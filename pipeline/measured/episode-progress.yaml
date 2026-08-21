@@ -1,96 +1,110 @@
 measured_at: 2026-08-14 09:40Z
-measured_at_CORRECTION_0819: >-
-  CORRECTION, 2026-08-19. THE STAMP ABOVE IS NO LONGER THE AGE OF THIS FILE AND IS LEFT STANDING
-  BECAUSE IT IS THE AGE OF THE PASS THAT WROTE THE ORIGINAL ROWS. Both episodes have since been
-  rewritten on later authority, each with its own dated key naming its own sources: episode 1's
-  fifteen rows on 2026-08-13's publication ruling, recorded in `ep1_publication_CORRECTION_0819`,
-  and ALL TWENTY-ONE of episode 2's rows remeasured 2026-08-19 12:20Z, recorded in
-  `remeasured_0819`. So no row below is still dated by this line. Read the per-episode
-  `states_read_from` and the per-beat `remeasured_0819.read_from` for what any single row actually
-  rests on.
+measured_at_CORRECTION_0819: 'CORRECTION, 2026-08-19. THE STAMP ABOVE IS NO LONGER THE AGE OF THIS FILE
+  AND IS LEFT STANDING BECAUSE IT IS THE AGE OF THE PASS THAT WROTE THE ORIGINAL ROWS. Both episodes have
+  since been rewritten on later authority, each with its own dated key naming its own sources: episode
+  1''s fifteen rows on 2026-08-13''s publication ruling, recorded in `ep1_publication_CORRECTION_0819`,
+  and ALL TWENTY-ONE of episode 2''s rows remeasured 2026-08-19 12:20Z, recorded in `remeasured_0819`.
+  So no row below is still dated by this line. Read the per-episode `states_read_from` and the per-beat
+  `remeasured_0819.read_from` for what any single row actually rests on.'
 source: 'per-beat states written by the motion lane at scoring time, against the definitions of done in
   review/ep2-picks/done-definitions.yaml. NOTHING here is `done`: `done` means the author has passed it
   and he has not seen last night''s work yet, so the two beats the card has finished sit as candidate-awaiting-founder.'
-goblin_gate_CORRECTION_0816: >-
-  CORRECTION, 2026-08-16 (provenance audit). READ THIS BEFORE ANY `state: blocked-decision` CARRYING THE
-  WORDS "character gate" BELOW. The twelve episode-2 beats 2, 3, 4, 7, 8, 13, 14, 15, 16, 17, 19 and 20
-  are all recorded here as `blocked-decision -- goblin beat, character gate`. THAT GATE IS OPEN AND HAS
-  BEEN SINCE THE HOUR AFTER THIS FILE WAS MEASURED. `measured_at` is 2026-08-14 09:40Z; the founder
-  answered the numbered goblin picker at 2026-08-14T11:09:07Z with "seed s0 is the goblin. also update
-  the review page", and re-sent the same approval 12.5 seconds later at 11:09:19Z prefixed "anyways focus
-  on continuing the queue!". The canonical repo record of that answer is the picker card in
-  review/inbox.yaml ("Gate open. ... Twelve beats unblocked."), and commit 78007cc7 fired the wave off it.
-  A SECOND, LATER ROUND ON THE SAME QUESTION IS ALSO RESOLVED: the 08-14 reference was judged infantile
-  and re-picked on 2026-08-15 -- "ill take 1 for the goblin, although some of the heads in the reference
-  are dismorphed or something, so just, beware" -- and that card names beats 07, 08, 15, 17, 19 and 20 as
-  "unblocked on the design". So no beat in this file is held by the CHARACTER question today.
-  THE STATE STRINGS AND NOTES BELOW ARE LEFT STANDING, NOT ERASED: they were true when the motion lane
-  wrote them, and house style is that a superseded line stays and a dated sibling is written beside it.
-  Each of the twelve carries a `state_CORRECTION_0816` naming its own evidence -- a successful (rc=0)
-  ltx_i2v motion run, read from the box sidecars on origin/farm-results-rtx5090, which is the only
-  complete corpus (pipeline/measured/queue-history.json is itself behind and is missing beat 07's
-  post-gate motion entirely). All twelve have shipped motion; eleven of the twelve have motion rendered
-  AFTER the gate opened, and beat 08 is the single exception and says so in its own correction.
-  WHY THIS MATTERED ENOUGH TO CORRECT: pipeline/queue_history.py READS THIS FILE and copies `state` and
-  `note` into every job row's `verdict` in pipeline/measured/queue-history.json, which /queue publishes.
-  248 ledger rows across these twelve beats carried `beat_state: blocked-decision`, and beat 20's rows
-  printed it directly beside `gate: "rendering now (2 jobs)"` -- a record contradicting itself on one
-  line. WHAT IS NOT BEING CLAIMED HERE: this correction retires the CHARACTER GATE as a reason and
-  nothing else. It does NOT re-score any beat, does NOT move any beat to `candidate-awaiting-founder`,
-  and does NOT invent a founder verdict -- that is the motion and taste lanes' call, on their evidence.
-  Some of these beats are still blocked on other, real grounds (beat 08 needs a two-figure guard+goblin
-  reference that nothing on disk has; beat 19 is not renderable until a plate exists with the fruit ON
-  THE STEM). Those grounds are simply not this one.
+goblin_gate_CORRECTION_0816: 'CORRECTION, 2026-08-16 (provenance audit). READ THIS BEFORE ANY `state:
+  blocked-decision` CARRYING THE WORDS "character gate" BELOW. The twelve episode-2 beats 2, 3, 4, 7,
+  8, 13, 14, 15, 16, 17, 19 and 20 are all recorded here as `blocked-decision -- goblin beat, character
+  gate`. THAT GATE IS OPEN AND HAS BEEN SINCE THE HOUR AFTER THIS FILE WAS MEASURED. `measured_at` is
+  2026-08-14 09:40Z; the founder answered the numbered goblin picker at 2026-08-14T11:09:07Z with "seed
+  s0 is the goblin. also update the review page", and re-sent the same approval 12.5 seconds later at
+  11:09:19Z prefixed "anyways focus on continuing the queue!". The canonical repo record of that answer
+  is the picker card in review/inbox.yaml ("Gate open. ... Twelve beats unblocked."), and commit 78007cc7
+  fired the wave off it. A SECOND, LATER ROUND ON THE SAME QUESTION IS ALSO RESOLVED: the 08-14 reference
+  was judged infantile and re-picked on 2026-08-15 -- "ill take 1 for the goblin, although some of the
+  heads in the reference are dismorphed or something, so just, beware" -- and that card names beats 07,
+  08, 15, 17, 19 and 20 as "unblocked on the design". So no beat in this file is held by the CHARACTER
+  question today. THE STATE STRINGS AND NOTES BELOW ARE LEFT STANDING, NOT ERASED: they were true when
+  the motion lane wrote them, and house style is that a superseded line stays and a dated sibling is written
+  beside it. Each of the twelve carries a `state_CORRECTION_0816` naming its own evidence -- a successful
+  (rc=0) ltx_i2v motion run, read from the box sidecars on origin/farm-results-rtx5090, which is the only
+  complete corpus (pipeline/measured/queue-history.json is itself behind and is missing beat 07''s post-gate
+  motion entirely). All twelve have shipped motion; eleven of the twelve have motion rendered AFTER the
+  gate opened, and beat 08 is the single exception and says so in its own correction. WHY THIS MATTERED
+  ENOUGH TO CORRECT: pipeline/queue_history.py READS THIS FILE and copies `state` and `note` into every
+  job row''s `verdict` in pipeline/measured/queue-history.json, which /queue publishes. 248 ledger rows
+  across these twelve beats carried `beat_state: blocked-decision`, and beat 20''s rows printed it directly
+  beside `gate: "rendering now (2 jobs)"` -- a record contradicting itself on one line. WHAT IS NOT BEING
+  CLAIMED HERE: this correction retires the CHARACTER GATE as a reason and nothing else. It does NOT re-score
+  any beat, does NOT move any beat to `candidate-awaiting-founder`, and does NOT invent a founder verdict
+  -- that is the motion and taste lanes'' call, on their evidence. Some of these beats are still blocked
+  on other, real grounds (beat 08 needs a two-figure guard+goblin reference that nothing on disk has;
+  beat 19 is not renderable until a plate exists with the fruit ON THE STEM). Those grounds are simply
+  not this one.'
 ep1_publication_CORRECTION_0819:
-  correction: >-
-    CORRECTION, 2026-08-19 (resolved-but-open drift audit; third of its class, after the goblin gate
-    above and the sapling review card). READ THIS BEFORE ANY EPISODE-1 BEAT ROW BELOW. All fifteen of
-    episode 1's beats now read `state: done`. Eleven were changed on this date; four already were.
+  correction: 'CORRECTION, 2026-08-19 (resolved-but-open drift audit; third of its class, after the goblin
+    gate above and the sapling review card). READ THIS BEFORE ANY EPISODE-1 BEAT ROW BELOW. All fifteen
+    of episode 1''s beats now read `state: done`. Eleven were changed on this date; four already were.
     THE RULING IS THE AUTHORITY AND IT IS OLDER THAN THE MEASUREMENT: the founder closed episode 1 on
-    2026-08-13, recorded three separate times in the `resolved:` entries of review/inbox.yaml -- the
-    beat-02 rerun sheet, the sixteen-frame arm sheet, and the v42 provisional-cut card -- each
-    carrying the same verbatim words, quoted in `ruling_verbatim` below. Episode 1 has been PUBLISHED
-    and live for over a week. This file was measured 2026-08-14 09:40Z, a day AFTER that ruling, off
-    review/ep1-audit-0812/index.html, an audit table written before it; the per-beat states were
-    never reconciled with the whole-episode publication, so the status page kept publishing an
-    open episode.
-    THE TWO KINDS OF PASS, KEPT DISTINCT RATHER THAN BLENDED: beats 8, 9, 12 and 15 hold an
-    INDIVIDUAL verdict on their own motion -- beat 8 on "beat 8 looks good", and 9, 12 and 15 on
-    "yeah keep em still" -- and their notes are untouched by this correction. The other eleven (1, 2,
-    3, 4, 5, 6, 7, 10, 11, 13, 14) were never screened one at a time and are PASSED BY WHOLE-EPISODE
-    PUBLICATION: shipping the cut passed everything in the cut. Each of the eleven now says so in its
-    own note, in those words, so a reader of one row never has to come back up here to learn which
-    kind of pass it is holding.
-    WHY THIS MATTERED ENOUGH TO CORRECT: pipeline/episode_eta.py `read_progress()` feeds the sapling
-    tree in pipeline/charts.py, which published "EP 1 · 4/15 passed" on /status for six days after
-    the episode went live -- ten leaves drawn "waiting for your look" and one "waiting on a decision",
-    aimed at an author who had already ruled and moved on. A page that asks a man to re-decide what he
-    closed is the same defect as one that tells him he is blocking work he unblocked; that was
-    goblin_gate_CORRECTION_0816, and this is the same class one episode over.
-    WHAT IS NOT BEING CLAIMED. This records a WHOLE-EPISODE pass, not fifteen individual taste
-    verdicts, and it does not pretend the open per-beat questions were answered -- they were closed
-    UNREAD, which each note says: beat 02's loop, beat 05's sapling reveal, beat 06's sixteen-frame
-    sheet and its unscreened v42 zoom-out, beat 07's discarded half of its footage. It does not touch
-    the licence gate either: beats 6, 9, 12 and 15 remain licence-gated for REDISTRIBUTION of their
-    stills (the standing D15 debt), which is a rights question and never was a taste one. And it
-    invents no verdict the founder did not give -- the pass is his sentence, applied at the scope he
-    said it at.
-    BEAT-LEVEL TASTE RE-OPENS ONLY IF HE REOPENS IT (R4 -- taste belongs to the author). No lane may
-    re-file any of these fifteen as `candidate-awaiting-founder` or `blocked-decision` on its own
-    initiative. If he asks to look at episode 1 again, that request is the authority, and a dated
-    sibling correction is written here beside this one rather than erasing it.
+    2026-08-13, recorded three separate times in the `resolved:` entries of review/inbox.yaml -- the beat-02
+    rerun sheet, the sixteen-frame arm sheet, and the v42 provisional-cut card -- each carrying the same
+    verbatim words, quoted in `ruling_verbatim` below. Episode 1 has been PUBLISHED and live for over
+    a week. This file was measured 2026-08-14 09:40Z, a day AFTER that ruling, off review/ep1-audit-0812/index.html,
+    an audit table written before it; the per-beat states were never reconciled with the whole-episode
+    publication, so the status page kept publishing an open episode. THE TWO KINDS OF PASS, KEPT DISTINCT
+    RATHER THAN BLENDED: beats 8, 9, 12 and 15 hold an INDIVIDUAL verdict on their own motion -- beat
+    8 on "beat 8 looks good", and 9, 12 and 15 on "yeah keep em still" -- and their notes are untouched
+    by this correction. The other eleven (1, 2, 3, 4, 5, 6, 7, 10, 11, 13, 14) were never screened one
+    at a time and are PASSED BY WHOLE-EPISODE PUBLICATION: shipping the cut passed everything in the cut.
+    Each of the eleven now says so in its own note, in those words, so a reader of one row never has to
+    come back up here to learn which kind of pass it is holding. WHY THIS MATTERED ENOUGH TO CORRECT:
+    pipeline/episode_eta.py `read_progress()` feeds the sapling tree in pipeline/charts.py, which published
+    "EP 1 · 4/15 passed" on /status for six days after the episode went live -- ten leaves drawn "waiting
+    for your look" and one "waiting on a decision", aimed at an author who had already ruled and moved
+    on. A page that asks a man to re-decide what he closed is the same defect as one that tells him he
+    is blocking work he unblocked; that was goblin_gate_CORRECTION_0816, and this is the same class one
+    episode over. WHAT IS NOT BEING CLAIMED. This records a WHOLE-EPISODE pass, not fifteen individual
+    taste verdicts, and it does not pretend the open per-beat questions were answered -- they were closed
+    UNREAD, which each note says: beat 02''s loop, beat 05''s sapling reveal, beat 06''s sixteen-frame
+    sheet and its unscreened v42 zoom-out, beat 07''s discarded half of its footage. It does not touch
+    the licence gate either: beats 6, 9, 12 and 15 remain licence-gated for REDISTRIBUTION of their stills
+    (the standing D15 debt), which is a rights question and never was a taste one. And it invents no verdict
+    the founder did not give -- the pass is his sentence, applied at the scope he said it at. BEAT-LEVEL
+    TASTE RE-OPENS ONLY IF HE REOPENS IT (R4 -- taste belongs to the author). No lane may re-file any
+    of these fifteen as `candidate-awaiting-founder` or `blocked-decision` on its own initiative. If he
+    asks to look at episode 1 again, that request is the authority, and a dated sibling correction is
+    written here beside this one rather than erasing it.'
   ruling_verbatim: we have already published it dude, we are done. lets move on to episode 2.
   ruling_date: '2026-08-13'
   ruling_recorded_in: review/inbox.yaml (three resolved entries, all episode 1)
-  passed_individually: [8, 9, 12, 15]
-  passed_by_publication: [1, 2, 3, 4, 5, 6, 7, 10, 11, 13, 14]
-  counts_before: {done: 4, candidate-awaiting-founder: 10, blocked-decision: 1}
-  counts_after: {done: 15}
-  # The rows exactly as the 2026-08-14 09:40Z measurement left them. Kept because
-  # house style is that a superseded reading stays on the record and a dated
-  # sibling is written beside it -- these were true of the audit page they were
-  # read from, they were merely never checked against the ruling that predated
-  # them by a day.
+  passed_individually:
+  - 8
+  - 9
+  - 12
+  - 15
+  passed_by_publication:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 10
+  - 11
+  - 13
+  - 14
+  counts_before:
+    done: 4
+    candidate-awaiting-founder: 10
+    blocked-decision: 1
+  counts_after:
+    done: 15
+  states_before_why: >-
+    The rows exactly as the 2026-08-14 09:40Z measurement left them. Kept because house style is
+    that a superseded reading stays on the record and a dated sibling is written beside it --
+    these were true of the audit page they were read from, they were merely never checked against
+    the ruling that predated them by a day.
+    (THIS WAS A `#` COMMENT UNTIL 2026-08-21, when the remeasure pass round-tripped this file
+    through yaml.safe_dump and comments do not survive that. Restored here verbatim as a key
+    rather than lost -- R6. It was the only comment the file had; the reformat changed no value.)
   states_before:
     1: candidate-awaiting-founder
     2: blocked-decision
@@ -109,31 +123,55 @@ ep1_publication_CORRECTION_0819:
     15: done
 remeasured_0819:
   measured_at: 2026-08-19 12:20Z
-  scope: |-
-    EPISODE 2 ONLY. Every one of its 21 rows below was rewritten in this pass. Episode 1 is untouched: its fifteen rows and its own `ep1_publication_CORRECTION_0819` are byte-identical, because episode 1 is closed on the founder's word and R4 says a lane does not reopen it.
-  why: |-
-    The rows were measured 2026-08-14 09:40Z and were five days and roughly forty written verdicts stale. The founder asked, 2026-08-19: "hows the progress with episode 2? i should be able to see it on the website but y'know.. its not projected very well." He was right twice over. FIRST, the states: nothing on file reflected that beats 01, 07, 17 and 18 now hold takes that PASS a pre-registered bar, that two demo cuts had shipped, or that the character gate twelve rows still named had been open since ninety minutes after the measurement. SECOND, and worse, /status was publishing NO ETA AT ALL: read_progress() emitted `stale-gate-closed` for those twelve rows, episode_eta.episode_row() counted over STATES which by design excludes it, and the KeyError was swallowed whole by build_sim.episode_eta_rows()'s bare except, so both ETA cards and the glance cell had been silently absent for days while the sapling tree beside them drew fine. Fixed in the same commit as this measurement (episode_eta.py, counts over EMITTED_STATES).
+  scope: 'EPISODE 2 ONLY. Every one of its 21 rows below was rewritten in this pass. Episode 1 is untouched:
+    its fifteen rows and its own `ep1_publication_CORRECTION_0819` are byte-identical, because episode
+    1 is closed on the founder''s word and R4 says a lane does not reopen it.'
+  why: 'The rows were measured 2026-08-14 09:40Z and were five days and roughly forty written verdicts
+    stale. The founder asked, 2026-08-19: "hows the progress with episode 2? i should be able to see it
+    on the website but y''know.. its not projected very well." He was right twice over. FIRST, the states:
+    nothing on file reflected that beats 01, 07, 17 and 18 now hold takes that PASS a pre-registered bar,
+    that two demo cuts had shipped, or that the character gate twelve rows still named had been open since
+    ninety minutes after the measurement. SECOND, and worse, /status was publishing NO ETA AT ALL: read_progress()
+    emitted `stale-gate-closed` for those twelve rows, episode_eta.episode_row() counted over STATES which
+    by design excludes it, and the KeyError was swallowed whole by build_sim.episode_eta_rows()''s bare
+    except, so both ETA cards and the glance cell had been silently absent for days while the sapling
+    tree beside them drew fine. Fixed in the same commit as this measurement (episode_eta.py, counts over
+    EMITTED_STATES).'
   states_read_from:
-  - |-
-      review/ep2-demo-0819/sources/picks-0819.yaml -- the latest cut's manifest: one line per beat, which take is in the cut and WHY (new / carry-forward / slate), with each take's verdict named. This is the durable record of what he would actually watch.
-  - |-
-      pipeline/jobs/ep2-b*-08{18,19}.yaml -- the specs' own appended verdict, verdict_clauses, verdict_fail_modes_all_reported and pick blocks. A bar registered before the pixels existed, scored after.
-  - |-
-      pipeline/work-ladder-0819.md -- the standing ladder: the four slates and their routes, the crf-10 per-beat table, the beat-14 parking ruling, the beat-07 judging lane's appendix, and the owner map.
-  - |-
-      review/ep2-picks/done-definitions.yaml -- each beat's done_when, its rounds, its recorded status (SHIP WITH FAULT NAMED / THIRD ROUND EARNED / NO VERDICT YET), and the founder rulings quoted verbatim inside it.
-  - |-
-      review/inbox.yaml -- READ FOR OPEN ENTRIES ONLY, and there are exactly two: one taste decision (the guards, beats 05/06/10/11) and one veto-only pick. That count is the whole authority for `blocked-decision` in this pass.
-  - |-
-      genomes/sapling/nodes/002b-first-citizen/node.md and leaves/002b-t0-c.yaml -- the STEWARDSHIP.md §6 record, which changed on 2026-08-19: he read all five rewritten lines (beats 12, 13, 15, 19, 20) and answered "all approved", so §6 no longer holds footage on any of them. Beat 17's 08-18 restage is the one line he has not been shown and §6 still gates it.
-  state_rule: |-
-    THE RULE APPLIED, WRITTEN DOWN SO THE NEXT REMEASURE CAN DISAGREE WITH THIS ONE ON PURPOSE RATHER THAN BY DRIFT.
-      done                        -- only where the FOUNDER passed it. Episode 2: none. Not one beat of it carries a founder pass, and the two shipped cuts are bench assemblies (--out), with no leaf and nothing in lineage.yaml.
-      candidate-awaiting-founder  -- the beat's slot holds footage carrying a WRITTEN pass or ship verdict against a bar registered before the pixels existed, and he has not ruled on it. What moves the beat is his eyes.
-      fix-known                   -- the beat's own record names a route the CARD can run, and the footage in its slot carries no pass. Green: the machine's clock.
-      blocked-decision            -- an entry OPEN in review/inbox.yaml is what the beat waits on, and no route the card can run reaches past it. Three beats, one question, and it is a taste question (R4).
-      never-rendered              -- nothing rendered. Episode 2: none; every beat has footage or a judged sample somewhere.
-    TWO TIE-BREAKS, both live in this pass. (a) A beat carrying BOTH a ship verdict and a named unfired route follows the ROUTE (green) when that route was filed to fix a defect the ship verdict itself records as outstanding -- beat 21, whose banded sky is exactly that. Beats 03, 04, 12 and 13 have no rung filed, so they follow the verdict (amber). (b) Where a beat is named in the open taste entry AND its slot holds a passing take, it counts as awaiting his LOOK -- beat 11, whose cast half was separately discharged on 2026-08-16 and whose note says so.
+  - 'review/ep2-demo-0819/sources/picks-0819.yaml -- the latest cut''s manifest: one line per beat, which
+    take is in the cut and WHY (new / carry-forward / slate), with each take''s verdict named. This is
+    the durable record of what he would actually watch.'
+  - pipeline/jobs/ep2-b*-08{18,19}.yaml -- the specs' own appended verdict, verdict_clauses, verdict_fail_modes_all_reported
+    and pick blocks. A bar registered before the pixels existed, scored after.
+  - 'pipeline/work-ladder-0819.md -- the standing ladder: the four slates and their routes, the crf-10
+    per-beat table, the beat-14 parking ruling, the beat-07 judging lane''s appendix, and the owner map.'
+  - review/ep2-picks/done-definitions.yaml -- each beat's done_when, its rounds, its recorded status (SHIP
+    WITH FAULT NAMED / THIRD ROUND EARNED / NO VERDICT YET), and the founder rulings quoted verbatim inside
+    it.
+  - 'review/inbox.yaml -- READ FOR OPEN ENTRIES ONLY, and there are exactly two: one taste decision (the
+    guards, beats 05/06/10/11) and one veto-only pick. That count is the whole authority for `blocked-decision`
+    in this pass.'
+  - 'genomes/sapling/nodes/002b-first-citizen/node.md and leaves/002b-t0-c.yaml -- the STEWARDSHIP.md
+    §6 record, which changed on 2026-08-19: he read all five rewritten lines (beats 12, 13, 15, 19, 20)
+    and answered "all approved", so §6 no longer holds footage on any of them. Beat 17''s 08-18 restage
+    is the one line he has not been shown and §6 still gates it.'
+  state_rule: "THE RULE APPLIED, WRITTEN DOWN SO THE NEXT REMEASURE CAN DISAGREE WITH THIS ONE ON PURPOSE\
+    \ RATHER THAN BY DRIFT.\n  done                        -- only where the FOUNDER passed it. Episode\
+    \ 2: none. Not one beat of it carries a founder pass, and the two shipped cuts are bench assemblies\
+    \ (--out), with no leaf and nothing in lineage.yaml.\n  candidate-awaiting-founder  -- the beat's\
+    \ slot holds footage carrying a WRITTEN pass or ship verdict against a bar registered before the pixels\
+    \ existed, and he has not ruled on it. What moves the beat is his eyes.\n  fix-known             \
+    \      -- the beat's own record names a route the CARD can run, and the footage in its slot carries\
+    \ no pass. Green: the machine's clock.\n  blocked-decision            -- an entry OPEN in review/inbox.yaml\
+    \ is what the beat waits on, and no route the card can run reaches past it. Three beats, one question,\
+    \ and it is a taste question (R4).\n  never-rendered              -- nothing rendered. Episode 2:\
+    \ none; every beat has footage or a judged sample somewhere.\nTWO TIE-BREAKS, both live in this pass.\
+    \ (a) A beat carrying BOTH a ship verdict and a named unfired route follows the ROUTE (green) when\
+    \ that route was filed to fix a defect the ship verdict itself records as outstanding -- beat 21,\
+    \ whose banded sky is exactly that. Beats 03, 04, 12 and 13 have no rung filed, so they follow the\
+    \ verdict (amber). (b) Where a beat is named in the open taste entry AND its slot holds a passing\
+    \ take, it counts as awaiting his LOOK -- beat 11, whose cast half was separately discharged on 2026-08-16\
+    \ and whose note says so."
   counts_before:
     candidate-awaiting-founder: 6
     stale-gate-closed: 12
@@ -166,328 +204,617 @@ remeasured_0819:
     19: blocked-decision
     20: blocked-decision
     21: fix-known
-  what_this_retires: |-
-    THE TWELVE HOLLOW LEAVES. `goblin_gate_CORRECTION_0816` below is left standing and is not edited -- it is the record of the audit that caught the dead gate -- but its closing sentence said the correction "does NOT re-score any beat" and left that to the motion and taste lanes. This pass IS that re-scoring, three days later, and every one of the twelve now carries a fresh state read off records that postdate the gate. The per-row `state_CORRECTION_0816` keys are gone WITH their rows rather than stripped from them: a correction of a superseded state has nothing left to correct, and queue_history.carry_correction would otherwise stamp the NEW state SUPERSEDED and republish the retracted reading into /queue for another week. The old readings are preserved in `states_before` above, which is where ep1's own correction put them.
-  what_is_not_claimed: |-
-    NO FOUNDER VERDICT IS INVENTED ANYWHERE IN THIS PASS. Nine beats move to `candidate-awaiting-founder`, which asserts only that a written pass exists and that he has not looked -- it is the amber state, his clock, and it is not a pass. Beat 13's 2026-08-18 board ruling and beat 16's 2026-08-16 leaf ruling are recorded at exactly the scope he gave them and no wider. `done` stays at zero for episode 2. Nor is any bar re-scored here: every state cites the lane verdict it was read from, and where two records disagree (beat 11's BROKEN-TAKE override against its newest take, beat 15's §6 hold against the same-day discharge) the row says so in its own note rather than picking a winner silently.
+  what_this_retires: 'THE TWELVE HOLLOW LEAVES. `goblin_gate_CORRECTION_0816` below is left standing and
+    is not edited -- it is the record of the audit that caught the dead gate -- but its closing sentence
+    said the correction "does NOT re-score any beat" and left that to the motion and taste lanes. This
+    pass IS that re-scoring, three days later, and every one of the twelve now carries a fresh state read
+    off records that postdate the gate. The per-row `state_CORRECTION_0816` keys are gone WITH their rows
+    rather than stripped from them: a correction of a superseded state has nothing left to correct, and
+    queue_history.carry_correction would otherwise stamp the NEW state SUPERSEDED and republish the retracted
+    reading into /queue for another week. The old readings are preserved in `states_before` above, which
+    is where ep1''s own correction put them.'
+  what_is_not_claimed: 'NO FOUNDER VERDICT IS INVENTED ANYWHERE IN THIS PASS. Nine beats move to `candidate-awaiting-founder`,
+    which asserts only that a written pass exists and that he has not looked -- it is the amber state,
+    his clock, and it is not a pass. Beat 13''s 2026-08-18 board ruling and beat 16''s 2026-08-16 leaf
+    ruling are recorded at exactly the scope he gave them and no wider. `done` stays at zero for episode
+    2. Nor is any bar re-scored here: every state cites the lane verdict it was read from, and where two
+    records disagree (beat 11''s BROKEN-TAKE override against its newest take, beat 15''s §6 hold against
+    the same-day discharge) the row says so in its own note rather than picking a winner silently.'
 episodes:
 - number: 2
   node: 002b-first-citizen
   title: First Citizen
-  review_url: /review/ep2-demo-0819
+  review_url: /review/ep2-ship-0821
   total_beats: 21
-  states_read_from: |-
-    REMEASURED 2026-08-19 -- see the top-level `remeasured_0819` key for the rule applied, the counts before and after, and the six classes of record read. Per beat, the exact files are listed in that beat's own `remeasured_0819.read_from` below, because an episode-level string cannot tell a reader which record decided ONE row, which is the only question an audit of one beat ever asks. The four durable records this pass leans on, in the order they outrank each other: the cut manifest (what is in the episode), the job specs' verdict blocks (whether it passes), the work ladder (what the card does next), and review/inbox.yaml's OPEN entries (what only he can answer).
+  states_read_from: 'REMEASURED 2026-08-19 -- see the top-level `remeasured_0819` key for the rule applied,
+    the counts before and after, and the six classes of record read. Per beat, the exact files are listed
+    in that beat''s own `remeasured_0819.read_from` below, because an episode-level string cannot tell
+    a reader which record decided ONE row, which is the only question an audit of one beat ever asks.
+    The four durable records this pass leans on, in the order they outrank each other: the cut manifest
+    (what is in the episode), the job specs'' verdict blocks (whether it passes), the work ladder (what
+    the card does next), and review/inbox.yaml''s OPEN entries (what only he can answer).'
   beats:
   - n: 1
     state: candidate-awaiting-founder
-    note: |-
-      IN THE CUT, NEW, AND PASSING. 01-cold-open-b01-nubgrow-b-s20260826-0818 is the only seed of six that cleared its pre-registered bar, 7 of 7 (G1 growth, G2 purple, G3 two leaves, G4 scale, G5 camera), off the founder's own 2026-08-13 route: inpaint a nub into frame 1 and grow it with the motion prompt. One caveat named in the verdict rather than smoothed over — the light blooms from dawn purple to pale amber. A crf-10 sibling ALSO passes and is cut-preferred for the next assembly (f120 fidelity 15.2 against 65.7, G1 monotone over 85 frames with 0 shrinks). He has not looked at either.
+    note: 'IN THE CUT, NEW, AND PASSING. 01-cold-open-b01-nubgrow-b-s20260826-0818 is the only seed of
+      six that cleared its pre-registered bar, 7 of 7 (G1 growth, G2 purple, G3 two leaves, G4 scale,
+      G5 camera), off the founder''s own 2026-08-13 route: inpaint a nub into frame 1 and grow it with
+      the motion prompt. One caveat named in the verdict rather than smoothed over — the light blooms
+      from dawn purple to pale amber. A crf-10 sibling ALSO passes and is cut-preferred for the next assembly
+      (f120 fidelity 15.2 against 65.7, G1 monotone over 85 frames with 0 shrinks). He has not looked
+      at either.'
     remeasured_0819:
       previous_state: candidate-awaiting-founder
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 1, why: new
-      - |-
-        pipeline/jobs/ep2-b01-growmotion-b-0818.yaml — verdict PASS, one caveat; `pick`
-      - |-
-        pipeline/jobs/ep2-b01-growmotion-crf10-0819.yaml — verdict_this_job PASS
-      - |-
-        pipeline/work-ladder-0819.md — crf-10 table, row 01: PASS, cut-preferred
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 1, why: new'
+      - pipeline/jobs/ep2-b01-growmotion-b-0818.yaml — verdict PASS, one caveat; `pick`
+      - pipeline/jobs/ep2-b01-growmotion-crf10-0819.yaml — verdict_this_job PASS
+      - 'pipeline/work-ladder-0819.md — crf-10 table, row 01: PASS, cut-preferred'
+    remeasured_0821:
+      previous_state: candidate-awaiting-founder
+      why: In the ship cut as the chroma composite; 7 of 8 scored clauses, G5a fails on one band.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 1
   - n: 2
-    state: fix-known
-    note: |-
-      IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries the sapling — not a seventeenth seed. Nothing here needs a decision.
+    state: candidate-awaiting-founder
+    note: 'IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN
+      judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain
+      the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate
+      that carries the sapling — not a seventeenth seed. Nothing here needs a decision.'
     remeasured_0819:
       previous_state: blocked-decision
-      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the character gate that had been open since 2026-08-14T11:09:07Z
+      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the
+        character gate that had been open since 2026-08-14T11:09:07Z
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 2, why: carry-forward (the newest verdict's own pick, s20260834)
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'02': done_when, judged_0817_anchor_wave (all 16 FAIL), status THIRD ROUND EARNED
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 2, why: carry-forward (the newest verdict''s
+        own pick, s20260834)'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''02'': done_when, judged_0817_anchor_wave (all
+        16 FAIL), status THIRD ROUND EARNED'
+    remeasured_0821:
+      previous_state: fix-known
+      why: AGE-B SWAP. The grey child is out of the cut; the new take holds its face to f101 against a
+        4.04 s slot and is trimmed to 97 frames.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 2
+      - review/motion-ageb-0821/JUDGING-0821.md
+      - pipeline/jobs/ep2-b02-tilemotion-s2-0821.yaml verdict_ageb_wave_0821
+      previous_note_status: 'CORRECTED 2026-08-21: the take this note describes is no longer in the cut.'
   - n: 3
     state: candidate-awaiting-founder
-    note: |-
-      IN THE CUT WITH ITS FAULT NAMED: refire-0814 reads the beat — he crouches and the cover is comically inadequate — but the size-mismatch joke reads weakly. The one available swap is deliberately NOT taken: s20260846 is the 0817 st-wave pick, yet all fifteen of its seeds carry done_when FAIL because its plate has no trunk, and swapping a written FAIL over an incumbent whose verdict stands is not a staging call. No rung is filed for the card on this beat. What is left is his look.
+    note: 'IN THE CUT WITH ITS FAULT NAMED: refire-0814 reads the beat — he crouches and the cover is
+      comically inadequate — but the size-mismatch joke reads weakly. The one available swap is deliberately
+      NOT taken: s20260846 is the 0817 st-wave pick, yet all fifteen of its seeds carry done_when FAIL
+      because its plate has no trunk, and swapping a written FAIL over an incumbent whose verdict stands
+      is not a staging call. No rung is filed for the card on this beat. What is left is his look.'
     remeasured_0819:
       previous_state: blocked-decision
-      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the character gate that had been open since 2026-08-14T11:09:07Z
+      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the
+        character gate that had been open since 2026-08-14T11:09:07Z
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 3, why: carry-forward, with the declined swap named
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'03': status SHIP WITH FAULT NAMED, refire_result, judged_0817_st_wave
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 3, why: carry-forward, with the declined
+        swap named'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''03'': status SHIP WITH FAULT NAMED, refire_result,
+        judged_0817_st_wave'
+    remeasured_0821:
+      previous_state: candidate-awaiting-founder
+      why: AGE-B SWAP. The 0.79 s dead tail and the adult read both left with the old take; the new one
+        holds 121 frames and its fault is that the motion is small.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 3
+      - review/motion-ageb-0821/JUDGING-0821.md
+      - pipeline/jobs/ep2-b03-tilemotion-s2-0821.yaml verdict_ageb_wave_0821
+      previous_note_status: 'CORRECTED 2026-08-21: the take this note describes is no longer in the cut.'
   - n: 4
     state: candidate-awaiting-founder
-    note: |-
-      IN THE CUT WITH ITS FAULT NAMED: a clean close-up on his face holding his breath. The recorded residual is that it reads young, and the record says that is the s0 reference HE chose rather than a prompt fault — so there is no fix for the card to run. The only new artefact is a recovered 0813 balloon-pair clip whose verdict is FAIL, the fault reproducing at a second seed.
+    note: 'IN THE CUT WITH ITS FAULT NAMED: a clean close-up on his face holding his breath. The recorded
+      residual is that it reads young, and the record says that is the s0 reference HE chose rather than
+      a prompt fault — so there is no fix for the card to run. The only new artefact is a recovered 0813
+      balloon-pair clip whose verdict is FAIL, the fault reproducing at a second seed.'
     remeasured_0819:
       previous_state: blocked-decision
-      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the character gate that had been open since 2026-08-14T11:09:07Z
+      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the
+        character gate that had been open since 2026-08-14T11:09:07Z
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 4, why: carry-forward
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'04': status SHIP WITH FAULT NAMED, refire_result, shipping_fault
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 4, why: carry-forward'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''04'': status SHIP WITH FAULT NAMED, refire_result,
+        shipping_fault'
+    remeasured_0821:
+      previous_state: candidate-awaiting-founder
+      why: AGE-B SWAP. On design at last, and the E1 glance clause is STILL unanswered -- the eyes are
+        blank slits by construction, so the look is a head move either way.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 4
+      - review/motion-ageb-0821/JUDGING-0821.md
+      - pipeline/jobs/ep2-b04-tilemotion-s1-0821.yaml verdict_ageb_wave_0821
+      previous_note_status: 'CORRECTED 2026-08-21: the take this note describes is no longer in the cut.'
   - n: 5
-    state: blocked-decision
-    note: |-
-      HELD BY THE ONE OPEN TASTE CALL, AND IT IS GENUINELY HIS. The in-cut standB-trim take meets its own definition — seedB holds two guards for the whole clip in a field present at frame one and the scan reads — and its ONLY recorded fault is the cast read the open entry asks about. The card cannot reach it: the adjective route is closed by his own 2026-08-12 ruling (body-type and tone words stay out of the prompt), five casting rounds have not moved it, and review/ep2-guards-0818 reads 0 of 12 frames clear of every term of the bar, so no new plate is ready to animate from either.
-    remeasured_0819:
-      previous_state: candidate-awaiting-founder
-      read_from:
-      - |-
-        review/inbox.yaml — the ONE open taste entry, since 2026-08-17: "THE GUARDS READ ADOLESCENT on beats 05, 06, 10 and 11 - one taste question, not four", at /review/ep2-guards-0818
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 5, why: carry-forward; "no new plate is ready to animate from"
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'05': shipping_fault, round_4_result, plate_lane_0817 and its same-day retraction
-  - n: 6
-    state: blocked-decision
-    note: |-
-      HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move instead. Its remaining fault is the guard cast read. Stills only since (ep2-b06-cast-0817), and guards-0818 reads 0 of 12.
-    remeasured_0819:
-      previous_state: candidate-awaiting-founder
-      read_from:
-      - |-
-        review/inbox.yaml — the ONE open taste entry, since 2026-08-17: "THE GUARDS READ ADOLESCENT on beats 05, 06, 10 and 11 - one taste question, not four", at /review/ep2-guards-0818
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 6, why: carry-forward; "Stills only; guards-0818 reads 0 of 12"
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'06': round_3_result, seed_status, shipping_fault
-  - n: 7
     state: candidate-awaiting-founder
-    note: |-
-      PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the goblin's collar by f055 and holds to f096, measured at his own shoulder so no camera move scores as the action. The crf-10 take is cut-preferred (background drift 5.43 against 36.41) and its verdict walks this beat's done_when clause by clause. STILL A SLATE IN THE 0819 CUT: the swap is named, not made, and belongs to the next assembly. One plate fault survives on an already-passing shot — the scavenger wears the guard's own pale wrap tunic — and three plate rungs have now failed to remove it, so that is not what this beat waits on.
+    note: 'HELD BY THE ONE OPEN TASTE CALL, AND IT IS GENUINELY HIS. The in-cut standB-trim take meets
+      its own definition — seedB holds two guards for the whole clip in a field present at frame one and
+      the scan reads — and its ONLY recorded fault is the cast read the open entry asks about. The card
+      cannot reach it: the adjective route is closed by his own 2026-08-12 ruling (body-type and tone
+      words stay out of the prompt), five casting rounds have not moved it, and review/ep2-guards-0818
+      reads 0 of 12 frames clear of every term of the bar, so no new plate is ready to animate from either.'
+    remeasured_0819:
+      previous_state: candidate-awaiting-founder
+      read_from:
+      - 'review/inbox.yaml — the ONE open taste entry, since 2026-08-17: "THE GUARDS READ ADOLESCENT on
+        beats 05, 06, 10 and 11 - one taste question, not four", at /review/ep2-guards-0818'
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 5, why: carry-forward; "no new plate is ready
+        to animate from"'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''05'': shipping_fault, round_4_result, plate_lane_0817
+        and its same-day retraction'
+    remeasured_0821:
+      previous_state: blocked-decision
+      why: THE TASTE CALL THIS ROW WAS BLOCKED ON IS ANSWERED -- 'they should look like grown men. yes.
+        dumb grown men.' The beat is no longer held by a decision; it is held by his look.
+      read_from:
+      - review/ep2-guards-0818 (ANSWERED pass, 2026-08-20)
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 5
+      previous_note_status: 'CORRECTED 2026-08-21: no longer blocked-decision; the guards card came back
+        pass on 08-20.'
+  - n: 6
+    state: candidate-awaiting-founder
+    note: HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition
+      — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the
+      hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat
+      10's move instead. Its remaining fault is the guard cast read. Stills only since (ep2-b06-cast-0817),
+      and guards-0818 reads 0 of 12.
+    remeasured_0819:
+      previous_state: candidate-awaiting-founder
+      read_from:
+      - 'review/inbox.yaml — the ONE open taste entry, since 2026-08-17: "THE GUARDS READ ADOLESCENT on
+        beats 05, 06, 10 and 11 - one taste question, not four", at /review/ep2-guards-0818'
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 6, why: carry-forward; "Stills only; guards-0818
+        reads 0 of 12"'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''06'': round_3_result, seed_status, shipping_fault'
+    remeasured_0821:
+      previous_state: blocked-decision
+      why: Same answered taste call. The bark board is still the wrong size and that fault is named.
+      read_from:
+      - review/ep2-guards-0818 (ANSWERED pass, 2026-08-20)
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 6
+      previous_note_status: 'CORRECTED 2026-08-21: no longer blocked-decision; the guards card came back
+        pass on 08-20.'
+  - n: 7
+    state: fix-known
+    note: 'PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT''S LIFE AND HE HAS NOT SEEN IT. Both
+      2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely
+      failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands
+      on the goblin''s collar by f055 and holds to f096, measured at his own shoulder so no camera move
+      scores as the action. The crf-10 take is cut-preferred (background drift 5.43 against 36.41) and
+      its verdict walks this beat''s done_when clause by clause. STILL A SLATE IN THE 0819 CUT: the swap
+      is named, not made, and belongs to the next assembly. One plate fault survives on an already-passing
+      shot — the scavenger wears the guard''s own pale wrap tunic — and three plate rungs have now failed
+      to remove it, so that is not what this beat waits on.'
     remeasured_0819:
       previous_state: blocked-decision
-      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the character gate that had been open since 2026-08-14T11:09:07Z
+      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the
+        character gate that had been open since 2026-08-14T11:09:07Z
       read_from:
-      - |-
-        pipeline/jobs/ep2-b07-point-motion-0819.yaml — verdict PASS, M1-M4, F2 did not fire
-      - |-
-        pipeline/jobs/ep2-b07-point-crf10-0819.yaml — verdict PASS; verdict_cut CUT-PREFERRED; verdict_the_slate: done_when is met by this take
-      - |-
-        pipeline/jobs/ep2-b07-scavcostume-0819.yaml — verdict FAIL; verdict_the_production_call: beat 07 does not wait for the plate
-      - |-
-        pipeline/work-ladder-0819.md — "BEAT 07 IS THE FIRST SLATE WITH FOOTAGE A VERDICT LETS INTO A CUT"
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 7, why: slate (the 0817 job is an is_show_content:false probe)
+      - pipeline/jobs/ep2-b07-point-motion-0819.yaml — verdict PASS, M1-M4, F2 did not fire
+      - 'pipeline/jobs/ep2-b07-point-crf10-0819.yaml — verdict PASS; verdict_cut CUT-PREFERRED; verdict_the_slate:
+        done_when is met by this take'
+      - 'pipeline/jobs/ep2-b07-scavcostume-0819.yaml — verdict FAIL; verdict_the_production_call: beat
+        07 does not wait for the plate'
+      - pipeline/work-ladder-0819.md — "BEAT 07 IS THE FIRST SLATE WITH FOOTAGE A VERDICT LETS INTO A
+        CUT"
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 7, why: slate (the 0817 job is an is_show_content:false
+        probe)'
+    remeasured_0821:
+      previous_state: candidate-awaiting-founder
+      why: KEPT ITS OLD TAKE AND THE FIX IS NAMED. Both age-B seeds were judged and both fail on ACTION
+        -- neither contains a guard, so the confiscation is absent rather than weak. The next rung is
+        the plate, which must stage two figures.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 7 ageb_wave_result_0821
+      - review/motion-ageb-0821/JUDGING-0821.md
+      - pipeline/jobs/ep2-b07-tilemotion-s1-0821.yaml / -s2- verdict_ageb_wave_0821
+      previous_note_status: STILL TRUE 2026-08-21, and now with a second failed round behind it.
   - n: 8
     state: fix-known
-    note: |-
-      IN THE CUT AS A CARRY-FORWARD WITH NO PASSING VERDICT — both 0817 motion takes are is_show_content:false engine probes and ep2-b08-boardcomp-0818 is a pre-registered FAIL. Five conditioning rungs are now CLOSED BY MEASUREMENT across three axes (scale, stroke weight, hint class), and the reason is structural rather than a tuning gap: xinsir/controlnet-scribble-sdxl-1.0 is a SCRIBBLE net, so any hint it can read is a hint it traces (ink traced 26.1% nocontrol, 94-98% at every contour rung) and any hint it cannot read it draws (the sparse skeleton came back as a luminous cross with orbs). Do not file a sixth hint variant. The route named in its place is RESEARCH before a render: whether an SDXL-compatible OpenPose/DWPose ControlNet exists, whether its weights reach a box running HF_HUB_OFFLINE, and whether its preprocessor is the Annotators dependency this route has avoided. Rung 2 (0.45, 7px, contour) is still the best frame this beat has produced.
+    note: 'IN THE CUT AS A CARRY-FORWARD WITH NO PASSING VERDICT — both 0817 motion takes are is_show_content:false
+      engine probes and ep2-b08-boardcomp-0818 is a pre-registered FAIL. Five conditioning rungs are now
+      CLOSED BY MEASUREMENT across three axes (scale, stroke weight, hint class), and the reason is structural
+      rather than a tuning gap: xinsir/controlnet-scribble-sdxl-1.0 is a SCRIBBLE net, so any hint it
+      can read is a hint it traces (ink traced 26.1% nocontrol, 94-98% at every contour rung) and any
+      hint it cannot read it draws (the sparse skeleton came back as a luminous cross with orbs). Do not
+      file a sixth hint variant. The route named in its place is RESEARCH before a render: whether an
+      SDXL-compatible OpenPose/DWPose ControlNet exists, whether its weights reach a box running HF_HUB_OFFLINE,
+      and whether its preprocessor is the Annotators dependency this route has avoided. Rung 2 (0.45,
+      7px, contour) is still the best frame this beat has produced.'
     remeasured_0819:
       previous_state: blocked-decision
-      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the character gate that had been open since 2026-08-14T11:09:07Z
+      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the
+        character gate that had been open since 2026-08-14T11:09:07Z
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 8, why: carry-forward
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'08': status NO VERDICT YET; figure_count_ruled_from_the_script_0817
-      - |-
-        pipeline/jobs/ep2-b08-cnetplate-r2..r5-0819.yaml — the four judged rungs
-      - |-
-        pipeline/work-ladder-0819.md — rung-5 appendix and the owner map row "beat 08 hint / identity"
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 8, why: carry-forward'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''08'': status NO VERDICT YET; figure_count_ruled_from_the_script_0817'
+      - pipeline/jobs/ep2-b08-cnetplate-r2..r5-0819.yaml — the four judged rungs
+      - pipeline/work-ladder-0819.md — rung-5 appendix and the owner map row "beat 08 hint / identity"
+    remeasured_0821:
+      previous_state: fix-known
+      why: KEPT ITS OLD TAKE. Both age-B seeds lose the face to a featureless green head at the SAME frame,
+        f055, against a slot that needs f099 -- one failure frame across two seeds is a recipe fault,
+        so the next rung is the plate and not a third seed.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 8 ageb_wave_result_0821
+      - review/motion-ageb-0821/JUDGING-0821.md
+      - pipeline/jobs/ep2-b08-tilemotion-s1-0821.yaml / -s2- verdict_ageb_wave_0821
+      previous_note_status: 'CORRECTED 2026-08-21: eleven 08-20 rungs produced stills only; the 08-21
+        age-B round is the twelfth and thirteenth and both failed at f055.'
   - n: 9
-    state: fix-known
-    note: |-
-      SLATE, AND THE RUNG UNDER IT IS THE CARD'S AND RUNNABLE NOW. Both existing clips are is_show_content:false and barred from the cut by their own headers, so this slot has never held footage. Two things were settled on 2026-08-19: the engine CAN move a face (a slow eye close-and-reopen over forty frames on a locked camera), and the init holds when --image-crf is 10 rather than 33 — at 33 the conditioning image is abandoned at the first denoising step and an adult man is a different, younger person by frame 21. The named rung is NOT another motion clip: it is the plate — reference-weight or a crop pass to reach the 55% head the bar demands, best measured about 35% — and it wants ONE SAMPLE. The guard-cast taste call sits above this beat as well, but it is not what stops the next job.
+    state: candidate-awaiting-founder
+    note: 'SLATE, AND THE RUNG UNDER IT IS THE CARD''S AND RUNNABLE NOW. Both existing clips are is_show_content:false
+      and barred from the cut by their own headers, so this slot has never held footage. Two things were
+      settled on 2026-08-19: the engine CAN move a face (a slow eye close-and-reopen over forty frames
+      on a locked camera), and the init holds when --image-crf is 10 rather than 33 — at 33 the conditioning
+      image is abandoned at the first denoising step and an adult man is a different, younger person by
+      frame 21. The named rung is NOT another motion clip: it is the plate — reference-weight or a crop
+      pass to reach the 55% head the bar demands, best measured about 35% — and it wants ONE SAMPLE. The
+      guard-cast taste call sits above this beat as well, but it is not what stops the next job.'
     remeasured_0819:
       previous_state: fix-known
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 9, why: slate; "Still blocked on the guard-cast call"
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'09': park_reason, lever, cast_gate_closed_0816, plate_lane_0817 and its refinement (the plate lane's own blocked_on)
-      - |-
-        pipeline/jobs/ep2-b09-faceturn-0819.yaml and -crf10-0819.yaml — the crf finding
-      - |-
-        pipeline/work-ladder-0819.md — "Beat 09 - THE PAUSE", next rung
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 9, why: slate; "Still blocked on the guard-cast
+        call"'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''09'': park_reason, lever, cast_gate_closed_0816,
+        plate_lane_0817 and its refinement (the plate lane''s own blocked_on)'
+      - pipeline/jobs/ep2-b09-faceturn-0819.yaml and -crf10-0819.yaml — the crf finding
+      - pipeline/work-ladder-0819.md — "Beat 09 - THE PAUSE", next rung
+    remeasured_0821:
+      previous_state: fix-known
+      why: NO LONGER A SLATE. Beat 09 has had a picture since 2026-08-20 and it scores 4 of 4 on the bar
+        written before it rendered. It entered as a steward override of its own spec's is_show_content
+        declaration; the card that declaration was waiting on has since been answered pass, so the override
+        is discharged.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 9
+      - review/ep2-guards-0818 (ANSWERED pass, 2026-08-20)
+      previous_note_status: 'CORRECTED 2026-08-21: this row said SLATE. It has been wrong since 08-20.'
   - n: 10
-    state: blocked-decision
-    note: |-
-      HELD BY THE SAME OPEN TASTE CALL. The in-cut pairB take meets its own definition — both men present from frame one and throughout, the board raised with its blank face showing, field at frame one — and its recorded fault is the same guard cast read as beat 05. Two further facts, neither of them a route the card can take today: the 0817 plate lane isolated a second hard condition (prop ownership), and review/ep2-mac-plates-0818 rejects the new b10 plate outright ("no goblin at all"), which condemns that plate and not this clip.
+    state: candidate-awaiting-founder
+    note: 'HELD BY THE SAME OPEN TASTE CALL. The in-cut pairB take meets its own definition — both men
+      present from frame one and throughout, the board raised with its blank face showing, field at frame
+      one — and its recorded fault is the same guard cast read as beat 05. Two further facts, neither
+      of them a route the card can take today: the 0817 plate lane isolated a second hard condition (prop
+      ownership), and review/ep2-mac-plates-0818 rejects the new b10 plate outright ("no goblin at all"),
+      which condemns that plate and not this clip.'
     remeasured_0819:
       previous_state: candidate-awaiting-founder
       read_from:
-      - |-
-        review/inbox.yaml — the ONE open taste entry, since 2026-08-17: "THE GUARDS READ ADOLESCENT on beats 05, 06, 10 and 11 - one taste question, not four", at /review/ep2-guards-0818
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 10, why: carry-forward, with the plate rejection named
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'10': round_4_result, shipping_fault, plate_lane_0817
+      - 'review/inbox.yaml — the ONE open taste entry, since 2026-08-17: "THE GUARDS READ ADOLESCENT on
+        beats 05, 06, 10 and 11 - one taste question, not four", at /review/ep2-guards-0818'
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 10, why: carry-forward, with the plate rejection
+        named'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''10'': round_4_result, shipping_fault, plate_lane_0817'
+    remeasured_0821:
+      previous_state: blocked-decision
+      why: Same answered taste call. The board still faces the camera and that fault is named.
+      read_from:
+      - review/ep2-guards-0818 (ANSWERED pass, 2026-08-20)
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 10
+      previous_note_status: 'CORRECTED 2026-08-21: no longer blocked-decision; the guards card came back
+        pass on 08-20.'
   - n: 11
     state: candidate-awaiting-founder
-    note: |-
-      IN THE CUT AND PASSING. 11-they-leave-b11-w4-s20260903-0817 is the newest take and the picked one, passing all six of the beat's pre-registered conditions UNSOFTENED; the runner-up s20260912 also passes six and its own verdict rejects it for an unrequested 13 percent camera pull-back. The 0815 `status_override: BROKEN TAKE` names the OLD 0814 pick, not this one, and the cast half of that block was discharged 2026-08-16. The crf-10 re-run filed on 2026-08-19 to test whether the identity collapse was codec-borne came back FAIL-COLLAPSE-UNCHANGED — guard B still turns his face to camera in the same window — so the flag is not the explanation and the incumbent stands unchallenged. Named in his open guards taste entry, and counted here as awaiting his LOOK rather than as blocked, because this slot holds a take that passes: the two records are reconciled per beat rather than left to disagree.
+    note: 'IN THE CUT AND PASSING. 11-they-leave-b11-w4-s20260903-0817 is the newest take and the picked
+      one, passing all six of the beat''s pre-registered conditions UNSOFTENED; the runner-up s20260912
+      also passes six and its own verdict rejects it for an unrequested 13 percent camera pull-back. The
+      0815 `status_override: BROKEN TAKE` names the OLD 0814 pick, not this one, and the cast half of
+      that block was discharged 2026-08-16. The crf-10 re-run filed on 2026-08-19 to test whether the
+      identity collapse was codec-borne came back FAIL-COLLAPSE-UNCHANGED — guard B still turns his face
+      to camera in the same window — so the flag is not the explanation and the incumbent stands unchallenged.
+      Named in his open guards taste entry, and counted here as awaiting his LOOK rather than as blocked,
+      because this slot holds a take that passes: the two records are reconciled per beat rather than
+      left to disagree.'
     remeasured_0819:
       previous_state: candidate-awaiting-founder
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 11, why: carry-forward; "It IS the newest take and the picked one"
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'11': round_3_result, status_override_0815, blocked_on_0815_CAST_HALF_DISCHARGED_0816, glasses_do_not_affect_this_beat_0816
-      - |-
-        pipeline/jobs/ep2-b11-crf10-0819.yaml — verdict FAIL-COLLAPSE-UNCHANGED
-      - |-
-        review/inbox.yaml — the open `pick` entry: the r1s1 PLATE promotion, veto-only, silence accepts, and therefore not a block
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 11, why: carry-forward; "It IS the newest
+        take and the picked one"'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''11'': round_3_result, status_override_0815,
+        blocked_on_0815_CAST_HALF_DISCHARGED_0816, glasses_do_not_affect_this_beat_0816'
+      - pipeline/jobs/ep2-b11-crf10-0819.yaml — verdict FAIL-COLLAPSE-UNCHANGED
+      - 'review/inbox.yaml — the open `pick` entry: the r1s1 PLATE promotion, veto-only, silence accepts,
+        and therefore not a block'
+    remeasured_0821:
+      previous_state: candidate-awaiting-founder
+      why: In the cut. Its standing verdict was retired and the take rides a silence-accepts window that
+        a ship is the wrong moment to leave unread -- flagged on the ship page.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 11
+      - review/ep2-picks/farm-recovered-0814-scores.yaml
   - n: 12
     state: candidate-awaiting-founder
-    note: |-
-      IN THE CUT WITH ITS BLEMISH NAMED. The geometry lever landed after two rounds of counting in words had failed: exactly two oval cotyledons on one stem against sky at BOTH seeds, with the thin bare side-branch at seedB, no bush, no goblin. STATED PLAINLY BECAUSE IT CHANGES WHAT HE WOULD SEE: the file in the cut is the UNTRIMMED take, so the 0815 trim that measurably removes this beat's one recorded fault (a warm-to-cool palette shift across the first second) is NOT in what he would watch. No ep2-b12 job dated 0817-0819 exists. §6 is discharged on this beat's rewritten line as of 2026-08-19.
+    note: 'IN THE CUT WITH ITS BLEMISH NAMED. The geometry lever landed after two rounds of counting in
+      words had failed: exactly two oval cotyledons on one stem against sky at BOTH seeds, with the thin
+      bare side-branch at seedB, no bush, no goblin. STATED PLAINLY BECAUSE IT CHANGES WHAT HE WOULD SEE:
+      the file in the cut is the UNTRIMMED take, so the 0815 trim that measurably removes this beat''s
+      one recorded fault (a warm-to-cool palette shift across the first second) is NOT in what he would
+      watch. No ep2-b12 job dated 0817-0819 exists. §6 is discharged on this beat''s rewritten line as
+      of 2026-08-19.'
     remeasured_0819:
       previous_state: candidate-awaiting-founder
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 12, why: carry-forward; the take filename records `untrimmed`
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'12': round_3_result, pick ep2-b12-tightB, blemish, trim_0815
-      - |-
-        genomes/sapling/nodes/002b-first-citizen/node.md — §6 discharged on beats 12, 13, 15, 19, 20 on 2026-08-19
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 12, why: carry-forward; the take filename
+        records `untrimmed`'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''12'': round_3_result, pick ep2-b12-tightB, blemish,
+        trim_0815'
+      - genomes/sapling/nodes/002b-first-citizen/node.md — §6 discharged on beats 12, 13, 15, 19, 20 on
+        2026-08-19
+    remeasured_0821:
+      previous_state: candidate-awaiting-founder
+      why: In the cut as a 13-frame head trim that removes an opening on a leaf shape canon rules out.
+        Never scored against a bar.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 12
   - n: 13
     state: candidate-awaiting-founder
-    note: |-
-      IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — "the shipped version stands (no slide, he sits down beside it, thin shade)" — ratified the rewritten LINE and is recorded here as exactly that, not as a pass on the pixels; inventing the second from the first is how a page starts claiming verdicts he never gave. That is why this is his look and not `done`.
+    note: 'IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens,
+      the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing
+      is filed for the card. HIS 2026-08-18 BOARD RULING — "the shipped version stands (no slide, he sits
+      down beside it, thin shade)" — ratified the rewritten LINE and is recorded here as exactly that,
+      not as a pass on the pixels; inventing the second from the first is how a page starts claiming verdicts
+      he never gave. That is why this is his look and not `done`.'
     remeasured_0819:
       previous_state: blocked-decision
-      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the character gate that had been open since 2026-08-14T11:09:07Z
+      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the
+        character gate that had been open since 2026-08-14T11:09:07Z
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 13, why: carry-forward; "No ep2-b13 job dated 0817 or 0818"
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'13': status SHIP WITH FAULT NAMED, refire_result, done_when (the flagged script conflict)
-      - |-
-        genomes/sapling/nodes/002b-first-citizen/node.md — the 2026-08-18 board ruling, and the §6 discharge of 2026-08-19
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 13, why: carry-forward; "No ep2-b13 job dated
+        0817 or 0818"'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''13'': status SHIP WITH FAULT NAMED, refire_result,
+        done_when (the flagged script conflict)'
+      - genomes/sapling/nodes/002b-first-citizen/node.md — the 2026-08-18 board ruling, and the §6 discharge
+        of 2026-08-19
+    remeasured_0821:
+      previous_state: candidate-awaiting-founder
+      why: AGE-B SWAP, and this is the beat he ruled on -- the frame he was shown when he said 'this is
+        one of the images where the goblin looks like an adult, which is wrong' is out of the cut. The
+        new take's own head-lift starts 0.06 s after its slot ends, so it does not play.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 13
+      - review/motion-ageb-0821/JUDGING-0821.md
+      - pipeline/jobs/ep2-b13-tilemotion-s2-0821.yaml verdict_ageb_wave_0821
+      previous_note_status: 'CORRECTED 2026-08-21: the take this note describes is no longer in the cut.'
   - n: 14
     state: fix-known
-    note: |-
-      FIRST FOOTAGE THIS BEAT HAS EVER HAD IS IN THE CUT, AND IT DOES NOT PASS: M1 (hands to the dirt) and M4 (same figure, camera locked) PASS, M2 (the glance never returns) and M3 (the face reads sullen, not embarrassed) FAIL. It is in the cut because real footage of a beat beats a slate for review purposes, not because it passes, and 80 of its 121 frames are frozen — the obvious f085-f121 trim is not applied for a mechanical reason, that window being 1.54s against a 5.08s slot, so looping or palindroming it would be worse than the frozen head it removes. PARKED BY STEWARD RULING 2026-08-19 until the four slates close, veto-able in one line: three independent measurements now say the remaining gap is taste and not mechanism, and the crf-10 pair changed nothing while costing movement at the second seed. The register question stays open on a compositional instrument — an inpaint mask or img2img init over the arm region, or a reference pose — and the pre-committed stop holds: no ninth wording.
+    note: 'FIRST FOOTAGE THIS BEAT HAS EVER HAD IS IN THE CUT, AND IT DOES NOT PASS: M1 (hands to the
+      dirt) and M4 (same figure, camera locked) PASS, M2 (the glance never returns) and M3 (the face reads
+      sullen, not embarrassed) FAIL. It is in the cut because real footage of a beat beats a slate for
+      review purposes, not because it passes, and 80 of its 121 frames are frozen — the obvious f085-f121
+      trim is not applied for a mechanical reason, that window being 1.54s against a 5.08s slot, so looping
+      or palindroming it would be worse than the frozen head it removes. PARKED BY STEWARD RULING 2026-08-19
+      until the four slates close, veto-able in one line: three independent measurements now say the remaining
+      gap is taste and not mechanism, and the crf-10 pair changed nothing while costing movement at the
+      second seed. The register question stays open on a compositional instrument — an inpaint mask or
+      img2img init over the arm region, or a reference pose — and the pre-committed stop holds: no ninth
+      wording.'
     remeasured_0819:
       previous_state: blocked-decision
-      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the character gate that had been open since 2026-08-14T11:09:07Z
+      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the
+        character gate that had been open since 2026-08-14T11:09:07Z
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 14, why: new; verdict FAIL on M2 and M3; `not_trimmed`
-      - |-
-        pipeline/jobs/ep2-b14-mac-motion-0818.yaml — the take in the cut
-      - |-
-        pipeline/jobs/ep2-b14-motion-crf10-0819.yaml and -s2 — no change, second seed cost movement
-      - |-
-        pipeline/work-ladder-0819.md — "Beat 14 - not a slate, but the ladder stops here too"; "Beat 14 - PARKED by steward ruling"; owner map row "beat 14"
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 14, why: new; verdict FAIL on M2 and M3;
+        `not_trimmed`'
+      - pipeline/jobs/ep2-b14-mac-motion-0818.yaml — the take in the cut
+      - pipeline/jobs/ep2-b14-motion-crf10-0819.yaml and -s2 — no change, second seed cost movement
+      - pipeline/work-ladder-0819.md — "Beat 14 - not a slate, but the ladder stops here too"; "Beat 14
+        - PARKED by steward ruling"; owner map row "beat 14"
+    remeasured_0821:
+      previous_state: fix-known
+      why: In the cut and failing M2 and M3, unchanged. One of the seven goblin beats the age-B wave did
+        NOT reach.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 14
   - n: 15
-    state: fix-known
-    note: |-
-      SLATE — no footage has ever existed for this beat — AND ITS BLOCKER IS NOW NAMED. It was unknown until 2026-08-19: done_when needs HIM AND THE SAPLING IN THE SAME FRAME, and the acting was never the problem. 24 artifacts from the large 0815 inventory were judged, two MPS plates drawn, r1 scored 6 of 7 with all seven fail modes silent, and the wording ladder closed at two rungs. The plate is PICKED as a composite base — 15-good-listener-mac-plate-r1s1.png — and the next route is that composite: r1's frame plus ep2-b12-tightB's leaves. THE §6 HOLD THE 0819 LADDER RECORDED ON THIS BEAT IS DISCHARGED, same day: he read all five rewritten lines and answered "all approved", so footage render is legal here now and this is the card's work, not a wait on him.
+    state: candidate-awaiting-founder
+    note: 'SLATE — no footage has ever existed for this beat — AND ITS BLOCKER IS NOW NAMED. It was unknown
+      until 2026-08-19: done_when needs HIM AND THE SAPLING IN THE SAME FRAME, and the acting was never
+      the problem. 24 artifacts from the large 0815 inventory were judged, two MPS plates drawn, r1 scored
+      6 of 7 with all seven fail modes silent, and the wording ladder closed at two rungs. The plate is
+      PICKED as a composite base — 15-good-listener-mac-plate-r1s1.png — and the next route is that composite:
+      r1''s frame plus ep2-b12-tightB''s leaves. THE §6 HOLD THE 0819 LADDER RECORDED ON THIS BEAT IS
+      DISCHARGED, same day: he read all five rewritten lines and answered "all approved", so footage render
+      is legal here now and this is the card''s work, not a wait on him.'
     remeasured_0819:
       previous_state: blocked-decision
-      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the character gate that had been open since 2026-08-14T11:09:07Z
+      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the
+        character gate that had been open since 2026-08-14T11:09:07Z
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 15, why: slate; "no footage exists"
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'15': status NO VERDICT YET, done_when
-      - |-
-        pipeline/jobs/ep2-b15-macplate-publish-0819.yaml — plate_pick, composite base
-      - |-
-        pipeline/work-ladder-0819.md — "BEAT 15 IS NOT A PLATE RUNG THIS LADDER CAN SPEND" (its §6 half now superseded by the same-day discharge)
-      - |-
-        genomes/sapling/nodes/002b-first-citizen/node.md and genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml — §6 DISCHARGED 2026-08-19, "all approved"
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 15, why: slate; "no footage exists"'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''15'': status NO VERDICT YET, done_when'
+      - pipeline/jobs/ep2-b15-macplate-publish-0819.yaml — plate_pick, composite base
+      - pipeline/work-ladder-0819.md — "BEAT 15 IS NOT A PLATE RUNG THIS LADDER CAN SPEND" (its §6 half
+        now superseded by the same-day discharge)
+      - genomes/sapling/nodes/002b-first-citizen/node.md and genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml
+        — §6 DISCHARGED 2026-08-19, "all approved"
+    remeasured_0821:
+      previous_state: fix-known
+      why: NO LONGER A SLATE. Beat 15 has had footage since 2026-08-20. Its named break is costume, not
+        anatomy -- the 08-20 audit calls it the second-best tile match in the whole cut.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 15
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- goblin_audit beat_15
+      previous_note_status: 'CORRECTED 2026-08-21: this row said SLATE and ''no footage has ever existed''.
+        Both have been untrue since 08-20.'
   - n: 16
-    state: fix-known
-    note: |-
-      IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered "the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling" — a taste ruling (R4) that the LEAF is wrong in both, not a pick between them, so the A-or-B question was the wrong question. The ruling is in hand and the beat goes back to needing a PLATE. Explicitly ruled out by that finding: re-rendering off either leg's wording, because the plant description itself is what failed. Expensive because this beat's own done_when makes the leaf the subject. No ep2-b16 job dated 0817-0819 exists anywhere in the tree.
+    state: candidate-awaiting-founder
+    note: 'IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting
+      his look. Shown legs A and B on 2026-08-16 he answered "the difference between leg b and a is just
+      how this big leaf looks, both of them are wrong though and do not resemble the sapling" — a taste
+      ruling (R4) that the LEAF is wrong in both, not a pick between them, so the A-or-B question was
+      the wrong question. The ruling is in hand and the beat goes back to needing a PLATE. Explicitly
+      ruled out by that finding: re-rendering off either leg''s wording, because the plant description
+      itself is what failed. Expensive because this beat''s own done_when makes the leaf the subject.
+      No ep2-b16 job dated 0817-0819 exists anywhere in the tree.'
     remeasured_0819:
       previous_state: blocked-decision
-      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the character gate that had been open since 2026-08-14T11:09:07Z
+      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the
+        character gate that had been open since 2026-08-14T11:09:07Z
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 16, why: carry-forward
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'16': both_legs_rejected_0816 (FOUNDER RULING, verbatim), unexpected_finding (the lobed leaf against canon), done_when
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 16, why: carry-forward'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''16'': both_legs_rejected_0816 (FOUNDER RULING,
+        verbatim), unexpected_finding (the lobed leaf against canon), done_when'
+    remeasured_0821:
+      previous_state: fix-known
+      why: NO LONGER A REJECTED CARRY-FORWARD. Beat 16 got the first footage it has ever had at 01:05
+        on 08-21 and scores 7 of 7 on its bar; the sapling in it is DRAWN, not prompted. Its fault is
+        that the goblin behind the plant is the superseded adult design.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 16
+      - review/ep2-b16-leaf-0820
+      previous_note_status: 'CORRECTED 2026-08-21: this row described a take he had rejected. That take
+        is out.'
   - n: 17
     state: candidate-awaiting-founder
-    note: |-
-      IN THE CUT, NEW, AND PASSING ALL FIVE CLAUSES: S1 stand, S2 the shake (the hem travels one full out-and-back across roughly a third of the frame, feet planted), S3 turn and walk away, P1 plate fidelity (12.5 at f008 against a ceiling of 40), and P2 — the garment clause added after the previous take turned the cloak into a pink-and-cream poncho — at hue 223.8 / sat 0.58 at f036, inside the required 180-260 degrees at 0.40 or more. One variable separates it from its predecessor: the positive prompt now NAMES the cloak's colour. IT REPLACES A TAKE THAT HAD BEEN IN EVERY CUT SINCE 2026-08-15 AND MISSED ITS OWN BAR IN ALL OF THEM — a frame-by-frame audit of all 97 frames found no hand-to-cloak contact anywhere. Honest cost, unscored by any clause: it is the least mobile of the three takes (source interframe median 0.50) — the cloak moves more while the clip moves less. A crf-10 sibling also PASSES and is cut-preferred for the next assembly. ONE THING TO KNOW BEFORE HE WATCHES IT: the 2026-08-18 restage of this beat's LINE ("brushes off" to "gives his cloak a shake") is the single script edit of the set he has not been shown, and §6 still gates that line.
+    note: 'IN THE CUT, NEW, AND PASSING ALL FIVE CLAUSES: S1 stand, S2 the shake (the hem travels one
+      full out-and-back across roughly a third of the frame, feet planted), S3 turn and walk away, P1
+      plate fidelity (12.5 at f008 against a ceiling of 40), and P2 — the garment clause added after the
+      previous take turned the cloak into a pink-and-cream poncho — at hue 223.8 / sat 0.58 at f036, inside
+      the required 180-260 degrees at 0.40 or more. One variable separates it from its predecessor: the
+      positive prompt now NAMES the cloak''s colour. IT REPLACES A TAKE THAT HAD BEEN IN EVERY CUT SINCE
+      2026-08-15 AND MISSED ITS OWN BAR IN ALL OF THEM — a frame-by-frame audit of all 97 frames found
+      no hand-to-cloak contact anywhere. Honest cost, unscored by any clause: it is the least mobile of
+      the three takes (source interframe median 0.50) — the cloak moves more while the clip moves less.
+      A crf-10 sibling also PASSES and is cut-preferred for the next assembly. ONE THING TO KNOW BEFORE
+      HE WATCHES IT: the 2026-08-18 restage of this beat''s LINE ("brushes off" to "gives his cloak a
+      shake") is the single script edit of the set he has not been shown, and §6 still gates that line.'
     remeasured_0819:
       previous_state: blocked-decision
-      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the character gate that had been open since 2026-08-14T11:09:07Z
+      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the
+        character gate that had been open since 2026-08-14T11:09:07Z
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 17, why: new
-      - |-
-        pipeline/jobs/ep2-b17-shake-navy-0819.yaml — verdict PASS on all five clauses; pick_of_the_three_beat_17_takes
-      - |-
-        pipeline/jobs/ep2-b17-navy-crf10-0819.yaml — verdict_this_job PASS
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'17': script_RESTAGE_CORRECTION_0818, full_arm_read_0817 (8/8 stand, 8/8 turn, 0/8 brush)
-      - |-
-        genomes/sapling/nodes/002b-first-citizen/node.md — the §6 exclusion naming the beat-17 restage
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 17, why: new'
+      - pipeline/jobs/ep2-b17-shake-navy-0819.yaml — verdict PASS on all five clauses; pick_of_the_three_beat_17_takes
+      - pipeline/jobs/ep2-b17-navy-crf10-0819.yaml — verdict_this_job PASS
+      - 'review/ep2-picks/done-definitions.yaml — beats.''17'': script_RESTAGE_CORRECTION_0818, full_arm_read_0817
+        (8/8 stand, 8/8 turn, 0/8 brush)'
+      - genomes/sapling/nodes/002b-first-citizen/node.md — the §6 exclusion naming the beat-17 restage
+    remeasured_0821:
+      previous_state: candidate-awaiting-founder
+      why: In the cut and passing all five clauses. Its restaged stage direction is still unread by him,
+        which is the STEWARDSHIP SS6 gate and the one item on the ship page's checklist.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 17
+      - genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml approval_status
   - n: 18
     state: candidate-awaiting-founder
-    note: |-
-      IN THE CUT, NEW, AND PASSING: motion in all four quarters (interframe medians 5.56 / 6.67 / 6.05 / 5.16), zero specular pumping on 120 of 120 adjacent pairs, hue held at 315 degrees with a spread of 4.1 degrees over all 121 frames. Named pick of three seeds off one recipe — 1 pass, 1 FAIL-STROBE, 1 pass-but-decaying — and that comparison is itself the finding: THE STROBE IS SEED-BORNE, where the 2026-08-12 read had it looking like a property of the recipe. It replaces a steward pick that had NO lane verdict on the clip at all. Carried forward unfixed from the incumbent because they belong to the plate family and not to this clip: the fruit reads aubergine/plum rather than fig, the backdrop is a flat peach void rather than a field, and the plate is glossy with a hard specular. That look is R4 and untouched here. Its own crf-10 sibling is a FAIL-FROZEN (interframe median 0.570 against 5.956), so the original stands and the flag is not applied to this beat.
+    note: 'IN THE CUT, NEW, AND PASSING: motion in all four quarters (interframe medians 5.56 / 6.67 /
+      6.05 / 5.16), zero specular pumping on 120 of 120 adjacent pairs, hue held at 315 degrees with a
+      spread of 4.1 degrees over all 121 frames. Named pick of three seeds off one recipe — 1 pass, 1
+      FAIL-STROBE, 1 pass-but-decaying — and that comparison is itself the finding: THE STROBE IS SEED-BORNE,
+      where the 2026-08-12 read had it looking like a property of the recipe. It replaces a steward pick
+      that had NO lane verdict on the clip at all. Carried forward unfixed from the incumbent because
+      they belong to the plate family and not to this clip: the fruit reads aubergine/plum rather than
+      fig, the backdrop is a flat peach void rather than a field, and the plate is glossy with a hard
+      specular. That look is R4 and untouched here. Its own crf-10 sibling is a FAIL-FROZEN (interframe
+      median 0.570 against 5.956), so the original stands and the flag is not applied to this beat.'
     remeasured_0819:
       previous_state: fix-known
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 18, why: new
-      - |-
-        pipeline/jobs/ep2-b18-tremble-s20260871-0817.yaml — verdict PASS, named pick of three
-      - |-
-        pipeline/jobs/ep2-b18-tremble-crf10-0819.yaml — FAIL-FROZEN
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'18': done_when, park_reason, lever, shipping_fault
-      - |-
-        pipeline/work-ladder-0819.md — crf-10 table, row 18: FAIL, original stands
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 18, why: new'
+      - pipeline/jobs/ep2-b18-tremble-s20260871-0817.yaml — verdict PASS, named pick of three
+      - pipeline/jobs/ep2-b18-tremble-crf10-0819.yaml — FAIL-FROZEN
+      - 'review/ep2-picks/done-definitions.yaml — beats.''18'': done_when, park_reason, lever, shipping_fault'
+      - 'pipeline/work-ladder-0819.md — crf-10 table, row 18: FAIL, original stands'
+    remeasured_0821:
+      previous_state: candidate-awaiting-founder
+      why: In the cut and passing. 5.9 s of its slot is a held final frame, the longest freeze in the
+        episode.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 18
   - n: 19
-    state: fix-known
-    note: |-
-      SLATE, AND ITS FIVE-DAY BLOCKER IS DEAD. "Not renderable until the plate exists" held since 2026-08-15 because every plate we owned showed the fruit already lying in the grass; three draws on 2026-08-19 put the fruit ALOFT 3 of 3, and the plant was then DRAWN rather than prompted after three wordings each produced a bead-strung vine (pipeline/beat19_drop_composite.py clears both twigs into the plate's own field and draws one rooted stem, two wide oval cotyledons, one thin side-branch and one fig; four rounds rejected by eye first, about 4.5s each, no GPU). TWO PASSING PLATE SAMPLES NOW EXIST AND ZERO PICKS FOR THE CUT: 0.30 passes all eight pre-registered clauses and fires FAIL-CRYSTAL on its gloss half, and 0.22 — one key changed, same seed, same init sha, same words — drops the segmented-body luminance spread from 71.8 to 23.9, an ordinary cel shadow terminator. The steward's derivation pick is 0.22. NAMED AND NOT FIRED: this plate's motion, at --image-crf 10 rather than 33. §6 is discharged on this beat as of 2026-08-19. Matte-vs-gloss is R4 and open, and both plates are committed side by side so it can be settled on pixels in one look — but no render waits on that answer.
+    state: candidate-awaiting-founder
+    note: 'SLATE, AND ITS FIVE-DAY BLOCKER IS DEAD. "Not renderable until the plate exists" held since
+      2026-08-15 because every plate we owned showed the fruit already lying in the grass; three draws
+      on 2026-08-19 put the fruit ALOFT 3 of 3, and the plant was then DRAWN rather than prompted after
+      three wordings each produced a bead-strung vine (pipeline/beat19_drop_composite.py clears both twigs
+      into the plate''s own field and draws one rooted stem, two wide oval cotyledons, one thin side-branch
+      and one fig; four rounds rejected by eye first, about 4.5s each, no GPU). TWO PASSING PLATE SAMPLES
+      NOW EXIST AND ZERO PICKS FOR THE CUT: 0.30 passes all eight pre-registered clauses and fires FAIL-CRYSTAL
+      on its gloss half, and 0.22 — one key changed, same seed, same init sha, same words — drops the
+      segmented-body luminance spread from 71.8 to 23.9, an ordinary cel shadow terminator. The steward''s
+      derivation pick is 0.22. NAMED AND NOT FIRED: this plate''s motion, at --image-crf 10 rather than
+      33. §6 is discharged on this beat as of 2026-08-19. Matte-vs-gloss is R4 and open, and both plates
+      are committed side by side so it can be settled on pixels in one look — but no render waits on that
+      answer.'
     remeasured_0819:
       previous_state: blocked-decision
-      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the character gate that had been open since 2026-08-14T11:09:07Z
+      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the
+        character gate that had been open since 2026-08-14T11:09:07Z
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 19, why: slate; the only new artefact is a recovered 0812 FAIL
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'19': done_when, ruling_0815, plate_requirement_0815, status "not renderable until the plate exists"
-      - |-
-        pipeline/jobs/ep2-b19-sapcomp-0819.yaml — verdict_0819 PASS 8/8, FAIL-CRYSTAL
-      - |-
-        pipeline/jobs/ep2-b19-sapgloss-0819.yaml — verdict_0819, pick_0819 (strength 0.22)
-      - |-
-        pipeline/work-ladder-0819.md — "Beat 19 - THE DROP", and "NOT A PICK"
-      - |-
-        genomes/sapling/nodes/002b-first-citizen/node.md — §6 discharged 2026-08-19
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 19, why: slate; the only new artefact is
+        a recovered 0812 FAIL'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''19'': done_when, ruling_0815, plate_requirement_0815,
+        status "not renderable until the plate exists"'
+      - pipeline/jobs/ep2-b19-sapcomp-0819.yaml — verdict_0819 PASS 8/8, FAIL-CRYSTAL
+      - pipeline/jobs/ep2-b19-sapgloss-0819.yaml — verdict_0819, pick_0819 (strength 0.22)
+      - pipeline/work-ladder-0819.md — "Beat 19 - THE DROP", and "NOT A PICK"
+      - genomes/sapling/nodes/002b-first-citizen/node.md — §6 discharged 2026-08-19
+    remeasured_0821:
+      previous_state: fix-known
+      why: 'NO LONGER A SLATE. Beat 19 has had a composite since 2026-08-19. It scores 8 of 8 with one
+        clause never asked: he does not notice the fig land.'
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 19
+      previous_note_status: 'CORRECTED 2026-08-21: this row said SLATE. It has been wrong since 08-19.'
   - n: 20
-    state: fix-known
-    note: |-
-      IN THE CUT AS A CARRY-FORWARD WITH NO VERDICT YET against its own done_when — BOTH HANDS to the fruit, then the look UP to a branch that is visibly BARE, the empty stem being the evidence and having to be in frame. Stills only since; review/ep2-mac-plates-0818 rejects the new b20 plates — "all the wrong character, a round-headed chibi child" — which condemns those plates and not this clip, and leaves the beat needing a plate that is the right character. One thing IS settled and it is his: the fruit is purple (founder ruling 2026-08-16). §6 is discharged on this beat's rewritten line as of 2026-08-19.
+    state: candidate-awaiting-founder
+    note: 'IN THE CUT AS A CARRY-FORWARD WITH NO VERDICT YET against its own done_when — BOTH HANDS to
+      the fruit, then the look UP to a branch that is visibly BARE, the empty stem being the evidence
+      and having to be in frame. Stills only since; review/ep2-mac-plates-0818 rejects the new b20 plates
+      — "all the wrong character, a round-headed chibi child" — which condemns those plates and not this
+      clip, and leaves the beat needing a plate that is the right character. One thing IS settled and
+      it is his: the fruit is purple (founder ruling 2026-08-16). §6 is discharged on this beat''s rewritten
+      line as of 2026-08-19.'
     remeasured_0819:
       previous_state: blocked-decision
-      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the character gate that had been open since 2026-08-14T11:09:07Z
+      previously_emitted_as: stale-gate-closed -- a hollow leaf on /status, the row's note naming the
+        character gate that had been open since 2026-08-14T11:09:07Z
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 20, why: carry-forward, with the plate rejection named
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'20': status NO VERDICT YET, done_when, colour_ruled_0816
-      - |-
-        genomes/sapling/nodes/002b-first-citizen/node.md — §6 discharged 2026-08-19
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 20, why: carry-forward, with the plate rejection
+        named'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''20'': status NO VERDICT YET, done_when, colour_ruled_0816'
+      - genomes/sapling/nodes/002b-first-citizen/node.md — §6 discharged 2026-08-19
+    remeasured_0821:
+      previous_state: fix-known
+      why: AGE-B SWAP, and the only one in the wave that closes a done_when clause -- HE LOOKS UP, at
+        f076, inside a 3.74 s slot. The tree is still wrong and the fruit is RED where canon has the fig
+        purple.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 20
+      - review/motion-ageb-0821/JUDGING-0821.md
+      - pipeline/jobs/ep2-b20-tilemotion-s2-0821.yaml verdict_ageb_wave_0821
+      previous_note_status: 'CORRECTED 2026-08-21: the take this note describes is no longer in the cut.'
   - n: 21
-    state: fix-known
-    note: |-
-      IN THE CUT AND ONE AXIS SHORT. The two-held-positions wording FIXED THE MOVEMENT — the leaf tilts, holds and STOPS, which is the whole beat — and the daylight plate swap fixed the world after the dusk plate had been fighting a daylight beat. What remains is a banded poster sky and a palette jump at frame one, plus an outline that narrows between the two poses. THE ROUTE EXISTS AND IS UNFIRED: ep2-b21-leafcanon-inpaint-0817 passes on the axis under test but is a 4-frame PLATE whose own text says the motion seeds are "now payable", i.e. not yet run; its sibling ep2-b21-scale-0817 is FAIL-COUNT. No b21 motion dated 0817-0819 exists, on disk or on the box.
+    state: candidate-awaiting-founder
+    note: 'IN THE CUT AND ONE AXIS SHORT. The two-held-positions wording FIXED THE MOVEMENT — the leaf
+      tilts, holds and STOPS, which is the whole beat — and the daylight plate swap fixed the world after
+      the dusk plate had been fighting a daylight beat. What remains is a banded poster sky and a palette
+      jump at frame one, plus an outline that narrows between the two poses. THE ROUTE EXISTS AND IS UNFIRED:
+      ep2-b21-leafcanon-inpaint-0817 passes on the axis under test but is a 4-frame PLATE whose own text
+      says the motion seeds are "now payable", i.e. not yet run; its sibling ep2-b21-scale-0817 is FAIL-COUNT.
+      No b21 motion dated 0817-0819 exists, on disk or on the box.'
     remeasured_0819:
       previous_state: fix-known
       read_from:
-      - |-
-        review/ep2-demo-0819/sources/picks-0819.yaml — beat 21, why: carry-forward, with the unfired motion seeds named
-      - |-
-        review/ep2-picks/done-definitions.yaml — beats.'21': round_4_result, lever_result, shipping_fault, understandable UNDERSTANDABLE
-      - |-
-        pipeline/jobs/ep2-b21-leafcanon-inpaint-0817.yaml — a plate, motion not fired
+      - 'review/ep2-demo-0819/sources/picks-0819.yaml — beat 21, why: carry-forward, with the unfired
+        motion seeds named'
+      - 'review/ep2-picks/done-definitions.yaml — beats.''21'': round_4_result, lever_result, shipping_fault,
+        understandable UNDERSTANDABLE'
+      - pipeline/jobs/ep2-b21-leafcanon-inpaint-0817.yaml — a plate, motion not fired
+    remeasured_0821:
+      previous_state: fix-known
+      why: In the cut as an 8-frame head trim. The only beat of the eight whose definition is fully met,
+        all four clauses, the hard one measured.
+      read_from:
+      - review/ep2-ship-0821/sources/ship-manifest.yaml -- beat 21
+  states_read_from_CORRECTION_0821: 'CORRECTED 2026-08-21: every row below is remeasured against the SHIP
+    CUT''s manifest (review/ep2-ship-0821/sources/ship-manifest.yaml), not against the 08-19 demo picks.
+    The review_url moved with it. See `remeasured_0821` at the top of this file and the per-beat `remeasured_0821`
+    block for what each row now rests on. The 08-19 lines are left standing.'
 - number: 1
   node: 001-capability-inventory
   title: Capability Inventory
@@ -495,48 +822,46 @@ episodes:
   total_beats: 15
   states_read_from: review/ep1-audit-0812/index.html (the "Where each beat stands on your word" table),
     superseded in one place by review/inbox.yaml
-  states_read_from_CORRECTION_0819: >-
-    CORRECTION, 2026-08-19: the audit page named above is now superseded WHOLESALE, not "in one place",
-    and review/inbox.yaml is the source for every row below. The audit table was written before the
-    founder published episode 1 and closed it on 2026-08-13; all fifteen beats are `done` on that
-    ruling. The line above is left standing because it is what the measurement read at 09:40Z on
-    2026-08-14. See `ep1_publication_CORRECTION_0819` at the top of this file for his words, the date,
-    which four beats hold an individual verdict, which eleven are passed by the publication, and the
-    fifteen states this replaced.
+  states_read_from_CORRECTION_0819: 'CORRECTION, 2026-08-19: the audit page named above is now superseded
+    WHOLESALE, not "in one place", and review/inbox.yaml is the source for every row below. The audit
+    table was written before the founder published episode 1 and closed it on 2026-08-13; all fifteen
+    beats are `done` on that ruling. The line above is left standing because it is what the measurement
+    read at 09:40Z on 2026-08-14. See `ep1_publication_CORRECTION_0819` at the top of this file for his
+    words, the date, which four beats hold an individual verdict, which eleven are passed by the publication,
+    and the fifteen states this replaced.'
   beats:
   - n: 1
     state: done
-    note: never judged individually — no per-beat verdict was ever recorded, and the seed twin
-      (ep1-b11/b13 pattern) landed a second candidate he never had to look at. Passed by whole-episode
-      publication, founder 2026-08-13.
+    note: never judged individually — no per-beat verdict was ever recorded, and the seed twin (ep1-b11/b13
+      pattern) landed a second candidate he never had to look at. Passed by whole-episode publication,
+      founder 2026-08-13.
   - n: 2
     state: done
-    note: his pick, and the loop was the open question — 'shorten the line, accept the loop, or pick
-      differently?' The published cut carries the loop; the question closed unanswered. Passed by
-      whole-episode publication, founder 2026-08-13.
+    note: his pick, and the loop was the open question — 'shorten the line, accept the loop, or pick differently?'
+      The published cut carries the loop; the question closed unanswered. Passed by whole-episode publication,
+      founder 2026-08-13.
   - n: 3
     state: done
-    note: still is canon; the motion over it was never judged on its own. Passed by whole-episode
-      publication, founder 2026-08-13.
+    note: still is canon; the motion over it was never judged on its own. Passed by whole-episode publication,
+      founder 2026-08-13.
   - n: 4
     state: done
-    note: fix wired, never screened on its own — it answers a note he gave. Passed by whole-episode
-      publication, founder 2026-08-13.
+    note: fix wired, never screened on its own — it answers a note he gave. Passed by whole-episode publication,
+      founder 2026-08-13.
   - n: 5
     state: done
-    note: his sapling-reveal ask HAS four candidate frames he never saw — the audit line saying no
-      candidate existed was true of the node and false of the repo. The ask closed unpicked. Passed by
-      whole-episode publication, founder 2026-08-13.
+    note: his sapling-reveal ask HAS four candidate frames he never saw — the audit line saying no candidate
+      existed was true of the node and false of the repo. The ask closed unpicked. Passed by whole-episode
+      publication, founder 2026-08-13.
   - n: 6
     state: done
-    note: his zoom-out landed in the v42 bench cut he chose not to screen, and sixteen frames on one
-      sheet closed unpicked; the PUBLISHED cut is the older one his earlier word grandfathered. Passed
-      by whole-episode publication, founder 2026-08-13.
+    note: his zoom-out landed in the v42 bench cut he chose not to screen, and sixteen frames on one sheet
+      closed unpicked; the PUBLISHED cut is the older one his earlier word grandfathered. Passed by whole-episode
+      publication, founder 2026-08-13.
   - n: 7
     state: done
-    note: 'fix wired, never screened on its own. The secondary — the beat throws away half its footage
-      — was flagged, never fixed, and shipped that way. Passed by whole-episode publication, founder
-      2026-08-13.'
+    note: fix wired, never screened on its own. The secondary — the beat throws away half its footage
+      — was flagged, never fixed, and shipped that way. Passed by whole-episode publication, founder 2026-08-13.
   - n: 8
     state: done
     note: DONE on his word — 'beat 8 looks good'. The only beat in the episode with a positive verdict
@@ -556,8 +881,8 @@ episodes:
     note: held still under 'yeah keep em still'. Licence-gated for publication
   - n: 13
     state: done
-    note: never judged individually; seed twin ep1-b13-seedB-0813 queued. Passed by whole-episode
-      publication, founder 2026-08-13.
+    note: never judged individually; seed twin ep1-b13-seedB-0813 queued. Passed by whole-episode publication,
+      founder 2026-08-13.
   - n: 14
     state: done
     note: still is canon, motion never judged on its own. Passed by whole-episode publication, founder
@@ -565,3 +890,24 @@ episodes:
   - n: 15
     state: done
     note: held still under 'yeah keep em still'. Licence-gated for publication
+remeasured_0821:
+  measured_at: 2026-08-21 15:xxZ
+  scope: EPISODE 2 ONLY, all 21 rows. Episode 1 is untouched -- it is closed on his word and R4 says a
+    lane does not reopen it.
+  why: FOUR ROWS WERE PRINTING FALSE ON /status. Beats 09, 15 and 19 were published as SLATE and beat
+    16 as a carry-forward he had already rejected; all four have had footage in the cut since 08-19/08-20/08-21.
+    THREE MORE were held at `blocked-decision` on the guards taste call, which came back PASS on 08-20
+    -- the same shape of staleness the 08-16 goblin-gate correction exists to catch, one card later. AND
+    FIVE BEATS CHANGED TAKE on 2026-08-21 when the age-B expressive wave's picks were swapped into review/ep2-ship-0821.
+  states_read_from:
+  - 'review/ep2-ship-0821/sources/ship-manifest.yaml -- the ship cut''s own manifest: one row per beat,
+    its take, its sha and its named shipping fault'
+  - review/motion-ageb-0821/JUDGING-0821.md -- the 14-clip judging ledger the five swaps rest on
+  - pipeline/jobs/ep2-b{02,03,04,07,08,13,20}-tilemotion-s{1,2}-0821.yaml -- verdict_ageb_wave_0821 on
+    all fourteen
+  - review/ep2-guards-0818 (ANSWERED pass, 2026-08-20)
+  why_nothing_is_done: '`done` means the author has passed it. He has not watched this cut -- that watch-through
+    IS the gate -- so every beat with a picture sits at candidate-awaiting-founder and the two whose fault
+    is named and whose fix is known sit at fix-known. Writing `done` off a steward pick is the exact drift
+    that put the word `adult` into canon.'
+  counts: 19 candidate-awaiting-founder, 2 fix-known (07 and 08), 0 blocked-decision, 0 slates.
