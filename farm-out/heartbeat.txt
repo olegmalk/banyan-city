@@ -3858,3 +3858,4 @@
 14:19:18Z DONE task=ep2-b01-field-s2-0821-1787321810 rc=0 artifacts=1
 14:19:24Z STARTED task=ep2-b01-field-s3-0821-1787321813 attempt=1 on box-runner
 14:19:43Z DONE task=ep2-b01-field-s3-0821-1787321813 rc=0 artifacts=1
+14:20:47Z box-runner idle ready=0 failed=80
