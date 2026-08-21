@@ -3559,3 +3559,6 @@
 08:37:59Z box-runner idle ready=0 failed=67
 08:48:03Z box-runner idle ready=0 failed=67
 08:58:07Z box-runner idle ready=0 failed=67
+09:06:04Z box-runner up pid=17576 host=MSI
+09:06:06Z STARTED task=ep3-sapfield-p01-0821-1787303071 attempt=1 on box-runner
+09:06:10Z FAIL task=ep3-sapfield-p01-0821-1787303071 rc=9 step=hintskel
