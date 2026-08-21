@@ -2,10 +2,10 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "6caa823c6ce6de8c7532f46e4aa1a7f783d658e6",
-  "measured_at": "2026-08-21T17:50:06Z",
-  "job_count": 1369,
-  "ok": 1288,
+  "source_commit": "3d66c586b5f9d57a62784fa827b92c04e89c02c1",
+  "measured_at": "2026-08-21T19:00:53Z",
+  "job_count": 1393,
+  "ok": 1312,
   "failed": 81,
   "upcoming_count": 85,
   "skipped_sidecars": null,
@@ -13,6 +13,1488 @@
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep3-saplora-s44-0821-1787338625",
+   "task": "ep3-saplora-s44-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:58:53Z",
+   "finished_at": "2026-08-21T18:59:07Z",
+   "duration_s": 14,
+   "sidecar": "farm-out/box/ep3-saplora-s44-0821-1787338625.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s44-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s44 of 44, drawn on plate w02 (rolling green downland, a low sun on the horizon). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 630 px tall rooted at (380, 1160) with leaves 0.48 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN rolling green downland, a low sun on the horizon under warm diffuse backlight, lit blade tips, shadowed slopes, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level with…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s44-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s44-0821/sap-s44-s20260820-mask.png",
+     "name": "sap-s44-s20260820-mask.png",
+     "bytes": 4418,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s44-0821/sap-s44-s20260820.png",
+     "name": "sap-s44-s20260820.png",
+     "bytes": 1193325,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s44-0821/sap-s44-w02-0821.png",
+     "name": "sap-s44-w02-0821.png",
+     "bytes": 1137259,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s44-0821/sap-s44-w02-mask-0821.png",
+     "name": "sap-s44-w02-mask-0821.png",
+     "bytes": 4418,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, close to the camera, large in frame, rolling green downland, a low sun on the horizon, warm diffuse backlight, lit blade tips, shadowed slopes, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s44-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s43-0821-1787338621",
+   "task": "ep3-saplora-s43-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:58:29Z",
+   "finished_at": "2026-08-21T18:58:44Z",
+   "duration_s": 15,
+   "sidecar": "farm-out/box/ep3-saplora-s43-0821-1787338621.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s43-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s43 of 44, drawn on plate w02 (rolling green downland, a low sun on the horizon). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 490 px tall rooted at (350, 1130) with leaves 0.50 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN rolling green downland, a low sun on the horizon under warm diffuse backlight, lit blade tips, shadowed slopes, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level with…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s43-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s43-0821/sap-s43-s20260820-mask.png",
+     "name": "sap-s43-s20260820-mask.png",
+     "bytes": 3775,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s43-0821/sap-s43-s20260820.png",
+     "name": "sap-s43-s20260820.png",
+     "bytes": 1200381,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s43-0821/sap-s43-w02-0821.png",
+     "name": "sap-s43-w02-0821.png",
+     "bytes": 1159065,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s43-0821/sap-s43-w02-mask-0821.png",
+     "name": "sap-s43-w02-mask-0821.png",
+     "bytes": 3775,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, standing clear of the grass, mid frame, rolling green downland, a low sun on the horizon, warm diffuse backlight, lit blade tips, shadowed slopes, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s43-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s42-0821-1787338615",
+   "task": "ep3-saplora-s42-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:58:09Z",
+   "finished_at": "2026-08-21T18:58:24Z",
+   "duration_s": 15,
+   "sidecar": "farm-out/box/ep3-saplora-s42-0821-1787338615.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s42-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s42 of 44, drawn on plate w02 (rolling green downland, a low sun on the horizon). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 280 px tall rooted at (300, 1000) with leaves 0.52 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN rolling green downland, a low sun on the horizon under warm diffuse backlight, lit blade tips, shadowed slopes, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level with…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s42-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s42-0821/sap-s42-s20260820-mask.png",
+     "name": "sap-s42-s20260820-mask.png",
+     "bytes": 2676,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s42-0821/sap-s42-s20260820.png",
+     "name": "sap-s42-s20260820.png",
+     "bytes": 1196129,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s42-0821/sap-s42-w02-0821.png",
+     "name": "sap-s42-w02-0821.png",
+     "bytes": 1179328,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s42-0821/sap-s42-w02-mask-0821.png",
+     "name": "sap-s42-w02-mask-0821.png",
+     "bytes": 2676,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, small, at middle distance, rolling green downland, a low sun on the horizon, warm diffuse backlight, lit blade tips, shadowed slopes, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s42-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s41-0821-1787338610",
+   "task": "ep3-saplora-s41-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:57:49Z",
+   "finished_at": "2026-08-21T18:58:03Z",
+   "duration_s": 14,
+   "sidecar": "farm-out/box/ep3-saplora-s41-0821-1787338610.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s41-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s41 of 44, drawn on plate w03 (a green meadow at night, distant hills, a moonlit cumulus). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 640 px tall rooted at (360, 1160) with leaves 0.48 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a green meadow at night, distant hills, a moonlit cumulus under moonlight through broken cloud, patches of shadow, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level w…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s41-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s41-0821/sap-s41-s20260820-mask.png",
+     "name": "sap-s41-s20260820-mask.png",
+     "bytes": 4499,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s41-0821/sap-s41-s20260820.png",
+     "name": "sap-s41-s20260820.png",
+     "bytes": 1073554,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s41-0821/sap-s41-w03-0821.png",
+     "name": "sap-s41-w03-0821.png",
+     "bytes": 1003764,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s41-0821/sap-s41-w03-mask-0821.png",
+     "name": "sap-s41-w03-mask-0821.png",
+     "bytes": 4499,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, close to the camera, large in frame, a green meadow at night, distant hills, a moonlit cumulus, moonlight through broken cloud, patches of shadow, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s41-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s40-0821-1787338605",
+   "task": "ep3-saplora-s40-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:57:29Z",
+   "finished_at": "2026-08-21T18:57:43Z",
+   "duration_s": 14,
+   "sidecar": "farm-out/box/ep3-saplora-s40-0821-1787338605.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s40-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s40 of 44, drawn on plate w03 (a green meadow at night, distant hills, a moonlit cumulus). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 500 px tall rooted at (400, 1130) with leaves 0.50 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a green meadow at night, distant hills, a moonlit cumulus under moonlight through broken cloud, patches of shadow, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level w…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s40-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s40-0821/sap-s40-s20260820-mask.png",
+     "name": "sap-s40-s20260820-mask.png",
+     "bytes": 3851,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s40-0821/sap-s40-s20260820.png",
+     "name": "sap-s40-s20260820.png",
+     "bytes": 1060173,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s40-0821/sap-s40-w03-0821.png",
+     "name": "sap-s40-w03-0821.png",
+     "bytes": 1007162,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s40-0821/sap-s40-w03-mask-0821.png",
+     "name": "sap-s40-w03-mask-0821.png",
+     "bytes": 3851,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, standing clear of the grass, mid frame, a green meadow at night, distant hills, a moonlit cumulus, moonlight through broken cloud, patches of shadow, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s40-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s39-0821-1787338601",
+   "task": "ep3-saplora-s39-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:57:08Z",
+   "finished_at": "2026-08-21T18:57:23Z",
+   "duration_s": 15,
+   "sidecar": "farm-out/box/ep3-saplora-s39-0821-1787338601.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s39-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s39 of 44, drawn on plate w03 (a green meadow at night, distant hills, a moonlit cumulus). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 300 px tall rooted at (330, 1050) with leaves 0.52 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a green meadow at night, distant hills, a moonlit cumulus under moonlight through broken cloud, patches of shadow, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level w…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s39-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s39-0821/sap-s39-s20260820-mask.png",
+     "name": "sap-s39-s20260820-mask.png",
+     "bytes": 2838,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s39-0821/sap-s39-s20260820.png",
+     "name": "sap-s39-s20260820.png",
+     "bytes": 1049154,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s39-0821/sap-s39-w03-0821.png",
+     "name": "sap-s39-w03-0821.png",
+     "bytes": 1022827,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s39-0821/sap-s39-w03-mask-0821.png",
+     "name": "sap-s39-w03-mask-0821.png",
+     "bytes": 2838,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, small, at middle distance, a green meadow at night, distant hills, a moonlit cumulus, moonlight through broken cloud, patches of shadow, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s39-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s38-0821-1787338596",
+   "task": "ep3-saplora-s38-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:56:48Z",
+   "finished_at": "2026-08-21T18:57:02Z",
+   "duration_s": 14,
+   "sidecar": "farm-out/box/ep3-saplora-s38-0821-1787338596.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s38-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s38 of 44, drawn on plate w03 (a green meadow at night, distant hills, a moonlit cumulus). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 180 px tall rooted at (280, 1080) with leaves 0.56 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a green meadow at night, distant hills, a moonlit cumulus under moonlight through broken cloud, patches of shadow, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level w…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s38-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s38-0821/sap-s38-s20260820-mask.png",
+     "name": "sap-s38-s20260820-mask.png",
+     "bytes": 2219,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s38-0821/sap-s38-s20260820.png",
+     "name": "sap-s38-s20260820.png",
+     "bytes": 1042302,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s38-0821/sap-s38-w03-0821.png",
+     "name": "sap-s38-w03-0821.png",
+     "bytes": 1031426,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s38-0821/sap-s38-w03-mask-0821.png",
+     "name": "sap-s38-w03-mask-0821.png",
+     "bytes": 2219,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, a tiny sprout, small in a wide frame, a green meadow at night, distant hills, a moonlit cumulus, moonlight through broken cloud, patches of shadow, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s38-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-sapfld6-w04-0821-1787337803",
+   "task": "ep3-sapfld6-w04-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:44:39Z",
+   "finished_at": "2026-08-21T18:44:58Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep3-sapfld6-w04-0821-1787337803.json",
+   "spec_file": "pipeline/jobs/ep3-sapfld6-w04-0821.yaml",
+   "purpose": {
+    "consumer": "THE 26:11 RATIO IN pipeline/lora/manifest-sapling.yaml. v2 is 37 frames over 15 plates and the lighting axis it just opened is four plates wide against eleven daylit ones -- its own record says so. Four more non-daylit plates is the cheapest thing that moves it, and the cells are chosen so that the ANSWER is worth as much as the pictures: each one deletes the word round 5 measured as carrying a ground material, from the cell it carried it into. What eats a passing plate is step 2 (pipeline/beat…",
+    "why": "DELETES `winter` AND `snow peaks` FROM v10, keeping the cold light. v10 asked for `cold clear winter light` over `distant snow peaks` and returned a SNOWFIELD -- the ground word lost to the season word. Nothing here names a season or a frozen material, and `distant hills` is the depth cue instead of peaks. THE RECIPE IS NOT UNDER TEST. Rounds 1-4 settled it and round 5 spent it: the quality prefix, `no humans`, `wide shot` with NO `low angle`, the negative, the checkpoint, the size, the steps,…",
+    "success": "One 832x1216 png at seed 20260974, cel dialect, of a green meadow under 'cold clear air, pale blue light, long shadows' at 'wide shot': STRAIGHT horizon, clean drawable ground plane in the lower centre, no plant, no figure, AND a GREEN-DOMINANT region in the lower half. The green is the whole question in three of these four cells -- v10 and v04 each returned a picture that was fine and had no green in it, and v01 returned green so blue the palette sampler found one pixel of it. A cell that come…",
+    "owner": "sapling-dataset lane, 2026-08-21 round 6 (the word probe)",
+    "est_minutes": 3,
+    "priority": 41
+   },
+   "artifacts_dir": "farm-out/ep3-sapfld6-w04-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfld6-w04-0821/ep3-sapfld6-w04-0821-nocontrol.png",
+     "name": "ep3-sapfld6-w04-0821-nocontrol.png",
+     "bytes": 950638,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a green meadow, distant hills, cold clear air, pale blue light, long shadows, wide shot",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfld6-w04-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-sapfld6-w03-0821-1787337801",
+   "task": "ep3-sapfld6-w03-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:44:14Z",
+   "finished_at": "2026-08-21T18:44:33Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep3-sapfld6-w03-0821-1787337801.json",
+   "spec_file": "pipeline/jobs/ep3-sapfld6-w03-0821.yaml",
+   "purpose": {
+    "consumer": "THE 26:11 RATIO IN pipeline/lora/manifest-sapling.yaml. v2 is 37 frames over 15 plates and the lighting axis it just opened is four plates wide against eleven daylit ones -- its own record says so. Four more non-daylit plates is the cheapest thing that moves it, and the cells are chosen so that the ANSWER is worth as much as the pictures: each one deletes the word round 5 measured as carrying a ground material, from the cell it carried it into. What eats a passing plate is step 2 (pipeline/beat…",
+    "why": "EXTENDS v02, THE ONE CONFIRMED WINNER, and is the control of this batch. v02 (`night, moonlight, blue darkness`) is the greenest plate of the fourteen, so moonlight demonstrably does not starve the palette; `broken cloud` adds the directional patchiness D4 measures. If w03 fails while v02 passed, the variable is the seed and not the words, and that is worth knowing before any of the other three are read. THE RECIPE IS NOT UNDER TEST. Rounds 1-4 settled it and round 5 spent it: the quality prefi…",
+    "success": "One 832x1216 png at seed 20260973, cel dialect, of a green meadow under 'moonlight through broken cloud, patches of shadow' at 'wide shot': STRAIGHT horizon, clean drawable ground plane in the lower centre, no plant, no figure, AND a GREEN-DOMINANT region in the lower half. The green is the whole question in three of these four cells -- v10 and v04 each returned a picture that was fine and had no green in it, and v01 returned green so blue the palette sampler found one pixel of it. A cell that…",
+    "owner": "sapling-dataset lane, 2026-08-21 round 6 (the word probe)",
+    "est_minutes": 3,
+    "priority": 41
+   },
+   "artifacts_dir": "farm-out/ep3-sapfld6-w03-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfld6-w03-0821/ep3-sapfld6-w03-0821-nocontrol.png",
+     "name": "ep3-sapfld6-w03-0821-nocontrol.png",
+     "bytes": 1028636,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a green meadow, distant hills, moonlight through broken cloud, patches of shadow, wide shot",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfld6-w03-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-sapfld6-w02-0821-1787337798",
+   "task": "ep3-sapfld6-w02-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:43:49Z",
+   "finished_at": "2026-08-21T18:44:08Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep3-sapfld6-w02-0821-1787337798.json",
+   "spec_file": "pipeline/jobs/ep3-sapfld6-w02-0821.yaml",
+   "purpose": {
+    "consumer": "THE 26:11 RATIO IN pipeline/lora/manifest-sapling.yaml. v2 is 37 frames over 15 plates and the lighting axis it just opened is four plates wide against eleven daylit ones -- its own record says so. Four more non-daylit plates is the cheapest thing that moves it, and the cells are chosen so that the ANSWER is worth as much as the pictures: each one deletes the word round 5 measured as carrying a ground material, from the cell it carried it into. What eats a passing plate is step 2 (pipeline/beat…",
+    "why": "DELETES `golden hour` AND `long shadows` FROM v04, keeping the warm low light they were asking for. v04 returned magnified tan grass with no ground plane at all -- the season word brought dry grass with it. This asks for the same photons and names no time of year. THE RECIPE IS NOT UNDER TEST. Rounds 1-4 settled it and round 5 spent it: the quality prefix, `no humans`, `wide shot` with NO `low angle`, the negative, the checkpoint, the size, the steps, the cfg, the staging and the nocontrol arm…",
+    "success": "One 832x1216 png at seed 20260972, cel dialect, of a green meadow under 'low sun behind thin cloud, warm diffuse glow' at 'wide shot': STRAIGHT horizon, clean drawable ground plane in the lower centre, no plant, no figure, AND a GREEN-DOMINANT region in the lower half. The green is the whole question in three of these four cells -- v10 and v04 each returned a picture that was fine and had no green in it, and v01 returned green so blue the palette sampler found one pixel of it. A cell that comes…",
+    "owner": "sapling-dataset lane, 2026-08-21 round 6 (the word probe)",
+    "est_minutes": 3,
+    "priority": 41
+   },
+   "artifacts_dir": "farm-out/ep3-sapfld6-w02-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfld6-w02-0821/ep3-sapfld6-w02-0821-nocontrol.png",
+     "name": "ep3-sapfld6-w02-0821-nocontrol.png",
+     "bytes": 1189638,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a green meadow, distant hills, low sun behind thin cloud, warm diffuse glow, wide shot",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfld6-w02-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-sapfld6-w01-0821-1787337795",
+   "task": "ep3-sapfld6-w01-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:43:24Z",
+   "finished_at": "2026-08-21T18:43:44Z",
+   "duration_s": 20,
+   "sidecar": "farm-out/box/ep3-sapfld6-w01-0821-1787337795.json",
+   "spec_file": "pipeline/jobs/ep3-sapfld6-w01-0821.yaml",
+   "purpose": {
+    "consumer": "THE 26:11 RATIO IN pipeline/lora/manifest-sapling.yaml. v2 is 37 frames over 15 plates and the lighting axis it just opened is four plates wide against eleven daylit ones -- its own record says so. Four more non-daylit plates is the cheapest thing that moves it, and the cells are chosen so that the ANSWER is worth as much as the pictures: each one deletes the word round 5 measured as carrying a ground material, from the cell it carried it into. What eats a passing plate is step 2 (pipeline/beat…",
+    "why": "DELETES `deep blue twilight sky` FROM v01. v01 is the round-5 result that hurts most: it passed the eye and REFUSED at the palette sampler with ONE green-dominant pixel at RGB (2,7,2), because a blue key leaves no green to sample. Same time of day, grey key instead of blue. If this comes back green-dominant the dark end of the dataset gains dusk; if it comes back blue again the finding is that the checkpoint's dusk IS blue and dusk is closed for this instrument. THE RECIPE IS NOT UNDER TEST. Ro…",
+    "success": "One 832x1216 png at seed 20260971, cel dialect, of a green meadow under 'overcast at dusk, the last grey light, no sun' at 'wide shot': STRAIGHT horizon, clean drawable ground plane in the lower centre, no plant, no figure, AND a GREEN-DOMINANT region in the lower half. The green is the whole question in three of these four cells -- v10 and v04 each returned a picture that was fine and had no green in it, and v01 returned green so blue the palette sampler found one pixel of it. A cell that come…",
+    "owner": "sapling-dataset lane, 2026-08-21 round 6 (the word probe)",
+    "est_minutes": 3,
+    "priority": 41
+   },
+   "artifacts_dir": "farm-out/ep3-sapfld6-w01-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfld6-w01-0821/ep3-sapfld6-w01-0821-nocontrol.png",
+     "name": "ep3-sapfld6-w01-0821-nocontrol.png",
+     "bytes": 1124093,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a green meadow, distant hills, overcast at dusk, the last grey light, no sun, wide shot",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfld6-w01-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s37-0821-1787337197",
+   "task": "ep3-saplora-s37-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:35:59Z",
+   "finished_at": "2026-08-21T18:36:14Z",
+   "duration_s": 15,
+   "sidecar": "farm-out/box/ep3-saplora-s37-0821-1787337197.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s37-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s37 of 37, drawn on plate v05 (a wet green moor in the rain, receding grey hills). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 420 px tall rooted at (480, 1140) with leaves 0.50 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a wet green moor in the rain, receding grey hills under flat rain light, grey-teal, no cast shadow, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level with its twenty-…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s37-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s37-0821/sap-s37-s20260820-mask.png",
+     "name": "sap-s37-s20260820-mask.png",
+     "bytes": 3495,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s37-0821/sap-s37-s20260820.png",
+     "name": "sap-s37-s20260820.png",
+     "bytes": 1446711,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s37-0821/sap-s37-v05-0821.png",
+     "name": "sap-s37-v05-0821.png",
+     "bytes": 1417805,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s37-0821/sap-s37-v05-mask-0821.png",
+     "name": "sap-s37-v05-mask-0821.png",
+     "bytes": 3495,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, standing clear of the grass, mid frame, a wet green moor in the rain, receding grey hills, flat rain light, grey-teal, no cast shadow, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s37-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s36-0821-1787337193",
+   "task": "ep3-saplora-s36-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:35:39Z",
+   "finished_at": "2026-08-21T18:35:54Z",
+   "duration_s": 15,
+   "sidecar": "farm-out/box/ep3-saplora-s36-0821-1787337193.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s36-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s36 of 37, drawn on plate v05 (a wet green moor in the rain, receding grey hills). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 170 px tall rooted at (300, 980) with leaves 0.57 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a wet green moor in the rain, receding grey hills under flat rain light, grey-teal, no cast shadow, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level with its twenty-…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s36-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s36-0821/sap-s36-s20260820-mask.png",
+     "name": "sap-s36-s20260820-mask.png",
+     "bytes": 2150,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s36-0821/sap-s36-s20260820.png",
+     "name": "sap-s36-s20260820.png",
+     "bytes": 1449054,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s36-0821/sap-s36-v05-0821.png",
+     "name": "sap-s36-v05-0821.png",
+     "bytes": 1441192,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s36-0821/sap-s36-v05-mask-0821.png",
+     "name": "sap-s36-v05-mask-0821.png",
+     "bytes": 2150,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, a tiny sprout, small in a wide frame, a wet green moor in the rain, receding grey hills, flat rain light, grey-teal, no cast shadow, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s36-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s35-0821-1787337189",
+   "task": "ep3-saplora-s35-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:35:19Z",
+   "finished_at": "2026-08-21T18:35:34Z",
+   "duration_s": 15,
+   "sidecar": "farm-out/box/ep3-saplora-s35-0821-1787337189.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s35-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s35 of 37, drawn on plate v12 (a green plain after rain, puddles, breaking cloud). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 500 px tall rooted at (200, 1160) with leaves 0.50 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a green plain after rain, puddles, breaking cloud under bright breaking cloud, wet specular puddles, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level with its twenty…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s35-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s35-0821/sap-s35-s20260820-mask.png",
+     "name": "sap-s35-s20260820-mask.png",
+     "bytes": 3823,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s35-0821/sap-s35-s20260820.png",
+     "name": "sap-s35-s20260820.png",
+     "bytes": 1190676,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s35-0821/sap-s35-v12-0821.png",
+     "name": "sap-s35-v12-0821.png",
+     "bytes": 1134121,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s35-0821/sap-s35-v12-mask-0821.png",
+     "name": "sap-s35-v12-mask-0821.png",
+     "bytes": 3823,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, standing clear of the grass, mid frame, a green plain after rain, puddles, breaking cloud, bright breaking cloud, wet specular puddles, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s35-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s34-0821-1787337185",
+   "task": "ep3-saplora-s34-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:34:59Z",
+   "finished_at": "2026-08-21T18:35:14Z",
+   "duration_s": 15,
+   "sidecar": "farm-out/box/ep3-saplora-s34-0821-1787337185.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s34-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s34 of 37, drawn on plate v12 (a green plain after rain, puddles, breaking cloud). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 300 px tall rooted at (300, 1120) with leaves 0.52 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a green plain after rain, puddles, breaking cloud under bright breaking cloud, wet specular puddles, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level with its twenty…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s34-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s34-0821/sap-s34-s20260820-mask.png",
+     "name": "sap-s34-s20260820-mask.png",
+     "bytes": 2800,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s34-0821/sap-s34-s20260820.png",
+     "name": "sap-s34-s20260820.png",
+     "bytes": 1177167,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s34-0821/sap-s34-v12-0821.png",
+     "name": "sap-s34-v12-0821.png",
+     "bytes": 1146695,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s34-0821/sap-s34-v12-mask-0821.png",
+     "name": "sap-s34-v12-mask-0821.png",
+     "bytes": 2800,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, small, at middle distance, a green plain after rain, puddles, breaking cloud, bright breaking cloud, wet specular puddles, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s34-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s33-0821-1787337180",
+   "task": "ep3-saplora-s33-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:34:39Z",
+   "finished_at": "2026-08-21T18:34:54Z",
+   "duration_s": 15,
+   "sidecar": "farm-out/box/ep3-saplora-s33-0821-1787337180.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s33-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s33 of 37, drawn on plate v12 (a green plain after rain, puddles, breaking cloud). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 190 px tall rooted at (150, 900) with leaves 0.55 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a green plain after rain, puddles, breaking cloud under bright breaking cloud, wet specular puddles, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level with its twenty…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s33-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s33-0821/sap-s33-s20260820-mask.png",
+     "name": "sap-s33-s20260820-mask.png",
+     "bytes": 2230,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s33-0821/sap-s33-s20260820.png",
+     "name": "sap-s33-s20260820.png",
+     "bytes": 1163665,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s33-0821/sap-s33-v12-0821.png",
+     "name": "sap-s33-v12-0821.png",
+     "bytes": 1149616,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s33-0821/sap-s33-v12-mask-0821.png",
+     "name": "sap-s33-v12-mask-0821.png",
+     "bytes": 2230,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, a tiny sprout, small in a wide frame, a green plain after rain, puddles, breaking cloud, bright breaking cloud, wet specular puddles, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s33-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s32-0821-1787337176",
+   "task": "ep3-saplora-s32-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:34:19Z",
+   "finished_at": "2026-08-21T18:34:34Z",
+   "duration_s": 15,
+   "sidecar": "farm-out/box/ep3-saplora-s32-0821-1787337176.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s32-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s32 of 37, drawn on plate v03 (a green plain under storm cloud, a shaft of light beyond). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 560 px tall rooted at (500, 1150) with leaves 0.49 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a green plain under storm cloud, a shaft of light beyond under dark storm sky, one bright shaft, a luminous horizon band, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s32-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s32-0821/sap-s32-s20260820-mask.png",
+     "name": "sap-s32-s20260820-mask.png",
+     "bytes": 4096,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s32-0821/sap-s32-s20260820.png",
+     "name": "sap-s32-s20260820.png",
+     "bytes": 1007089,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s32-0821/sap-s32-v03-0821.png",
+     "name": "sap-s32-v03-0821.png",
+     "bytes": 943774,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s32-0821/sap-s32-v03-mask-0821.png",
+     "name": "sap-s32-v03-mask-0821.png",
+     "bytes": 4096,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, close to the camera, large in frame, a green plain under storm cloud, a shaft of light beyond, dark storm sky, one bright shaft, a luminous horizon band, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s32-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s31-0821-1787337172",
+   "task": "ep3-saplora-s31-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:33:59Z",
+   "finished_at": "2026-08-21T18:34:14Z",
+   "duration_s": 15,
+   "sidecar": "farm-out/box/ep3-saplora-s31-0821-1787337172.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s31-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s31 of 37, drawn on plate v03 (a green plain under storm cloud, a shaft of light beyond). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 260 px tall rooted at (330, 1080) with leaves 0.52 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a green plain under storm cloud, a shaft of light beyond under dark storm sky, one bright shaft, a luminous horizon band, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s31-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s31-0821/sap-s31-s20260820-mask.png",
+     "name": "sap-s31-s20260820-mask.png",
+     "bytes": 2666,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s31-0821/sap-s31-s20260820.png",
+     "name": "sap-s31-s20260820.png",
+     "bytes": 988941,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s31-0821/sap-s31-v03-0821.png",
+     "name": "sap-s31-v03-0821.png",
+     "bytes": 965415,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s31-0821/sap-s31-v03-mask-0821.png",
+     "name": "sap-s31-v03-mask-0821.png",
+     "bytes": 2666,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, small, at middle distance, a green plain under storm cloud, a shaft of light beyond, dark storm sky, one bright shaft, a luminous horizon band, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s31-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s30-0821-1787337168",
+   "task": "ep3-saplora-s30-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:33:39Z",
+   "finished_at": "2026-08-21T18:33:54Z",
+   "duration_s": 15,
+   "sidecar": "farm-out/box/ep3-saplora-s30-0821-1787337168.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s30-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s30 of 37, drawn on plate v03 (a green plain under storm cloud, a shaft of light beyond). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 200 px tall rooted at (400, 990) with leaves 0.55 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a green plain under storm cloud, a shaft of light beyond under dark storm sky, one bright shaft, a luminous horizon band, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s30-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s30-0821/sap-s30-s20260820-mask.png",
+     "name": "sap-s30-s20260820-mask.png",
+     "bytes": 2273,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s30-0821/sap-s30-s20260820.png",
+     "name": "sap-s30-s20260820.png",
+     "bytes": 982172,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s30-0821/sap-s30-v03-0821.png",
+     "name": "sap-s30-v03-0821.png",
+     "bytes": 965790,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s30-0821/sap-s30-v03-mask-0821.png",
+     "name": "sap-s30-v03-mask-0821.png",
+     "bytes": 2273,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, a tiny sprout, small in a wide frame, a green plain under storm cloud, a shaft of light beyond, dark storm sky, one bright shaft, a luminous horizon band, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s30-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s29-0821-1787337163",
+   "task": "ep3-saplora-s29-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:33:19Z",
+   "finished_at": "2026-08-21T18:33:33Z",
+   "duration_s": 14,
+   "sidecar": "farm-out/box/ep3-saplora-s29-0821-1787337163.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s29-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s29 of 37, drawn on plate v02 (a green meadow at night, distant hills, moonlit slope). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 620 px tall rooted at (360, 1090) with leaves 0.48 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a green meadow at night, distant hills, moonlit slope under cool moonlight, blue darkness, a pale rim on the slope, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s29-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s29-0821/sap-s29-s20260820-mask.png",
+     "name": "sap-s29-s20260820-mask.png",
+     "bytes": 4400,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s29-0821/sap-s29-s20260820.png",
+     "name": "sap-s29-s20260820.png",
+     "bytes": 992176,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s29-0821/sap-s29-v02-0821.png",
+     "name": "sap-s29-v02-0821.png",
+     "bytes": 923643,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s29-0821/sap-s29-v02-mask-0821.png",
+     "name": "sap-s29-v02-mask-0821.png",
+     "bytes": 4400,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, close to the camera, large in frame, a green meadow at night, distant hills, moonlit slope, cool moonlight, blue darkness, a pale rim on the slope, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s29-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s28-0821-1787337159",
+   "task": "ep3-saplora-s28-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:32:59Z",
+   "finished_at": "2026-08-21T18:33:14Z",
+   "duration_s": 15,
+   "sidecar": "farm-out/box/ep3-saplora-s28-0821-1787337159.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s28-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s28 of 37, drawn on plate v02 (a green meadow at night, distant hills, moonlit slope). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 300 px tall rooted at (330, 1000) with leaves 0.52 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a green meadow at night, distant hills, moonlit slope under cool moonlight, blue darkness, a pale rim on the slope, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s28-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s28-0821/sap-s28-s20260820-mask.png",
+     "name": "sap-s28-s20260820-mask.png",
+     "bytes": 2765,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s28-0821/sap-s28-s20260820.png",
+     "name": "sap-s28-s20260820.png",
+     "bytes": 972005,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s28-0821/sap-s28-v02-0821.png",
+     "name": "sap-s28-v02-0821.png",
+     "bytes": 948179,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s28-0821/sap-s28-v02-mask-0821.png",
+     "name": "sap-s28-v02-mask-0821.png",
+     "bytes": 2765,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, small, at middle distance, a green meadow at night, distant hills, moonlit slope, cool moonlight, blue darkness, a pale rim on the slope, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s28-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep3-saplora-s27-0821-1787337155",
+   "task": "ep3-saplora-s27-0821",
+   "node": "001-capability-inventory",
+   "beat": 0,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:32:39Z",
+   "finished_at": "2026-08-21T18:32:53Z",
+   "duration_s": 14,
+   "sidecar": "farm-out/box/ep3-saplora-s27-0821-1787337155.json",
+   "spec_file": "pipeline/jobs/ep3-saplora-s27-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA'S TRAINING SET and nothing else -- pipeline/lora/README.md, which gates it at >=20 composited saplings across distinct scenes, scales and lighting. This is frame s27 of 37, drawn on plate v02 (a green meadow at night, distant hills, moonlit slope). It is not a beat, it does not enter a cut, and it is not a candidate for one. DECISIONS.md item 18 ('never train on the output') is open and unresolved; this builds the dataset the question is ABOUT and decides nothing.",
+    "why": "$0 and ~3 minutes on a card that is otherwise idle. The recipe is unchanged from a family that has finished five composited plants; the ONE variable is the init, and twenty-six inits is what a dataset is. The plant is 180 px tall rooted at (300, 950) with leaves 0.56 of the stem, so the mask is small and local and the pass is being asked to finish a structure rather than invent one.",
+    "success": "One 832x1216 png of the canon two-leaf sapling STANDING IN a green meadow at night, distant hills, moonlit slope under cool moonlight, blue darkness, a pale rim on the slope, with the plant NATURALIZED into the plate's cel dialect -- line weight and shading on the blades, not the flat drawn shapes the init handed it -- and NO FIGURE AND NO CREATURE anywhere in the frame. Exactly two leaves on one stem, one plant only, and the background unchanged outside the mask. Judged at contact-sheet level…",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 55
+   },
+   "artifacts_dir": "farm-out/ep3-saplora-s27-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-s27-0821/sap-s27-s20260820-mask.png",
+     "name": "sap-s27-s20260820-mask.png",
+     "bytes": 2193,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s27-0821/sap-s27-s20260820.png",
+     "name": "sap-s27-s20260820.png",
+     "bytes": 966190,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s27-0821/sap-s27-v02-0821.png",
+     "name": "sap-s27-v02-0821.png",
+     "bytes": 955113,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-s27-0821/sap-s27-v02-mask-0821.png",
+     "name": "sap-s27-v02-mask-0821.png",
+     "bytes": 2193,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the ground, a tiny sprout, small in a wide frame, a green meadow at night, distant hills, moonlit slope, cool moonlight, blue darkness, a pale rim on the slope, no humans, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, four leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, second plant, two plants, 1boy, people, goblin, text, photorealism, 3d render, low quality, worst quality, blurry",
+   "prompt_source": "job spec `pipeline/jobs/ep3-saplora-s27-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "ep2-b07-twofig-r5-0821-1787335353",
+   "task": "ep2-b07-twofig-r5-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T18:02:43Z",
+   "finished_at": "2026-08-21T18:03:12Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b07-twofig-r5-0821-1787335353.json",
+   "spec_file": "pipeline/jobs/ep2-b07-twofig-r5-0821.yaml",
+   "purpose": {
+    "consumer": "THE PLATE BEAT 07'S MOTION SPEC GETS FILED OFF IF IT IS NINE OF NINE -- that is the standing agreement and the motion rung is written the moment a human confirms this plate. Beat 07 is the only one of the wave's four failed beats with no round-2 clip at all, because no plate has yet been good enough to animate. SECOND CONSUMER: the finding itself. Round 4 showed the adapter carries eye SHAPE and words carry eye COLOUR; if putting exactly those two words back closes the gap without costing the g…",
+    "why": "ROUND 4 SPLIT THE FACE INTO WHAT THE ADAPTER HOLDS AND WHAT THE WORDS HELD, AND THIS PUTS BACK EXACTLY THE SECOND HALF. With every goblin face word deleted and ip-scale at 1.25, round 4 returned the species, the bald skull, the large pointed ears, the skin AND narrow vertical slit pupils -- the hardest feature in the canon, which six k-ladder wording rungs never reached. It did not return the off-white sclera, which came back as a green iris, or the eyebags. That is a clean decomposition and it…",
+    "success": "ONE 832x1216 png that is NINE OF NINE. THE TWO THIS ROUND IS FOR: E1 off-white sclera, not a green iris filling the eye; E2 eyebags present under both eyes. THE SEVEN ROUND 4 ALREADY WON, and a regression on any of them FAILS this round even if E1 and E2 land, because round 4 would then be the better plate: E3 narrow vertical slit pupils; A2 no bobblehead at an identical crop box; A3 no containment bleed beyond round 4's faint pre-existing ring ghosting; G1 exactly two whole figures on one grou…",
+    "owner": "canon-motion plate-fix lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 15
+   },
+   "artifacts_dir": "farm-out/ep2-b07-twofig-r5-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-twofig-r5-0821/ep2-b07-twofig-r5-0821-ipahead.png",
+     "name": "ep2-b07-twofig-r5-0821-ipahead.png",
+     "bytes": 1480803,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-twofig-r5-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-twofig-r5-0821/jerry-guard-twofig-0821.png",
+     "name": "jerry-guard-twofig-0821.png",
+     "bytes": 13413,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2boys, goblin, green skin, bald, pointy ears, white eyes, eyebags, mandarin collar, green shirt, black shorts, boots, standing at left, and one tall human city guard in full armor and a closed helmet at right, a full head taller, facing him, arm rising to point, muted color, tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, blank eyes, no pupils, round pupils, big round eyes, thick eyebrows, cloak, hood, patchwork, human face on the goblin, two goblins, goblin guard, bare head, old man, hair, beard, child, chibi, 3boys, crowd, multiple heads, disembodied head",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b07-twofig-r5-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b07-twofig-r4-0821-1787334763",
+   "task": "ep2-b07-twofig-r4-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T17:52:45Z",
+   "finished_at": "2026-08-21T17:53:14Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b07-twofig-r4-0821-1787334763.json",
+   "spec_file": "pipeline/jobs/ep2-b07-twofig-r4-0821.yaml",
+   "purpose": {
+    "consumer": "THE PLATE BEAT 07'S MOTION SPEC IS STILL WAITING FOR, after three rounds in which no plate passed on both figures. If this one clears, the beat 07 motion rung gets filed off it immediately using the laws the passing three (04, 08, 13) ran on. ITS SECOND CONSUMER IS EVERY FUTURE TWO-CHARACTER PLATE IN THIS SHOW: if the IP-Adapter can hold the founder's goblin with no face words at all, the 77-token budget stops being the wall wherever two characters have to share it.",
+    "why": "THREE ROUNDS PROVED THE WALL IS THE TOKEN BUDGET, SO THIS ROUND REMOVES A CLAIMANT INSTEAD OF MOVING TOKENS AROUND. R1 had the guard and missed the eye. R2 had the eye and lost the palette, the mask boundary, the guard's hand and the boots. R3 had the eye, the palette, no halo, the hand and the boots, and lost the guard -- he came back as a bare green goblin skull in armour. Every attribute has been achieved in some round and never all in one, and every round was the same 77 tokens reallocated.…",
+    "success": "ONE 832x1216 png in which BOTH identities are right at once for the first time. A1 the goblin is the founder's goblin -- off-white sclera, narrow vertical slit pupils, eyebags, thin brows, green, bald, large pointed ears -- WITH NO FACE WORDS IN THE PROMPT; A2 he is NOT a bobblehead, his head no larger relative to his body than at ip-scale 1.0 in rounds 1-3; A3 no containment bleed -- none of the reference's flat field, square framing or crop in the plate; G1 exactly two figures, whole, one gro…",
+    "owner": "canon-motion plate-fix lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 15
+   },
+   "artifacts_dir": "farm-out/ep2-b07-twofig-r4-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-twofig-r4-0821/ep2-b07-twofig-r4-0821-ipahead.png",
+     "name": "ep2-b07-twofig-r4-0821-ipahead.png",
+     "bytes": 1466817,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-twofig-r4-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-twofig-r4-0821/jerry-guard-twofig-0821.png",
+     "name": "jerry-guard-twofig-0821.png",
+     "bytes": 13413,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2boys, goblin, green skin, bald, pointy ears, mandarin collar, green shirt, black shorts, boots, standing at left, arms at sides, and one tall human city guard in full armor and a closed helmet at right, a full head taller, facing him, arm rising to point, muted color, tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, blank eyes, no pupils, round pupils, big round eyes, thick eyebrows, cloak, hood, patchwork, human face on the goblin, two goblins, goblin guard, bare head, old man, hair, beard, child, chibi, 3boys, crowd, multiple heads, disembodied head",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b07-twofig-r4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
   {
    "id": "ep2-b07-twofig-r3-0821-1787334115",
    "task": "ep2-b07-twofig-r3-0821",
