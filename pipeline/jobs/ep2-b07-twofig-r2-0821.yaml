@@ -265,3 +265,61 @@ shared_scratch_dir_with_round_1: |
   pair to add. It warns rather than refuses on purpose -- derive_spec is used
   by every lane in a live worktree, and a new refusal would stop peers mid-run
   for a fault that is usually cosmetic. A round 3 will see the warning.
+verdict_b07_twofig_r2_0821: |
+  THE ONE VARIABLE WORKED AND THE ROUND IS STILL A REGRESSION. The eye clause
+  did exactly what it was filed to do; three things I asserted were not
+  load-bearing turned out to be, and they broke the plate. Judged by eye at 1:1
+  against round 1 side by side. rc=0.
+
+  E1 SLIT PUPILS    PASS, UNAMBIGUOUSLY. At 1:1 both eyes are off-white sclera
+                    with a NARROW VERTICAL SLIT PUPIL. Round 1 had large round
+                    eyes with a green iris. Adding `white eyes` and
+                    `constricted pupils` to the positive and `round pupils, big
+                    round eyes` to the negative fixed the canon eye in one
+                    round, and that result stands independent of everything
+                    below.
+  WARDROBE          BETTER THAN ROUND 1. The mandarin collar is now a proper
+                    standing collar with a large frog closure.
+  E2 READS ADULT    MARGINAL. Better with the canon eye, but the head is still
+                    large for the body and the face still reads soft.
+
+  THREE REGRESSIONS, ALL FROM THE SAME MISTAKE:
+  P1 PALETTE        FAIL. Blue sky, golden grass, gold-trimmed armour. The
+                    plate has left the muted sage dialect entirely. CAUSE: this
+                    spec dropped `muted color` from the positive to buy tokens
+                    for the eye clause.
+  P2 MASK HALO      FAIL, AND IT IS A HARD DEFECT. A visible hard-edged
+                    RECTANGLE of paler, cooler background surrounds the goblin
+                    -- the IP-Adapter mask region, showing as a box. Round 1
+                    has no such box with the SAME mask at the SAME ip-scale, so
+                    it is not the mask: it is P1. The masked region kept the
+                    reference's muted palette while everything outside it went
+                    warm, and the divergence drew the boundary.
+  P3 GREEN HAND     FAIL. The guard's pointing hand is bright GREEN GOBLIN SKIN
+                    coming out of an armoured sleeve, and the gesture points
+                    up and away rather than at the goblin. Round 1's hand was
+                    an armoured gauntlet aimed at him. G4 -- no adapter leak --
+                    held in round 1 and does not hold here.
+  minor             boots became sandals; this spec dropped `boots`.
+
+  THE REASONING ERROR, NAMED PLAINLY. This spec's `the_one_variable` argued the
+  dropped terms were safe because "round 1 shows none was load-bearing: the
+  palette, the render quality and the boots all came back correct". THAT IS
+  BACKWARDS. They came back correct BECAUSE those terms were in the prompt. I
+  read the absence of a defect as evidence the guard against it was
+  unnecessary. A 77-token budget makes every addition a subtraction, and the
+  subtraction has to be judged on what it was holding, not on the fact that
+  nothing was broken while it held.
+
+  NET: ROUND 1 IS THE BETTER PLATE and neither round passes -- round 1 fails
+  the canon eye, round 2 fails palette, mask halo and the guard's hand. BEAT 07
+  THEREFORE HAS NO PASSING TWO-FIGURE PLATE AFTER TWO ROUNDS, AND NO MOTION
+  SPEC WAS FILED OFF EITHER. That is the honest state; a plate this lane would
+  not animate is not one to hand the founder as done.
+
+  WHAT A ROUND 3 SHOULD DO, and it is precise now: keep the eye clause exactly
+  as written here, restore `muted color` and `boots`, and buy the ~5 tokens
+  back from the GUARD clause instead -- openpose is already carrying his pose
+  and stature, so his wording can shorten without losing him. If that still
+  does not fit, raise ip-scale rather than spend positive tokens. Round 3 is
+  the founder's call, not this lane's: two rounds is the budget.

@@ -262,3 +262,51 @@ derivation:
     - key priority = 14
     payload:b20-motion-prompt.txt:
     - payload b20-motion-prompt.txt (703 -> 945 chars)
+verdict_canonmotion_r2_0821: |
+  THREE OF FOUR, AND THE TWO PLATE-CARRIED FAULTS ARE BOTH GONE. R1, R2 and R4
+  PASS; R3 FAIL. Judged by eye at 1:1 off a 6-frame sheet
+  (f000/024/048/072/096/104). rc=0, 105 frames, 704x1280, recipe and seed
+  identical to round 1; the only change is the init.
+
+  R1 NO PULL-BACK   PASS. His scale is constant across all 105 frames and the
+                    horizon and grass do not travel. Round 1's verdict was
+                    "slight pull-back, not locked"; this one is locked.
+  R2 BRANCH HOLDS   PASS, AND THE ROGUE BRANCH IS GONE. Round 1: "a branch
+                    enters at top right from ~f048". Nothing enters here. The
+                    composited two-leaf sapling stands at frame right, at about
+                    his eye line, unmoved and un-multiplied for the whole clip
+                    -- which is the object the script calls "the sapling's
+                    thinnest branch beside him". The model stopped inventing it
+                    once it was there.
+  CANON FIG         PASS, AND THIS IS THE OTHER PLATE-CARRIED FAULT CLEARED.
+                    The fig is PURPLE in every frame. Round 1 had it
+                    yellow-green and the outgoing take had it red -- "the same
+                    fault in a new colour, carried by the plate and not
+                    introduced by the motion". pipeline/beat20_fig_recolor.py
+                    put canon purple into the composite, the 0.30 naturalize
+                    kept it, and the motion preserved it end to end.
+  R3 ACTION         FAIL, ON THE HALF THAT MATTERS. The done_when is "he lifts
+                    the fig in both hands and looks up from it to the branch --
+                    THE LOOK UP COMPLETES". THE LIFT NOW HAPPENS: the fig is
+                    low in his lap at f000 and raised to chest-and-chin height
+                    from f048 onward, held in both hands throughout. That is
+                    real scripted motion and it is new -- round 1 was "close to
+                    a still with a runtime", and the pre-registered freeze risk
+                    does NOT fire here. But HE STILL NEVER LOOKS UP. His head
+                    stays level and his eyes stay on the camera in all 105
+                    frames; he never turns toward the sapling at his right. The
+                    beat's whole turn is that look, so the beat does not land.
+  R4 IDENTITY       PASS, and clean. Features drawn in every frame, no
+                    dissolve, mandarin collar and frogging intact, ears intact,
+                    skin colour steady, no new appendage.
+
+  WHAT THIS BEAT CONTRIBUTES: it is the wave's cleanest confirmation that the
+  fault was the INIT. Two separate defects that round 1 blamed on the plate --
+  an object arriving out of nowhere and a fruit in the wrong colour -- both
+  disappear when the plate carries the object and the colour, with every
+  sampler number held. What is left is a HEAD TURN the model will not perform,
+  which is an action question and not a plate one.
+
+  NOT ESCALATED. Two rounds is the budget and this is round 2. The residual is
+  a new question -- how to buy a head turn -- and it is the founder's to open.
+  review/ep2-ship-0821 is untouched and no cut moved.

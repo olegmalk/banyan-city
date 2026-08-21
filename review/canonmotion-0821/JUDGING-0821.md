@@ -166,3 +166,101 @@ b20  FAIL, A1 -- the same failure as the take it was meant to replace.
   canon    the fruit is YELLOW-GREEN. Canon has the fig PURPLE. The outgoing
            take had it RED, so this is the same fault in a new colour, carried
            by the plate rather than introduced by the motion.
+
+================================================================================
+ROUND 2 — the plate-fix wave, 2026-08-21
+================================================================================
+# THE LAW ROUND 1 MEASURED: a prompt naming an object ABSENT from the init makes
+# the model build the object and pull the camera back to fit it. Round 1 failed
+# on exactly the four beats whose prompts named something the plate lacked (02
+# and 03 the trunk, 20 the branch, 07 the guard) and passed on the three that
+# asked only for motion the plate had a body for (04, 08, 13).
+#
+# ROUND 2 CHANGED ONE THING: the init. b02/b03/b20 got the scripted object
+# composited onto the same canon w2 plate and drawn in by a 0.30 masked i2i
+# (pipeline/derive_ep2_sapnat_0821.py); b07 got a two-figure openpose plate
+# (pipeline/derive_b07_twofig_0821.py). Every sampler number is round 1's.
+# Motion re-filed by pipeline/file_canonmotion_r2_0821.py.
+#
+# Clips + plates: branch farm-results-rtx5090, farm-out/ep2-bNN-*-r2-0821/.
+# Rebuild any sheet with:
+#   ffmpeg -i <clip>.mp4 -vf "select=eq(n\,F)" -vframes 1 fNNN.png   (F = 0 24 48 72 96 104)
+#   python3 pipeline/compare_sheet.py OUT.png "<title>" "f000"=f000.png ...
+
+THE PLATES (all four rc=0; judged before any motion was filed)
+  b02 sapnat  PASS  trunk drawn in, not moved, he untouched
+  b03 sapnat  PASS  ditto — and the stem crosses his chest, which is the joke
+  b20 sapnat  PASS  branch beside him AND the fig recoloured to canon purple
+  b07 twofig  FAIL after 2 rounds — see below. No motion filed off it.
+  measured on landing: mean |delta| INSIDE the drawn region 10.2–14.2 (really
+  redrawn), OUTSIDE it 0.024–0.055 (the goblin untouched), plant centroid moved
+  0.1–5.4 px on 832x1216 (it did not move).
+
+b02  3/4 — R3 FAIL. THE CAMERA HELD.
+  R1 pass  no pull-back at all. Round 1 ended with him "a speck at bottom right
+           of a wide shot dominated by a large bare tree that is in no plate";
+           none of that happens. Three constant-scale references hold in every
+           frame — the small green critter at bottom centre, the sapling's stem
+           and leaves, the grass-blade stroke width.
+  R2 pass  the sapling is there for 105 frames and NO tree is ever built.
+  R3 FAIL  no sprint and no skid. He drifts back and left, is behind the stem
+           around f060, and bends over by f096. Timing is inside the slot; the
+           SHAPE of the move is wrong.
+  R4 pass  features every frame, collar + frogging hold, no new appendage.
+  metric   eye-separation is DISQUALIFIED on this beat — he leaves centre, so
+           from ~f048 it measures grass, not eyes (left/right dark-pixel split
+           goes 6081/7910 at f000 to 3060/12790 at f096). Do not quote it here.
+
+b03  2/4 — R1 MARGINAL, R3 FAIL. THE HORN IS GONE, THE COVER EXISTS.
+  R1 MARGINAL  still recedes, by half as much. Eye separation (valid here — he
+           stays centred and fully in frame): 339.7 px f000 → 246.9 px f104,
+           monotonic, 73%. Round 1 was "his height roughly halves", ~50%.
+  R2 pass  trunk present all 105 frames, no tree. Round 1 drew no trunk at all,
+           so "the beat's cover does not exist" is fixed.
+  R3 FAIL  the pre-registered "still with a runtime" fired. No crouch, no
+           sideways eye flick; the only event is his eyes closing from ~f096.
+  R4 pass  AND THE ROUND-1 HORN IS GONE — nothing grows from the crown.
+
+b20  3/4 — R3 FAIL. BOTH PLATE-CARRIED FAULTS CLEARED.
+  R1 pass  scale constant, frame locked. Round 1 was "slight pull-back".
+  R2 pass  NO rogue branch enters. The composited sapling stands at frame right
+           at his eye line for the whole clip.
+  fig      PASS — PURPLE in every frame. Round 1 had it yellow-green, the
+           outgoing take red. Recolour survived naturalize AND motion.
+  R3 FAIL  the LIFT now happens (fig from lap at f000 to chin height by f048,
+           both hands) — that is new, and the freeze risk did NOT fire. But he
+           still NEVER LOOKS UP: head level, eyes on camera, all 105 frames.
+  R4 pass  clean.
+
+b07  PLATE FAILS AFTER TWO ROUNDS. NO MOTION FILED.
+  R1  guard PASS and emphatic — five heads, full plate, helmeted, a head and a
+      half taller: the founder's "dumb grown men" in pixels. No adapter leak.
+      Goblin FAILS on the eyes: large round green eyes, not canon slit pupils.
+      Suspected the IP mask; DREW IT ON THE OUTPUT and the box is correct — it
+      holds the whole skull, both ears and the face. Killed that hypothesis for
+      one composite instead of a round of GPU.
+  R2  the eye clause WORKED — narrow vertical slit pupils on off-white sclera,
+      and a better collar. But it regressed three ways: palette went warm (blue
+      sky, gold armour), a hard-edged rectangular IP-MASK HALO appeared around
+      the goblin, and the guard's pointing hand came back as GREEN GOBLIN SKIN
+      aimed upward. All three trace to one mistake — this lane dropped `muted
+      color` and `boots` to buy eye tokens, arguing round 1 proved them not
+      load-bearing. Round 1 proved the opposite: they came back correct BECAUSE
+      those terms were there. The halo is the palette split drawing the mask
+      boundary, not a mask fault.
+  ROUND 3 (founder's call): keep the eye clause verbatim, restore `muted color`
+      and `boots`, buy the ~5 tokens from the GUARD clause — openpose already
+      carries his pose and stature — or raise ip-scale instead of spending
+      positive tokens.
+
+WHAT THE WAVE NOW KNOWS, AND IT IS TWO LEVERS AND NOT ONE
+  THE PLATE FIXES THE CAMERA. Every camera/invention fault round 1 blamed on a
+  missing object cleared or halved when the object was composited in, with all
+  sampler numbers held: b02 pull-back gone, b20 pull-back gone and the rogue
+  branch gone, b03 halved, and the invented tree never appears again.
+  THE PLATE DOES NOT BUY THE ACTION. All three still fail R3, each differently
+  — b02 has the wrong shape of move, b03 has almost none, b20 does the lift but
+  not the look. Beats asking for travel hold their frame; beats asking for
+  stillness still drift. That is an action-wording / motion-strength question,
+  a different lever, and it is NOT opened here: two rounds is the budget.
+  NOTHING IN review/ep2-ship-0821 WAS TOUCHED. No cut moved. No swaps.
