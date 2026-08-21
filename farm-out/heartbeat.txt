@@ -3562,3 +3562,5 @@
 09:06:04Z box-runner up pid=17576 host=MSI
 09:06:06Z STARTED task=ep3-sapfield-p01-0821-1787303071 attempt=1 on box-runner
 09:06:10Z FAIL task=ep3-sapfield-p01-0821-1787303071 rc=9 step=hintskel
+09:06:15Z STARTED task=ep3-sapfield-p02-0821-1787303074 attempt=1 on box-runner
+09:06:18Z FAIL task=ep3-sapfield-p02-0821-1787303074 rc=9 step=hintskel

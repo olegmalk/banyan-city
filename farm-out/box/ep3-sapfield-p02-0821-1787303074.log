@@ -1,0 +1,15 @@
+#### job ep3-sapfield-p02-0821-1787303074 attempt 1 start 2026-08-21T09:06:15Z
+
+==== step stage START 2026-08-21T09:06:15Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# The parent and its twelve siblings only ran because a human scp'd\n# this file into <payload dir>\\src\\pipeline\\ by hand. This lane is\n# not awake to do that, so the job stages its own interpreter and\n# refuses to reach the GPU if the bytes are not the ones asserted.\nimport hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\ndst = r\"C:\\banyan-farm\\sapfield-p02-0821\\src\\pipeline\"\nwant = (\"controlnet_plate.py\", \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")\nos.makedirs(dst, exist_ok=True)\nwith urllib.request.urlopen(base + want[0], timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\nif got != want[1]:\n    print(\"!! %s fetched with sha %s, expected %s\"\n          % (want[0], got, want[1]))\n    raise SystemExit(1)\nwith open(os.path.join(dst, want[0]), \"wb\") as fh:\n    fh.write(blob)\nprint(\"staged\", want[0], got, \"->\", dst)\n"]
+staged controlnet_plate.py ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32 -> C:\banyan-farm\sapfield-p02-0821\src\pipeline
+==== step stage END rc=0 2026-08-21T09:06:15Z ====
+
+==== step hintskel START 2026-08-21T09:06:15Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\sapfield-p02-0821\\src\\pipeline\\controlnet_plate.py", "--root", "C:\\banyan-farm\\sapfield-p02-0821\\src", "--repo-commit", "d1d559d2a475b6d6260ac18a345bd2f65546b0f6", "--task", "ep3-sapfield-p02-0821", "--arm", "nocontrol", "--control", "pipeline/control/b08-pose-skel-0819.png", "--control-sha256", "09200bdf0d293f2555a4ee5430c3f9787dcccba8a6d783b7ff62cebafae89ac3", "--scale", "0.45", "--seed", "20260902", "--prompt-file", "C:\\banyan-farm\\sapfield-p02-0821\\prompt.txt", "--negative-file", "C:\\banyan-farm\\sapfield-p02-0821\\negative.txt", "--out", "C:\\banyan-farm\\sapfield-p02-0821\\out"]
+  prompt tokens: 26 (limit 77)
+Token indices sequence length is longer than the specified maximum sequence length for this model (135 > 77). Running this sequence through the model will result in indexing errors
+  negative tokens: 135 (limit 77)
+!! the negative runs 58 tokens past CLIP's 77 and diffusers would TRUNCATE it silently. The tail of every draft in this repo is the style anchor, so what gets dropped is exactly what makes the plate look like the show. Shorten it, or pass --allow-truncation if the overflow is deliberate.
+==== step hintskel END rc=9 2026-08-21T09:06:18Z ====
+#### job ep3-sapfield-p02-0821-1787303074 finished rc=9 2026-08-21T09:06:18Z
