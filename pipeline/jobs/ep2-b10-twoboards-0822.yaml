@@ -1,0 +1,234 @@
+id: ep2-b10-twoboards-0822
+task: ep2-b10-twoboards-0822
+node: 002b-first-citizen
+beat: 10
+runner: box
+priority: 12
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: the night iteration lane, 2026-08-22
+consumer: A CANDIDATE for beat 10 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched -- the
+  clip in the episode stays where it is until he picks this one.
+success: TWO SEPARATE BOARDS IN EVERY FRAME OF THE CLIP, one in each man's hands, different colours, never
+  touching and never resolving into a single object -- checked by stepping the clip, not by watching it
+  once. AND the blank back of the near guard's board is angled toward his PARTNER rather than flat to
+  the lens for the whole hold. Either failure alone is a fail.
+why: 'THE FOUNDER, 2026-08-22: ''the 2 things they were holding shapeshift into 1''. Stepped on the shipping
+  clip at 24-frame intervals: two boards at f0, drifting together by f48, ONE tan board from f72 to the
+  end. The cause is the parent prompt, which names a board five times and every one of them is the near
+  guard''s -- the partner is given nothing to hold. The plate hands the sampler two boards and the sentence
+  hands it one, so the sampler deletes one. The plate is NOT re-rendered: f0 already draws two separate
+  boards in two colours in two men''s hands, which is the thing to keep.'
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b10-twoboards-0822\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b10-twoboards-0822\b05-motion-prompt.txt: '2D anime, hand-drawn cel animation, static
+    locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject
+    already in frame: THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY IN THIS FRAME AND IT DOES NOT CHANGE
+    - the green summer field, the grass, the low hedge, the treeline and the pale sky are all present
+    from the first frame and stay exactly as they are, unmoving, for the whole shot. Nothing is added
+    to the background and nothing is redrawn. TWO UNIFORMED PATROL GUARDS, BOTH GROWN MEN, ARE ALREADY
+    IN THIS FRAME TOGETHER from the first frame to the last, standing close and facing each other, and
+    no third man is anywhere in it. THERE ARE TWO SEPARATE BARK BOARDS IN THIS FRAME AND THERE ARE TWO
+    OF THEM IN EVERY FRAME. The near guard holds HIS OWN pale grey-blue bark board in his own two hands.
+    His partner holds HIS OWN dark teal bark board, a different board, in his own hands, down at his hip.
+    The two boards are held by different men, they never touch, they never overlap and they never become
+    one board. Both stay hand-sized. THE NEAR GUARD FLIPS HIS OWN BOARD OVER AND HOLDS ITS COMPLETELY
+    BLANK BACK OUT TOWARD HIS PARTNER: he turns his board over, extends it toward the other man at chest
+    height with the empty back of it ANGLED TOWARD HIS PARTNER AND AWAY FROM THE CAMERA, shakes it once,
+    and holds it there while his partner looks at it. His partner keeps his own dark teal board in his
+    own hands the whole time and does not take the other one. Neither man walks anywhere and both stay
+    in frame. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality,
+    very aesthetic.'
+  C:\banyan-farm\ep2-b10-twoboards-0822\b05-negative.txt: background appearing, scene forming, iris, wipe,
+    dissolve, white background, blank background, one man alone, single figure, third guard, walking away,
+    peaked cap, military cap, background changing, background appearing, scene forming, world fading in,
+    iris, wipe, dissolve, empty field with one man, single figure, boy, child, bald guard, white hair,
+    giant clipboard, oversized board, standing still, standing in one spot, standing at attention, stationary,
+    motionless, frozen, still frame, no movement, loitering, armor, armour, breastplate, helmet, chainmail,
+    knight, weapon, sword, spear, giant clipboard, oversized prop, board filling the frame, prop larger
+    than his torso, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in,
+    pull back, tripod, camera, face morphing, distorted face, warped face, extra eyes, bald, walking out
+    of frame, floating head, disembodied head, scene change, shot change, dark, night, dusk, sunset, dim
+    lighting, low key, shadows dominant, white background, blank background, empty background, plain white
+    backdrop, void, isolated on white, character sheet, studio backdrop, photorealistic, 3D render, CGI,
+    live action, motion blur, text, one board, a single board, both men holding the same board, boards
+    merging, boards overlapping, two objects becoming one, morphing prop, prop changing shape, prop changing
+    colour, board flat to camera, board facing the viewer, empty hands
+  C:\banyan-farm\ep2-b10-twoboards-0822\b05-jobs-encode.json: "[{\"beat\": 10,\n  \"embeds\": \"C:\\\\\
+    banyan-farm\\\\ep2-b10-twoboards-0822\\\\b05-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b10-twoboards-0822\\\\b05-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\\
+    ep2-b10-twoboards-0822\\\\b05-negative.txt\"}]"
+  C:\banyan-farm\ep2-b10-twoboards-0822\b05-jobs-render.json: "[{\"beat\": 10,\n  \"seed\": 20260882,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b10-twoboards-0822\\\\b05-embeds.pt\",\n  \"init\": \"C:\\\
+    \\banyan-farm\\\\ep2-b10-twoboards-0822\\\\b05-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b10-twoboards-0822\\\\10-no-form-LTX-world-0813.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b10-twoboards-0822\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b05-scene-0814\05-the-patrol-ipa-r0-w015-s0.png
+  - --sha256
+  - e99ff9e129c303f63f383b44cdd38a59ca895fd496c58a2fd6d59cc3b2fcd8fa
+  - --out
+  - C:\banyan-farm\ep2-b10-twoboards-0822\b05-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b10-twoboards-0822\b05-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b10-twoboards-0822\b05-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b10-twoboards-0822
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b10-twoboards-0822\bench-b10-world.jsonl
+  - --bench-label
+  - ep2-b10-twoboards-0822
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b10-twoboards-0822\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b10-twoboards-0822/10-no-form-LTX-world-0813.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b10-twoboards-0822/b05-init-704x1280.png\")\n   \
+    \          + glob.glob(\"C:/banyan-farm/ep2-b10-twoboards-0822/bench-b10-world.jsonl\"))\nlines =\
+    \ []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n  \
+    \  with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b10-twoboards-0822.sha256\"),\
+    \ \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b10-twoboards-0822\10-no-form-LTX-world-0813.mp4
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. `approval_condition` is None, so nothing in it touches beat 05. A register
+  test on an approved node, not an episode assembly.'
+negative_is_insurance_not_the_fix: 'The merge terms in the negative are cheap and are not expected to
+  carry this. Ban et al. (ECCV 2024, arXiv:2406.02965), which this tree has now cited three times on its
+  own evidence: a negative acts only AFTER the positive has drawn the thing. The positive is the fix.'
+second_fault_fixed_in_the_same_pass: 'The page''s standing fault on beat 10 is that from f65 to f96 the
+  board is flat to the LENS, so the partner would see it edge-on -- and holding it out TO HIS PARTNER
+  is the clause that IS the beat. The new sentence angles the blank back toward the partner and away from
+  camera. Two faults in one spec is a deliberate exception to one-variable: they are the same sentence,
+  and splitting them would mean rendering the merge fix with a known-bad aim.'
+the_one_variable: THE WORDING. Same plate, same init, same seed family, same sampler settings as ep2-b10-pairB-0814
+  -- only the subject clause and the negative move, so a clip that still merges the boards falsifies the
+  placement explanation rather than leaving it arguable.
+derivation:
+  parent: pipeline/jobs/ep2-b10-pairB-0814.yaml
+  by: pipeline/derive_b10_twoboards_0822.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - consumer
+  - negative_is_insurance_not_the_fix
+  - owner
+  - second_fault_fixed_in_the_same_pass
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - verdict
+  - verdict_by
+  - verdict_clauses
+  - verdict_contradicts_a_founder_ruling
+  - verdict_disagrees_with_the_record_and_leaves_it_standing
+  - verdict_judged
+  - verdict_measured
+  - verdict_next_instrument
+  - verdict_reported_forward_for_the_lane_that_owns_the_in_hand_statistic
+  - verdict_status_recommendation
+  retokened:
+  - ep2-b10-pairB-0814 -> ep2-b10-twoboards-0822
+  overrides_applied_and_asserted:
+    key:beat:
+    - key beat = 10
+    key:priority:
+    - key priority = 12
+    payload:b05-motion-prompt.txt:
+    - payload b05-motion-prompt.txt (1835 -> 1651 chars)
+    payload:b05-negative.txt:
+    - payload b05-negative.txt (1197 -> 1437 chars)
+    seed:
+    - payload b05-jobs-render.json (20260915 -> 20260882, re-parsed)
+  seed: 20260882

@@ -23,9 +23,9 @@ why: 'THE FOUNDER VETOED THE FACE ON 2026-08-22 -- ''that aint my goblin'' -- an
 
 
   THE ACTION IS CARRIED VERBATIM from ep2-b07-canonmotion-0821 so the plate is the only thing that changed.
-  THE HEAD CLAUSE IS NOT: it said `off-white eyes with narrow vertical slit pupils`, which is the vetoed
-  eye, and a subject clause that disagrees with its own init is how this engine drifts a face back to
-  its prior over a clip.'
+  THE HEAD CLAUSE IS NOT CARRIED AS WRITTEN: it said `off-white eyes with narrow vertical slit pupils`,
+  which is the vetoed eye, and a subject clause that disagrees with its own init is how this engine drifts
+  a face back to its prior over a clip.'
 est_minutes: 8
 needs:
 - cuda
@@ -59,14 +59,15 @@ payload:
   C:\banyan-farm\ep2-b07-w4motion-0822\b07-motion-prompt.txt: '2D anime, hand-drawn cel animation, static
     locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject
     already in frame: TWO figures, both present in the very first frame and in every frame after it. ONE
-    small green goblin, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy
-    upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots,
-    standing at the left. ONE TALL ARMOURED CITY GUARD in a helmet, standing at the right, facing the
-    goblin, a full head taller. Both faces, both costumes and the goblin''s skin colour DO NOT CHANGE
-    for the whole clip. The goblin is standing, arms at sides, beside tall grass, full body. THE ACTION:
-    the guard''s arm comes up and points at him; he flinches back a half step -- TWO figures the whole
-    clip, and the point is aimed AT him. HALFWAY THROUGH the guard''s arm is up and level, pointing at
-    him, and he is leaning away.'
+    small green goblin with a bare hairless scalp, large pointed ears, small off-white almond eyes with
+    tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt,
+    dark shorts, dark boots, standing at the left. ONE TALL CITY GUARD, a grown man with near-black cropped
+    hair and round wire-rimmed glasses, in a brown patrol tunic, standing at the right, facing the goblin,
+    a full head taller. Both faces, both costumes and the goblin''s skin colour DO NOT CHANGE for the
+    whole clip. The goblin is standing, arms at sides, beside tall grass, full body. THE ACTION: the guard''s
+    arm comes up and points at him; he flinches back a half step -- TWO figures the whole clip, and the
+    point is aimed AT him. HALFWAY THROUGH the guard''s arm is up and level, pointing at him, and he is
+    leaning away.'
   C:\banyan-farm\ep2-b07-w4motion-0822\b07-negative.txt: second face, second goblin, two goblins, extra
     head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing,
     melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing,
@@ -174,10 +175,7 @@ bar: "THE CANON MOTION BAR. Read against taste/refs/goblin-canon-founder-0821.pn
 head_clause_rewrite: '''off-white eyes with narrow vertical slit pupils'' -> ''small off-white almond
   eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression''. The ONLY edit to
   the carried prompt.'
-not_done_on_purpose: 'BEATS 17 AND 19 HAVE CLEAN W4 PLATES AND NO CLIP HERE. Neither has ever had a motion
-  spec, so there is no action sentence to carry, and authoring two from scratch is its own piece of work
-  with its own bar -- doing it inside a filer whose stated one variable is THE PLATE would be a lie about
-  what changed. Also absent: ep2-b13-canon-w4curl-0821, the founder''s b13 story ruling (he curls DOWN
+not_done_on_purpose: 'ABSENT: ep2-b13-canon-w4curl-0821, the founder''s b13 story ruling (he curls DOWN
   small, never rises) rendered as a second plate for that beat. It is a POSE change and gets its own motion
   spec, not a slot in a wave whose variable is the face.'
 plate_provenance: farm-out/ep2-b07-canon-w4-0821/ep2-b07-canon-w4-0821-ipahead.png, 832x1216, sha256 975d61499fd49e57723bd95c6636956ca1e31a84b06c40fe4bea6482d3d50b3d,
@@ -249,7 +247,7 @@ derivation:
     key:priority:
     - key priority = 13
     payload:b07-motion-prompt.txt:
-    - payload b07-motion-prompt.txt (695 -> 969 chars)
+    - payload b07-motion-prompt.txt (695 -> 1066 chars)
     seed:
     - payload b07-jobs-render.json (20260904 -> 20260877, re-parsed)
   seed: 20260877

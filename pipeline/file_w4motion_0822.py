@@ -109,6 +109,62 @@ ROWS = {
 }
 
 
+# ── THE GUARD, AND WHY HE IS FIXED IN THIS FILER TOO. ────────────────────────
+# `check_canon_drift` failed beat 07's first draft against `ep2-guard-hair`, and
+# it was right twice over.
+#
+#   1. THE WORD `bald`. The canon entry says it plainly: `bald` was the
+#      steward's own translation of an anti-helmet intent and carried the
+#      founder's BALD ruling for the GOBLIN onto men it was never about. In this
+#      prompt the word genuinely IS the goblin's -- but it sits four words from
+#      a second figure in a two-figure clause, which is the attribute-binding
+#      hazard this tree has already measured on eyewear (`ep2-b10-attrbind-
+#      eyewear-0817`). A checker that cannot tell which figure owns the word is
+#      modelling the sampler's problem, not failing to understand ours. So the
+#      goblin gets `a bare hairless scalp`, which no guard rule matches and no
+#      reader can mis-assign.
+#
+#   2. THE HELMET, which is the bigger error. `ONE TALL ARMOURED CITY GUARD in a
+#      helmet` predates 2026-08-22, when the founder settled guard 1 by
+#      SELECTING one of our own frames -- taste/refs/guard1-canon-founder-0822.
+#      That guard has near-black cropped hair and round wire rims and no armour
+#      and no helmet, and humans are drawn in detailed cinematic anime. A
+#      helmet is not a small deviation from that reference, it is a different
+#      character; and a helmet also hides the hair the canon entry exists to
+#      protect, which is presumably how the two survived beside each other.
+#
+# NOT ATTEMPTED HERE: the guard's BODY. The coordinator's note is explicit that
+# a close-up reference does not settle full-body proportion and that the
+# re-plates need it paired with the 5-head skeleton. That is a PLATE job for
+# b05/07/08 and it is not this filer's -- this only stops the motion prompt
+# asking for a character the canon no longer has.
+GUARD_OLD = ("ONE TALL ARMOURED CITY GUARD in a helmet, standing at the "
+             "right, facing the goblin, a full head taller.")
+GUARD_NEW = ("ONE TALL CITY GUARD, a grown man with near-black cropped hair "
+             "and round wire-rimmed glasses, in a brown patrol tunic, "
+             "standing at the right, facing the goblin, a full head taller.")
+BALD_OLD = "ONE small green goblin, bald, large pointed ears,"
+BALD_NEW = ("ONE small green goblin with a bare hairless scalp, large pointed "
+            "ears,")
+
+
+def _apply_guard_canon(beat: int, prompt: str) -> str:
+    """Bring any guard in this prompt onto the 2026-08-22 canon."""
+    if "GUARD" not in prompt.upper():
+        return prompt
+    for old, new in ((GUARD_OLD, GUARD_NEW), (BALD_OLD, BALD_NEW)):
+        if old not in prompt:
+            raise SystemExit("!! beat %02d names a guard but does not carry "
+                             "%r -- this filer cannot bring it onto canon "
+                             "blind, and shipping it would render the "
+                             "pre-08-22 guard" % (beat, old[:40]))
+        prompt = prompt.replace(old, new)
+    if "helmet" in prompt or "\bbald\b" in prompt:
+        raise SystemExit("!! beat %02d still carries the pre-canon guard"
+                         % beat)
+    return prompt
+
+
 def sha_of(rel: str) -> str:
     with open(os.path.join(REPO, rel), "rb") as fh:
         return hashlib.sha256(fh.read()).hexdigest()
@@ -150,6 +206,7 @@ def build(beat: int, pspec: dict):
                          "job is to replace it, and a silent no-op would ship "
                          "the vetoed eye" % (action_from, EYE_OLD))
     prompt = prompt.replace(EYE_OLD, EYE_NEW)
+    prompt = _apply_guard_canon(beat, prompt)
 
     rel = REL_PLATE % (plate_job, plate_job)
     if not os.path.exists(os.path.join(REPO, rel)):
