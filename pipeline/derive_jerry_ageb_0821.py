@@ -694,9 +694,68 @@ composed rules that follow from it.""" % expression,
         force=force)]
 
 
-def wave(force=False):
+# ── THE SPLIT, coordinator route decision 2026-08-21 after the four samples. ─
+# The expression is INVARIANT on this recipe (s1/m1/m2/e1 all scowl, and Option B
+# scowls with no expression tags at all), so the wave is split by whether the
+# beat's own stage direction READS THROUGH a wary, guarded, scowling face. He is
+# a scavenger being hunted by guards; wary is his resting state and most of this
+# episode is spent in it. Judged per beat against the node.md line, by eye.
+#
+# THIS IS A FIT JUDGEMENT, NOT A CLAIM THE EXPRESSION LANDED. Every one of these
+# plates wears the same face. What differs is whether that face is a defensible
+# reading of the beat or a contradiction of it.
+EMOTION_FIT = {
+    "02": ("FITS. 'sprints into frame, skids, and dives behind the trunk' -- "
+           "he is being hunted. A hard grimace on a fleeing scavenger reads as "
+           "fear-adjacent, and the SPRINT carries the panic in the body and "
+           "the motion, not the face."),
+    "03": ("FITS, AND IT IS NEARLY IDEAL. 'crouches behind a trunk that hides "
+           "roughly one-sixth of him' -- furtive, holding his breath, and the "
+           "joke is that he thinks it is working. A wary scowl is exactly the "
+           "face of someone hiding badly and concentrating on it."),
+    "04": ("FITS BEST OF THE SEVEN. THE PEEK -- 'leans out from behind the "
+           "trunk to look, and pulls straight back the moment he has looked'. "
+           "This beat IS wariness. The founder picked this staging himself."),
+    "07": ("FITS. 'Guard 1 points at the scavenger, decisive.' He has just been "
+           "identified and is cornered. Defensive is the correct read and a "
+           "scowl is defensive."),
+    "08": ("FITS. 'Guard 2 lowers the clipboard and points at the scavenger's "
+           "belly.' Caught out, with the evidence already eaten. A sullen "
+           "scowl is what caught-out looks like on a guarded character; the "
+           "sheepishness was always the softer of two valid readings."),
+    "20": ("FITS ON THE SUSPICION READING. '...Did you just ANSWER me?' is awe "
+           "in one reading and DISBELIEF in another, and a scavenger who has "
+           "spent the whole episode being hunted meets a talking plant with "
+           "suspicion before wonder. Recorded as the weaker of the six fits, "
+           "and it is the beat to revisit first if the expressive reference "
+           "lands."),
+    "13": ("CLASHES, AND IT IS THE ONLY ONE. '...Thanks for the shade' over a "
+           "man whose legs gave out is GRATITUDE -- the first kind thing that "
+           "happens to him in the episode. A scowl does not read as thanks in "
+           "any framing. This beat does not ship on this recipe; it routes to "
+           "the expressive-reference build."),
+}
+
+# The six that ship now. 13 is held out by EMOTION_FIT above, not by omission.
+WAVE_NOW = ["02", "03", "04", "07", "08", "20"]
+
+FOLDED = {"03", "13", "20"}      # crouch and seatspan -- the C1 collar class
+
+C1_FAULT = """NAMED FAULT, CARRIED NOT CHASED (coordinator, 2026-08-21). This
+beat's skeleton is FOLDED, and folded poses at this recipe bring back a magenta
+collar at the neck: measured 1.17%-7.36% of the mask region against 0.00% on
+every standing frame. It got WORSE in both directions at once -- bigger mask and
+smaller, stronger adapter and weaker -- so it is not adapter coverage; on a
+folded pose the neck sits under the jaw and the checkpoint dresses it. It is
+recorded on the ship page's fault table and is NOT a reason to hold the beat."""
+
+
+def wave(force=False, beats=None):
     written = []
+    beats = beats or WAVE_NOW
     for beat, hint, pose_words, expression, direction in WAVE:
+        if beat not in beats:
+            continue
         written.append(_emit(
             new_id="ep2-b%s-ageb-p1-0821" % beat,
             job_dir="b%sageb-p1-0821" % beat,
@@ -727,7 +786,20 @@ def wave(force=False):
                       "that misses is attributable to the beat."
                       % (AGE_B_HEAD_FRAC, expression)),
             beat=beat, priority=6,
-            extra_keys={"post_ship_patch": (
+            extra_keys={"emotion_fit_judgement": EMOTION_FIT[beat],
+                        "expression_is_invariant": (
+                "SAID PLAINLY SO NO LATER LANE READS THIS PLATE AS PROOF THE "
+                "EXPRESSION RULING WORKED. It did not. Four samples on beat 13 "
+                "(s1/m1/m2/e1) moved the mask, the adapter strength and the "
+                "eye/brow tags and the face scowled in every one, and Option B "
+                "scowls with NO expression tags at all. This plate carries its "
+                "beat's emotion tags as provenance and as a live slot for when "
+                "an expressive reference exists -- not as a claim they drew "
+                "anything. The beat ships because the WARY FACE FITS IT, which "
+                "is the judgement recorded in emotion_fit_judgement."),
+                        **({"c1_folded_fault": C1_FAULT}
+                           if beat in FOLDED else {}),
+                        "post_ship_patch": (
                 "review/ep2-ship-0821 IS NOT TOUCHED BY THIS JOB. A plate here "
                 "becomes a candidate, a candidate becomes a pick, a pick "
                 "becomes a motion spec, and only a passing motion take is "
