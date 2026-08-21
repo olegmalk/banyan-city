@@ -1,0 +1,178 @@
+# ep2-b06-cast-0817 -- 2026-08-17, GUARD CAST REDRAW. Beat 06, THE CLIPBOARD.
+#
+# THE ONE VARIABLE. The draft key. Recipe, references, arm and seed count are
+# byte-identical to ep2-b09-plate-nos2-0815 and to ep2-b07-cast-0817 filed
+# minutes ago: refs-guards-twoinfield-nos2-0815, --arm window4, 4 seeds, no
+# --ref-prefix, no --seed-start. The wording is what moves, from an anonymous
+# `bald`/`bare heads` type to the approved cast.
+#
+# WHY. `guard_plates_are_miscast_0816`: 0 of 17 guard plate prompts name the
+# approved cast, 14 of 17 ask for `bald`, and NEITHER APPROVED GUARD IS BALD. The
+# three prompts that did not ask for it are all on THIS beat and all from
+# 2026-08-12, and they still name nobody -- "a round short-haired guard man". The
+# founder froze the wardrobe on 2026-08-16, "the cast stands as drawn", so this
+# corrects prompts to a settled look and proposes nothing.
+#
+# WHY BEAT 06 IS THE PRECEDENT AND NOT AN EXPERIMENT. It is the one guard beat
+# already shipping off a ONE-guard plate, and the two-figure beats were corrected
+# to two figures because of it (`beats.06` is cited in
+# insert_b0708_figure_count_0817 as the control: same grammar, one guard,
+# already shipping). Its grammar is therefore held and only its cast is changed.
+# THE MAN IN THIS BEAT IS GUARD 2 / GUARD B -- light sandy hair, cream
+# short-sleeve shirt, white sash over one shoulder, broad dark-brown wrap skirt.
+# He is the one who carries the bark board, read off the board itself: beat 10's
+# stage direction is "Guard 2 flips the clipboard around".
+#
+# THE PROMPT, verbatim from pipeline/wave-drafts.yaml beats.6.authored_b06_cast_0817
+# (repo sha b75415098678b47cfbc3a8670de2c9982fcef01cbb180d2253da160004a4b94d; the
+# harness copy was hashed on the box with certutil after the sync and matches):
+#
+#   A guard man with light sandy hair, cream shirt, white shoulder sash and brown
+#   wrap skirt turns over a bark board in both hands at reading height, looking
+#   down, tall grass, hedgerow behind, pale sky above, cinematic lighting,
+#   masterpiece, best quality, very aesthetic No girl, no child, no armor, no
+#   helmet, no knight, no white background, no plain background, no dark, no
+#   night. No photorealism, no 3D render look. 9:16 vertical, no text.
+#
+# TOKENS. 72 of 77 positive, 65 of 77 negative, measured on the string that
+# actually gets sent with sd_prompt.negative_tokens -- not with compress()'s
+# prose estimator, which under-counts a tag list by up to 10 tokens and will
+# report headroom while CLIP has already dropped the style anchor. NO TRADE ON
+# THIS BEAT: the style tail is byte-identical to the one beats 05, 06 and 09
+# already carry, so nothing was cut to make room and the tail is not a variable.
+#
+# THE LAWS APPLIED. PROP OWNERSHIP: a prop does not bind to a person clause the
+# way hair and garments do -- it goes to whoever is drawn nearest -- so the board
+# sits INSIDE guard B's own clause, and this beat holds only one man for it to
+# land on, which is exactly why it is the beat to establish the grammar on. THE
+# HAND LAW: `in both hands` specifies both of the only hands in frame, because an
+# unspecified hand is a vacancy the model fills and the negative does not reach
+# it. THE VACANCY LAW ABOVE THE HORIZON: `pale sky above` gives the upper third
+# its own positive noun; `horizon` is negated nowhere.
+#
+# WHAT IS LIKELIEST TO FAIL, SAID BEFORE THE RENDER. The bark board is a prop
+# four wording attempts and twenty-three inpaint samples failed on, and the frame
+# that finally passed (ep2-b06-barkboard-inpaint-0815 s10) got there by
+# compositing procedural bark relief and inpainting at strength 0.30 -- NOT by
+# wording. So the board's TEXTURE term below is the term this job is most likely
+# to lose, and losing it does not touch the cast terms: cast and board are scored
+# SEPARATELY so a cast-correct man with a papery board is recorded as what it is
+# rather than as a failed plate.
+#
+# NO plate_ack, no drafts_ack, no gate. $0, local card, no provider, no spend.
+id: ep2-b06-cast-0817
+task: ep2-b06-cast-0817
+node: 002b-first-citizen
+beat: 6
+runner: box
+needs_gpu: true
+priority: 6
+max_attempts: 1
+sample: true
+owner: guard cast-redraw lane, 2026-08-17 -- filed to backlog immediately after its dry run, because the backlog
+  was empty and the autofill never authors work
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml. A STILL PLATE on an approved node: no
+  voice, no motion, no episode assembly, no publication.'
+script_line: 'Beat 06 THE CLIPBOARD (0:28-0:33): the guard turns the bark board over and reads off it.'
+consumer: 'The beat-06 motion lane -- the one guard beat that already ships, and therefore the beat whose plate must
+  stop contradicting the cast before its neighbours copy it. Its shipping take is drawn off a prompt from the sweep
+  that asks for nobody, and `guard_plates_are_miscast_0816` re-explains beat 11''s recorded "TOTAL IDENTITY COLLAPSE"
+  as the render drifting TOWARD the approved cast because the plate asked for bald. This is the plate the same beat
+  family gets rebuilt on.'
+success: 'THE BAR, PRE-REGISTERED BEFORE THE PIXELS EXIST, scored by eye per frame across all 16, reported as N of
+  16 with a per-condition rate across the four seeds. CAST TERMS: (1) exactly ONE adult human figure, whole-bodied,
+  no second man and no child; (2) LIGHT SANDY hair -- not dark, not black, and NOT BALD; (3) a cream short-sleeve
+  shirt; (4) a white sash over ONE shoulder, not a waist sash; (5) a broad dark-brown wrap skirt. ACTION AND PROP
+  TERMS, scored separately so a lost board does not erase a correct man: (6) the board is held in BOTH hands at reading
+  height with the man looking DOWN at it, and no hand lies across its face; (7) it is hand-sized, flat and rectangular;
+  (8) its surface reads as ROUGH BARK -- not white paper, not planed timber, no chrome clip. WORLD TERMS: (9) tall
+  grass at ground level, a hedgerow band, and sky ABOVE it, all three with real content; (10) no white or plain background
+  and no downward plan view. PRE-REGISTERED FAIL MODES, recorded by name whether or not they fire: the sash migrating
+  to the waist (it is guard A''s that is a waist sash, so this is the tell that the two men have merged); the board
+  reading as paper (the failure four wordings and 23 inpaint samples already had, and the reason the shipping board
+  was COMPOSITED rather than prompted); a second figure appearing. A term found loose is said so and tightened FORWARD.'
+why: 'Beat 06 is the control the two-figure correction was argued from and the only guard beat already shipping, so
+  a cast-correct plate here is worth more than one anywhere else: it is the grammar beats 05, 07, 09, 10 and 11 copy.
+  The correction is wording only -- the cast is frozen (founder, 2026-08-16) and identity held 14 of 14 once casting
+  was right. Minutes of local GPU, $0, no provider.'
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b06-cast-0817
+  - --draft-key
+  - authored_b06_cast_0817
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b06-cast-0817
+  - --draft-key
+  - authored_b06_cast_0817
+  - --arm
+  - window4
+  - --task
+  - ep2-b06-cast-0817
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  # THE GLOB CARRIES THE BEAT SLUG (the-clipboard) the sampler actually writes. A
+  # glob without it matches nothing and publishes nothing while still returning a
+  # code that reads like a render failure.
+  - "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/goblin-ipa-0812/out-b06-cast-0817\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b06-cast-0817\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(srcdir + \"/06-the-clipboard-*\"))\npngs = [f for f in\
+    \ src if f.lower().endswith(\".png\")]\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b06-cast-0817.sha256\"), \"w\", newline=\"\\n\")\
+    \ as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s),\",\
+    \ len(pngs), \"png + manifest ->\", dst)\nraise SystemExit(0 if len(pngs) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b06-cast-0817\06-the-clipboard-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-cast-0817\06-the-clipboard-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-cast-0817\06-the-clipboard-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b06-cast-0817\06-the-clipboard-ipa-r3-w015-s0.png

@@ -1,0 +1,286 @@
+id: ep2-b04-tightcrop-z24-0820
+task: ep2-b04-tightcrop-z24-0820
+node: 002b-first-citizen
+beat: 4
+runner: box
+priority: 22
+needs_gpu: true
+max_attempts: 1
+owner: goblin-design audit lane, 2026-08-20 (beat 04, rung 3 -- staging)
+consumer: 'Beat 04''s slot in review/ep2-ship-0821. That slot currently holds rung 1''s clip, swapped
+  in tonight on the DESIGN axis to answer the founder''s 08-20 complaint that the cut flips the goblin''s
+  age between shots -- it is the ratified adult and it is shipping with its action fault named (''the
+  gaze is carried by a head turn, not the pupils''). This rung is what would clear that fault: the same
+  character, at a framing where the movement the engine gives actually reads. If it lands before 12:00
+  it swaps; after that it is a post-ship patch, and the patch is worth having either way.'
+success: 'One 704x1280 121-frame mp4 of the ratified adult goblin in which A GLANCE READS AT 1:1 -- he
+  looks away and back -- with his mouth shut, the camera locked, both ears in frame and no drift toward
+  a child. The bracket end: maximum eye subtense, dome and ears cropped away. The instrument for the head-band
+  number is rung 1''s, unchanged, so the three rungs sit on one scale; the number is PUBLISHED and NOT
+  SCORED, because rungs 1 and 2 already proved that scoring it is what closes the wording ladder rather
+  than the beat. THE DEGENERATE PASS IS NAMED IN ADVANCE: a clip in which nothing moves satisfies every
+  stillness clause on this page and fails T1, and is a FAIL.'
+why: $0, ~7 minutes, and it is the rung BOTH of beat 04's wording rungs named in their own verdicts and
+  neither fired. The card measured 0 ready / 0 running / 0 backlog at 20:57 tonight -- the exact state
+  that wasted last night -- and this is zero-dependency work whose plate is already on the box and whose
+  consumer is a beat the founder complained about today. Filed to backlog so autofill runs it with no
+  session alive.
+est_minutes: 7
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b04-tightcrop-z24-0820\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH, from a ZOOMED sub-box.\n\nRung 1 and rung 2 of beat 04 used\
+    \ this file with ZOOM = 1.0, i.e. the whole\nplate. Their shared verdict named the next rung as \"\
+    a cover_crop box, not a\nprompt\", and this is that box. No model, no network, no new flags: ZOOM\
+    \ and CY\nare constants here so the step's argv is unchanged from the parent's.\n\nZOOM is linear:\
+    \ the sub-box is the largest WxH-aspect rectangle that fits the\nsource, divided by ZOOM, centred\
+    \ at (CX, CY) as fractions of the source, and\nclamped inside the source so it can never sample outside\
+    \ the image.\n\"\"\"\nimport argparse, hashlib, os, sys\nfrom PIL import Image\n\nZOOM = 2.4\nCX =\
+    \ 0.5\nCY = 0.4\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\nap.add_argument(\"\
+    --sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"--out\"\
+    , required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\nif not\
+    \ os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\nwith\
+    \ open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n        h.update(chunk)\n\
+    have = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC SHA MISMATCH -- refusing.\\\
+    n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for v in a.size.split(\"x\"))\nim\
+    \ = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nar = W / float(H)\nbh = min(sh, sw / ar)\
+    \ / float(ZOOM)\nbw = bh * ar\nif bw > sw:\n    bw = sw\n    bh = bw / ar\nx = CX * sw - bw / 2.0\n\
+    y = CY * sh - bh / 2.0\nx = max(0.0, min(sw - bw, x))\ny = max(0.0, min(sh - bh, y))\nbox = (int(round(x)),\
+    \ int(round(y)), int(round(x + bw)), int(round(y + bh)))\nim = im.crop(box).resize((W, H), Image.LANCZOS)\n\
+    os.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\nprint(\"\
+    src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"ZOOM %.3f CY %.3f -> sub-box %s of %dx%d,\
+    \ resized to %dx%d\" % (ZOOM, CY, box, sw, sh, W, H), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)\n"
+  C:\banyan-farm\ep2-b04-tightcrop-z24-0820\b04-motion-prompt.txt: '2D anime, hand-drawn cel animation,
+    static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art.
+    Subject already in frame: ONE lean wiry adult goblin man alone, green skin, bald head, long pointed
+    ears, patchwork cloak, crouched low in deep tall grass in bright daylight, seen close on his face
+    and shoulders. HE IS HOLDING HIS BREATH AND ONLY HIS EYES MOVE: his eyes flick to one side, hold,
+    then travel slowly back across to the other side. HIS MOUTH STAYS SHUT the whole time and his jaw
+    stays set -- he is listening for something, not speaking, and no word is said. His head and shoulders
+    stay STILL. He stays THE SAME GOBLIN from the first frame to the last: the same green skin, the same
+    bald head, the same long pointed ears, one face and one figure only. The light on him is CONSTANT
+    and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest,
+    masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b04-tightcrop-z24-0820\b04-negative.txt: open mouth, talking, speaking, shouting,
+    teeth, tongue, lip sync, second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby,
+    girl, round head, big eyes, cute, different face, changing face, face changing, morphing, melting
+    face, skin colour change, human skin, pale skin, hair, wig, glasses, flickering light, strobe, strobing,
+    pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement,
+    dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of
+    frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down,
+    scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live
+    action, motion blur, text
+  C:\banyan-farm\ep2-b04-tightcrop-z24-0820\b04-jobs-encode.json: '[{"beat": 4, "embeds": "C:\\banyan-farm\\ep2-b04-tightcrop-z24-0820\\b04-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b04-tightcrop-z24-0820\\b04-motion-prompt.txt", "negative_file":
+    "C:\\banyan-farm\\ep2-b04-tightcrop-z24-0820\\b04-negative.txt"}]'
+  C:\banyan-farm\ep2-b04-tightcrop-z24-0820\b04-jobs-render.json: '[{"beat": 4, "seed": 20260819, "embeds":
+    "C:\\banyan-farm\\ep2-b04-tightcrop-z24-0820\\b04-embeds.pt", "init": "C:\\banyan-farm\\ep2-b04-tightcrop-z24-0820\\b04-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b04-tightcrop-z24-0820\\04-the-footnote-LTX-ep2-b04-tightcrop-z24-0820.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b04-tightcrop-z24-0820\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b04-mac-plate-0819\04-the-footnote-mac-plate-r1s1.png
+  - --sha256
+  - 5dd35da532612e5d85c15ef3353068bf1e44675f8ddfc73c316ac2f654d4e350
+  - --out
+  - C:\banyan-farm\ep2-b04-tightcrop-z24-0820\b04-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b04-tightcrop-z24-0820\b04-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b04-tightcrop-z24-0820\b04-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b04-tightcrop-z24-0820
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b04-tightcrop-z24-0820\bench-ep2-b04-tightcrop-z24-0820.jsonl
+  - --bench-label
+  - ep2-b04-tightcrop-z24-0820
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-tightcrop-z24-0820\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b04-tightcrop-z24-0820/04-the-footnote-LTX-ep2-b04-tightcrop-z24-0820.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b04-tightcrop-z24-0820/b04-init-704x1280.png\")\n\
+    \             + glob.glob(\"C:/banyan-farm/ep2-b04-tightcrop-z24-0820/bench-ep2-b04-tightcrop-z24-0820.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b04-tightcrop-z24-0820.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot\
+    \ pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b04-tightcrop-z24-0820\04-the-footnote-LTX-ep2-b04-tightcrop-z24-0820.mp4
+- C:\banyan-farm\ep2-b04-tightcrop-z24-0820\b04-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml -- the leaf the
+  render gate itself reads. SCRIPT LINE, beat 09 THE PAUSE, node.md verbatim: "Guard 1''s face works through
+  it, slowly." One man, one face, no second figure, no dialogue in this beat. This is a SILENT MOTION
+  CLIP on an approved node: no voice synthesis, no episode assembly, no publication.'
+script_line: 'Beat 09 THE PAUSE, node.md verbatim: "Guard 1''s face works through it, slowly."'
+bar:
+  t1_the_glance_reads: 'At 1:1, on the frames and not on a number: he visibly looks away and back. THE
+    WHOLE POINT OF THE RUNG IS THAT THE MECHANISM NO LONGER HAS TO BE THE PUPILS. Rung 1 was failed for
+    redirecting the gaze with a head rotation against a prompt that forbade it; at this crop a rotation
+    of the size the engine actually gives subtends enough frame to READ as a glance, and beat 04''s done_when
+    asks for live eyes under a held breath, not for a particular muscle. If it reads, it passes.'
+  t2_head_travel_is_measured_not_forbidden: Head-band ink centroid travel, rung 1's instrument and rung
+    1's rows (100-520), PUBLISHED WHATEVER IT IS and scored against nothing. It is here so the three rungs
+    are comparable -- 64.7 px at z 1.0, 4.7 px with the head locked -- and so a future reader can see
+    what the crop did to the number. A bar on it would re-open the wording ladder these two rungs closed.
+  t3_the_ratified_adult_holds: 'Same lean wiry adult goblin at frame 121 as at frame 1: green skin, bald
+    dome, long pointed ears, one face, one figure, NO DRIFT TOWARD A CHILD. Canon: pipeline/canon.yaml
+    ep2-goblin-design-adult, founder-ratified 2026-08-19. This is the clause the whole job is for and
+    it outranks T1: a clip that finds the glance and loses the character is a FAIL, because the character
+    is what the founder complained about on 08-20.'
+  t4_the_ears_survive_the_crop: Both long pointed ears are inside the frame at f000 and at f120. Scored
+    on the z 1.7 rungs and EXPECTED TO FAIL on z 2.4, which is filed as a bracket. It is a separate clause
+    from T3 because the ears are the cheapest read on this design and losing them to the crop would be
+    buying the glance with the character.
+  t5_rung_1s_passing_clauses_hold: 'Mouth shut for all 121 frames -- beat 04 has no spoken line and an
+    open mouth is a speech cue. Camera locked: no pan, tilt, dolly or zoom. Both passed in rungs 1 and
+    2; losing one would mean the crop bought its win somewhere else.'
+failure_predicted_in_advance: T-FROZEN. Rung 1's motion was spread across the frame and a large share
+  of it was grass; this crop throws most of the grass away, and rung 2 already showed that when this engine
+  runs out of things to move it holds rather than invents. If T-FROZEN fires on all three seeds, beat
+  04 as written is not reachable on this engine and the honest report to the founder is that the beat
+  needs a different action or a different tool -- his call, not this lane's.
+how_to_judge_this_in_the_morning: Contact-sheet level, by eye, one line per clip. Extract f000/f030/f060/f090/f120
+  from all four, tile them next to rung 1's clip and next to the child take that shipped, and answer T1,
+  T3 and T4 off the sheet. Only if T1 is arguable does the head-band number get computed. The founder's
+  complaint is a design complaint and T3 is the clause that answers it, so a rung that passes T3 and fails
+  T1 is still worth reporting as a design-clean fallback.
+init_provenance: 'Rung 1''s plate, unchanged and unmoved: 04-the-footnote-mac-plate-r1s1.png, sha256 5dd35da532612e5d85c15ef3353068bf1e44675f8ddfc73c316ac2f654d4e350,
+  published through ep2-b04-mac-plate-0819 and resolvable on origin/farm-results-rtx5090, so the plate
+  and refs guards RUN and PASS with no plate_ack. The sha is asserted inside cover_crop.py before anything
+  is written, so a crop of the wrong plate cannot happen silently. THE CROP WAS RUN ON THIS EXACT FILE
+  LOCALLY BEFORE THIS JOB WAS FILED and the three framings were read at 1:1 -- $0, PIL only, no model.'
+not_done_on_purpose: 'No prompt edit. No negative edit. No crf change. No frame or fps change. No new
+  argv flag -- the zoom lives in the payload so the invocation is identical to the parent''s. No fourth
+  wording: rungs 1 and 2 closed that route from both sides and re-opening it here would make any result
+  ambiguous.'
+pre_registered_fail_modes: 'T-FROZEN -- the tight crop removes the grass, which is most of what moved
+  in rung 1, and the clip comes back dead. Named as the most likely and it is a FAIL, not a tidy still:
+  rung 2 already produced the degenerate pass once and it was reported as a failure. T-THE-CROP-IS-NOT-ENOUGH
+  -- the rotation is the same 64.7 px of plate and still reads as a twitch rather than a glance; the z
+  2.4 bracket exists to tell that apart from ''more crop would fix it''. T-IDENTITY-DRIFT-ON-A-BIGGER-FACE
+  -- a face at this scale gives the sampler more room to redraw features; --image-crf 10 is what stands
+  between this and the drift that fired at 33, and if T3 fails while the flag is at 10 that is a finding
+  about crop scale and not about the flag. T-THE-EARS-GO -- expected on z 2.4 by construction, and would
+  be a real loss on z 1.7. T-SEEDS-AGREE -- all three draws at z 1.7 do the same thing, in which case
+  the answer is the framing and not the draw, and the next move is a different staging rather than more
+  seeds.'
+the_one_variable: The init's framing, and nothing else. cover_crop.py takes a centred sub-box at ZOOM
+  2.4, centre y 0.4, instead of the whole plate; the step's argv, the source plate, its asserted sha,
+  the prompt, the negative, the frame count, the fps, the guidance, the sigmas, the two-stage flag, the
+  offload mode and --image-crf 10 are rung 1's byte for byte. The three z 1.7 rungs differ from each other
+  ONLY in seed.
+derivation:
+  parent: pipeline/jobs/ep2-b04-eyes-crf10-0819.yaml
+  by: pipeline/derive_spec.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - how_to_judge_this_in_the_morning
+  - init_provenance
+  - not_done_on_purpose
+  - owner
+  - pre_registered_fail_modes
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - init_provenance
+  - next_rung_named_not_taken
+  - not_done_on_purpose
+  - pre_registered_fail_modes
+  - pre_registered_fail_modes_as_fired
+  - verdict
+  - verdict_measured
+  - what_this_did_not_settle
+  - what_this_does_not_license
+  - what_this_settles
+  retokened:
+  - ep2-b04-eyes-crf10-0819 -> ep2-b04-tightcrop-z24-0820
+  overrides_applied_and_asserted:
+    key:est_minutes:
+    - key est_minutes = 7
+    payload:cover_crop.py:
+    - payload cover_crop.py (1380 -> 2065 chars)
+    seed:
+    - payload b04-jobs-render.json (20260819 -> 20260819, re-parsed)
+  seed: 20260819

@@ -136,7 +136,8 @@ NEG_R2 = ("extra head, disembodied head, multiple heads, floating head, "
 
 def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
          extra_keys=None, neg_add=None, ip_scale=None, ip_ref=None,
-         pos_add=None, pose_override=None, pose_words_override=None):
+         pos_add=None, pose_override=None, pose_words_override=None,
+         control_scale=None, seed=None):
     if beat not in C.WAVE:
         raise SystemExit("!! beat %r is not in the wave" % beat)
     pose, pose_words, default_emotion, stage = C.WAVE[beat]
@@ -152,6 +153,8 @@ def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
         prompt = prompt.replace(C.IDENTITY, C.IDENTITY + ", " + pos_add, 1)
     negative = C.NEGATIVE + ((", " + neg_add) if neg_add else "")
     ip_scale = ip_scale or C.IP_SCALE
+    control_scale = control_scale or C.CONTROL_SCALE
+    seed = seed or C.SEED
     ip_ref = ip_ref or C.IP_REF
     ip_ref_sha = C.REF_SHA[ip_ref]
 
@@ -243,6 +246,8 @@ def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
         "argv:--ip-mask": mask,
         "argv:--ip-scale": ip_scale,
         "argv:--repo-commit": C.ASSET_COMMIT,
+        "argv:--scale": control_scale,
+        "argv:--seed": str(seed),
         "payload:prompt.txt": prompt,
         "payload:negative.txt": negative,
         "key:beat": int(beat),
@@ -275,8 +280,8 @@ def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
                        ("--ip-mask", mask),
                        ("--ip-scale", ip_scale),
                        ("--ip-weight", C.IP_WEIGHT),
-                       ("--scale", C.CONTROL_SCALE),
-                       ("--seed", str(C.SEED)),
+                       ("--scale", control_scale),
+                       ("--seed", str(seed)),
                        ("--arm", C.ARM),
                        ("--task", new_id)):
         if argv.count(flag) != 1:
@@ -361,6 +366,8 @@ def main(argv=None):
     ap.add_argument("--ip-ref")
     ap.add_argument("--pose", help="skeleton pose override (a rung lever)")
     ap.add_argument("--pose-words", help="pose+location clause override")
+    ap.add_argument("--control-scale", help="ControlNet scale (a rung lever)")
+    ap.add_argument("--seed", type=int)
     ap.add_argument("--commit", help="the asset commit to pin as --repo-commit")
     ap.add_argument("--force", action="store_true")
     a = ap.parse_args(sys.argv[1:] if argv is None else argv)
@@ -386,7 +393,8 @@ def main(argv=None):
         emit(a.beat, rnd=a.round, emotion=a.emotion, force=a.force,
              neg_add=a.neg_add, pos_add=a.pos_add, ip_scale=a.ip_scale,
              ip_ref=a.ip_ref, pose_override=a.pose,
-             pose_words_override=a.pose_words)
+             pose_words_override=a.pose_words,
+             control_scale=a.control_scale, seed=a.seed)
         return 0
     ap.error("pass --sample, --wave or --beat N")
 

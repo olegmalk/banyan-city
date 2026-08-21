@@ -1,0 +1,197 @@
+# ep2-b10-cast-0817 -- 2026-08-17, GUARD CAST REDRAW. Beat 10, NO FORM.
+#
+# READ THIS FIRST: DIAGNOSTIC RUNG, NOT A SHIPPING PLATE, and it is one because it
+# OMITS EYEWEAR THE APPROVED CAST CARRIES. Founder, 2026-08-17: "draw the second
+# man without glasses. we need to have control." Guard A carries the wire-rims as
+# drawn, guard B carries none. The engine does not have that control today --
+# `glasses` inside exactly one man's clause landed on BOTH men at 5 of 5 legible
+# two-guard renders, at seeds where hair and garments separated cleanly -- and a
+# SEPARATE LANE OWNS THAT BINDING. This job does not attempt it and must not be
+# read as having answered it: both men are drawn with no eyewear so the only thing
+# this rung varies is the instrument named below. NO LATER LANE MAY PROMOTE A
+# PASSING FRAME HERE TO A SHIPPING PLATE -- guard A has no glasses in any of them.
+#
+# THE ONE VARIABLE, and it is an INSTRUMENT rather than a noun. Four beat-10 plates
+# were drawn on 2026-08-17 and their read is recorded in `beats.10.plate_lane_0817`:
+# count, world and cast all came right, and THE BOARD WENT TO GUARD A OR TO BOTH
+# MEN AT 4 OF 4 -- with the board clause written INSIDE guard B's own person clause
+# and B named first. Hair and garments bind to their person clause; A PROP DOES
+# NOT, it attaches to whichever figure is drawn NEAREST. This draft stops fighting
+# that law and uses it: GUARD B IS `the near one` AND HOLDS THE BOARD, GUARD A IS
+# `the far one`. That is the whole change. The hand-occupying instrument that failed
+# there (`hands behind his back`, which came back as arms folded in front and so was
+# never actually tested) is NOT retried here; the far man gets `arms down` only.
+#
+# WHY THE BEAT WANTS TWO GUARDS AND KEEPS THEM. Unlike beats 07 and 08, whose
+# three-figure clauses were corrected to two, beat 10's `done_when` is right as
+# written: "TWO guards in frame; the near one flips the bark board and holds its
+# blank back TOWARD HIS PARTNER". The partner IS the target of the gesture, so he
+# cannot be dropped, and that is exactly why the prop must be bound to the correct
+# one of two same-species figures.
+#
+# WHY AT ALL. `guard_plates_are_miscast_0816`: 0 of 17 guard plate prompts name the
+# approved cast, 14 of 17 ask for `bald`, and NEITHER APPROVED GUARD IS BALD. This
+# beat's own shipping fault -- "the two guards read younger and softer than the
+# guards in 06 and 11", carried for days as "a taste call and his" -- was
+# re-explained by that finding as a casting contradiction, not a taste question.
+# Wardrobe frozen by the founder 2026-08-16, "the cast stands as drawn".
+#
+# THE PROMPT, verbatim from pipeline/wave-drafts.yaml beats.10.authored_b10_cast_0817
+# (repo sha 504b1810a8629fcc9d2868641900b24b9d290551099a5ace359a7db13613be09; the
+# harness copy was hashed on the box with certutil after the sync and matches):
+#
+#   Two guard men, the near one light sandy hair, cream shirt, brown skirt, holds a
+#   blank bark board in both hands, the far one dark cropped hair, tan tunic, arms
+#   down, tall grass, hedgerow, pale sky above, cinematic lighting, masterpiece,
+#   best quality, very aesthetic No girl, no child, no armor, no helmet, no knight,
+#   no white background, no plain background, no dark, no night. No photorealism,
+#   no 3D render look. 9:16 vertical, no text.
+#
+# TOKENS AND THE TRADES, NAMED SO THEY ARE THE FIRST SUSPECTS. 77 of 77 positive --
+# exactly on the ceiling -- and 65 of 77 negative, measured on the string that gets
+# sent via render_wave_goblin.check() and sd_prompt.negative_tokens, with ZERO
+# faults including the `2boys` count tag this block declares. NOT the prose
+# estimator, which under-counts a tag list by up to 10 tokens and reports headroom
+# while CLIP has already dropped the style anchor. The style tail is NOT cut and is
+# byte-identical to the other seven cast drafts. What was traded: the word `behind`
+# out of `hedgerow behind`; `in tall grass` moved out of the lead clause into the
+# world list; and GUARD A'S WHITE WAIST SASH IS NOT NAMED AT ALL. THE BAR BELOW
+# THEREFORE DOES NOT SCORE THE FAR MAN'S SASH -- a missing or merged sash there is
+# not evidence of anything, because nothing asked for it.
+#
+# THE OTHER LAWS. THE HAND LAW: all four hands are specified, `in both hands` on the
+# near man and `arms down` on the far one, because last time only the near man's
+# were and the far pair came back holding a bamboo pole at one seed and a duplicate
+# board at another WITH `weapon` in the negative. THE VACANCY LAW ABOVE THE HORIZON:
+# `pale sky above` gives the upper third its own positive noun; `horizon` is negated
+# nowhere.
+#
+# WHAT A PASS HERE WOULD AND WOULD NOT MEAN, said before the render. It would mean
+# the prop binds by ADJACENCY, which is a general finding beats 06 and 08 also need.
+# It would NOT mean beat 10 is renderable: this beat's action is a small in-hand
+# manipulation, which measures 0 of 8 in-hand against 12 of 12 whole-body, and the
+# composition fix for it reproduced 0 of 4. A passing plate here does not imply a
+# passing beat and no motion may be inferred from it.
+#
+# NO plate_ack, no drafts_ack, no gate. $0, local card, no provider, no spend.
+id: ep2-b10-cast-0817
+task: ep2-b10-cast-0817
+node: 002b-first-citizen
+beat: 10
+runner: box
+needs_gpu: true
+priority: 6
+max_attempts: 1
+sample: true
+owner: guard cast-redraw lane, 2026-08-17 -- filed to backlog immediately after its dry run, with ready at 3 jobs
+  and the backlog empty
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml. A STILL PLATE on an approved node: no
+  voice, no motion, no episode assembly, no publication.'
+script_line: 'Beat 10 NO FORM (0:47-0:52): Guard 2 flips the clipboard around and holds its blank back toward Guard
+  1.'
+consumer: 'The beat-10 plate question, and every beat that needs the bark board to belong to a named man -- 06, 08
+  and 10 all name it in their action. The blocker here is isolated and is not the cast: four plates on 2026-08-17
+  got count, world and cast right and lost the BOARD to the wrong man at 4 of 4. This rung tests the one instrument
+  that follows from the diagnosis rather than fighting it: draw the owner NEAREST.'
+success: 'THE BAR, PRE-REGISTERED BEFORE THE PIXELS EXIST, scored by eye per frame across all 16 and reported as N
+  of 16 with a per-condition rate across the four seeds. THE TERM THIS RUNG EXISTS FOR: (1) THE BOARD IS IN THE NEAR
+  MAN''S HANDS AND ONLY HIS -- both of his hands on it, no second board anywhere, and no hand of the far man touching
+  it. That is the pass/fail of the experiment; everything else is a control. CAST AND COUNT CONTROLS: (2) exactly TWO
+  adult human figures, both whole-bodied, neither a child; (3) the near man has LIGHT SANDY hair, a cream shirt and
+  a brown wrap skirt; (4) the far man has DARK CROPPED hair and a tan tunic -- HIS SASH IS NOT SCORED, the prompt
+  had no budget for it; (5) NEITHER MAN IS BALD; (6) the two men are distinguishable from each other -- both dark
+  or both sandy is a FAIL even if each looks individually right. PROP AND WORLD CONTROLS: (7) the board is hand-sized,
+  flat, rectangular and BLANK on the face shown, with no hand across it; (8) tall grass at ground level, a hedgerow
+  band, and sky ABOVE it, all three with real content; (9) no white or plain background and not a downward plan view;
+  (10) the far man''s hands are EMPTY -- no pole, no duplicate board, nothing. PRE-REGISTERED FAIL MODES, recorded
+  by name whether or not they fire: the board reaching the far man or both men anyway, which would mean adjacency
+  is not the binding either and the remaining options are all bigger than a rung (identical dress, or a composite);
+  a SECOND board hanging in the air with no hand on it, the founder''s own named defect and what the previous r2 reproduced;
+  the board reading as paper rather than bark, which is the prop''s long-standing wording failure and is scored SEPARATELY
+  from ownership; eyewear appearing on either man unprompted, which is a finding to hand the binding lane. A term
+  found loose is said so and tightened FORWARD, never rewritten after seeing the picture.'
+why: 'The board is the one blocker left on this beat''s plate and it is now isolated: a prop does not bind to a person
+  clause, it goes to whoever is drawn nearest. This rung applies that finding as the only change -- owner nearest,
+  same refs, same arm, same seeds -- and it is the cheapest of the three remaining options by a wide margin (the others
+  are dressing both men identically, which changes the cast, or compositing). Minutes of local GPU, $0, no provider.'
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '10'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b10-cast-0817
+  - --draft-key
+  - authored_b10_cast_0817
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '10'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b10-cast-0817
+  - --draft-key
+  - authored_b10_cast_0817
+  - --arm
+  - window4
+  - --task
+  - ep2-b10-cast-0817
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  # THE GLOB CARRIES THE BEAT SLUG (no-form) the sampler actually writes. A glob
+  # without it matches nothing and publishes nothing while still returning a code
+  # that reads like a render failure.
+  - "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/goblin-ipa-0812/out-b10-cast-0817\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b10-cast-0817\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(srcdir + \"/10-no-form-*\"))\npngs = [f for f in\
+    \ src if f.lower().endswith(\".png\")]\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b10-cast-0817.sha256\"), \"w\", newline=\"\\n\")\
+    \ as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s),\",\
+    \ len(pngs), \"png + manifest ->\", dst)\nraise SystemExit(0 if len(pngs) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b10-cast-0817\10-no-form-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b10-cast-0817\10-no-form-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b10-cast-0817\10-no-form-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b10-cast-0817\10-no-form-ipa-r3-w015-s0.png

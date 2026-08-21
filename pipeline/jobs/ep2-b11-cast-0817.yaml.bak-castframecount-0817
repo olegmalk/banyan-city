@@ -1,0 +1,188 @@
+# ep2-b11-cast-0817 -- 2026-08-17, GUARD CAST REDRAW. Beat 11, THEY LEAVE.
+#
+# READ THIS FIRST: DIAGNOSTIC RUNG, NOT A SHIPPING PLATE, because it OMITS EYEWEAR
+# THE APPROVED CAST CARRIES. Founder, 2026-08-17: "draw the second man without
+# glasses. we need to have control." Guard A carries the wire-rims as drawn, guard
+# B carries none, and `glasses` inside one man's clause landed on BOTH men at 5 of
+# 5 legible two-guard renders. A SEPARATE LANE OWNS THAT BINDING; this job does not
+# attempt it and no later lane may promote a passing frame here to a shipping plate.
+# On this beat the omission costs almost nothing to the READ, because both men have
+# their backs to camera and no face is in frame at all -- which is also why the
+# defect this rung fixes was fatal here in particular.
+#
+# THIS IS A PLATE, NOT MOTION. Beat 11's motion is DONE: `s20260903` is the first
+# take in this episode to clear its whole definition, and the cut is being rebuilt
+# around it. NO MOTION SEEDS ARE FILED HERE AND NONE MAY BE INFERRED FROM THIS
+# JOB. What is still wrong is the picture the beat is conditioned on.
+#
+# THE ONE VARIABLE. The draft key. refs-guards-twoinfield-nos2-0815, --arm window4,
+# 4 seeds, no --ref-prefix, no --seed-start -- byte-identical to the six cast specs
+# filed before it today and to ep2-b09-plate-nos2-0815 before them.
+#
+# WHY THIS BEAT IS THE ONE THE MISCASTING WAS FIRST RECORDED ON, WITH THE CAUSE THE
+# WRONG WAY ROUND. `beats.11.override_third_check_0815` logs "TOTAL IDENTITY
+# COLLAPSE AWAY FROM THE PLATE - the near guard's bald scalp fills in with dark hair
+# CONTINUOUSLY across f16-f21". The plate asked for bald. Dark hair is what guard A
+# ACTUALLY IS. So the thing recorded as the defect was the render drifting TOWARD
+# the approved cast, and the lever named in `blocked_on_0815` -- "whatever binds
+# identity to the plate through a turn - the plate itself was right at f0" -- is
+# aimed at the wrong thing, because the plate was NOT right at f0. The take is still
+# broken either way; a head changing mid-shot is unshippable in both directions.
+# `guard_plates_are_miscast_0816`: 0 of 17 guard plate prompts name the approved
+# cast, 14 of 17 ask for `bald`, and NEITHER APPROVED GUARD IS BALD.
+#
+# AND WHY IT MATTERS MOST HERE. Both men are walking away with their backs turned.
+# HAIR IS THE ONLY CAST ATTRIBUTE STILL LEGIBLE -- no face, no glasses, no collar.
+# A beat whose only identity signal is the one attribute every prompt got backwards
+# is the beat where this correction is worth the most.
+#
+# THE PROMPT, verbatim from pipeline/wave-drafts.yaml beats.11.authored_b11_cast_0817
+# (repo sha 504b1810a8629fcc9d2868641900b24b9d290551099a5ace359a7db13613be09; the
+# harness copy was hashed on the box with certutil after the sync and matches):
+#
+#   Two guard men walk away, backs turned, one with dark cropped hair, tan tunic,
+#   white sash, the other light sandy hair, cream shirt, brown skirt, arms swinging,
+#   tall grass, hedgerow ahead, pale sky above, cinematic lighting, masterpiece,
+#   best quality, very aesthetic No girl, no child, no armor, no helmet, no knight,
+#   no white background, no plain background, no dark, no night. No photorealism,
+#   no 3D render look. 9:16 vertical, no text.
+#
+# TOKENS AND THE TRADE. 74 of 77 positive, 65 of 77 negative, measured on the string
+# that gets sent through render_wave_goblin.check() and sd_prompt.negative_tokens,
+# ZERO faults including the `2boys` count tag this block declares -- not the prose
+# estimator, which under-counts a tag list by up to 10 tokens and reports headroom
+# while CLIP has already dropped the style anchor. The style tail is NOT cut and is
+# byte-identical to the other seven cast drafts. TRADED: `wrap` out of both garment
+# names (`tan tunic`, `brown skirt`) and `from the camera` out of the walk clause.
+# Those four words are the first suspects if the garments read as the wrong cut or
+# the men turn out to be walking across frame instead of away from it.
+#
+# THE LAWS APPLIED. THE HAND LAW: `arms swinging` specifies all four hands, which is
+# the whole reason it is in a prompt for a beat where nobody carries anything --
+# beat 10 left the far man's pair unspecified and got a bamboo pole at one seed and
+# a duplicate board at another WITH `weapon` negated. THE VACANCY LAW ABOVE THE
+# HORIZON: `pale sky above` gives the upper third its own positive noun; a ground
+# noun cannot fill a sky region, and `horizon` is negated nowhere.
+#
+# NO plate_ack, no drafts_ack, no gate. $0, local card, no provider, no spend.
+id: ep2-b11-cast-0817
+task: ep2-b11-cast-0817
+node: 002b-first-citizen
+beat: 11
+runner: box
+needs_gpu: true
+priority: 7
+max_attempts: 1
+sample: true
+owner: guard cast-redraw lane, 2026-08-17 -- filed to backlog immediately after its dry run, with ready low and the
+  backlog empty
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml. A STILL PLATE on an approved node: no
+  voice, no motion, no episode assembly, no publication.'
+script_line: 'Beat 11 THEY LEAVE (0:53-0:57): two guards walk away from camera, backs turned, still arguing.'
+consumer: 'The beat-11 plate, and the identity-through-motion question this beat''s log is the main evidence for.
+  The MOTION is already done at s20260903 and nothing here re-opens it. What this feeds is the record: the plate the
+  passing take and every earlier take were conditioned on asked for a bald man, and the beat''s headline fault was
+  the render growing the approved cast''s dark hair. A cast-correct plate is what any future re-render of this beat,
+  and any reading of that log, has to be measured against.'
+success: 'THE BAR, PRE-REGISTERED BEFORE THE PIXELS EXIST, scored by eye per frame across all 16 and reported as N
+  of 16 with a per-condition rate across the four seeds. THE TERMS THIS BEAT LIVES ON, because hair is the only cast
+  signal a back view carries: (1) NEITHER MAN IS BALD and neither has a bare scalp; (2) one man''s hair is DARK and
+  CROPPED, the other''s LIGHT SANDY -- both dark or both sandy is a FAIL of the term even if each man individually
+  looks right, since this is the frame where the two men are hardest to tell apart. POSE AND COUNT: (3) exactly TWO
+  adult human figures, both whole-bodied, neither a child; (4) BOTH have their BACKS to camera and are walking AWAY
+  from it -- not across frame, not turned toward the lens; (5) all four hands visible and EMPTY, no board, pole or
+  prop. GARMENTS: (6) a tan tunic with a white sash on the dark-haired man; (7) a cream shirt and brown skirt on the
+  sandy-haired one; (8) the garments do not swap or merge between the two. WORLD: (9) tall grass at ground level, a
+  hedgerow band ahead of them, and sky ABOVE it, all three with real content; (10) no white or plain background, and
+  not a downward plan view. PRE-REGISTERED FAIL MODES, recorded by name whether or not they fire: the two men rendering
+  as ONE man twice, which a back view makes likelier than any other framing; the walk reading as ACROSS frame rather
+  than away, which is the traded `from the camera` and must be blamed there first; the garments reading as the wrong
+  cut, which is the traded `wrap`; a face appearing, i.e. one or both men turning; eyewear appearing unprompted, which
+  is a finding to hand the binding lane. A term found loose is said so and tightened FORWARD, never rewritten after
+  seeing the picture.'
+why: 'Beat 11 is where the miscasting was first written down and misdiagnosed -- a render growing guard A''s real dark
+  hair over a prompted bald scalp was logged as identity collapse AWAY from the plate. It is also the beat with the
+  fewest cast signals available: backs turned, no face, so hair is all there is, and hair is the attribute 14 of 17
+  prompts got exactly backwards. Correcting the plate is cheap, and the beat''s motion is already done so nothing
+  downstream is waiting on a decision here. Minutes of local GPU, $0, no provider.'
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '11'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b11-cast-0817
+  - --draft-key
+  - authored_b11_cast_0817
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '11'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b11-cast-0817
+  - --draft-key
+  - authored_b11_cast_0817
+  - --arm
+  - window4
+  - --task
+  - ep2-b11-cast-0817
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  # THE GLOB CARRIES THE BEAT SLUG (they-leave) the sampler actually writes. A glob
+  # without it matches nothing and publishes nothing while still returning a code
+  # that reads like a render failure.
+  - "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/goblin-ipa-0812/out-b11-cast-0817\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b11-cast-0817\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(srcdir + \"/11-they-leave-*\"))\npngs = [f for f in\
+    \ src if f.lower().endswith(\".png\")]\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b11-cast-0817.sha256\"), \"w\", newline=\"\\n\")\
+    \ as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s),\",\
+    \ len(pngs), \"png + manifest ->\", dst)\nraise SystemExit(0 if len(pngs) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b11-cast-0817\11-they-leave-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b11-cast-0817\11-they-leave-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b11-cast-0817\11-they-leave-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b11-cast-0817\11-they-leave-ipa-r3-w015-s0.png

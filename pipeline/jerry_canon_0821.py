@@ -173,7 +173,14 @@ NEGATIVE = ("lowres, worst quality, low quality, text, watermark, "
             "blank eyes, no pupils, thick eyebrows, "
             "cloak, hood, patchwork, "
             "human face, wrinkled skin, old man, hair, beard, "
-            "child, chibi, 2boys")
+            "child, chibi, 2boys, "
+            # ROUND-TWO/THREE CONTAINMENT, promoted into the default. These do
+            # not by themselves remove anything -- r2 proved that on the ghost
+            # head and r5 proved it again on the eyepatch -- they are kept
+            # because they are cheap and because a term that is absent cannot
+            # help once the geometry is right.
+            "multiple heads, disembodied head, glowing eyes, orange eyes, "
+            "third eye, eyepatch")
 SEED = 20260823                    # the wave's seed, held so takes compare
 
 # The per-beat lever, and the whole per-beat lever. One mouth tag, one brow tag.
@@ -248,10 +255,10 @@ CONTROL_SCALE = "1.0"
 RENDER_W, RENDER_H = 832, 1216
 
 # ── 5. THE ADAPTER. ──────────────────────────────────────────────────────────
-IP_REF = "jerry-canon-sq22-0821"
-IP_REF_HEAD_FRAC = 0.22
-IP_REF_SHA = "bb10bbb269f07849365693a2f277c05624f6cc0fbe4f4dffe8adbe9fb205416e"
-IP_REF_ENCODED_PCT = 6.7
+IP_REF = "jerry-canon-sq45-0821"
+IP_REF_HEAD_FRAC = 0.45
+IP_REF_SHA = "066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c"
+IP_REF_ENCODED_PCT = 28.3
 # Every reference on disk, so a rung may name one by stem and the fetch step
 # still sha-asserts it. Built by REF_BUILDER at the head-frac in the name.
 REF_SHA = {
@@ -268,8 +275,24 @@ REF_SHA = {
     "jerry-canon-sq45-0821":
         "066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c",
 }
-IP_SCALE = "0.7"                   # k6a's, unchanged: the reference moved, not
-                                   # the strength, so this stays a fixed point.
+# 1.0, NOT k6a's 0.7, AND THE PAIR (sq45, 1.0) IS ONE FINDING, NOT TWO DIALS.
+# Rounds four to seven all drew a HARD PATCH OVER ONE EYE -- a black lozenge, a
+# stitched pad, a monocle, a blank oval, depending on the rung. It survived
+# every single-variable attack: three eyepatch/facial-mark tags in the negative
+# (which only MORPHED it, once into a third eye in the middle of the forehead),
+# ControlNet scale 1.0/0.8/0.6, ip_scale 0.9/0.7/0.55, references at 0.22/0.25/
+# 0.45, and four different seeds. The encoded reference was blown up to 8x and
+# inspected: a clean symmetric face, no patch, so it was never being copied.
+#
+# WHAT IT ACTUALLY WAS: not enough face to go round. At head_frac 0.370 the head
+# is 360 px of an 832x1216 render, while the 0.22 reference gave CLIP a subject
+# 85x65 px with eyes about 10 px across. A weak, low-resolution face signal
+# stretched over a very large head resolves as mush, and the denoiser resolves
+# mush into an object. r8 raised BOTH the reference detail (6.7% -> 28.3% of the
+# encoder) and the strength (0.7 -> 1.0) and both eyes came back clean, on the
+# seated beat and the standing beat at once. They move together because either
+# alone had already been tested and failed.
+IP_SCALE = "1.0"
 IP_WEIGHT = "ip-adapter-plus-face_sdxl_vit-h.safetensors"
 IP_WEIGHT_SHA = ("677ad8860204f7d0bfba12d29e6c31ded9beefdf3e4bbd102518357d31"
                  "a292c1")
@@ -277,7 +300,7 @@ ASSET_DIR = "farm-out/jerry-canon-assets-0821"
 ASSET_URL = ("https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
              + ASSET_DIR + "/")
 REF_BUILDER = "pipeline/author_jerry_canonref_0821.py"
-REF_BUILDER_ARGS = ["--head-frac", "0.22"]
+REF_BUILDER_ARGS = ["--head-frac", "0.45"]
 DRIVER = "controlnet_plate.py"
 DRIVER_SHA = "ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32"
 ARM = "ipahead"

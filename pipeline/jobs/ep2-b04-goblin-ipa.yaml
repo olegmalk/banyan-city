@@ -1,0 +1,198 @@
+# 002b beat 04 — ONE SAMPLE of a CONSISTENCY MECHANISM. Not a wave, not a
+# pick sheet, and not a second opinion on what a goblin is.
+#
+# THE DEFECT. Commit 406909c, on the wave-1 sample: "green four times, tusked
+# three times, and four different creatures." Green and tusks are prompt-level
+# attributes and the prompt delivered them. Identity is not a prompt-level
+# attribute — under text conditioning alone the seed picks the creature, so
+# four seeds picked four creatures. A fifteen-beat wave whose goblin is a
+# different animal each beat is broken whatever anyone's taste says, so this
+# job is a technical fix and carries no `gate:`: it is not waiting on a verdict
+# because it is not asking for one.
+#
+# THE ONE VARIABLE. Same beat, same four seeds (20260723/20261723/20262723/
+# 20263723), same prompt string built by the same render_wave_goblin.check()
+# from the same wave-drafts.yaml, same `green skin, tusks`, same 40 steps, 7.5
+# guidance, 832x1216 and same negative — all of it verified identical to the
+# wave-1 sidecars by a dry run before this spec was written (69 positive tokens
+# on the box's real CLIP tokenizer, matching 04-the-footnote-wave1-s0.yaml).
+# What changes is that the UNet also sees an image, through IP-Adapter Plus.
+#
+# WHY THIS MECHANISM AND NOT MORE TAGS. The obvious consistency fix is a longer,
+# more specified character description, and it costs two things this project
+# cannot pay. Tokens: beat 08 of this wave has 9 of headroom, and compress()
+# drops TRAILING sentences, so an overrun returns unstyled rather than short.
+# And the founder's own constraint — "nothing complex" — is an instruction
+# AGAINST elaboration, so the tag fix argues with him. IP-Adapter adds zero
+# prompt tokens and adds no words to the character at all.
+#
+# NOTHING IS DOWNLOADED AND NOTHING IS PICKED. Both IP-Adapter files
+# (sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors and models/image_encoder)
+# were already in the box HF cache; h94/IP-Adapter is Apache-2.0. IP-Adapter
+# FaceID was REJECTED on licence, not on fit: it is released "exclusively for
+# research purposes and is not intended for commercial use" because InsightFace
+# is non-commercial — the same trap as Depth-Anything-V2 Base's cc-by-nc-4.0.
+# The reference image is one of the four wave-1 frames and ALL FOUR are used in
+# turn, so no frame is anointed; choosing the goblin is R4's and this job does
+# not do it.
+
+id: ep2-b04-goblin-ipa
+task: ep2-b04-goblin-ipa-0810
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 40
+max_attempts: 1
+owner: goblin-consistency lane
+
+consumer: >-
+  The decision about how episode 2 gets a goblin who is the same character in
+  all fifteen beats. Wave-1 answered "he is green and he has tusks" and left
+  the wave unshippable; until a mechanism is measured, every one of the
+  fourteen staged specs would render a fifteenth different creature. The output
+  of this job is a number and a contact sheet the founder can look at, not a
+  candidate he is asked to rank.
+
+success: >-
+  24 PNGs at C:\banyan-farm\goblin-ipa-0810\out (6 cells x 4 seeds), each with
+  its .yaml provenance sidecar written at render time (7.2), plus
+  identity-agreement.yaml carrying mean pairwise DINOv2 and CLIP-I agreement
+  for the wave-1 baseline and for every cell. The job succeeds by producing the
+  measurement, INCLUDING a measurement that says the mechanism failed — a low
+  number here is a result, not a failed job.
+
+why: >-
+  One variable against the wave-1 sample: the conditioning. The headline arm is
+  all four references at scale 0.6 (the diffusers docs put 0.5 at "balanced
+  between the text and image prompt"); a 0.4/0.8 sweep on one reference follows
+  so the knob is measured rather than asserted. Sequential, one image at a
+  time — batch-of-4 configs are banned on this card.
+
+est_minutes: 9
+
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\out
+  - --out
+  - C:\banyan-farm\goblin-ipa-0810\out
+  - --task
+  - ep2-b04-goblin-ipa-0810
+
+# The baseline is measured by the SAME code in the SAME run as the treatment.
+# Measuring wave-1 separately, earlier, or on the Mac would leave the delta
+# resting on two runs of two builds of two models, which is how a difference in
+# the instrument gets reported as a difference in the frames. facebook/dinov2-base
+# is Apache-2.0 and was pulled into the cache before this spec was queued.
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\identity_agreement.py
+  - --group
+  - wave1-baseline=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s*.png
+  - --group
+  - ipa-ref0-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c060-s*.png
+  - --group
+  - ipa-ref1-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r1-c060-s*.png
+  - --group
+  - ipa-ref2-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r2-c060-s*.png
+  - --group
+  - ipa-ref3-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r3-c060-s*.png
+  - --group
+  - ipa-ref0-scale040=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c040-s*.png
+  - --group
+  - ipa-ref0-scale080=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c080-s*.png
+  - --ref-for
+  - ipa-ref0-scale060=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s0.png
+  - --ref-for
+  - ipa-ref1-scale060=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s1.png
+  - --ref-for
+  - ipa-ref2-scale060=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s2.png
+  - --ref-for
+  - ipa-ref3-scale060=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s3.png
+  - --ref-for
+  - ipa-ref0-scale040=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s0.png
+  - --ref-for
+  - ipa-ref0-scale080=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s0.png
+  - --out
+  - C:\banyan-farm\goblin-ipa-0810\out\identity-agreement.yaml
+
+# DURABILITY, unchanged from the wave specs and for the same reason: the
+# courier already commits farm-out and force-pushes on every job_done
+# (box_runner.py:486-506), so publishing is a COPY and touches no runner code
+# and no credentials. allow_fail because a failed copy must never mark a good
+# render failed.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-goblin-ipa"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0810/out/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        # Hash the COPY: what this records has to be the bytes that get
+        # committed, or the manifest attests to the wrong file.
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b04-goblin-ipa.sha256"), "w") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 24 stills + 24 sidecars + identity-agreement.yaml.
+    raise SystemExit(0 if len(src) == 49 else 1)
+
+artifacts:
+- C:\banyan-farm\goblin-ipa-0810\out\identity-agreement.yaml
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c060-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c060-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c060-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c060-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r1-c060-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r1-c060-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r1-c060-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r1-c060-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r2-c060-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r2-c060-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r2-c060-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r2-c060-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r3-c060-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r3-c060-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r3-c060-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r3-c060-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c040-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c040-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c040-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c040-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c080-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c080-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c080-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c080-s3.png

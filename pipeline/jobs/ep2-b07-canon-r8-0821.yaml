@@ -1,25 +1,24 @@
-id: ep2-b13-canon-s1-0821
-task: ep2-b13-canon-s1-0821
+id: ep2-b07-canon-r8-0821
+task: ep2-b07-canon-r8-0821
 node: 002b-first-citizen
-beat: 13
+beat: 7
 runner: box
-priority: 9
+priority: 6
 needs_gpu: true
 max_attempts: 1
-sample: true
+sample: false
 owner: canon lane, 2026-08-21
-consumer: THE JUDGEMENT THAT RELEASES THE CANON WAVE, and nothing else renders until it is made. On this
-  one frame depend six more plates, seven motion tranches and the swap into review/ep2-ship-0821. If it
-  fails, the round-2 variable is named in `round_2_lever` and the wave waits.
+consumer: The canon patch wave's plate for beat 07. A pass here becomes a plate CANDIDATE; the pick is
+  a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched
+  by this job.
 success: ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png
-  on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec,
+  on the bar in `bar`. Beat 07's own emotion (B3) is scored against the stage direction in this spec,
   not against a general impression.
-why: 'THE ONE SAMPLE FOR THE WHOLE CANON RECIPE, ROUND s1.
+why: 'BEAT 07 OF THE CANON PATCH WAVE, ROUND r8.
 
 
-  THE SHADE -- ''The scavenger''s legs give out and he drops to sit in the grass at the base of the stem,
-  then tips his head sideways into the sapling''s hand-sized patch of shade''. Line: ''...Thanks for the
-  shade.'' EXHAUSTED, and the first moment he is not being chased.
+  CONFISCATE -- ''Guard 1 points at the scavenger, decisive.'' He is the object of the sentence and has
+  just been identified. Apprehension, not panic: the guards are absurd and he is starting to notice.
 
 
   THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png,
@@ -48,13 +47,14 @@ env:
   HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
   PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
 payload:
-  C:\banyan-farm\b13canon-s1-0821\prompt.txt: masterpiece, best quality, 1boy, solo, goblin, green skin,
+  C:\banyan-farm\b07canon-r8-0821\prompt.txt: masterpiece, best quality, 1boy, solo, goblin, green skin,
     bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt,
-    black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees,
-    in tall grass, full body
-  C:\banyan-farm\b13canon-s1-0821\negative.txt: lowres, worst quality, low quality, text, watermark, blank
-    eyes, no pupils, thick eyebrows, cloak, hood, scarf, patchwork, human face, wrinkled skin, old man,
-    hair, beard, child, chibi, pointy nose, dot nose, 2boys
+    black shorts, boots, muted color, closed mouth, frown, worried, standing, arms at sides, beside tall
+    grass, full body
+  C:\banyan-farm\b07canon-r8-0821\negative.txt: lowres, worst quality, low quality, text, watermark, blank
+    eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair,
+    beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye,
+    extra eyes, forehead mark, eyepatch
 steps:
 - name: stage
   argv:
@@ -63,11 +63,11 @@ steps:
   - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT\
     \ -- driver, skeleton AND the IP-Adapter\n# reference. Emitted by pipeline/jerry_canon_0821.py.\n\
     import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-canon-assets-0821/\"\
-    \nroot = r\"C:\\banyan-farm\\b13canon-s1-0821\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \nroot = r\"C:\\banyan-farm\\b07canon-r8-0821\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
     \ \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\"),\n\
-    \        (\"jerry-canon-h37sit-0821.png\", os.path.join(root, \"pipeline\", \"control\"),\n      \
-    \   \"5a37c536d4bbd59b535154da56de164c6316a6844a033c823ee6c54860be08bb\"),\n        (\"jerry-canon-sq22-0821.png\"\
-    , os.path.join(root, \"pipeline\", \"control\"),\n         \"bb10bbb269f07849365693a2f277c05624f6cc0fbe4f4dffe8adbe9fb205416e\"\
+    \        (\"jerry-canon-h37f-0821.png\", os.path.join(root, \"pipeline\", \"control\"),\n        \
+    \ \"2b50d9e8076eab57373cafbe506f8f7ce73f6abbec3c65eacffcf877234ec13b\"),\n        (\"jerry-canon-sq45-0821.png\"\
+    , os.path.join(root, \"pipeline\", \"control\"),\n         \"066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c\"\
     )]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
     \ + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
     \    if got != sha:\n        print(\"!! %s fetched with sha %s, expected %s\"\n              % (name,\
@@ -76,60 +76,60 @@ steps:
 - name: posehint
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
-  - C:\banyan-farm\b13canon-s1-0821\src\pipeline\controlnet_plate.py
+  - C:\banyan-farm\b07canon-r8-0821\src\pipeline\controlnet_plate.py
   - --root
-  - C:\banyan-farm\b13canon-s1-0821\src
+  - C:\banyan-farm\b07canon-r8-0821\src
   - --repo-commit
-  - 7596da13302774ac5963ee8f3315e9fb5d4ab64d
+  - e7699d9d
   - --task
-  - ep2-b13-canon-s1-0821
+  - ep2-b07-canon-r8-0821
   - --arm
   - ipahead
   - --controlnet
   - xinsir/controlnet-openpose-sdxl-1.0
   - --control
-  - pipeline/control/jerry-canon-h37sit-0821.png
+  - pipeline/control/jerry-canon-h37f-0821.png
   - --control-sha256
-  - 5a37c536d4bbd59b535154da56de164c6316a6844a033c823ee6c54860be08bb
+  - 2b50d9e8076eab57373cafbe506f8f7ce73f6abbec3c65eacffcf877234ec13b
   - --scale
   - '1.0'
   - --seed
   - '20260823'
   - --ip-ref
-  - pipeline/control/jerry-canon-sq22-0821.png
+  - pipeline/control/jerry-canon-sq45-0821.png
   - --ip-mask
-  - 181,509,651,909
+  - 154,35,678,480
   - --ip-ref-sha256
-  - bb10bbb269f07849365693a2f277c05624f6cc0fbe4f4dffe8adbe9fb205416e
+  - 066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c
   - --ip-scale
-  - '0.7'
+  - '1.0'
   - --ip-weight
   - ip-adapter-plus-face_sdxl_vit-h.safetensors
   - --prompt-file
-  - C:\banyan-farm\b13canon-s1-0821\prompt.txt
+  - C:\banyan-farm\b07canon-r8-0821\prompt.txt
   - --negative-file
-  - C:\banyan-farm\b13canon-s1-0821\negative.txt
+  - C:\banyan-farm\b07canon-r8-0821\negative.txt
   - --out
-  - C:\banyan-farm\b13canon-s1-0821\out
+  - C:\banyan-farm\b07canon-r8-0821\out
 - name: publish
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - -c
   - "# The courier pushes from farm-out and from nowhere else.\n# The CONDITIONS travel with the frame:\
     \ a reader scoring whether the\n# adapter carried the EAR needs the ear it was shown.\nimport glob,\
-    \ hashlib, os, shutil\nout_dir = \"C:/banyan-farm/b13canon-s1-0821/out\"\npay_dir = \"C:/banyan-farm/b13canon-s1-0821\"\
-    \nctl_dir = \"C:/banyan-farm/b13canon-s1-0821/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-canon-s1-0821\"\
-    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b13-canon-s1-0821-ipahead.png*\"\
+    \ hashlib, os, shutil\nout_dir = \"C:/banyan-farm/b07canon-r8-0821/out\"\npay_dir = \"C:/banyan-farm/b07canon-r8-0821\"\
+    \nctl_dir = \"C:/banyan-farm/b07canon-r8-0821/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b07-canon-r8-0821\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b07-canon-r8-0821-ipahead.png*\"\
     )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
-    /negative.txt\")\n               + glob.glob(ctl_dir + \"/jerry-canon-h37sit-0821.png\")\n       \
-    \        + glob.glob(ctl_dir + \"/jerry-canon-sq22-0821.png\"))\nlines = []\nfor f in files:\n   \
-    \ shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as\
-    \ fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
-    with open(os.path.join(dst, \"ep2-b13-canon-s1-0821.sha256\"), \"w\", newline=\"\\n\") as fh:\n  \
-    \  fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) + manifest\
-    \ ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)\n"
+    /negative.txt\")\n               + glob.glob(ctl_dir + \"/jerry-canon-h37f-0821.png\")\n         \
+    \      + glob.glob(ctl_dir + \"/jerry-canon-sq45-0821.png\"))\nlines = []\nfor f in files:\n    shutil.copy2(f,\
+    \ dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith\
+    \ open(os.path.join(dst, \"ep2-b07-canon-r8-0821.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\
+    \\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) + manifest ->\",\
+    \ dst)\nraise SystemExit(0 if len(files) >= 6 else 1)\n"
 artifacts:
-- C:\banyan-farm\b13canon-s1-0821\out\ep2-b13-canon-s1-0821-ipahead.png
+- C:\banyan-farm\b07canon-r8-0821\out\ep2-b07-canon-r8-0821-ipahead.png
 bar: "THE CANON BAR. Read at 1:1 against taste/refs/goblin-canon-founder-0821.png\n-- THE FOUNDER'S OWN\
   \ IMAGE -- and against nothing else. Tile B\n(adult-b19-0819.jpg) is SUPERSEDED and is no longer the\
   \ thing to match; a frame\nthat looks like the tile now FAILS.\n\n  IDENTITY -- five clauses, and three\
@@ -158,17 +158,23 @@ bar: "THE CANON BAR. Read at 1:1 against taste/refs/goblin-canon-founder-0821.pn
   \ image\n      is watercolour-adjacent and its background is genuinely out of focus.\n\nA frame failing\
   \ ANY of F1-F5, P1-P2 or W2 is REJECTED and is not a candidate.\nNear-misses are what made the 31-frame\
   \ LoRA set untrainable."
-clip77_measured_not_estimated: positive 69 of 77, negative 60 of 77, counted with animagine-xl-3.1's OWN
+clip77_measured_not_estimated: positive 69 of 77, negative 77 of 77, counted with animagine-xl-3.1's OWN
   vocab by pipeline/clip_token_count.py. The first draft of the identity clause measured 84-90 and the
   tail it was dropping was THE POSE AND THE LOCATION on all seven beats.
 founder_ruling_verbatim: dude, this is how the goblin should look
+guard_absence_warning: 'BEAT 07 IS THE CONFISCATION AND THIS PLATE HAS NO GUARD IN IT ON PURPOSE -- it
+  is the goblin''s plate and the guards are a separate cast with their own approved sheet. CARRIED FORWARD
+  FROM THE FALLBACK LANE''S 14-CLIP RECORD: b07''s MOTION drew no guard on either seed, so the confiscation
+  action was simply absent from the clip. That is the prompt-summons law -- a subject that is not PLACED
+  in the wording is not drawn. When this plate''s motion spec is written it MUST name the guard as a placed
+  subject in frame, or beat 07 will come back empty a third time.'
 ip_adapter:
   ruling: 'FOUNDER RULING, 2026-08-21 16:54, and it is an IMAGE, not a sentence: taste/refs/goblin-canon-founder-0821.png,
     committed b93a70da, with "dude, this is how the goblin should look". It supersedes tile B and the
     08-21 age-B recipe on every axis it shows. See canon.yaml `ep2-goblin-design-adult` -> `founder_ruling_2026_08_21`
     and pipeline/jerry_canon_0821.py.'
-  ref: farm-out/jerry-canon-assets-0821/jerry-canon-sq22-0821.png
-  ref_sha256: bb10bbb269f07849365693a2f277c05624f6cc0fbe4f4dffe8adbe9fb205416e
+  ref: farm-out/jerry-canon-assets-0821/jerry-canon-sq45-0821.png
+  ref_sha256: 066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c
   ref_provenance: 'goblin-canon-founder-0821.png cropped (187,110)-(677,483) -- the measured head box
     plus 18 px, WIDE because the ears project 27% of a skull width on each side -- background flood-filled
     with the image''s own field median (187,195,149), pasted CENTRED at 22% head-of-frame on a 448x448
@@ -177,21 +183,21 @@ ip_adapter:
     head ratio the ratio the encoder receives. Encoder coverage here is 6.7% and the subject touches no
     encoder edge (asserted by the builder, which returns 1 if it does). Rebuild with `pipeline/author_jerry_canonref_0821.py
     --head-frac 0.22`; assert with `--check bb10bbb269f07849365693a2f277c05624f6cc0fbe4f4dffe8adbe9fb205416e`.'
-  mask: 181,509,651,909
+  mask: 154,35,678,480
   mask_frame: RENDER pixels, 832x1216
   mask_rule: DERIVED FROM THE SKELETON, not scaled from k6a's box. k6a's 315,130,515,350 was authored
     around a head_frac 0.190 skull whose ears 'barely break the silhouette'. At head_frac 0.370 the head
     alone is 360 px tall and the ears reach 449/300 of a skull width, so that box would sit inside the
     forehead and the adapter would never touch the loudest thing in the new design. This box is the crown-to-chin
     span at this pose, widened by the MEASURED ear-span ratio 449/300 and 20 px of margin. Derived by
-    pipeline/jerry_canon_0821.head_box('sit').
-  scale: '0.7'
+    pipeline/jerry_canon_0821.head_box('stand').
+  scale: '1.0'
   weights: h94/IP-Adapter sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors, apache-2.0, sha256
     677ad8860204f7d0bfba12d29e6c31ded9beefdf3e4bbd102518357d31a292c1, 847517512 bytes. THE GENERAL ADAPTER
     ip-adapter-plus_sdxl_vit-h.safetensors IS THE SAME NUMBER OF BYTES, so only the digest separates them;
     controlnet_plate.py carries an allowlist keyed by name and carrying the digest.
-  skeleton: farm-out/jerry-canon-assets-0821/jerry-canon-h37sit-0821.png
-  skeleton_sha256: 5a37c536d4bbd59b535154da56de164c6316a6844a033c823ee6c54860be08bb
+  skeleton: farm-out/jerry-canon-assets-0821/jerry-canon-h37f-0821.png
+  skeleton_sha256: 2b50d9e8076eab57373cafbe506f8f7ce73f6abbec3c65eacffcf877234ec13b
   head_frac: 0.37
   controlnet: xinsir/controlnet-openpose-sdxl-1.0 at scale 1.0
   proportion_ruling: 'head_frac 0.370 = 2.71 heads, MEASURED off the founder''s image (head 337 px, figure
@@ -215,13 +221,13 @@ round_2_lever: "NAMED BEFORE THE RENDER so round two is a decision and not a bra
   \ IP_SCALE from 0.7, or rebuild the reference at head-frac 0.25 (already on disk, sha in the module).\
   \ The ear is geometry the adapter carries, not a word.\nOne at a time, in that order, and each is one\
   \ spec."
-stage_direction: 'THE SHADE -- ''The scavenger''s legs give out and he drops to sit in the grass at the
-  base of the stem, then tips his head sideways into the sapling''s hand-sized patch of shade''. Line:
-  ''...Thanks for the shade.'' EXHAUSTED, and the first moment he is not being chased.'
-supersedes: ep2-b13-ageb-{p1,r2}-0821 on the DESIGN axis. Those frames are the wrong character as of 16:54
+stage_direction: 'CONFISCATE -- ''Guard 1 points at the scavenger, decisive.'' He is the object of the
+  sentence and has just been identified. Apprehension, not panic: the guards are absurd and he is starting
+  to notice.'
+supersedes: ep2-b07-ageb-{p1,r2}-0821 on the DESIGN axis. Those frames are the wrong character as of 16:54
   today and are kept as evidence. This job does not delete or re-file them.
-the_one_variable: THE BEAT -- its skeleton pose (sit) at head_frac 0.370, its pose words, its emotion
-  (`relief`) and the mask that skeleton implies. The recipe, the reference and the proportion are the
+the_one_variable: THE BEAT -- its skeleton pose (stand) at head_frac 0.370, its pose words, its emotion
+  (`worried`) and the mask that skeleton implies. The recipe, the reference and the proportion are the
   sample's and are identical across the wave, so a frame that misses is attributable to the beat.
 the_rung_this_is_one_variable_from: 'NOTHING -- this is not a rung. The reference image changed, so holding
   one variable would be theatre. It is a wholesale recipe change and it is being run the way the rule
@@ -254,6 +260,7 @@ derivation:
   - clip77_measured_not_estimated
   - consumer
   - founder_ruling_verbatim
+  - guard_absence_warning
   - ip_adapter
   - one_sample_rule
   - owner
@@ -274,145 +281,40 @@ derivation:
   - the_one_variable
   - the_rung_this_is_one_variable_from
   retokened:
-  - jerryface-k6a-0821 -> b13canon-s1-0821
-  - ep2-jerry-face-k6a-0821 -> ep2-b13-canon-s1-0821
+  - jerryface-k6a-0821 -> b07canon-r8-0821
+  - ep2-jerry-face-k6a-0821 -> ep2-b07-canon-r8-0821
   overrides_applied_and_asserted:
     argv:--control:
-    - step posehint --control (pipeline/control/jerry-skel-h19-0820.png -> pipeline/control/jerry-canon-h37sit-0821.png)
+    - step posehint --control (pipeline/control/jerry-skel-h19-0820.png -> pipeline/control/jerry-canon-h37f-0821.png)
     argv:--control-sha256:
     - step posehint --control-sha256 (244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c
-      -> 5a37c536d4bbd59b535154da56de164c6316a6844a033c823ee6c54860be08bb)
+      -> 2b50d9e8076eab57373cafbe506f8f7ce73f6abbec3c65eacffcf877234ec13b)
     argv:--ip-mask:
-    - step posehint --ip-mask (315,130,515,350 -> 181,509,651,909)
+    - step posehint --ip-mask (315,130,515,350 -> 154,35,678,480)
     argv:--ip-ref:
-    - step posehint --ip-ref (pipeline/control/jerry-tile-sq20-0821.png -> pipeline/control/jerry-canon-sq22-0821.png)
+    - step posehint --ip-ref (pipeline/control/jerry-tile-sq20-0821.png -> pipeline/control/jerry-canon-sq45-0821.png)
     argv:--ip-ref-sha256:
     - step posehint --ip-ref-sha256 (f65c9bb412e541fbe9b6024ddaec5a78b78028afd87e325baa06d6d430dded14
-      -> bb10bbb269f07849365693a2f277c05624f6cc0fbe4f4dffe8adbe9fb205416e)
+      -> 066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c)
     argv:--ip-scale:
-    - step posehint --ip-scale (0.7 -> 0.7)
+    - step posehint --ip-scale (0.7 -> 1.0)
     argv:--repo-commit:
-    - step posehint --repo-commit (894b6214ce4ce3f88e8d518ae33de73fbc71f909 -> 7596da13302774ac5963ee8f3315e9fb5d4ab64d)
+    - step posehint --repo-commit (894b6214ce4ce3f88e8d518ae33de73fbc71f909 -> e7699d9d)
+    argv:--scale:
+    - step posehint --scale (1.0 -> 1.0)
+    argv:--seed:
+    - step posehint --seed (20260823 -> 20260823)
     key:beat:
-    - key beat = 13
+    - key beat = 7
     key:est_minutes:
     - key est_minutes = 4
     key:node:
     - key node = '002b-first-citizen'
     key:priority:
-    - key priority = 9
+    - key priority = 6
     key:sample:
-    - key sample = True
+    - key sample = False
     payload:negative.txt:
-    - payload negative.txt (208 -> 214 chars)
+    - payload negative.txt (208 -> 293 chars)
     payload:prompt.txt:
-    - payload prompt.txt (235 -> 281 chars)
-verdict_canon_s1_0821: |-
-  FAIL, judged by eye at 1:1 on the frame itself, 2026-08-21 13:35Z. The wave is
-  HELD and round two is four one-variable rungs, listed at the bottom.
-
-  WHAT THE NEW RECIPE WON, and it is the half nobody had ever got:
-    F1 EARS -- PASS, and this is the ruling that inverted this morning. Large,
-       lateral, pointed, clear of the skull on both sides, dominating the
-       silhouette. Striking `pointy ears`/`long pointy ears`/`elf` from the
-       negative and putting `pointy ears` in the positive did exactly what the
-       measurement said it would.
-    W1 COSTUME -- PASS. A mandarin-collar shirt with frog closures, dark
-       shorts, dark boots. The founder's "3 outfit" ruling is on the frame.
-    W2 NO CLOAK -- PASS. No cloak, no hood, no patches, no stitch lines.
-    F3 BALD -- PASS. Smooth unbroken dome, no hair, no horns, no cowl.
-    F5 NO AGE MODELLING -- PASS. Smooth face, no furrows, no folds, no jowls.
-    B1 POSE -- PASS. Sitting, hands clasped between the knees.
-    P1/P2 -- PASS on the evidence available. Large head on an ordinary child
-       body, not a mascot, not round-bellied. Seated, so the 2.7-head number is
-       not directly measurable off this frame and is not claimed to be.
-
-  WHAT FAILED, in descending order of severity:
-    C1 CONTAINMENT -- HARD FAIL AND THE REASON NOTHING SCALES. There is a
-       SECOND GOBLIN HEAD, roughly twice life size, floating in the upper right
-       of the frame. One subject was asked for. `2boys` is already in the
-       negative and did not touch it, which is the point: this is not a second
-       CHARACTER, it is a second HEAD, and the tag for a character does not
-       name it. A frame with two heads is not a candidate for anything.
-    F2 EYES -- FAIL, and it is the clause the whole pupil ruling turned on.
-       The founder's image has an off-white sclera (#ABA9A1) with a SMALL DARK
-       VERTICAL SLIT pupil about 10% of the eye's width. This frame has large
-       ORANGE-RED IRISES filling the eye with a round pupil. `slit pupils`
-       bought a pupil -- which is progress, `blank eyes` is genuinely dead --
-       but it bought the wrong one, and nothing in the recipe names the COLOUR,
-       so the checkpoint picked its favourite.
-    F4 SKIN / L1 PALETTE -- FAIL. Saturated apple green where the measurement
-       is #7C806D, a muted grey-olive, and the whole frame is higher contrast
-       and more saturated than the founder's watercolour-adjacent image.
-       `muted color` is in the positive and lost.
-    B3 EMOTION -- FAIL. The beat is THE SHADE and the emotion asked for was
-       `relief` = `closed mouth, slight smile`. The face is stern and deadpan.
-       Consistent with every prior finding that this face scowls through
-       expression tags; NOT scored as the reason for the hold, because the
-       three failures above have to be fixed first and any of them could be
-       what is eating the mouth.
-    B2 WORLD -- MARGINAL. Tall grass is present and in frame, which is the bar,
-       but it is foreground blur against a blank cream void with no depth.
-
-  ONE THING THAT AROSE UNASKED: small hoop EARRINGS on both ears. Not in the
-  prompt, not in the founder's image. Noted, not yet fought -- it may be the
-  `pointy ears` prior dragging its usual companions in, and it may vanish when
-  the containment fix lands.
-
-  ROUND TWO IS FOUR RUNGS, ONE VARIABLE EACH, off this exact spec. The
-  containment and colour-word additions are in ALL FOUR because a two-headed
-  frame cannot be judged on anything else -- that makes r2a the new baseline
-  and r2b/r2c/r2d one variable off r2a, not off this frame.
-    r2a  NEGATIVE += extra head, disembodied head, multiple heads, floating
-         head, orange eyes, glowing eyes, red eyes, saturated, high contrast.
-         Named for the two hard fails; nothing else moves.
-    r2b  r2a + IP_SCALE 0.7 -> 0.9. The reference HAS the right eye and the
-         right skin and only 6.7% of the encoder's pixels are carrying it.
-    r2c  r2a + reference sq22 -> sq25 (already built, sha in the module). More
-         encoded head, same strength.
-    r2d  r2a + `constricted pupils` restored to the positive. It was cut by the
-         CLIP-77 budget and there are 3 spare tokens.
-verdict_canon_rounds_2_to_8_0821: |-
-  THE SAMPLE GATE IS DISCHARGED BY ep2-b13-canon-r8-0821 AND ep2-b07-canon-r8-0821,
-  judged by eye at 1:1, 2026-08-21 14:05Z. Eight rounds, seventeen frames, ~16s
-  each, $0. Two defects were found and both were GEOMETRY, not wording -- which
-  is the finding worth more than the frames.
-
-  DEFECT 1, THE GHOST HEAD (rounds 1-3). A second goblin head floating above the
-  figure in every frame. Negatives did nothing (`multiple heads`, `disembodied
-  head`, `floating head`) -- Ban et al. ECCV 2024 as canon already cites it.
-  MEASURED THE HOLE: at head_frac 0.370 the seated pose leaves 55% of the frame
-  empty above the crown (crouch 46%, hunch 34%, stand 26%). r3a swapped the pose
-  to stand and the ghost vanished; r3b (reference 6.7% -> 28.3% encoder) and r3c
-  (ip_scale 0.5) both kept it. FIX: STATURE_FOR, a per-pose stature solved so the
-  crown lands at ~18% of frame height, asserted in --selftest for every pose.
-
-  DEFECT 2, THE EYEPATCH (rounds 4-8). A hard object over one eye -- black
-  lozenge, stitched pad, monocle, blank oval. It survived THREE eyepatch tags in
-  the negative (which morphed it into a THIRD EYE on the forehead), ControlNet
-  1.0/0.8/0.6, ip_scale 0.9/0.7/0.55, references 0.22/0.25/0.45, and four seeds.
-  The encoded reference was inspected at 8x: clean symmetric face, never copied.
-  CAUSE: not enough face to go round. The 0.22 reference hands CLIP a subject
-  85x65 px with 10 px eyes, and that signal stretched across a 360 px head
-  resolves as mush the denoiser turns into an object. FIX: reference sq45
-  (28.3% encoder) AND ip_scale 1.0 together -- both had failed alone.
-
-  r8 ON TWO BEATS AT ONCE, and this is the state the wave is released on:
-    b07 (standing) -- the closest frame to the founder's image this tree has
-      produced. Ears large, lateral, pointed. Mandarin-collar shirt with frog
-      closures, dark shorts, dark boots. Bald, no cloak. Two clean symmetric
-      eyes. Muted high-key palette. Large head on a child body, ~3 heads. Full
-      body, feet in frame, tall grass present. Brow reads as apprehension, which
-      is beat 07's stage direction.
-    b13 (seated) -- clean, no patch, hands clasped between the knees, the slight
-      smile the beat asks for. Framing is TIGHT: the frame-fill stature crops the
-      feet, which is acceptable on an intimate beat and is noted, not hidden.
-
-  WHAT IS STILL SHORT OF CANON, said plainly rather than left for the founder to
-  find: the EYE COLOUR. The measurement is an off-white sclera (#ABA9A1) with a
-  small dark vertical slit pupil ~10% of the eye's width. r8 draws a pale sclera
-  with a GREEN IRIS and a dark pupil. `slit pupils` is doing shape work and
-  nothing in the recipe names the colour. That is the next single variable and it
-  is a wording rung, not a geometry one. The skin is also a touch greener than
-  #7C806D. Neither is a containment failure and neither blocks the wave.
-
+    - payload prompt.txt (235 -> 274 chars)

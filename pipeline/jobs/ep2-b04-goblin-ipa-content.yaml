@@ -1,0 +1,168 @@
+# 002b beat 04 — ARM 2 of the consistency sample. Same beat, same four seeds,
+# same prompt. One variable against ARM 1: WHERE the adapter is applied.
+#
+# WHY THERE IS AN ARM 2. Arm 1 (ep2-b04-goblin-ipa, done 2026-08-10) worked and
+# charged for it. Seed-to-seed identity agreement rose from 0.6967 mean pairwise
+# DINOv2 on the wave-1 baseline to 0.7828-0.8345 across four references at scale
+# 0.6, and by eye each row of four is recognisably one creature where the
+# baseline row is four. But the skin left the green band: the share of pixels at
+# hue 140-170 deg fell from 0.256 on the baseline to 0.005, 0.001, 0.013 and
+# 0.002 on the four arm-1 references, with mean saturation down from 0.256 to
+# 0.10-0.23. Green is the founder's ONE named attribute. A mechanism that holds
+# the character by draining his one stated colour out of it has not fixed the
+# defect, it has traded it, and reporting the DINO gain without the hue loss
+# would be reporting half a measurement.
+#
+# WHY IT HAPPENS AND WHY THIS IS THE LEVER. IP-Adapter carries the reference's
+# palette along with its character, and every beat-04 reference is lit like a
+# dim interior — the wave-1 lighting fault (morning light drew dusk in 4 of 4),
+# now being fed back in and amplified. diffusers 0.29.2's set_ip_adapter_scale
+# takes a per-transformer-block config and its own docstring names the split:
+# up block_0 is where style is injected, down block_2 is where layout/content
+# is. This arm scopes the adapter to down block_2 alone — ask the reference for
+# the creature, leave the colour to the text prompt that was already delivering
+# it. That is a documented lever, not a steward's theory of the UNet.
+#
+# ALL FOUR REFERENCES AGAIN, for the same reason as arm 1: nobody has picked a
+# canonical goblin and this job does not pick one. Choosing the goblin is R4's.
+
+id: ep2-b04-goblin-ipa-content
+task: ep2-b04-goblin-ipa-content-0810
+node: 002b-first-citizen
+beat: 4
+runner: box
+needs_gpu: true
+priority: 40
+max_attempts: 1
+owner: goblin-consistency lane
+
+consumer: >-
+  The same decision arm 1 serves — how episode 2 gets one goblin across fifteen
+  beats — with the question arm 1 left open: whether the identity gain can be
+  had WITHOUT the colour loss. If it can, the recommendation is a mechanism the
+  founder's "green" and "nothing complex" both survive. If it cannot, that
+  trade-off is the finding and he is the one who should hear it.
+
+success: >-
+  16 PNGs at C:\banyan-farm\goblin-ipa-0810\out2 (4 references x 4 seeds) with
+  per-frame 7.2 sidecars, plus identity-agreement-content.yaml measuring the
+  wave-1 baseline, the arm-1 cells and these four with ONE build of one metric.
+  A result showing the scoped adapter loses the identity gain is a success:
+  the job produces the measurement, not a preferred answer.
+
+why: >-
+  One variable against arm 1: the adapter is scoped to down block_2 instead of
+  every block at 0.6. Sequential, one image at a time — batch-of-4 configs are
+  banned on this card.
+
+est_minutes: 6
+
+needs:
+- cuda
+- vram20
+- farm-venv
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_sample.py
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\out
+  - --out
+  - C:\banyan-farm\goblin-ipa-0810\out2
+  - --arm
+  - content
+  - --task
+  - ep2-b04-goblin-ipa-content-0810
+
+# Baseline, arm 1 and arm 2 measured in ONE run of ONE build, so the deltas
+# cannot be an artefact of the instrument being loaded twice.
+- name: measure
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\identity_agreement.py
+  - --group
+  - wave1-baseline=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s*.png
+  - --group
+  - arm1-ref0-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r0-c060-s*.png
+  - --group
+  - arm1-ref1-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r1-c060-s*.png
+  - --group
+  - arm1-ref2-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r2-c060-s*.png
+  - --group
+  - arm1-ref3-scale060=C:\banyan-farm\goblin-ipa-0810\out\04-the-footnote-ipa-r3-c060-s*.png
+  - --group
+  - arm2-ref0-content=C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r0-content-s*.png
+  - --group
+  - arm2-ref1-content=C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r1-content-s*.png
+  - --group
+  - arm2-ref2-content=C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r2-content-s*.png
+  - --group
+  - arm2-ref3-content=C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r3-content-s*.png
+  - --ref-for
+  - arm2-ref0-content=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s0.png
+  - --ref-for
+  - arm2-ref1-content=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s1.png
+  - --ref-for
+  - arm2-ref2-content=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s2.png
+  - --ref-for
+  - arm2-ref3-content=C:\banyan-farm\wave-goblin-prep\out\04-the-footnote-wave1-s3.png
+  - --out
+  - C:\banyan-farm\goblin-ipa-0810\out2\identity-agreement-content.yaml
+
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-goblin-ipa-content"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob("C:/banyan-farm/goblin-ipa-0810/out2/*"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        c = os.path.join(dst, os.path.basename(f))
+        with open(c, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
+        lines.append(h + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "ep2-b04-goblin-ipa-content.sha256"), "w") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) + manifest ->", dst)
+    # 16 stills + 16 sidecars + identity-agreement-content.yaml.
+    raise SystemExit(0 if len(src) == 33 else 1)
+
+artifacts:
+- C:\banyan-farm\goblin-ipa-0810\out2\identity-agreement-content.yaml
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r0-content-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r0-content-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r0-content-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r0-content-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r1-content-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r1-content-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r1-content-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r1-content-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r2-content-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r2-content-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r2-content-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r2-content-s3.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r3-content-s0.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r3-content-s1.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r3-content-s2.png
+- C:\banyan-farm\goblin-ipa-0810\out2\04-the-footnote-ipa-r3-content-s3.png

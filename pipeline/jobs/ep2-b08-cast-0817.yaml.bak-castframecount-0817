@@ -1,0 +1,261 @@
+# ep2-b08-cast-0817 -- 2026-08-17, GUARD CAST REDRAW. Beat 08, INSIDE HIM.
+#
+# THE LAST GUARD BEAT WITH NO FILED PLATE. 05, 06, 07, 09, 10 and 11 are all filed.
+# This one was blocked on a bookkeeping question that turned out not to exist, and
+# the reason it is worth stating is that the block was believed for a day:
+#
+#   Beat 08 was reported as needing `tag: 2boys` edited to `1boy`, on the reading
+#   that my 2026-08-17 script ruling made it a two-figure beat and that `2boys`
+#   was a residue of the retired three-figure master. `count_tag()` DOES NOT COUNT
+#   FIGURES -- it regex-matches the LEADING Danbooru tag of compress()'s output --
+#   so `tag:` records the AUTHORING CONVENTION a beat's drafts open in, and the
+#   count guard in check() is an INTERNAL CONSISTENCY test between a draft and its
+#   beat. Beat 07 shows the same two figures (guard + {{GOBLIN}}) opening "A guard
+#   man" and declaring `1boy`, clean at 62/77. Beat 08's six drafts all open
+#   "Two ..." and declare `2boys`. Both conventions are legal; nothing was wrong.
+#   Forcing `1boy` was MEASURED to fault beat 08's existing `authored`
+#   ("COUNT TAG is '2boys', draft declares '1boy'") and would have faulted all six.
+#   So no key was edited. `authored_b08_cast_0817` was ADDED, opening "Two men,".
+#
+# THE CAST, and this beat is the one place the cast is COMPLETE rather than
+# compromised. Founder 2026-08-16 "the cast stands as drawn"; 2026-08-17 "draw the
+# second man without glasses. we need to have control." Guard 2 IS the second man
+# -- guard B on the sheet: light sandy hair, cream shirt, white sash, broad brown
+# wrap skirt, no eyewear. So unlike ep2-b06/b10-cast-0817, which are explicitly
+# DIAGNOSTIC RUNGS because they omit guard A's wire-rims, THIS DRAFT OMITS NOTHING
+# THE APPROVED CAST CARRIES. It is still not a shipping plate for the reason in
+# `limits` below, but not for an eyewear reason. NO general eyewear instrument is
+# attempted here -- no `glasses` in the negative, nothing -- because a separate
+# lane owns that binding and `glasses` inside one man's clause landed on both men
+# at 5 of 5.
+#
+# THE PROMPT, verbatim from pipeline/wave-drafts.yaml beats.8.authored_b08_cast_0817
+# (repo sha cbb3658ed516e087bbe3725d6c5a83103ed3ab0f9480f0803cf6c713c8e732a5; the
+# harness copy at C:\banyan-farm\wave-goblin-prep\wave-drafts.yaml was hashed with
+# certutil AFTER the sync and MATCHES -- verified, not assumed, and the sampler
+# records `drafts_sha256` in every sidecar so the frames prove it themselves):
+#
+#   Two men, the near one light sandy hair, cream shirt, white sash, brown skirt,
+#   holds a bark clipboard in both hands, the far one a goblin, {{GOBLIN}}, patched
+#   cloak, looks at his belly, arms down, tall grass, pale sky above, cinematic
+#   lighting, masterpiece, best quality, very aesthetic No girl, no child, no armor,
+#   no helmet, no knight, no white background, no plain background, no dark, no
+#   night. No photorealism, no 3D render look. 9:16 vertical, no text.
+#
+# `C:\banyan-farm\wave-goblin-prep\render_wave_goblin.py` was also hashed and is
+# BYTE-IDENTICAL to the repo's (be18f941...), so the measurement below was taken
+# with the same checker code the box will run.
+#
+# TOKENS AND THE ONE TRADE, NAMED AS THE FIRST SUSPECT. 74 of 77 positive and 66 of
+# 77 negative, measured through render_wave_goblin.check() on the REAL CLIP -- not
+# the prose estimator, which under-counts a tag list by up to 10 tokens and reports
+# headroom after CLIP has already dropped the anchor. ZERO FAULTS, style anchor
+# PRESENT, count tag `2boys` against the declared `2boys`. WHAT WAS TRADED:
+# `hedgerow` is gone. With it the draft measures 75/77 and compress() SHEDS `very
+# aesthetic` -- the style anchor -- which is a fault (measured: 75/77 anchor
+# MISSING vs 74/77 anchor PRESENT). THE STYLE TAIL IS NOT CUT and is byte-identical
+# to the other seven cast drafts. `tall grass` and `pale sky above` both survive,
+# so the ground band and the ABOVE-HORIZON band each keep a noun of their own.
+#
+# THE LAWS THIS DRAFT USES RATHER THAN FIGHTS.
+#   PROP OWNERSHIP: a prop does not bind to a person clause, it goes to whoever is
+#     drawn NEAREST -- four beat-10 plates lost the board to the wrong man at 4 of 4
+#     with the board clause inside its owner's clause. The clipboard is GUARD 2's,
+#     so guard 2 is `the near one` and holds it. Copied deliberately from
+#     authored_b10_cast_0817, the only cast-correct guard draft measured clean.
+#   STATE, NOT VERB: the board is AT REST in both hands. The beat's action is
+#     "lowers the clipboard and points", and this model renders a verb's END state,
+#     so a plate saying "lowering" or "pointing" would arrive finished with nowhere
+#     to travel. The plate is the PRE state on purpose; i2v supplies the move.
+#   THE HAND LAW: every hand in frame is named -- the near man's on the board, the
+#     goblin's `arms down`. Beat 10's unnamed far man grew a bamboo pole at one seed
+#     and a duplicate board at another WITH `weapon` negated, against beat 05's four
+#     specified hands at 0 of 3.
+#   THE VACANCY LAW ABOVE THE HORIZON: `pale sky above` gives the upper band its own
+#     positive noun and `horizon` is negated nowhere. Beat 14 spent three rungs on
+#     2026-08-17 proving the corollary -- a band above the horizon cannot be filled
+#     by a ground noun, and a region with no noun comes back a flat wash.
+#
+# WHAT THIS DOES NOT ASK, so a passing frame is not over-read. IT DOES NOT ASK
+# WHETHER THE POINT BINDS TO THE GUARD. In text-to-image a pointing arm attached to
+# the goblin 3 of 3 and a board 9 of 12 however worded; `ep2-b08-twofig-both`,
+# `-armonly` and `ep2-b07-twofig-turn` own that question off an init and are
+# `is_show_content: false` engine probes that are never cut in. This draft asks for
+# no gesture at all and deliberately does not compete with them.
+#
+# A REAL EXPOSURE ON THIS JOB, FOUND WHILE FILING IT AND NOT WAIVED AWAY.
+# box_enqueue's `drafts_problems` docstring says: "The renderer keeps a second,
+# later check of its own (see --expect-drafts-sha256) because enqueue time and run
+# time are not the same moment: `--backlog` work sits for hours". THAT FLAG IS
+# IMPLEMENTED NOWHERE. Grepped across the repo on 2026-08-17: the string
+# `--expect-drafts-sha256` appears in exactly one place, box_enqueue.py's own
+# docstring, and in none of goblin_ipa_beat.py, goblin_ipa_sample.py or
+# render_wave_goblin.py. So the enqueue-time drafts comparison that this job just
+# passed is the ONLY one there is, and it fires on the Mac at filing time.
+#
+# WHY THAT BITES THIS JOB SPECIFICALLY: it is going to BACKLOG, so it will sit. If
+# any lane re-syncs a different wave-drafts.yaml to C:\banyan-farm\wave-goblin-prep
+# before this runs, this job renders a different prompt and publishes it as beat
+# 08's cast plate, and NOTHING WILL STOP IT. It remains DETECTABLE after the fact,
+# which is the saving grace and the instruction below.
+#
+# SO, FOR WHOEVER SCORES THESE FRAMES -- DO THIS BEFORE BELIEVING ANY OF THEM:
+# every sidecar goblin_ipa_sample.py writes carries `drafts_sha256`. It MUST read
+#   cbb3658ed516e087bbe3725d6c5a83103ed3ab0f9480f0803cf6c713c8e732a5
+# If it does not, these frames were drawn from wording this spec did not measure,
+# the 74/77 zero-fault measurement below does not describe them, and they must be
+# re-rendered rather than scored. The flag was NOT implemented here: adding a
+# run-time check to a shared renderer with live peers mid-shift is new plumbing in
+# somebody else's file, and the honest move is to record the gap and hand it on
+# rather than to patch it quietly or to pretend the docstring is true.
+#
+# NO plate_ack, no drafts_ack, no gate. $0, local card, no provider, no spend.
+id: ep2-b08-cast-0817
+task: ep2-b08-cast-0817
+node: 002b-first-citizen
+beat: 8
+runner: box
+needs_gpu: true
+priority: 5
+max_attempts: 1
+sample: true
+owner: 'beats 07/08 figure-count lane, 2026-08-17 -- filed to backlog immediately after its dry run, with ready at
+  1 job, running at 1 and the backlog EMPTY, so this is depth on a thin card rather than filler. Guard cast work is
+  otherwise exhausted: this was the last of the seven guard beats with no filed plate.'
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml. A STILL PLATE on an approved node: no
+  voice, no motion, no episode assembly, no publication.'
+script_line: 'Beat 08 INSIDE HIM (0:37-0:42): "Guard 2 lowers the clipboard and points at the scavenger''s belly."
+  Line: "The apple is *inside him*, Dren." TWO figures -- the acting guard and the scavenger whose belly is the target
+  -- per `figure_count_ruled_from_the_script_0817` in review/ep2-picks/done-definitions.yaml, which corrected this
+  beat''s `done_when` clause "both guards and the scavenger in frame" against the script. The superseded clause is
+  left standing there with the correction beneath it.'
+consumer: 'Beat 08''s plate, which does not exist in any cast-correct form. `guard_plates_are_miscast_0816`: 0 of
+  17 guard plate prompts name the approved cast and 14 of 17 ask for `bald`, and NEITHER APPROVED GUARD IS BALD. The
+  only two-figure guard+goblin frame the project owns that ever passed a bar (farm-out/ep2-b0708-twofig-mac-0815/08-inside-him-twofig-mac-r3-s0.png)
+  has a BALD guard, so it is miscast at the first attribute a viewer reads off a person and cannot close the beat.
+  Beat 08 is also the beat whose motion takes were animated off a COSTUME CARD on blank paper -- one figure, waist-up,
+  eyes closed, no field and no second body -- which is why no wording ever reached a target that was not in the picture.
+  This is the first frame that would give it the approved man, the goblin, the field and the board at once.'
+success: 'THE BAR, PRE-REGISTERED BEFORE THE PIXELS EXIST, scored by eye per frame across all 16 and reported as N
+  of 16 with a per-condition rate across the four seeds. THE TERMS THIS RUNG EXISTS FOR: (1) EXACTLY TWO FIGURES --
+  ONE human guard and ONE goblin, both whole-bodied. A SECOND GUARD IS A FAIL and it is the single most likely failure
+  here, because --refs is a TWO-GUARD reference set (refs-guards-twoinfield-nos2-0815) being used on a beat that needs
+  one guard; if a third body arrives, the refs are pulling it and that is a real finding about using a two-figure ref
+  on a one-guard beat. (2) THE BOARD IS IN THE GUARD''S HANDS AND ONLY HIS -- both of his hands on it, no second board,
+  and no goblin hand touching it. The board reaching the goblin is the recorded 9-of-12 fault and is what the near-owner
+  staging exists to prevent. CAST CONTROLS: (3) the guard has LIGHT SANDY hair, a cream shirt, a white sash and a
+  brown skirt; (4) HE IS NOT BALD -- a bald guard fails outright, because bald is precisely the defect being corrected;
+  (5) he reads ADULT, not a child. GOBLIN CONTROLS: (6) the goblin is green-skinned with pointed ears and a patched
+  cloak, reads adult rather than a human child (a human child is the recorded beat-08 fault at two seeds), and (7)
+  HIS BELLY IS VISIBLE AND UNOCCLUDED -- the beat''s `done_when` needs the belly legible as the point''s target, so
+  a belly hidden behind the board or cropped out is a fail even if everything else lands. (8) his hands are EMPTY --
+  no pole, no duplicate board, nothing. PROP AND WORLD CONTROLS: (9) the board is hand-sized, flat, rectangular and
+  reads as BARK rather than paper, with no hand across its face -- material is scored SEPARATELY from ownership, because
+  a bar that certified a prop''s material while never naming its shape scored 8/12 passes with 0/12 usable this week;
+  (10) tall grass at ground level and sky ABOVE it, both with real content, no white or plain background, and not a
+  downward plan view. PRE-REGISTERED FAIL MODES, recorded by name whether or not they fire: a second guard arriving
+  from the refs; the board on the goblin or in both pairs of hands; the guard coming back bald; the goblin reading
+  as a human child; the belly occluded by the board the guard is holding, which is the one geometric tension in this
+  staging and is expected to be the closest call; eyewear appearing on either figure unprompted, which is a finding
+  to hand the binding lane and NOT something this job may attempt to fix. A term found loose is said so and tightened
+  FORWARD, never rewritten after seeing the picture.'
+limits: 'WHAT A PASS HERE WOULD NOT MEAN, written before the render. (a) IT IS NOT A PASSING BEAT. Beat 08''s action
+  is a small in-hand prop manipulation plus a point, which measures 0 of 8 in-hand against 12 of 12 whole-body, and
+  no motion may be inferred from a still. (b) THE GOBLIN IS NOT REFERENCE-CONDITIONED. --refs holds GUARDS, so the
+  goblin''s identity comes from the prompt slot alone; a goblin-identity fault in these frames is NOT evidence about
+  the goblin references, and these frames are a guard-cast plate that happens to contain a goblin. (c) THE SIDECAR
+  FIELDS ARE THE SAMPLER''S, NOT THIS SPEC''S. goblin_ipa_sample.py writes `cost_usd: 0.00`, `founder_verdict: null`,
+  `scored: false` and `candidate_set: none (mechanism test, not a pick sheet)`; it does NOT write `approved:` or `provisional:`.
+  Saying so here rather than claiming otherwise: these frames are UNAPPROVED AND PROVISIONAL by this spec''s declaration,
+  and the sampler was not edited to add the keys because it is a shared file and every beat''s sidecar would change.
+  (d) NO `plate_ack` EXISTS AND NONE MAY BE ADDED to promote anything here.'
+why: 'The last guard beat with no filed plate, on a card at ready 1 / running 1 / backlog 0. The blocker was believed
+  to be a `tag:` edit that would have faulted six of a peer''s clean drafts; it was measured instead and the tag turned
+  out to be correct, so the fix was one ADDED draft key and no edit at all. The draft is cast-complete -- guard 2 carries
+  no eyewear by the founder''s own ruling, so unlike beats 06 and 10 this rung omits nothing the approved cast has --
+  and it uses the prop-ownership law rather than fighting it. Minutes of local GPU, $0, no provider.'
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '8'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b08-cast-0817
+  - --draft-key
+  - authored_b08_cast_0817
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '8'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b08-cast-0817
+  - --draft-key
+  - authored_b08_cast_0817
+  - --arm
+  - window4
+  - --task
+  - ep2-b08-cast-0817
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  # THE GLOB CARRIES THE BEAT SLUG (inside-him) the sampler actually writes, and the
+  # beat number is ZERO-PADDED as the sampler pads it ("08-", not "8-"). A glob
+  # without the slug matches nothing and publishes nothing while still returning a
+  # code that reads like a render failure. The publish DESTINATION is under
+  # courier-box/farm-out, a DIFFERENT tree from the sampler's --out above -- compared
+  # deliberately here rather than by os.path.dirname, which returns '' for a Windows
+  # path on this machine and would make two distinct paths look equal.
+  - "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/goblin-ipa-0812/out-b08-cast-0817\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b08-cast-0817\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(srcdir + \"/08-inside-him-*\"))\npngs = [f for f in\
+    \ src if f.lower().endswith(\".png\")]\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b08-cast-0817.sha256\"), \"w\", newline=\"\\n\")\
+    \ as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s),\",\
+    \ len(pngs), \"png + manifest ->\", dst)\nraise SystemExit(0 if len(pngs) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b08-cast-0817\08-inside-him-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b08-cast-0817\08-inside-him-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b08-cast-0817\08-inside-him-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b08-cast-0817\08-inside-him-ipa-r3-w015-s0.png

@@ -1,0 +1,183 @@
+# ep2-b09-cast-0817 -- 2026-08-17, GUARD CAST REDRAW. Beat 09, THE PAUSE.
+#
+# EYEWEAR IS NAMED HERE AND THAT IS ALLOWED. The founder's 2026-08-17 ruling --
+# "draw the second man without glasses. we need to have control." -- means guard A
+# carries the wire-rims and guard B carries none. This is a CLOSE-UP OF ONE MAN,
+# guard A, the wearer. There is no second face in frame for the attribute to leak
+# onto, so naming it here confounds nothing and the eyewear-binding lane's problem
+# does not arise. The two-guard rung in this same batch (ep2-b05-cast-0817) omits
+# eyewear on both men for the opposite reason and says so on its face.
+#
+# THE ONE VARIABLE against ep2-b09-plate-nos2-0815, which is the box's last plate
+# attempt on this beat: the draft key. Same refs-guards-twoinfield-nos2-0815, same
+# --arm window4, same 4 seeds, no --ref-prefix, no --seed-start. That job's
+# wording (`authored_b09_scene4`) is one of the 17 the sweep caught: it names
+# nobody and it came back as a COSTUME CARD.
+#
+# AND THE ONE VARIABLE against the four close-up plates the MAC drew this morning,
+# which is a different and more useful comparison, because those four exist and
+# their read is recorded in `beats.09.plate_lane_0817`: this rung runs the same
+# cast wording through the IP-ADAPTER 15% WINDOW ON THE GUARD REFERENCE SET. The
+# Mac rung had no reference conditioning at all. IT IS AIMED AT EXACTLY THE TWO
+# CONDITIONS THE MAC RUNG LOST: the hair came back mid-to-dark BROWN AND SHAGGY
+# where guard A's is near-black and CROPPED, and the face read young. Hair colour
+# and texture are what a reference is for. What the Mac rung already WON is not
+# re-litigated and is expected to hold: `wire-rim glasses` rendered as unmistakable
+# round wire frames at 4 of 4, never sunglasses, in a phrase that had appeared in
+# ZERO prompts repo-wide; and this beat's recorded "another blank background" fault
+# cleared at 4 of 4.
+#
+# WHY. `guard_plates_are_miscast_0816`: 0 of 17 guard plate prompts name the
+# approved cast, 14 of 17 ask for `bald`, and NEITHER APPROVED GUARD IS BALD.
+# `cast_gate_closed_0816` asked specifically that the wire-rims be NAMED in any
+# prompt showing guard A's face. This is that beat. Wardrobe frozen by the founder
+# 2026-08-16, "the cast stands as drawn" -- a wording correction, not a proposal.
+#
+# THE PROMPT, verbatim from pipeline/wave-drafts.yaml beats.9.authored_b09_cast_0817
+# (repo sha b75415098678b47cfbc3a8670de2c9982fcef01cbb180d2253da160004a4b94d; the
+# harness copy was hashed on the box with certutil after the sync and matches):
+#
+#   A guard man with dark cropped hair and wire-rim glasses, close on his face,
+#   head and shoulders, eyes open, thoughtful, mouth closed, tan tunic collar,
+#   white shoulder sash, tall grass and hedgerow behind him, cinematic lighting,
+#   masterpiece, best quality, very aesthetic No girl, no child, no hands, no
+#   clipboard, no armor, no helmet, no knight, no white background, no plain
+#   background, no closed eyes, no dark, no night. No photorealism, no 3D render
+#   look. 9:16 vertical, no text.
+#
+# TOKENS. 73 of 77 positive, 74 of 77 negative -- the tightest negative in the
+# batch -- measured on the string that gets sent with sd_prompt.negative_tokens,
+# not with compress()'s prose estimator, which under-counts a tag list by up to 10
+# tokens and reports headroom while CLIP has already dropped the style anchor. NO
+# TRADE: the 14-token style tail is byte-identical to beats 05 and 06's.
+#
+# THE LAWS APPLIED. THE HAND LAW, ANSWERED BY DELETION RATHER THAN BY SPECIFYING:
+# `no hands` puts `hands` in the negative, which is the right move on a face plate
+# where an in-frame hand is nothing but a vacancy waiting for a prop -- and is what
+# the Mac draft did. `no clipboard` is there because the board is GUARD 2's prop
+# and this is guard 1's face. The background gets positive nouns of its own, grass
+# and hedgerow, rather than a negated blankness: on the previous attempt this beat
+# "came back WHITE", and a negation does not reach a hole.
+#
+# NO plate_ack, no drafts_ack, no gate. $0, local card, no provider, no spend.
+id: ep2-b09-cast-0817
+task: ep2-b09-cast-0817
+node: 002b-first-citizen
+beat: 9
+runner: box
+needs_gpu: true
+priority: 8
+max_attempts: 1
+sample: true
+owner: guard cast-redraw lane, 2026-08-17 -- filed to backlog immediately after its dry run, because the backlog
+  was empty and the autofill never authors work
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on: 2026-08-03`,
+  read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml. A STILL PLATE on an approved node: no
+  voice, no motion, no episode assembly, no publication. `guards_CORRECTION_0816.what_this_releases` governs and is
+  unchanged: staged plates of the approved pair may be DRAWN; motion off a costume card may not.'
+script_line: 'Beat 09 THE PAUSE (0:42-0:46): close on Guard 1''s face working through the thought, in daylight.'
+consumer: 'The beat-09 motion lane, whose recorded blocker is that "beat 09 has no staged plate of the approved man"
+  -- a full-body plate cannot supply a face. Four close plates now exist from the Mac and are two conditions short:
+  hair colour/texture and head size. This is the reference-conditioned rung at those two conditions, and the first
+  one on the box path that names the cast at all.'
+success: 'THE BAR, PRE-REGISTERED BEFORE THE PIXELS EXIST, scored by eye per frame across all 16, reported as N of
+  16 with a per-condition rate across the four seeds. THE TWO CONDITIONS THIS RUNG IS AIMED AT, and it is a failure
+  of the rung if they do not move: (1) the hair is NEAR-BLACK and CROPPED -- not mid-brown, not shaggy, not blond,
+  and NOT BALD; (2) the head measures at least 55% of frame height, the bar this beat already carries, which the Mac
+  rung missed at 48-53% -- measured, not eyeballed. THE CONDITIONS THE MAC RUNG ALREADY WON AND WHICH MUST HOLD: (3)
+  WIRE-RIM GLASSES legible as round wire frames, not sunglasses, not absent; (4) a real background behind him -- grass
+  and hedgerow with actual content, NOT white and NOT plain. THE REST OF THE BEAT''S OWN DEFINITION: (5) one adult
+  man only, no second figure and no child; (6) face toward the lens, EYES OPEN, mouth closed, reading as thoughtful
+  rather than blank or comic; (7) the face reads ADULT, not young -- the Mac rung''s third named fault; (8) tan tunic
+  collar and a white sash over the shoulder; (9) NO hands and no board, clipboard or paper anywhere in frame; (10)
+  daylight. PRE-REGISTERED FAIL MODES, recorded by name whether or not they fire: the costume-card collapse this beat''s
+  previous box plate died of (a turnaround sheet or a plain-ground character card instead of a scene); the reference
+  set pulling the FRAMING back to the two-in-field full body the refs depict, which would cost condition 2 while winning
+  condition 1 -- if that happens it is the rung''s answer, not a mystery; eyewear absent at any seed, given the phrase
+  rendered 4 of 4 elsewhere. A term found loose is said so and tightened FORWARD, never rewritten after seeing the
+  picture.'
+why: 'Beat 09 is one of six beats shut on the single cause in `guard_plates_are_miscast_0816`, and the only one whose
+  action is a FACE -- so it is the only one where the cast correction is the whole job rather than part of it. Four
+  Mac plates got two of four cast conditions; the instrument that addresses the other two, hair colour and texture,
+  is reference conditioning, which the Mac path does not have and this path does. Minutes of local GPU, $0, no provider.'
+est_minutes: 5
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '9'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b09-cast-0817
+  - --draft-key
+  - authored_b09_cast_0817
+  - --arm
+  - window4
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '9'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\wave-goblin-prep\refs-guards-twoinfield-nos2-0815
+  - --out
+  - C:\banyan-farm\goblin-ipa-0812\out-b09-cast-0817
+  - --draft-key
+  - authored_b09_cast_0817
+  - --arm
+  - window4
+  - --task
+  - ep2-b09-cast-0817
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  # THE GLOB CARRIES THE BEAT SLUG (the-pause) the sampler actually writes. A glob
+  # without it matches nothing and publishes nothing while still returning a code
+  # that reads like a render failure -- that is what made six rendered plates read
+  # as six failures on 2026-08-14.
+  - "import glob, hashlib, os, shutil\nsrcdir = \"C:/banyan-farm/goblin-ipa-0812/out-b09-cast-0817\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b09-cast-0817\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nsrc = sorted(glob.glob(srcdir + \"/09-the-pause-*\"))\npngs = [f for f in\
+    \ src if f.lower().endswith(\".png\")]\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n\
+    \    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h\
+    \ = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b09-cast-0817.sha256\"), \"w\", newline=\"\\n\")\
+    \ as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s),\",\
+    \ len(pngs), \"png + manifest ->\", dst)\nraise SystemExit(0 if len(pngs) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\goblin-ipa-0812\out-b09-cast-0817\09-the-pause-ipa-r0-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b09-cast-0817\09-the-pause-ipa-r1-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b09-cast-0817\09-the-pause-ipa-r2-w015-s0.png
+- C:\banyan-farm\goblin-ipa-0812\out-b09-cast-0817\09-the-pause-ipa-r3-w015-s0.png

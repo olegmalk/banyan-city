@@ -1,0 +1,213 @@
+id: ep2-b02-adultplate-s20260825-0820
+task: ep2-b02-adultplate-s20260825-0820
+node: 002b-first-citizen
+beat: 2
+runner: box
+priority: 34
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: goblin-design audit lane, 2026-08-20 (beat 02 -- the missed goblin beat)
+consumer: 'A six-tile sheet, judged by eye in the morning, whose winner becomes the init plate for a beat
+  02 motion job on the proven `anchor` recipe -- and through that, beat 02''s slot in review/ep2-ship-0821,
+  which today opens the episode on the wrong creature. Nothing consumes a single one of these tiles on
+  its own: the sheet is the artifact and the pick is a person''s.'
+success: 'One 832x1216 SDXL plate, seed 20260825, of the founder-ratified lean wiry adult goblin sprinting
+  through a morning field, drawn from the canon wording and NO reference image. It lands as one tile of
+  a six-seed sheet and is scored against the five clauses in `bar`, in rank order: he is the adult, he
+  is running, the sapling is tiny, the framing is wide, there is one figure. A tile that fails P1 is discarded
+  whatever else it does, because P1 is the founder''s complaint and the other four are craft.'
+why: $0, ~2 minutes, zero dependencies, and it is the ONLY missing input for the one goblin beat in this
+  episode that has never had an adult plate drawn for it. The card measured 0 ready / 0 running / 0 backlog
+  at 20:57 -- the same empty-box window that wasted last night -- and this needs no session alive to run.
+est_minutes: 3
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\b02adultplate-s20260825-0820\prompt.txt: lean wiry adult goblin man, green skin, bald
+    head, long pointed ears, one broken tusk, faded green patchwork cloak, sprinting low through tall
+    grass, mid-stride, leaning forward, dust at his heels, one tiny two-leaf sapling standing tall ahead
+    of him, wide shot, static camera, morning field, 2D anime, cel shading, clean ink linework, cinematic
+    lighting, detailed, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\b02adultplate-s20260825-0820\negative.txt: child, kid, boy, baby, toddler, chibi, mascot,
+    cute, round face, chubby cheeks, blush, oversized head, big head, domed cranium, short stubby limbs,
+    girl, crowd, two goblins, extra arms, extra hands, extra fingers, deformed hands, armor, helmet, knight,
+    dark, night, text, watermark, photorealism, 3d render, low quality, deformed
+steps:
+- name: hintskel
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\b02adultplate-s20260825-0820\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\b02adultplate-s20260825-0820\src
+  - --repo-commit
+  - dc7348f36d6ffaf218a9d423a80072f0efb6fdf3
+  - --task
+  - ep2-b02-adultplate-s20260825-0820
+  - --arm
+  - nocontrol
+  - --control
+  - pipeline/control/b08-pose-skel-0819.png
+  - --control-sha256
+  - 09200bdf0d293f2555a4ee5430c3f9787dcccba8a6d783b7ff62cebafae89ac3
+  - --scale
+  - '0.45'
+  - --seed
+  - '20260825'
+  - --prompt-file
+  - C:\banyan-farm\b02adultplate-s20260825-0820\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\b02adultplate-s20260825-0820\negative.txt
+  - --out
+  - C:\banyan-farm\b02adultplate-s20260825-0820\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Required by box_enqueue.courier_problems (2026-08-19): a job whose\n# artifacts live outside courier-box\\\
+    farm-out must have a step that\n# carries them there, because the courier pushes from farm-out and\
+    \ from\n# nowhere else. ep2-cnet-probe-0817 rendered perfectly and was invisible\n# for two days for\
+    \ want of exactly this.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/b02adultplate-s20260825-0820/out\"\
+    \npay_dir = \"C:/banyan-farm/b02adultplate-s20260825-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b02-adultplate-s20260825-0820\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b02-adultplate-s20260825-0820-nocontrol.png*\"\
+    )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
+    /negative.txt\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst,\
+    \ os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b02-adultplate-s20260825-0820.sha256\"\
+    ), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\n\
+    print(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files)\
+    \ >= 4 else 1)"
+artifacts:
+- C:\banyan-farm\b02adultplate-s20260825-0820\out\ep2-b02-adultplate-s20260825-0820-nocontrol.png
+bar:
+  p1_he_is_the_ratified_adult: 'THE CLAUSE THE JOB EXISTS FOR. Read at 1:1 against picture B on /review/ep2-goblin-design-0819
+    and against beats 07, 14, 17 and 19 of the ship cut: lean, angular, five and a half to six heads tall,
+    green skin, bald, long pointed ears. NOT the round child of picture C -- no four-head proportion,
+    no oversized dome, no pink cheek patches, no child stance. A tile that is arguable is a NO; the whole
+    point of the sheet is that some tiles will not be arguable.'
+  p2_he_is_running: 'The pose reads as a sprint at 1:1: weight forward, one leg driving, not a standing
+    figure with motion lines. Beat 02''s whole content is the dive, and an i2v init that shows him standing
+    gives the motion recipe nowhere to go. Second in rank behind P1 and ahead of P3.'
+  p3_the_sapling_is_tiny_and_in_frame: 'One thin stem with two leaves, rooted, and SHORTER THAN HE IS
+    -- the founder''s standing ruling that the sapling is tiny, which beat 13''s shipped take broke by
+    growing a mature forked tree. Nice to have on a plate, not fatal: the motion job can be conditioned
+    on a tile that has him and no plant, and beat 03 already carries the size mismatch.'
+  p4_wide_enough_for_a_dive: Full body in frame with grass around him, not a bust and not a close-up.
+    The script says "Camera wide so the dive reads" and a cropped plate cannot be widened by a motion
+    prompt.
+  p5_one_figure: Exactly one creature. No second goblin, no guard, no human. The b08 lane has burned eleven
+    rungs on `green skin` landing on two bodies out of one pooled embedding, and that failure is cheap
+    to detect here and expensive to detect after a motion render.
+failure_predicted_in_advance: P-THE-SAPLING-EATS-THE-ADJECTIVES. This prompt asks for a LEAN ADULT and
+  a TINY PLANT in one pooled embedding, and this model's documented habit in this repo is to move size
+  words onto the subject. If it fires -- adult wording, child result, on tiles that drew the sapling and
+  not on tiles that did not -- the next rung is to drop the plant from the plate entirely and let the
+  motion job's field carry it, NOT a seventh wording of the identity string.
+how_to_judge_this_in_the_morning: Tile all six into one contact sheet next to picture B and picture C
+  from /review/ep2-goblin-design-0819, and answer P1 off the sheet in one line per tile. Only the P1 survivors
+  get read for P2-P5. If no tile passes P1, the finding is that the canon wording alone does not carry
+  this pose and the next rung is an adult reference set -- which does not exist yet and would have to
+  be cut.
+init_provenance: 'NONE, and that is the design. No IPA, no reference image, no control hint: this is txt2img
+  from the canon string quoted verbatim out of pipeline/canon.yaml. Every existing b02 plate descends
+  from refs-goblin-approved-0814, which is the round child set, and the only adult-leaning refs on the
+  box (refs-goblin-d1std-0815) measure themselves at 4.5-5 heads and would reproduce the defect. Text
+  is the route that has actually drawn this character.'
+not_done_on_purpose: NO MOTION JOB IS FILED AGAINST THESE. A plate nobody has looked at is not an approved
+  result, and firing beat 02's motion recipe on an unseen tile is the exact thing ONE SAMPLE BEFORE ANY
+  BATCH exists to stop. No edit to plate_scratch.py, wave-drafts.yaml or the canon identity string --
+  the string is quoted, not revised. No touch to beats 08 or 13, which peer lanes own tonight.
+pre_registered_fail_modes: P-THE-CHILD-COMES-BACK -- the model resolves `goblin` to the round young one
+  regardless of `lean wiry adult`, which is the read the whole 08-13 to 08-15 ladder was fighting when
+  it had no `child` in its negative. Named as most likely on the tiles that also carry `tiny`. P-THE-SAPLING-EATS-THE-ADJECTIVES
+  -- `tiny two-leaf sapling` sits four clauses after `lean wiry adult` and SDXL pools the whole string;
+  `tiny` landing on HIM instead of the plant is the specific mechanism that made `a small goblin` read
+  as a child in the first place (the 08-13 diagnosis, which the goblin-design page calls probably still
+  right). P-TWO-FIGURES -- `green skin` on two bodies, the b08 lane's standing defect. P-NO-SPRINT --
+  he stands still in tall grass and the pose clause is ignored, which is P2 and is survivable only if
+  some tile does run. P-CROPPED -- the figure fills the frame and the dive has nowhere to happen.
+the_one_variable_and_the_three_inert_flags: The arm, from `hintskel` to `nocontrol`. `controlnet_plate.py`
+  line 488 reads `use_cn = a.arm != "nocontrol"`, and `--control`, `--control-sha256` and `--scale` are
+  read only inside `if use_cn:` (lines 592-608). They are therefore left BYTE-IDENTICAL to the parent's
+  rather than edited out -- an edit would be a second difference between this job and a recipe that has
+  run clean, and the honest record is that they are present and never read. The prompt, the negative,
+  the beat and the seed are the job's own; the model, the sampler, the size, the steps and the cfg are
+  the parent's.
+derivation:
+  parent: pipeline/jobs/ep2-b08-cnetplate-r5-0819.yaml
+  by: pipeline/derive_spec.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - how_to_judge_this_in_the_morning
+  - init_provenance
+  - not_done_on_purpose
+  - owner
+  - pre_registered_fail_modes
+  - success
+  - the_one_variable_and_the_three_inert_flags
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - a_measurement_that_did_NOT_support_the_claim_and_is_reported_anyway
+  - bar
+  - identity_stays_parked_and_the_reason_has_now_changed
+  - instrument_note_the_probe_metric_is_VOID_on_this_hint
+  - licence_note
+  - not_done_on_purpose
+  - the_condition_was_DRAWN_not_obeyed
+  - the_next_instrument_is_a_DIFFERENT_NET_and_it_is_a_RESEARCH_question_first
+  - verdict
+  - verdict_measured
+  - verdict_rule
+  - what_this_does_not_license
+  - what_this_settles
+  - why_this_happened_and_it_reframes_ALL_FIVE_RUNGS
+  retokened:
+  - b08cnetplate-r5-0819 -> b02adultplate-s20260825-0820
+  - ep2-b08-cnetplate-r5-0819 -> ep2-b02-adultplate-s20260825-0820
+  overrides_applied_and_asserted:
+    argv:--arm:
+    - step hintskel --arm (hintskel -> nocontrol)
+    argv:--seed:
+    - step hintskel --seed (20260819 -> 20260825)
+    key:beat:
+    - key beat = 2
+    key:est_minutes:
+    - key est_minutes = 3
+    payload:negative.txt:
+    - payload negative.txt (275 -> 329 chars)
+    payload:prompt.txt:
+    - payload prompt.txt (271 -> 407 chars)
+publish_glob_correction: 'CORRECTED 2026-08-21 (recovery lane): publish glob and artifacts: said -hintskel.png while --arm nocontrol makes controlnet_plate.py:491 write -nocontrol.png, so a successful render exited rc=1 and the courier pushed nothing; the >= 4 gate is unchanged and still right (png + png.meta.yaml + prompt.txt + negative.txt).'

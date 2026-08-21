@@ -1,0 +1,8 @@
+
+- id: ep2-b01-figgrow-055-0812
+  kind: prediction
+  written: 2026-08-12 ~13:3x before enqueue. First ep2 motion sample, from the
+    doubly-approved beat-01 frame; figgrow staging, guidance 1.0.
+  predicates: [fig grows rather than pops in, palette holds the approved frame, no invented objects, plant-only 1/1]
+  consumer: his look; scale-or-not is his call.
+  outcome: null
