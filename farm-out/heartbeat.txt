@@ -3896,3 +3896,5 @@
 15:13:13Z DONE task=ep2-b08-canonmotion-0821-1787324428 rc=0 artifacts=1
 15:13:19Z STARTED task=ep2-b02-canonmotion-0821-1787324433 attempt=1 on box-runner
 15:19:20Z DONE task=ep2-b02-canonmotion-0821-1787324433 rc=0 artifacts=1
+15:19:26Z STARTED task=ep2-b03-canonmotion-0821-1787324439 attempt=1 on box-runner
+15:25:23Z DONE task=ep2-b03-canonmotion-0821-1787324439 rc=0 artifacts=1
