@@ -8220,3 +8220,49 @@ fires, check the register for a reference that already exists.
 adapter over `taste/refs/guard1-canon-founder-0822.png` so the costume family and
 the style come from guard 1 while the prompt varies hair and build. Sheet at
 `/review/ep2-guardcast2-0822`. Guard 1 is **not** re-asked.
+
+---
+
+### FOUNDER VETO 2026-08-22 — "that aint my goblin", AND ROUND NINE INVERTS THE EXPECTED DIRECTION
+
+The whole w2 goblin sweep is vetoed on the FACE, posted against a sweep frame.
+Diffed at 1:1 against `taste/refs/goblin-canon-founder-0821.png`:
+
+| | the w2 plates | HIS image |
+|---|---|---|
+| eye | wide round, **large green iris**, white sclera, catchlights | narrow almond, **off-white field**, tiny dark pupil, heavy upper lid |
+| under-eye | clean | **eyebags** |
+| skull | tall egg, narrow chin | broad low dome |
+| ears | very large, swept up and back | smaller, near-horizontal |
+| palette | saturated green, pink highlights | desaturated sage, washed high-key |
+
+**THE WORD WAS THE DEFECT, AND IT WAS A REQUIRED ONE.** `slit pupils` sat in
+`IDENTITY` and `derive_jerry_canon_0821` *asserted its presence* on every spec.
+On animagine that tag draws a large iris with a slit through it — the exact eye
+he vetoed. A required tag that produces the vetoed frame is not a guard; it is
+the defect with a test around it. It is out of the required list, with the
+reason recorded there. `blank eyes` and `no pupils` came out of the NEGATIVE for
+the mirror reason: his eye very nearly *is* a blank field.
+
+**Round nine, three one-variable rungs on beat 13, all with the word side of the
+eye stripped to zero** (positive loses `slit pupils, constricted pupils,
+eyebags, thin eyebrows`; negative loses `blank eyes, no pupils`; the
+defect-containment negatives stay, because they name failures and not his eye):
+
+| rung | reference | ip | verdict |
+|---|---|---|---|
+| r9a | sq65 (58.9% encoded) | 1.0 | skull, ears and palette land. **Eye still a green anime iris with lashes.** |
+| r9b | sq65 | 1.2 | worse on every axis — eyes widest, ears largest. The step up hurts. |
+| r9c | **sq45 (28.3%)** | 1.0 | **closest to his goblin so far.** Half-lidded heavy upper lid, pale near-blank iris field, thin high brow arcs, broad dome, washed sage. Pupils still too faint; no eyebags. |
+
+**THE RE-CUT WAS THE WRONG LEVER AND THE WORDS WERE THE RIGHT ONE.** r9c changed
+only the wording and beat both sq65 rungs. More reference detail gives the
+denoiser more high-frequency face to resolve, and it resolves it into a
+*detailed anime eye* — which is the house style doing its job on the wrong
+feature. **The night order's instinct to go DOWN in head fraction is therefore
+live again**, having been refused here on r4–r7 evidence that was all measured
+with the eye words still in play. `sq65` stays on disk as the falsification.
+
+Round ten, running: r10a sq45 @ 0.9 · r10b sq45 @ 1.0 +`eyebags` · r10c sq25
+@ 1.0 · r10d sq25 @ 1.2. **No goblin-beat candidate is staged until a rung
+matches his image at 1:1** — every sweep render inherits this fault.

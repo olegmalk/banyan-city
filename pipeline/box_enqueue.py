@@ -2225,7 +2225,105 @@ def with_backlog_meta(job: dict, spec_path: str, expires_h: float) -> dict:
     return job
 
 
+# ── GUARD 9: THE CARD'S DISK, WHICH FILLED UP AND FAILED TWO JOBS QUIETLY. ───
+# 2026-08-22, 21:12Z. ep2-b15-canonmotion and ep2-b16-canonmotion both died in
+# `encode` with `RuntimeError: ios_base::badbit set` out of torch.save, one
+# minute apart, on a recipe whose sibling b14 had just passed. Nothing in the
+# log says "disk": torch reports a short write as a zip-container length
+# mismatch ("unexpected pos 385361152 vs 385361040") and the runner records
+# rc=1. C: had 78 MB free of 926 GB.
+#
+# WHERE IT WENT. Every LTX job writes its prompt embeds and latents as .pt into
+# its own C:\banyan-farm\<jobdir>, and nothing has ever deleted them: 368 files,
+# 263 GB, across 1256 job directories going back to the first ep2 wave. They are
+# pure scratch — re-derived by the encode step from prompt.txt in under a minute
+# — while the frames and clips that matter were couriered into farm-out and
+# pushed long ago.
+#
+# WHY THIS IS A PRECONDITION AND NOT A CRON. A full disk does not stop the
+# queue; it makes the queue produce failures that read like recipe faults, which
+# is the expensive kind of wrong. The lane that hit it was about to re-cut a
+# reference and re-word a prompt to explain b15/b16. So the check runs where a
+# lane can still be told, at the moment work is filed, and it heals itself
+# first: purge scratch older than PURGE_AGE_H (old enough that a claimed job
+# cannot own it), re-measure, and only then refuse.
+DISK_FLOOR_GB = 40.0        # below this, purge scratch before queueing
+DISK_HARD_GB = 8.0          # below this after a purge, refuse — nothing will run
+PURGE_AGE_H = 6
+PURGE_KEEP = ("banyan-city", "venv", "venv-lora", "courier-box",
+              "cnet-openpose-twins", "goblin-ipa-0812")
+
+
+def box_free_gb():
+    """Free GB on the card's C:, or None if the box cannot be reached."""
+    r = ssh("fsutil volume diskfree C:", timeout=60)
+    if r.returncode:
+        return None
+    for line in (r.stdout or "").splitlines():
+        if "total free bytes" in line.lower() and ":" in line:
+            # fsutil prints "Total free bytes : 282,552,942,592 (263.1 GB)".
+            # Take the value BEFORE the parenthetical: sweeping every digit in
+            # the line silently appends the "2631" of the pretty form and
+            # reports a terabyte-scale lie that passes every floor.
+            val = line.split(":", 1)[1].split("(")[0]
+            digits = "".join(c for c in val if c.isdigit())
+            if digits:
+                return int(digits) / (1024.0 ** 3)
+    return None
+
+
+def purge_box_scratch(age_h: int = PURGE_AGE_H):
+    """Delete .pt scratch from finished job dirs. Returns GB freed, or None."""
+    keep = ",".join("'%s'" % n for n in PURGE_KEEP)
+    ps = ("$keep=%s; $cut=(Get-Date).AddHours(-%d); "
+          "$d=Get-ChildItem C:\\banyan-farm -Directory -Force | "
+          "Where-Object { $keep -notcontains $_.Name }; "
+          "if (-not $d) { '0'; exit }; "
+          "$f=Get-ChildItem $d.FullName -Recurse -File -Force -Filter *.pt "
+          "-ErrorAction SilentlyContinue | "
+          "Where-Object { $_.LastWriteTime -lt $cut }; "
+          "if (-not $f) { '0'; exit }; "
+          "$gb=[math]::Round(($f | Measure-Object Length -Sum).Sum/1GB,2); "
+          "$f | Remove-Item -Force -ErrorAction SilentlyContinue; $gb"
+          % (keep, age_h))
+    r = ssh('powershell -NoProfile -Command "%s"' % ps.replace('"', '\\"'),
+            timeout=600)
+    if r.returncode:
+        return None
+    for line in reversed((r.stdout or "").strip().splitlines()):
+        try:
+            return float(line.strip())
+        except ValueError:
+            continue
+    return None
+
+
+def assert_box_has_room():
+    free = box_free_gb()
+    if free is None:
+        print("  disk: could not read the card's free space -- continuing, but "
+              "a job that dies in torch.save is this, not your recipe")
+        return
+    if free >= DISK_FLOOR_GB:
+        print("  disk: %.1f GB free on the card" % free)
+        return
+    print("  disk: only %.1f GB free on the card (floor %.0f) -- purging .pt "
+          "scratch older than %dh" % (free, DISK_FLOOR_GB, PURGE_AGE_H))
+    freed = purge_box_scratch()
+    after = box_free_gb()
+    print("  disk: purge freed %s GB, now %s GB free"
+          % ("?" if freed is None else "%.1f" % freed,
+             "?" if after is None else "%.1f" % after))
+    if after is not None and after < DISK_HARD_GB:
+        sys.exit("!! REFUSING TO QUEUE: the card has %.1f GB free and a purge "
+                 "of job scratch did not fix it. An LTX encode needs room for "
+                 "a ~700 MB .pt and fails as a torch zip-length error, not as "
+                 "a disk error -- so this would be filed as a recipe fault. "
+                 "Find the real consumer of C: before queueing." % after)
+
+
 def enqueue(job: dict, dest: str = "ready") -> None:
+    assert_box_has_room()
     name = job["id"] + ".json"
     local = os.path.join("/tmp", name)
     with open(local, "w", encoding="utf-8") as fh:

@@ -1,0 +1,47 @@
+# Provenance (7.2), written AT RENDER TIME by controlnet_plate.py on
+# the rtx5090. A SAMPLE, not a pick and not canon.
+platform: local-gpu (rtx5090)
+task: ep2-b13-canon-r9a-0821
+arm: ipahead
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLControlNetPipeline (text2img + scribble control)
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260823
+cost_usd: 0
+controlnet: xinsir/controlnet-openpose-sdxl-1.0
+controlnet_licence: apache-2.0 (D15 SAFE, no attribution condition; front matter and body both, and no annotator is used -- the hint is authored in PIL)
+controlnet_variant: None (xinsir ships no fp16 variant file; passing one raises)
+controlnet_conditioning_scale: 1.0
+control_guidance_start: 0.0
+control_guidance_end: 1.0
+control_image: pipeline/control/jerry-canon-h37fsit-0821.png
+control_image_sha256: 3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e
+control_polarity: white-on-black
+control_authored_by: pipeline/author_b08_pose_hint.py (PIL, no model, no photo-derived edge map, no annotator)
+ip_adapter: h94/IP-Adapter (apache-2.0 (D15 SAFE, no attribution condition) -- h94/IP-Adapter sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors, 847517512 bytes, sha256 677ad8860204f7d0bfba12d29e6c31ded9beefdf3e4bbd102518357d31a292c1, fetched by ep2-ipa-facewt-fetch-0821. THE SAME LENGTH as the general adapter above and only the digest separates them. Trained for faces that must survive a small share of the reference, which is the regime where k5a's mouth disappeared)
+ip_adapter_weight: sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors
+ip_adapter_image_encoder: models/image_encoder (ViT-H; the folder the _vit-h adapters require, and the only encoder in the box cache)
+ip_adapter_scale: [[1.0]]
+ip_adapter_refs: ['C:\\banyan-farm\\b13canon-r9a-0821\\src\\pipeline\\control\\jerry-canon-sq65-0821.png']
+ip_adapter_ref_sha256: ['06ff0c067b3507a6dba1d9918385d59ead85bb361a6a4deff7dfec8f48525cbc']
+ip_adapter_mask_geometry: rects
+ip_adapter_masks: [(0, 0, 832, 655)] (x0,y0,x1,y1 in RENDER pixels, drawn by controlnet_plate.mask_images -- no mask file exists to drift)
+ip_adapter_masks_overlap: false (asserted; two identities on one pixel is refused, not warned about)
+repo_commit: 3f6fbb535
+model_load_seconds: 8.7
+render_seconds: 16.0
+rendered_utc: 2026-08-21T21:23:14Z
+torch_version: 2.11.0+cu128
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon.
+  Never takes a canon filename, is not published to the site, not
+  posted, and not assembled into an episode. Ground truth is the
+  founder (R4).
+prompt: |-
+  best quality, 1boy, solo, goblin, green skin, bald, pointy ears, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body
+negative: |-
+  lowres, worst quality, low quality, text, watermark, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch
