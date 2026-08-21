@@ -3528,3 +3528,5 @@
 07:07:55Z STARTED task=ep2-b20-tilefix-r2-0821-1787295962 attempt=1 on box-runner
 07:08:23Z DONE task=ep2-b20-tilefix-r2-0821-1787295962 rc=0 artifacts=1
 07:15:28Z box-runner idle ready=0 failed=67
+07:24:03Z STARTED task=ep2-b02-tilemotion-s1-0821-1787296922 attempt=1 on box-runner
+07:30:12Z DONE task=ep2-b02-tilemotion-s1-0821-1787296922 rc=0 artifacts=1
