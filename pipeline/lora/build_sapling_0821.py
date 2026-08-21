@@ -84,6 +84,17 @@ SETTING = {
     "r05": "steep grassy hillside above a valley, hard midday sun",
     "r08": "sunlit clearing path between dark trees, strong backlight",
     "p09": "wildflower meadow, daisies in the grass, bright daylight",
+    # ---- v2, 2026-08-21. THE LIGHTING CLAUSE IS THE POINT OF THESE FOUR.
+    # Every setting above ends in a DAYLIT phrase, which is the cap v1's own
+    # manifest names: a subject LoRA whose every frame shares a time of day
+    # learns the time of day into `bnysapling`, exactly as a shared backdrop
+    # would. These say night, storm, rain and after-rain, and they say it in
+    # the caption -- where a named attribute is one the trigger is excused
+    # from carrying -- rather than leaving it for the token to absorb.
+    "v02": "green meadow at night, distant hills, moonlight, blue darkness",
+    "v03": "green plain under storm cloud, a shaft of light, dark sky",
+    "v05": "wet green moor in the rain, grey hills, flat rain light",
+    "v12": "green plain after rain, puddles, breaking cloud",
 }
 
 STYLE = "anime style, cel shading, detailed background"

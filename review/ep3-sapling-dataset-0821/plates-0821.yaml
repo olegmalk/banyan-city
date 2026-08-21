@@ -245,3 +245,179 @@ round_5_consumer: >-
   (beat16_sapling_composite.py) and step 3 (the 0.30 inpaint,
   derive_sapling_lora_naturalize_0821.py). No cut, no beat, no promotion,
   $0 on otherwise-idle card, and DECISIONS.md item 18 is still open.
+
+# ---------------------------------------------------------------------------
+# ROUND 5, JUDGED 2026-08-21 by the sapling-dataset lane. All fourteen drained
+# clean on the box before this was written. The PNGs live permanently on
+# origin/farm-results-rtx5090 at farm-out/ep3-sapfld5-vNN-0821/; only the
+# plates the dataset uses are copied onto main, which is the same convention
+# rounds 1-4 followed.
+
+round_5_result: >-
+  4 OF 14 USABLE, against 8 of 8 in round 4 -- and the drop is the point of the
+  round rather than a regression in it. Round 4 asked for eight DAYLIT scenes
+  off a recipe tuned on daylit scenes and got eight. Round 5 asked for the
+  lighting the recipe had never been pointed at, and the recipe held on the
+  axis it was proved on (D3: ZERO FIGURES IN FOURTEEN OF FOURTEEN, the first
+  clean sweep this tree's figure ban has ever had) while failing on two
+  specific things that are now measured instead of guessed. Kept: v02, v03,
+  v05, v12.
+
+round_5_verdicts:
+  - id: v01
+    scene: dusk
+    verdict: REFUSED AT STEP 2
+    law: D5
+    note: >-
+       By eye it passes: cel, straight horizon, a smooth dusk field band at
+       y~610-800 with tall-grass silhouettes below it. THE PALETTE SAMPLER
+       REFUSED IT. `foliage_palette` found ONE green-dominant pixel in the
+       plant's region AND in the whole-lower-half fallback, at RGB (2,7,2), and
+       C5 then failed the composite -- fill luma 5.0 against a field's 54.9.
+       Dusk teal is BLUE-dominant, not green-dominant, so this is the u05
+       failure arriving through a lighting word rather than a ground-cover one.
+       Not an eye call and not curated around; the plate is kept on main so the
+       refusal can be reproduced.
+  - id: v02
+    scene: night, moonlight
+    verdict: PASS
+    law: all
+    note: >-
+       THE PRE-REGISTERED PREDICTION WAS WRONG HERE AND IT IS WORTH THE WHOLE
+       ROUND. v02 was named in advance as the cell most likely to come back
+       green-starved; it is the GREENEST PLATE IN THE BATCH -- 34k to 176k
+       green-dominant pixels depending on the region, against v01's one. Flat
+       cel fills, hard ink, a smooth emerald slope from y~800 with blades
+       crossing it (D2 allows blades), moonlit rim gradient for D4. The
+       dataset's dark end comes from TRUE NIGHT after all, not from dusk.
+  - id: v03
+    scene: storm, light shaft
+    verdict: PASS
+    law: all
+    note: >-
+       The other cell pre-registered as green-starved, and also wrong: a bright
+       flat green plane from y~950 under a near-black sky, 10k-97k green px.
+       The shaft gives D4 a real luminance gradient. CAVEAT CARRIED INTO THE
+       GEOMETRY TABLE: dark landform wedges sit in both bottom corners, so
+       roots stay in x 280..680.
+  - id: v04
+    scene: golden hour
+    verdict: REJECT
+    law: D2
+    note: >-
+       The distance clause worked at the top of the frame and the LOWER HALF IS
+       MACRO GRASS -- magnified sunlit strokes over shadow, no plane to root
+       on. Round 1's failure shape, reappearing under a lighting word on a
+       recipe that had beaten it. Also tan, so D5 would have taken it next.
+  - id: v05
+    scene: rain
+    verdict: PASS with a caveat
+    law: D2/D5
+    note: >-
+       Cel, rain streaks readable, a wet grey-teal moor band from y~950 with
+       dark rock lumps scattered through it (D2 caveat -- roots aimed between
+       them). THE PALETTE SAMPLES THIRTY-NINE PIXELS, from the whole-lower-half
+       fallback, and that number is recorded rather than rounded up: it is one
+       above the floor where the tool refuses. Kept because the sage-grey plant
+       it produced reads INTEGRATED in the composite, not pasted -- judged on
+       the picture, not on the count. If v05's two frames come back wrong from
+       step 3 they are the first to drop.
+  - id: v06
+    scene: lake
+    verdict: REJECT
+    law: D2
+    note: "water fills the lower two thirds; risk 2 fired exactly as written."
+  - id: v07
+    scene: creek
+    verdict: REJECT
+    law: D2
+    note: >-
+       risk 2 again, and this one is the surprise: r06's cell PASSED in round 2
+       with the same words. Here the creek owns the whole lower centre and the
+       green banks are edge lobes with pebbles in them. Flat diffuse light on
+       top of it, so D4 is gone too. Same prompt, different seed, opposite
+       verdict -- the water cells are a lottery, not a recipe.
+  - id: v08
+    scene: sea clifftop
+    verdict: REJECT
+    law: D2
+    note: >-
+       returned a FLOATING ISLAND in open sea. The scene words and the picture
+       disagree completely and there is no near ground plane at all.
+  - id: v09
+    scene: ridge above fog
+    verdict: REJECT
+    law: D2
+    note: >-
+       `low fog below` put the camera ABOVE the weather: the near plane is
+       cloud, the ridge is a dark mid-frame band, nothing is rootable. The
+       distinction the cell was written to test (fog below vs fog around) is
+       real and it costs the plane either way.
+  - id: v10
+    scene: winter light
+    verdict: REJECT
+    law: D5
+    note: >-
+       `cold clear winter light` over `green meadow` returned a SNOWFIELD with
+       rocks. The lighting word beat the ground word -- worth knowing, because
+       every other cell assumed the green clause would hold.
+  - id: v11
+    scene: riverbank evening
+    verdict: REJECT
+    law: D2
+    note: "sky owns 75% of the frame, water the rest; grass is a corner sliver. Risk 2, third of three."
+  - id: v12
+    scene: after rain
+    verdict: PASS
+    law: all
+    note: >-
+       The strongest new cell: flat cel, hard ink, 48k-251k green px, green
+       lobes between puddles from y~850. Specular water in a set that is
+       otherwise entirely matte. Roots go ON a lobe, never in standing water --
+       a puddle under the plant is a structure the 0.30 pass preserves.
+  - id: v13
+    scene: heat haze
+    verdict: REJECT
+    law: D1
+    note: >-
+       the one D1 loss of the batch and a clean one: soft airbrushed gradients,
+       no flat fills, no ink line. `hazy heat` did not fail to draw -- it drew,
+       and what it drew was a different medium.
+  - id: v14
+    scene: alpenglow
+    verdict: REJECT
+    law: D5
+    note: >-
+       the pink light on the peaks arrived beautifully and the near plane is
+       SNOW AND CONIFERS. Same shape as v10: the lighting word carried the
+       ground with it.
+
+round_5_what_the_predictions_got_right_and_wrong: >-
+  PREDICTION ONE (the dark cells come back green-starved) IS FALSIFIED WHERE IT
+  WAS AIMED AND TRUE ONE CELL OVER. v02 (night) and v03 (storm) were the two
+  named, and both are green-dominant and both passed; the cell that actually
+  refused at the palette sampler was v01, DUSK, which was written as the safe
+  one and as the fallback for the dark end. The mechanism was right and the
+  target was wrong: what starves the sampler is a BLUE key, and dusk's teal is
+  bluer than moonlight's emerald.
+  PREDICTION TWO (the water cells lose the plane) IS EXACTLY RIGHT, 3 of 3.
+  v06, v07 and v11 all put a horizontal band where the rootable strip belongs,
+  and `green banks` first in the word order did not buy the near field on any
+  of them. Water is now a CLOSED question for this recipe, not an open one:
+  four cells over two rounds, one pass (r06) that a same-words re-run (v07)
+  could not reproduce.
+  PREDICTION THREE (the painter's words draw nothing) IS HALF RIGHT AND THE
+  OTHER HALF IS WORSE. They all drew something. `golden hour`, `alpenglow` and
+  `hazy heat` each produced their light convincingly -- and two of the three
+  brought a NEW GROUND with them (tan slopes, snow), and the third brought a
+  new MEDIUM (airbrush). The failure was never that the light would be ignored;
+  it is that a lighting word on this checkpoint carries a whole scene.
+
+round_5_licensed: >-
+  Step 2 on the four passers: eleven composites (s27..s37) at four scale tiers
+  over night, storm, rain and after-rain, filed by
+  pipeline/build_sapling_lora_composites_0821.py --fids s27..s37 (the v1 rows
+  are NOT rewritten -- their shas are asserted by twenty-six committed specs,
+  which is now a --fids flag rather than a habit). Then step 3, all eleven in
+  one filing pass. Still nothing trained; DECISIONS.md item 18 remains open and
+  is not touched by building the set the question is about.

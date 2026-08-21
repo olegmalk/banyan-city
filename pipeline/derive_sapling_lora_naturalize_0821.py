@@ -49,8 +49,18 @@ this deriver emits the corrected name. The committed files are deliberately NOT
 regenerated: they are the record of what the card actually did, and the frames
 they produced are re-published under their real names by the dataset builder.
 
+ROUND 5 / v2, 2026-08-21. Eleven more rows (s27..s37) were added to B.ROWS on
+four NON-DAYLIT plates -- night, storm shaft, rain, after-rain -- because every
+one of v1's eleven plates is lit by day and a subject LoRA whose every frame
+shares a time of day learns the time of day into the trigger. Nothing about the
+recipe moves for them either: same 40 steps, cfg 7.5, strength 0.30, pad-crop
+64, blur 8, same seed, same negative shape. The only new thing in this file is
+the no-clobber guard at the write, and it exists because extending B.ROWS is
+exactly the move that would otherwise have rewritten the drained twenty-six.
+
   python3 pipeline/derive_sapling_lora_naturalize_0821.py            # dry
   python3 pipeline/derive_sapling_lora_naturalize_0821.py --write
+  python3 pipeline/derive_sapling_lora_naturalize_0821.py --write --regen
 """
 
 from __future__ import annotations
@@ -217,12 +227,12 @@ for name, want in WANT.items():
                     "THE SAPLING LoRA'S TRAINING SET and nothing else -- "
                     "pipeline/lora/README.md, which gates it at >=20 "
                     "composited saplings across distinct scenes, scales and "
-                    "lighting. This is frame %s of 26, drawn on plate %s (%s). "
+                    "lighting. This is frame %s of %d, drawn on plate %s (%s). "
                     "It is not a beat, it does not enter a cut, and it is not "
                     "a candidate for one. DECISIONS.md item 18 ('never train "
                     "on the output') is open and unresolved; this builds the "
                     "dataset the question is ABOUT and decides nothing."
-                    % (fid, pk, scene["scene"])),
+                    % (fid, len(B.ROWS), pk, scene["scene"])),
                 "success": (
                     "One 832x1216 png of the canon two-leaf sapling STANDING IN "
                     "%s under %s, with the plant NATURALIZED into the plate's "
@@ -437,6 +447,20 @@ for name, want in WANT.items():
             return 1
 
         out = os.path.join(REPO, "pipeline", "jobs", new_id + ".yaml")
+        # A SPEC ON DISK IS THE AS-RUN RECORD AND IS NOT OVERWRITTEN. The
+        # docstring above says the committed twenty-six are "the record of what
+        # the card actually did"; that was prose, and prose is not a guard. It
+        # became one when round 5 added rows to B.ROWS: a plain --write over the
+        # extended table would have silently rewritten all twenty-six drained
+        # specs (with the retoken fix applied, so their publish directory names
+        # would no longer match the directories the box actually wrote) to file
+        # eleven new ones. Now the run files only what does not exist, and
+        # --regen is the explicit way to say you mean it.
+        if write and os.path.exists(out) and "--regen" not in sys.argv:
+            print("%-22s %-4s KEPT AS-RUN (spec exists; --regen to rewrite)"
+                  % (new_id, pk))
+            n_ok += 1
+            continue
         if write:
             with open(out, "w", encoding="utf-8") as fh:
                 fh.write(derive_spec._dump(child))

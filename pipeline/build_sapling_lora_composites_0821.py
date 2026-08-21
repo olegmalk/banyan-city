@@ -111,6 +111,31 @@ SCENES = {
                 scene="sunlit clearing path between dark trees",
                 light="strong backlight down the avenue, deep shade at the edges",
                 ground="path from y~1000"),
+    # ---- ROUND 5 / v2, added 2026-08-21. THE NON-DAYLIT HALF OF THE LIGHTING
+    # ---- AXIS. Every plate above is DAY -- the eleven lightings v1 carries are
+    # flat daylight, sunset backlight, dawn mist, heavy overcast, alpine midday,
+    # forest dapple, even daylight, pale dawn, strong backlight, hard midday sun
+    # and bright daylight -- so a LoRA trained on v1 alone learns a time of day
+    # into `bnysapling`. These four are what survived the round-5 bar out of
+    # fourteen; the ten that did not, and why, are in
+    # review/ep3-sapling-dataset-0821/plates-0821.yaml under round_5_result.
+    "v02": dict(plate="ep3-sapfld5-v02-0821.png",
+                scene="a green meadow at night, distant hills, moonlit slope",
+                light="cool moonlight, blue darkness, a pale rim on the slope",
+                ground="the moonlit slope from y~800; tall blades from y~1050"),
+    "v03": dict(plate="ep3-sapfld5-v03-0821.png",
+                scene="a green plain under storm cloud, a shaft of light beyond",
+                light="dark storm sky, one bright shaft, a luminous horizon band",
+                ground="the flat green plane from y~950. DARK LANDFORM WEDGES "
+                       "sit in both bottom corners -- roots stay in x 280..680"),
+    "v05": dict(plate="ep3-sapfld5-v05-0821.png",
+                scene="a wet green moor in the rain, receding grey hills",
+                light="flat rain light, grey-teal, no cast shadow",
+                ground="the near moor band from y~950"),
+    "v12": dict(plate="ep3-sapfld5-v12-0821.png",
+                scene="a green plain after rain, puddles, breaking cloud",
+                light="bright breaking cloud, wet specular puddles",
+                ground="green lobes BETWEEN the puddles, y~850..1216"),
 }
 
 # tier -> the caption's SCALE clause. Four tiers, and they are apparent size in
@@ -172,6 +197,26 @@ ROWS = [
     ("s24", "p09", "s",  (416,  920),  200,  5.0, 0.55, 69.0),
     ("s25", "p09", "m",  (600, 1020),  320, -4.0, 0.52, 65.0),
     ("s26", "p09", "l",  (400, 1060),  580, -6.0, 0.49, 59.0),
+    # ---- ROUND 5 / v2. Same aiming laws as above (roots off the bottom edge,
+    # tall plants left of centre), plus one this round added: on v03 the root
+    # also stays clear of the dark landform wedges in the bottom corners, and
+    # on v12 it stays on a green lobe rather than in a puddle -- a root in
+    # standing water is a structure the 0.30 pass would preserve underneath the
+    # plant. Every row below was dry-run before it was written and the palette
+    # line was read: v02 samples 34k-176k green px, v03 10k-97k, v12 48k-251k.
+    # v05 samples THIRTY-NINE, from the whole-lower-half fallback, and it is
+    # kept deliberately with that number recorded -- see plates-0821.yaml.
+    ("s27", "v02", "s",  (300,  950),  180,  6.0, 0.56, 70.0),
+    ("s28", "v02", "m",  (330, 1000),  300,  6.0, 0.52, 64.0),
+    ("s29", "v02", "xl", (360, 1090),  620, -5.0, 0.48, 57.0),
+    ("s30", "v03", "s",  (400,  990),  200,  5.0, 0.55, 69.0),
+    ("s31", "v03", "m",  (330, 1080),  260, -6.0, 0.52, 64.0),
+    ("s32", "v03", "xl", (500, 1150),  560,  5.0, 0.49, 60.0),
+    ("s33", "v12", "s",  (150,  900),  190, -4.0, 0.55, 69.0),
+    ("s34", "v12", "m",  (300, 1120),  300, -5.0, 0.52, 64.0),
+    ("s35", "v12", "l",  (200, 1160),  500,  6.0, 0.50, 62.0),
+    ("s36", "v05", "s",  (300,  980),  170,  4.0, 0.57, 70.0),
+    ("s37", "v05", "l",  (480, 1140),  420, -6.0, 0.50, 61.0),
 ]
 
 
@@ -202,31 +247,48 @@ def main() -> int:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--sheet", action="store_true",
                     help="build contact sheets of the written inits/overlays")
+    ap.add_argument("--fids", default=None,
+                    help="comma-separated frame ids to run (default: all). "
+                         "THE v1 ROWS ARE ALREADY DRAWN AND THEIR SHAS ARE "
+                         "ASSERTED BY TWENTY-SIX COMMITTED JOB SPECS, so a v2 "
+                         "round runs --fids s27,... rather than rewriting "
+                         "inits the box has already conditioned on.")
     a = ap.parse_args()
 
     if a.sheet:
-        return sheet()
+        return sheet(a.fids.split(",") if a.fids else None)
+
+    want = set(a.fids.split(",")) if a.fids else None
+    if want:
+        known = {r[0] for r in ROWS}
+        unknown = sorted(want - known)
+        if unknown:
+            print("!! --fids names rows that are not in the table: %s"
+                  % ", ".join(unknown))
+            return 1
 
     os.makedirs(os.path.join(REPO, OUT), exist_ok=True)
     os.makedirs(os.path.join(REPO, OVERLAY), exist_ok=True)
     bad = 0
-    for row in ROWS:
+    rows = [r for r in ROWS if want is None or r[0] in want]
+    for row in rows:
         rc, out = run(row, a.write)
         keep = [l for l in out.splitlines()
                 if l.startswith(("FAIL", "!!", "plant extent", "all checks"))]
         print("%-4s %-4s rc=%d  %s" % (row[0], row[1], rc, " | ".join(keep)))
         if rc:
             bad += 1
-    print("\n%d/%d rows failed" % (bad, len(ROWS)))
+    print("\n%d/%d rows failed" % (bad, len(rows)))
     return 1 if bad else 0
 
 
-def sheet() -> int:
+def sheet(fids=None) -> int:
     from PIL import Image, ImageDraw
+    want = set(fids) if fids else None
     for kind, d, pat in (("init", OUT, "sap-%s-%s-0821.png"),
                          ("overlay", OVERLAY, "ov-%s-%s.png")):
         imgs = []
-        for row in ROWS:
+        for row in [r for r in ROWS if want is None or r[0] in want]:
             p = os.path.join(REPO, d, pat % (row[0], row[1]))
             if os.path.isfile(p):
                 imgs.append(("%s %s h%d" % (row[0], row[1], row[4]), p))
@@ -241,8 +303,12 @@ def sheet() -> int:
             x, y = (i % cols) * cw, (i // cols) * (ch + 20)
             s.paste(im, (x, y))
             dr.text((x + 5, y + ch + 4), lbl, fill=(255, 240, 120))
+        # A FILTERED SHEET GETS ITS OWN NAME. Writing a 11-cell subset over
+        # CONTACT-init-0821.png would replace the 26-cell record of v1 with a
+        # picture that looks like the whole dataset and is not.
         out = os.path.join(REPO, "review/ep3-sapling-dataset-0821",
-                           "CONTACT-%s-0821.png" % kind)
+                           "CONTACT-%s%s-0821.png"
+                           % (kind, "-subset" if want else ""))
         s.save(out)
         print("wrote %s (%d cells)" % (out, len(imgs)))
     return 0

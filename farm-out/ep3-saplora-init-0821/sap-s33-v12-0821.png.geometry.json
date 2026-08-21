@@ -1,0 +1,85 @@
+{
+ "apex": [
+  136.7,
+  710.5
+ ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
+ "erase_box": null,
+ "erased_px": 0,
+ "field_mean_luma": 138.3,
+ "height_px": 190.0,
+ "leaf_len_px": 104.5,
+ "leaves": [
+  {
+   "len": 104.5,
+   "node": [
+    135.7,
+    715.5
+   ],
+   "side": -1.0,
+   "tip": [
+    35.8,
+    696.5
+   ]
+  },
+  {
+   "len": 110.8,
+   "node": [
+    137.7,
+    710.5
+   ],
+   "side": 1.0,
+   "tip": [
+    238.1,
+    681.4
+   ]
+  }
+ ],
+ "light_dx": 0.996,
+ "light_dy": 0.088,
+ "lit_side": "right",
+ "mask_fraction": 0.0167,
+ "palette": {
+  "dark": [
+   52,
+   138,
+   93
+  ],
+  "ink": [
+   24,
+   67,
+   77
+  ],
+  "light": [
+   82,
+   172,
+   104
+  ],
+  "mid": [
+   65,
+   154,
+   99
+  ],
+  "n_sampled": 47827,
+  "source": "the field's own greens"
+ },
+ "plant_extent": [
+  34,
+  239,
+  673,
+  902
+ ],
+ "plant_fill_luma": 133.9,
+ "plant_fraction": 0.0084,
+ "plate": "farm-out/ep3-sapling-dataset-0821/plates/ep3-sapfld5-v12-0821.png",
+ "plate_sha256": "9f91235e4c5a56c520ea1e5e49bbdb580620f4b463e7ab59bb6e74c5be860600",
+ "root": [
+  150.0,
+  900.0
+ ],
+ "size": [
+  832,
+  1216
+ ],
+ "tilt_deg": -4.0
+}
