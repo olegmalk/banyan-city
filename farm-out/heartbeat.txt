@@ -4054,3 +4054,5 @@
 20:25:17Z DONE task=ep2-b02-panicstr-0822-1787343877 rc=0 artifacts=2
 20:26:04Z STARTED task=ep2-b01-figshape-r2-0822-1787343957 attempt=1 on box-runner
 20:32:14Z DONE task=ep2-b01-figshape-r2-0822-1787343957 rc=0 artifacts=2
+20:32:22Z STARTED task=ep2-b02-panic-0822-1787344019 attempt=1 on box-runner
+20:38:19Z DONE task=ep2-b02-panic-0822-1787344019 rc=0 artifacts=1

@@ -1,0 +1,106 @@
+{
+  "id": "ep2-b02-panic-0822-1787344019",
+  "task": "ep2-b02-panic-0822",
+  "node": "002b-first-citizen",
+  "beat": 2,
+  "worker": "box-runner",
+  "priority": 14,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "crop",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b02-panic-0822\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b02-panicstr-0822\\b02-panic-s060.png",
+        "--sha256",
+        "6e9fd437bd60e83dbc8239e80c8185ad8cb1f59b0810343acce8791533f7a12c",
+        "--out",
+        "C:\\banyan-farm\\ep2-b02-panic-0822\\b02-init-704x1280.png",
+        "--size",
+        "704x1280"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b02-panic-0822\\b02-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b02-panic-0822\\b02-jobs-render.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "105",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "10",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b02-panic-0822",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b02-panic-0822\\bench-ep2-b02-panic-0822.jsonl",
+        "--bench-label",
+        "ep2-b02-panic-0822"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b02-panic-0822\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b02-panic-0822/02-evidence-LTX-ep2-b02-panic-0822.mp4*\")\n             + glob.glob(\"C:/banyan-farm/ep2-b02-panic-0822/b02-init-704x1280.png\")\n             + glob.glob(\"C:/banyan-farm/ep2-b02-panic-0822/bench-ep2-b02-panic-0822.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b02-panic-0822.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b02-panic-0822\\02-evidence-LTX-ep2-b02-panic-0822.mp4"
+  ],
+  "spec_sha256": "050ef58f60fd98984f10832a2bbc772c9da788790a874810692d0df42ccb52e8",
+  "started_at": "2026-08-21T20:32:22Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-21T20:38:19Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b02-panic-0822\\02-evidence-LTX-ep2-b02-panic-0822.mp4"
+  ]
+}
