@@ -3696,3 +3696,4 @@
 10:28:20Z DONE task=ep3-sapfld4-u07-0821-1787307799 rc=0 artifacts=1
 10:28:28Z STARTED task=ep3-sapfld4-u08-0821-1787307802 attempt=1 on box-runner
 10:28:47Z DONE task=ep3-sapfld4-u08-0821-1787307802 rc=0 artifacts=1
+10:29:51Z box-runner idle ready=0 failed=79
