@@ -1,0 +1,256 @@
+id: ep2-b20-lookup-s2-0821
+task: ep2-b20-lookup-s2-0821
+node: 002b-first-citizen
+beat: 20
+runner: box
+priority: 12
+needs_gpu: true
+max_attempts: 1
+owner: iteration-campaign lane B (beats 11-21), 2026-08-21 night
+consumer: 'THE BEAT-20 SELECTION on review/ep2-beats-0821. Beat 20 currently has three takes and not one
+  of them closes its done_when, so the founder has nothing to pick between: the shipping take is an old
+  man under the wrong tree, round 1 is a still with a runtime, and round 2 is a clean canon goblin who
+  never moves his head. This batch exists to put a FINISHED version in front of him rather than a fourth
+  description of what is wrong. Nothing here touches review/ep2-ship-0821 or any cut.'
+success: 'THREE 704x1280 105-frame 24fps mp4s, and the batch succeeds if AT LEAST ONE of them clears all
+  four bars. H1 THE HEAD TURNS: his face is square to the lens at f000 and is angled away from the lens
+  toward his right by f096, judged as skull orientation and not as eye direction -- eyes rolling up inside
+  a level head is what round 2 already did and it is a FAIL here. H2 the chin is visibly higher at f096
+  than at f000. H3 everything round 2 already won is still won: frame locked with his scale constant,
+  the composited stem still there and un-multiplied, the fig purple, and face, ears, skin and clothes
+  drawn in every frame with no dissolve. H4 the fig stays closed in both hands the whole clip. A clip
+  that buys the head turn by breaking H3 is not a candidate, it is a trade the beat cannot make.'
+why: 'ROUND 2''S SUBJECT INVENTORY TOLD THE MODEL HE WAS ALREADY LOOKING UP, AND THEN THE ACTION ASKED
+  HIM TO LOOK UP.
+
+
+  The sentence is ''He is squatting, holding a small fruit, looking up, in tall grass, full body.'' That
+  clause is the model''s inventory of what is already true. With the end state pre-asserted there, a goblin
+  who looks up and never moves satisfies both sentences at once -- which is the clip that came back in
+  round 1 and again in round 2.
+
+
+  ROUND 2''S OWN RESULT IS THE EVIDENCE THAT THIS IS THE LIVE FAULT AND NOT A GUESS. The LIFT in that
+  same action clause DID happen: the fig goes from his lap at f000 to chest-and-chin height by f048. The
+  lift is the half of the action whose end state the inventory did NOT already assert -- the inventory
+  says the fruit is ''closed in both his hands'', not that it is raised. So the model moved the part it
+  had not been told was finished and skipped the part it had. Two halves of one sentence, one rendered
+  and one not, split exactly along which end state the inventory had already spent.
+
+
+  WHAT CHANGED: the inventory now describes the init as it is -- head level, face to the lens, fruit low
+  in the lap, all three checked at 1:1 on b20-init-704x1280.png before this was written -- and THE ACTION
+  restates the delta in body-part terms, the skull rotating and the chin lifting, rather than in the word
+  the inventory had already used. The stem''s position is also corrected to what the picture shows: its
+  leaves sit at about y=440 against his eyes at about y=220, so they are BELOW his eye line, and round
+  2''s ''at about his eye line'' was wording that disagreed with its own init. This wave has already measured
+  what the model does when the words and the init disagree.
+
+
+  WHAT DID NOT CHANGE: the init plate and its sha assert, size, frame count, fps, guidance, sampler, sigmas,
+  two-stage, crf, offload, the negative block byte for byte, and the trim plan. Round 2 proved the plate;
+  this asks only about the sentence.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b20-lookup-s2-0821\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b20-lookup-s2-0821\b20-motion-prompt.txt: '2D anime, hand-drawn cel animation, static
+    locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject
+    already in frame: ONE small green goblin alone, bald, large pointed ears, off-white eyes with narrow
+    vertical slit pupils, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour
+    and clothes DO NOT CHANGE for the whole clip. He is squatting in tall grass, full body, square to
+    camera, HIS HEAD LEVEL AND HIS FACE TOWARD THE LENS, the fruit held low in both hands in his lap.
+    A SMALL ROUND PURPLE FIG is already closed in both his hands, and A THIN SAPLING STEM WITH TWO LEAVES
+    is already in frame close beside him at his right, its two leaves higher than the fruit in his lap.
+    Both stay where they are for the whole clip. THE ACTION: he raises the fig in both hands, and then
+    HIS HEAD TURNS AWAY FROM THE LENS TO HIS RIGHT AND HIS CHIN LIFTS -- the whole skull rotates, his
+    face stops pointing at the camera, and he ends looking at the two leaves on the stem beside him instead
+    of at the fruit. THE HEAD TURN IS THE BEAT and it must finish. HALFWAY THROUGH his face has already
+    left the camera and is angled toward the stem at his right, chin up off the fruit, the fig still closed
+    in both hands.'
+  C:\banyan-farm\ep2-b20-lookup-s2-0821\b20-negative.txt: second face, second goblin, two goblins, extra
+    head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing,
+    melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing,
+    cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark
+  C:\banyan-farm\ep2-b20-lookup-s2-0821\b20-jobs-encode.json: '[{"beat": 20, "embeds": "C:\\banyan-farm\\ep2-b20-lookup-s2-0821\\b20-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b20-lookup-s2-0821\\b20-motion-prompt.txt", "negative_file":
+    "C:\\banyan-farm\\ep2-b20-lookup-s2-0821\\b20-negative.txt"}]'
+  C:\banyan-farm\ep2-b20-lookup-s2-0821\b20-jobs-render.json: '[{"beat": 20, "seed": 20260921, "embeds":
+    "C:\\banyan-farm\\ep2-b20-lookup-s2-0821\\b20-embeds.pt", "init": "C:\\banyan-farm\\ep2-b20-lookup-s2-0821\\b20-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b20-lookup-s2-0821\\20-evidence-LTX-ep2-b20-lookup-s2-0821.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b20-lookup-s2-0821\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b20-sapnat-0821\b20-sapnat-s20260820.png
+  - --sha256
+  - f8ffa9f24bfa3a9f8077dcc043326eee20dcb4752593227d1346a86f2f49be36
+  - --out
+  - C:\banyan-farm\ep2-b20-lookup-s2-0821\b20-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b20-lookup-s2-0821\b20-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b20-lookup-s2-0821\b20-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '105'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b20-lookup-s2-0821
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b20-lookup-s2-0821\bench-ep2-b20-lookup-s2-0821.jsonl
+  - --bench-label
+  - ep2-b20-lookup-s2-0821
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b20-lookup-s2-0821\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b20-lookup-s2-0821/20-evidence-LTX-ep2-b20-lookup-s2-0821.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b20-lookup-s2-0821/b20-init-704x1280.png\")\n   \
+    \          + glob.glob(\"C:/banyan-farm/ep2-b20-lookup-s2-0821/bench-ep2-b20-lookup-s2-0821.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b20-lookup-s2-0821.sha256\"),\
+    \ \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot\
+    \ pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b20-lookup-s2-0821\20-evidence-LTX-ep2-b20-lookup-s2-0821.mp4
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. The line is untouched by this job. Beat 20''s staging is quoted in `script_line` from jerry_canon_0821.WAVE[20],
+  which is the same node text the canon plate under this clip was drawn against. NOTE ON PROVENANCE: this
+  spec''s parent is a BEAT 20 job and both of these keys cross derive_spec''s allow-list as structure
+  -- carried unedited they would have had beat 20 claiming beat 16''s restaging as its authority, so they
+  are re-stated here rather than inherited.'
+script_line: 'EVIDENCE -- ''crouches back down, picks the fig up with both hands, and looks from it to
+  the sapling''s thinnest branch beside him''. Line: ''...Did you just ANSWER me?'' Awe. The episode''s
+  turn.'
+failure_predicted_in_advance: 'EYES WITHOUT A SKULL, and it is why H1 is written as skull orientation.
+  Round 2 already showed the model will roll the pupils upward inside a head that does not move; a round
+  3 that buys a slightly stronger version of the same eye-roll has not bought the beat, and scoring it
+  generously is how a fault survives a round. SECOND: the head turns and takes the face off-canon with
+  it -- a three-quarter or profile skull is a view the canon plate never showed the model, so the ear,
+  the collar or the slit pupil can dissolve as it rotates. H3 catches that, and a clip that turns the
+  head by losing the face is a fail, not a trade. THIRD, cheapest: naming the stem as a thing he turns
+  TOWARD re-opens the pull-back the plate fix closed. H3''s scale clause catches it.'
+not_done_on_purpose: THE INIT IS NOT RE-COMPOSITED, even though the stem's leaves sitting below his eye
+  line is a real reason a LOOK UP is hard to buy here. Lifting the stem in the plate is a second variable
+  and a second render step, and the sentence is the cheaper lever by an order of magnitude; if all three
+  seeds come back with a level head, the wording route is closed and the plate geometry is the next rung,
+  filed as its own job with its own question. NOTHING HERE TOUCHES THE CUT, and no beat outside 20 is
+  in this batch.
+the_one_variable: 'THE SUBJECT INVENTORY''S POSE SENTENCE, which stops asserting the action''s end state,
+  plus the action clause restated as the body-part delta that follows from it. Everything a sampler reads
+  is round 2''s: same init png and same sha assert, same 704x1280, same 105 frames at 24fps, same guidance,
+  sigmas, two-stage, crf and offload, same negative text. SEED 20260920 IS ROUND 2''S OWN SEED and is
+  kept on purpose so that s1 is a true single-variable control against the round-2 clip; s2 and s3 are
+  variance on the same wording, because a head turn either seeds in or does not.'
+derivation:
+  parent: pipeline/jobs/ep2-b20-canonmotion-r2-0821.yaml
+  by: pipeline/file_b20_lookup_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - consumer
+  - failure_predicted_in_advance
+  - not_done_on_purpose
+  - owner
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - derivation
+  - failure_predicted_in_advance
+  - not_done_on_purpose
+  - plate_provenance
+  - the_one_variable
+  - verdict_canonmotion_r2_0821
+  retokened:
+  - ep2-b20-canonmotion-r2-0821 -> ep2-b20-lookup-s2-0821
+  overrides_applied_and_asserted:
+    key:priority:
+    - key priority = 12
+    payload:b20-motion-prompt.txt:
+    - payload b20-motion-prompt.txt (945 -> 1264 chars)
+    seed:
+    - payload b20-jobs-render.json (20260920 -> 20260921, re-parsed)
+  seed: 20260921
