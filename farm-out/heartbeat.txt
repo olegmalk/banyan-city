@@ -3446,3 +3446,5 @@
 00:07:18Z box-runner idle ready=0 failed=67
 00:12:10Z STARTED task=ep2-b09-r2s2-c1-0821-1787270943-again5d73a8 attempt=1 on box-runner
 00:18:24Z DONE task=ep2-b09-r2s2-c1-0821-1787270943-again5d73a8 rc=0 artifacts=2
+00:19:26Z STARTED task=ep2-b09-r2s2-c2-0821-1787270948-againd8d4a8 attempt=1 on box-runner
+00:25:51Z DONE task=ep2-b09-r2s2-c2-0821-1787270948-againd8d4a8 rc=0 artifacts=2
