@@ -8025,3 +8025,23 @@ seven; what is open is a taste question with pixels, and it is one question:
 it for an expressive reference crop?* Four beats of the seven (02, 04, 07, 08)
 are upright and would not carry the C1 regression; three (03, 13, 20) are folded
 and would.
+
+### Disposition of the `.HOLD-age-pivot-0821` jobs: LEFT HELD, NOT DELETED
+
+38 jobs were renamed out of `ready/` and `backlog/` the moment the founder ruled
+— 14 motion, 20 dataset scene, 2 plates, `lora-jerry-0820`, plus
+`ep2-b13/b14/b17/b20-tile*`. **All of them stay held and none is deleted.** They
+are superseded on the age axis by Option B and every one would still render the
+adult, so nothing is reinstated; but the rename is the reversible form and the
+specs are the reproducible record of what the adult wave was going to be. A
+deleted spec cannot be diffed against its replacement.
+
+`lora-jerry-0820` stays held for a second, independent reason and it is the
+**item-18 gate**: `DECISIONS.md` item 18 reads *"Never train on the output. No
+LoRA, no finetune, no distillation from LTX frames."* Its own text scopes the ban
+to **LTX material**, and the jerry dataset is animagine-xl-3.1 SDXL plates, so it
+is outside the named scope — **but the flag is recorded, not resolved by this
+lane**, exactly as `ep3-sapfield-p0*` flagged it. Training stays behind the
+motion tranche regardless, and the dataset cannot be re-curated at age B with
+expression variety until the expression question above is answered, because a
+LoRA learns what it is shown and today it would be shown seven scowls.
