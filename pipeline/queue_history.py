@@ -240,6 +240,223 @@ def still_provenance(art_yamls):
     return got
 
 
+# ------------------------------------------------- the prompt fallback chain
+#
+# THE GAP THIS CLOSES, 2026-08-21 (founder: many Finished cards say "PROMPT NOT
+# RECORDED" while the prompt is sitting in the committed spec). The two readers
+# above each know exactly ONE place to look — `motion_provenance` reads payload
+# keys ending `-motion-prompt.txt`, `still_provenance` reads the branch artifact
+# sidecar's `prompt:` — and a job that keeps its prompt anywhere else fell
+# through both. Measured over 1,187 rows: 440 showed no prompt, and 287 of those
+# had the bytes in their own `pipeline/jobs/<id>.yaml` the whole time, under the
+# plain `prompt.txt` payload key that 188 specs use. Every `inpaint_fruit.py`
+# job and every `controlnet_plate.py` tilefix/tileread job is in that set.
+#
+# This is a JOIN, not a recomputation: the payload value IS the byte string the
+# box wrote to disk and the render step read. The 77-token-fit warning in this
+# file's header is about re-deriving what the box computed — reading back the
+# exact bytes it was handed is the opposite of that.
+
+
+def payload_base(key) -> str:
+    """Basename of a payload key, which is a box-absolute Windows path."""
+    return str(key).replace("\\", "/").rsplit("/", 1)[-1].lower()
+
+
+def spec_prompt_bytes(spec):
+    """(prompt, negative, key) — the prompt bytes a spec ships to the box.
+
+    Preference order is the order a job's own recipe would read them: a motion
+    prompt first (a motion spec that carries both is an encode/render pair and
+    the motion file is the one the render step opens), then the plain
+    `prompt.txt` that most still and inpaint specs use, then any other
+    `*-prompt.txt`, then a top-level `prompt:` field. `key` names which one
+    answered so the page can say where the words came from.
+    """
+    if not isinstance(spec, dict):
+        return None, None, None
+    payload = spec.get("payload") or {}
+    prompt, key = None, None
+
+    def take(pred):
+        for k, v in payload.items():
+            b = payload_base(k)
+            if pred(b):
+                text = str(v).strip()
+                if text:
+                    return text, b
+        return None, None
+
+    for pred in (lambda b: b.endswith("-motion-prompt.txt"),
+                 lambda b: b == "prompt.txt",
+                 lambda b: b.endswith("prompt.txt") and "negative" not in b):
+        prompt, key = take(pred)
+        if prompt:
+            break
+    if not prompt:
+        for field in ("prompt", "positive_prompt"):
+            if spec.get(field):
+                prompt, key = str(spec[field]).strip(), field + ":"
+                break
+
+    negative, _ = take(lambda b: b == "negative.txt" or b.endswith("-negative.txt"))
+    return prompt or None, negative or None, key
+
+
+def sidecar_prompt_bytes(parsed_arts):
+    """(prompt, negative, filename) from any published artifact sidecar.
+
+    `still_provenance` already reads these for still-shaped jobs; this is the
+    same read made available to the other kinds, and it is the last link in the
+    chain rather than the first because a spec is committed and a branch file
+    is not.
+    """
+    for path, y in sorted((parsed_arts or {}).items()):
+        if not isinstance(y, dict):
+            continue
+        for field in ("prompt", "positive_prompt"):
+            if y.get(field):
+                neg = str(y.get("negative_prompt") or y.get("negative") or "").strip()
+                return str(y[field]).strip(), neg or None, path.rsplit("/", 1)[-1]
+    return None, None, None
+
+
+def task_id_variants(task, job_id):
+    """Ids to try against the spec index, most exact first.
+
+    `task` is normally already the clean spec id and `id` is the same thing
+    stamped `-<epoch>` by the runner, but not every era wrote both, and a few
+    re-runs carry an `-again` token the spec file never had. Normalising costs
+    nothing and a spec found is a prompt shown.
+    """
+    out = []
+    for raw in (task, job_id):
+        base = str(raw or "").strip()
+        if not base:
+            continue
+        for cand in (base,
+                     re.sub(r"-\d{10,13}$", "", base)):
+            for final in (cand,
+                          re.sub(r"-(?:again|retry|rerun)\d*(?=$|-)", "", cand)):
+                if final and final not in out:
+                    out.append(final)
+    return out
+
+
+# Scripts that assemble their prompt ON THE BOX from a selector key — a
+# `--variant` / `--draft-key` / `--arm` index into a table living inside the
+# harness copy that ran. There are no prompt bytes in the spec or on the branch
+# to join to, so the page names the mechanism instead of implying a lost record.
+HARNESS_SCRIPTS = {
+    "render_wave_sample.py", "goblin_ipa_beat.py", "goblin_ipa_sample.py",
+    "render_b06r6.py", "render_b06r7.py", "render_b06r8.py",
+    "controlnet_probe.py",
+}
+
+# Scripts that only move, crop or stamp bytes. A job built entirely from these
+# generated no pixels and never had a prompt — "NOT RECORDED" is not merely
+# unhelpful there, it is wrong.
+TRANSFER_SCRIPTS = {
+    "fetch_init.py", "fetch_plate.py", "fetch_plates.py", "copy_plate.py",
+    "cover_crop.py", "stamp_sidecar.py", "verify_embeds.py",
+    "identity_agreement.py", "green_share.py",
+}
+
+SELECTOR_FLAGS = ("--draft-key", "--variant", "--arm")
+
+
+def job_scripts(sc):
+    """Basenames of every .py a run's steps invoked, from the runtime record."""
+    out = set()
+    for step in (sc or {}).get("steps") or []:
+        for arg in step.get("argv") or []:
+            b = str(arg).replace("\\", "/").rsplit("/", 1)[-1].lower()
+            if b.endswith(".py"):
+                out.add(b)
+    return out
+
+
+def job_selector(sc):
+    """`--variant foo` / `--draft-key foo` / `--arm foo` as a printable phrase."""
+    for step in (sc or {}).get("steps") or []:
+        argv = [str(a) for a in (step.get("argv") or [])]
+        for flag in SELECTOR_FLAGS:
+            if flag in argv:
+                i = argv.index(flag)
+                if i + 1 < len(argv):
+                    return f"{flag} {argv[i + 1]}"
+    return None
+
+
+def absent_prompt_label(sc, spec, had_spec):
+    """An honest sentence for a job whose prompt is absent BY NATURE.
+
+    Returns None when the absence is a genuine gap in the record — those keep
+    saying so. The point is only to stop printing "PROMPT NOT RECORDED" over a
+    file-transfer job, which never had one to record: a marker that cries wolf
+    on 153 rows is a marker nobody reads on the rows that matter.
+    """
+    scripts = job_scripts(sc)
+    harness = sorted(scripts & HARNESS_SCRIPTS)
+    if harness:
+        sel = job_selector(sc)
+        return ("prompt built on the box by `%s`%s — it is assembled from that "
+                "selector at render time, so no prompt text exists in the spec "
+                "or on the results branch to quote here"
+                % (harness[0], f" from `{sel}`" if sel else ""))
+    if scripts and not (scripts - TRANSFER_SCRIPTS):
+        return ("file-transfer job — no prompt: its steps only fetch, crop or "
+                "stamp bytes (%s) and generate no pixels"
+                % ", ".join(f"`{s}`" for s in sorted(scripts)))
+    if not scripts:
+        return ("file-transfer job — no prompt: this run generated nothing, its "
+                "steps are inline publish/probe commands only")
+    if had_spec:
+        return None
+    return None
+
+
+def resolve_prompt(row, sc, spec, spec_rel, parsed_arts):
+    """Fill `row`'s prompt from the first source that has it, and say which.
+
+    Chain: whatever the per-kind reader already found (the render-time record)
+    -> the committed job spec's payload -> a published artifact sidecar. Then,
+    if all three are empty, an honest by-kind label for jobs that never had a
+    prompt at all. `prompt_from` is the machine-readable answer to "which link
+    filled this", so a later audit can count the joins without parsing prose.
+    """
+    if row.get("prompt"):
+        row["prompt_from"] = "record"
+        return
+
+    prompt, negative, key = spec_prompt_bytes(spec)
+    if prompt:
+        row["prompt"] = prompt
+        row["negative"] = row.get("negative") or negative
+        row["prompt_from"] = "spec"
+        row["prompt_source"] = (
+            "job spec `%s`%s — the exact bytes the box was handed"
+            % (spec_rel or "pipeline/jobs/…",
+               f", payload `{key}`" if key else ""))
+        return
+
+    prompt, negative, name = sidecar_prompt_bytes(parsed_arts)
+    if prompt:
+        row["prompt"] = prompt
+        row["negative"] = row.get("negative") or negative
+        row["prompt_from"] = "sidecar"
+        row["prompt_source"] = (
+            "published artifact sidecar `%s` (written at render time on the box)"
+            % name)
+        return
+
+    row["prompt_from"] = None
+    label = absent_prompt_label(sc, spec, bool(spec))
+    if label:
+        row["prompt_absent"] = label
+        row["prompt_source"] = label
+
+
 def spec_state(raw_text, in_cancelled_dir):
     if in_cancelled_dir:
         return "cancelled-by-founder"
@@ -635,9 +852,15 @@ def build_job_row(sidecar_path, sc, specs, pubdirs, files_by_dir, blobs, shamap,
     task = sc.get("task") or sc.get("id")
     kind = classify_kind(sc.get("steps"))
     spec, spec_rel = None, None
-    hit = specs.get(str(task))
-    if hit:
-        spec, spec_rel = hit[0], hit[1]
+    # Most exact id first. The runner stamps `id` as `<task>-<epoch>` and a few
+    # eras wrote only one of the two, so a plain `specs[task]` lost the spec —
+    # and with it the prompt — for 68 motion rows whose file was on main all
+    # along (measured 2026-08-21).
+    for cand in task_id_variants(task, sc.get("id")):
+        hit = specs.get(cand)
+        if hit:
+            spec, spec_rel = hit[0], hit[1]
+            break
 
     row = {
         "id": sc.get("id"), "task": task, "node": sc.get("node"),
@@ -739,6 +962,10 @@ def build_job_row(sidecar_path, sc, specs, pubdirs, files_by_dir, blobs, shamap,
                                "recorded here and the parent frame is ledgered in "
                                "taste/steward-model.ledger.yaml")
         row["reference"] = ref
+
+    # Whatever the per-kind reader above could not find, the chain tries for:
+    # the committed spec first, then a published sidecar, then an honest label.
+    resolve_prompt(row, sc, spec, spec_rel, parsed_arts)
 
     v = {}
     bs = beat_state.get((row["node"], row["beat"]))

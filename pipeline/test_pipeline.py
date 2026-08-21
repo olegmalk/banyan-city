@@ -9898,6 +9898,151 @@ def test_the_worker_refuses_before_it_loads_a_model():
           "raise SystemExit(msg)" in src)
 
 
+def test_a_prompt_in_the_spec_can_never_print_as_not_recorded():
+    # THE FAILURE, 2026-08-21 (founder): "many cards on the /queue Finished page
+    # say PROMPT NOT RECORDED — e.g. every beat-08 inpaint from yesterday — while
+    # the prompts exist in the committed specs." He was right, and it was a join
+    # gap, not lost provenance. queue_history.build_job_row picked exactly ONE
+    # source per kind: motion read payload keys ending `-motion-prompt.txt`,
+    # everything else read the branch artifact sidecar's `prompt:`. Neither ever
+    # looked at the plain `prompt.txt` payload key that 188 specs use — every
+    # inpaint_fruit.py job and every controlnet_plate.py tilefix among them. 440
+    # of 1,187 rows printed the marker; 287 of those had the bytes in their own
+    # pipeline/jobs/<id>.yaml the whole time.
+    #
+    # Two invariants, because the fix has two halves and each can rot alone:
+    #   (a) a row whose record carries no prompt but whose SPEC does must render
+    #       the spec's bytes, and say it read them from the spec;
+    #   (b) a job that never had a prompt (a fetch/publish transfer) must say so
+    #       by kind, not cry PROMPT NOT RECORDED — a marker that fires on jobs
+    #       with nothing to record is one nobody reads on the jobs that matter.
+    import queue_history as qh
+
+    inpaint_steps = [{"name": "s1", "argv": [r"C:\py.exe",
+                                             r"C:\job\inpaint_fruit.py", "--init", "x"]}]
+
+    # (a) the record is empty, the spec has the bytes -> the spec wins.
+    spec = {"payload": {r"C:\banyan-farm\b08\prompt.txt": "brown leather harness strap",
+                        r"C:\banyan-farm\b08\negative.txt": "goblin, green skin"}}
+    row = {"prompt": None, "negative": None,
+           "prompt_source": "not recorded — no artifact sidecar on the branch"}
+    qh.resolve_prompt(row, {"steps": inpaint_steps}, spec,
+                      "pipeline/jobs/ep2-b08-cnetfill-0820.yaml", {})
+    check("a prompt the spec carries is rendered, not reported missing",
+          row["prompt"] == "brown leather harness strap")
+    check("its negative comes along", row["negative"] == "goblin, green skin")
+    check("and the row records WHICH source filled it",
+          row["prompt_from"] == "spec")
+    check("naming the spec file and the payload key it was read from",
+          "ep2-b08-cnetfill-0820.yaml" in row["prompt_source"]
+          and "prompt.txt" in row["prompt_source"])
+    check("the scary marker's reason is gone from the row",
+          "not recorded" not in row["prompt_source"])
+
+    # The render-time record OUTRANKS the spec: a still's sidecar is what the
+    # box actually used, and a spec edited after the run must not overwrite it.
+    kept = {"prompt": "what the box really rendered", "negative": None,
+            "prompt_source": "artifact sidecar (written at render time on the box)"}
+    qh.resolve_prompt(kept, {"steps": inpaint_steps}, spec, "pipeline/jobs/x.yaml", {})
+    check("a prompt already on the record is never overwritten by the spec",
+          kept["prompt"] == "what the box really rendered"
+          and kept["prompt_from"] == "record")
+
+    # A motion spec carrying BOTH keys yields the motion one — that is the file
+    # the render step opens; `prompt.txt` beside it is the encode half.
+    both = {"payload": {r"C:\j\b13-motion-prompt.txt": "the camera pushes in",
+                        r"C:\j\prompt.txt": "a still frame"}}
+    p, _n, key = qh.spec_prompt_bytes(both)
+    check("a motion spec yields its motion prompt, not the still one",
+          p == "the camera pushes in" and key == "b13-motion-prompt.txt")
+    check("a spec with no prompt bytes yields nothing rather than a guess",
+          qh.spec_prompt_bytes({"payload": {r"C:\j\negative.txt": "x"}})[0] is None)
+    check("an empty payload value is not a prompt",
+          qh.spec_prompt_bytes({"payload": {r"C:\j\prompt.txt": "   "}})[0] is None)
+
+    # The last link: a published artifact sidecar, for kinds whose reader never
+    # consulted one.
+    side = {"prompt": None, "negative": None, "prompt_source": "not recorded"}
+    qh.resolve_prompt(side, {"steps": inpaint_steps}, None, None,
+                      {"farm-out/d/a.yaml": {"prompt": "from the sidecar",
+                                             "negative_prompt": "blurry"}})
+    check("a sidecar prompt is the last link and it is used",
+          side["prompt"] == "from the sidecar" and side["prompt_from"] == "sidecar")
+    check("the sidecar's negative comes with it", side["negative"] == "blurry")
+
+    # (b) a transfer job never had a prompt. It says that, by kind.
+    xfer = {"prompt": None, "negative": None, "prompt_source": "not recorded"}
+    qh.resolve_prompt(xfer, {"steps": [
+        {"name": "fetch", "argv": [r"C:\py.exe", r"C:\job\fetch_plate.py"]},
+        {"name": "crop", "argv": [r"C:\py.exe", r"C:\job\cover_crop.py", "--src", "x"]},
+    ]}, {}, "pipeline/jobs/ep2-b12-plateship-0819.yaml", {})
+    check("a transfer job's prompt stays null — nothing is invented",
+          xfer["prompt"] is None and xfer["prompt_from"] is None)
+    check("and it is labelled honestly by kind",
+          xfer["prompt_absent"].startswith("file-transfer job — no prompt"))
+    check("the honest label replaces the reason the page prints",
+          xfer["prompt_source"] == xfer["prompt_absent"])
+    check("a transfer job never claims a prompt went unrecorded",
+          "NOT RECORDED" not in xfer["prompt_absent"].upper())
+
+    # A harness job builds its prompt on the box from a selector key. That is a
+    # third thing again: not a gap, not a transfer — name the mechanism.
+    harness = {"prompt": None, "negative": None, "prompt_source": "not recorded"}
+    qh.resolve_prompt(harness, {"steps": [{"name": "sample", "argv": [
+        r"C:\py.exe", r"C:\h\render_wave_sample.py", "--beat", "20",
+        "--variant", "authored_b20_plate"]}]}, {}, "pipeline/jobs/x.yaml", {})
+    check("a harness job names the script that built its prompt",
+          "render_wave_sample.py" in harness["prompt_absent"])
+    check("and the selector the prompt was built from",
+          "authored_b20_plate" in harness["prompt_absent"])
+
+    # A genuine gap is still a genuine gap: a generative script with no bytes
+    # anywhere keeps saying so rather than borrowing a friendlier label.
+    gap = {"prompt": None, "negative": None,
+           "prompt_source": "not recorded — spec missing or carries no payload"}
+    qh.resolve_prompt(gap, {"steps": [{"name": "r", "argv": [
+        r"C:\py.exe", r"C:\j\ltx_i2v.py", "--stage", "render"]}]}, None, None, {})
+    check("an unexplained gap is not dressed up as a transfer job",
+          gap.get("prompt_absent") is None
+          and "not recorded" in gap["prompt_source"])
+
+    # The runner stamps `id` as `<task>-<epoch>`; a few re-runs carry an -again
+    # token the spec file never had. Both must still find the spec.
+    v = qh.task_id_variants("ep2-b04-tightcrop-0820", "ep2-b04-tightcrop-0820-1787245395")
+    check("the epoch-stamped id normalises back to the spec stem",
+          "ep2-b04-tightcrop-0820" in v)
+    check("an -again token is stripped too",
+          "ep2-b08-cnetfill-0820" in qh.task_id_variants("ep2-b08-cnetfill-0820-again", None))
+
+    # THE LIVE LEDGER, which is what /queue actually bakes. This is the founder's
+    # complaint as a mechanical gate: no row may print the marker while its own
+    # committed spec holds the bytes. It needs no magic number and survives the
+    # branch moving.
+    import json
+    import yaml
+    led = REPO / "pipeline" / "measured" / "queue-history.json"
+    if led.exists():
+        doc = json.loads(led.read_text(encoding="utf-8"))
+        cache, offenders = {}, []
+        for job in doc.get("jobs") or []:
+            if job.get("prompt") or not job.get("spec_file"):
+                continue
+            rel = job["spec_file"]
+            if rel not in cache:
+                f = REPO / rel
+                try:
+                    cache[rel] = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
+                except (OSError, yaml.YAMLError):
+                    cache[rel] = {}
+            if qh.spec_prompt_bytes(cache[rel])[0]:
+                offenders.append(job.get("task"))
+        check("no ledger row hides a prompt its own spec carries",
+              not offenders, )
+        blank = [j.get("task") for j in doc.get("jobs") or []
+                 if not j.get("prompt") and not j.get("prompt_source")]
+        check("every promptless row still explains itself", not blank)
+
+
 def test_a_corrected_gate_never_reaches_the_queue_page_uncorrected():
     # THE FAILURE, 2026-08-16. gate-evidence.yaml never erases a superseded
     # line: it leaves it standing and writes a dated `gate_CORRECTION_MMDD`
@@ -10504,6 +10649,7 @@ def main():
         with tempfile.TemporaryDirectory() as td:
             _t(td)
     test_the_real_register_has_no_assertion_living_on_dead_text()
+    test_a_prompt_in_the_spec_can_never_print_as_not_recorded()
     test_a_corrected_gate_never_reaches_the_queue_page_uncorrected()
     test_a_lifted_block_and_a_wrong_success_bar_cannot_reach_the_ledger()
     print()
