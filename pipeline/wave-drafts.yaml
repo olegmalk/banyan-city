@@ -3575,6 +3575,39 @@ beats:
       teenager, no glasses, no hands, no clipboard, no armor, no helmet, no
       knight, no white background, no plain background, no dark, no night.
       No photorealism, no 3D render look. 9:16 vertical, no text.
+    # -- `authored_b06_guard1canon_0822` -- 2026-08-22, night iteration lane.
+    # THE BEAT'S OWN PLATE, not a casting cell. Every b06 draft above it is
+    # either the pre-canon guard (round, bald, bureaucratic, mismatched armour
+    # -- all retired by the 08-22 canon ruling) or a guard-2 casting head with
+    # `no hands, no clipboard` in it, which is the opposite of what this beat
+    # needs. This one draws GUARD 1 AS RATIFIED -- dark cropped hair, round
+    # wire-rim glasses, cream shirt collar, white shoulder sash -- doing beat
+    # 06's action.
+    #
+    # THE BOARD SIZE IS THE BEAT'S STANDING FAULT and it is answered in the
+    # words, positively: "a large flat slab of rough brown bark ... as wide as
+    # his shoulders". `no small board` is in the negative as containment only.
+    # The positive-placement law says the size has to be asserted, not banned,
+    # and this repo has five firings of that law behind it.
+    #
+    # NO SPECIES WORDS ARE LEFT TO CHANCE. `no goblin, no green skin, no
+    # pointed ears` are here because the b07 re-run tonight came back with a
+    # POINTED EAR on the guard. Beat 06 has one figure so nothing can leak
+    # from a second, but the checkpoint's guard prior is now measurably
+    # contaminated and the negative costs 6 tokens.
+    #
+    # 77 positive / 70 negative CLIP tokens, counted with
+    # assert_under_clip77 before writing.
+    authored_b06_guard1canon_0822: >-
+      A grown guard man with dark cropped hair and round wire-rim glasses,
+      cream shirt collar and white shoulder sash, stands in tall green grass,
+      hedgerow behind, pale sky above, holding a large flat slab of rough
+      brown bark in both hands at chest height, as wide as his shoulders,
+      looking down at it, cinematic lighting, masterpiece, best quality, very
+      aesthetic No girl, no child, no goblin, no green skin, no pointed ears,
+      no armor, no helmet, no metal clip, no spring clip, no white paper, no
+      small board, no white background, no dark, no night. No photorealism,
+      no 3D render look. 9:16 vertical, no text.
   7:
     slug: confiscate
     kind: guard
