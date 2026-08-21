@@ -3510,3 +3510,5 @@
 07:01:43Z DONE task=ep2-b13-tilefix-p1-0821-1787295258 rc=0 artifacts=1
 07:01:49Z STARTED task=ep2-b20-tilefix-p1-0821-1787295261 attempt=1 on box-runner
 07:02:16Z DONE task=ep2-b20-tilefix-p1-0821-1787295261 rc=0 artifacts=1
+07:02:22Z STARTED task=ep2-jerry-set-point-0821-1787295090 attempt=1 on box-runner
+07:02:50Z DONE task=ep2-jerry-set-point-0821-1787295090 rc=0 artifacts=1
