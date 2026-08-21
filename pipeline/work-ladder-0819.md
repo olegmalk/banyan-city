@@ -7922,3 +7922,20 @@ drops newer rows). On conflict: regenerate with the CURRENT queue_history.py
 (`python3 pipeline/queue_history.py --fetch`), add, continue. Same principle
 for any generated-and-committed artifact: resolve by regeneration, never by
 picking a side.
+
+## Standing rule: the publish glob must be DERIVED from `--arm`, never typed (2026-08-21)
+`controlnet_plate.py:491` writes `<task>-<arm>.png`, so a spec whose publish
+glob and `artifacts:` were typed against the *parent's* arm exits **rc=1 on a
+render that succeeded** and the courier pushes nothing. It cost eight finished
+`ep2-b04-tileread-v*-0820` pictures a hand-copy off the card, and the identical
+strand was sitting unfired in six `ep2-b02-adultplate-*-0820` specs. **Both
+sites are now corrected** — glob and `artifacts:` say `-nocontrol.png`, each
+spec carries a one-line `publish_glob_correction:`, and every b04 png is
+sha256-verified into `farm-out/` with the manifest its publish step never wrote.
+The class is closed at all known sites, which is exactly the state a prose
+lesson reaches right before it recurs. **The rung that would make it structural:
+`box_enqueue` asserts that each publish glob and `artifacts:` entry contains the
+literal `--arm` value of the step that writes it** — one string compare per
+spec, no render, no filesystem, no new machinery, and it refuses at enqueue time
+instead of after the GPU has already paid. Cheap enough that "derive it, don't
+type it" stops depending on the deriver being careful.

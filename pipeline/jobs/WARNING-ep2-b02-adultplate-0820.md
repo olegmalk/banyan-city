@@ -11,6 +11,9 @@ not inferred.
 
 ## DEFECT 1 — the publish step reports every successful render as a FAILURE
 
+> **FIXED IN PLACE 2026-08-21 by the recovery lane — see the closing section.
+> DEFECT 2 STANDS and still gates firing these six.**
+
 **Verified in all six specs.** Each one runs:
 
     --arm nocontrol
@@ -99,3 +102,40 @@ Two live caveats on it, both from tonight and both measured:
 - If the authoring lane is gone and nobody has claimed these by the next pass,
   fixing them in place is the right call — but re-deriving them off the
   corrected canon is better than repairing the wording of a retired premise.
+
+---
+
+## UPDATE 2026-08-21 — DEFECT 1 FIXED IN PLACE. DEFECT 2 UNTOUCHED.
+
+By the **recovery lane**, acting on the clause directly above. The authoring
+lane never came back: at the time of this edit all six were still `??` with the
+same 21:07 mtime this warning recorded — 14 hours cold — and
+`C:\banyan-queue\{ready,running,backlog}` held no `ep2-b02-adultplate-*` and no
+`ep2-b04-tileread-*` entry, so nothing was fixed out from under a running job.
+
+**What changed, in all six here and in the eight `ep2-b04-tileread-v*-0820`
+specs that took the same defect from the same parent:** the publish glob and
+`artifacts:` now say `-nocontrol.png`, matching `--arm nocontrol`. Each spec
+carries a one-line `publish_glob_correction:` key saying so, so a re-enqueue
+cannot silently reproduce the strand. Edits 1 and 2 of the three this warning
+prescribed; **edit 3 was not needed and that is a finding, not a skip** — the
+`>= 4` gate was already right, because the corrected glob returns exactly the
+four files the courier has: the png, its `.png.meta.yaml` sidecar, `prompt.txt`
+and `negative.txt`.
+
+**The six remain `??` on purpose.** Committing them would put six specs built on
+the retired `adult` premise into the tree looking fireable. DEFECT 2 is the
+authoring question and it belongs to whoever re-derives them off
+`canon.yaml → correction_2026_08_20`; this lane only closed the publish-glob
+class. **Fixing DEFECT 1 did not make these six fireable.**
+
+**The b04 strand is recovered:** all eight pngs verified sha256-identical
+between `C:\banyan-farm\b04tileread-v*-0820\out\` and `farm-out/`, and each dir
+now carries the `<task>.sha256` manifest its publish step never got to write.
+
+**The structural rung this warning asked for is named, not built:**
+`box_enqueue` can assert cheaply that every publish glob and `artifacts:` entry
+contains the literal `--arm` value of the step that writes it — one string
+compare per spec, no render and no filesystem — which turns "the publish glob
+and `artifacts:` must be derived from `--arm`, never typed" from prose into a
+refusal at enqueue time.

@@ -63,7 +63,7 @@ steps:
     \ from\n# nowhere else. ep2-cnet-probe-0817 rendered perfectly and was invisible\n# for two days for\
     \ want of exactly this.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/b04tileread-v0-0820/out\"\
     \npay_dir = \"C:/banyan-farm/b04tileread-v0-0820\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b04-tileread-v0-0820\"\
-    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b04-tileread-v0-0820-hintskel.png*\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b04-tileread-v0-0820-nocontrol.png*\"\
     )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
     /negative.txt\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst,\
     \ os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
@@ -72,7 +72,7 @@ steps:
     print(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files)\
     \ >= 4 else 1)"
 artifacts:
-- C:\banyan-farm\b04tileread-v0-0820\out\ep2-b04-tileread-v0-0820-hintskel.png
+- C:\banyan-farm\b04tileread-v0-0820\out\ep2-b04-tileread-v0-0820-nocontrol.png
 owner: goblin-design audit lane, 2026-08-20 night
 consumer: THE RECIPE, NOT THE BEAT. The seven-beat design wave (02 03 04 07 08 13 20) cannot be authored
   until a wording puts the B tile's creature on the canvas at a CLOSE-UP on purpose. This rung is one
@@ -241,3 +241,4 @@ derivation:
     - payload negative.txt (329 -> 231 chars)
     payload:prompt.txt:
     - payload prompt.txt (407 -> 156 chars)
+publish_glob_correction: 'CORRECTED 2026-08-21 (recovery lane): publish glob and artifacts: said -hintskel.png while --arm nocontrol makes controlnet_plate.py:491 write -nocontrol.png, so a successful render exited rc=1 and the courier pushed nothing; the >= 4 gate is unchanged and still right (png + png.meta.yaml + prompt.txt + negative.txt).'
