@@ -3566,3 +3566,5 @@
 09:06:18Z FAIL task=ep3-sapfield-p02-0821-1787303074 rc=9 step=hintskel
 09:06:23Z STARTED task=ep3-sapfield-p03-0821-1787303077 attempt=1 on box-runner
 09:06:27Z FAIL task=ep3-sapfield-p03-0821-1787303077 rc=9 step=hintskel
+09:06:32Z STARTED task=ep3-sapfield-p04-0821-1787303079 attempt=1 on box-runner
+09:06:35Z FAIL task=ep3-sapfield-p04-0821-1787303079 rc=9 step=hintskel
