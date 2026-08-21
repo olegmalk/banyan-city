@@ -439,6 +439,10 @@ mechanism that has ever put this beat's pointing arm on the guard.
   it vague.
 - **Taste is R4.** Bars, tradeoffs, routes and staging that applies a ruling are
   the steward's. Picks, promotion and `plate_ack` are not made in a job spec.
+- **Every push goes through `./pipeline/safe_push.sh <the git push args>`**, never
+  a bare `git push`. It runs the local gates, reads their exit codes, and refuses
+  to push onto a main whose lint-genome is red — `--fixing-main` only if your
+  commit IS the repair. See the incident record dated 2026-08-20 below.
 
 ---
 
@@ -7426,3 +7430,29 @@ it: if a session transcript is ever indexed, corroborate against 2026-08-20
 evening and delete the note. This is the discipline the previous entry in this
 file paid for the hard way — a lane may not promote its own tasking to a founder
 ruling, and the cure is not silence but a dated quote with its channel named.
+---
+
+## Appended 2026-08-21 by the push-guard lane
+
+### INCIDENT 2026-08-20 19:24-19:57Z — one broken commit, six failure emails
+
+- **Broke it:** `5d1dbbf0` (19:24:39Z) — added three `subprocess.run(text=...)`
+  calls with no `encoding=` to `derive_b16_field_0820.py`; lint-genome's own
+  "every text-mode subprocess read names its encoding" gate went red (run
+  32408510828).
+- **Fixed it:** `7086f8b4` (19:57:12Z) — the same one keyword on the same three
+  lines; green from run 32411442697 onward.
+- **The cost was not the bug.** Between those two, five lanes pushed work that
+  was itself fine onto a main already red — `a22714c5` 19:29Z, `7df8173d` and
+  `e2408270` 19:43Z, `ed119409`, `164b0e59`, `f80aca27` 19:52-19:55Z — and every
+  one re-sent the founder the same failure. Second time in two days, eight emails.
+- **Now code:** `pipeline/safe_push.sh` is the only way a lane pushes. It runs
+  `lint_genome` + `test_pipeline` and reads their exit codes; asks GitHub for
+  lint-genome's state; refuses on red with *"main is red — fix it or wait;
+  pushing now emails the founder"* unless `--fixing-main`; allows stacking on an
+  in-flight run and prints its id. `pipeline/test_safe_push.py` (41 checks, in
+  CI) stubs `gh` and drives all four states. Note the state that matters: an
+  in-flight run with a **failure behind it** is still red, and a one-row
+  `gh run list -L1` cannot see that — it is exactly what lanes 2-6 pushed into.
+- Prose said "check main is green before pushing" in three documents and was
+  followed 0 of 5 times. That is the whole argument for the wrapper.

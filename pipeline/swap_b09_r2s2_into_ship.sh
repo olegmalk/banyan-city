@@ -131,7 +131,8 @@ say "9. then commit with an explicit pathspec, and verify what is SERVED"
 cat <<'TAIL'
   git commit -m '...' -- review/ep2-ship-0821 pipeline/measured/proof-ledger.json \
       review/ep2-picks/cut-readiness-0819.yaml STATE.md pipeline/work-ladder-0819.md
-  git push origin main
+  ./pipeline/safe_push.sh origin main    # never a bare `git push`: it runs the
+                                         # gates and refuses a red main
   # the served bytes, not the local ones -- a push is not a deploy:
   curl -sL https://banyan.city/review/ep2-ship-0821/ep2-ship-0821.mp4 | shasum -a 256
 TAIL

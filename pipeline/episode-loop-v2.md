@@ -29,3 +29,9 @@ watch, ship.
   composite-first for undrawable objects) are INPUTS to wording, not
   per-beat research to re-run.
 - A failed batch gets ONE line in the ladder, not a verdict document.
+
+## Pushing
+- **Every push goes through `./pipeline/safe_push.sh <the git push args>`** —
+  it runs the local gates and refuses to push onto a red main (`--fixing-main`
+  only if your commit IS the repair). Six lanes pushed onto one broken main on
+  2026-08-20 and each push re-mailed the founder the same failure.

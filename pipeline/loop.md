@@ -97,6 +97,11 @@ ceiling.** The $0 default stands; hiding it does not.
   before it is staged for a drop or published as a leaf.
 - Diagnosis is model-run; **taste verdicts stay the founder's** (R4):
   the loop proposes, the screening decides.
+- **Every push goes through `./pipeline/safe_push.sh <the git push args>`**,
+  never a bare `git push`: it runs the local gates and refuses to push onto a
+  red main (`--fixing-main` only if the commit IS the repair). Six lanes pushed
+  onto one broken main on 2026-08-20 and each push re-mailed the founder the
+  same CI failure.
 - Every re-render publishes provenance like any leaf (§7.2).
 
 ## Cycle log
