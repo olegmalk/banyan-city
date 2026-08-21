@@ -158,7 +158,8 @@ def stage_src(tags) -> int:
         r = subprocess.run(
             ["scp", "-o", "ConnectTimeout=20", local,
              "%s:C:/banyan-farm/b01field-%s-0821/src/pipeline/controlnet_plate.py"
-             % (BOX, tag)], capture_output=True, text=True)
+             % (BOX, tag)], capture_output=True, text=True,
+            encoding="utf-8", errors="replace")
         if r.returncode:
             bad.append("%s scp rc=%d %s" % (tag, r.returncode, r.stderr.strip()))
             continue
@@ -166,7 +167,8 @@ def stage_src(tags) -> int:
             ["ssh", "-o", "ConnectTimeout=20", BOX,
              'powershell -NoProfile -Command "(Get-FileHash -Algorithm SHA256 '
              "'C:\\banyan-farm\\b01field-%s-0821\\src\\pipeline\\controlnet_plate.py'"
-             ').Hash"' % tag], capture_output=True, text=True)
+             ').Hash"' % tag], capture_output=True, text=True,
+            encoding="utf-8", errors="replace")
         got = (back.stdout or "").strip().lower()
         if got[:64] != want[:64]:
             bad.append("%s sha on box %s != %s" % (tag, got[:12], want[:12]))
