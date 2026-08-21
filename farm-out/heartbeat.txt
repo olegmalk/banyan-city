@@ -4049,3 +4049,4 @@
 20:17:45Z DONE task=ep2-b02-panicface-0822-1787343064 rc=0 artifacts=1
 20:17:51Z STARTED task=ep2-b03-crouchlife-0822-1787342846 attempt=1 on box-runner
 20:23:50Z DONE task=ep2-b03-crouchlife-0822-1787342846 rc=0 artifacts=1
+20:23:55Z box-runner idle ready=0 failed=80
