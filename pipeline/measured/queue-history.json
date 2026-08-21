@@ -2,10 +2,10 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "19f3d7a297e2502aad0d20a59c8806d811a309c7",
-  "measured_at": "2026-08-21T13:28:34Z",
-  "job_count": 1291,
-  "ok": 1211,
+  "source_commit": "ea68e510ead46671331ba122d8627dec05fdccfc",
+  "measured_at": "2026-08-21T13:36:37Z",
+  "job_count": 1292,
+  "ok": 1212,
   "failed": 80,
   "upcoming_count": 83,
   "skipped_sidecars": null,
@@ -13,6 +13,75 @@
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-b13-canon-s1-0821-1787319124",
+   "task": "ep2-b13-canon-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T13:32:11Z",
+   "finished_at": "2026-08-21T13:32:42Z",
+   "duration_s": 31,
+   "sidecar": "farm-out/box/ep2-b13-canon-s1-0821-1787319124.json",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-s1-0821.yaml",
+   "purpose": {
+    "consumer": "THE JUDGEMENT THAT RELEASES THE CANON WAVE, and nothing else renders until it is made. On this one frame depend six more plates, seven motion tranches and the swap into review/ep2-ship-0821. If it fails, the round-2 variable is named in `round_2_lever` and the wave waits.",
+    "why": "THE ONE SAMPLE FOR THE WHOLE CANON RECIPE, ROUND s1. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin shoul…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 9
+   },
+   "artifacts_dir": "farm-out/ep2-b13-canon-s1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-canon-s1-0821/ep2-b13-canon-s1-0821-ipahead.png",
+     "name": "ep2-b13-canon-s1-0821-ipahead.png",
+     "bytes": 1391662,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-canon-s1-0821/jerry-canon-h37sit-0821.png",
+     "name": "jerry-canon-h37sit-0821.png",
+     "bytes": 8601,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-canon-s1-0821/jerry-canon-sq22-0821.png",
+     "name": "jerry-canon-sq22-0821.png",
+     "bytes": 16727,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, scarf, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, pointy nose, dot nose, 2boys",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-s1-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "episode": 2,
+    "beat": 13,
+    "label": "Beat 13 — The Shade",
+    "moment": "The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade — the only part of him it will cover — knees up around his ears.",
+    "moment_short": "The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized…",
+    "line": "…Thanks for the shade.",
+    "speaker": "SCAVENGER",
+    "expresses": "he ends FOLDED SMALL in the sapling's shade, knees up. SCRIPT CONFLICT, flagged not solved: the script says \"slides down the trunk\", and the founder has ruled the sapling is tiny — \"thats ridiculous, lmao. the sapling is tiny\" — so there is no trunk to slide down. The END STATE is what the beat needs; how he gets there is an author call, not a steward one.",
+    "expresses_short": "he ends FOLDED SMALL in the sapling's shade, knees up."
+   }
+  },
   {
    "id": "ep3-saplora-s26-0821-1787316400",
    "task": "ep3-saplora-s26-0821",
