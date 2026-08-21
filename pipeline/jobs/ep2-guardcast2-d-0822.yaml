@@ -1,0 +1,183 @@
+id: ep2-guardcast2-d-0822
+task: ep2-guardcast2-d-0822
+node: 002b-first-citizen
+beat: 6
+runner: box
+priority: 6
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: guard lane, 2026-08-22 -- cell D of the round-2 casting sheet, filed with the batch that followed
+  the cell-A sample
+consumer: 'THE FOUNDER, on /review/ep2-guardcast2-0822, as candidate D of ten. This cell is NOT a sample
+  and does not carry the sample''s job: cell A answered whether the recipe holds and this one only adds
+  a face to choose between. Nothing downstream consumes it until he picks.'
+success: 'ONE 832x1216 png at seed 20263725, scored at 1:1 on the bar cell A pre-registered, which is
+  unchanged and applies to this cell term for term. The only thing this spec moves is the hair-and-face
+  clause: shaved head, dark stubble, broad flat face, wide-set eyes, slack mouth.'
+why: 'GUARD 2, CELL D OF TEN: shaved head, dark stubble, broad flat face, wide-set eyes, slack mouth.
+  One variable against cell A -- the hair-and-face clause and the seed index that follows from the cell''s
+  position. Driver, checkpoint, reference, adapter arm, framing, costume, background, style tail and negative
+  are all held. $0.'
+est_minutes: 3
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import hashlib, os, shutil, urllib.request\ndst = r\"C:\\banyan-farm\\guardcast2-0822\\refs\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nwant = \"f78336496ce9d1c7f67978b58885e5f1ac259b532a2f8e4aed578af4080ef22c\"\nwith\
+    \ urllib.request.urlopen(\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/taste/refs/guard1-canon-founder-0822-sq.png\"\
+    , timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\nif got != want:\n\
+    \    raise SystemExit(\"!! guard-1 reference sha %s, wanted %s -- \"\n                     \"refusing\
+    \ to condition on unknown bytes\"\n                     % (got, want))\nfirst = os.path.join(dst,\
+    \ \"guard1sq-s0.png\")\nwith open(first, \"wb\") as fh:\n    fh.write(blob)\nfor i in (1, 2, 3):\n\
+    \    shutil.copy2(first, os.path.join(dst, \"guard1sq-s%d.png\" % i))\nprint(\"reference verified\"\
+    , got[:12], \"-> 4 slots (3 are byte-copies; \"\n      \"dedup_cells drops them and one cell is drawn)\"\
+    )\n"
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\guardcast2-0822\refs
+  - --ref-prefix
+  - guard1sq
+  - --out
+  - C:\banyan-farm\guardcast2-0822\out-d
+  - --draft-key
+  - authored_b06_guard2cast_d_0822
+  - --arm
+  - window4
+  - --seeds
+  - '1'
+  - --seed-start
+  - '3'
+  - --expect-drafts-sha256
+  - 9d8cc03f01d6a48787c910fb7a6f57362bef7f3855413bc1a826afb5b6d665d8
+  - --task
+  - ep2-guardcast2-d-0822
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\guardcast2-0822\refs
+  - --ref-prefix
+  - guard1sq
+  - --out
+  - C:\banyan-farm\guardcast2-0822\out-d
+  - --draft-key
+  - authored_b06_guard2cast_d_0822
+  - --arm
+  - window4
+  - --seeds
+  - '1'
+  - --seed-start
+  - '3'
+  - --expect-drafts-sha256
+  - 9d8cc03f01d6a48787c910fb7a6f57362bef7f3855413bc1a826afb5b6d665d8
+  - --task
+  - ep2-guardcast2-d-0822
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\nsrcdir = r\"C:\\banyan-farm\\guardcast2-0822\\out-d\"\ndst = r\"\
+    C:\\banyan-farm\\courier-box\\farm-out\\ep2-guardcast2-d-0822\"\nos.makedirs(dst, exist_ok=True)\n\
+    want = \"06-the-clipboard-ipa-r0-w015-s3.png\"\npng = os.path.join(srcdir, want)\nif not os.path.isfile(png):\n\
+    \    have = sorted(os.path.basename(f) for f in glob.glob(srcdir + \"/*.png\"))\n    raise SystemExit(\"\
+    !! %s was not written; the dir holds %s\" % (want, have))\nsrc = [png] + sorted(glob.glob(png + \"\
+    .*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"\
+    \  \"\n                     + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-guardcast2-d-0822.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) ->\", dst)\n"
+artifacts:
+- C:\banyan-farm\guardcast2-0822\out-d\06-the-clipboard-ipa-r0-w015-s3.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. A STILL CASTING PLATE on an approved node: no voice, no motion, no episode assembly, no
+  publication. It draws nobody who is cast -- guard 2 is the open question and this sheet is how it is
+  put to the founder.'
+script_line: 'Beat 06 THE CLIPBOARD: guard 2, the one with the bark board. Drawn here head-and-shoulders,
+  without the prop, because the question is his FACE.'
+cell: 'cell D of ten. Sheet: /review/ep2-guardcast2-0822. Recipe and full trace: pipeline/derive_guardcast2_0822.py.'
+derivation:
+  parent: pipeline/jobs/ep2-guardcast2-a-0822.yaml
+  by: pipeline/derive_guardcast2_0822.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - cell
+  - consumer
+  - owner
+  - success
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - frame_count
+  - one_sample_rule
+  - recipe_trace
+  - seed_note
+  retokened:
+  - out-a -> out-d
+  - 06-the-clipboard-ipa-r0-w015-s0.png -> 06-the-clipboard-ipa-r0-w015-s3.png
+  - ep2-guardcast2-a-0822 -> ep2-guardcast2-d-0822
+  overrides_applied_and_asserted:
+    argv:--draft-key:
+    - step dry --draft-key (authored_b06_guard2cast_a_0822 -> authored_b06_guard2cast_d_0822)
+    - step sample --draft-key (authored_b06_guard2cast_a_0822 -> authored_b06_guard2cast_d_0822)
+    argv:--out:
+    - step dry --out (C:\banyan-farm\guardcast2-0822\out-d -> C:\banyan-farm\guardcast2-0822\out-d)
+    - step sample --out (C:\banyan-farm\guardcast2-0822\out-d -> C:\banyan-farm\guardcast2-0822\out-d)
+    argv:--seed-start:
+    - step dry --seed-start (0 -> 3)
+    - step sample --seed-start (0 -> 3)

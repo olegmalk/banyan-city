@@ -1,0 +1,170 @@
+id: ep2-guardcast2-a-0822
+task: ep2-guardcast2-a-0822
+node: 002b-first-citizen
+beat: 6
+runner: box
+priority: 6
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: guard lane, 2026-08-22 -- the round-2 casting sheet, filed the night the founder rejected round
+  1 on style
+consumer: 'THE FOUNDER, on /review/ep2-guardcast2-0822. Cell A is THE SAMPLE and its consumer is the decision
+  to fire the other nine at all: it is one cell of a ten-cell sheet and it exists so the recipe is looked
+  at before it is scaled. Guard 1 is NOT re-asked -- he is cast, and taste/refs/guard1-canon-founder-0822.png
+  is him. Nothing downstream consumes any of these frames until he picks: no beat plate, no motion spec,
+  and review/ep2-ship-0821 is not touched.'
+success: 'ONE 832x1216 png, scored AT 1:1 and by eye, never by a metric. A pass is a CANDIDATE on the
+  picker page and nothing more -- the cast is R4 and this job does not make it. THE BAR, PRE-REGISTERED
+  BEFORE THE PIXELS EXIST: (1) ONE GROWN MAN, alone in frame -- a read of child, teenager or female is
+  a DROP, not a note, and the round-1 sheet cut two cells on exactly this; (2) the face reads DUMB and
+  readable at a glance -- slack, blank or gormless, which is the founder''s own brief ("they should look
+  like grown men. yes. dumb grown men"); (3) DETAILED CINEMATIC ANIME, the style of taste/refs/guard1-canon-founder-0822.png
+  and the whole reason this round exists -- a flat, muted or tag-sheet look is a fail however good the
+  face is; (4) NO GLASSES and NO HAND in frame, both being attributes of the REFERENCE that must not travel;
+  (5) the costume family reads: cream shirt collar and white shoulder sash; (6) head and shoulders, face
+  toward the lens, a real grass-and-hedgerow background rather than a plain ground; (7) he is NOT guard
+  1 -- if the adapter has cloned the reference''s face this cell is a duplicate, not a candidate, and
+  the sheet says so. PRE-REGISTERED FAIL MODES, recorded by name whether or not they fire: wire rims arriving
+  off the reference despite the negative; the hand-on-cheek composition arriving with them; the 6-step
+  structure hold being too short to carry the style at all, which would show as a cell that is on-brief
+  and off-look.'
+why: 'GUARD 2, CELL A OF TEN: thick dark brown hair, heavy square jaw, thick neck, slack open mouth. Round
+  1''s twelve cells were drawn on the flat goblin-era tag stack and the founder rejected all of them in
+  one sentence -- "none of them are right, the style is wrong" -- posting the beat-09 guard close-up as
+  the contrast. This is the same casting question re-asked through the recipe THAT frame was drawn with:
+  goblin_ipa_beat.py --character guard --arm window4 (IP-Adapter at scale 0.6, off after the first 15%
+  of the denoise) over the new guard-1 reference, with a prose prompt out of wave-drafts.yaml closing
+  on the ratified 14-token style tail. Minutes of local GPU, $0, no provider. See pipeline/derive_guardcast2_0822.py
+  for the full trace.'
+est_minutes: 3
+needs:
+- cuda
+- vram20
+- farm-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import hashlib, os, shutil, urllib.request\ndst = r\"C:\\banyan-farm\\guardcast2-0822\\refs\"\nos.makedirs(dst,\
+    \ exist_ok=True)\nwant = \"f78336496ce9d1c7f67978b58885e5f1ac259b532a2f8e4aed578af4080ef22c\"\nwith\
+    \ urllib.request.urlopen(\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/taste/refs/guard1-canon-founder-0822-sq.png\"\
+    , timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\nif got != want:\n\
+    \    raise SystemExit(\"!! guard-1 reference sha %s, wanted %s -- \"\n                     \"refusing\
+    \ to condition on unknown bytes\"\n                     % (got, want))\nfirst = os.path.join(dst,\
+    \ \"guard1sq-s0.png\")\nwith open(first, \"wb\") as fh:\n    fh.write(blob)\nfor i in (1, 2, 3):\n\
+    \    shutil.copy2(first, os.path.join(dst, \"guard1sq-s%d.png\" % i))\nprint(\"reference verified\"\
+    , got[:12], \"-> 4 slots (3 are byte-copies; \"\n      \"dedup_cells drops them and one cell is drawn)\"\
+    )\n"
+- name: dry
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\guardcast2-0822\refs
+  - --ref-prefix
+  - guard1sq
+  - --out
+  - C:\banyan-farm\guardcast2-0822\out-a
+  - --draft-key
+  - authored_b06_guard2cast_a_0822
+  - --arm
+  - window4
+  - --seeds
+  - '1'
+  - --seed-start
+  - '0'
+  - --expect-drafts-sha256
+  - 9d8cc03f01d6a48787c910fb7a6f57362bef7f3855413bc1a826afb5b6d665d8
+  - --task
+  - ep2-guardcast2-a-0822
+  - --dry
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\wave-goblin-prep\goblin_ipa_beat.py
+  - --beat
+  - '6'
+  - --character
+  - guard
+  - --harness
+  - C:\banyan-farm\wave-goblin-prep
+  - --root
+  - C:\banyan-farm\wave-goblin-prep\repo
+  - --refs
+  - C:\banyan-farm\guardcast2-0822\refs
+  - --ref-prefix
+  - guard1sq
+  - --out
+  - C:\banyan-farm\guardcast2-0822\out-a
+  - --draft-key
+  - authored_b06_guard2cast_a_0822
+  - --arm
+  - window4
+  - --seeds
+  - '1'
+  - --seed-start
+  - '0'
+  - --expect-drafts-sha256
+  - 9d8cc03f01d6a48787c910fb7a6f57362bef7f3855413bc1a826afb5b6d665d8
+  - --task
+  - ep2-guardcast2-a-0822
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\nsrcdir = r\"C:\\banyan-farm\\guardcast2-0822\\out-a\"\ndst = r\"\
+    C:\\banyan-farm\\courier-box\\farm-out\\ep2-guardcast2-a-0822\"\nos.makedirs(dst, exist_ok=True)\n\
+    want = \"06-the-clipboard-ipa-r0-w015-s0.png\"\npng = os.path.join(srcdir, want)\nif not os.path.isfile(png):\n\
+    \    have = sorted(os.path.basename(f) for f in glob.glob(srcdir + \"/*.png\"))\n    raise SystemExit(\"\
+    !! %s was not written; the dir holds %s\" % (want, have))\nsrc = [png] + sorted(glob.glob(png + \"\
+    .*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"\
+    \  \"\n                     + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-guardcast2-a-0822.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) ->\", dst)\n"
+artifacts:
+- C:\banyan-farm\guardcast2-0822\out-a\06-the-clipboard-ipa-r0-w015-s0.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. A STILL CASTING PLATE on an approved node: no voice, no motion, no episode assembly, no
+  publication. It draws nobody who is cast -- guard 2 is the open question and this sheet is how it is
+  put to the founder.'
+script_line: 'Beat 06 THE CLIPBOARD: guard 2, the one with the bark board. Drawn here head-and-shoulders,
+  without the prop, because the question is his FACE.'
+recipe_trace: parent recipe pipeline/jobs/ep2-b09-cast-0817.yaml; reference taste/refs/guard1-canon-founder-0822-sq.png
+  sha f78336496ce9d1c7, a top-anchored 832x832 crop of taste/refs/guard1-canon-founder-0822.png (sha 420fc2c0...);
+  prompt pipeline/wave-drafts.yaml beats.6.authored_b06_guard2cast_a_0822, file sha 9d8cc03f01d6a487,
+  enforced at RUN time by --expect-drafts-sha256 so a hand-sync between filing and firing cannot swap
+  the wording underneath it.
+one_sample_rule: 'CELL A IS THE SAMPLE AND THE OTHER NINE ARE HELD. CLAUDE.md requires one sample per
+  RECIPE CHANGE, and this is three at once: a new reference, a new prompt family and a new beat. The specific
+  risk the sample answers: the reference wears WIRE RIMS and has A HAND ON THE CHEEK, and a 6-step structure
+  hold is precisely when a composition is set, so `no glasses` and `no hands` are load-bearing negatives
+  that have never been tested against THIS reference. Round 1''s spec argued "THE BATCH IS THE SAMPLE"
+  and round 1 was rejected entire.'
+seed_note: 'Seeds are the sampler''s own arithmetic and are pinned by construction: wg.SEED (20260719)
+  + beat (6) + seed_start * 1000. Cell A is --seed-start 0 -> 20260725; cells B..J take seed_start 1..9
+  -> 20261725..20269725. No two cells can collide and every cell''s seed is derivable from its letter
+  without opening the artifact.'
+frame_count: ONE png per cell. window4 enumerates four reference slots and the stage step writes four
+  byte-identical copies of the single guard-1 reference, so dedup_cells drops three and one cell is drawn,
+  at one seed. Stated here rather than discovered by the artifact check -- an artifact list naming frames
+  the run never writes is what retired a b09 job at rc 92.

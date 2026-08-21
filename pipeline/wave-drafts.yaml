@@ -3458,6 +3458,123 @@ beats:
       no child, no armor, no helmet, no knight, no white background, no plain
       background, no dark, no night. No photorealism, no 3D render look. 9:16
       vertical, no text.
+
+    # GUARD-2 CASTING, 2026-08-22. Ten cells, `authored_b06_guard2cast_<letter>_0822`.
+    # The founder rejected the whole 12-cell flat-stack sheet the same night --
+    # "none of them are right, the style is wrong" -- and posted the beat-09 guard
+    # close-up as the contrast. That frame is now guard 1 (canon.yaml,
+    # ep2-guard1-canon-founder-0822) and these ten are guard 2 re-cast on the
+    # recipe THAT FRAME was drawn with: authored_b09_cast_0817's own sentence shape
+    # and its 14-token style tail, byte-identical, through goblin_ipa_beat.py's
+    # window4 arm over the new guard-1 reference.
+    #
+    # WHAT IS HELD CONSTANT ACROSS ALL TEN, so the sheet asks one question: the
+    # opening clause (which is also what derives `1boy`), the head-and-shoulders
+    # framing, the costume family (cream shirt collar + white shoulder sash -- guard
+    # 2's ratified wardrobe from the 08-16 sheet, same family as guard 1's tan tunic
+    # and white sash), the background, the style tail and the negative.
+    #
+    # WHAT VARIES: hair and face/build, and nothing else. Two axes at once is
+    # deliberate here and would not be on a measurement rung -- this is a CASTING
+    # sheet whose job is to give him ten different men to choose between, not to
+    # isolate a variable. The 08-22 sheet's own honest miss was that its build axis
+    # barely moved because one openpose skeleton fixed every silhouette; there is no
+    # skeleton here, so build is carried by the face words that actually reach CLIP.
+    #
+    # `no glasses` and `no hands` are in the negative FOR A NAMED REASON: the
+    # IP-Adapter reference is guard 1's close-up, and in it he wears wire rims and has
+    # a hand against his cheek. Guard 2 is the man the founder ruled glasses-free on
+    # 2026-08-17 ("draw the second man without glasses. we need to have control."), so
+    # both are attributes of the REFERENCE that must not travel. `no teenager` is
+    # there because `child` alone did not stop the 08-22 sheet's H and I reading
+    # late-teen.
+    #
+    # Measured with pipeline/clip_token_count.py against animagine-xl-3.1's own vocab:
+    # longest positive 73 of 77 (cell d), every negative 75 of 77. Both under, and the
+    # negative's last term is a duplicate `text` that beat_negative appends, so even a
+    # one-token overflow there would cost nothing that is not already said.
+    authored_b06_guard2cast_a_0822: >-
+      A grown guard man, mature male face, thick dark brown hair, heavy
+      square jaw, thick neck, slack open mouth, close on his face, cream
+      shirt collar, white shoulder sash, tall grass, hedgerow behind,
+      cinematic lighting, masterpiece, best quality, very aesthetic No girl,
+      no child, no teenager, no glasses, no hands, no clipboard, no armor,
+      no helmet, no knight, no white background, no plain background, no
+      dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
+    authored_b06_guard2cast_b_0822: >-
+      A grown guard man, mature male face, light sandy hair, long thin face,
+      drooping eyelids, blank stare, close on his face, cream shirt collar,
+      white shoulder sash, tall grass, hedgerow behind, cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no child, no
+      teenager, no glasses, no hands, no clipboard, no armor, no helmet, no
+      knight, no white background, no plain background, no dark, no night.
+      No photorealism, no 3D render look. 9:16 vertical, no text.
+    authored_b06_guard2cast_c_0822: >-
+      A grown guard man, mature male face, cropped ginger hair, round heavy
+      face, full cheeks, small eyes, close on his face, cream shirt collar,
+      white shoulder sash, tall grass, hedgerow behind, cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no child, no
+      teenager, no glasses, no hands, no clipboard, no armor, no helmet, no
+      knight, no white background, no plain background, no dark, no night.
+      No photorealism, no 3D render look. 9:16 vertical, no text.
+    authored_b06_guard2cast_d_0822: >-
+      A grown guard man, mature male face, shaved head, dark stubble, broad
+      flat face, wide-set eyes, slack mouth, close on his face, cream shirt
+      collar, white shoulder sash, tall grass, hedgerow behind, cinematic
+      lighting, masterpiece, best quality, very aesthetic No girl, no child,
+      no teenager, no glasses, no hands, no clipboard, no armor, no helmet,
+      no knight, no white background, no plain background, no dark, no
+      night. No photorealism, no 3D render look. 9:16 vertical, no text.
+    authored_b06_guard2cast_e_0822: >-
+      A grown guard man, mature male face, shaggy black hair, gaunt narrow
+      face, big ears, eyebrows raised, close on his face, cream shirt
+      collar, white shoulder sash, tall grass, hedgerow behind, cinematic
+      lighting, masterpiece, best quality, very aesthetic No girl, no child,
+      no teenager, no glasses, no hands, no clipboard, no armor, no helmet,
+      no knight, no white background, no plain background, no dark, no
+      night. No photorealism, no 3D render look. 9:16 vertical, no text.
+    authored_b06_guard2cast_f_0822: >-
+      A grown guard man, mature male face, grey-streaked brown hair, thick
+      moustache, jowly face, half-closed eyes, close on his face, cream
+      shirt collar, white shoulder sash, tall grass, hedgerow behind,
+      cinematic lighting, masterpiece, best quality, very aesthetic No girl,
+      no child, no teenager, no glasses, no hands, no clipboard, no armor,
+      no helmet, no knight, no white background, no plain background, no
+      dark, no night. No photorealism, no 3D render look. 9:16 vertical, no
+      text.
+    authored_b06_guard2cast_g_0822: >-
+      A grown guard man, mature male face, receding sandy hair, high
+      forehead, narrow face, puzzled frown, close on his face, cream shirt
+      collar, white shoulder sash, tall grass, hedgerow behind, cinematic
+      lighting, masterpiece, best quality, very aesthetic No girl, no child,
+      no teenager, no glasses, no hands, no clipboard, no armor, no helmet,
+      no knight, no white background, no plain background, no dark, no
+      night. No photorealism, no 3D render look. 9:16 vertical, no text.
+    authored_b06_guard2cast_h_0822: >-
+      A grown guard man, mature male face, curly black hair, wide square
+      face, thick neck, gormless grin, close on his face, cream shirt
+      collar, white shoulder sash, tall grass, hedgerow behind, cinematic
+      lighting, masterpiece, best quality, very aesthetic No girl, no child,
+      no teenager, no glasses, no hands, no clipboard, no armor, no helmet,
+      no knight, no white background, no plain background, no dark, no
+      night. No photorealism, no 3D render look. 9:16 vertical, no text.
+    authored_b06_guard2cast_i_0822: >-
+      A grown guard man, mature male face, straight light brown hair, big
+      nose, doughy face, mouth slightly open, close on his face, cream shirt
+      collar, white shoulder sash, tall grass, hedgerow behind, cinematic
+      lighting, masterpiece, best quality, very aesthetic No girl, no child,
+      no teenager, no glasses, no hands, no clipboard, no armor, no helmet,
+      no knight, no white background, no plain background, no dark, no
+      night. No photorealism, no 3D render look. 9:16 vertical, no text.
+    authored_b06_guard2cast_j_0822: >-
+      A grown guard man, mature male face, short red hair, freckles, heavy
+      brow, blunt chin, blank stare, close on his face, cream shirt collar,
+      white shoulder sash, tall grass, hedgerow behind, cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl, no child, no
+      teenager, no glasses, no hands, no clipboard, no armor, no helmet, no
+      knight, no white background, no plain background, no dark, no night.
+      No photorealism, no 3D render look. 9:16 vertical, no text.
   7:
     slug: confiscate
     kind: guard
