@@ -1,0 +1,38 @@
+#### job ep2-jerry-expref-0821-1787306750 attempt 1 start 2026-08-21T10:05:55Z
+
+==== step stage START 2026-08-21T10:05:55Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "from PIL import Image, ImageDraw\nimport hashlib, os, urllib.request\nroot = r'C:\\banyan-farm\\jerryexpref-0821'\nos.makedirs(root, exist_ok=True)\nurl = 'https://raw.githubusercontent.com/olegmalk/banyan-city/main/review/ep2-goblin-design-0819/adult-b19-0819.jpg'\nwith urllib.request.urlopen(url, timeout=180) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\nif got != '1a71fb920807bd15399f8a516d3b26979fd65f7b122a11b49a74f0fa8bc5c2eb':\n    print('!! tile sha', got); raise SystemExit(1)\ntile = os.path.join(root, 'tile.jpg')\nopen(tile, 'wb').write(blob)\nim = Image.open(tile)\nm = Image.new('L', im.size, 0)\nd = ImageDraw.Draw(m)\nd.rectangle([200, 336, 305, 366], fill=255)\nd.rectangle([222, 416, 300, 440], fill=255)\nm.save(os.path.join(root, 'mask.png'))\nprint('staged tile', got, im.size, 'mask drawn')\n"]
+staged tile 1a71fb920807bd15399f8a516d3b26979fd65f7b122a11b49a74f0fa8bc5c2eb (680, 1236) mask drawn
+==== step stage END rc=0 2026-08-21T10:05:55Z ====
+
+==== step soft045 START 2026-08-21T10:05:55Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\jerryexpref-0821\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\jerryexpref-0821\\tile.jpg", "--init-sha256", "1a71fb920807bd15399f8a516d3b26979fd65f7b122a11b49a74f0fa8bc5c2eb", "--mask-png", "C:\\banyan-farm\\jerryexpref-0821\\mask.png", "--prompt-file", "C:\\banyan-farm\\jerryexpref-0821\\prompt.txt", "--negative-file", "C:\\banyan-farm\\jerryexpref-0821\\negative.txt", "--out", "C:\\banyan-farm\\jerryexpref-0821\\expref-s045.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.45", "--seed", "20260823", "--pad-crop", "64", "--blur", "8", "--note", "THE EXPRESSIVE REFERENCE, strength 0.45. Brow and mouth bands only; the EYES ARE NOT IN THE MASK because T1 is the one identity clause the adapter is provably carrying and the mood is not in the eyes."]
+Couldn't connect to the Hub: Cannot reach https://huggingface.co/api/models/cagliostrolab/animagine-xl-3.1: offline mode is enabled. To disable it, please unset the `HF_HUB_OFFLINE` environment variable..
+Will try to load from local cache.
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00, 18.70it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:01<00:00,  2.49it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:01<00:00,  2.90it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.56it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.81it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 5s
+Traceback (most recent call last):
+  File "C:\banyan-farm\jerryexpref-0821\inpaint_fruit.py", line 1111, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\banyan-farm\jerryexpref-0821\inpaint_fruit.py", line 835, in main
+    out = pipe(**kwargs).images[0]
+          ^^^^^^^^^^^^^^
+  File "C:\banyan-farm\venv\Lib\site-packages\torch\utils\_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\venv\Lib\site-packages\diffusers\pipelines\stable_diffusion_xl\pipeline_stable_diffusion_xl_inpaint.py", line 1459, in __call__
+    self.check_inputs(
+  File "C:\banyan-farm\venv\Lib\site-packages\diffusers\pipelines\stable_diffusion_xl\pipeline_stable_diffusion_xl_inpaint.py", line 802, in check_inputs
+    raise ValueError(f"`height` and `width` have to be divisible by 8 but are {height} and {width}.")
+ValueError: `height` and `width` have to be divisible by 8 but are 1236 and 680.
+==== step soft045 END rc=1 2026-08-21T10:06:04Z ====
+#### job ep2-jerry-expref-0821-1787306750 finished rc=1 2026-08-21T10:06:04Z

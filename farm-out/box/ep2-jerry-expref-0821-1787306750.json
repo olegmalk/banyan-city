@@ -1,0 +1,116 @@
+{
+  "id": "ep2-jerry-expref-0821-1787306750",
+  "task": "ep2-jerry-expref-0821",
+  "node": "002b-first-citizen",
+  "beat": 13,
+  "worker": "box-runner",
+  "priority": 2,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_OFFLINE": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "PYTHONUTF8": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "from PIL import Image, ImageDraw\nimport hashlib, os, urllib.request\nroot = r'C:\\banyan-farm\\jerryexpref-0821'\nos.makedirs(root, exist_ok=True)\nurl = 'https://raw.githubusercontent.com/olegmalk/banyan-city/main/review/ep2-goblin-design-0819/adult-b19-0819.jpg'\nwith urllib.request.urlopen(url, timeout=180) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\nif got != '1a71fb920807bd15399f8a516d3b26979fd65f7b122a11b49a74f0fa8bc5c2eb':\n    print('!! tile sha', got); raise SystemExit(1)\ntile = os.path.join(root, 'tile.jpg')\nopen(tile, 'wb').write(blob)\nim = Image.open(tile)\nm = Image.new('L', im.size, 0)\nd = ImageDraw.Draw(m)\nd.rectangle([200, 336, 305, 366], fill=255)\nd.rectangle([222, 416, 300, 440], fill=255)\nm.save(os.path.join(root, 'mask.png'))\nprint('staged tile', got, im.size, 'mask drawn')\n"
+      ],
+      "name": "stage"
+    },
+    {
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\jerryexpref-0821\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\jerryexpref-0821\\tile.jpg",
+        "--init-sha256",
+        "1a71fb920807bd15399f8a516d3b26979fd65f7b122a11b49a74f0fa8bc5c2eb",
+        "--mask-png",
+        "C:\\banyan-farm\\jerryexpref-0821\\mask.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\jerryexpref-0821\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\jerryexpref-0821\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\jerryexpref-0821\\expref-s045.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.45",
+        "--seed",
+        "20260823",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--note",
+        "THE EXPRESSIVE REFERENCE, strength 0.45. Brow and mouth bands only; the EYES ARE NOT IN THE MASK because T1 is the one identity clause the adapter is provably carrying and the mood is not in the eyes."
+      ],
+      "name": "soft045"
+    },
+    {
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\jerryexpref-0821\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\jerryexpref-0821\\tile.jpg",
+        "--init-sha256",
+        "1a71fb920807bd15399f8a516d3b26979fd65f7b122a11b49a74f0fa8bc5c2eb",
+        "--mask-png",
+        "C:\\banyan-farm\\jerryexpref-0821\\mask.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\jerryexpref-0821\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\jerryexpref-0821\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\jerryexpref-0821\\expref-s035.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.35",
+        "--seed",
+        "20260823",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--note",
+        "THE EXPRESSIVE REFERENCE, strength 0.35. Brow and mouth bands only; the EYES ARE NOT IN THE MASK because T1 is the one identity clause the adapter is provably carrying and the mood is not in the eyes."
+      ],
+      "name": "soft035"
+    },
+    {
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\nsrc = 'C:/banyan-farm/jerryexpref-0821'\ndst = 'C:/banyan-farm/courier-box/farm-out/ep2-jerry-expref-0821'\nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(src + '/expref-*.png')\n               + glob.glob(src + '/mask.png')\n               + glob.glob(src + '/prompt.txt')\n               + glob.glob(src + '/negative.txt'))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, 'rb') as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + '  '\n                     + os.path.basename(f))\nwith open(os.path.join(dst, 'ep2-jerry-expref-0821.sha256'), 'w', newline='\\n') as fh:\n    fh.write('\\n'.join(sorted(lines)) + '\\n')\nprint('published', len(files), '->', dst)\nraise SystemExit(0 if len(files) >= 5 else 1)\n"
+      ],
+      "name": "publish"
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\jerryexpref-0821\\expref-s045.png",
+    "C:\\banyan-farm\\jerryexpref-0821\\expref-s035.png"
+  ],
+  "spec_sha256": "aa24f6d3b303aef5b628dcefbfe36cc984bb0f592d27dd8eab4e118af1f2621c",
+  "started_at": "2026-08-21T10:05:55Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-21T10:06:04Z",
+  "rc": 1,
+  "failed_step": "soft045",
+  "artifacts_present": []
+}
