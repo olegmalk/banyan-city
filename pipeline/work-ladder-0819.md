@@ -8293,3 +8293,38 @@ Round eleven, running, and it is the last round on this question: r11a sq65 @
 1.0 +`eyebags` (the reference that got the skull, ears and palette right, plus
 the word that flips the eye) · r11b sq45 @ 0.8 +`eyebags` (the r3 tradeoff
 direction, to temper the overshoot) · r11c sq65 @ 0.9 +`eyebags`.
+
+**ROUND ELEVEN, AND THEN THE SHEET CORRECTED THE LANE.**
+
+| rung | reference | ip | verdict |
+|---|---|---|---|
+| r11a | sq65 | 1.0 +`eyebags` | judged BEST on the full frame — broad dome, near-horizontal ears, washed sage, flat mouth |
+| r11b | sq45 | 0.8 +`eyebags` | r10b's overshoot, unimproved: giant white ovals, ears enormous |
+| r11c | sq65 | 0.9 +`eyebags` | back to a rendered green iris. Worse than r11a. |
+
+**r11a WAS DECLARED THE PICK AND THE WAVE WAS FIRED ON IT. THAT WAS WRONG AND
+IT WAS CAUGHT BY LOOKING PROPERLY.** The eleven-beat w3 re-plate went to the
+card, and only then was `review/ep2-goblin-eye-0822/EYE-b13-ladder-0822.png`
+built — five face crops scaled to a COMMON HEIGHT beside his image. At matched
+scale r11a's eye is a large grey-green iris in a white sclera, which is nearer
+the vetoed w2 than it is to him. Judging a face by scrolling between two
+full-body frames at different head sizes is not judging it at 1:1, and the
+verdict flipped the moment the crops were the same height. **Eight of the eleven
+w3 plates were held in `ready/` as `.HOLD-eyesize-unsettled-0822` before they
+ran; b02, b03 and b04 had already claimed and are kept as evidence.** This is
+the CLAUDE.md scaling rule catching itself one beat late — the fifteen-beat K
+recipe, in miniature.
+
+**WHAT THE SHEET SHOWS THAT NO FULL FRAME DID: the missing variable is EYE SIZE.**
+In his image the eye is SMALL in a very large dome — the face is mostly
+forehead, the eyes sit low and wide-set, and each is a white almond with a dot.
+Every render so far draws an anime-scaled eye and then argues about its fill.
+`eyebags` (r10b) is still the only term that has ever changed the FILL from
+rendered iris to white field with dark pupils; nothing yet has changed the SIZE,
+and no lever in the current set addresses it.
+
+Round twelve, on the size axis, off r10b's mechanism (eyebags kept throughout):
+r12a sq45 +`jitome` · r12b sq65 +`jitome` · r12c sq45, negative +`large eyes,
+big eyes` · r12d sq45 +`jitome`, negative +`large eyes, big eyes`. `jitome` is
+booru's name for the flat deadpan narrow eye and is a CONVENTION tag, which is
+the only kind of eye term that has moved this render.
