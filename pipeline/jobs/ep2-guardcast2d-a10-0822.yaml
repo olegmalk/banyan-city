@@ -1,0 +1,117 @@
+id: ep2-guardcast2d-a10-0822
+task: ep2-guardcast2d-a10-0822
+node: 002b-first-citizen
+beat: 6
+runner: box
+priority: 6
+needs_gpu: true
+max_attempts: 1
+sample: false
+owner: guard lane, 2026-08-22 -- round 2D, the seed sweep after 2C's null result
+consumer: THE FOUNDER, on /review/ep2-guardcast2-0822. Five of the ten 2B cells held their own face and
+  round 2C proved the pose negative does not shift it; this sweep buys the sheet its missing clean men
+  by sampling past a compositional prior instead of arguing with it. Guard 1 is not re-asked and review/ep2-ship-0821
+  is untouched.
+success: 'ONE 832x1216 png at the seed named in this spec, scored at 1:1. THE ONLY OPEN QUESTION IS THE
+  HAND: pass = NO hand in frame and no hand-on-face composition. Everything else about this recipe has
+  been shown across eleven frames tonight and is not re-litigated here, but it must still HOLD, and a
+  frame that loses one of these is dropped rather than argued for: one grown man alone, detailed cinematic
+  anime, cream shirt collar and white shoulder sash, real grass background, no glasses, not guard 1, and
+  the cell''s own hair-and-face clause legible. A pass is a CANDIDATE on the picker page and nothing more
+  -- the cast is R4 and this job does not make it. PRE-REGISTERED: if BOTH of a cell''s two draws come
+  back holding the face, that cell is reported on the page as unfixed at this recipe rather than swapped
+  for a sixth idea nobody sampled.'
+why: 'GUARD 2, CELL A AT A FRESH SEED (20270725): thick dark brown hair, heavy square jaw, thick neck,
+  slack open mouth. NOT A RECIPE CHANGE and so not sample-gated -- driver, checkpoint, prompt bytes, negative
+  bytes, steps, cfg and size are round 2C''s exactly and only the seed moves. Round 2C''s A/B is the reason:
+  three pose terms in the model''s own dialect did not remove the hand at the same seed, which together
+  with 2B''s adapter removal rules out both the reference and the wording and leaves a checkpoint prior
+  that lands on some seeds and not others -- five of ten in 2B. Twenty seconds a frame to sample past
+  it. $0. Full reasoning in pipeline/derive_guardcast2d_0822.py.'
+est_minutes: 2
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-guardcast2d-a10-0822\prompt.txt: 1boy, a grown guard man, mature male face, thick
+    dark brown hair, heavy square jaw, thick neck, slack open mouth, close on his face, cream shirt collar,
+    white shoulder sash, tall grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very
+    aesthetic
+  C:\banyan-farm\ep2-guardcast2d-a10-0822\negative.txt: photorealistic, 3d render, abstract, text, watermark,
+    signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl,
+    child, teenager, glasses, hands, clipboard, armor, helmet, knight, white background, dark, night,
+    hand on own face, head rest, hand up
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
+    \nroot = r\"C:\\banyan-farm\\ep2-guardcast2d-a10-0822\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")]\n\
+    for name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
+    \ + \"pipeline/\" + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
+    \    if got != sha:\n        raise SystemExit(\"!! %s sha %s, wanted %s\" % (name, got, sha))\n  \
+    \  with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n    print(\"staged\"\
+    , name, got[:12])\n"
+- name: cast
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-guardcast2d-a10-0822\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\ep2-guardcast2d-a10-0822\src
+  - --task
+  - ep2-guardcast2d-a10-0822
+  - --arm
+  - nocontrol
+  - --seed
+  - '20270725'
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --prompt-file
+  - C:\banyan-farm\ep2-guardcast2d-a10-0822\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\ep2-guardcast2d-a10-0822\negative.txt
+  - --out
+  - C:\banyan-farm\ep2-guardcast2d-a10-0822\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The courier pushes from farm-out and from nowhere else.\n# The CONDITIONS travel with the frame:\
+    \ prompt and negative go too, so\n# the sheet can be re-read months from now without this spec in\
+    \ hand.\nimport glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-guardcast2d-a10-0822\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(\"C:/banyan-farm/ep2-guardcast2d-a10-0822/out/ep2-guardcast2d-a10-0822-nocontrol.png*\"\
+    )\n               + glob.glob(\"C:/banyan-farm/ep2-guardcast2d-a10-0822/prompt.txt\")\n          \
+    \     + glob.glob(\"C:/banyan-farm/ep2-guardcast2d-a10-0822/negative.txt\"))\nlines = []\nfor f in\
+    \ files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c,\
+    \ \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \"\n          \
+    \           + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-guardcast2d-a10-0822.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 3 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-guardcast2d-a10-0822\out\ep2-guardcast2d-a10-0822-nocontrol.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. A STILL CASTING PLATE on an approved node: no voice, no motion, no episode assembly, no
+  publication.'
+script_line: 'Beat 06 THE CLIPBOARD: guard 2, the one with the bark board. Head and shoulders, no prop
+  -- the question is his FACE.'
+recipe_trace: 'pipeline/jobs/ep2-guardcast2c-a-0822.yaml with the seed moved from 20260725 to 20270725
+  and nothing else touched. Seed arithmetic is the sheet''s own, extended: SEED_BASE + (cell index + offset)
+  * 1000, offsets 10 and 20, so no 2D seed can collide with a 2B, a 2C or another 2D.'
