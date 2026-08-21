@@ -3917,3 +3917,4 @@
 16:54:06Z DONE task=ep2-b03-sapnat-0821-1787331207 rc=0 artifacts=2
 16:54:13Z STARTED task=ep2-b20-sapnat-0821-1787331211 attempt=1 on box-runner
 16:54:26Z DONE task=ep2-b20-sapnat-0821-1787331211 rc=0 artifacts=2
+16:54:31Z box-runner idle ready=0 failed=80
