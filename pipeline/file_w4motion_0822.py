@@ -93,6 +93,29 @@ ACTIONS_AUTHORED = {
          "head is already low."),
 }
 
+# THE POSE VARIANT, AND IT IS A FOUNDER STORY RULING RATHER THAN A LANE IDEA.
+# On beat 13 he ruled that the goblin CURLS DOWN SMALL to fit his face into the
+# sapling's hand-sized patch of shade -- he never rises, and there is no phantom
+# tree. `ep2-b13-canon-w4curl-0821` is that plate (hunch skeleton, head tipped
+# down and to one side). Its action must CONTINUE the curl, not start one: the
+# plate is already hunched, and asking a plate for the state it is already in is
+# what returned beat 20 a still with a runtime. The "never rises" clause is
+# written in explicitly because the beat's own shipping clip stands him back up,
+# which is the thing the ruling is against.
+VARIANTS = {
+    ("13", "curl"): dict(
+        slug="the-shade",
+        plate="ep2-b13-canon-w4curl-0821",
+        action=("He is hunched forward, head tipped down and to one side, in "
+                "tall grass, full body. THE ACTION: his shoulders drop and he "
+                "settles lower over his knees, his head sinking a little "
+                "further down and to the side -- settle, sink, still. HALFWAY "
+                "THROUGH his shoulders are down and his head is lower than it "
+                "started, still tipping. HE NEVER RISES, he never straightens "
+                "up and his head never comes back up."),
+    ),
+}
+
 ROWS = {
     2:  ("the-sprint",     "ep2-b02-canonmotion-0821", "ep2-b02-canon-w4-0821"),
     3:  ("bad-cover",      "ep2-b03-canonmotion-0821", "ep2-b03-canon-w4-0821"),
@@ -182,8 +205,12 @@ def _prompt_of(spec_id: str) -> str:
     return d["payload"][keys[0]]
 
 
-def build(beat: int, pspec: dict):
-    slug, action_from, plate_job = ROWS[beat]
+def build(beat: int, pspec: dict, variant: str = None):
+    if variant:
+        v = VARIANTS[(str(beat), variant)]
+        slug, action_from, plate_job = v["slug"], None, v["plate"]
+    else:
+        slug, action_from, plate_job = ROWS[beat]
     # THE WHOLE PROMPT IS CARRIED, NOT JUST THE ACTION, and the eye is swapped
     # inside it. The first draft grafted beat 04's head clause onto every beat
     # and beat 07 caught it: 07 is the confiscation, its head names TWO figures
@@ -198,7 +225,9 @@ def build(beat: int, pspec: dict):
         # wave's cleanest pass and its head names ONE goblin, which is what
         # these two plates hold.
         head = _prompt_of("ep2-b04-canonmotion-0821")
-        prompt = head[:head.index("He is ")] + ACTIONS_AUTHORED[beat]
+        action = (VARIANTS[(str(beat), variant)]["action"] if variant
+                  else ACTIONS_AUTHORED[beat])
+        prompt = head[:head.index("He is ")] + action
     else:
         prompt = _prompt_of(action_from)
     if EYE_OLD not in prompt:
@@ -212,7 +241,8 @@ def build(beat: int, pspec: dict):
     if not os.path.exists(os.path.join(REPO, rel)):
         raise SystemExit("!! %s is not on disk -- pull the plate first" % rel)
     plate_sha = sha_of(rel)
-    new_id = "ep2-b%02d-w4motion-0822" % beat
+    new_id = ("ep2-b%02d-w4motion%s-0822" % (beat, variant) if variant
+              else "ep2-b%02d-w4motion-0822" % beat)
 
     child = derive_spec.derive(
         PARENT, new_id,
@@ -311,13 +341,18 @@ def main(argv=None) -> int:
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--beats", default=",".join(str(b) for b in sorted(ROWS)))
+    ap.add_argument("--variant", help="a VARIANTS pose variant, e.g. curl")
     a = ap.parse_args(sys.argv[1:] if argv is None else argv)
 
     pspec = _yaml.safe_load(open(os.path.join(REPO, PARENT), encoding="utf-8"))
     for beat in [int(b) for b in a.beats.split(",")]:
-        if beat not in ROWS:
+        if a.variant:
+            if (str(beat), a.variant) not in VARIANTS:
+                raise SystemExit("!! beat %d has no %r variant"
+                                 % (beat, a.variant))
+        elif beat not in ROWS:
             raise SystemExit("!! beat %d has no row in this filer" % beat)
-        child, prompt = build(beat, pspec)
+        child, prompt = build(beat, pspec, variant=a.variant)
         blob = _yaml.safe_dump({k: v for k, v in child.items()
                                 if k != "derivation"})
         if "b04-" in blob or "04-evidence" in blob:
@@ -335,8 +370,13 @@ def main(argv=None) -> int:
                 raise SystemExit("!! beat %02d: the VETOED eye is still in the "
                                  "%s" % (beat, where))
         out = "pipeline/jobs/%s.yaml" % child["id"]
+        # The plate is read back off the EMITTED argv, not off ROWS: with a
+        # --variant in play ROWS holds the wrong plate, and a report line that
+        # names a different file than the spec uses is how a wrong init ships.
+        argv = [t for st in child["steps"] for t in st.get("argv", [])]
+        used = argv[argv.index("--src") + 1].replace("\\", "/").split("/")[-2]
         print("%-26s beat %02d  plate %-28s prompt %d chars"
-              % (child["id"], beat, ROWS[beat][2], len(prompt)))
+              % (child["id"], beat, used, len(prompt)))
         if a.write:
             derive_spec.write(child, out, force=a.force)
             print("   wrote %s" % out)
