@@ -3786,3 +3786,5 @@
 13:04:38Z box-runner idle ready=0 failed=79
 13:14:42Z box-runner idle ready=0 failed=79
 13:24:46Z box-runner idle ready=0 failed=79
+13:32:11Z STARTED task=ep2-b13-canon-s1-0821-1787319124 attempt=1 on box-runner
+13:32:42Z DONE task=ep2-b13-canon-s1-0821-1787319124 rc=0 artifacts=1
