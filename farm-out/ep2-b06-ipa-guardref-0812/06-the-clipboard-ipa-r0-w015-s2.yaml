@@ -1,0 +1,59 @@
+# Still provenance (7.2), written AT RENDER TIME by goblin_ipa_sample.py
+# on the rtx5090. ONE SAMPLE of a CONSISTENCY MECHANISM on beat 04 —
+# not a wave, and not a candidate for the founder to pick from. The
+# prompt, seeds, steps, guidance and negative are byte-identical to the
+# wave-1 sample (commit 406909c); the ONLY change is the IP-Adapter
+# conditioning recorded below. The reference image is one of the four
+# wave-1 frames, used because all four are used in turn — it is NOT a
+# canonical goblin and nobody has picked one.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+cost_usd: 0.00
+shot_beat: 6
+beat_slug: the-clipboard
+beat_kind: guard
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20262725
+seeds_in_batch: 4
+task: ep2-b06-ipa-guardref-0812
+render_round: ipa-consistency-1
+candidate_set: none (mechanism test, not a pick sheet)
+count_tag: 1boy
+negative_terms_removed: tall tree
+consistency_mechanism: IP-Adapter Plus (SDXL, ViT-H image encoder)
+ip_adapter_repo: h94/IP-Adapter
+ip_adapter_weight: sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors
+ip_adapter_image_encoder: h94/IP-Adapter/models/image_encoder
+ip_adapter_licence: Apache-2.0 (h94/IP-Adapter); image encoder weights derive from laion/CLIP-ViT-H-14-laion2B-s32B-b79K, MIT
+ip_adapter_scale: 0.6
+ip_adapter_step_window: >-
+  on for steps 0-5 of 40 (15% of the denoise), then set_ip_adapter_scale(0.0) from callback_on_step_end for the remaining 34. The reference conditions the early, structure-forming steps only; the late steps are text-conditioned alone.
+ip_adapter_reference: 04-the-footnote-wave1-s0.png
+ip_adapter_reference_sha256: bb5ed2d26b4b7662c7191cab9ddd8613d22d49a89165639868a3221d82b27501
+ip_adapter_reference_prep: centre-cropped to square, then the pipeline's CLIPImageProcessor
+ip_adapter_reference_note: >-
+  one of the four wave-1 frames. All four are used as the reference in turn across this run, so the agreement number is a property of the mechanism and not an endorsement of any one creature. Choosing the goblin is R4's call and this run does not make it.
+goblin_definition_source: >-
+  the founder, 2026-08-10, verbatim: "he is just a simple green goblin, nothing complex". Recorded in cuts/cuts.yaml item 18 (settled) and taste/steward-model.ledger.yaml record ep2-goblin-definition-0810.
+goblin_definition_as_sent: >-
+  green skin, bald head — unchanged from the wave-1 sample, on purpose. It is the steward's translation of his sentence into slot tags and he has NOT ratified it. Holding it fixed is what makes this an A/B of the mechanism rather than a second, confounded question about the words.
+prompts_from: wave-drafts.yaml (NOT shots.md — shots.md is untouched)
+harness_sha256: 7efd0b96bfa14b4a3f2411f3646f6e5fa22723c149e2ea0d628520446485d1e8
+drafts_sha256: bf8e7fd8ba1dff591ea2ccc57ce8bec3a4dc394fb417ed1d281bbed9ce0fafb0
+sampler_sha256: b98d9987442737000e683195cca7ae8d234f34fe20d75538c917c7d2d43ec95c
+tokenizer: openai/clip-vit-large-patch14 (transformers, on the box)
+positive_tokens: 67
+negative_tokens_sent: 45
+extra_negative_tier: guard
+prompt_tokens_added_by_mechanism: 0
+prompt: >-
+  1boy, a round guard man in mismatched armor turns over a bark clipboard that fills the lower third of the frame, tracing a line on it with one finger as he reads, brow furrowed. Slow drift in, medium close-up, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic
+negative_prompt: >-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, photorealism, text
+colour_anchor_negative: none (negative byte-identical to arm 1)
+render_seconds: 9.4
+founder_verdict: null
+scored: false

@@ -1,0 +1,22 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 20
+beat_slug: "evidence"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20263746
+render_seconds: 70.7
+png_sha256: "4943dba272208b9338e5514fe189057c821c83936509c9d1ae40b303e6a72ad4"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "1boy, lean wiry adult goblin man, green skin, bald head, patchwork cloak, solo, in a sunny grassy field, raises a ripe fig in both hands in front of him like evidence, eyes widening as he looks up at a bare branch above. Warm amber afternoon light, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic"
+negative_prompt: "text, girl, baby, child, chibi, glowing eyes, glowing orb, dark, night, dusk, sunset, dim lighting, moody lighting, low key, shadows dominant, photorealism, leaf on head, plant girl, alraune, monster girl, flower on head, head wreath, hair ornament, leaf hair ornament, plant hair, female goblin, elf"
+done_when: "COLOUR ONLY. A blind cold reader -- a fresh agent given the frame and nothing else, no context and no prompt text, asked `what colour is the fruit?` -- must answer with a word in the PURPLE family (purple, violet, aubergine, eggplant-purple, plum-purple, indigo, magenta-purple). PASS requires all of: C1 the reader finds exactly one fruit in frame at all -- no fruit is a FAIL, not a pass, because there is then nothing whose colour was tested; C2 the reader's colour word is in the purple family; C3 the answer is NOT hedged toward red or brown -- `purplish-red`, `reddish purple`, `brownish purple` and `maroon-purple` are all FAIL, because the founder's test is whether it reads purple to a naive eye, not whether purple is arguable; C4 the reader is asked BEFORE being told anything about figs, canon or this lane. Named in advance, the failure modes: Q1 RED SURVIVES (reader says red, dark red, maroon, burgundy, crimson, wine, brown, russet) -- the founder's exact rejection, and the next lever would be a NEGATIVE naming the failure colour, not more positive adjectives; Q2 BLACK COLLAPSE (reader says black) -- overshoot, `deep` is the suspect token; Q3 EGGPLANT (reads as a vegetable) -- already spent on beat 18, do not re-buy it; Q4 GLOWING ORB (the fault that came back 4 of 4 on the 08-12 round) -- colour of a light source is not colour of a fruit; Q5 NO FRUIT or more than one; Q6 THE COLOUR LANDS AND THE BEAT STILL DOES NOT -- expected, and explicitly NOT a pass for beat 20."
+why_this_plate: "THE FOUNDER RULED THE FRUIT PURPLE, 2026-08-16: `the fruit should be purple. it should not be that hard to make it purple.` He is right, and the reason is mechanical rather than linguistic. The four seeds he rejected (farm-out/ep2-b20-idfix/20-evidence-wave1-s*.png, task ep2-b20-idfix-0812, 2026-08-12) were drawn from draft variant `authored_b20_refresh`, whose prompt -- read out of the frame's own sidecar, not guessed -- says `raises a RIPE FIG`. There is no colour word in it anywhere, and its negative bans glowing eyes, glowing orb, dark and night but nothing red or brown. BEAT 20 WAS NEVER ASKED FOR PURPLE. Measured on the real CLIP tokenizer, that prompt was 73/77 and its negative 75/77 -- nothing was truncated, so the missing colour was missing from the text, not lost in transit. The purple canon landed 08-13/14 into three beat-20 drafts (authored_b20_plate 74/77, _scene 73/77, _adult 76/77, all three carrying `deep purple-violet fig, green at its neck, matte` INTACT in the positive) and not one of them has ever been rendered -- farm-out/ holds ep2-b20-idfix, -idfix-r2 and -ipa-frozen-0812 and no ep2-b20-plate-0814. That purple is reachable at all on this exact recipe is already evidenced: SAMPLE-b18-purple-fruit-0815.png, same checkpoint, same 832x1216x40 on MPS, `One small round purple fruit`, came back unmistakably purple. So r1 here is the CONTROL -- the failing prompt, byte for byte -- and r2 changes exactly one noun phrase in it."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 1
+scored: false

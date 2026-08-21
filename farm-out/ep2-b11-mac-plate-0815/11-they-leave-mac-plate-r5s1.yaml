@@ -1,0 +1,22 @@
+platform: "local-gpu (Apple Silicon, MPS)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+cost_usd: 0.0
+shot_beat: 11
+beat_slug: "they-leave"
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260816
+render_seconds: 149.0
+png_sha256: "931397f134409667f072b8b15cd68763d9b1355bf584c5ba0667283223ec6509"
+prompts_from: "authored for this plate test (shots.md UNTOUCHED)"
+prompt: "2boys, from behind, full body, wide shot, two guard men standing together in tall grass, tall grass background, one man with dark cropped hair in a plain tan tunic, one man with light sandy hair in a dark brown tunic, cloth sash of office, loose fists at their sides, dark trousers and boots, sunny day, masterpiece, best quality"
+negative_prompt: "text, looking at viewer, facing viewer, face, looking back, profile, from side, close-up, portrait, distant, small figure, bald, 1boy, 3boys, solo, sky, horizon, white background, simple background, holding object, clipboard, armor, helmet, knight, child, photorealism, 3d render, night"
+done_when: "PLATE BAR, pre-registered before the plate was drawn. All seven must hold: P1 the two men are the APPROVED guards -- one dark haired in a light tan tunic, one light-sandy haired in a darker brown garment, NEITHER BALD; P2 exactly two whole figures, full-length, no third body; P3 both seen from behind, no face, with unobstructed field ahead of them to walk into; P4 the taller man spans at least 25% of frame height so the costumes are legible; P5 no flat untextured region larger than a torso; P6 no clipboard, board, badge or weapon; P7 field present in the plate itself. Fail modes named in advance: Q1 bald pair, Q2 wrong count, Q3 frontal, Q4 specks, Q5 vacancy, Q6 costume merge, Q7 prop arrival, Q8 swapped costume. Good staging with the wrong men is a FAIL -- identity is the point of this plate."
+why_this_plate: "The founder cast both guards on 14 and 15 August, and no staged picture of them doing anything exists -- both men are costume cards on a grey void, which is why beats 05, 06, 07, 09, 10 and 11 were animated off costume cards and cannot be cut. Worse, a sweep of all 15 plate prompts for those beats found NONE naming the cast: 13 of 15 ask for `bald` or `bare heads`, and neither approved guard is bald. So every guard plate we own is mis-cast at the most visible attribute there is, and beat 11's recorded `identity collapse` is the render growing the dark hair guard A actually has. Beat 11 goes first because it is PURE WHOLE-BODY MOTION -- the one thing this engine does reliably, 12/12 stand-ups against 0/8 in-hand -- and because the take standing in the demo cut is knowingly broken."
+founder_verdict: null
+approved: false
+provisional: true
+revision: 5
+scored: false
