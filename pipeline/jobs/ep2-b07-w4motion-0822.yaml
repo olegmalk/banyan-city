@@ -62,12 +62,13 @@ payload:
     small green goblin with a bare hairless scalp, large pointed ears, small off-white almond eyes with
     tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt,
     dark shorts, dark boots, standing at the left. ONE TALL CITY GUARD, a grown man with near-black cropped
-    hair and round wire-rimmed glasses, in a brown patrol tunic, standing at the right, facing the goblin,
-    a full head taller. Both faces, both costumes and the goblin''s skin colour DO NOT CHANGE for the
-    whole clip. The goblin is standing, arms at sides, beside tall grass, full body. THE ACTION: the guard''s
-    arm comes up and points at him; he flinches back a half step -- TWO figures the whole clip, and the
-    point is aimed AT him. HALFWAY THROUGH the guard''s arm is up and level, pointing at him, and he is
-    leaning away.'
+    hair and round wire-rimmed glasses, wearing HIS OWN uniform and not the goblin''s: a tan wrap tunic
+    with a wide turned-down tan collar and a WHITE SASH OVER ONE SHOULDER, no mandarin collar and no frog
+    buttons. He stands at the right, facing the goblin, a full head taller. Both faces, both costumes
+    and the goblin''s skin colour DO NOT CHANGE for the whole clip. The goblin is standing, arms at sides,
+    beside tall grass, full body. THE ACTION: the guard''s arm comes up and points at him; he flinches
+    back a half step -- TWO figures the whole clip, and the point is aimed AT him. HALFWAY THROUGH the
+    guard''s arm is up and level, pointing at him, and he is leaning away.'
   C:\banyan-farm\ep2-b07-w4motion-0822\b07-negative.txt: second face, second goblin, two goblins, extra
     head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing,
     melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing,
@@ -247,7 +248,7 @@ derivation:
     key:priority:
     - key priority = 13
     payload:b07-motion-prompt.txt:
-    - payload b07-motion-prompt.txt (695 -> 1066 chars)
+    - payload b07-motion-prompt.txt (695 -> 1216 chars)
     seed:
     - payload b07-jobs-render.json (20260904 -> 20260877, re-parsed)
   seed: 20260877

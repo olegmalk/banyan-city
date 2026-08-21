@@ -191,9 +191,20 @@ ROWS = {
 # asking for a character the canon no longer has.
 GUARD_OLD = ("ONE TALL ARMOURED CITY GUARD in a helmet, standing at the "
              "right, facing the goblin, a full head taller.")
+# WARDROBE STRENGTHENED 2026-08-22 after the first clip. "in a brown patrol
+# tunic" lost to the goblin's own costume: the guard came back wearing the
+# GOBLIN'S mandarin-collar tunic, which is attribute binding again -- the
+# goblin's wardrobe is named in detail three clauses earlier and the guard's
+# was named in four words, so the detailed one won both figures. The canon
+# wardrobe from the guard-1 note (tan tunic collar, WHITE SHOULDER SASH) is now
+# spelled out at the same level of detail, and the sash is the load-bearing
+# term because it is the one item the goblin does not have.
 GUARD_NEW = ("ONE TALL CITY GUARD, a grown man with near-black cropped hair "
-             "and round wire-rimmed glasses, in a brown patrol tunic, "
-             "standing at the right, facing the goblin, a full head taller.")
+             "and round wire-rimmed glasses, wearing HIS OWN uniform and not "
+             "the goblin's: a tan wrap tunic with a wide turned-down tan "
+             "collar and a WHITE SASH OVER ONE SHOULDER, no mandarin collar "
+             "and no frog buttons. He stands at the right, facing the goblin, "
+             "a full head taller.")
 BALD_OLD = "ONE small green goblin, bald, large pointed ears,"
 BALD_NEW = ("ONE small green goblin with a bare hairless scalp, large pointed "
             "ears,")
