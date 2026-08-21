@@ -7,8 +7,8 @@ size: 704x1280
 seconds: 4.375
 steps: 8@352x640+3@704x1280
 guidance: 2.0
-seed: 20260873
-task: ep2-b03-w4motion-0822
+seed: 20260874
+task: ep2-b04-w4motion-0822
 cost_usd: 0
 prompt: ''
 negative: ''
@@ -16,5 +16,5 @@ mode: production
 batch: 1
 batch_slot: 0
 offload: sequential
-throughput_s_video_per_s_wall: 0.0176
-compute_s_per_video_s: 56.9
+throughput_s_video_per_s_wall: 0.017
+compute_s_per_video_s: 58.8

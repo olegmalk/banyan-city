@@ -22,10 +22,12 @@ why: 'THE FOUNDER VETOED THE FACE ON 2026-08-22 -- ''that aint my goblin'' -- an
   before this spec was written.
 
 
-  THE ACTION IS CARRIED VERBATIM from ep2-b04-w4motion-0822 so the plate is the only thing that changed.
-  THE HEAD CLAUSE IS NOT: it said `off-white eyes with narrow vertical slit pupils`, which is the vetoed
-  eye, and a subject clause that disagrees with its own init is how this engine drifts a face back to
-  its prior over a clip.'
+  THE ACTION IS AUTHORED HERE -- this beat has never had a motion spec, so there was no sentence to carry.
+  It is written to the wave''s laws and, because this plate is ALREADY in the pose the beat describes,
+  it CONTINUES that pose rather than asking for it: beat 20 asked a plate to look up when its own inventory
+  already said he was looking up, and got a still with a runtime. THE HEAD CLAUSE IS NOT CARRIED AS WRITTEN:
+  it said `off-white eyes with narrow vertical slit pupils`, which is the vetoed eye, and a subject clause
+  that disagrees with its own init is how this engine drifts a face back to its prior over a clip.'
 est_minutes: 8
 needs:
 - cuda
@@ -61,10 +63,11 @@ payload:
     already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes
     with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage
     shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole
-    clip. He is hunched over, leaning out sideways, in tall grass, full body. THE ACTION: he leans out
-    sideways from behind the trunk, looks, and pulls straight back -- out, look, back -- the pull-back
-    is the joke and must land. HALFWAY THROUGH he is leaned out sideways at full extension, looking, not
-    yet back.'
+    clip. He is standing, arms at sides, in tall grass, full body. THE ACTION: he leans his head and shoulders
+    out to one side, looks, and pulls straight back upright -- out, look, back -- the pull-back is the
+    joke and must land. HALFWAY THROUGH he is leaned out sideways at full extension, looking, not yet
+    back. HIS FEET STAY PLANTED and he stays upright: he never tips over, never lies down and never leaves
+    his feet.'
   C:\banyan-farm\ep2-b04-w4motion-0822\b04-negative.txt: second face, second goblin, two goblins, extra
     head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing,
     melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing,
@@ -172,10 +175,7 @@ bar: "THE CANON MOTION BAR. Read against taste/refs/goblin-canon-founder-0821.pn
 head_clause_rewrite: '''off-white eyes with narrow vertical slit pupils'' -> ''small off-white almond
   eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression''. The ONLY edit to
   the carried prompt.'
-not_done_on_purpose: 'BEATS 17 AND 19 HAVE CLEAN W4 PLATES AND NO CLIP HERE. Neither has ever had a motion
-  spec, so there is no action sentence to carry, and authoring two from scratch is its own piece of work
-  with its own bar -- doing it inside a filer whose stated one variable is THE PLATE would be a lie about
-  what changed. Also absent: ep2-b13-canon-w4curl-0821, the founder''s b13 story ruling (he curls DOWN
+not_done_on_purpose: 'ABSENT: ep2-b13-canon-w4curl-0821, the founder''s b13 story ruling (he curls DOWN
   small, never rises) rendered as a second plate for that beat. It is a POSE change and gets its own motion
   spec, not a slot in a wave whose variable is the face.'
 plate_provenance: farm-out/ep2-b04-canon-w4-0821/ep2-b04-canon-w4-0821-ipahead.png, 832x1216, sha256 5c103f73ca32b4eb0994babd376c5efc8993dee6b4771393fcc89d81f2cebfa2,
@@ -247,7 +247,7 @@ derivation:
     key:priority:
     - key priority = 13
     payload:b04-motion-prompt.txt:
-    - payload b04-motion-prompt.txt (695 -> 752 chars)
+    - payload b04-motion-prompt.txt (695 -> 860 chars)
     seed:
     - payload b04-jobs-render.json (20260904 -> 20260874, re-parsed)
   seed: 20260874

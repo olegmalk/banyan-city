@@ -81,6 +81,24 @@ EYE_NEW = ("small off-white almond eyes with tiny dark pupils, heavy upper "
 # and the plate contains no fig, so the drop is the assembly's problem and
 # naming it here is precisely what pulled the camera back on four round-1 beats.
 ACTIONS_AUTHORED = {
+    # BEAT 04 JOINED THIS DICT AFTER ITS FIRST W4 CLIP TOPPLED HIM. The carried
+    # action read "he leans out sideways FROM BEHIND THE TRUNK", and the w4
+    # plate is a single figure standing in grass with no trunk in it. That is
+    # the wave's own first law broken by the act of carrying: the sentence was
+    # written against an older plate that HAD a trunk, and "from behind" is
+    # positional -- it tells the model where the body is relative to an object
+    # that is not there. The model resolved it by rotating the whole figure
+    # ninety degrees until he was lying horizontally across the frame, and he
+    # stayed there. Carrying an action verbatim is only safe when the plate
+    # LINEAGE matches; b04's did not. Rewritten to the same three beats of
+    # movement -- out, look, back -- with no object in it.
+    4:  ("He is standing, arms at sides, in tall grass, full body. THE ACTION: "
+         "he leans his head and shoulders out to one side, looks, and pulls "
+         "straight back upright -- out, look, back -- the pull-back is the "
+         "joke and must land. HALFWAY THROUGH he is leaned out sideways at "
+         "full extension, looking, not yet back. HIS FEET STAY PLANTED and he "
+         "stays upright: he never tips over, never lies down and never leaves "
+         "his feet."),
     17: ("He is standing, turning away, in tall grass, full body. THE ACTION: "
          "he carries the turn through, settles onto the far foot and takes one "
          "step away -- turn through, plant, step. HALFWAY THROUGH his back is "
@@ -129,7 +147,7 @@ ROWS = {
     # plate deserves.
     2:  ("the-sprint",     "ep2-b02-panic-0822",       "ep2-b02-canon-w4-0821"),
     3:  ("bad-cover",      "ep2-b03-crouchlife-s2-0822", "ep2-b03-canon-w4-0821"),
-    4:  ("the-footnote",   "ep2-b04-canonmotion-0821", "ep2-b04-canon-w4-0821"),
+    4:  ("the-footnote",   None,                       "ep2-b04-canon-w4-0821"),
     7:  ("confiscate",     "ep2-b07-canonmotion-0821", "ep2-b07-canon-w4-0821"),
     8:  ("inside-him",     "ep2-b08-canonmotion-0821", "ep2-b08-canon-w4-0821"),
     13: ("the-shade",      "ep2-b13-canonmotion-0821", "ep2-b13-canon-w4-0821"),

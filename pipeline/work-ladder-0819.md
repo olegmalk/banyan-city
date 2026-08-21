@@ -8408,3 +8408,39 @@ each beat's own prompt makes the eye the single edit for all ten.
 
 `ep2-b13-w4motion-0822` is queued ALONE as the sample. The other nine are
 written and wait for it.
+
+**THE MOTION WAVE, JUDGED AS IT LANDS — AND CARRYING AN ACTION IS ONLY SAFE
+WHEN THE PLATE LINEAGE MATCHES.**
+
+| beat | verdict |
+|---|---|
+| b13 | **PASS on the thing the wave was for.** The approved face holds all 105 frames — dome, off-white almond eyes, dark pupils, ears, collar intact at the last frame — and the eye never drifts back to an iris. Action is thin, close to the still-with-a-runtime failure, but that is the beat's own already-judged sentence. |
+| b02 | **PASS, uncut.** He runs in, plants, skids down flat, lands on his forearms with his chin off the ground and STAYS down — last night's version of this staging had to be cut at f78 because the full take stood him back up. Canon face throughout, no camera pull-back. |
+| b03 | **WARN.** Face holds 105 frames; the body barely moves and the camera drifts. Better than round one, still nearly a still. |
+| b04 | **FAIL, and it is the most useful failure of the night.** The figure rotates ninety degrees until he is lying horizontally across the frame, and stays there. |
+| b10 (twoboards) | **PARTIAL → trimmed.** Two separate boards through f78; between f78 and f86 the teal one is absorbed and they hold one pale board. Cut at 79. |
+
+**WHY b04 TOPPLED, AND THE LAW IT ADDS.** Its carried action reads *"he leans
+out sideways FROM BEHIND THE TRUNK"*. The w4 plate is a single figure standing
+in grass with **no trunk in it**. That is this wave's own first law — name
+nothing the plate does not contain — broken *by the act of carrying*: the
+sentence was written against an older plate that HAD a trunk, and `from behind`
+is POSITIONAL, so it tells the model where the body sits relative to an object
+that is not there. The model resolved the contradiction by rotating the whole
+figure onto its side.
+
+> **CARRYING AN ACTION VERBATIM IS ONLY SAFE WHEN THE PLATE LINEAGE MATCHES.**
+> The filer's stated one variable was "the plate", which is exactly the variable
+> that invalidates a positional clause.
+
+An audit of all thirteen emitted actions for object names: b02 (`sapling`,
+`stem`), b03 (`stem`), b04 (`trunk`), b07 (`fig`, `guard`), b20 (`fig`,
+`fruit`, `branch`); the other eight name nothing. **Naming is not automatically
+fatal** — b02 passed with `sapling` in it, because a stalk did appear and the
+action is not positional relative to it. b07's `guard` is deliberate and
+recorded: that beat came back empty twice for NOT placing him. b04 was the one
+whose clause was positional, and b20 is the one to watch when it lands.
+
+b04 is re-authored to the same three beats of movement — out, look, back — with
+no object in it, plus an explicit `HIS FEET STAY PLANTED … he never tips over`,
+and is re-queued.
