@@ -2561,6 +2561,34 @@ beats:
       no child, no armor, no helmet, no knight, no clipboard, no white
       background, no plain background, no dark, no night. No photorealism, no
       3D render look. 9:16 vertical, no text.
+    # -- `authored_b05_guards_f_0822` -- 2026-08-22, night iteration lane.
+    # BEAT 05's STANDING FAULT, in its own words: "Neither guard wears the sash
+    # you froze for the cast -- the clip contradicts a ruling that is already
+    # final." Both sashes are asserted here, positively, in one clause that
+    # covers both men.
+    #
+    # THE LEFT MAN IS GUARD 1 AS RATIFIED (dark cropped hair, round wire-rim
+    # glasses). THE RIGHT MAN IS GUARD 2 AND HE IS NOT CAST -- this draft picks
+    # cell F of the round-2 casting sheet (grey-streaked hair, thick moustache,
+    # jowly face) and everything drawn from it is PROVISIONAL pending the
+    # founder's letter. F rather than B or J on tonight's b07 finding: a thick
+    # grey moustache is the one feature in the sentence that the other man
+    # cannot also have, and the measured mechanism is that a term with no
+    # competitor binds while a term with one duplicates.
+    #
+    # BOTH MEN ARE PLACED -- "left" and "right" -- because beat 07 came back
+    # with no guard at all twice for describing a figure without placing him.
+    #
+    # 77 positive / 61 negative CLIP tokens, counted before writing.
+    authored_b05_guards_f_0822: >-
+      Two grown guard men stand side by side in tall green grass, hedgerow
+      behind, pale sky above, looking out over an empty field. The left man
+      has dark cropped hair and round wire-rim glasses. The right man has a
+      thick grey moustache and a jowly face. Both wear white shoulder sashes,
+      cinematic lighting, masterpiece, best quality, very aesthetic No girl,
+      no child, no goblin, no green skin, no pointed ears, no armor, no
+      helmet, no third man, no crowd, no white background, no dark, no night.
+      No photorealism, no 3D render look. 9:16 vertical, no text.
   6:
     slug: the-clipboard
     kind: guard
