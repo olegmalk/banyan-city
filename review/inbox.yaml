@@ -2190,3 +2190,29 @@
     SURVIVE and sharpen - enormous ears and a broken tusk are creature features, both in the
     original script line, both lost on the way to the man-read. train-jerry-0820 is HELD until
     the set is re-curated for tile fidelity, so nothing is waiting on an answer.'
+- what: 'GUARD CASTING - 12 candidates, pick two. You ruled the existing guard references "not the
+    best... some have girls, and theyre just improper", and on 08-20 you said what you want: "they
+    should look like grown men. yes. dumb grown men". Five 0812 rounds never asked you that question -
+    they repaired wording against a cast nobody had drawn to a brief. So this is the route you chose:
+    a generated sheet. Same pose, same wardrobe, same recipe in all twelve; only hair, build and face
+    change. Your pick becomes the guards'' reference image, which is exactly what the goblin got on
+    08-21 and what the guards have never had.'
+  url: /review/ep2-guardcast-0822
+  group: taste
+  since: '2026-08-22'
+  kind: decision
+  episode: 2
+  verdict_hint: 'guardcast <letter>, or guardcast <letter>+<letter> for guard 1 + guard 2. "none of
+    them, because X" is also an answer and X is the next round''s one variable.'
+  note_for_lanes: 'The guard-casting lane, 2026-08-22. NOT BLOCKING THE SHIP - review/ep2-ship-0821 is
+    untouched and no beat plate, motion spec or clip is conditioned on any of these frames until he
+    picks. Recipe: pipeline/derive_guardcast_0822.py and the twelve pipeline/jobs/ep2-guardcast-*-0822
+    specs. It is the ratified k6a-era still stack with the IP-Adapter and every goblin term removed -
+    there is no guard reference to condition on, and making one is what the sheet is for. The two
+    instruments answering "some have girls": gender asserted POSITIVELY in the first six tokens
+    (1boy, solo, mature male) rather than only negated, and adult head-to-body carried by GEOMETRY -
+    the 5.2-head openpose skeleton at scale 1.0 - because every 0812 round already carried `child` in
+    its negative and still produced children. Wardrobe (cream shirt, white sash, brown wrap) is held
+    constant from the 08-16 ratified sheet and is NOT re-opened by this card: a pick here is a face
+    and a build, not a new costume ruling. Frames that read girl or child were dropped at 1:1 before
+    the page was built and are named on it.'
