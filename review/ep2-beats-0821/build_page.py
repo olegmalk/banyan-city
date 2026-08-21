@@ -107,15 +107,26 @@ BEATS = {
             "the word and it changes, but that is a script change and it is yours. "
             "THE SHAPE IS A REAL DEFECT AND ITS CAUSE WAS IN THE PROMPT: the instruction under this clip "
             "literally says the nub \"swells, darkens and ROUNDS into a single deep purple fig\", and nothing "
-            "in it or its ban list ever said what a fig looks like. A re-render is running with the "
-            "silhouette written out — teardrop, heavy at the bottom, necked at the top where it meets the "
-            "branch — and ball, sphere, berry and lollipop banned. "
+            "in it or its ban list ever said what a fig looks like. It has now been said, and the clip "
+            "below is the result — it took two rounds, and the first one is not shown to you because it "
+            "was my mistake rather than a finding: rewriting the prompt to describe the silhouette "
+            "dropped the words \"deep purple\" out of it and the fig ripened teal. "
+            "IF THE ONE FAULT LEFT IN IT BOTHERS YOU, the next lever is not more words — it is drawing "
+            "the fig-shaped bud into the picture instead of the round blob the tool draws today, which is "
+            "the same thing that had to be done for this fruit's COLOUR back in August when words would "
+            "not carry it either. "
             "Separately: a composite that fixed two of the three failing colour bands was swapped in on "
             "08-20 and you ruled it back out on 08-21. This is the take you kept, and that decision is "
             "closed unless you reopen it."),
         faults_from="ship-manifest.yaml beat 1 (the row for the take this one replaced) + verdict_chromaticity_rung_0820",
-        inflight="Round 1 of that re-render came back and is NOT being offered to you, for two reasons and one of them was my mistake: rewriting the prompt to describe the silhouette dropped the words \"deep purple\" out of it, so the fig ripened TEAL — and the shape came back lumpy with two little stalks growing out of the top, because banning \"sphere\" read as a ban on roundness generally. A fig is round; the thing to ban is the lollipop. Round 2 (ep2-b01-figshape-r2-0822) is on the box now with the colour words restored and only the ball-on-a-stick reading banned. If wording will not carry the shape in two rounds, the next lever is drawing the fig-shaped nub into the plate instead of the ellipse the tool draws today — the same way the fruit's COLOUR had to be made structural in August when words failed on it.",
-        candidates=[],
+        candidates=[
+            dict(file=f"{CAND_URL}/01-cold-open-LTX-figshape-r2-0822.mp4",
+                 poster=f"{POSTER_URL}/01-cold-open-LTX-figshape-r2-0822.jpg",
+                 label="THE FIG, RE-SHAPED — tonight, newest", tag="warn",
+                 verdict="The stick is gone. It is no longer a ball with a pin in the top: the fruit is a leaning teardrop, heavier at the bottom, and it meets the branch directly with nothing standing clear above it. It still ripens green to purple, which is the script. THE NEW FAULT, and it is yours to price: a pale green crescent sits on its upper shoulder for the whole second half — it reads either as an unripe patch or as a bite taken out of it, depending on the frame. It is one fruit, not two, and it is not a highlight.",
+                 diff="Wording only — same plate, same recipe, same everything as the take in the cut. One clause describing the silhouette, and the lollipop reading banned. Round 1 of this is not shown: describing the shape accidentally dropped the words \"deep purple\" out of the prompt and the fig ripened teal. That was my error, not a finding.",
+                 src="pipeline/jobs/ep2-b01-figshape-r2-0822.yaml"),
+        ],
     ),
     2: dict(
         goblin=True,
