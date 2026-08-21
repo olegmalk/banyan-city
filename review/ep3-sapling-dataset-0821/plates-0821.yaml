@@ -197,3 +197,51 @@ what_this_licensed_and_what_happened: >-
   frames at farm-out/ep3-saplora-frames-0821/, contact sheet
   CONTACT-dataset-0821.png beside this file. STILL NOTHING TRAINED, and
   DECISIONS.md item 18 is still open.
+
+# ---------------------------------------------------------------------------
+# ROUND 5, FILED 2026-08-21. Not a recipe round -- rounds 1-4 settled the
+# recipe and this one SPENDS it, on the axis v1's own manifest is capped by.
+
+round_5_why: >-
+  v1 is 26 frames over ELEVEN scenes and the gate is VARIETY, not count. Read
+  the eleven lightings the captions actually carry -- flat daylight, sunset
+  backlight, dawn mist, heavy overcast, alpine midday, forest dapple, even
+  daylight, pale dawn, strong backlight, hard midday sun, bright daylight.
+  Every one of them is DAY, and the set has no water in it anywhere. A subject
+  LoRA whose every frame shares a time of day learns the time of day into the
+  trigger, which is the same defect as the shared backdrop this file was
+  written to kill, one axis over. The leaf-count cap the manifest names out
+  loud is NOT attacked here: it needs a tool that can draw three, five and six
+  leaves and that tool still does not exist.
+
+round_5_filed: >-
+  ep3-sapfld5-v01..v14-0821, derived by pipeline/derive_sapling_field_r5_0821.py
+  from the round-4 CONTROL (u01) so the recipe is inherited byte for byte --
+  quality prefix, `no humans`, `wide shot` with NO `low angle`, the negative,
+  the checkpoint, size, steps, cfg, staging and the nocontrol arm at 0.45. The
+  one variable is the scene-and-lighting clause; every cell names something FAR
+  AWAY (round 2's lever) and keeps a GREEN ground (D5, which is what dropped
+  u05). New lighting: dusk, night/moonlight, storm shaft, golden hour, rain,
+  after-rain, heat haze, cold winter light, alpenglow. New scenes: lake, creek
+  (r06's cell, which passed in round 2 and never made it into v1), sea
+  clifftop, ridge above fog, riverbank.
+
+round_5_failure_predicted_in_advance: >-
+  FIRST, THE EXPECTED ONE: the dark cells come back GREEN-STARVED. v02 (night)
+  and v03 (storm) ask for greens that survive a blue or near-black key, and
+  u05 already proved the consequence -- no green-dominant pixel in the lower
+  half and beat16_sapling_composite REFUSES the plate. If they fail they fail
+  at step 2, not at the eye, and the dark end comes from v01/v12 instead.
+  SECOND: the water cells (v06, v07, v11) put a horizontal band where the
+  rootable strip should be -- the same failure shape round 3 pre-registered for
+  treelines, which is why the words say `green banks` first.
+  THIRD: `golden hour`, `alpenglow` and `hazy heat` are painter's words, not
+  objects, and this checkpoint may return the same clear-day plate for all
+  three. A lighting word that does nothing is worth knowing before v2 curation
+  counts on it.
+
+round_5_consumer: >-
+  V2 CURATION of pipeline/lora/manifest-sapling.yaml, via step 2
+  (beat16_sapling_composite.py) and step 3 (the 0.30 inpaint,
+  derive_sapling_lora_naturalize_0821.py). No cut, no beat, no promotion,
+  $0 on otherwise-idle card, and DECISIONS.md item 18 is still open.
