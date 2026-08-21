@@ -144,18 +144,21 @@ SCENES = {
     # the tan macro grass did not come back. w01 (dusk, grey key) REFUSED at
     # this tool with ZERO green-dominant pixels and w04 (cold light, no season
     # word) came back a snowfield; both are judged in plates-0821.yaml.
+    # THE SCENE AND LIGHT STRINGS ARE A CLIP BUDGET, NOT PROSE. Step 3 builds
+    # its prompt out of them and assert_under_clip77 REFUSED the first draft of
+    # both of these -- w03 at 80 and w02 at 81 against 77 -- before a spec was
+    # written. `cool blue key` and `a tall ... beyond` came off w03,
+    # `low sun behind thin cloud` and `distant hills` off w02, because the
+    # picture already says them and the sun disc is in the scene clause.
     "w03": dict(plate="ep3-sapfld6-w03-0821.png",
-                scene="a green meadow at night, distant hills, a tall moonlit "
-                      "cumulus beyond",
-                light="moonlight through broken cloud, patches of shadow, cool "
-                      "blue key",
+                scene="a green meadow at night, distant hills, a moonlit "
+                      "cumulus",
+                light="moonlight through broken cloud, patches of shadow",
                 ground="the open emerald plane from y~880, the cleanest in the "
                        "set -- no rock, no puddle, no wedge"),
     "w02": dict(plate="ep3-sapfld6-w02-0821.png",
-                scene="rolling green downland, a low sun on the horizon, "
-                      "distant hills",
-                light="low sun behind thin cloud, warm diffuse backlight, lit "
-                      "blade tips against shadowed slopes",
+                scene="rolling green downland, a low sun on the horizon",
+                light="warm diffuse backlight, lit blade tips, shadowed slopes",
                 ground="the lit crest from y~940. THE WHOLE FOREGROUND IS A "
                        "BLADED SWARD -- the small tier would be swallowed by "
                        "it, so this plate carries m/l/xl only"),
