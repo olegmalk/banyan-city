@@ -572,7 +572,46 @@ def newest_finish(jobs: list) -> str | None:
     return max(stamps) if stamps else None
 
 
-def freshness_html(jobs: list, now: datetime.datetime = None) -> str:
+def rebuild_note(measured_at: str | None, now: datetime.datetime) -> str:
+    """One sentence separating "the loop stopped" from "the box was quiet".
+
+    A four-hour fuse is short enough that a genuinely idle night will trip it,
+    and on such a night a banner asserting "renders continue on the box" is
+    simply false — which is how a red banner becomes wallpaper. But the page
+    can tell the two apart WITHOUT guessing, because the ledger records when it
+    was last rebuilt: an old newest-row under a ledger rebuilt minutes ago means
+    the box published nothing, and an old newest-row under an old rebuild means
+    the refresh is what died.
+
+    THIS DOES NOT DECIDE STALENESS — `freshness_html` still reads that off the
+    rows alone, and it must. On 2026-08-20 `measured_at` was one minute old
+    while the page was four days behind, because a human ran the generator
+    without fetching; anything that let a fresh `measured_at` buy freshness
+    would re-open exactly that. It annotates the verdict; it cannot overturn it.
+    And for the same reason it reports the REBUILD TIME as a fact and does not
+    conclude "the box was quiet" from it — that is the inference 08-20
+    falsified. It narrows the question; the reader closes it.
+    """
+    dt = parse_iso(measured_at)
+    if dt is None:
+        return ('<span class="qfresh-fix">This page does not record when its '
+                'ledger was last rebuilt, so it cannot narrow down which of '
+                'the two stopped.</span>')
+    gap = (now - dt).total_seconds()
+    if gap < FEED_STALE_HOURS * 3600:
+        return (f'<span class="qfresh-fix">The ledger itself was rebuilt '
+                f'<b>{_e(age_words(gap))}</b>, so the hourly refresh is alive '
+                f'and this gap is on the far side of it: either nothing '
+                f'finished on the box, or something did and was not published '
+                f'to the branch. An idle box is its own alarm — a runnable job '
+                f'should never be waiting on one.</span>')
+    return (f'<span class="qfresh-fix">And the ledger has not been rebuilt '
+            f'since <b>{_e(age_words(gap))}</b>, so the hourly refresh is what '
+            f'stopped: this is the page, not the box.</span>')
+
+
+def freshness_html(jobs: list, now: datetime.datetime = None,
+                   measured_at: str = None) -> str:
     """The line above the gallery that says how current the gallery is.
 
     Three states and no fourth: fresh (a quiet fact), stale (a red banner naming
@@ -616,6 +655,7 @@ def freshness_html(jobs: list, now: datetime.datetime = None) -> str:
         f'<code>{_e(RESULTS_BRANCH)}</code> as it goes, and anything it has run '
         f'since that time exists and is simply not shown here. An empty top row '
         f'on a stale feed is not an idle card.'
+        + rebuild_note(measured_at, now) +
         f'<span class="qfresh-fix">The page is baked from the committed '
         f'<code>pipeline/measured/queue-history.json</code>, refreshed hourly by '
         f'<code>.github/workflows/queue-refresh.yml</code> — past '
@@ -940,7 +980,7 @@ def render(data: dict | None, now: datetime.datetime = None) -> str:
 
     measured = meta.get("measured_at") or "unknown"
     src_commit = str(meta.get("source_commit") or "")[:9]
-    fresh = freshness_html(jobs, now)
+    fresh = freshness_html(jobs, now, meta.get("measured_at"))
 
     stats = (
         '<ul class="qstats">'

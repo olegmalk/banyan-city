@@ -9040,6 +9040,32 @@ def test_the_queue_page_says_so_when_its_own_feed_has_died():
     check("and it names the automation, so the reader looks where it broke",
           "queue-refresh.yml" in five_h)
 
+    # A FOUR-HOUR FUSE WILL FIRE ON A QUIET NIGHT AS WELL AS A BROKEN LOOP, and
+    # a banner that cannot tell those apart is one he learns to ignore. The page
+    # narrows it with a fact it actually holds — when the ledger was last
+    # rebuilt — and states that fact WITHOUT concluding anything about the box,
+    # because "measured_at is fresh, therefore the box was quiet" is precisely
+    # the inference 2026-08-20 falsified.
+    loop_dead = bq.render({"_meta": {"measured_at": "2026-08-18T09:00:00Z"},
+                           "upcoming": [], "jobs": [row]},
+                          datetime.datetime(2026, 8, 20, 13, 0, tzinfo=utc))
+    check("a ledger that has not been rebuilt names the refresh as the fault",
+          "the hourly refresh is what stopped" in loop_dead)
+    box_quiet = bq.render(fresh_meta,
+                          datetime.datetime(2026, 8, 20, 13, 1, tzinfo=utc))
+    check("a ledger rebuilt a minute ago says so, and puts the gap on the far "
+          "side of the refresher instead",
+          "the hourly refresh is alive" in box_quiet)
+    check("...and still does not claim the box was quiet, which is the exact "
+          "inference the 08-20 defect proved wrong",
+          "either nothing finished on the box, or something did and was not "
+          "published" in box_quiet)
+    blind_note = bq.render(data,
+                           datetime.datetime(2026, 8, 20, 13, 0, tzinfo=utc))
+    check("and with no rebuild stamp at all it says it cannot narrow it down, "
+          "rather than picking one",
+          "cannot narrow down which of the two stopped" in blind_note)
+
     three_h = bq.render(data, datetime.datetime(2026, 8, 16, 18, 57, tzinfo=utc))
     check("three hours behind is still a working card and stays quiet",
           "THIS FEED IS STALE" not in three_h)
