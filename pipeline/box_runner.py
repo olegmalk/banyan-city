@@ -168,6 +168,18 @@ COURIER_IDLE_MINUTES = 10
 # the runner emits no beats at all between job_start and job_done, so any render
 # over 45 min already aged out of "live" -- and eight minutes of card time per
 # job, plus two daemon deaths, is the worse of the two.
+#
+# WHY 60 STAYED 60 ON 2026-08-21 (measured, after 48 consecutive timeouts)
+#
+# The obvious reading of "every push exceeds 60 s" is that 60 is too small now.
+# It was not. The clone is single-branch, so a successful push never advanced
+# `refs/remotes/origin/farm-results-rtx5090`, and git packs a push against that
+# ref: frozen two days back, it made every push enumerate 26160 objects over
+# 3335 commits where the real delta was 283 objects / 73 files. Re-pointing the
+# ref took one `git config --add` and one fetch (3.9 s); the push after it
+# finished in 2.4 s. Raising the cap would have hidden a cost that doubles on
+# its own -- the timeouts were the only reason anyone looked. See
+# Courier._ensure_tracking_refspec and Courier._reanchor_if_failing.
 DEFERRED_EVENTS = ("job_start", "runner_up")
 PUSH_TIMEOUT_SECONDS = 60
 # Not in the RC table above: that table is job verdicts, and this number never
@@ -705,6 +717,51 @@ class Courier:
             timeout=timeout,
         )
 
+    def _ensure_tracking_refspec(self) -> None:
+        """Make a successful push ADVANCE `refs/remotes/origin/<branch>`.
+
+        2026-08-21, and this cost the box eight hours of card time: the clone at
+        `self.repo` is single-branch, `remote.origin.fetch =
+        +refs/heads/main:refs/remotes/origin/main`. git only updates a
+        remote-tracking ref after a push when a fetch refspec MAPS that ref, so
+        every `git push -f origin farm-results-rtx5090` left
+        `refs/remotes/origin/farm-results-rtx5090` frozen at whatever
+        `ensure()`'s one explicit fetch set when the worktree was created --
+        two days and 3335 commits earlier.
+
+        That ref is the delta base `git push` packs against. Frozen, it does not
+        describe the remote, it describes the past, and the pack grows by one
+        commit per heartbeat forever: 26160 objects enumerated where the true
+        delta was 283. It fit inside PUSH_TIMEOUT_SECONDS until it did not, and
+        then it fit inside nothing -- 48 consecutive timeouts, ~60 s of dead
+        time bolted onto every job. The pushes were LANDING; the client was
+        killed before it could read the report and write the ref, so each
+        failure made the next pack bigger. A courier that cannot see the remote
+        move cannot stay cheap.
+
+        One `git config --add` is the whole fix. Idempotent, ~5 ms, and it must
+        run even when the worktree already exists -- the machine that hit this
+        had a healthy worktree and a poisoned config.
+        """
+        spec = "+refs/heads/%s:refs/remotes/origin/%s" % (self.branch, self.branch)
+        try:
+            have = self._git("config", "--get-all", "remote.origin.fetch",
+                             cwd=self.repo, timeout=20)
+            if spec in (have.stdout or "").split():
+                return
+            r = self._git("config", "--add", "remote.origin.fetch", spec,
+                          cwd=self.repo, timeout=20)
+            if r.returncode:
+                self.log("courier: could not add fetch refspec: %s"
+                         % (r.stderr or r.stdout or "").strip()[-200:])
+            else:
+                self.log("courier: added fetch refspec for %s -- pushes now "
+                         "advance its tracking ref, so packs stay small"
+                         % self.branch)
+        except Exception as exc:
+            self.log("courier: could not add fetch refspec: %s: %s"
+                     % (type(exc).__name__, exc))
+
     def ensure(self) -> bool:
         """Create the worktree if it is not there yet. Idempotent."""
         if self.ready:
@@ -712,6 +769,9 @@ class Courier:
         if self.disabled_reason:
             return False
         try:
+            # Before anything else, and deliberately ahead of the
+            # worktree-already-there return: see _ensure_tracking_refspec.
+            self._ensure_tracking_refspec()
             if os.path.isdir(os.path.join(self.worktree, ".git")) or \
                os.path.isfile(os.path.join(self.worktree, ".git")):
                 self.ready = True
@@ -792,6 +852,38 @@ class Courier:
                 "push exceeded %ds and its process tree was killed\n%s"
                 % (timeout, out or ""))
 
+    def _reanchor_if_failing(self) -> None:
+        """After repeated failures, re-read where the remote actually is.
+
+        The failure mode this exists for is a spiral, not an outage. A push that
+        times out does not update `refs/remotes/origin/<branch>`, so the next
+        push packs against the same old base PLUS everything the failed one
+        added -- each attempt strictly more expensive than the last, which is
+        how one slow push on 2026-08-20 became 48 and stayed there. A foreign
+        writer on the branch does it too: a lane published a plate crop at
+        23:59Z and the box, which had never seen that commit, could no longer
+        use the remote tip as a delta base at all.
+
+        A fetch of one branch measured 3.9 s against this 4.34 GiB repo -- an
+        order of magnitude under the push cap, and only ever paid on the failure
+        path. Two in a row is the trigger: one failure is usually the network
+        (`ssh: connect to host github.com port 22: Connection timed out`) and
+        re-anchoring will not help it.
+        """
+        if self.unpushed < 2:
+            return
+        try:
+            r = self._git("fetch", "-q", "origin",
+                          "+refs/heads/%s:refs/remotes/origin/%s"
+                          % (self.branch, self.branch),
+                          cwd=self.repo, timeout=PUSH_TIMEOUT_SECONDS)
+            self.log("courier: re-anchored tracking ref after %d failure(s) (rc=%s)"
+                     % (self.unpushed, r.returncode))
+        except Exception as exc:
+            # Never fatal: this is an optimisation for the next push, not the push.
+            self.log("courier: re-anchor fetch failed, pushing anyway: %s: %s"
+                     % (type(exc).__name__, exc))
+
     def _publish(self, message: str) -> None:
         # -- <path>, never a bare commit. This worktree is the courier's alone
         # today, but farm_worker.Courier.mark carries the same scar for the same
@@ -803,6 +895,7 @@ class Courier:
             self.log("!! courier commit failed: %s"
                      % (c.stderr or c.stdout or "").strip()[-300:])
             return
+        self._reanchor_if_failing()
         rc, out = self._push()
         if rc:
             self.unpushed += 1

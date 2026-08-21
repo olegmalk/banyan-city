@@ -7585,3 +7585,80 @@ and the k6a pixels pass T1, T2, T3, P1, P2, P3, P4 and T8 at 1:1 against the
 tile. Swapping canon's vocabulary into that slot is a new rung on a route already
 closed for six wordings — not a tidy-up — and it would move the one variable in
 every frame derived from the standard. If it is ever done, it is done as a rung.
+
+---
+
+## INCIDENT 2026-08-21 — 48 courier pushes in a row died at the 60 s cap, and the cap was not the problem
+
+**Symptom.** From ~00:40Z to 06:57Z every `git push -f origin
+farm-results-rtx5090` from `C:\banyan-farm\courier-box` was killed at
+`PUSH_TIMEOUT_SECONDS`: *"push exceeded 60s and its process tree was killed"*,
+48 consecutive failures in `C:\banyan-queue\runner.log`. Each one bolted ~60 s of
+dead time onto the job it followed, and the `/queue` page's refresher — which
+reads that branch — had nothing new to read.
+
+**What it was NOT.** Not overnight volume, not the site-thumbs force-pushes, not
+k6/jerry PNG batches, not the 4.34 GiB pack making negotiation slow. A fetch of
+that one branch against that same repo measured **3.9 s**. Negotiation was never
+the cost.
+
+**Root cause, measured.** The clone the courier borrows from is **single-branch**:
+
+```
+remote.origin.fetch = +refs/heads/main:refs/remotes/origin/main
+```
+
+git only advances a remote-tracking ref after a push when a fetch refspec *maps*
+that ref. Nothing mapped `farm-results-rtx5090`, so
+`refs/remotes/origin/farm-results-rtx5090` had been frozen at `ce880bef` since
+the day `Courier.ensure()` created the worktree — **3335 commits and two days**
+behind the real tip. That ref is the delta base `git push` packs against, so
+every push re-enumerated the same two days of history:
+
+| | objects | commits |
+|---|---|---|
+| packed against the frozen ref (what actually ran) | **26 160** | 3 335 |
+| the true delta (`HEAD` vs the real remote tip) | **283** | 49 / 73 files |
+
+It fit inside 60 s until it did not, and then it could not recover: **the pushes
+were landing server-side** — the client was killed after sending the pack but
+before reading the report, so the ref never moved and the next pack was one
+commit bigger. A self-feeding spiral, not a network fault. A lane publishing
+`09-the-pause-platecrop-r2s2.png` straight onto the branch at 23:59Z (a
+legitimate push — `box_enqueue --src` reads that branch) removed the last usable
+delta base and is what tipped it over the line the same night.
+
+**Fix — one `git config --add`, no timeout raise, no `git gc`.**
+
+1. Box-side, applied live: added
+   `+refs/heads/farm-results-rtx5090:refs/remotes/origin/farm-results-rtx5090`
+   to `remote.origin.fetch`, then one fetch to re-anchor. **The very next push
+   completed in 2.4 s** and `LOCAL == TRACK == REMOTE`.
+2. `Courier._ensure_tracking_refspec()` in `pipeline/box_runner.py` now sets that
+   refspec itself, idempotently, and **ahead of the worktree-already-exists
+   return** — the box that hit this had a healthy worktree and a poisoned config,
+   so a check that only runs at worktree creation would never have fired.
+3. `Courier._reanchor_if_failing()` fetches the branch before a push once two
+   have failed in a row, which breaks the spiral even if the ref goes stale some
+   other way. Only paid on the failure path; 3.9 s against a 60 s cap.
+
+`PUSH_TIMEOUT_SECONDS` **stays 60**, on purpose: raising it would have hidden a
+cost that doubles on its own, and the timeouts were the only reason anyone
+looked.
+
+**Verified.** Tips match (`41b4845`, local = tracking = remote); runner.log reads
+`courier push recovered after 49 failure(s)` at 06:57:52Z with no failure since
+a single unrelated `ssh: connect to host github.com port 22` blip at 07:00:31Z
+that recovered on its own; per-job latency back to **claim → done in 31–33 s**
+with no 60 s gap between jobs; **96 of today's job records and heartbeats
+through 07:08:23Z are on the pushed branch**, so the queue-history refresher can
+see them. Deployed to `C:\banyan-farm\box_runner.py` by region splice with
+backup `box_runner.py-precourierrefspec` (46 954 → 52 220 bytes, `py_compile`
+clean); the running daemon (pid 8768, holding `runner.lock`) was not restarted
+and was not disturbed — jobs kept claiming and completing throughout.
+
+**On the daytime-decision item — this one is NOT the repo/pack architecture.**
+The 4.34 GiB pack is real and still worth deciding about, but it was a bystander
+here: the same repo pushes in 2.4 s and fetches in 3.9 s. The defect was one
+missing line of git config, and it was invisible for two days because nothing
+measures how far a courier's delta base has drifted from the remote.
