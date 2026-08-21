@@ -3,163 +3,291 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>How young is Jerry? A, B or C</title>
+<title>Is this your goblin? Seven beats against your picture</title>
 <style>
   :root {
     --bg: #17181a; --panel: #1f2124; --line: #33363b;
     --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
-    --pass: #7fd68b; --fail: #e08b8b; --warn: #d8b46a; --new: #8fc4e8;
+    --pass: #7fd68b; --fail: #e08b8b; --new: #8fc4e8;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
   body { margin: 0; background: var(--bg); color: var(--ink);
          font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-         padding: 0 24px 96px; }
+         padding: 0 20px 96px; }
   .wrap { max-width: 1020px; margin: 0 auto; }
-  header.top { padding: 40px 0 20px; border-bottom: 1px solid var(--line); }
-  header.top h1 { margin: 0 0 6px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
-  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 78ch; }
-  h2 { font-size: 18px; margin: 40px 0 6px; font-weight: 650; }
-  h3 { font-size: 16px; margin: 26px 0 4px; font-weight: 650; }
-  p { max-width: 78ch; }
+  header.top { padding: 36px 0 18px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 8px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 74ch; }
+  h2 { font-size: 18px; margin: 42px 0 6px; font-weight: 650; }
+  p { max-width: 74ch; }
   p.sub { color: var(--muted); font-size: 14.5px; }
+  .stamp { display: inline-block; margin: 18px 0 4px; padding: 3px 9px; border-radius: 3px;
+           background: #3a2a2a; border: 1px solid #6b4141; color: #f0c9c9;
+           font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; }
   .callout { margin: 22px 0 0; padding: 16px 20px; background: var(--panel);
              border: 1px solid var(--line); border-left: 3px solid var(--accent);
              border-radius: 5px; }
   .callout p { margin: 0 0 10px; } .callout p:last-child { margin-bottom: 0; }
-  blockquote { margin: 0 0 16px; padding: 6px 0 6px 16px;
-               border-left: 3px solid var(--line); color: #cdd2d8; }
-  img { width: 100%; height: auto; border: 1px solid var(--line);
-        border-radius: 5px; display: block; margin: 14px 0 6px; background: #000; }
-  figcaption { color: var(--muted); font-size: 13.5px; }
-  .opts { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 8px; }
-  .opts figure { margin: 0; flex: 1 1 280px; min-width: 260px; }
-  .opts .k { display: inline-block; padding: 2px 10px; border-radius: 3px;
-             background: #2b3440; border: 1px solid #47576b; color: var(--new);
-             font-weight: 700; font-size: 15px; letter-spacing: .03em; }
-  .anch { display: flex; flex-wrap: wrap; gap: 18px; }
-  .anch figure { margin: 0; flex: 1 1 240px; min-width: 220px; }
+  .q { font-size: 19px; line-height: 1.5; }
+  img, video { width: 100%; height: auto; border: 1px solid var(--line);
+               border-radius: 5px; display: block; background: #000; }
+  figure { margin: 0; }
+  figcaption { color: var(--muted); font-size: 13.5px; margin-top: 6px; }
+  .ref { display: flex; gap: 22px; flex-wrap: wrap; align-items: flex-start; margin-top: 16px; }
+  .ref figure { flex: 0 1 320px; min-width: 220px; }
+  .ref .words { flex: 1 1 320px; min-width: 260px; }
+  blockquote { margin: 0 0 14px; padding: 6px 0 6px 16px;
+               border-left: 3px solid var(--accent); color: #dfe3e8; font-size: 17px; }
+  .beat { margin: 26px 0 0; padding: 16px 18px; background: var(--panel);
+          border: 1px solid var(--line); border-radius: 6px; }
+  .beat.pass { border-left: 3px solid var(--pass); }
+  .beat.fail { border-left: 3px solid var(--fail); }
+  .bhead { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .bhead .n { font-weight: 700; font-size: 16.5px; letter-spacing: .02em; }
+  .chip { padding: 2px 9px; border-radius: 3px; font-size: 12.5px; font-weight: 700;
+          letter-spacing: .04em; }
+  .chip.pass { background: #223326; border: 1px solid #3f6b46; color: var(--pass); }
+  .chip.fail { background: #332222; border: 1px solid #6b4141; color: var(--fail); }
+  .line { color: var(--muted); font-size: 14px; margin: 6px 0 12px; max-width: 74ch; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .pair img, .pair video { aspect-ratio: 2 / 3; object-fit: contain; }
+  .pair figcaption { font-size: 12.5px; }
+  .verdict { margin: 12px 0 0; font-size: 15px; max-width: 74ch; }
+  .fix { margin: 10px 0 0; font-size: 14px; color: #d3d8de;
+         border-top: 1px dashed var(--line); padding-top: 10px; max-width: 74ch; }
+  .fix b { color: var(--new); }
+  ul { max-width: 74ch; padding-left: 20px; }
+  li { margin: 6px 0; }
   code { font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
          background: #26282c; padding: 1px 5px; border-radius: 3px; }
-  .stamp { display: inline-block; margin: 0 0 4px; padding: 3px 9px; border-radius: 3px;
-           background: #3a2a2a; border: 1px solid #6b4141; color: #f0c9c9;
-           font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; }
-  ul { max-width: 78ch; }
-  li { margin: 5px 0; }
-  footer { margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--line);
-           color: var(--muted); font-size: 13.5px; }
   a { color: var(--new); }
-  .q { font-size: 19px; line-height: 1.5; }
-  table { border-collapse: collapse; margin: 14px 0; font-size: 14.5px; }
-  th, td { border: 1px solid var(--line); padding: 6px 11px; text-align: left; }
-  th { background: var(--panel); }
+  footer { margin-top: 52px; padding-top: 18px; border-top: 1px solid var(--line);
+           color: var(--muted); font-size: 13.5px; }
+  @media (max-width: 560px) {
+    h2 { margin-top: 34px; }
+    .pair { gap: 10px; }
+    body { padding: 0 14px 72px; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
 <header class="top">
-  <h1>How young is Jerry? Pick A, B or C</h1>
-  <p class="sub">Your ruling this morning superseded tile B on the age axis. This is that ruling
-  rendered three ways, on the same creature, from the same recipe, with one number changed.
-  $0 &mdash; nine samples on the idle card, about six minutes.</p>
+  <h1>Is this your goblin?</h1>
+  <p class="sub">Your picture, then the seven beats we redrew from it this evening &mdash; each one as a
+  still and as the 4.4-second clip made from that still. Three work, four do not, and the four all
+  break the same way. One question at the bottom. $0, all of it on the local card.</p>
 </header>
 
-<p class="stamp">PRIVATE REVIEW PAGE &middot; A TASTE CALL (R4) &middot; EVERY ADULT-DESIGN JOB IS ALREADY HELD</p>
+<p class="stamp">PRIVATE REVIEW PAGE &middot; NOTHING HERE IS IN THE EPISODE &middot; THE CUT IS UNTOUCHED</p>
 
+<h2>1. Your picture &mdash; the reference everything below is measured against</h2>
+<div class="ref">
+  <figure>
+    <img src="/review/ep2-goblin-age-0821/FOUNDER-goblin-0821.jpg"
+         alt="The founder's goblin reference image">
+    <figcaption>Given today at 16:54. Now <code>taste/refs/goblin-canon-founder-0821.png</code>,
+    and the canon in <code>pipeline/canon.yaml</code>.</figcaption>
+  </figure>
+  <div class="words">
+    <blockquote>&ldquo;dude, this is how the goblin should look&rdquo;</blockquote>
+    <p>That picture replaced the old adult design on every axis it shows &mdash; ears, eyes, height,
+    skin, clothes. No tusk, no patchwork cloak; those belonged to the design it replaced. Everything
+    made before 16:54 is the wrong character, kept as evidence and not used.</p>
+    <p class="sub">Seven beats were redrawn against it, then handed to the motion model. That is
+    what the rest of this page is.</p>
+  </div>
+</div>
+
+<h2>2. The seven heads next to yours</h2>
+<img src="/review/ep2-goblin-age-0821/HEADS-strip.jpg"
+     alt="Head crops: the founder reference next to the seven beat plates">
+<figcaption>Same crop on all eight. Top left is yours.</figcaption>
+<p class="fix" style="margin-top:14px"><b>The one difference I can see without being asked:</b>
+the eyes. Yours are narrow and half-lidded, with a small pale slit and a heavy brow. All seven of
+ours came back with big round anime eyes and a pale green iris. The ears are bigger and more elvish
+than yours too. Everything else &mdash; bald dome, green skin, mandarin collar, dark shorts, boots
+&mdash; matches. If the eyes are wrong, say so and it is a one-line change to the recipe, not a
+re-render of the design.</p>
+<img style="margin-top:16px" src="/review/ep2-goblin-age-0821/EYES-strip.jpg"
+     alt="Eye comparison: the founder reference, the beat 07 plate, and the e1 round">
+<figcaption>Close up, same crop. Middle is the plate the beat 07 clip below was made from &mdash;
+green iris, big and round. Right is a round we already have from earlier today with the iris taken
+out, which is nearer your off-white eye but still a bigger, rounder eye than yours. So the colour
+lever works; the size and the lids would be the second change.</figcaption>
+
+<h2>3. The seven beats: still, then the clip made from it</h2>
+<p class="sub">Left is the drawn plate. Right is the clip &mdash; 704&times;1280, 105 frames, 4.4
+seconds, no sound. Tap to play. Verdicts are mine and you can overrule any of them.</p>
+
+<div class="beat fail">
+  <div class="bhead"><span class="n">BEAT 02 &mdash; THE SPRINT</span><span class="chip fail">FAIL</span></div>
+  <p class="line">He sprints in, skids, and dives behind the sapling's thin trunk. The most
+  frightened he is in the episode.</p>
+  <div class="pair">
+    <figure><img src="/review/ep2-goblin-age-0821/PLATE-b02.jpg" alt="Beat 02 plate">
+      <figcaption>the plate</figcaption></figure>
+    <figure><video controls playsinline preload="metadata"
+        poster="/review/ep2-goblin-age-0821/POSTER-b02.jpg"
+        src="/review/ep2-goblin-age-0821/MOTION-b02.mp4"></video>
+      <figcaption>the clip</figcaption></figure>
+  </div>
+  <p class="verdict">The camera pulls back until he is a speck at the bottom right of a wide shot,
+  and a big bare tree that is in no plate grows to fill the frame. No sprint, no skid, no dive. His
+  face stays drawn the whole time &mdash; this is a staging failure, not a character one. (The small
+  creature at his boots is a known fault in this plate, already logged.)</p>
+</div>
+
+<div class="beat fail">
+  <div class="bhead"><span class="n">BEAT 03 &mdash; BAD COVER</span><span class="chip fail">FAIL</span></div>
+  <p class="line">He crouches behind a trunk that hides about one-sixth of him, and believes it is
+  working.</p>
+  <div class="pair">
+    <figure><img src="/review/ep2-goblin-age-0821/PLATE-b03.jpg" alt="Beat 03 plate">
+      <figcaption>the plate</figcaption></figure>
+    <figure><video controls playsinline preload="metadata"
+        poster="/review/ep2-goblin-age-0821/POSTER-b03.jpg"
+        src="/review/ep2-goblin-age-0821/MOTION-b03.mp4"></video>
+      <figcaption>the clip</figcaption></figure>
+  </div>
+  <p class="verdict">A curved horn or topknot grows out of his bald head about two-thirds through and
+  stays. The camera drifts back and he shrinks by half. There is no trunk anywhere in frame, so the
+  joke &mdash; bad cover &mdash; never happens. The face itself never dissolves.</p>
+</div>
+
+<div class="beat pass">
+  <div class="bhead"><span class="n">BEAT 04 &mdash; THE FOOTNOTE</span><span class="chip pass">PASS</span></div>
+  <p class="line">He leans out to look, and pulls straight back the moment he has looked. Your own
+  restaging pick from yesterday.</p>
+  <div class="pair">
+    <figure><img src="/review/ep2-goblin-age-0821/PLATE-b04.jpg" alt="Beat 04 plate">
+      <figcaption>the plate</figcaption></figure>
+    <figure><video controls playsinline preload="metadata"
+        poster="/review/ep2-goblin-age-0821/POSTER-b04.jpg"
+        src="/review/ep2-goblin-age-0821/MOTION-b04.mp4"></video>
+      <figcaption>the clip</figcaption></figure>
+  </div>
+  <p class="verdict">The best clip in the set. There is a real lean out and a real pull back, and
+  both land inside the cut &mdash; the motion two rounds of drawing failed to get. The frame holds
+  still. What it is not is a peek: with no trunk in shot there is nothing to lean out from, so it
+  reads as a stumble and recover.</p>
+</div>
+
+<div class="beat fail">
+  <div class="bhead"><span class="n">BEAT 07 &mdash; CONFISCATE</span><span class="chip fail">FAIL</span></div>
+  <p class="line">Guard 1 points at him, decisive. He has just been identified.</p>
+  <div class="pair">
+    <figure><img src="/review/ep2-goblin-age-0821/PLATE-b07.jpg" alt="Beat 07 plate">
+      <figcaption>the plate</figcaption></figure>
+    <figure><video controls playsinline preload="metadata"
+        poster="/review/ep2-goblin-age-0821/POSTER-b07.jpg"
+        src="/review/ep2-goblin-age-0821/MOTION-b07.mp4"></video>
+      <figcaption>the clip</figcaption></figure>
+  </div>
+  <p class="verdict">The guard finally shows up &mdash; armoured, helmeted, an adult, which is what
+  you ruled &mdash; and the camera pulls back to fit him in. Then the goblin walks out of frame, so
+  the last second is a guard pointing at empty grass. The beat is a guard pointing at <em>him</em>,
+  so it fails even though the hard part worked.</p>
+</div>
+
+<div class="beat pass">
+  <div class="bhead"><span class="n">BEAT 08 &mdash; INSIDE HIM</span><span class="chip pass">PASS</span></div>
+  <p class="line">Guard 2 points at his belly. He is caught, and the thing he is caught with is
+  already eaten.</p>
+  <div class="pair">
+    <figure><img src="/review/ep2-goblin-age-0821/PLATE-b08.jpg" alt="Beat 08 plate">
+      <figcaption>the plate</figcaption></figure>
+    <figure><video controls playsinline preload="metadata"
+        poster="/review/ep2-goblin-age-0821/POSTER-b08.jpg"
+        src="/review/ep2-goblin-age-0821/MOTION-b08.mp4"></video>
+      <figcaption>the clip</figcaption></figure>
+  </div>
+  <p class="verdict">Clean on everything I score: face drawn in every frame, clothes hold, frame
+  locked, and the look-down lands early. The cost is a taste call and it is yours: from about
+  halfway, over half the clip is the top of his bowed head, so his face is small for most of it.</p>
+</div>
+
+<div class="beat pass">
+  <div class="bhead"><span class="n">BEAT 13 &mdash; THE SHADE</span><span class="chip pass">PASS</span></div>
+  <p class="line">His legs give out, he sits, and tips his head into the sapling's hand-sized patch
+  of shade. &ldquo;...Thanks for the shade.&rdquo;</p>
+  <div class="pair">
+    <figure><img src="/review/ep2-goblin-age-0821/PLATE-b13.jpg" alt="Beat 13 plate">
+      <figcaption>the plate</figcaption></figure>
+    <figure><video controls playsinline preload="metadata"
+        poster="/review/ep2-goblin-age-0821/POSTER-b13.jpg"
+        src="/review/ep2-goblin-age-0821/MOTION-b13.mp4"></video>
+      <figcaption>the clip</figcaption></figure>
+  </div>
+  <p class="verdict">Face holds to the last frame, where the previous version of this beat lost it
+  halfway. Frame locked, clothes hold. Two soft spots: the head-tip finishes just after the cut
+  point, so in the episode it reads as begun rather than done; and his eyes close early, so the
+  canon eye &mdash; the whole point of your picture &mdash; is only readable for the first two
+  seconds.</p>
+</div>
+
+<div class="beat fail">
+  <div class="bhead"><span class="n">BEAT 20 &mdash; EVIDENCE</span><span class="chip fail">FAIL</span></div>
+  <p class="line">He picks the fig up with both hands and looks from it to the sapling's thinnest
+  branch. &ldquo;...Did you just ANSWER me?&rdquo; The episode's turn.</p>
+  <div class="pair">
+    <figure><img src="/review/ep2-goblin-age-0821/PLATE-b20.jpg" alt="Beat 20 plate">
+      <figcaption>the plate</figcaption></figure>
+    <figure><video controls playsinline preload="metadata"
+        poster="/review/ep2-goblin-age-0821/POSTER-b20.jpg"
+        src="/review/ep2-goblin-age-0821/MOTION-b20.mp4"></video>
+      <figcaption>the clip</figcaption></figure>
+  </div>
+  <p class="verdict">He never looks up, and the look up is the beat &mdash; the same failure as the
+  take this was meant to replace. The pose barely changes at all, so it is close to a still with a
+  runtime. His face is arguably the cleanest in the set. The fig is yellow-green; canon says purple,
+  and that came in with the plate, not the motion.</p>
+</div>
+
+<h2>4. Why the four failed, and what is already running</h2>
 <div class="callout">
-  <p class="q"><strong>THE QUESTION.</strong> Three age reads, all of them younger than the tile,
-  none of them the killed round-chibi design. <strong>Which one is Jerry &mdash; A, B or C?</strong></p>
-  <p class="sub">One letter is enough. If none of them is right, "younger than C" or "between A and B"
-  is just as usable and costs another six minutes.</p>
+  <p><strong>All four failures name something the drawing does not contain.</strong> Beats 02 and 03
+  say &ldquo;the thin sapling trunk&rdquo;, 20 says &ldquo;the branch&rdquo;, 07 says
+  &ldquo;the guard&rdquo; &mdash; and none of those is in the still the clip starts from. In every
+  one of the four the camera pulled back, and in beat 02 the model went ahead and built the tree.
+  Handed a word for something it cannot see, this model rebuilds the shot to make room for it.</p>
+  <p>Beat 04 is the control: its plate is missing the trunk too, but its instructions never name it
+  &mdash; and beat 04 is the one that held still. So it is <em>naming</em> the absent thing that
+  moves the camera, not missing it. The fix is the picture, not the wording.</p>
 </div>
-
-<h2>What you said</h2>
-<blockquote>Younger, not chibi &mdash; a kid/teen goblin, younger read than tile B, but NOT the
-killed round-chibi design.</blockquote>
-<p>Recorded in <code>canon.yaml</code> as superseding tile B <strong>on the age axis and on nothing
-else</strong>. Every creature attribute below is still the tile's and was not on the table: blank
-white eyes with no pupil, no nose bridge, the short low swept-back ears, bald dome, green skin,
-patchwork cloak.</p>
-
-<h2>The three options</h2>
-<div class="opts">
-  <figure>
-    <span class="k">A</span> <strong>&mdash; the teen</strong>
-    <img src="/review/ep2-goblin-age-0821/A-h215-teen.png" alt="Option A, teen read, 4.65 heads">
-    <figcaption><strong>4.65 heads.</strong> Reads as an adolescent: the head is bigger than the
-    tile's but the body is still long. Closest to the tile, so the least disruptive to the shots
-    already made.</figcaption>
-  </figure>
-  <figure>
-    <span class="k">B</span> <strong>&mdash; the kid</strong>
-    <img src="/review/ep2-goblin-age-0821/B-h240-kid.png" alt="Option B, kid read, 4.17 heads">
-    <figcaption><strong>4.17 heads.</strong> Clearly a child, still slim &mdash; no belly, no squat
-    stance. This is the middle of the ladder and the most literal reading of "a kid/teen
-    goblin".</figcaption>
-  </figure>
-  <figure>
-    <span class="k">C</span> <strong>&mdash; the youngest</strong>
-    <img src="/review/ep2-goblin-age-0821/C-h265-youngest.png" alt="Option C, youngest read, 3.77 heads">
-    <figcaption><strong>3.77 heads.</strong> Built as the far end &mdash; the rung expected to break
-    your floor. <strong>It did not.</strong> Big head, but still a slim upright figure, not the round
-    mascot.</figcaption>
-  </figure>
-</div>
-
-<h2>The two anchors &mdash; what you are moving away from</h2>
-<div class="anch">
-  <figure>
-    <img src="/review/ep2-goblin-age-0821/ANCHOR-tile-b.jpg" alt="Tile B, the adult reference">
-    <figcaption><strong>TILE B</strong> &mdash; 5.26 heads. The reference until this morning. Still
-    the reference for every attribute except age.</figcaption>
-  </figure>
-  <figure>
-    <img src="/review/ep2-goblin-age-0821/ANCHOR-k6a-adult.png" alt="k6a, the adult wave frame">
-    <figcaption><strong>k6a</strong> &mdash; the same recipe at the adult proportion, and the frame
-    the seven patch-wave beats were drawn from this morning. This is what A/B/C replace.</figcaption>
-  </figure>
-</div>
-
-<h2>What changed between them, and what did not</h2>
-<table>
-  <tr><th>Held identical</th><th>Moved</th></tr>
-  <tr>
-    <td>the face adapter and its reference crop &middot; the mask &middot; the pose skeleton's
-        stance &middot; the openpose net at 1.0 &middot; the seed &middot; every creature word</td>
-    <td><strong>head-to-body</strong> (the skeleton's head fraction) and the <strong>age clause</strong>
-        of the prompt &mdash; nothing else</td>
-  </tr>
-</table>
-
-<h2>One thing the batch found that is worth thirty seconds</h2>
-<p><strong>The words barely matter here; the geometry does all of it.</strong> Each row was rendered
-three times &mdash; with the word "adult" simply deleted, with "young goblin, slim", and with
-"teenage goblin boy, slim, soft rounded jaw" &mdash; and inside a row the three are nearly
-indistinguishable. The age you are looking at is carried by <em>proportion</em>, not by adjectives.
-That is good news: it means whichever letter you pick is a number we can hit exactly and repeatably,
-rather than a phrasing we have to keep re-arguing.</p>
-<p>All nine, so you can check that claim rather than take it:</p>
-<img src="/review/ep2-goblin-age-0821/GRID-all-nine.png" alt="All nine samples: three head fractions by three wordings, with both anchors">
-<figcaption>Top row: the two adult anchors. Then 4.65 / 4.17 / 3.77 heads, each at three wordings.</figcaption>
-
-<h2>What is waiting on this</h2>
+<p><strong>Fixed plates are rendering right now</strong> &mdash; no waiting on this page:</p>
 <ul>
-  <li><strong>Held, not lost:</strong> 14 motion jobs, 20 dataset samples, 2 plates and the character
-  LoRA were pulled off the queue the moment you ruled &mdash; all of them would have rendered the
-  adult. They are renamed, not deleted.</li>
-  <li><strong>This morning's seven beats already work</strong> &mdash; 02, 03, 04, 07, 08, 13, 20 all
-  came back as the creature instead of an adult man, a child or an old man, including beat 07 finally
-  <em>bald</em>. They are drawn at the adult proportion and get re-rendered at whichever letter you
-  pick. The recipe is the same; only the number moves.</li>
-  <li><strong>Nothing in the shipped cut has changed</strong> and nothing will until you have seen it.</li>
+  <li><strong>02, 03, 20</strong> &mdash; the sapling and the branch were painted into the plates
+  themselves and redrawn in place (his figure untouched, measured). Beat 02's re-roll has already
+  finished on the card, 03 is rendering as this page went up, 20 is next in the queue.</li>
+  <li><strong>07</strong> &mdash; needs a two-figure plate with the guard already in it. The first
+  attempt drew a good guard but lost the goblin's eyes and collar, so a corrected plate is queued
+  ahead of the clip.</li>
+  <li><strong>04, 08, 13</strong> &mdash; nothing queued. They are candidates, waiting on you.</li>
 </ul>
+<p class="sub">Nothing here has gone into the episode. The shipping cut is untouched and stays that
+way until you say otherwise.</p>
+
+<h2>5. The one question</h2>
+<div class="callout">
+  <p class="q"><strong>Does this read as your goblin?</strong></p>
+  <p><strong>&ldquo;yes&rdquo; is a complete answer</strong> &mdash; then I take the design as
+  settled and spend the card on the staging faults above.</p>
+  <p>If it is not him, one line of what is off is enough (&ldquo;eyes too big&rdquo;, &ldquo;ears
+  too long&rdquo;, &ldquo;too young&rdquo;). Everything on this page is one number or two words away
+  from being re-rendered, and the whole set costs about ten minutes on the idle card.</p>
+</div>
 
 <footer>
-  $0 &mdash; nine samples on the local card, no provider spend. Frames, prompts, skeletons and
-  reference images are committed beside each job under <code>farm-out/ep2-jerry-age-*-0821/</code>.
-  Ruling recorded in <code>pipeline/canon.yaml</code>; the ladder is in
-  <code>pipeline/work-ladder-0819.md</code>.
+  Seven clips, LTX image-to-video on the local RTX 5090, 704&times;1280, 105 frames at 24fps, one
+  seed each, $0 &mdash; no provider spend. Plates are the canon w2 round, 832&times;1216, drawn
+  against your picture with an IP-Adapter. Specs and full judging notes:
+  <code>pipeline/jobs/ep2-b*-canonmotion-0821.yaml</code> and
+  <code>review/canonmotion-0821/JUDGING-0821.md</code>. The earlier page at this address &mdash;
+  <a href="/review/ep2-goblin-age-0821/age-abc.html">the A / B / C age question</a> &mdash; is superseded
+  by your picture and kept for the record.
 </footer>
 
 </div>
