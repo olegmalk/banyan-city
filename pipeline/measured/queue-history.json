@@ -2,17 +2,1877 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "4a2e141459a8c941cd5c5373813bccee128acb62",
-  "measured_at": "2026-08-21T21:44:08Z",
-  "job_count": 1466,
-  "ok": 1382,
+  "source_commit": "6b6cb249ce7e4c079afb5bf905f52f267c608ea4",
+  "measured_at": "2026-08-21T22:45:42Z",
+  "job_count": 1497,
+  "ok": 1413,
   "failed": 84,
-  "upcoming_count": 102,
+  "upcoming_count": 117,
   "skipped_sidecars": null,
   "skipped_specs": null,
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-b04-w4motion-0822-1787349793",
+   "task": "ep2-b04-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T22:33:54Z",
+   "finished_at": "2026-08-21T22:39:58Z",
+   "duration_s": 364,
+   "sidecar": "farm-out/box/ep2-b04-w4motion-0822-1787349793.json",
+   "spec_file": "pipeline/jobs/ep2-b04-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 04 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b04-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b04-w4motion-0822/04-the-footnote-LTX-ep2-b04-w4motion-0822.mp4",
+     "name": "04-the-footnote-LTX-ep2-b04-w4motion-0822.mp4",
+     "bytes": 296138,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b04-w4motion-0822/b04-init-704x1280.png",
+     "name": "b04-init-704x1280.png",
+     "bytes": 956409,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is standing, arms at sides, in tall grass, full body. THE ACTION: he leans his head and shoulders out to one side, looks, and pulls straight back upright -- out, look, back -- the pull-back is the joke and must land. HALFWAY THROUGH he is leaned out sideways at full extension, looking, not yet back. HIS FEET STAY PLANTED and he stays upright: he never tips over, never lies down and never leaves his feet.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260874,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b04-canon-w4-0821/ep2-b04-canon-w4-0821-ipahead.png",
+    "sha256": "5c103f73ca32b4eb0994babd376c5efc8993dee6b4771393fcc89d81f2cebfa2"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: a clean close-up on his face holding his breath. The recorded residual is that it reads young, and the record says that is the s0 reference HE chose rather than a prompt fault — so there is no fix for the card to run. The only new artefact is a recovered 0813 balloo…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 4,
+    "episode": null,
+    "label": "Beat 04",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b03-w4motion-0822-1787350639-again951640",
+   "task": "ep2-b03-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 3,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T22:27:52Z",
+   "finished_at": "2026-08-21T22:33:48Z",
+   "duration_s": 356,
+   "sidecar": "farm-out/box/ep2-b03-w4motion-0822-1787350639-again951640.json",
+   "spec_file": "pipeline/jobs/ep2-b03-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 03 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b03-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b03-w4motion-0822/03-bad-cover-LTX-ep2-b03-w4motion-0822.mp4",
+     "name": "03-bad-cover-LTX-ep2-b03-w4motion-0822.mp4",
+     "bytes": 383364,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b03-w4motion-0822/b03-init-704x1280.png",
+     "name": "b03-init-704x1280.png",
+     "bytes": 1048833,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is squatting, hiding behind a thin trunk, in tall grass, full body. A THIN BARE SAPLING STEM WITH TWO LEAVES is also already in frame, rooted in the grass directly in front of him and crossing his body, and it stays where it is for the whole clip. THE ACTION: three separate moves, one after the other, and he is still moving when the clip ends. FIRST he drops his head and shoulders down and sideways behind the thin stem that is already there, hunching until his shoulders are up around his ears. THEN his head comes back up and turns to look off to his left, away from the stem. THEN it snaps back to centre. His body stays where it is and only his head, neck and shoulders travel. HALFWAY THROUGH his head is at its lowest, tucked down and tilted, shoulders hunched up around it.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260873,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b03-canon-w4-0821/ep2-b03-canon-w4-0821-ipahead.png",
+    "sha256": "890862b83b6529f66a8f26dd065e24df3598f8fec7853a1642b880cf6f407531"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: refire-0814 reads the beat — he crouches and the cover is comically inadequate — but the size-mismatch joke reads weakly. The one available swap is deliberately NOT taken: s20260846 is the 0817 st-wave pick, yet all fifteen of its seeds carry done_when FAIL because…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 3,
+    "episode": null,
+    "label": "Beat 03",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b02-w4motion-0822-1787350634-again754dd0",
+   "task": "ep2-b02-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T22:21:45Z",
+   "finished_at": "2026-08-21T22:27:46Z",
+   "duration_s": 361,
+   "sidecar": "farm-out/box/ep2-b02-w4motion-0822-1787350634-again754dd0.json",
+   "spec_file": "pipeline/jobs/ep2-b02-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 02 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b02-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b02-w4motion-0822/02-the-sprint-LTX-ep2-b02-w4motion-0822.mp4",
+     "name": "02-the-sprint-LTX-ep2-b02-w4motion-0822.mp4",
+     "bytes": 556692,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b02-w4motion-0822/b02-init-704x1280.png",
+     "name": "b02-init-704x1280.png",
+     "bytes": 995197,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is walking, arm outstretched, in tall grass, full body. A THIN BARE SAPLING STEM WITH TWO LEAVES is also already in frame, rooted in the grass in front of him, and it stays where it is for the whole clip. THE ACTION: he runs in from the left, skids on one foot, and throws himself down flat behind the sapling stem that is already there -- entry, skid, dive, in that order, as one continuous move. HE DOES NOT LAND ON HIS FACE: his forearms take the landing, his chin stays off the ground, and he ends LYING PRONE ON HIS CHEST behind the stem with his head raised and his eyes forward. His mouth stays wide open and his brows stay high the whole time. HALFWAY THROUGH he is mid-skid, still upright, leaning back, not yet down.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260872,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b02-canon-w4-0821/ep2-b02-canon-w4-0821-ipahead.png",
+    "sha256": "4e00c82c937c7495f43f3239eb91f132a3764ba388a3949b307f746abba0c80f"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 2,
+    "episode": null,
+    "label": "Beat 02",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b10-twoboards-0822-1787350196",
+   "task": "ep2-b10-twoboards-0822",
+   "node": "002b-first-citizen",
+   "beat": 10,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T22:15:27Z",
+   "finished_at": "2026-08-21T22:21:39Z",
+   "duration_s": 372,
+   "sidecar": "farm-out/box/ep2-b10-twoboards-0822-1787350196.json",
+   "spec_file": "pipeline/jobs/ep2-b10-twoboards-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 10 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched -- the clip in the episode stays where it is until he picks this one.",
+    "why": "THE FOUNDER, 2026-08-22: 'the 2 things they were holding shapeshift into 1'. Stepped on the shipping clip at 24-frame intervals: two boards at f0, drifting together by f48, ONE tan board from f72 to the end. The cause is the parent prompt, which names a board five times and every one of them is the near guard's -- the partner is given nothing to hold. The plate hands the sampler two boards and the sentence hands it one, so the sampler deletes one. The plate is NOT re-rendered: f0 already draws…",
+    "success": "TWO SEPARATE BOARDS IN EVERY FRAME OF THE CLIP, one in each man's hands, different colours, never touching and never resolving into a single object -- checked by stepping the clip, not by watching it once. AND the blank back of the near guard's board is angled toward his PARTNER rather than flat to the lens for the whole hold. Either failure alone is a fail.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 6,
+    "priority": 12
+   },
+   "artifacts_dir": "farm-out/ep2-b10-twoboards-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b10-twoboards-0822/10-no-form-LTX-world-0813.mp4",
+     "name": "10-no-form-LTX-world-0813.mp4",
+     "bytes": 918747,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b10-twoboards-0822/b05-init-704x1280.png",
+     "name": "b05-init-704x1280.png",
+     "bytes": 1099021,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY IN THIS FRAME AND IT DOES NOT CHANGE - the green summer field, the grass, the low hedge, the treeline and the pale sky are all present from the first frame and stay exactly as they are, unmoving, for the whole shot. Nothing is added to the background and nothing is redrawn. TWO UNIFORMED PATROL GUARDS, BOTH GROWN MEN, ARE ALREADY IN THIS FRAME TOGETHER from the first frame to the last, standing close and facing each other, and no third man is anywhere in it. THERE ARE TWO SEPARATE BARK BOARDS IN THIS FRAME AND THERE ARE TWO OF THEM IN EVERY FRAME. The near guard holds HIS OWN pale grey-blue bark board in his own two hands. His partner holds HIS OWN dark teal bark board, a different board, in his own hands, down at his hip. The two boards are held by different men, they never touch, they never overlap and they never become one board. Both stay hand-sized. THE NEAR GUARD FLIPS HIS OWN BOARD OVER AND HOLDS ITS COMPLETELY BLANK BACK OUT TOWARD HIS PARTNER: he turns his board over, extends it toward the other man at chest height with the empty back of it ANGLED TOWARD HIS PARTNER AND AWAY FROM THE CAMERA, shakes it once, and holds it there while his partner looks at it. His partner keeps his own dark teal board in his own hands the whole time and does not take the other one. Neither man walks anywhere and both stay in frame. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "background appearing, scene forming, iris, wipe, dissolve, white background, blank background, one man alone, single figure, third guard, walking away, peaked cap, military cap, background changing, background appearing, scene forming, world fading in, iris, wipe, dissolve, empty field with one man, single figure, boy, child, bald guard, white hair, giant clipboard, oversized board, standing still, standing in one spot, standing at attention, stationary, motionless, frozen, still frame, no movement, loitering, armor, armour, breastplate, helmet, chainmail, knight, weapon, sword, spear, giant clipboard, oversized prop, board filling the frame, prop larger than his torso, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, face morphing, distorted face, warped face, extra eyes, bald, walking out of frame, floating head, disembodied head, scene change, shot change, dark, night, dusk, sunset, dim lighting, low key, shadows dominant, white background, blank background, empty background, plain white backdrop, void, isolated on white, character sheet, studio backdrop, photorealistic, 3D render, CGI, live action, motion blur, text, one board, a single board, both men holding the same board, boards merging, boards overlapping, two objects becoming one, morphing prop, prop changing shape, prop changing colour, board flat to camera, board facing the viewer, empty hands",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260882,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b05-scene-0814/05-the-patrol-ipa-r0-w015-s0.png",
+    "sha256": "e99ff9e129c303f63f383b44cdd38a59ca895fd496c58a2fd6d59cc3b2fcd8fa"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut pairB take meets its own definition — both men present from frame one and throughout, the board raised with its blank face showing, field at frame one — and its recorded fault is the same guard cast read as beat 05. Two further facts, neither of them a r…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 10,
+    "episode": null,
+    "label": "Beat 10",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b03-w4motion-0822-1787349788",
+   "task": "ep2-b03-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 3,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T22:09:19Z",
+   "finished_at": "2026-08-21T22:15:21Z",
+   "duration_s": 362,
+   "sidecar": "farm-out/box/ep2-b03-w4motion-0822-1787349788.json",
+   "spec_file": "pipeline/jobs/ep2-b03-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 03 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b03-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b03-w4motion-0822/03-bad-cover-LTX-ep2-b03-w4motion-0822.mp4",
+     "name": "03-bad-cover-LTX-ep2-b03-w4motion-0822.mp4",
+     "bytes": 383364,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b03-w4motion-0822/b03-init-704x1280.png",
+     "name": "b03-init-704x1280.png",
+     "bytes": 1048833,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is squatting, hiding behind a thin trunk, in tall grass, full body. A THIN BARE SAPLING STEM WITH TWO LEAVES is also already in frame, rooted in the grass directly in front of him and crossing his body, and it stays where it is for the whole clip. THE ACTION: three separate moves, one after the other, and he is still moving when the clip ends. FIRST he drops his head and shoulders down and sideways behind the thin stem that is already there, hunching until his shoulders are up around his ears. THEN his head comes back up and turns to look off to his left, away from the stem. THEN it snaps back to centre. His body stays where it is and only his head, neck and shoulders travel. HALFWAY THROUGH his head is at its lowest, tucked down and tilted, shoulders hunched up around it.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260873,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b03-canon-w4-0821/ep2-b03-canon-w4-0821-ipahead.png",
+    "sha256": "890862b83b6529f66a8f26dd065e24df3598f8fec7853a1642b880cf6f407531"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: refire-0814 reads the beat — he crouches and the cover is comically inadequate — but the size-mismatch joke reads weakly. The one available swap is deliberately NOT taken: s20260846 is the 0817 st-wave pick, yet all fifteen of its seeds carry done_when FAIL because…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 3,
+    "episode": null,
+    "label": "Beat 03",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b02-w4motion-0822-1787349783",
+   "task": "ep2-b02-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T22:03:12Z",
+   "finished_at": "2026-08-21T22:09:13Z",
+   "duration_s": 361,
+   "sidecar": "farm-out/box/ep2-b02-w4motion-0822-1787349783.json",
+   "spec_file": "pipeline/jobs/ep2-b02-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 02 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b02-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b02-w4motion-0822/02-the-sprint-LTX-ep2-b02-w4motion-0822.mp4",
+     "name": "02-the-sprint-LTX-ep2-b02-w4motion-0822.mp4",
+     "bytes": 556692,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b02-w4motion-0822/b02-init-704x1280.png",
+     "name": "b02-init-704x1280.png",
+     "bytes": 995197,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is walking, arm outstretched, in tall grass, full body. A THIN BARE SAPLING STEM WITH TWO LEAVES is also already in frame, rooted in the grass in front of him, and it stays where it is for the whole clip. THE ACTION: he runs in from the left, skids on one foot, and throws himself down flat behind the sapling stem that is already there -- entry, skid, dive, in that order, as one continuous move. HE DOES NOT LAND ON HIS FACE: his forearms take the landing, his chin stays off the ground, and he ends LYING PRONE ON HIS CHEST behind the stem with his head raised and his eyes forward. His mouth stays wide open and his brows stay high the whole time. HALFWAY THROUGH he is mid-skid, still upright, leaning back, not yet down.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260872,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b02-canon-w4-0821/ep2-b02-canon-w4-0821-ipahead.png",
+    "sha256": "4e00c82c937c7495f43f3239eb91f132a3764ba388a3949b307f746abba0c80f"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 2,
+    "episode": null,
+    "label": "Beat 02",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b13-w4motion-0822-1787349418",
+   "task": "ep2-b13-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:57:06Z",
+   "finished_at": "2026-08-21T22:02:23Z",
+   "duration_s": 317,
+   "sidecar": "farm-out/box/ep2-b13-w4motion-0822-1787349418.json",
+   "spec_file": "pipeline/jobs/ep2-b13-w4motion-0822.yaml",
+   "purpose": {
+    "consumer": "A CANDIDATE for beat 13 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+    "why": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE. Rounds nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contac…",
+    "success": "ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over the run, which is exactly what the head clause below was rewritten to prevent.",
+    "owner": "the night iteration lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b13-w4motion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-w4motion-0822/13-the-shade-LTX-ep2-b13-w4motion-0822.mp4",
+     "name": "13-the-shade-LTX-ep2-b13-w4motion-0822.mp4",
+     "bytes": 231229,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b13-w4motion-0822/b13-init-704x1280.png",
+     "name": "b13-init-704x1280.png",
+     "bytes": 917828,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is sitting, hands clasped between knees, in tall grass, full body. THE ACTION: he sits, his shoulders drop, and his head tips sideways into the shade -- exhaustion resolving into relief; the head-tip completes. HALFWAY THROUGH his shoulders are down and his head has begun to tip sideways.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260883,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b13-canon-w4-0821/ep2-b13-canon-w4-0821-ipahead.png",
+    "sha256": "a4f6f7bf4345032f481219abc3772a070467e7b37549489d009d3eb335c65ed2"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 13,
+    "episode": null,
+    "label": "Beat 13",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-guardcast2d-j20-0822-1787349158",
+   "task": "ep2-guardcast2d-j20-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:56:01Z",
+   "finished_at": "2026-08-21T21:56:20Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep2-guardcast2d-j20-0822-1787349158.json",
+   "spec_file": "pipeline/jobs/ep2-guardcast2d-j20-0822.yaml",
+   "purpose": {
+    "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822 as a possible candidate J. One of ten draws whose only job is to come back without a hand in frame; whichever of a cell's two draws is clean goes on the sheet, and if neither is, the page says so.",
+    "why": "GUARD 2, CELL J AT FRESH SEED 20289725: short red hair, freckles, heavy brow, blunt chin, blank stare. One variable against the sweep's root -- the cell's clause and the seed. Same driver, same negative, same steps, cfg and size. $0.",
+    "success": "ONE 832x1216 png at seed 20289725, scored at 1:1 on the hand clause first and the carried-over clauses second, exactly as the root spec of this sweep states them. The cell's own clause must stay legible: short red hair, freckles, heavy brow, blunt chin, blank stare.",
+    "owner": "guard lane, 2026-08-22 -- cell J pass 2 of round 2D's seed sweep",
+    "est_minutes": 2,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-guardcast2d-j20-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-guardcast2d-j20-0822/ep2-guardcast2d-j20-0822-nocontrol.png",
+     "name": "ep2-guardcast2d-j20-0822-nocontrol.png",
+     "bytes": 1107446,
+     "kind": "image"
+    }
+   ],
+   "prompt": "1boy, a grown guard man, mature male face, short red hair, freckles, heavy brow, blunt chin, blank stare, close on his face, cream shirt collar, white shoulder sash, tall grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very aesthetic",
+   "negative": "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, teenager, glasses, hands, clipboard, armor, helmet, knight, white background, dark, night, hand on own face, head rest, hand up",
+   "prompt_source": "job spec `pipeline/jobs/ep2-guardcast2d-j20-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-guardcast2d-j10-0822-1787349155",
+   "task": "ep2-guardcast2d-j10-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:55:36Z",
+   "finished_at": "2026-08-21T21:55:55Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep2-guardcast2d-j10-0822-1787349155.json",
+   "spec_file": "pipeline/jobs/ep2-guardcast2d-j10-0822.yaml",
+   "purpose": {
+    "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822 as a possible candidate J. One of ten draws whose only job is to come back without a hand in frame; whichever of a cell's two draws is clean goes on the sheet, and if neither is, the page says so.",
+    "why": "GUARD 2, CELL J AT FRESH SEED 20279725: short red hair, freckles, heavy brow, blunt chin, blank stare. One variable against the sweep's root -- the cell's clause and the seed. Same driver, same negative, same steps, cfg and size. $0.",
+    "success": "ONE 832x1216 png at seed 20279725, scored at 1:1 on the hand clause first and the carried-over clauses second, exactly as the root spec of this sweep states them. The cell's own clause must stay legible: short red hair, freckles, heavy brow, blunt chin, blank stare.",
+    "owner": "guard lane, 2026-08-22 -- cell J pass 1 of round 2D's seed sweep",
+    "est_minutes": 2,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-guardcast2d-j10-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-guardcast2d-j10-0822/ep2-guardcast2d-j10-0822-nocontrol.png",
+     "name": "ep2-guardcast2d-j10-0822-nocontrol.png",
+     "bytes": 1204421,
+     "kind": "image"
+    }
+   ],
+   "prompt": "1boy, a grown guard man, mature male face, short red hair, freckles, heavy brow, blunt chin, blank stare, close on his face, cream shirt collar, white shoulder sash, tall grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very aesthetic",
+   "negative": "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, teenager, glasses, hands, clipboard, armor, helmet, knight, white background, dark, night, hand on own face, head rest, hand up",
+   "prompt_source": "job spec `pipeline/jobs/ep2-guardcast2d-j10-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-guardcast2d-h20-0822-1787349152",
+   "task": "ep2-guardcast2d-h20-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:55:11Z",
+   "finished_at": "2026-08-21T21:55:30Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep2-guardcast2d-h20-0822-1787349152.json",
+   "spec_file": "pipeline/jobs/ep2-guardcast2d-h20-0822.yaml",
+   "purpose": {
+    "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822 as a possible candidate H. One of ten draws whose only job is to come back without a hand in frame; whichever of a cell's two draws is clean goes on the sheet, and if neither is, the page says so.",
+    "why": "GUARD 2, CELL H AT FRESH SEED 20287725: curly black hair, wide square face, thick neck, gormless grin. One variable against the sweep's root -- the cell's clause and the seed. Same driver, same negative, same steps, cfg and size. $0.",
+    "success": "ONE 832x1216 png at seed 20287725, scored at 1:1 on the hand clause first and the carried-over clauses second, exactly as the root spec of this sweep states them. The cell's own clause must stay legible: curly black hair, wide square face, thick neck, gormless grin.",
+    "owner": "guard lane, 2026-08-22 -- cell H pass 2 of round 2D's seed sweep",
+    "est_minutes": 2,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-guardcast2d-h20-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-guardcast2d-h20-0822/ep2-guardcast2d-h20-0822-nocontrol.png",
+     "name": "ep2-guardcast2d-h20-0822-nocontrol.png",
+     "bytes": 1107471,
+     "kind": "image"
+    }
+   ],
+   "prompt": "1boy, a grown guard man, mature male face, curly black hair, wide square face, thick neck, gormless grin, close on his face, cream shirt collar, white shoulder sash, tall grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very aesthetic",
+   "negative": "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, teenager, glasses, hands, clipboard, armor, helmet, knight, white background, dark, night, hand on own face, head rest, hand up",
+   "prompt_source": "job spec `pipeline/jobs/ep2-guardcast2d-h20-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-guardcast2d-h10-0822-1787349149",
+   "task": "ep2-guardcast2d-h10-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:54:46Z",
+   "finished_at": "2026-08-21T21:55:05Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep2-guardcast2d-h10-0822-1787349149.json",
+   "spec_file": "pipeline/jobs/ep2-guardcast2d-h10-0822.yaml",
+   "purpose": {
+    "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822 as a possible candidate H. One of ten draws whose only job is to come back without a hand in frame; whichever of a cell's two draws is clean goes on the sheet, and if neither is, the page says so.",
+    "why": "GUARD 2, CELL H AT FRESH SEED 20277725: curly black hair, wide square face, thick neck, gormless grin. One variable against the sweep's root -- the cell's clause and the seed. Same driver, same negative, same steps, cfg and size. $0.",
+    "success": "ONE 832x1216 png at seed 20277725, scored at 1:1 on the hand clause first and the carried-over clauses second, exactly as the root spec of this sweep states them. The cell's own clause must stay legible: curly black hair, wide square face, thick neck, gormless grin.",
+    "owner": "guard lane, 2026-08-22 -- cell H pass 1 of round 2D's seed sweep",
+    "est_minutes": 2,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-guardcast2d-h10-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-guardcast2d-h10-0822/ep2-guardcast2d-h10-0822-nocontrol.png",
+     "name": "ep2-guardcast2d-h10-0822-nocontrol.png",
+     "bytes": 1024929,
+     "kind": "image"
+    }
+   ],
+   "prompt": "1boy, a grown guard man, mature male face, curly black hair, wide square face, thick neck, gormless grin, close on his face, cream shirt collar, white shoulder sash, tall grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very aesthetic",
+   "negative": "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, teenager, glasses, hands, clipboard, armor, helmet, knight, white background, dark, night, hand on own face, head rest, hand up",
+   "prompt_source": "job spec `pipeline/jobs/ep2-guardcast2d-h10-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-guardcast2d-d20-0822-1787349146",
+   "task": "ep2-guardcast2d-d20-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:54:22Z",
+   "finished_at": "2026-08-21T21:54:40Z",
+   "duration_s": 18,
+   "sidecar": "farm-out/box/ep2-guardcast2d-d20-0822-1787349146.json",
+   "spec_file": "pipeline/jobs/ep2-guardcast2d-d20-0822.yaml",
+   "purpose": {
+    "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822 as a possible candidate D. One of ten draws whose only job is to come back without a hand in frame; whichever of a cell's two draws is clean goes on the sheet, and if neither is, the page says so.",
+    "why": "GUARD 2, CELL D AT FRESH SEED 20283725: shaved head, dark stubble, broad flat face, wide-set eyes, slack mouth. One variable against the sweep's root -- the cell's clause and the seed. Same driver, same negative, same steps, cfg and size. $0.",
+    "success": "ONE 832x1216 png at seed 20283725, scored at 1:1 on the hand clause first and the carried-over clauses second, exactly as the root spec of this sweep states them. The cell's own clause must stay legible: shaved head, dark stubble, broad flat face, wide-set eyes, slack mouth.",
+    "owner": "guard lane, 2026-08-22 -- cell D pass 2 of round 2D's seed sweep",
+    "est_minutes": 2,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-guardcast2d-d20-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-guardcast2d-d20-0822/ep2-guardcast2d-d20-0822-nocontrol.png",
+     "name": "ep2-guardcast2d-d20-0822-nocontrol.png",
+     "bytes": 1005982,
+     "kind": "image"
+    }
+   ],
+   "prompt": "1boy, a grown guard man, mature male face, shaved head, dark stubble, broad flat face, wide-set eyes, slack mouth, close on his face, cream shirt collar, white shoulder sash, tall grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very aesthetic",
+   "negative": "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, teenager, glasses, hands, clipboard, armor, helmet, knight, white background, dark, night, hand on own face, head rest, hand up",
+   "prompt_source": "job spec `pipeline/jobs/ep2-guardcast2d-d20-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-guardcast2d-d10-0822-1787349142",
+   "task": "ep2-guardcast2d-d10-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:53:58Z",
+   "finished_at": "2026-08-21T21:54:16Z",
+   "duration_s": 18,
+   "sidecar": "farm-out/box/ep2-guardcast2d-d10-0822-1787349142.json",
+   "spec_file": "pipeline/jobs/ep2-guardcast2d-d10-0822.yaml",
+   "purpose": {
+    "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822 as a possible candidate D. One of ten draws whose only job is to come back without a hand in frame; whichever of a cell's two draws is clean goes on the sheet, and if neither is, the page says so.",
+    "why": "GUARD 2, CELL D AT FRESH SEED 20273725: shaved head, dark stubble, broad flat face, wide-set eyes, slack mouth. One variable against the sweep's root -- the cell's clause and the seed. Same driver, same negative, same steps, cfg and size. $0.",
+    "success": "ONE 832x1216 png at seed 20273725, scored at 1:1 on the hand clause first and the carried-over clauses second, exactly as the root spec of this sweep states them. The cell's own clause must stay legible: shaved head, dark stubble, broad flat face, wide-set eyes, slack mouth.",
+    "owner": "guard lane, 2026-08-22 -- cell D pass 1 of round 2D's seed sweep",
+    "est_minutes": 2,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-guardcast2d-d10-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-guardcast2d-d10-0822/ep2-guardcast2d-d10-0822-nocontrol.png",
+     "name": "ep2-guardcast2d-d10-0822-nocontrol.png",
+     "bytes": 1035430,
+     "kind": "image"
+    }
+   ],
+   "prompt": "1boy, a grown guard man, mature male face, shaved head, dark stubble, broad flat face, wide-set eyes, slack mouth, close on his face, cream shirt collar, white shoulder sash, tall grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very aesthetic",
+   "negative": "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, teenager, glasses, hands, clipboard, armor, helmet, knight, white background, dark, night, hand on own face, head rest, hand up",
+   "prompt_source": "job spec `pipeline/jobs/ep2-guardcast2d-d10-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-guardcast2d-b20-0822-1787349138",
+   "task": "ep2-guardcast2d-b20-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:53:33Z",
+   "finished_at": "2026-08-21T21:53:52Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep2-guardcast2d-b20-0822-1787349138.json",
+   "spec_file": "pipeline/jobs/ep2-guardcast2d-b20-0822.yaml",
+   "purpose": {
+    "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822 as a possible candidate B. One of ten draws whose only job is to come back without a hand in frame; whichever of a cell's two draws is clean goes on the sheet, and if neither is, the page says so.",
+    "why": "GUARD 2, CELL B AT FRESH SEED 20281725: light sandy hair, long thin face, drooping eyelids, blank stare. One variable against the sweep's root -- the cell's clause and the seed. Same driver, same negative, same steps, cfg and size. $0.",
+    "success": "ONE 832x1216 png at seed 20281725, scored at 1:1 on the hand clause first and the carried-over clauses second, exactly as the root spec of this sweep states them. The cell's own clause must stay legible: light sandy hair, long thin face, drooping eyelids, blank stare.",
+    "owner": "guard lane, 2026-08-22 -- cell B pass 2 of round 2D's seed sweep",
+    "est_minutes": 2,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-guardcast2d-b20-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-guardcast2d-b20-0822/ep2-guardcast2d-b20-0822-nocontrol.png",
+     "name": "ep2-guardcast2d-b20-0822-nocontrol.png",
+     "bytes": 1070356,
+     "kind": "image"
+    }
+   ],
+   "prompt": "1boy, a grown guard man, mature male face, light sandy hair, long thin face, drooping eyelids, blank stare, close on his face, cream shirt collar, white shoulder sash, tall grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very aesthetic",
+   "negative": "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, teenager, glasses, hands, clipboard, armor, helmet, knight, white background, dark, night, hand on own face, head rest, hand up",
+   "prompt_source": "job spec `pipeline/jobs/ep2-guardcast2d-b20-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 20,
+    "episode": null,
+    "label": "Beat 20",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-guardcast2d-b10-0822-1787349135",
+   "task": "ep2-guardcast2d-b10-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:53:09Z",
+   "finished_at": "2026-08-21T21:53:27Z",
+   "duration_s": 18,
+   "sidecar": "farm-out/box/ep2-guardcast2d-b10-0822-1787349135.json",
+   "spec_file": "pipeline/jobs/ep2-guardcast2d-b10-0822.yaml",
+   "purpose": {
+    "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822 as a possible candidate B. One of ten draws whose only job is to come back without a hand in frame; whichever of a cell's two draws is clean goes on the sheet, and if neither is, the page says so.",
+    "why": "GUARD 2, CELL B AT FRESH SEED 20271725: light sandy hair, long thin face, drooping eyelids, blank stare. One variable against the sweep's root -- the cell's clause and the seed. Same driver, same negative, same steps, cfg and size. $0.",
+    "success": "ONE 832x1216 png at seed 20271725, scored at 1:1 on the hand clause first and the carried-over clauses second, exactly as the root spec of this sweep states them. The cell's own clause must stay legible: light sandy hair, long thin face, drooping eyelids, blank stare.",
+    "owner": "guard lane, 2026-08-22 -- cell B pass 1 of round 2D's seed sweep",
+    "est_minutes": 2,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-guardcast2d-b10-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-guardcast2d-b10-0822/ep2-guardcast2d-b10-0822-nocontrol.png",
+     "name": "ep2-guardcast2d-b10-0822-nocontrol.png",
+     "bytes": 1070497,
+     "kind": "image"
+    }
+   ],
+   "prompt": "1boy, a grown guard man, mature male face, light sandy hair, long thin face, drooping eyelids, blank stare, close on his face, cream shirt collar, white shoulder sash, tall grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very aesthetic",
+   "negative": "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, teenager, glasses, hands, clipboard, armor, helmet, knight, white background, dark, night, hand on own face, head rest, hand up",
+   "prompt_source": "job spec `pipeline/jobs/ep2-guardcast2d-b10-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 10,
+    "episode": null,
+    "label": "Beat 10",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-guardcast2d-a20-0822-1787349132",
+   "task": "ep2-guardcast2d-a20-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:52:44Z",
+   "finished_at": "2026-08-21T21:53:03Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep2-guardcast2d-a20-0822-1787349132.json",
+   "spec_file": "pipeline/jobs/ep2-guardcast2d-a20-0822.yaml",
+   "purpose": {
+    "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822 as a possible candidate A. One of ten draws whose only job is to come back without a hand in frame; whichever of a cell's two draws is clean goes on the sheet, and if neither is, the page says so.",
+    "why": "GUARD 2, CELL A AT FRESH SEED 20280725: thick dark brown hair, heavy square jaw, thick neck, slack open mouth. One variable against the sweep's root -- the cell's clause and the seed. Same driver, same negative, same steps, cfg and size. $0.",
+    "success": "ONE 832x1216 png at seed 20280725, scored at 1:1 on the hand clause first and the carried-over clauses second, exactly as the root spec of this sweep states them. The cell's own clause must stay legible: thick dark brown hair, heavy square jaw, thick neck, slack open mouth.",
+    "owner": "guard lane, 2026-08-22 -- cell A pass 2 of round 2D's seed sweep",
+    "est_minutes": 2,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-guardcast2d-a20-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-guardcast2d-a20-0822/ep2-guardcast2d-a20-0822-nocontrol.png",
+     "name": "ep2-guardcast2d-a20-0822-nocontrol.png",
+     "bytes": 1062674,
+     "kind": "image"
+    }
+   ],
+   "prompt": "1boy, a grown guard man, mature male face, thick dark brown hair, heavy square jaw, thick neck, slack open mouth, close on his face, cream shirt collar, white shoulder sash, tall grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very aesthetic",
+   "negative": "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, teenager, glasses, hands, clipboard, armor, helmet, knight, white background, dark, night, hand on own face, head rest, hand up",
+   "prompt_source": "job spec `pipeline/jobs/ep2-guardcast2d-a20-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-guardcast2d-a10-0822-1787349128",
+   "task": "ep2-guardcast2d-a10-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:52:19Z",
+   "finished_at": "2026-08-21T21:52:38Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep2-guardcast2d-a10-0822-1787349128.json",
+   "spec_file": "pipeline/jobs/ep2-guardcast2d-a10-0822.yaml",
+   "purpose": {
+    "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822. Five of the ten 2B cells held their own face and round 2C proved the pose negative does not shift it; this sweep buys the sheet its missing clean men by sampling past a compositional prior instead of arguing with it. Guard 1 is not re-asked and review/ep2-ship-0821 is untouched.",
+    "why": "GUARD 2, CELL A AT A FRESH SEED (20270725): thick dark brown hair, heavy square jaw, thick neck, slack open mouth. NOT A RECIPE CHANGE and so not sample-gated -- driver, checkpoint, prompt bytes, negative bytes, steps, cfg and size are round 2C's exactly and only the seed moves. Round 2C's A/B is the reason: three pose terms in the model's own dialect did not remove the hand at the same seed, which together with 2B's adapter removal rules out both the reference and the wording and leaves a chec…",
+    "success": "ONE 832x1216 png at the seed named in this spec, scored at 1:1. THE ONLY OPEN QUESTION IS THE HAND: pass = NO hand in frame and no hand-on-face composition. Everything else about this recipe has been shown across eleven frames tonight and is not re-litigated here, but it must still HOLD, and a frame that loses one of these is dropped rather than argued for: one grown man alone, detailed cinematic anime, cream shirt collar and white shoulder sash, real grass background, no glasses, not guard 1,…",
+    "owner": "guard lane, 2026-08-22 -- round 2D, the seed sweep after 2C's null result",
+    "est_minutes": 2,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-guardcast2d-a10-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-guardcast2d-a10-0822/ep2-guardcast2d-a10-0822-nocontrol.png",
+     "name": "ep2-guardcast2d-a10-0822-nocontrol.png",
+     "bytes": 1138801,
+     "kind": "image"
+    }
+   ],
+   "prompt": "1boy, a grown guard man, mature male face, thick dark brown hair, heavy square jaw, thick neck, slack open mouth, close on his face, cream shirt collar, white shoulder sash, tall grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very aesthetic",
+   "negative": "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, teenager, glasses, hands, clipboard, armor, helmet, knight, white background, dark, night, hand on own face, head rest, hand up",
+   "prompt_source": "job spec `pipeline/jobs/ep2-guardcast2d-a10-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b14-canon-w4b-0821-1787349032",
+   "task": "ep2-b14-canon-w4b-0821",
+   "node": "002b-first-citizen",
+   "beat": 14,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:50:45Z",
+   "finished_at": "2026-08-21T21:51:13Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b14-canon-w4b-0821-1787349032.json",
+   "spec_file": "pipeline/jobs/ep2-b14-canon-w4b-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 14. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 14 OF THE CANON PATCH WAVE, ROUND w4b. THE DEFENSE -- 'He picks at the dirt, embarrassed, glancing around.' Line: 'It was ONE apple. It fell off the cart...' He is arguing a case nobody asked him to argue, to a plant. Embarrassed, not sad. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion,…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 14's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b14-canon-w4b-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b14-canon-w4b-0821/ep2-b14-canon-w4b-0821-ipahead.png",
+     "name": "ep2-b14-canon-w4b-0821-ipahead.png",
+     "bytes": 1082002,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b14-canon-w4b-0821/jerry-canon-h37fkneel-0821.png",
+     "name": "jerry-canon-h37fkneel-0821.png",
+     "bytes": 10377,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b14-canon-w4b-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, blush, embarrassed, kneeling, picking at the dirt with one hand, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch, second goblin, crowd",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b14-canon-w4b-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "FIRST FOOTAGE THIS BEAT HAS EVER HAD IS IN THE CUT, AND IT DOES NOT PASS: M1 (hands to the dirt) and M4 (same figure, camera locked) PASS, M2 (the glance never returns) and M3 (the face reads sullen, not embarrassed) FAIL. It is in the cut because real footage of a beat beats a slate for review pur…",
+    "gate": "rendering now (2 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 14,
+    "episode": null,
+    "label": "Beat 14",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-guardcast2c-a-0822-1787348663",
+   "task": "ep2-guardcast2c-a-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:49:38Z",
+   "finished_at": "2026-08-21T21:49:56Z",
+   "duration_s": 18,
+   "sidecar": "farm-out/box/ep2-guardcast2c-a-0822-1787348663.json",
+   "spec_file": "pipeline/jobs/ep2-guardcast2c-a-0822.yaml",
+   "purpose": {
+    "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822. Cell A is THE SAMPLE and its consumer is the decision to fire the other four: five of ten 2B cells came back holding their own face and this is the one change aimed at that. Guard 1 is not re-asked and review/ep2-ship-0821 is untouched.",
+    "why": "GUARD 2, CELL A RE-DRAWN AGAINST THE POSE: thick dark brown hair, heavy square jaw, thick neck, slack open mouth. Round 2B removed the IP-Adapter and the identity collapse went with it, but five of ten cells still rested a hand on the cheek -- so `hands` in the negative binds the OBJECT and not the COMPOSITION, which a head-and-shoulders portrait prompt reaches for on its own. Three pose terms go in (hand on own face, head rest, hand up) and three dead ones come out (a duplicate `text`, `photor…",
+    "success": "ONE 832x1216 png at seed 20260725, scored at 1:1 AND SIDE BY SIDE WITH ITS OWN 2B TWIN, which is the only reading that means anything here. THE PASS: (1) NO HAND anywhere in frame and no hand-on-face composition -- this is the whole question and a partial hand is a fail; (2) the man SURVIVES the change: still one grown male, still the same build and hair the clause asks for (thick dark brown hair, heavy square jaw, thick neck, slack open mouth), because a negative that fixes the pose by wreckin…",
+    "owner": "guard lane, 2026-08-22 -- round 2C, the pose A/B, filed off a five-of-ten count taken at 1:1 on the 2B sheet",
+    "est_minutes": 2,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-guardcast2c-a-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-guardcast2c-a-0822/ep2-guardcast2c-a-0822-nocontrol.png",
+     "name": "ep2-guardcast2c-a-0822-nocontrol.png",
+     "bytes": 1107551,
+     "kind": "image"
+    }
+   ],
+   "prompt": "1boy, a grown guard man, mature male face, thick dark brown hair, heavy square jaw, thick neck, slack open mouth, close on his face, cream shirt collar, white shoulder sash, tall grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very aesthetic",
+   "negative": "photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, teenager, glasses, hands, clipboard, armor, helmet, knight, white background, dark, night, hand on own face, head rest, hand up",
+   "prompt_source": "job spec `pipeline/jobs/ep2-guardcast2c-a-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b20-canon-w4-0821-1787348595",
+   "task": "ep2-b20-canon-w4-0821",
+   "node": "002b-first-citizen",
+   "beat": 20,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:49:04Z",
+   "finished_at": "2026-08-21T21:49:32Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b20-canon-w4-0821-1787348595.json",
+   "spec_file": "pipeline/jobs/ep2-b20-canon-w4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 20. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 20 OF THE CANON PATCH WAVE, ROUND w4. EVIDENCE -- 'crouches back down, picks the fig up with both hands, and looks from it to the sapling's thinnest branch beside him'. Line: '...Did you just ANSWER me?' Awe. The episode's turn. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the skin an…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 20's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b20-canon-w4-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b20-canon-w4-0821/ep2-b20-canon-w4-0821-ipahead.png",
+     "name": "ep2-b20-canon-w4-0821-ipahead.png",
+     "bytes": 1195132,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b20-canon-w4-0821/jerry-canon-h37fcrouch-0821.png",
+     "name": "jerry-canon-h37fcrouch-0821.png",
+     "bytes": 10906,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b20-canon-w4-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, open mouth, surprised, squatting, holding a small fruit, looking up, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b20-canon-w4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO VERDICT YET against its own done_when — BOTH HANDS to the fruit, then the look UP to a branch that is visibly BARE, the empty stem being the evidence and having to be in frame. Stills only since; review/ep2-mac-plates-0818 rejects the new b20 plates — \"all the…",
+    "gate": "rendering now (2 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 20,
+    "episode": null,
+    "label": "Beat 20",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b13-canon-w4curl-0821-1787348868",
+   "task": "ep2-b13-canon-w4curl-0821",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:48:30Z",
+   "finished_at": "2026-08-21T21:48:58Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b13-canon-w4curl-0821-1787348868.json",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-w4curl-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND w4curl. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b13-canon-w4curl-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-canon-w4curl-0821/ep2-b13-canon-w4curl-0821-ipahead.png",
+     "name": "ep2-b13-canon-w4curl-0821-ipahead.png",
+     "bytes": 1146704,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-canon-w4curl-0821/jerry-canon-h37fhunch-0821.png",
+     "name": "jerry-canon-h37fhunch-0821.png",
+     "bytes": 10582,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-canon-w4curl-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, hunched forward, head tipped down and to one side, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-w4curl-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 13,
+    "episode": null,
+    "label": "Beat 13",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b19-canon-w4-0821-1787348592",
+   "task": "ep2-b19-canon-w4-0821",
+   "node": "002b-first-citizen",
+   "beat": 19,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:47:52Z",
+   "finished_at": "2026-08-21T21:48:21Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b19-canon-w4-0821-1787348592.json",
+   "spec_file": "pipeline/jobs/ep2-b19-canon-w4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 19. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 19 OF THE CANON PATCH WAVE, ROUND w4. THE DROP -- 'the sapling low in frame and the scavenger standing beside it, mid-stride away: the stem lets go and the fig drops the short distance into the grass by his heel. He stops mid-step and looks back down at it.' No line. Surprise, caught mid-step. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it con…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 19's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b19-canon-w4-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b19-canon-w4-0821/ep2-b19-canon-w4-0821-ipahead.png",
+     "name": "ep2-b19-canon-w4-0821-ipahead.png",
+     "bytes": 1333404,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b19-canon-w4-0821/jerry-canon-h37fstride-0821.png",
+     "name": "jerry-canon-h37fstride-0821.png",
+     "bytes": 11197,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b19-canon-w4-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, open mouth, surprised, standing mid-stride, looking back down at the ground, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch, second goblin, crowd",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b19-canon-w4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "SLATE, AND ITS FIVE-DAY BLOCKER IS DEAD. \"Not renderable until the plate exists\" held since 2026-08-15 because every plate we owned showed the fruit already lying in the grass; three draws on 2026-08-19 put the fruit ALOFT 3 of 3, and the plant was then DRAWN rather than prompted after three wordin…",
+    "gate": "rendering now (1 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 19,
+    "episode": null,
+    "label": "Beat 19",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b17-canon-w4-0821-1787348588",
+   "task": "ep2-b17-canon-w4-0821",
+   "node": "002b-first-citizen",
+   "beat": 17,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:47:16Z",
+   "finished_at": "2026-08-21T21:47:44Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b17-canon-w4-0821-1787348588.json",
+   "spec_file": "pipeline/jobs/ep2-b17-canon-w4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 17. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 17 OF THE CANON PATCH WAVE, ROUND w4. GOODBYE -- 'The scavenger pushes himself up, gives his cloak a shake, and turns to go.' (Restaged 2026-08-18: the brush gesture is a measured engine limit, 0 of 8; whole-body stand-and-turn is 8 of 8.) Line: 'If anyone asks -- you didn't see me.' Dry. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradi…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 17's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b17-canon-w4-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b17-canon-w4-0821/ep2-b17-canon-w4-0821-ipahead.png",
+     "name": "ep2-b17-canon-w4-0821-ipahead.png",
+     "bytes": 1299290,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b17-canon-w4-0821/jerry-canon-h37f-0821.png",
+     "name": "jerry-canon-h37f-0821.png",
+     "bytes": 9625,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b17-canon-w4-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, standing, turning away, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch, second goblin, crowd",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b17-canon-w4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT, NEW, AND PASSING ALL FIVE CLAUSES: S1 stand, S2 the shake (the hem travels one full out-and-back across roughly a third of the frame, feet planted), S3 turn and walk away, P1 plate fidelity (12.5 at f008 against a ceiling of 40), and P2 — the garment clause added after the previous take…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 17,
+    "episode": null,
+    "label": "Beat 17",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b16-canon-w4-0821-1787348585",
+   "task": "ep2-b16-canon-w4-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:46:42Z",
+   "finished_at": "2026-08-21T21:47:11Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b16-canon-w4-0821-1787348585.json",
+   "spec_file": "pipeline/jobs/ep2-b16-canon-w4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 16. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 16 OF THE CANON PATCH WAVE, ROUND w4. WHY -- 'Close on the sapling's leaf; the scavenger sits blurred behind it.' NOTE ON STAGING, and it is why this row exists at all: the shot is a leaf close-up and he is the blurred figure behind it, so this plate is the FIGURE, not the framing. The founder's verdict on this beat was 'old man goblin. very wrong', which means he is legible enough in the take to be judged, so the design has to be right even at this depth. THE RECIPE CHANGED WHOLESALE AT 1…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 16's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b16-canon-w4-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b16-canon-w4-0821/ep2-b16-canon-w4-0821-ipahead.png",
+     "name": "ep2-b16-canon-w4-0821-ipahead.png",
+     "bytes": 1086577,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b16-canon-w4-0821/jerry-canon-h37fsit-0821.png",
+     "name": "jerry-canon-h37fsit-0821.png",
+     "bytes": 12349,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b16-canon-w4-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, sitting, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b16-canon-w4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 16,
+    "episode": null,
+    "label": "Beat 16",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b15-canon-w4-0821-1787348581",
+   "task": "ep2-b15-canon-w4-0821",
+   "node": "002b-first-citizen",
+   "beat": 15,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:46:09Z",
+   "finished_at": "2026-08-21T21:46:36Z",
+   "duration_s": 27,
+   "sidecar": "farm-out/box/ep2-b15-canon-w4-0821-1787348581.json",
+   "spec_file": "pipeline/jobs/ep2-b15-canon-w4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 15. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 15 OF THE CANON PATCH WAVE, ROUND w4. GOOD LISTENER -- 'He tips his head down and sideways until his eyes are level with the two leaves, and talks to them from a hand's width away; both of them share the frame.' Line: 'You're a good listener.' Fond, and the warmest he is in the episode. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradict…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 15's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b15-canon-w4-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b15-canon-w4-0821/ep2-b15-canon-w4-0821-ipahead.png",
+     "name": "ep2-b15-canon-w4-0821-ipahead.png",
+     "bytes": 1214179,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b15-canon-w4-0821/jerry-canon-h37fcrouch-0821.png",
+     "name": "jerry-canon-h37fcrouch-0821.png",
+     "bytes": 10906,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b15-canon-w4-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, squatting, head tilted down and sideways, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b15-canon-w4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "SLATE — no footage has ever existed for this beat — AND ITS BLOCKER IS NOW NAMED. It was unknown until 2026-08-19: done_when needs HIM AND THE SAPLING IN THE SAME FRAME, and the acting was never the problem. 24 artifacts from the large 0815 inventory were judged, two MPS plates drawn, r1 scored 6 o…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 15,
+    "episode": null,
+    "label": "Beat 15",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b14-canon-w4-0821-1787348577",
+   "task": "ep2-b14-canon-w4-0821",
+   "node": "002b-first-citizen",
+   "beat": 14,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:45:35Z",
+   "finished_at": "2026-08-21T21:46:03Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b14-canon-w4-0821-1787348577.json",
+   "spec_file": "pipeline/jobs/ep2-b14-canon-w4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 14. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 14 OF THE CANON PATCH WAVE, ROUND w4. THE DEFENSE -- 'He picks at the dirt, embarrassed, glancing around.' Line: 'It was ONE apple. It fell off the cart...' He is arguing a case nobody asked him to argue, to a plant. Embarrassed, not sad. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, t…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 14's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b14-canon-w4-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b14-canon-w4-0821/ep2-b14-canon-w4-0821-ipahead.png",
+     "name": "ep2-b14-canon-w4-0821-ipahead.png",
+     "bytes": 1186324,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b14-canon-w4-0821/jerry-canon-h37fkneel-0821.png",
+     "name": "jerry-canon-h37fkneel-0821.png",
+     "bytes": 10377,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b14-canon-w4-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, blush, embarrassed, kneeling, picking at the dirt with one hand, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b14-canon-w4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "FIRST FOOTAGE THIS BEAT HAS EVER HAD IS IN THE CUT, AND IT DOES NOT PASS: M1 (hands to the dirt) and M4 (same figure, camera locked) PASS, M2 (the glance never returns) and M3 (the face reads sullen, not embarrassed) FAIL. It is in the cut because real footage of a beat beats a slate for review pur…",
+    "gate": "rendering now (2 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 14,
+    "episode": null,
+    "label": "Beat 14",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b08-canon-w4-0821-1787348574",
+   "task": "ep2-b08-canon-w4-0821",
+   "node": "002b-first-citizen",
+   "beat": 8,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:45:01Z",
+   "finished_at": "2026-08-21T21:45:29Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b08-canon-w4-0821-1787348574.json",
+   "spec_file": "pipeline/jobs/ep2-b08-canon-w4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 08. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 08 OF THE CANON PATCH WAVE, ROUND w4. INSIDE HIM -- 'Guard 2 lowers the clipboard and points at the scavenger's belly.' He is caught, and the thing he is caught with is already eaten. Sheepish. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the skin and the clothes. Every frame rendered…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 08's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b08-canon-w4-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b08-canon-w4-0821/ep2-b08-canon-w4-0821-ipahead.png",
+     "name": "ep2-b08-canon-w4-0821-ipahead.png",
+     "bytes": 1244922,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b08-canon-w4-0821/jerry-canon-h37f-0821.png",
+     "name": "jerry-canon-h37f-0821.png",
+     "bytes": 9625,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b08-canon-w4-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, blush, embarrassed, standing, head bowed, looking down, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b08-canon-w4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO PASSING VERDICT — both 0817 motion takes are is_show_content:false engine probes and ep2-b08-boardcomp-0818 is a pre-registered FAIL. Five conditioning rungs are now CLOSED BY MEASUREMENT across three axes (scale, stroke weight, hint class), and the reason is s…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 8,
+    "episode": null,
+    "label": "Beat 08",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b07-canon-w4-0821-1787348571",
+   "task": "ep2-b07-canon-w4-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:44:27Z",
+   "finished_at": "2026-08-21T21:44:55Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b07-canon-w4-0821-1787348571.json",
+   "spec_file": "pipeline/jobs/ep2-b07-canon-w4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 07. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 07 OF THE CANON PATCH WAVE, ROUND w4. CONFISCATE -- 'Guard 1 points at the scavenger, decisive.' He is the object of the sentence and has just been identified. Apprehension, not panic: the guards are absurd and he is starting to notice. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 07's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b07-canon-w4-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-canon-w4-0821/ep2-b07-canon-w4-0821-ipahead.png",
+     "name": "ep2-b07-canon-w4-0821-ipahead.png",
+     "bytes": 1163178,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-w4-0821/jerry-canon-h37f-0821.png",
+     "name": "jerry-canon-h37f-0821.png",
+     "bytes": 9625,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-w4-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, worried, standing, arms at sides, beside tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b07-canon-w4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b04-canon-w4-0821-1787348568",
+   "task": "ep2-b04-canon-w4-0821",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:43:53Z",
+   "finished_at": "2026-08-21T21:44:21Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b04-canon-w4-0821-1787348568.json",
+   "spec_file": "pipeline/jobs/ep2-b04-canon-w4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 04. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 04 OF THE CANON PATCH WAVE, ROUND w4. THE FOOTNOTE -- 'leans out from behind the trunk to look, and pulls straight back the moment he has looked'. THE PEEK, the founder's own restaging pick (A, 2026-08-20). The eyes are the whole beat. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 04's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b04-canon-w4-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b04-canon-w4-0821/ep2-b04-canon-w4-0821-ipahead.png",
+     "name": "ep2-b04-canon-w4-0821-ipahead.png",
+     "bytes": 1107071,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b04-canon-w4-0821/jerry-canon-h37fhunch-0821.png",
+     "name": "jerry-canon-h37fhunch-0821.png",
+     "bytes": 10582,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b04-canon-w4-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, worried, hunched over, leaning out sideways, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b04-canon-w4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: a clean close-up on his face holding his breath. The recorded residual is that it reads young, and the record says that is the s0 reference HE chose rather than a prompt fault — so there is no fix for the card to run. The only new artefact is a recovered 0813 balloo…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 4,
+    "episode": null,
+    "label": "Beat 04",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b03-canon-w4-0821-1787348565",
+   "task": "ep2-b03-canon-w4-0821",
+   "node": "002b-first-citizen",
+   "beat": 3,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:43:19Z",
+   "finished_at": "2026-08-21T21:43:47Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b03-canon-w4-0821-1787348565.json",
+   "spec_file": "pipeline/jobs/ep2-b03-canon-w4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 03. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 03 OF THE CANON PATCH WAVE, ROUND w4. BAD COVER -- 'crouches behind a trunk that hides roughly one-sixth of him'. The comedy is that he believes it is working, so the face is furtive rather than terrified -- held breath, not a scream. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the s…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 03's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b03-canon-w4-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b03-canon-w4-0821/ep2-b03-canon-w4-0821-ipahead.png",
+     "name": "ep2-b03-canon-w4-0821-ipahead.png",
+     "bytes": 1224275,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b03-canon-w4-0821/jerry-canon-h37fcrouch-0821.png",
+     "name": "jerry-canon-h37fcrouch-0821.png",
+     "bytes": 10906,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b03-canon-w4-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, furrowed brow, squatting, hiding behind a thin trunk, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b03-canon-w4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: refire-0814 reads the beat — he crouches and the cover is comically inadequate — but the size-mismatch joke reads weakly. The one available swap is deliberately NOT taken: s20260846 is the 0817 st-wave pick, yet all fifteen of its seeds carry done_when FAIL because…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 3,
+    "episode": null,
+    "label": "Beat 03",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b02-canon-w4-0821-1787348561",
+   "task": "ep2-b02-canon-w4-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T21:42:46Z",
+   "finished_at": "2026-08-21T21:43:15Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b02-canon-w4-0821-1787348561.json",
+   "spec_file": "pipeline/jobs/ep2-b02-canon-w4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 02. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 02 OF THE CANON PATCH WAVE, ROUND w4. THE SPRINT -- 'sprints into frame, skids, and dives behind the sapling's thin trunk'. He is running from the guards and has not seen the sapling yet. This is the most frightened he is in the episode. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, th…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 02's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b02-canon-w4-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b02-canon-w4-0821/ep2-b02-canon-w4-0821-ipahead.png",
+     "name": "ep2-b02-canon-w4-0821-ipahead.png",
+     "bytes": 1158576,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b02-canon-w4-0821/jerry-canon-h37fstride-0821.png",
+     "name": "jerry-canon-h37fstride-0821.png",
+     "bytes": 11197,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b02-canon-w4-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, open mouth, surprised, walking, arm outstretched, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b02-canon-w4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 2,
+    "episode": null,
+    "label": "Beat 02",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
   {
    "id": "ep2-b13-canon-w4-0821-1787348466",
    "task": "ep2-b13-canon-w4-0821",
@@ -27,9 +1887,15 @@
    "finished_at": "2026-08-21T21:41:49Z",
    "duration_s": 29,
    "sidecar": "farm-out/box/ep2-b13-canon-w4-0821-1787348466.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-w4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND w4. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", a…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
    "artifacts_dir": "farm-out/ep2-b13-canon-w4-0821",
    "outputs": [
     {
@@ -51,13 +1917,13 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-w4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
    "recipe": null,
    "init": null,
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "spec",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
@@ -3539,9 +5405,15 @@
    "finished_at": "2026-08-21T20:11:03Z",
    "duration_s": 370,
    "sidecar": "farm-out/box/ep2-b01-fignonly-s20260871-0821-1787339929.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b01-fignonly-s20260871-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 01'S SELECTION on review/ep2-beats-0821. Per lane A's instruction the beat's selection is fignonly + chroma + the best of one fresh seed batch; this is that batch. A candidate version, not a swap, and it does not touch the closed composite ruling.",
+    "why": "Beat 01's composite question is CLOSED -- the chroma composite was swapped in on 08-20 and the founder ruled it back out on 08-21 -- and nothing here reopens it. What the beat lacks is options: the founder is being shown one take of the shot that opens the episode. Its recorded open fault (the field moves with the fig) is already argued against in the negative in six separate terms, so a re-word has nothing left to say and the remaining lever is the draw. Two fresh seeds give the cold open a th…",
+    "success": "One 704x1280 121-frame mp4 in which the fig goes from green nub to a single deep purple fig AND THE FIELD DOES NOT MOVE WITH IT -- the grass blades and the background hold while the fruit changes. The incumbent's specific weakness, found by reading it tonight, is that its fig does not ripen so much as SWAP: it is teal and static from f000 to f087 and purple at f098, a colour change inside one 11-frame gap, and the fruit also relocates down the stem across that gap. A cell that ripens gradually…",
+    "owner": "iteration-campaign lane A (beats 01-10), 2026-08-21 night",
+    "est_minutes": 12,
+    "priority": 30
+   },
    "artifacts_dir": "farm-out/ep2-b01-fignonly-s20260871-0821",
    "outputs": [
     {
@@ -3557,9 +5429,9 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — spec missing or carries no payload",
+   "prompt": "On the thinnest branch of the tiny two-leaf sapling, the small green nub swells, darkens and rounds into a single deep purple fig -- the only thing in frame that moves. Detailed cinematic anime, warm amber backlight, hazy out-of-focus grassy field, soft glowing light, masterpiece, best quality, very aesthetic.",
+   "negative": "camera pan, camera tilt, zoom, dolly, push in, pull back, tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame, growing plant, sprouting, unfurling leaves, stem lengthening, leaves enlarging, plant enlarging, blooming, brightening, exposure change, overexposed, blown highlights, changing background",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
    "recipe": {
     "size": "704x1280",
     "frames": "121",
@@ -3571,8 +5443,12 @@
     "seed": 20260871,
     "seconds": 5.042
    },
+   "init": {
+    "path": "farm-out/ep2-b01-nubcomp-b-0818/b01-nubcomp-s20260826.png",
+    "sha256": "1b6d349204e50de0347c76a1e9092a26c90139f43fb1f3218bce635828534c36"
+   },
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "record",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT, NEW, AND PASSING. 01-cold-open-b01-nubgrow-b-s20260826-0818 is the only seed of six that cleared its pre-registered bar, 7 of 7 (G1 growth, G2 purple, G3 two leaves, G4 scale, G5 camera), off the founder's own 2026-08-13 route: inpaint a nub into frame 1 and grow it with the motion prom…",
@@ -3601,9 +5477,15 @@
    "finished_at": "2026-08-21T20:04:47Z",
    "duration_s": 373,
    "sidecar": "farm-out/box/ep2-b01-fignonly-s20260818-0821-1787339937.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b01-fignonly-s20260818-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 01'S SELECTION on review/ep2-beats-0821. Per lane A's instruction the beat's selection is fignonly + chroma + the best of one fresh seed batch; this is that batch. A candidate version, not a swap, and it does not touch the closed composite ruling.",
+    "why": "Beat 01's composite question is CLOSED -- the chroma composite was swapped in on 08-20 and the founder ruled it back out on 08-21 -- and nothing here reopens it. What the beat lacks is options: the founder is being shown one take of the shot that opens the episode. Its recorded open fault (the field moves with the fig) is already argued against in the negative in six separate terms, so a re-word has nothing left to say and the remaining lever is the draw. Two fresh seeds give the cold open a th…",
+    "success": "One 704x1280 121-frame mp4 in which the fig goes from green nub to a single deep purple fig AND THE FIELD DOES NOT MOVE WITH IT -- the grass blades and the background hold while the fruit changes. The incumbent's specific weakness, found by reading it tonight, is that its fig does not ripen so much as SWAP: it is teal and static from f000 to f087 and purple at f098, a colour change inside one 11-frame gap, and the fruit also relocates down the stem across that gap. A cell that ripens gradually…",
+    "owner": "iteration-campaign lane A (beats 01-10), 2026-08-21 night",
+    "est_minutes": 12,
+    "priority": 30
+   },
    "artifacts_dir": "farm-out/ep2-b01-fignonly-s20260818-0821",
    "outputs": [
     {
@@ -3619,9 +5501,9 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — spec missing or carries no payload",
+   "prompt": "On the thinnest branch of the tiny two-leaf sapling, the small green nub swells, darkens and rounds into a single deep purple fig -- the only thing in frame that moves. Detailed cinematic anime, warm amber backlight, hazy out-of-focus grassy field, soft glowing light, masterpiece, best quality, very aesthetic.",
+   "negative": "camera pan, camera tilt, zoom, dolly, push in, pull back, tripod, cut to another shot, scene change, different location, split screen, still image, freeze frame, growing plant, sprouting, unfurling leaves, stem lengthening, leaves enlarging, plant enlarging, blooming, brightening, exposure change, overexposed, blown highlights, changing background",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
    "recipe": {
     "size": "704x1280",
     "frames": "121",
@@ -3633,8 +5515,12 @@
     "seed": 20260818,
     "seconds": 5.042
    },
+   "init": {
+    "path": "farm-out/ep2-b01-nubcomp-b-0818/b01-nubcomp-s20260826.png",
+    "sha256": "1b6d349204e50de0347c76a1e9092a26c90139f43fb1f3218bce635828534c36"
+   },
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "record",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT, NEW, AND PASSING. 01-cold-open-b01-nubgrow-b-s20260826-0818 is the only seed of six that cleared its pre-registered bar, 7 of 7 (G1 growth, G2 purple, G3 two leaves, G4 scale, G5 camera), off the founder's own 2026-08-13 route: inpaint a nub into frame 1 and grow it with the motion prom…",
@@ -3663,9 +5549,15 @@
    "finished_at": "2026-08-21T19:58:28Z",
    "duration_s": 379,
    "sidecar": "farm-out/box/ep2-b10-reroll-s20260871-0821-1787339910.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b10-reroll-s20260871-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 10'S SELECTION on review/ep2-beats-0821 for the founder's morning pick. Never iterated; one take on offer. A candidate version, not a swap.",
+    "why": "Beat 10's headline fault -- the blank board faces the CAMERA instead of the partner -- is a CLOSED WORDING ROUTE and this rung spends nothing on it. The positive already says partner-facing three times ('extends it toward the other man at chest height so the empty back of it faces his partner'); round 3 and round 4 both failed the same way; and plate_lane_0817 isolated the mechanism -- 'A PROP DOES NOT [bind to a person clause], it attaches to whichever figure is drawn nearest'. episode-loop-v2…",
+    "success": "One 704x1280 121-frame mp4 in which THE CARRIED BOARD IS ONE OBJECT FROM FIRST FRAME TO LAST -- same colour, same shape, same hands -- and both men's hands stay drawn hands at f044, f052 and f061 where the incumbent melts them, with two guards in frame throughout and the field present at frame one. THE BOARD'S FACING IS NOT IN THIS BAR. It is pre-declared as out of scope here so that a clip cannot be reported as a failure for missing a target this rung never aimed at, and so that a clip that DO…",
+    "owner": "iteration-campaign lane A (beats 01-10), 2026-08-21 night",
+    "est_minutes": 6,
+    "priority": 19
+   },
    "artifacts_dir": "farm-out/ep2-b10-reroll-s20260871-0821",
    "outputs": [
     {
@@ -3681,9 +5573,9 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — spec missing or carries no payload",
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY IN THIS FRAME AND IT DOES NOT CHANGE - the green field, the grass, the hedge and the sky are all present from the first frame and stay exactly as they are. Nothing is added to the background and nothing is redrawn. TWO UNIFORMED PATROL GUARDS, BOTH GROWN MEN, ARE ALREADY IN THIS FRAME TOGETHER from the first frame to the last, standing close, and no third man is anywhere in it. THE NEAR GUARD FLIPS HIS BARK BOARD AND HOLDS ITS COMPLETELY BLANK BACK OUT TOWARD HIS PARTNER at chest height, shakes it once, and holds it there while his partner looks at it. Neither man walks anywhere. THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY IN THIS FRAME AND IT DOES NOT CHANGE - the green summer field, the low hedge, the treeline and the pale sky are all present from the first frame and stay exactly as they are, unmoving, for the whole shot. Nothing is added to the background and nothing is redrawn. TWO UNIFORMED PATROL GUARDS, BOTH GROWN MEN, are in the field: the near one in a brown patrol tunic with a cloth sash and a bark clipboard in his hands, and HIS PARTNER, a second guard in the same uniform, standing close beside him within arm's reach and facing him. THE NEAR GUARD FLIPS HIS BARK CLIPBOARD AROUND AND HOLDS ITS COMPLETELY BLANK BACK OUT TOWARD HIS PARTNER: he turns the board over, extends it toward the other man at chest height so the empty back of it faces his partner, shakes it once, and holds it there while his partner looks at it. Both men stay in frame and neither walks off. The board stays hand-sized. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "background appearing, scene forming, iris, wipe, dissolve, white background, blank background, one man alone, single figure, third guard, walking away, peaked cap, military cap, background changing, background appearing, scene forming, world fading in, iris, wipe, dissolve, empty field with one man, single figure, boy, child, bald guard, white hair, giant clipboard, oversized board, standing still, standing in one spot, standing at attention, stationary, motionless, frozen, still frame, no movement, loitering, armor, armour, breastplate, helmet, chainmail, knight, weapon, sword, spear, giant clipboard, oversized prop, board filling the frame, prop larger than his torso, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, face morphing, distorted face, warped face, extra eyes, bald, walking out of frame, floating head, disembodied head, scene change, shot change, dark, night, dusk, sunset, dim lighting, low key, shadows dominant, white background, blank background, empty background, plain white backdrop, void, isolated on white, character sheet, studio backdrop, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
    "recipe": {
     "size": "704x1280",
     "frames": "121",
@@ -3695,8 +5587,12 @@
     "seed": 20260871,
     "seconds": 5.042
    },
+   "init": {
+    "path": "farm-out/ep2-b05-scene-0814/05-the-patrol-ipa-r0-w015-s0.png",
+    "sha256": "e99ff9e129c303f63f383b44cdd38a59ca895fd496c58a2fd6d59cc3b2fcd8fa"
+   },
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "record",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut pairB take meets its own definition — both men present from frame one and throughout, the board raised with its blank face showing, field at frame one — and its recorded fault is the same guard cast read as beat 05. Two further facts, neither of them a r…",
@@ -3725,9 +5621,15 @@
    "finished_at": "2026-08-21T19:52:02Z",
    "duration_s": 370,
    "sidecar": "farm-out/box/ep2-b10-reroll-s20260818-0821-1787339922.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b10-reroll-s20260818-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 10'S SELECTION on review/ep2-beats-0821 for the founder's morning pick. Never iterated; one take on offer. A candidate version, not a swap.",
+    "why": "Beat 10's headline fault -- the blank board faces the CAMERA instead of the partner -- is a CLOSED WORDING ROUTE and this rung spends nothing on it. The positive already says partner-facing three times ('extends it toward the other man at chest height so the empty back of it faces his partner'); round 3 and round 4 both failed the same way; and plate_lane_0817 isolated the mechanism -- 'A PROP DOES NOT [bind to a person clause], it attaches to whichever figure is drawn nearest'. episode-loop-v2…",
+    "success": "One 704x1280 121-frame mp4 in which THE CARRIED BOARD IS ONE OBJECT FROM FIRST FRAME TO LAST -- same colour, same shape, same hands -- and both men's hands stay drawn hands at f044, f052 and f061 where the incumbent melts them, with two guards in frame throughout and the field present at frame one. THE BOARD'S FACING IS NOT IN THIS BAR. It is pre-declared as out of scope here so that a clip cannot be reported as a failure for missing a target this rung never aimed at, and so that a clip that DO…",
+    "owner": "iteration-campaign lane A (beats 01-10), 2026-08-21 night",
+    "est_minutes": 6,
+    "priority": 19
+   },
    "artifacts_dir": "farm-out/ep2-b10-reroll-s20260818-0821",
    "outputs": [
     {
@@ -3743,9 +5645,9 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — spec missing or carries no payload",
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY IN THIS FRAME AND IT DOES NOT CHANGE - the green field, the grass, the hedge and the sky are all present from the first frame and stay exactly as they are. Nothing is added to the background and nothing is redrawn. TWO UNIFORMED PATROL GUARDS, BOTH GROWN MEN, ARE ALREADY IN THIS FRAME TOGETHER from the first frame to the last, standing close, and no third man is anywhere in it. THE NEAR GUARD FLIPS HIS BARK BOARD AND HOLDS ITS COMPLETELY BLANK BACK OUT TOWARD HIS PARTNER at chest height, shakes it once, and holds it there while his partner looks at it. Neither man walks anywhere. THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY IN THIS FRAME AND IT DOES NOT CHANGE - the green summer field, the low hedge, the treeline and the pale sky are all present from the first frame and stay exactly as they are, unmoving, for the whole shot. Nothing is added to the background and nothing is redrawn. TWO UNIFORMED PATROL GUARDS, BOTH GROWN MEN, are in the field: the near one in a brown patrol tunic with a cloth sash and a bark clipboard in his hands, and HIS PARTNER, a second guard in the same uniform, standing close beside him within arm's reach and facing him. THE NEAR GUARD FLIPS HIS BARK CLIPBOARD AROUND AND HOLDS ITS COMPLETELY BLANK BACK OUT TOWARD HIS PARTNER: he turns the board over, extends it toward the other man at chest height so the empty back of it faces his partner, shakes it once, and holds it there while his partner looks at it. Both men stay in frame and neither walks off. The board stays hand-sized. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "background appearing, scene forming, iris, wipe, dissolve, white background, blank background, one man alone, single figure, third guard, walking away, peaked cap, military cap, background changing, background appearing, scene forming, world fading in, iris, wipe, dissolve, empty field with one man, single figure, boy, child, bald guard, white hair, giant clipboard, oversized board, standing still, standing in one spot, standing at attention, stationary, motionless, frozen, still frame, no movement, loitering, armor, armour, breastplate, helmet, chainmail, knight, weapon, sword, spear, giant clipboard, oversized prop, board filling the frame, prop larger than his torso, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, face morphing, distorted face, warped face, extra eyes, bald, walking out of frame, floating head, disembodied head, scene change, shot change, dark, night, dusk, sunset, dim lighting, low key, shadows dominant, white background, blank background, empty background, plain white backdrop, void, isolated on white, character sheet, studio backdrop, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
    "recipe": {
     "size": "704x1280",
     "frames": "121",
@@ -3757,8 +5659,12 @@
     "seed": 20260818,
     "seconds": 5.042
    },
+   "init": {
+    "path": "farm-out/ep2-b05-scene-0814/05-the-patrol-ipa-r0-w015-s0.png",
+    "sha256": "e99ff9e129c303f63f383b44cdd38a59ca895fd496c58a2fd6d59cc3b2fcd8fa"
+   },
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "record",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut pairB take meets its own definition — both men present from frame one and throughout, the board raised with its blank face showing, field at frame one — and its recorded fault is the same guard cast read as beat 05. Two further facts, neither of them a r…",
@@ -3787,9 +5693,15 @@
    "finished_at": "2026-08-21T19:45:46Z",
    "duration_s": 377,
    "sidecar": "farm-out/box/ep2-b05-decontra-s20260871-0821-1787339900.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b05-decontra-s20260871-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 05'S SELECTION on the per-beat review page review/ep2-beats-0821, which the founder picks from in the morning. Beat 05 has never been iterated and currently offers him exactly one take. This cell is a candidate version, not a swap: lane A does not swap cuts, it stages options.",
+    "why": "Beat 05's prompt contradicts beat 05's own ruling. done-definitions beats.05 records the lever as 'stage them ALREADY STANDING and scanning rather than jogging in - motion toward camera is what breaks it', and the shipped spec's positive still ends 'THE JOG IS THE SHOT - he is moving for most of it, not standing', while its negative forbids BOTH jogging AND standing still. Read frame by frame tonight the clip does what a pulled-apart instruction produces: the pair drifts, and guard 2's head dis…",
+    "success": "One 704x1280 121-frame mp4 in which BOTH GUARDS KEEP A DRAWN FACE FOR THE WHOLE CLIP -- no smear, no featureless head, at f048, f060 and f070 where the incumbent loses guard 2 -- and in which the two men are PLANTED, turning their heads to scan, with neither man jogging toward camera and neither leaving frame. Read by eye at 1:1 on consecutive frames through the motion window (pipeline/coldread_frames.py), never an evenly spread sheet. A clip that holds both faces and scans is a genuine option…",
+    "owner": "iteration-campaign lane A (beats 01-10), 2026-08-21 night",
+    "est_minutes": 6,
+    "priority": 19
+   },
    "artifacts_dir": "farm-out/ep2-b05-decontra-s20260871-0821",
    "outputs": [
     {
@@ -3805,9 +5717,9 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — spec missing or carries no payload",
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE TWO GUARDS ARE ALREADY STANDING STILL IN THE FIELD AND THEY DO NOT WALK OR RUN ANYWHERE. They stand side by side on their marks, planted, and the only movement in the shot is that they TURN THEIR HEADS SLOWLY TO SCAN the field - one looks left, the other looks right, their shoulders barely moving. Neither man steps toward the camera, neither crosses the frame, and neither leaves it. THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY IN THIS FRAME AND IT DOES NOT CHANGE - the green summer field, the grass, the hedge and the sky are all present from the first frame and stay exactly as they are for the whole shot. Nothing is added to the background and nothing is redrawn. BOTH MEN ARE ALREADY IN THIS FRAME TOO, from the first frame to the last, and no third man is anywhere in it. EXACTLY TWO GUARDS ARE IN THIS SHOT AND THERE IS NO THIRD MAN ANYWHERE IN THE FRAME - not behind them, not at an edge, not out of focus. Two men, a pair, and the frame is too tight to hold a third. TWO UNIFORMED PATROL GUARDS, BOTH GROWN MEN, ARE IN THIS SHOT TOGETHER FROM THE FIRST FRAME AND BOTH STAY IN IT: two different men side by side, not one man twice — the near one carrying a bark clipboard, the second walking level with him a stride to his side. Both are in a brown patrol tunic with a cloth sash of office and a wide belt. BEHIND HIM THE WORLD IS FULLY DRAWN AND FILLS EVERY PART OF THE FRAME HE DOES NOT: green summer grass runs to the bottom edge of the frame, a low hedge and a dark treeline cross the middle distance behind him, and a pale blue midday sky with thin cloud fills the top of the frame. No part of the frame is left empty or white. a uniformed patrol guard in a summer field — short brown hair, a matching brown patrol tunic with a cloth SASH OF OFFICE across his chest and a small brass BADGE pinned on it, a wide belt, dark trousers and boots, a bark clipboard in one hand. HE IS ALREADY STOPPED AND HE STAYS STOPPED. Both feet are planted from the first frame. He rocks forward over them a little and settles back, his shoulders come up, and he looks off to one side and then slowly back across the field. THE SCAN IS THE SHOT — his head and his eyes are what move, and his feet do not leave their marks. A SECOND uniformed guard in the same brown patrol tunic and sash is planted beside him, a half step behind, and scans the other way. TWO MEN, both in frame, both standing on their marks. They stay large in frame — knees to head, near enough to read their faces; the field does not push them small. A green summer field behind, a dark treeline on the horizon. Bright midday sunlight, clear and even, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "jogging, running, walking toward camera, approaching, camera lurch, motion blur, blurred figure, cropped torso, extreme close-up, one man alone, background appearing, scene forming, world fading in, iris, wipe, dissolve, white background, third guard, extra soldier, a crowd, peaked cap, military cap, three guards, third man, a crowd, a squad, extra soldier, group of men, one man alone, single figure, solo, lone guard, second person arriving late, empty field, boy, child, round soft body, white background, blank background, isolated on white, character sheet, poster art, flat vector art, silhouette, frozen, still frame, no movement, reading a clipboard, looking down at a clipboard, armor, armour, breastplate, helmet, chainmail, knight, plate mail, weapon, sword, spear, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, face morphing, distorted face, warped face, extra eyes, bald, walking out of frame, leaving the frame, floating head, disembodied head, scene change, shot change, dark, night, dusk, sunset, dim lighting, low key, shadows dominant, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
    "recipe": {
     "size": "704x1280",
     "frames": "121",
@@ -3819,8 +5731,12 @@
     "seed": 20260871,
     "seconds": 5.042
    },
+   "init": {
+    "path": "farm-out/ep2-b05-scene-0814/05-the-patrol-ipa-r0-w015-s0.png",
+    "sha256": "e99ff9e129c303f63f383b44cdd38a59ca895fd496c58a2fd6d59cc3b2fcd8fa"
+   },
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "record",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "HELD BY THE ONE OPEN TASTE CALL, AND IT IS GENUINELY HIS. The in-cut standB-trim take meets its own definition — seedB holds two guards for the whole clip in a field present at frame one and the scan reads — and its ONLY recorded fault is the cast read the open entry asks about. The card cannot rea…",
@@ -3849,9 +5765,15 @@
    "finished_at": "2026-08-21T19:39:23Z",
    "duration_s": 370,
    "sidecar": "farm-out/box/ep2-b05-decontra-s20260818-0821-1787339915.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b05-decontra-s20260818-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 05'S SELECTION on the per-beat review page review/ep2-beats-0821, which the founder picks from in the morning. Beat 05 has never been iterated and currently offers him exactly one take. This cell is a candidate version, not a swap: lane A does not swap cuts, it stages options.",
+    "why": "Beat 05's prompt contradicts beat 05's own ruling. done-definitions beats.05 records the lever as 'stage them ALREADY STANDING and scanning rather than jogging in - motion toward camera is what breaks it', and the shipped spec's positive still ends 'THE JOG IS THE SHOT - he is moving for most of it, not standing', while its negative forbids BOTH jogging AND standing still. Read frame by frame tonight the clip does what a pulled-apart instruction produces: the pair drifts, and guard 2's head dis…",
+    "success": "One 704x1280 121-frame mp4 in which BOTH GUARDS KEEP A DRAWN FACE FOR THE WHOLE CLIP -- no smear, no featureless head, at f048, f060 and f070 where the incumbent loses guard 2 -- and in which the two men are PLANTED, turning their heads to scan, with neither man jogging toward camera and neither leaving frame. Read by eye at 1:1 on consecutive frames through the motion window (pipeline/coldread_frames.py), never an evenly spread sheet. A clip that holds both faces and scans is a genuine option…",
+    "owner": "iteration-campaign lane A (beats 01-10), 2026-08-21 night",
+    "est_minutes": 6,
+    "priority": 19
+   },
    "artifacts_dir": "farm-out/ep2-b05-decontra-s20260818-0821",
    "outputs": [
     {
@@ -3867,9 +5789,9 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — spec missing or carries no payload",
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE TWO GUARDS ARE ALREADY STANDING STILL IN THE FIELD AND THEY DO NOT WALK OR RUN ANYWHERE. They stand side by side on their marks, planted, and the only movement in the shot is that they TURN THEIR HEADS SLOWLY TO SCAN the field - one looks left, the other looks right, their shoulders barely moving. Neither man steps toward the camera, neither crosses the frame, and neither leaves it. THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY IN THIS FRAME AND IT DOES NOT CHANGE - the green summer field, the grass, the hedge and the sky are all present from the first frame and stay exactly as they are for the whole shot. Nothing is added to the background and nothing is redrawn. BOTH MEN ARE ALREADY IN THIS FRAME TOO, from the first frame to the last, and no third man is anywhere in it. EXACTLY TWO GUARDS ARE IN THIS SHOT AND THERE IS NO THIRD MAN ANYWHERE IN THE FRAME - not behind them, not at an edge, not out of focus. Two men, a pair, and the frame is too tight to hold a third. TWO UNIFORMED PATROL GUARDS, BOTH GROWN MEN, ARE IN THIS SHOT TOGETHER FROM THE FIRST FRAME AND BOTH STAY IN IT: two different men side by side, not one man twice — the near one carrying a bark clipboard, the second walking level with him a stride to his side. Both are in a brown patrol tunic with a cloth sash of office and a wide belt. BEHIND HIM THE WORLD IS FULLY DRAWN AND FILLS EVERY PART OF THE FRAME HE DOES NOT: green summer grass runs to the bottom edge of the frame, a low hedge and a dark treeline cross the middle distance behind him, and a pale blue midday sky with thin cloud fills the top of the frame. No part of the frame is left empty or white. a uniformed patrol guard in a summer field — short brown hair, a matching brown patrol tunic with a cloth SASH OF OFFICE across his chest and a small brass BADGE pinned on it, a wide belt, dark trousers and boots, a bark clipboard in one hand. HE IS ALREADY STOPPED AND HE STAYS STOPPED. Both feet are planted from the first frame. He rocks forward over them a little and settles back, his shoulders come up, and he looks off to one side and then slowly back across the field. THE SCAN IS THE SHOT — his head and his eyes are what move, and his feet do not leave their marks. A SECOND uniformed guard in the same brown patrol tunic and sash is planted beside him, a half step behind, and scans the other way. TWO MEN, both in frame, both standing on their marks. They stay large in frame — knees to head, near enough to read their faces; the field does not push them small. A green summer field behind, a dark treeline on the horizon. Bright midday sunlight, clear and even, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "jogging, running, walking toward camera, approaching, camera lurch, motion blur, blurred figure, cropped torso, extreme close-up, one man alone, background appearing, scene forming, world fading in, iris, wipe, dissolve, white background, third guard, extra soldier, a crowd, peaked cap, military cap, three guards, third man, a crowd, a squad, extra soldier, group of men, one man alone, single figure, solo, lone guard, second person arriving late, empty field, boy, child, round soft body, white background, blank background, isolated on white, character sheet, poster art, flat vector art, silhouette, frozen, still frame, no movement, reading a clipboard, looking down at a clipboard, armor, armour, breastplate, helmet, chainmail, knight, plate mail, weapon, sword, spear, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, face morphing, distorted face, warped face, extra eyes, bald, walking out of frame, leaving the frame, floating head, disembodied head, scene change, shot change, dark, night, dusk, sunset, dim lighting, low key, shadows dominant, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
    "recipe": {
     "size": "704x1280",
     "frames": "121",
@@ -3881,8 +5803,12 @@
     "seed": 20260818,
     "seconds": 5.042
    },
+   "init": {
+    "path": "farm-out/ep2-b05-scene-0814/05-the-patrol-ipa-r0-w015-s0.png",
+    "sha256": "e99ff9e129c303f63f383b44cdd38a59ca895fd496c58a2fd6d59cc3b2fcd8fa"
+   },
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "record",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "HELD BY THE ONE OPEN TASTE CALL, AND IT IS GENUINELY HIS. The in-cut standB-trim take meets its own definition — seedB holds two guards for the whole clip in a field present at frame one and the scan reads — and its ONLY recorded fault is the cast read the open entry asks about. The card cannot rea…",
@@ -104402,6 +106328,304 @@
     "beat": 14,
     "episode": null,
     "label": "Beat 14",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b13-w4motioncurl-0822",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 13,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 13 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b13-w4motioncurl-0822.yaml",
+   "authored_at": 1787350526,
+   "story": {
+    "kind": "beat",
+    "beat": 13,
+    "episode": null,
+    "label": "Beat 13",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b07-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 13,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 07 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b07-w4motion-0822.yaml",
+   "authored_at": 1787350381,
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b17-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 17,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 13,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 17 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b17-w4motion-0822.yaml",
+   "authored_at": 1787349974,
+   "story": {
+    "kind": "beat",
+    "beat": 17,
+    "episode": null,
+    "label": "Beat 17",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b19-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 19,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 13,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 19 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b19-w4motion-0822.yaml",
+   "authored_at": 1787349974,
+   "story": {
+    "kind": "beat",
+    "beat": 19,
+    "episode": null,
+    "label": "Beat 19",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b08-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 8,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 13,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 08 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b08-w4motion-0822.yaml",
+   "authored_at": 1787349459,
+   "story": {
+    "kind": "beat",
+    "beat": 8,
+    "episode": null,
+    "label": "Beat 08",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b14-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 14,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 13,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 14 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b14-w4motion-0822.yaml",
+   "authored_at": 1787349459,
+   "story": {
+    "kind": "beat",
+    "beat": 14,
+    "episode": null,
+    "label": "Beat 14",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b15-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 15,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 13,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 15 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b15-w4motion-0822.yaml",
+   "authored_at": 1787349459,
+   "story": {
+    "kind": "beat",
+    "beat": 15,
+    "episode": null,
+    "label": "Beat 15",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b16-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 13,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 16 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b16-w4motion-0822.yaml",
+   "authored_at": 1787349459,
+   "story": {
+    "kind": "beat",
+    "beat": 16,
+    "episode": null,
+    "label": "Beat 16",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b20-w4motion-0822",
+   "node": "002b-first-citizen",
+   "beat": 20,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 13,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 20 on review/ep2-beats-0821. review/ep2-ship-0821 is not touched and no cut moves because this landed -- a clip here is a candidate, and a candidate becomes a pick only when he picks it.",
+   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b20-w4motion-0822.yaml",
+   "authored_at": 1787349459,
+   "story": {
+    "kind": "beat",
+    "beat": 20,
+    "episode": null,
+    "label": "Beat 20",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-guardcast2c-b-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "state": "authored",
+   "priority": 6,
+   "est_minutes": 2,
+   "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822, as candidate B of ten. Not a sample: cell A answered whether the pose terms work, and this cell only applies the answer to another of the five that held its own face.",
+   "why_first": "GUARD 2, CELL B RE-DRAWN AGAINST THE POSE: light sandy hair, long thin face, drooping eyelids, blank stare.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-guardcast2c-b-0822.yaml",
+   "authored_at": 1787349181
+  },
+  {
+   "id": "ep2-guardcast2c-d-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "state": "authored",
+   "priority": 6,
+   "est_minutes": 2,
+   "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822, as candidate D of ten. Not a sample: cell A answered whether the pose terms work, and this cell only applies the answer to another of the five that held its own face.",
+   "why_first": "GUARD 2, CELL D RE-DRAWN AGAINST THE POSE: shaved head, dark stubble, broad flat face, wide-set eyes, slack mouth.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-guardcast2c-d-0822.yaml",
+   "authored_at": 1787349181
+  },
+  {
+   "id": "ep2-guardcast2c-h-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "state": "authored",
+   "priority": 6,
+   "est_minutes": 2,
+   "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822, as candidate H of ten. Not a sample: cell A answered whether the pose terms work, and this cell only applies the answer to another of the five that held its own face.",
+   "why_first": "GUARD 2, CELL H RE-DRAWN AGAINST THE POSE: curly black hair, wide square face, thick neck, gormless grin.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-guardcast2c-h-0822.yaml",
+   "authored_at": 1787349181
+  },
+  {
+   "id": "ep2-guardcast2c-j-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "other",
+   "state": "authored",
+   "priority": 6,
+   "est_minutes": 2,
+   "consumer": "THE FOUNDER, on /review/ep2-guardcast2-0822, as candidate J of ten. Not a sample: cell A answered whether the pose terms work, and this cell only applies the answer to another of the five that held its own face.",
+   "why_first": "GUARD 2, CELL J RE-DRAWN AGAINST THE POSE: short red hair, freckles, heavy brow, blunt chin, blank stare.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-guardcast2c-j-0822.yaml",
+   "authored_at": 1787349181
+  },
+  {
+   "id": "ep2-b06-handsize-s20260818-0821",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 19,
+   "est_minutes": 6,
+   "consumer": "BEAT 06'S SELECTION on review/ep2-beats-0821 for the founder's morning pick. The beat currently offers one take that is 70% frozen frame. A candidate version, not a swap.",
+   "why_first": "This beat's bar says 'board hand-sized and readable' and its shipping fault is 'the bark board is the wrong size', and the positive prompt asks for the fault in its own words: 'The BOARD IS THE SUBJECT - held high and large,'.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b06-handsize-s20260818-0821.yaml",
+   "authored_at": 1787348622,
+   "story": {
+    "kind": "beat",
+    "beat": 6,
+    "episode": null,
+    "label": "Beat 06",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b06-handsize-s20260871-0821",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 19,
+   "est_minutes": 6,
+   "consumer": "BEAT 06'S SELECTION on review/ep2-beats-0821 for the founder's morning pick. The beat currently offers one take that is 70% frozen frame. A candidate version, not a swap.",
+   "why_first": "This beat's bar says 'board hand-sized and readable' and its shipping fault is 'the bark board is the wrong size', and the positive prompt asks for the fault in its own words: 'The BOARD IS THE SUBJECT - held high and large,'.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b06-handsize-s20260871-0821.yaml",
+   "authored_at": 1787348622,
+   "story": {
+    "kind": "beat",
+    "beat": 6,
+    "episode": null,
+    "label": "Beat 06",
     "moment": null,
     "why": "the script on main has no beat by this number"
    }
