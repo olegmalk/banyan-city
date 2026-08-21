@@ -1,0 +1,85 @@
+{
+ "apex": [
+  242.1,
+  650.4
+ ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
+ "erase_box": null,
+ "erased_px": 0,
+ "field_mean_luma": 112.7,
+ "height_px": 560.0,
+ "leaf_len_px": 151.2,
+ "leaves": [
+  {
+   "len": 151.2,
+   "node": [
+    241.1,
+    655.4
+   ],
+   "side": -1.0,
+   "tip": [
+    110.1,
+    608.6
+   ]
+  },
+  {
+   "len": 160.3,
+   "node": [
+    243.1,
+    650.4
+   ],
+   "side": 1.0,
+   "tip": [
+    354.4,
+    579.0
+   ]
+  }
+ ],
+ "light_dx": -0.967,
+ "light_dy": 0.255,
+ "lit_side": "left",
+ "mask_fraction": 0.039,
+ "palette": {
+  "dark": [
+   58,
+   68,
+   38
+  ],
+  "ink": [
+   5,
+   4,
+   4
+  ],
+  "light": [
+   125,
+   133,
+   72
+  ],
+  "mid": [
+   67,
+   79,
+   44
+  ],
+  "n_sampled": 72216,
+  "source": "the field's own greens"
+ },
+ "plant_extent": [
+  109,
+  355,
+  576,
+  1209
+ ],
+ "plant_fill_luma": 83.9,
+ "plant_fraction": 0.0211,
+ "plate": "farm-out/ep2-b02-canon-w2-0821/ep2-b02-canon-w2-0821-ipahead.png",
+ "plate_sha256": "b33a3b2fddee4603c95cd86bedb8df62df51378d44804e9d6b12c567e3637e57",
+ "root": [
+  320.0,
+  1205.0
+ ],
+ "size": [
+  832,
+  1216
+ ],
+ "tilt_deg": -8.0
+}
