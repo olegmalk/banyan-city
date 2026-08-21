@@ -1,0 +1,276 @@
+id: ep3-sapfld7-x02-0821
+task: ep3-sapfld7-x02-0821
+node: 002b-first-citizen
+beat: 16
+runner: box
+priority: 120
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: sapling-dataset lane, 2026-08-21 round 7 (the built-scene probe)
+consumer: 'THE LAST THIN AXIS IN pipeline/lora/manifest-sapling.yaml THAT A PLATE ROUND CAN MOVE. v3 is
+  44 frames over 17 plates and every one of those plates is an open landscape or a wood -- its own record
+  says so, and says why: the recipe that buys a drawable plane is a distant-landform clause and a landform
+  is outdoors by construction. This tests whether that is the recipe or just the habit. What eats a passing
+  plate is step 2 (pipeline/beat16_sapling_composite.py) and step 3 (pipeline/derive_sapling_lora_naturalize_0821.py).
+  A FAILING BATCH IS ALSO A RESULT AND IS WORTH THE CARD TIME: four cells that all collapse close an axis
+  that has been open since round 2 and stop a later round paying for it again. No cut, no beat, no promotion,
+  $0 on the card, filed at priority 120 so the beat campaign runs first, and DECISIONS.md item 18 is open
+  and is not touched by building the set the question is about.'
+success: 'One 832x1216 png at seed 20260982, cel dialect, of ''beside a low stone wall running into the
+  distance, green field'' under ''low sun behind thin cloud, warm diffuse glow'' at ''wide shot'': STRAIGHT
+  horizon, a clean drawable ground plane in the lower centre with NO built structure standing in it, no
+  plant, NO FIGURE, and a GREEN-DOMINANT region in the lower half. Three of these four cells name stone,
+  and stone is grey: w01 came back grey and the palette sampler found ZERO green-dominant pixels in its
+  whole lower half and refused the plate. A beautiful courtyard with a paved floor has failed.'
+why: 'THE MINIMAL BUILT FEATURE. One object, no interior, no enclosure -- a wall is a line in perspective
+  and little else, so this cell separates RECESSION from ENCLOSURE. If x01 fails and x02 passes, what
+  the checkpoint needs is a perspective line rather than a place; if both fail, recession without a landform
+  draws nothing and the axis closes.
+
+
+  THE RECIPE IS NOT UNDER TEST AND NEITHER IS THE LIGHT. Rounds 1-4 settled the recipe, round 5 spent
+  it and round 6 found the one lighting clause that keeps a green ground: the quality prefix, `no humans`,
+  `wide shot` with NO `low angle`, the negative, the checkpoint, the size, the steps, the cfg, the staging
+  and the nocontrol arm at 0.45 are inherited byte for byte from the round-4 control, and the lighting
+  is frozen at ''low sun behind thin cloud, warm diffuse glow'', which is w02''s. THE ONE VARIABLE IS
+  THE SCENE CLAUSE, and every value names a RECEDING FEATURE THAT IS NOT A LANDFORM.'
+est_minutes: 3
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\sapfld7-x02-0821\prompt.txt: masterpiece, best quality, very aesthetic, no humans, beside
+    a low stone wall running into the distance, green field, low sun behind thin cloud, warm diffuse glow,
+    wide shot
+  C:\banyan-farm\sapfld7-x02-0821\negative.txt: lowres, worst quality, low quality, text, watermark, 1boy,
+    1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery,
+    landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The parent and its twelve siblings only ran because a human scp'd\n# this file into <payload dir>\\\
+    src\\pipeline\\ by hand. This lane is\n# not awake to do that, so the job stages its own interpreter\
+    \ and\n# refuses to reach the GPU if the bytes are not the ones asserted.\nimport hashlib, os, urllib.request\n\
+    base = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \ndst = r\"C:\\banyan-farm\\sapfld7-x02-0821\\src\\pipeline\"\nwant = (\"controlnet_plate.py\", \"\
+    ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")\nos.makedirs(dst, exist_ok=True)\n\
+    with urllib.request.urlopen(base + want[0], timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\n\
+    if got != want[1]:\n    print(\"!! %s fetched with sha %s, expected %s\"\n          % (want[0], got,\
+    \ want[1]))\n    raise SystemExit(1)\nwith open(os.path.join(dst, want[0]), \"wb\") as fh:\n    fh.write(blob)\n\
+    print(\"staged\", want[0], got, \"->\", dst)\n"
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The parent and its twelve siblings only ran because a human scp'd\n# this file into <payload dir>\\\
+    src\\pipeline\\ by hand. This lane is\n# not awake to do that, so the job stages its own interpreter\
+    \ and\n# refuses to reach the GPU if the bytes are not the ones asserted.\nimport hashlib, os, urllib.request\n\
+    base = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \ndst = r\"C:\\banyan-farm\\sapfld7-x02-0821\\src\\pipeline\"\nwant = (\"controlnet_plate.py\", \"\
+    ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")\nos.makedirs(dst, exist_ok=True)\n\
+    with urllib.request.urlopen(base + want[0], timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\n\
+    if got != want[1]:\n    print(\"!! %s fetched with sha %s, expected %s\"\n          % (want[0], got,\
+    \ want[1]))\n    raise SystemExit(1)\nwith open(os.path.join(dst, want[0]), \"wb\") as fh:\n    fh.write(blob)\n\
+    print(\"staged\", want[0], got, \"->\", dst)\n"
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The parent and its twelve siblings only ran because a human scp'd\n# this file into <payload dir>\\\
+    src\\pipeline\\ by hand. This lane is\n# not awake to do that, so the job stages its own interpreter\
+    \ and\n# refuses to reach the GPU if the bytes are not the ones asserted.\nimport hashlib, os, urllib.request\n\
+    base = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \ndst = r\"C:\\banyan-farm\\sapfld7-x02-0821\\src\\pipeline\"\nwant = (\"controlnet_plate.py\", \"\
+    ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")\nos.makedirs(dst, exist_ok=True)\n\
+    with urllib.request.urlopen(base + want[0], timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\n\
+    if got != want[1]:\n    print(\"!! %s fetched with sha %s, expected %s\"\n          % (want[0], got,\
+    \ want[1]))\n    raise SystemExit(1)\nwith open(os.path.join(dst, want[0]), \"wb\") as fh:\n    fh.write(blob)\n\
+    print(\"staged\", want[0], got, \"->\", dst)\n"
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The parent and its twelve siblings only ran because a human scp'd\n# this file into <payload dir>\\\
+    src\\pipeline\\ by hand. This lane is\n# not awake to do that, so the job stages its own interpreter\
+    \ and\n# refuses to reach the GPU if the bytes are not the ones asserted.\nimport hashlib, os, urllib.request\n\
+    base = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \ndst = r\"C:\\banyan-farm\\sapfld7-x02-0821\\src\\pipeline\"\nwant = (\"controlnet_plate.py\", \"\
+    ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")\nos.makedirs(dst, exist_ok=True)\n\
+    with urllib.request.urlopen(base + want[0], timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\n\
+    if got != want[1]:\n    print(\"!! %s fetched with sha %s, expected %s\"\n          % (want[0], got,\
+    \ want[1]))\n    raise SystemExit(1)\nwith open(os.path.join(dst, want[0]), \"wb\") as fh:\n    fh.write(blob)\n\
+    print(\"staged\", want[0], got, \"->\", dst)\n"
+- name: hintskel
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\sapfld7-x02-0821\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\sapfld7-x02-0821\src
+  - --repo-commit
+  - d1d559d2a475b6d6260ac18a345bd2f65546b0f6
+  - --task
+  - ep3-sapfld7-x02-0821
+  - --arm
+  - nocontrol
+  - --control
+  - pipeline/control/b08-pose-skel-0819.png
+  - --control-sha256
+  - 09200bdf0d293f2555a4ee5430c3f9787dcccba8a6d783b7ff62cebafae89ac3
+  - --scale
+  - '0.45'
+  - --seed
+  - '20260982'
+  - --prompt-file
+  - C:\banyan-farm\sapfld7-x02-0821\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\sapfld7-x02-0821\negative.txt
+  - --out
+  - C:\banyan-farm\sapfld7-x02-0821\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Required by box_enqueue.courier_problems (2026-08-19): a job whose\n# artifacts live outside courier-box\\\
+    farm-out must have a step that\n# carries them there, because the courier pushes from farm-out and\
+    \ from\n# nowhere else. ep2-cnet-probe-0817 rendered perfectly and was invisible\n# for two days for\
+    \ want of exactly this.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/sapfld7-x02-0821/out\"\
+    \npay_dir = \"C:/banyan-farm/sapfld7-x02-0821\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep3-sapfld7-x02-0821\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep3-sapfld7-x02-0821-nocontrol.png*\"\
+    )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
+    /negative.txt\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst,\
+    \ os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep3-sapfld7-x02-0821.sha256\"\
+    ), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\n\
+    print(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files)\
+    \ >= 4 else 1)"
+artifacts:
+- C:\banyan-farm\sapfld7-x02-0821\out\ep3-sapfld7-x02-0821-nocontrol.png
+derivation:
+  parent: pipeline/jobs/ep3-sapfld4-u01-0821.yaml
+  by: pipeline/derive_sapling_field_r7_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - consumer
+  - owner
+  - success
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - clip77_measured_not_estimated
+  - derivation
+  - failure_predicted_in_advance
+  - the_cargo_i_carried_without_warrant
+  - the_finding_that_bought_this_round
+  - the_one_variable
+  - this_cell
+  - what_rounds_1_to_3_cost_and_what_they_bought
+  retokened:
+  - sapfld4-u01-0821 -> sapfld7-x02-0821
+  - ep3-sapfld4-u01-0821 -> ep3-sapfld7-x02-0821
+  overrides_applied_and_asserted:
+    key:priority:
+    - key priority = 120
+    payload:prompt.txt:
+    - payload prompt.txt (113 -> 173 chars)
+    seed:
+    - step hintskel --seed (20260941 -> 20260982)
+  seed: 20260982
+bar: "FOUR PLATES, JUDGED AS ONE CONTACT SHEET, BY EYE AT 1:1. THERE IS NO\nPLANT AND NO FIGURE IN ANY\
+  \ OF THESE PICTURES AND BOTH ABSENCES ARE CORRECT.\n  D1 CEL, NOT PHOTO, NOT PAINTING. Flat fills, clean\
+  \ ink linework, the\n     episode's dialect. This is the clause the ep2-b16-field batch lost all\n \
+  \    four on, and it is the first one read. Bokeh, painterly rendering or a\n     photographic ground\
+  \ plane REJECTS the plate -- you cannot draw a sharp\n     cel seedling into a soft foreground without\
+  \ it reading as a decal.\n  D2 A CLEAN DRAWABLE GROUND PLANE in the lower centre, wide and tall enough\n\
+  \     to root a sapling at plate scale. Blades of grass crossing it are fine.\n     A rock, a flower,\
+  \ a shrub, a drawn plant or any structure is NOT: the\n     0.30 pass PRESERVES a structure it finds\
+  \ in the init (12 of 40 steps from\n     a latent that still carries it), so the composite would have\
+  \ to fight it.\n  D3 ZERO FIGURES. Not a goblin, not a human, not an animal, not a silhouette\n    \
+  \ on the horizon. A plate with any figure in it is REJECTED AND DELETED,\n     not cropped -- this lane\
+  \ may not render the scavenger and a frame that\n     contains him is not curated into a training set.\n\
+  \  D4 THE LIGHT HAS A DIRECTION. beat16_sapling_composite.py measures the\n     plate's own low-pass\
+  \ luminance gradient and carries it into the drawn\n     plant. A flat, directionless plate makes that\
+  \ measurement a no-op and\n     the composite reads as pasted.\n  D5 THE PALETTE IS THIS SHOW'S. The\
+  \ composite samples its greens FROM THE\n     PLATE, so an off-palette plate produces an off-palette\
+  \ sapling and the\n     frame teaches the LoRA the wrong colour.\nNOT SCORED: whether the picture is\
+  \ a good shot. None of these is a shot, none\nenters a cut, and none goes near review/ep2-ship-0821.\
+  \ They are ground planes\nfor an instrument.\nNOT SCORED: variety WITHIN a cell. The variety this batch\
+  \ is bought for is\nBETWEEN cells and it is measured at the manifest, not here."
+the_one_variable: THE SCENE CLAUSE ('beside a low stone wall running into the distance, green field').
+  The lighting is frozen at 'low sun behind thin cloud, warm diffuse glow' and the framing at 'wide shot';
+  everything else is the round-4 control's.
+this_cell: THE MINIMAL BUILT FEATURE. One object, no interior, no enclosure -- a wall is a line in perspective
+  and little else, so this cell separates RECESSION from ENCLOSURE. If x01 fails and x02 passes, what
+  the checkpoint needs is a perspective line rather than a place; if both fail, recession without a landform
+  draws nothing and the axis closes.
+the_rule_this_batch_tests: 'ROUND 2 SAID A LANDFORM **OR A RECEDING FEATURE** BUYS A DRAWABLE GROUND PLANE,
+  AND ONLY THE FIRST HALF HAS EVER BEEN TESTED. Every cell of rounds 1-6 named a hill, a mountain, a ridge,
+  a treeline or a distant field. These four name recession with NO landform in it -- a colonnade, a wall
+  in perspective, a lane between houses -- and one control that names the landform. Falsifiable in one
+  batch: if all three built cells come back as macro texture the way round 1''s ground-cover clauses did,
+  then recession is not the mechanism, landforms are, and this dataset is outdoors permanently.'
+why_four_cells: A PROBE, not a breadth batch, and the second one in a row. Round 1 filed ten cells off
+  a ratified recipe and review/ep3-sapling-dataset-0821/plates-0821.yaml records in this lane's own words
+  that a four-cell probe would have found its failure for 40% of the card time. Round 6 was four cells
+  and answered more than round 5's fourteen. x04 is the CONTROL so a batch-wide failure can be told apart
+  from the rule being wrong.
+failure_predicted_in_advance: 'FIRST, AND IT IS THE ONE THIS TREE HAS THE WORST RECORD ON: A FIGURE. The
+  negatives here have failed to hold position five times, and the only reason rounds 5 and 6 went 22 for
+  22 clean is that they asked for EMPTY LANDSCAPES, where there is nobody for the checkpoint to put in.
+  A courtyard and a village lane are places people live, and this is the hardest that ban has ever been
+  pushed. A plate with a figure in it is DELETED under D3, not cropped -- so a batch that comes back populated
+  costs its whole card time and returns the finding that built scenes are unreachable for this lane at
+  this negative, which is worth knowing and is not worth a sixth attempt at rewording the ban.
+
+  SECOND: THE STONE IS GREY AND GREY STARVES THE PALETTE. w01 was refused at step 2 with ZERO green-dominant
+  pixels in its whole lower half. A courtyard floored in flagstones or a lane floored in cobbles is the
+  same refusal arriving through a MATERIAL word instead of a lighting one. Every cell names grass, lawn
+  or verges first for exactly this reason, and round 5 proved that putting the green word first did not
+  save the water cells.
+
+  THIRD: THE BUILDING STANDS IN THE ROOTABLE STRIP. Round 3 pre-registered this shape for treelines and
+  it did not happen; round 5 pre-registered it for water and it happened 3 of 3. A wall or a house wall
+  crossing the lower centre is a STRUCTURE, and D2 rejects a plate whose plane has one in it because the
+  0.30 pass preserves what it finds in the init.
+
+  FOURTH, AND IT INVALIDATES THE BATCH RATHER THAN ANSWERING IT: x04, the control, fails. w02''s words
+  at a new seed producing tan grass or no plane would mean round 6''s warm-light finding rests on one
+  picture. Read x04 first.'
+clip77_measured_not_estimated: prompt 39 of 77, counted offline on animagine's own vocab before this file
+  was written; negative inherited from the round-4 control at 71 of 77.
+priority_is_deliberate: '120, and box_runner sorts ready/ by (priority, name) ASCENDING, so a LOWER number
+  runs first and an unset priority defaults to 100. This is therefore behind even an unmarked job. Two
+  iteration-campaign lanes (beats 01-10 and 11-21) are filing ship work to this same card tonight -- at
+  15 -- and a variety probe does not preempt ship work. This lane also does NOT refill after these four:
+  the campaign owns the card.'
