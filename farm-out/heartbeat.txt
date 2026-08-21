@@ -4082,3 +4082,5 @@
 20:44:28Z DONE task=ep2-guardcast-l-0822-1787344470 rc=0 artifacts=1
 20:44:34Z STARTED task=ep2-b03-crouchlife-s2-0822-1787344275 attempt=1 on box-runner
 20:50:35Z DONE task=ep2-b03-crouchlife-s2-0822-1787344275 rc=0 artifacts=1
+20:50:42Z STARTED task=ep2-b04-canonmotion-s2-0822-1787344305 attempt=1 on box-runner
+20:56:40Z DONE task=ep2-b04-canonmotion-s2-0822-1787344305 rc=0 artifacts=1
