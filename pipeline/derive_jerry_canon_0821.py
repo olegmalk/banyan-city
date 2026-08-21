@@ -134,10 +134,32 @@ NEG_R2 = ("extra head, disembodied head, multiple heads, floating head, "
           "orange eyes, glowing eyes, red eyes, saturated, high contrast")
 
 
+def _strip_terms(where, clause, terms):
+    """Delete named comma terms from a clause, refusing a term that is absent.
+
+    SUBTRACTION IS A LEVER THIS DERIVER DID NOT HAVE and the round-nine order
+    needs it: the founder's eye is an off-white field with a tiny pupil, and
+    the words `slit pupils` / `constricted pupils` in the positive and
+    `blank eyes` / `no pupils` in the negative are all pushing AWAY from it.
+    `--pos-add` cannot un-say a word. A silent no-op would be the dangerous
+    failure -- a rung recorded as "eye words removed" whose frame still had
+    them -- so a term that is not in the clause is a hard stop, not a warning.
+    """
+    if not terms:
+        return clause
+    parts = [t.strip() for t in clause.split(",")]
+    for term in [t.strip() for t in terms.split("|") if t.strip()]:
+        if term not in parts:
+            raise SystemExit("!! %s: cannot strip %r -- it is not a term in "
+                             "%r" % (where, term, clause))
+        parts.remove(term)
+    return ", ".join(parts)
+
+
 def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
          extra_keys=None, neg_add=None, ip_scale=None, ip_ref=None,
          pos_add=None, pose_override=None, pose_words_override=None,
-         control_scale=None, seed=None):
+         control_scale=None, seed=None, pos_strip=None, neg_strip=None):
     if beat not in C.WAVE:
         raise SystemExit("!! beat %r is not in the wave" % beat)
     pose, pose_words, default_emotion, stage = C.WAVE[beat]
@@ -152,6 +174,8 @@ def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
         # the pose and location stay at the tail where CLIP-77 protects them.
         prompt = prompt.replace(C.IDENTITY, C.IDENTITY + ", " + pos_add, 1)
     negative = C.NEGATIVE + ((", " + neg_add) if neg_add else "")
+    prompt = _strip_terms("%s prompt" % beat, prompt, pos_strip)
+    negative = _strip_terms("%s negative" % beat, negative, neg_strip)
     ip_scale = ip_scale or C.IP_SCALE
     control_scale = control_scale or C.CONTROL_SCALE
     seed = seed or C.SEED
@@ -172,6 +196,9 @@ def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
                            ref_sha256=ip_ref_sha, scale=ip_scale),
         "stage_direction": stage,
         "bar": BAR,
+        "word_side_strips": (
+            "positive -%s ; negative -%s" % (pos_strip or "nothing",
+                                             neg_strip or "nothing")),
         "the_one_variable": (
             "THE BEAT -- its skeleton pose (%s) at head_frac %.3f, its pose "
             "words, its emotion (`%s`) and the mask that skeleton implies. The "
@@ -362,6 +389,10 @@ def main(argv=None):
     ap.add_argument("--emotion")
     ap.add_argument("--neg-add", help="appended to the negative")
     ap.add_argument("--pos-add", help="appended to the IDENTITY clause")
+    ap.add_argument("--pos-strip", help="pipe-separated terms DELETED from the "
+                                        "positive; absent term = hard stop")
+    ap.add_argument("--neg-strip", help="pipe-separated terms DELETED from the "
+                                        "negative; absent term = hard stop")
     ap.add_argument("--ip-scale")
     ap.add_argument("--ip-ref")
     ap.add_argument("--pose", help="skeleton pose override (a rung lever)")
@@ -394,7 +425,8 @@ def main(argv=None):
              neg_add=a.neg_add, pos_add=a.pos_add, ip_scale=a.ip_scale,
              ip_ref=a.ip_ref, pose_override=a.pose,
              pose_words_override=a.pose_words,
-             control_scale=a.control_scale, seed=a.seed)
+             control_scale=a.control_scale, seed=a.seed,
+             pos_strip=a.pos_strip, neg_strip=a.neg_strip)
         return 0
     ap.error("pass --sample, --wave or --beat N")
 

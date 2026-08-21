@@ -337,6 +337,31 @@ REF_SHA = {
     # hypotheses for the ghost head every round-two rung drew.
     "jerry-canon-sq45-0821":
         "066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c",
+    # 58.9% encoded coverage. ROUND NINE, and it exists because the founder
+    # vetoed the whole w2 sweep on 2026-08-22 -- "that aint my goblin" -- on the
+    # EYES. Diffed at 1:1 against taste/refs/goblin-canon-founder-0821.png, the
+    # w2 plates draw WIDE ROUND eyes with large green irises and white sclera;
+    # his image draws a narrow almond eye that is an OFF-WHITE FIELD with a tiny
+    # dark pupil, a heavy upper lid, eyebags under it and a thin brow arc well
+    # above. Nothing about that eye is carried by a booru tag -- `slit pupils`
+    # on animagine draws a big iris with a slit in it, which is the defect --
+    # so it has to come from the adapter, and at sq45 the adapter was handing
+    # CLIP a face 28.3% of its pixels with eyes about 22 px across. sq65 is the
+    # same crop, same square canvas, same flood-filled field, scaled so the head
+    # fills the encoder: eyes ~34 px, coverage 58.9%. The builder REFUSES
+    # anything that would cut the crop, so the cranial dome and both ear tips
+    # still survive CLIPImageProcessor's centre crop -- the k3 amputation this
+    # law was written for cannot happen here.
+    #
+    # NOT 0.20-0.25, WHICH IS WHAT THE NIGHT ORDER ASKED FOR, and the reason is
+    # measured rather than argued: at head-frac 0.20-0.25 the encoder sees
+    # 3.9-6.7% subject, and that is the EXACT configuration rounds four to seven
+    # spent four rungs falsifying -- it is where the hard eye patch came from,
+    # and r8's finding is that the fix was MORE reference detail, not less. The
+    # order's own words were "re-cut to emphasize the eye region"; in this
+    # builder's units emphasis is UP.
+    "jerry-canon-sq65-0821":
+        "06ff0c067b3507a6dba1d9918385d59ead85bb361a6a4deff7dfec8f48525cbc",
 }
 # 1.0, NOT k6a's 0.7, AND THE PAIR (sq45, 1.0) IS ONE FINDING, NOT TWO DIALS.
 # Rounds four to seven all drew a HARD PATCH OVER ONE EYE -- a black lozenge, a
