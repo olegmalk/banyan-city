@@ -3848,3 +3848,5 @@
 14:10:34Z box-runner idle ready=0 failed=80
 14:16:49Z STARTED task=ep2-b01-field-s1-0821-1787321807 attempt=1 on box-runner
 14:17:08Z DONE task=ep2-b01-field-s1-0821-1787321807 rc=0 artifacts=1
+14:17:14Z STARTED task=ep2-b07-canon-e1-0821-1787321811 attempt=1 on box-runner
+14:17:43Z DONE task=ep2-b07-canon-e1-0821-1787321811 rc=0 artifacts=1
