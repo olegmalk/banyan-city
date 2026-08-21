@@ -1,0 +1,254 @@
+id: ep3-sapfld4-u01-0821
+task: ep3-sapfld4-u01-0821
+node: 002b-first-citizen
+beat: 16
+runner: box
+priority: 41
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: sapling-dataset lane, 2026-08-21 round 3
+consumer: beat16_sapling_composite.py, which draws a VERTICAL stem at a measured root point and therefore
+  needs a plate whose horizon is straight. Round 3 bought the ground plane and bent it; these plates are
+  the same planes without the curve, and they are what step 2 of the sapling dataset actually consumes.
+  No cut, no beat, no promotion.
+success: One 832x1216 png at seed 20260941, cel dialect, of in a green meadow, distant hills, clear sky,
+  day at 'wide shot', with a STRAIGHT horizon and a clean drawable ground plane in the lower centre, no
+  plant and no figure. A curved horizon is a FAIL here even where round 3 let it pass. Judged by eye at
+  1:1 with its seven siblings.
+why: 'THE CONTROL. t02 -- round 3''s cleanest cell -- with `low angle` removed and nothing else touched.
+  This one cell answers whether the curvature was the framing word.
+
+
+  ROUND 2 CORRECTED ITSELF AT r02. `wide shot, low angle` does not buy a ground plane -- naming something
+  FAR AWAY does. r02 is r01 with `wildflowers in the distance` deleted and nothing else changed, and it
+  collapsed back to the same magnified grass `close-up` gave in round 1. Every cell here carries an explicit
+  distance clause, and the wildflowers are dropped because they supplied depth and littered the near foreground
+  at the same time.'
+est_minutes: 3
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\sapfld4-u01-0821\prompt.txt: masterpiece, best quality, very aesthetic, no humans, in
+    a green meadow, distant hills, clear sky, day, wide shot
+  C:\banyan-farm\sapfld4-u01-0821\negative.txt: lowres, worst quality, low quality, text, watermark, 1boy,
+    1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery,
+    landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The parent and its twelve siblings only ran because a human scp'd\n# this file into <payload dir>\\\
+    src\\pipeline\\ by hand. This lane is\n# not awake to do that, so the job stages its own interpreter\
+    \ and\n# refuses to reach the GPU if the bytes are not the ones asserted.\nimport hashlib, os, urllib.request\n\
+    base = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \ndst = r\"C:\\banyan-farm\\sapfld4-u01-0821\\src\\pipeline\"\nwant = (\"controlnet_plate.py\", \"\
+    ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")\nos.makedirs(dst, exist_ok=True)\n\
+    with urllib.request.urlopen(base + want[0], timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\n\
+    if got != want[1]:\n    print(\"!! %s fetched with sha %s, expected %s\"\n          % (want[0], got,\
+    \ want[1]))\n    raise SystemExit(1)\nwith open(os.path.join(dst, want[0]), \"wb\") as fh:\n    fh.write(blob)\n\
+    print(\"staged\", want[0], got, \"->\", dst)\n"
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The parent and its twelve siblings only ran because a human scp'd\n# this file into <payload dir>\\\
+    src\\pipeline\\ by hand. This lane is\n# not awake to do that, so the job stages its own interpreter\
+    \ and\n# refuses to reach the GPU if the bytes are not the ones asserted.\nimport hashlib, os, urllib.request\n\
+    base = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \ndst = r\"C:\\banyan-farm\\sapfld4-u01-0821\\src\\pipeline\"\nwant = (\"controlnet_plate.py\", \"\
+    ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")\nos.makedirs(dst, exist_ok=True)\n\
+    with urllib.request.urlopen(base + want[0], timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\n\
+    if got != want[1]:\n    print(\"!! %s fetched with sha %s, expected %s\"\n          % (want[0], got,\
+    \ want[1]))\n    raise SystemExit(1)\nwith open(os.path.join(dst, want[0]), \"wb\") as fh:\n    fh.write(blob)\n\
+    print(\"staged\", want[0], got, \"->\", dst)\n"
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The parent and its twelve siblings only ran because a human scp'd\n# this file into <payload dir>\\\
+    src\\pipeline\\ by hand. This lane is\n# not awake to do that, so the job stages its own interpreter\
+    \ and\n# refuses to reach the GPU if the bytes are not the ones asserted.\nimport hashlib, os, urllib.request\n\
+    base = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \ndst = r\"C:\\banyan-farm\\sapfld4-u01-0821\\src\\pipeline\"\nwant = (\"controlnet_plate.py\", \"\
+    ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")\nos.makedirs(dst, exist_ok=True)\n\
+    with urllib.request.urlopen(base + want[0], timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\n\
+    if got != want[1]:\n    print(\"!! %s fetched with sha %s, expected %s\"\n          % (want[0], got,\
+    \ want[1]))\n    raise SystemExit(1)\nwith open(os.path.join(dst, want[0]), \"wb\") as fh:\n    fh.write(blob)\n\
+    print(\"staged\", want[0], got, \"->\", dst)\n"
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The parent and its twelve siblings only ran because a human scp'd\n# this file into <payload dir>\\\
+    src\\pipeline\\ by hand. This lane is\n# not awake to do that, so the job stages its own interpreter\
+    \ and\n# refuses to reach the GPU if the bytes are not the ones asserted.\nimport hashlib, os, urllib.request\n\
+    base = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \ndst = r\"C:\\banyan-farm\\sapfld4-u01-0821\\src\\pipeline\"\nwant = (\"controlnet_plate.py\", \"\
+    ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")\nos.makedirs(dst, exist_ok=True)\n\
+    with urllib.request.urlopen(base + want[0], timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\n\
+    if got != want[1]:\n    print(\"!! %s fetched with sha %s, expected %s\"\n          % (want[0], got,\
+    \ want[1]))\n    raise SystemExit(1)\nwith open(os.path.join(dst, want[0]), \"wb\") as fh:\n    fh.write(blob)\n\
+    print(\"staged\", want[0], got, \"->\", dst)\n"
+- name: hintskel
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\sapfld4-u01-0821\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\sapfld4-u01-0821\src
+  - --repo-commit
+  - d1d559d2a475b6d6260ac18a345bd2f65546b0f6
+  - --task
+  - ep3-sapfld4-u01-0821
+  - --arm
+  - nocontrol
+  - --control
+  - pipeline/control/b08-pose-skel-0819.png
+  - --control-sha256
+  - 09200bdf0d293f2555a4ee5430c3f9787dcccba8a6d783b7ff62cebafae89ac3
+  - --scale
+  - '0.45'
+  - --seed
+  - '20260941'
+  - --prompt-file
+  - C:\banyan-farm\sapfld4-u01-0821\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\sapfld4-u01-0821\negative.txt
+  - --out
+  - C:\banyan-farm\sapfld4-u01-0821\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# Required by box_enqueue.courier_problems (2026-08-19): a job whose\n# artifacts live outside courier-box\\\
+    farm-out must have a step that\n# carries them there, because the courier pushes from farm-out and\
+    \ from\n# nowhere else. ep2-cnet-probe-0817 rendered perfectly and was invisible\n# for two days for\
+    \ want of exactly this.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/sapfld4-u01-0821/out\"\
+    \npay_dir = \"C:/banyan-farm/sapfld4-u01-0821\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep3-sapfld4-u01-0821\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep3-sapfld4-u01-0821-nocontrol.png*\"\
+    )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
+    /negative.txt\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst,\
+    \ os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep3-sapfld4-u01-0821.sha256\"\
+    ), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\n\
+    print(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files)\
+    \ >= 4 else 1)"
+artifacts:
+- C:\banyan-farm\sapfld4-u01-0821\out\ep3-sapfld4-u01-0821-nocontrol.png
+derivation:
+  parent: pipeline/jobs/ep3-sapfld3-t02-0821.yaml
+  by: pipeline/derive_sapling_field_r4_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - consumer
+  - owner
+  - success
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - clip77_measured_not_estimated
+  - derivation
+  - failure_predicted_in_advance
+  - the_finding_that_bought_this_round
+  - the_one_variable
+  - this_cell
+  - what_rounds_1_and_2_cost_and_what_they_bought
+  retokened:
+  - sapfld3-t02-0821 -> sapfld4-u01-0821
+  - ep3-sapfld3-t02-0821 -> ep3-sapfld4-u01-0821
+  overrides_applied_and_asserted:
+    key:priority:
+    - key priority = 41
+    payload:prompt.txt:
+    - payload prompt.txt (124 -> 113 chars)
+    seed:
+    - step hintskel --seed (20260932 -> 20260941)
+  seed: 20260941
+bar: "EIGHT PLATES, JUDGED AS ONE CONTACT SHEET, BY EYE AT 1:1. THERE IS NO\nPLANT AND NO FIGURE IN ANY\
+  \ OF THESE PICTURES AND BOTH ABSENCES ARE CORRECT.\n  D1 CEL, NOT PHOTO, NOT PAINTING. Flat fills, clean\
+  \ ink linework, the\n     episode's dialect. This is the clause the ep2-b16-field batch lost all\n \
+  \    four on, and it is the first one read. Bokeh, painterly rendering or a\n     photographic ground\
+  \ plane REJECTS the plate -- you cannot draw a sharp\n     cel seedling into a soft foreground without\
+  \ it reading as a decal.\n  D2 A CLEAN DRAWABLE GROUND PLANE in the lower centre, wide and tall enough\n\
+  \     to root a sapling at plate scale. Blades of grass crossing it are fine.\n     A rock, a flower,\
+  \ a shrub, a drawn plant or any structure is NOT: the\n     0.30 pass PRESERVES a structure it finds\
+  \ in the init (12 of 40 steps from\n     a latent that still carries it), so the composite would have\
+  \ to fight it.\n  D3 ZERO FIGURES. Not a goblin, not a human, not an animal, not a silhouette\n    \
+  \ on the horizon. A plate with any figure in it is REJECTED AND DELETED,\n     not cropped -- this lane\
+  \ may not render the scavenger and a frame that\n     contains him is not curated into a training set.\n\
+  \  D4 THE LIGHT HAS A DIRECTION. beat16_sapling_composite.py measures the\n     plate's own low-pass\
+  \ luminance gradient and carries it into the drawn\n     plant. A flat, directionless plate makes that\
+  \ measurement a no-op and\n     the composite reads as pasted.\n  D5 THE PALETTE IS THIS SHOW'S. The\
+  \ composite samples its greens FROM THE\n     PLATE, so an off-palette plate produces an off-palette\
+  \ sapling and the\n     frame teaches the LoRA the wrong colour.\nNOT SCORED: whether the picture is\
+  \ a good shot. None of these is a shot, none\nenters a cut, and none goes near review/ep2-ship-0821.\
+  \ They are ground planes\nfor an instrument.\nNOT SCORED: variety WITHIN a cell. The variety this batch\
+  \ is bought for is\nBETWEEN cells and it is measured at the manifest, not here."
+the_one_variable: THE SCENE-AND-LIGHTING CLAUSE ('in a green meadow, distant hills, clear sky, day'),
+  and every value of it names something in the distance. 'wide shot, low angle' is still p09's byte for
+  byte and still frozen; so are the quality prefix, `no humans`, the negative, the checkpoint, the size,
+  the steps, the cfg, the nocontrol arm and its 0.45 scale.
+this_cell: THE CONTROL. t02 -- round 3's cleanest cell -- with `low angle` removed and nothing else touched.
+  This one cell answers whether the curvature was the framing word.
+the_finding_that_bought_this_round: 'ROUND 3 CONFIRMED ITS HYPOTHESIS AND EXPOSED THE NEXT DEFECT. Every
+  cell naming a distant landform returned a horizon and a rootable plane -- t02, t04 and t07 clean, and
+  not one macro-grass frame in eight, against six of ten in round 1. But six of the eight are BARREL-DISTORTED:
+  t01 arches its treeline over the top of the frame, t05 narrows its path to a wedge, and t02/t04/t06/t08
+  curve the horizon. A curved horizon is not a plane a cel seedling can stand up on -- beat16_sapling_composite.py
+  draws a VERTICAL stem at a measured root point and the plate''s geometry has to agree with it.'
+the_cargo_i_carried_without_warrant: '`low angle` came from p09 and was frozen through rounds 2 and 3
+  on the reading that the framing clause was load-bearing. r02 KILLED THAT READING -- the distance clause
+  is the lever -- and I froze the framing anyway instead of retiring the half of it that no longer had
+  an argument. `wide shot` earns its place; `low angle` was never tested alone and is what this checkpoint
+  draws as a fisheye. Two rounds of curvature is what carrying it cost.'
+what_rounds_1_to_3_cost_and_what_they_bought: '26 plates, ~78 minutes of otherwise-idle card, $0, and
+  8 usable ground planes. Bought one mechanism per round, each by a controlled change: round 1 that a
+  ground-cover noun returns a macro of itself, round 2 (by DELETING four words from the cell that passed)
+  that a named distant feature and not the framing word is what buys depth, round 3 that the depth cue
+  generalises across scenes and lighting. Two of my three round-opening predictions were wrong and both
+  are kept above their results.'
+failure_predicted_in_advance: 'FIRST: THE TREELINE COMES INTO THE FOREGROUND. `a treeline in the distance`
+  asks for trees, the negative bans `tree`, and this tree''s negatives have failed to hold position four
+  times. If trees arrive mid-frame the depth cue has cost the ground plane it bought and t02''s `distant
+  hills` -- which names no bannable object -- is the cell to carry forward.
+
+  SECOND: t04''s MIST EATS THE CUE. Haze is what makes distant hills read as distant, but r04 already
+  showed mist collapsing a cell to silhouettes. If t04 fails where t02 passes, mist is incompatible with
+  this route and the dataset''s cool-light breadth has to come from t06''s overcast instead.
+
+  THIRD, AND IT IS THE ONE THAT WOULD RE-OPEN THE ROUTE: the ground plane arrives but sits at the HORIZON,
+  not the lower centre. Then no wording fixes it and the answer is the crop this batch has already committed
+  to for scale.'
+clip77_measured_not_estimated: prompt 28 of 77, counted offline on animagine's own vocab before this file
+  was written; negative inherited at 71 of 77.
