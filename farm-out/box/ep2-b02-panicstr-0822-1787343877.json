@@ -1,0 +1,154 @@
+{
+  "id": "ep2-b02-panicstr-0822-1787343877",
+  "task": "ep2-b02-panicstr-0822",
+  "node": "002b-first-citizen",
+  "beat": 2,
+  "worker": "box-runner",
+  "priority": 14,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "mask",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# The mask is BUILT HERE, not shipped as a blob, so the two bands are\n# readable as numbers in the spec that a reviewer can check against\n# the plate. No model, no network, no GPU.\nfrom PIL import Image, ImageDraw\nimport os\nroot = r'C:\\banyan-farm\\b02panicstr-0822'\nos.makedirs(root, exist_ok=True)\nm = Image.new('L', (832, 1216), 0)\nd = ImageDraw.Draw(m)\nd.rectangle([268, 90, 604, 166], fill=255)   # BROW band\nd.rectangle([334, 274, 506, 350], fill=255)   # MOUTH band\nout = os.path.join(root, 'b02-panic-mask.png')\nm.save(out)\nprint('mask 832x1216 ->', out)\nprint('brow  [268, 90, 604, 166]')\nprint('mouth [334, 274, 506, 350]')\nprint('THE EYES (about y 177-268) ARE IN NEITHER BAND.')\n"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b02panicstr-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b02-sapnat-0821\\b02-sapnat-s20260820.png",
+        "--init-sha256",
+        "30dce0fabd444fdf5e0727eb4c6a317d65004f71a7df0dbe5cb126224dbf46ea",
+        "--mask-png",
+        "C:\\banyan-farm\\b02panicstr-0822\\b02-panic-mask.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b02panicstr-0822\\b02-face-prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b02panicstr-0822\\b02-face-negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b02panicstr-0822\\b02-panic-DRY.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.42",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260822",
+        "--note",
+        "MASK GEOMETRY CHECK. Asserts the plate's digest and resolves the mask BEFORE a model loads, so wrong bands cost seconds instead of a GPU fire.",
+        "--dry-run"
+      ]
+    },
+    {
+      "name": "face060",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b02panicstr-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b02-sapnat-0821\\b02-sapnat-s20260820.png",
+        "--init-sha256",
+        "30dce0fabd444fdf5e0727eb4c6a317d65004f71a7df0dbe5cb126224dbf46ea",
+        "--mask-png",
+        "C:\\banyan-farm\\b02panicstr-0822\\b02-panic-mask.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b02panicstr-0822\\b02-face-prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b02panicstr-0822\\b02-face-negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b02panicstr-0822\\b02-panic-s060.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.60",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260822",
+        "--note",
+        "STRENGTH RUNG. Same plate, same two bands, same seed, same everything as the 0.42 pass that came back with washed-out brows. Only the denoise moves."
+      ]
+    },
+    {
+      "name": "face075",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b02panicstr-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b02-sapnat-0821\\b02-sapnat-s20260820.png",
+        "--init-sha256",
+        "30dce0fabd444fdf5e0727eb4c6a317d65004f71a7df0dbe5cb126224dbf46ea",
+        "--mask-png",
+        "C:\\banyan-farm\\b02panicstr-0822\\b02-panic-mask.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b02panicstr-0822\\b02-face-prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b02panicstr-0822\\b02-face-negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b02panicstr-0822\\b02-panic-s075.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.75",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260822",
+        "--note",
+        "STRENGTH RUNG. Same plate, same two bands, same seed, same everything as the 0.42 pass that came back with washed-out brows. Only the denoise moves."
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import hashlib, os, shutil\nfrom_dir = 'C:/banyan-farm/b02panicstr-0822'\ndst = 'C:/banyan-farm/courier-box/farm-out/ep2-b02-panicstr-0822'\nNAMES = ['b02-panic-s060.png', 'b02-panic-s060.png.meta.yaml',\n         'b02-panic-s075.png', 'b02-panic-s075.png.meta.yaml',\n         'b02-panic-mask.png', 'b02-face-prompt.txt',\n         'b02-face-negative.txt']\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit('!! missing %s -- refusing to call the job clean.' % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), 'rb') as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + '  ' + name)\nwith open(os.path.join(dst, 'ep2-b02-panicstr-0822.sha256'), 'w',\n          newline='\\n') as fh:\n    fh.write('\\n'.join(sorted(lines)) + '\\n')\nprint('published', len(lines), 'file(s) + manifest ->', dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b02panicstr-0822\\b02-panic-s060.png",
+    "C:\\banyan-farm\\b02panicstr-0822\\b02-panic-s075.png"
+  ],
+  "spec_sha256": "2d69e388dd11c826854ed199fe92be9ebdc974a6f2a52bcdc5c2a7ecea64f6d3",
+  "started_at": "2026-08-21T20:24:39Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-21T20:25:17Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b02panicstr-0822\\b02-panic-s060.png",
+    "C:\\banyan-farm\\b02panicstr-0822\\b02-panic-s075.png"
+  ]
+}

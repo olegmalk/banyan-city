@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.6
+seed: 20260822
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/courier-box/farm-out/ep2-b02-sapnat-0821/b02-sapnat-s20260820.png
+init_sha256: 30dce0fabd444fdf5e0727eb4c6a317d65004f71a7df0dbe5cb126224dbf46ea
+mask_png: b02-panic-s060-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/b02panicstr-0822/b02-panic-mask.png
+mask_png_sha256: 3abcecc80e30587b6cf195500c35d9abc7d9f95ad22b6bb812f8a8e93b54ff48
+mask_white_px: 39270
+mask_bbox_px: [268, 90, 604, 350]
+mask_width_frac: 0.4038
+mask_height_frac: 0.2138
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-21T20:24:59Z
+render_seconds: 7.2
+wall_seconds: 15.6
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  STRENGTH RUNG. Same plate, same two bands, same seed, same everything as the 0.42 pass that came back with washed-out brows. Only the denoise moves.
+prompt: |-
+  masterpiece, best quality, very aesthetic, green skin goblin face, eyebrows raised high and arched, wide open mouth, shouting, gasping, panicked, terrified, running for his life
+negative: |-
+  lowres, worst quality, low quality, calm, neutral, blank expression, stern, serious, stoic, soldier, closed mouth, frown, angry, scowl, furrowed brow, teeth, tongue, human face, human nose, beard, wrinkles, old man, text, watermark
