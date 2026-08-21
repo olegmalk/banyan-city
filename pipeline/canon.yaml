@@ -552,6 +552,202 @@ subjects:
 
 - id: ep2-goblin-design-adult
   # ///////////////////////////////////////////////////////////////////////////
+  # SUPERSEDED 2026-08-21 16:54 BY A PICTURE FROM THE FOUNDER'S OWN HAND.
+  # `founder_ruling_2026_08_21` IS THE HEADLINE AND IT OUTRANKS EVERYTHING BELOW
+  # IT IN THIS BLOCK, INCLUDING `correction_2026_08_20`, WHICH WAS THE HEADLINE
+  # UNTIL TODAY. Read the two in that order: the 08-20 correction taught us to
+  # read PIXELS INSTEAD OF WORDS and it was right; the 08-21 ruling hands us a
+  # different set of pixels and the same lesson applies to it. Every clause of
+  # the 08-20 tile list that the new image contradicts is struck in place below,
+  # in its own text, with a pointer back here — the tile list is kept whole
+  # because eleven beats, thirteen ladder rungs and one frozen standard module
+  # were authored under it and a reader tracing any of them needs to find what
+  # they were authored under, not a blank.
+  # ///////////////////////////////////////////////////////////////////////////
+  founder_ruling_2026_08_21: >-
+    THE FOUNDER DREW THE ANSWER. 2026-08-21 16:54, verbatim, with an image
+    attached:
+
+      "dude, this is how the goblin should look."
+
+    THE IMAGE IS THE REFERENCE AND IT IS IN THE REPO:
+
+      taste/refs/goblin-canon-founder-0821.png   832x1216 RGB
+      sha256 b62f333644c2f316...   committed in b93a70da
+
+    THIS SUPERSEDES TILE B AND THE 08-21 AGE-B RECIPE ON EVERY AXIS THE IMAGE
+    SHOWS. Where the image is silent (see WHAT THE IMAGE DOES NOT SETTLE, last
+    section) the prior record still stands. Where it speaks it is final, and it
+    speaks about the face, the ears, the eyes, the palette, the proportion and
+    the clothes — which is to say about everything the last three days of
+    ladder rungs were arguing over.
+
+    HOW THE LIST BELOW WAS MADE, because the 08-20 correction's own lesson is
+    that a pointing finger is not a sentence. Every number here is MEASURED off
+    the file at 1:1 with a landmark overlay rendered and looked at, not
+    estimated from a thumbnail; every colour is a median over a named box, not
+    a pixel pick. The builder that crops this image carries the same constants
+    (pipeline/author_jerry_canonref_0821.py) so the canon and the reference
+    cannot drift apart by a typo.
+
+    ── THE ATTRIBUTE LIST, MEASURED ───────────────────────────────────────────
+
+    PROPORTION. Crown y=128, chin y=465 -> HEAD 337 px. Far sole y=1040 ->
+    FIGURE 912 px. That is 2.71 HEADS IN FRAME and head_frac 0.370. It is NOT
+    the ~3.2 the ruling was relayed with and it is not 5.2 either: the frozen
+    standard's HEAD_FRAC 0.190 — the tile's number — is WRONG BY A FACTOR OF
+    TWO against this image and is the single largest change here. CAVEAT
+    RECORDED RATHER THAN SMOOTHED OVER: the camera in this image is ABOVE the
+    subject and looking down, which foreshortens the legs more than the head,
+    so 2.71 is the in-frame ratio at THIS camera and a level-camera full body
+    will measure somewhat taller. 0.370 is therefore the number to author a
+    HIGH-ANGLE plate at, and a level-camera plate needs its own measurement
+    rather than this one carried across.
+
+    SKULL. Big, round, BALD, a smooth unbroken dome — no hair, no hairline, no
+    occipital step, no horns. Skull sides x=280..580 -> 300 px wide against 337
+    px tall, so the dome is very slightly taller than wide. The crown carries a
+    warm coral rim-light (outline pixel 158,107,98) that is LIGHT, not pigment.
+    A small hairline mark sits centre-forehead. No neck to speak of.
+
+    EARS — THE OLD EAR RULING IS DEAD. The 08-20 tile clause says "SHORT,
+    BROAD, LOW-SET FLANGES swept back and sitting almost flush at the jawline;
+    they barely break the head's silhouette. They are NOT long tapering elf
+    spikes." THE IMAGE IS THE OPPOSITE OF THAT CLAUSE ON EVERY WORD. Measured:
+    ear tips x=210 and x=659, an EAR SPAN OF 449 px against a 300 px skull, so
+    each ear projects 80 px = 27% OF A SKULL WIDTH clear of the head. Vertical
+    extent y=326..415, 89 px. They are LARGE, LATERAL AND POINTED, swept
+    outward and slightly UP (tip is ~40 degrees above the root), with real
+    interior structure — a drawn rim, a translucent warm leading edge catching
+    the same rim-light as the crown, a grey-green concha and an antihelix
+    ridge. They dominate the silhouette. THIS IS THE AXIS THE STANDARD RECIPE
+    FIGHTS HARDEST: see the negatives section.
+
+    EYES — THE BLANK-EYES CLAUSE IS DEAD. PUPILS ARE CANON. The 08-20 list
+    calls blank pupil-less eyes "the single loudest creature cue"; the founder's
+    own drawing has pupils and that settles it. Measured: each eye is a large
+    almond, ~73 x 49 px, i.e. 24% of skull width EACH, outer corners 214 px
+    apart = 71% of the skull. Sclera is an off-white warm grey (#ABA9A1), not
+    paper white. The PUPIL is small, dark and a NARROW VERTICAL SLIT-OVAL —
+    ~7 x 17 px, about 10% of eye width and 35% of eye height — set centrally.
+    Heavy dark upper lid line above, a distinct BAG/crease below each eye. The
+    eyes are wide open, not slitted.
+
+    BROWS AND MOUTH. Brows are THIN, SPARSE, SKETCHY STROKES angled into a
+    worried set — not the tile's single heavy dark bar and not `thick eyebrows`.
+    Mouth is a small closed DEADPAN FROWN, a short downturned line with a hint
+    of lower lip; NO TUSK IS VISIBLE. Nose is small and flat with a soft bridge
+    shadow and two drawn nostril dashes — so the 08-20 "THERE IS NO HUMAN NOSE /
+    no drawn nostrils" clause is softened: there is a small drawn nose, it is
+    just not a human wedge.
+
+    SKIN. A MUTED DESATURATED GREY-OLIVE, flat, one tone with soft shading and
+    NO age modelling. Medians: forehead #7C806D (124,128,109), cheek #7E816B,
+    lit crown #8E8272. Note what that is and is not — it is barely green (R and
+    G within 4 of each other) and it is MID-VALUE, not literally bright; it
+    reads pale because the whole image is high-key and the skin is low
+    saturation, not because the pigment is light. Anything asking for saturated
+    green will miss it.
+
+    COSTUME — THE PATCHWORK CLOAK IS SUPERSEDED, AND SEE THE SCRIPT FLAG BELOW
+    BEFORE ACTING ON THAT. What the image actually draws: a MANDARIN / BAND
+    COLLAR SHIRT in muted sage-teal (#4A5F58 lit front, #51645B on the sleeve),
+    long loose sleeves, a centre placket with small dark buttons; a narrow DARK
+    BELT at the waist, tied at the front (#10171C); DARK CHARCOAL SHORTS ending
+    just above the knee (#1A252B); bare lower legs; DARK LACED ANKLE BOOTS with
+    a strap on one (#2A3438). No cloak, no cowl, no scarf, no patches, no
+    stitch lines. This also RETIRES the 08-20 steward pick of "loose ragged
+    earth-brown trousers, barefoot" — that pick existed only because the tile
+    was ambiguous below the knee, and this image is not ambiguous.
+
+    PALETTE AND RENDER. Muted, watercolour-adjacent, high-key, low saturation
+    throughout, with soft ink linework and visible brush/pencil texture in the
+    grass. Background is a blown-out light field (#E0E8C9 lit grass, #B5C1C6
+    sky) with a soft blurred hill; depth of field is shallow and the background
+    is genuinely out of focus. The figure is the only thing in focus and it is
+    still LOW-CONTRAST against the ground.
+
+    ── WHAT IN THE RUNNING RECIPE NOW FIGHTS CANON ────────────────────────────
+
+    Measured against `pipeline/jerry_standard_0821.py` as frozen this morning.
+    These are the tokens that will actively PREVENT the image from being drawn,
+    and they are struck in `pipeline/jerry_canon_0821.py`:
+
+      NEGATIVE, strike `pointy ears` and `long pointy ears` and `elf`. All
+      three were put there on 08-20 to manufacture the tile's short flange —
+      canon.yaml's own note says "Danbooru has no tag for a short low swept-back
+      ear ... Absence plus suppression was the lever." The thing they suppress
+      is now the thing the founder drew. `pointy ears` moves to the POSITIVE.
+
+      POSITIVE, strike `blank eyes`. This is the pupil ban. It is described in
+      this very block as "THE WHOLE GAME" and it draws exactly the eye the
+      founder's picture does not have. Replaced by `slit pupils` + `small
+      pupils`, which name the measured 7x17 vertical pupil directly.
+
+      POSITIVE, strike `thick eyebrows`. The image's brows are thin and sparse.
+
+      POSITIVE, strike `patchwork cloak`. Superseded by the costume above; and
+      note the 08-20 measurement that this tag PAINTS THE SKULL at close-up
+      crops — it was a liability at head framing even under the old canon.
+
+      NEGATIVE, strike `pale skin` and `grey skin`. The measured skin is a
+      desaturated grey-olive; both tags are negating the actual target. This is
+      a WEAKER call than the four above — it is the one most likely to bring a
+      human complexion back with it, so it is struck on the sample first and
+      re-negated in round 2 if the sample's skin goes human.
+
+      NEGATIVE, `child` and `chibi` ARE NOW IN TENSION and are deliberately
+      KEPT. A 2.71-head figure is chibi territory by any tag definition, and
+      dropping them is the obvious move. It is not made here, because the same
+      block records that dropping the count tag "made it worse (a child)" and
+      that the proportion axis is a GEOMETRY problem the skeleton solves, not a
+      wording one. Proportion is carried by HEAD_FRAC and ControlNet. If the
+      sample comes back too tall with these in, they are the round-2 variable.
+
+      `1boy` stays, unchanged and for the unchanged reason: measured on 08-20 as
+      a dead lever, and this is not the day to re-open it.
+
+    ── FLAGGED FOR THE FOUNDER, NOT DECIDED HERE ──────────────────────────────
+
+    THE CLOAK IS IN THE SCRIPT, IN FOUR PLACES, AND SO IS A TUSK THE IMAGE DOES
+    NOT HAVE. This was checked before anything was struck, and it is a NARRATIVE
+    change, which is R4 and not the steward's:
+
+      genomes/sapling/nodes/002b-first-citizen/node.md:35
+        "A SCAVENGER — goblin-ish, enormous ears, one broken tusk, patchwork
+         cloak — sprints into frame, skids, and dives behind the sapling's thin
+         trunk."
+      genomes/sapling/nodes/002b-first-citizen/node.md:127
+        "The scavenger pushes himself up, GIVES HIS CLOAK A SHAKE, and turns to
+         go."   <- this one is a scripted ACTION on the garment, not a mention.
+                   Strike the cloak and beat 02's exit beat loses its business.
+      genomes/sapling/nodes/005-the-assessor/node.md:43
+        "a small round goblin, enormous ears, patchwork cloak"
+      genomes/sapling/nodes/006a-miracle-clause/node.md:108
+        "He SEARCHES HIS PATCHWORK CLOAK, then produces a single fig and offers
+         it."   <- also an action; the fig comes OUT of the cloak.
+
+    Two leaves carry it too (002b-t0-a.md:27, 002b-t0-b.md:36). "Enormous ears"
+    in three of these is the script AGREEING with the new image and disagreeing
+    with the tile, which is worth noticing on its own.
+
+    THE DESIGN RULING IS APPLIED TO RENDERS IMMEDIATELY — the image is what the
+    goblin looks like and no script line says otherwise about his face. THE
+    SCRIPT IS NOT TOUCHED. The open question for the founder is exactly one
+    sentence wide: does the cloak come off the character (two scripted actions
+    get rewritten), or does it go back on over these clothes? Until he answers,
+    plates draw the image's costume and no node.md is edited.
+
+    ── WHAT THE IMAGE DOES NOT SETTLE ─────────────────────────────────────────
+
+    Recorded so the next lane does not read silence as a ruling. The image is
+    ONE standing full-body at a high angle, so: no profile, no three-quarter
+    rear, no open mouth, no hands at readable scale (both hang half-hidden),
+    no expression other than the deadpan frown, and a bright angular panel at
+    his right hip that could be a pale satchel or could be a lit patch of
+    ground — it is NOT canonised as a prop either way. The level-camera head
+    ratio is unmeasured, as noted under PROPORTION.
+  # ///////////////////////////////////////////////////////////////////////////
   # CORRECTED 2026-08-20 (night), BY THE FOUNDER, AND THE CORRECTION IS THE
   # HEADLINE — read `correction_2026_08_20` BEFORE `what:`. `what:` below is the
   # 08-19 record and it is kept verbatim because it is what every plate, spec
@@ -598,12 +794,27 @@ subjects:
         two narrow upward-slanting slits under one heavy dark brow bar. This is
         the single loudest creature cue and it is the first thing a close-up
         destroys.
+        <<< STRUCK 2026-08-21 BY THE FOUNDER'S OWN IMAGE. PUPILS ARE CANON. The
+        drawing has a large open almond eye, ~73x49 px, warm off-white sclera,
+        and a small dark VERTICAL SLIT PUPIL ~7x17 px, with a heavy lid line and
+        an under-eye bag. `blank eyes` is struck from the positive. Nothing in
+        this clause survives except that the eye is a loud identity cue, which
+        is now an argument for drawing the pupil correctly rather than for
+        removing it. See `founder_ruling_2026_08_21`.
       * NOSE — THERE IS NO HUMAN NOSE. No bridge, no tip, no drawn nostrils; the
         lower face is a blunt forward muzzle with at most a slit.
       * MOUTH — a single wide thin lipless line. No lip volume, no philtrum.
       * EARS — SHORT, BROAD, LOW-SET FLANGES swept back and sitting almost flush
         at the jawline; they barely break the head's silhouette. They are NOT
         long tapering elf spikes.
+        <<< STRUCK 2026-08-21 BY THE FOUNDER'S OWN IMAGE, and struck on every
+        word: the ears are LARGE, LATERAL AND POINTED, 449 px of ear span across
+        a 300 px skull — 27% of a skull width projecting clear on each side —
+        89 px tall, swept out and slightly UP, with a drawn rim, a translucent
+        warm leading edge and an inner concha ridge. They dominate the
+        silhouette rather than barely breaking it. `pointy ears`, `long pointy
+        ears` and `elf` come OUT of the negative and `pointy ears` goes INTO the
+        positive. See `founder_ruling_2026_08_21`.
       * SKULL — a large smooth dome, roughly a fifth of the seated figure's
         height, with no hair, no hairline, no eyebrows and no occipital step.
       * NECK — effectively none. The dome sits on sloped narrow shoulders.
@@ -622,6 +833,13 @@ subjects:
         the knees, head sunk into the collar. Not upright, not heroic.
       * COSTUME — purple cowl-scarf at the neck and shoulders over a ragged
         patchwork cloak with visible stitch lines.
+        <<< STRUCK 2026-08-21 BY THE FOUNDER'S OWN IMAGE: mandarin-collar sage
+        shirt with a button placket and long loose sleeves, narrow dark belt
+        tied at the front, dark charcoal above-knee shorts, bare shins, dark
+        laced ankle boots. No cloak, no cowl, no patches. The cloak IS STILL IN
+        THE SCRIPT in four places, two of them scripted actions — that conflict
+        is FLAGGED FOR THE FOUNDER in `founder_ruling_2026_08_21` and no node.md
+        is edited on a steward's reading of a picture.
 
     THE LOWER HALF IS NOW DECIDED, and it is a STEWARD PICK, coordinator-ratified
     2026-08-20, not a founder ruling — it is recorded here because the tile
