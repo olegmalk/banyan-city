@@ -1,0 +1,282 @@
+id: ep2-b06-handsize-s20260818-0821
+task: ep2-b06-handsize-s20260818-0821
+node: 002b-first-citizen
+beat: 6
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: iteration-campaign lane A (beats 01-10), 2026-08-21 night
+consumer: BEAT 06'S SELECTION on review/ep2-beats-0821 for the founder's morning pick. The beat currently
+  offers one take that is 70% frozen frame. A candidate version, not a swap.
+success: One 704x1280 121-frame mp4 that is ALIVE PAST f046 -- the frame the incumbent died at -- with
+  a last-live-pair beyond f100, AND in which the bark board is small enough that his chest, both shoulders
+  and his chin read around it while he turns it over and reads off it with his eyes down. Both clauses
+  are scored; either one alone is a partial and is still shown. Read by eye at 1:1 on consecutive frames.
+why: 'This beat''s bar says ''board hand-sized and readable'' and its shipping fault is ''the bark board
+  is the wrong size'', and the positive prompt asks for the fault in its own words: ''The BOARD IS THE
+  SUBJECT - held high and large,''. The negative objects three separate times and loses, which is the
+  placement law behaving exactly as measured -- a negative does not size a prop. Second and larger fault,
+  and it is why the seed moves too: this render DIED. trim_0815 cut 72 dead tail frames, so a 6.45 s slot
+  is fed 1.92 s of picture and roughly 70% of the beat on screen is one frozen frame, the worst ratio
+  in the episode. A freeze is a (seed x plate) question on this recipe family and the record says so:
+  beat 12 lost 91 luma levels and came back at -0.04 on one integer of seed, plate and prompt byte-identical.
+  $0, ~6 minutes.'
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b06-handsize-s20260818-0821\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop\
+    \ an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib,\
+    \ os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b06-handsize-s20260818-0821\b05-motion-prompt.txt: "2D anime, hand-drawn cel animation,\
+    \ static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art.\
+    \ Subject already in frame: THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY IN THIS FRAME AND IT DOES\
+    \ NOT CHANGE - the green field, the grass, the hedge and the sky are all present from the first frame\
+    \ and stay exactly as they are. Nothing is added to the background and nothing is redrawn. ONE uniformed\
+    \ patrol guard, a grown man, is alone in this shot and no second person is anywhere in the frame.\
+    \ HE TURNS THE BARK BOARD OVER AND READS OFF IT: he rotates the hand-sized bark board face-up, brings\
+    \ it to chest height at a natural reading distance, runs a fingertip down it and his lips move as\
+    \ he reads. His eyes stay down on the board. BEHIND HIM THE WORLD IS FULLY DRAWN AND FILLS EVERY PART\
+    \ OF THE FRAME HE DOES NOT: green summer grass runs to the bottom edge of the frame, a low hedge and\
+    \ a dark treeline cross the middle distance behind him, and a pale blue midday sky with thin cloud\
+    \ fills the top of the frame. No part of the frame is left empty or white. a uniformed patrol guard\
+    \ in a summer field \u2014 short brown hair, a matching brown patrol tunic with a cloth SASH OF OFFICE\
+    \ across his chest and a small brass BADGE pinned on it, a wide belt, dark trousers and boots, a bark\
+    \ clipboard in one hand. HE TURNS THE CLIPBOARD OVER AND READS OFF IT. He rotates the bark board face-up\
+    \ in both hands, brings it up in front of his chest at a natural reading distance, runs a fingertip\
+    \ down it line by line, and his lips move as he reads. The BOARD IS HAND-SIZED \u2014 no wider than\
+    \ his two hands set side by side, small enough that his chest, both shoulders and his chin all stay\
+    \ visible behind it and around it,. His eyes stay down on it. He is working the board, not standing\
+    \ holding it. He stays large in frame \u2014 knees to head, near enough to read his face; the field\
+    \ does not push him small. A green summer field behind, a dark treeline on the horizon. Bright midday\
+    \ sunlight, clear and even, cinematic lighting, detailed, newest, masterpiece, best quality, very\
+    \ aesthetic."
+  C:\banyan-farm\ep2-b06-handsize-s20260818-0821\b05-negative.txt: background appearing, scene forming,
+    iris, wipe, dissolve, white background, blank background, two men, second guard, a pair, giant board,
+    oversized board, white background, blank background, empty background, isolated on white, character
+    sheet, studio backdrop, poster art, flat vector art, silhouette, standing still, standing in one spot,
+    standing at attention, stationary, motionless, frozen, still frame, no movement, loitering, armor,
+    armour, breastplate, helmet, chainmail, knight, weapon, sword, spear, giant clipboard, oversized prop,
+    board filling the frame, prop larger than his torso, camera pan, camera tilt, panning, tilting, camera
+    movement, dolly, zoom, push in, pull back, tripod, camera, face morphing, distorted face, warped face,
+    extra eyes, bald, walking out of frame, floating head, disembodied head, scene change, shot change,
+    dark, night, dusk, sunset, dim lighting, low key, shadows dominant, photorealistic, 3D render, CGI,
+    live action, motion blur, text
+  C:\banyan-farm\ep2-b06-handsize-s20260818-0821\b05-jobs-encode.json: "[{\"beat\": 6,\n  \"embeds\":\
+    \ \"C:\\\\banyan-farm\\\\ep2-b06-handsize-s20260818-0821\\\\b05-embeds.pt\",\n  \"prompt_file\": \"\
+    C:\\\\banyan-farm\\\\ep2-b06-handsize-s20260818-0821\\\\b05-motion-prompt.txt\",\n  \"negative_file\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b06-handsize-s20260818-0821\\\\b05-negative.txt\"}]"
+  C:\banyan-farm\ep2-b06-handsize-s20260818-0821\b05-jobs-render.json: "[{\"beat\": 6,\n  \"seed\": 20260818,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b06-handsize-s20260818-0821\\\\b05-embeds.pt\",\n  \"init\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b06-handsize-s20260818-0821\\\\b05-init-704x1280.png\",\n  \"out\": \"\
+    C:\\\\banyan-farm\\\\ep2-b06-handsize-s20260818-0821\\\\06-the-clipboard-LTX-ep2-b06-handsize-s20260818-0821.mp4\"\
+    }]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b06-handsize-s20260818-0821\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b10-patrol-scene-r2-0813\10-no-form-ipa-r0-w010-s1.png
+  - --sha256
+  - 441a4fd115fa2d0b5194b61b4317be8ee0e14ef6045a9507372062ef3e4cd98c
+  - --out
+  - C:\banyan-farm\ep2-b06-handsize-s20260818-0821\b05-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b06-handsize-s20260818-0821\b05-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b06-handsize-s20260818-0821\b05-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b06-handsize-s20260818-0821
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b06-handsize-s20260818-0821\bench-b06-world.jsonl
+  - --bench-label
+  - ep2-b06-handsize-s20260818-0821
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b06-handsize-s20260818-0821\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b06-handsize-s20260818-0821/06-the-clipboard-LTX-ep2-b06-handsize-s20260818-0821.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b06-handsize-s20260818-0821/b05-init-704x1280.png\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b06-handsize-s20260818-0821/bench-b06-world.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b06-handsize-s20260818-0821.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b06-handsize-s20260818-0821\06-the-clipboard-LTX-ep2-b06-handsize-s20260818-0821.mp4
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. `approval_condition` is None, so nothing in it touches beat 05. A register
+  test on an approved node, not an episode assembly.'
+pre_registered_fail_modes: 'H-PLATE-WIDTH, AND AFTER OPENING THE INIT THIS IS THE ONE I EXPECT. The plate
+  was opened at 1:1 before this spec was filed (see plate_ack). The prop already in it is a WIDE FLAT
+  TRAY carried horizontally at waist height with loose papers on it, and it is nearly as wide as the man.
+  The shipped clip''s first frames show exactly that tray and then convert it, around f008-f012, into
+  a vertical bark slab OF THE SAME WIDTH. On that reading the board is oversized because THE PLATE''S
+  PROP IS THAT WIDE, and a positive clause asking for hand-sized is arguing with the picture -- which
+  the absent-object law says it loses. If both cells come back with a wide board, that is not a weak result:
+  it converts ''the bark board is the wrong size'' from an open wording question into a PLATE JOB, in
+  one round, for $0, and the next lane should re-cut the plate rather than write a fifth sentence about
+  size. This is written down BEFORE the render so a wide board cannot be reported as a surprise.
+
+  H-SHIELD he raises the board in front of his face instead of reading off it. This is on record as this
+  beat''s other seed''s failure (''seedB holds the scene and the man but delivers the WRONG ACTION - he
+  raises the board like a shield''), so it is a known seed outcome and a second draw of it is information,
+  not surprise.
+
+  H-DEAD-AGAIN the render freezes again in the same region. Two fresh seeds both dying moves this beat
+  off the seed ladder and onto the plate.
+
+  H-SMALL-BUT-DEAD the sizing clause binds and the clip still dies. Recorded as a SPLIT result -- it would
+  mean the two faults are independent and the beat needs the sizing clause carried onto whatever fixes
+  the freeze.
+
+  H-OVERSHOOT the board shrinks until it is not readable as a written board. The bar says hand-sized AND
+  readable and this cell can fail on the second half.
+
+  H-SECOND-FIGURE the plate carries a SECOND, smaller figure in the right background holding a pale card
+  up. This beat''s positive says ''ONE uniformed patrol guard ... is alone in this shot and no second
+  person is anywhere in the frame'' and its negative names ''two men, second guard, a pair''. The shipped
+  take erased him successfully; a fresh seed may not.'
+read_that_produced_this_rung: 'Every beat 01-10 clip named in review/ep2-ship-0821/ep2-ship-0821.mp4.meta.yaml
+  `sources:` was decoded and read on 2026-08-21 night: an overview plus consecutive-frame strips through
+  each motion window via pipeline/coldread_frames.py, and an interframe-difference sweep over every adjacent
+  pair at 176x320 BT.601 luma. The faults this spec cites by frame number come from that read and not
+  from any existing verdict.'
+the_one_variable: ONE CLAUSE IN THE POSITIVE, PLUS THE SEED. 'The BOARD IS THE SUBJECT - held high and
+  large,.' becomes a hand-sized clause. The negative is NOT touched -- it already argues for the right
+  size and has been losing to the positive. Same init plate at the same asserted sha, same 121 frames,
+  same --image-crf 33, same sampler numbers. The two cells differ from each other by SEED ALONE.
+derivation:
+  parent: pipeline/jobs/ep2-b06-scene-0814r.yaml
+  by: pipeline/derive_spec.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - consumer
+  - owner
+  - pre_registered_fail_modes
+  - read_that_produced_this_rung
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - verdict
+  - verdict_by
+  - verdict_clauses
+  - verdict_contradicts_a_founder_ruling
+  - verdict_finds_a_gap_in_the_prop_identity_bar
+  - verdict_judged
+  - verdict_measured
+  - verdict_next_instrument
+  - verdict_reported_forward_a_defect_that_is_in_the_cut
+  - verdict_settles_the_open_question_on_this_beat
+  - verdict_status_recommendation
+  retokened:
+  - 06-the-clipboard-LTX-world-0813 -> 06-the-clipboard-LTX-ep2-b06-handsize-s20260818-0821
+  - ep2-b06-scene-0814r -> ep2-b06-handsize-s20260818-0821
+  overrides_applied_and_asserted:
+    payload:b05-motion-prompt.txt:
+    - payload b05-motion-prompt.txt (1983 -> 2106 chars)
+    seed:
+    - payload b05-jobs-render.json (20260806 -> 20260818, re-parsed)
+  seed: 20260818
+# --- appended by hand after the derivation: see the note in
+# pipeline/derive_ep2_laneA_r1_0821.py. derive_spec refuses this key
+# and is right to; a plate waiver is a human act, not an inheritance.
+plate_ack: 'refs: THE GUARD NAMES THIS EXACT FILE AS ITS OWN KNOWN FALSE POSITIVE AND I OPENED THE
+  PICTURE ANYWAY. box_enqueue refuses this init twice -- border flatness 0.740 against a 0.62 threshold,
+  and membership of CARD_REFS_DENYLIST via the producing job ep2-b10-patrol-scene-r2-0813 (reference
+  set refs-charref-guards-r5-0812). The refusal text itself says: ''refs-charref-guards-r5-0812 also
+  drew ep2-b10-patrol-scene-r2-0813/10-no-form-ipa-r0-w010-s1.png, opened 2026-08-16, which is a field
+  with a hedge, flowers and two guards. If this is that plate, this refusal is wrong.'' THIS IS THAT
+  PLATE, by name and by sha. Not taken on the guard''s word: the blob was fetched from origin/farm-results-rtx5090
+  on 2026-08-21 night, its sha256 re-computed as 441a4fd115fa2d0b5194b61b4317be8ee0e14ef6045a9507372062ef3e4cd98c
+  -- byte-identical to the assertion this spec''s crop step already makes -- and OPENED AT 1:1. What
+  is in it: a grown dark-haired man in a brown patrol coat and maroon sash standing in grass, with
+  white and yellow flowers in the near field, a hedge line across the middle distance, open sky above,
+  and a second smaller figure standing in the right background. It is a location, not blank paper.
+  The two refusals are also one signal and not two, as the guard''s own note says: the denylist was
+  built by scoring plates with the same border-flatness statistic. Waived for these two cells only;
+  the guard is left unchanged, because the threshold is right for the six cards it was cut from and
+  this is the false positive it already documents.'

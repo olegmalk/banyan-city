@@ -1,0 +1,241 @@
+id: ep2-b01-fignonly-s20260871-0821
+task: ep2-b01-fignonly-s20260871-0821
+node: 002b-first-citizen
+beat: 1
+runner: box
+priority: 30
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: iteration-campaign lane A (beats 01-10), 2026-08-21 night
+consumer: BEAT 01'S SELECTION on review/ep2-beats-0821. Per lane A's instruction the beat's selection
+  is fignonly + chroma + the best of one fresh seed batch; this is that batch. A candidate version, not
+  a swap, and it does not touch the closed composite ruling.
+success: 'One 704x1280 121-frame mp4 in which the fig goes from green nub to a single deep purple fig
+  AND THE FIELD DOES NOT MOVE WITH IT -- the grass blades and the background hold while the fruit changes.
+  The incumbent''s specific weakness, found by reading it tonight, is that its fig does not ripen so much
+  as SWAP: it is teal and static from f000 to f087 and purple at f098, a colour change inside one 11-frame
+  gap, and the fruit also relocates down the stem across that gap. A cell that ripens gradually and keeps
+  the fruit on its node beats the incumbent on the beat''s own done_when (''the purple fig SWELLS on the
+  stem'').'
+why: 'Beat 01''s composite question is CLOSED -- the chroma composite was swapped in on 08-20 and the
+  founder ruled it back out on 08-21 -- and nothing here reopens it. What the beat lacks is options: the
+  founder is being shown one take of the shot that opens the episode. Its recorded open fault (the field
+  moves with the fig) is already argued against in the negative in six separate terms, so a re-word has
+  nothing left to say and the remaining lever is the draw. Two fresh seeds give the cold open a third
+  and fourth distinct version to choose between beside fignonly and chroma. $0, ~12 minutes each.'
+est_minutes: 12
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b01-fignonly-s20260871-0821\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop\
+    \ an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib,\
+    \ os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b01-fignonly-s20260871-0821\stamp_sidecar.py: "#!/usr/bin/env python3\n\"\"\"Stamp\
+    \ the clip's provenance sidecar. REFUSES if the sidecar is missing.\n\nThis clip IS a candidate for\
+    \ the cut (the cold open), so is_show_content is\ntrue. Still approved: false / provisional: true\
+    \ -- nothing is cut until the\n121 frames are opened against the pre-registered bar, and R4 is the\n\
+    founder's.\n\"\"\"\nimport os, sys\n\nMETA = sys.argv[1]\nif not os.path.isfile(META):\n    sys.exit(\"\
+    !! no sidecar at %s -- refusing to call the job clean.\" % META)\nwith open(META, \"a\", encoding=\"\
+    utf-8\", newline=\"\\n\") as fh:\n    fh.write(\n        \"# --- appended by ep2-b01-fignonly-s20260871-0821\
+    \ after the render.\\n\"\n        \"approved: false\\n\"\n        \"provisional: true\\n\"\n     \
+    \   \"is_show_content: true\\n\"\n        \"note: |\\n\"\n        \"  A CANDIDATE TAKE FOR THE EPISODE\
+    \ 2 COLD OPEN. It animates the\\n\"\n        \"  founder's own 2026-08-13 route -- a small inpainted\
+    \ nub, grown by\\n\"\n        \"  the motion prompt -- on the frame-1 plate that passed its bar 7\
+    \ of\\n\"\n        \"  7 (ep2-b01-nubcomp-b-0818). Judged against the bar pre-registered\\n\"\n  \
+    \      \"  in pipeline/jobs/ep2-b01-fignonly-s20260871-0821.yaml BEFORE this render\\n\"\n       \
+    \ \"  existed. Not approved and not cut until those frames are opened.\\n\")\nprint(\"stamped %s\"\
+    \ % META, flush=True)"
+  C:\banyan-farm\ep2-b01-fignonly-s20260871-0821\b01-motion-prompt.txt: On the thinnest branch of the
+    tiny two-leaf sapling, the small green nub swells, darkens and rounds into a single deep purple fig
+    -- the only thing in frame that moves. Detailed cinematic anime, warm amber backlight, hazy out-of-focus
+    grassy field, soft glowing light, masterpiece, best quality, very aesthetic.
+  C:\banyan-farm\ep2-b01-fignonly-s20260871-0821\b01-negative.txt: camera pan, camera tilt, zoom, dolly,
+    push in, pull back, tripod, cut to another shot, scene change, different location, split screen, still
+    image, freeze frame, growing plant, sprouting, unfurling leaves, stem lengthening, leaves enlarging,
+    plant enlarging, blooming, brightening, exposure change, overexposed, blown highlights, changing background
+  C:\banyan-farm\ep2-b01-fignonly-s20260871-0821\b01-jobs-encode.json: "[\n {\n  \"beat\": 1,\n  \"embeds\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b01-fignonly-s20260871-0821-out\\\\b01-embeds.pt\",\n  \"prompt_file\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b01-fignonly-s20260871-0821\\\\b01-motion-prompt.txt\",\n  \"negative_file\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b01-fignonly-s20260871-0821\\\\b01-negative.txt\"\n }\n]"
+  C:\banyan-farm\ep2-b01-fignonly-s20260871-0821\b01-jobs-render.json: "[\n {\n  \"beat\": 1,\n  \"seed\"\
+    : 20260871,\n  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b01-fignonly-s20260871-0821-out\\\\b01-embeds.pt\"\
+    ,\n  \"init\": \"C:\\\\banyan-farm\\\\ep2-b01-fignonly-s20260871-0821-out\\\\b01-nub-init-704x1280.png\"\
+    ,\n  \"out\": \"C:\\\\banyan-farm\\\\ep2-b01-fignonly-s20260871-0821-out\\\\01-cold-open-LTX-fignonly-s20260871-0821.mp4\"\
+    \n }\n]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b01-fignonly-s20260871-0821\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b01-nubcomp-b-0818\b01-nubcomp-s20260826.png
+  - --sha256
+  - 1b6d349204e50de0347c76a1e9092a26c90139f43fb1f3218bce635828534c36
+  - --out
+  - C:\banyan-farm\ep2-b01-fignonly-s20260871-0821-out\b01-nub-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b01-fignonly-s20260871-0821\b01-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b01-fignonly-s20260871-0821\b01-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b01-fignonly-s20260871-0821
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b01-fignonly-s20260871-0821-out\bench-b01-nubgrow.jsonl
+  - --bench-label
+  - ep2-b01-fignonly-s20260871-0821
+- name: stamp
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b01-fignonly-s20260871-0821\stamp_sidecar.py
+  - C:\banyan-farm\ep2-b01-fignonly-s20260871-0821-out\01-cold-open-LTX-fignonly-s20260871-0821.mp4.meta.yaml
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# THE GLOB CARRIES THE BEAT SLUG (01-cold-open). No allow_fail: a publish\n# that cannot find its\
+    \ files is a FAIL of the job, not a footnote.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-b01-fignonly-s20260871-0821-out\"\
+    \npay_dir = \"C:/banyan-farm/ep2-b01-fignonly-s20260871-0821\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b01-fignonly-s20260871-0821\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/01-cold-open-LTX-fignonly-s20260871-0821.mp4*\"\
+    )\n               + glob.glob(out_dir + \"/b01-nub-init-704x1280.png\")\n               + glob.glob(out_dir\
+    \ + \"/bench-b01-nubgrow.jsonl\")\n               + glob.glob(pay_dir + \"/b01-motion-prompt.txt\"\
+    )\n               + glob.glob(pay_dir + \"/b01-negative.txt\"))\nlines = []\nfor f in files:\n   \
+    \ shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as\
+    \ fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b01-fignonly-s20260871-0821.sha256\"), \"w\", newline=\"\\n\") as\
+    \ fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s)\
+    \ + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)"
+artifacts:
+- C:\banyan-farm\ep2-b01-fignonly-s20260871-0821-out\01-cold-open-LTX-fignonly-s20260871-0821.mp4
+- C:\banyan-farm\ep2-b01-fignonly-s20260871-0821-out\b01-nub-init-704x1280.png
+script_authority: 'Node 002b-first-citizen, `approved_by: founder`, `approved_on: 2026-08-03`. The motion
+  prompt IS the script''s own cold-open sentence, staged on the frame-1 plate built by his own 2026-08-13
+  verdict. Sidecar stamped approved: false / provisional: true; nothing is cut until the frames are opened
+  against the pre-registered bar, and the taste call is the founder''s under R4. Silent, $0, no voice
+  synthesis, no episode assembly.'
+pre_registered_fail_modes: 'S-NOFIG the fruit never turns purple, or turns and reverts.
+
+  S-FIELD the grass moves with the fig, exactly as the incumbent does. Two seeds reproducing it makes
+  the field motion a property of the plate and the recipe rather than the draw, which retires the seed
+  ladder on this beat.
+
+  S-BLOOM whole-frame luminance walks. This recipe family is measured as capable of +73 and -91 levels
+  on a seed that behaves elsewhere, and beat 01''s own crf-33 parent is the +73.24 case, so this is checked
+  per render and never inherited.
+
+  S-POP the ripening happens in one frame pair again. Same defect as the incumbent, recorded rather than
+  excused.'
+read_that_produced_this_rung: 'Every beat 01-10 clip named in review/ep2-ship-0821/ep2-ship-0821.mp4.meta.yaml
+  `sources:` was decoded and read on 2026-08-21 night: an overview plus consecutive-frame strips through
+  each motion window via pipeline/coldread_frames.py, and an interframe-difference sweep over every adjacent
+  pair at 176x320 BT.601 luma. The faults this spec cites by frame number come from that read and not
+  from any existing verdict.'
+the_one_variable: THE SEED. The positive, the negative, the nubcomp plate and its sha assertion, and every
+  sampler flag are the shipping take's own, unchanged.
+derivation:
+  parent: pipeline/jobs/ep2-b01-fignonly-s20260840-0820.yaml
+  by: pipeline/derive_spec.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - consumer
+  - owner
+  - pre_registered_fail_modes
+  - read_that_produced_this_rung
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - control
+  - derivation
+  - failure_predicted_in_advance
+  - init_provenance
+  - pre_registered_fail_modes
+  - script_authority_note
+  - the_one_variable
+  - verdict_cut
+  - verdict_this_job
+  - verdict_this_job_measured
+  - what_this_licenses_after_the_verdict
+  retokened:
+  - 01-cold-open-LTX-fignonly-s20260840 -> 01-cold-open-LTX-fignonly-s20260871-0821
+  - ep2-b01-fignonly-s20260840-0820 -> ep2-b01-fignonly-s20260871-0821
+  overrides_applied_and_asserted:
+    seed:
+    - payload b01-jobs-render.json (20260840 -> 20260871, re-parsed)
+  seed: 20260871

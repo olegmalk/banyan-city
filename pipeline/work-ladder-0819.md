@@ -8328,3 +8328,33 @@ r12a sq45 +`jitome` · r12b sq65 +`jitome` · r12c sq45, negative +`large eyes,
 big eyes` · r12d sq45 +`jitome`, negative +`large eyes, big eyes`. `jitome` is
 booru's name for the flat deadpan narrow eye and is a CONVENTION tag, which is
 the only kind of eye term that has moved this render.
+
+**ROUND TWELVE SETTLES IT, AND THE ANSWER IS TWO CONVENTION TAGS.**
+
+| rung | change | verdict |
+|---|---|---|
+| r12a | sq45 +`jitome` | **the size lever.** White almond, single dark pupil, correct shape. |
+| r12b | sq65 +`jitome` | back to a rendered grey-green iris — sq65 loses the eye again |
+| r12c | sq45, negative +`large eyes, big eyes` | white almond, small dark pupils, but the set of the eyes is off |
+| r12d | **sq45 +`jitome`, negative +`large eyes, big eyes`** | **HIS GOBLIN.** Small white almond, tiny dark pupil, two thin high brow arcs, broad dome, flat mouth, washed sage. Beside the vetoed frame on the same sheet they are plainly two different characters. |
+
+**THE FINDING, AND IT IS THE SAME ONE THE GUARD LANE REACHED FROM THE OTHER
+SIDE: convention tags move this render and feature tags do not.** Four rounds
+named the pupil — `slit pupils`, `constricted pupils`, and their negations —
+and every one of them drew an *iris*. `eyebags` and `jitome` name no feature at
+all; they name the flat, deadpan, low-detail way an eye is DRAWN, and between
+them they fixed the fill and the size. `jitome` is booru's word for exactly the
+eye in his image, and it had never been tried.
+
+**THE RECIPE IS NOW THE MODULE DEFAULT, NOT FOUR CLI FLAGS.** `IDENTITY` carries
+`eyebags, jitome` and no pupil word; `NEGATIVE` carries `large eyes, big eyes`
+and no longer bans `blank eyes` — which was banning his own design. Both pupil
+tags are in the deriver's DEAD list, where `slit pupils` was *required* this
+morning, and the selftest now fails if `blank eyes` ever returns to the
+negative. A future spec is correct by construction.
+
+**SAMPLE GATE, HONOURED AT THE LAST STEP TOO.** Moving the terms into the module
+put them at different token POSITIONS than r12d's appended flags, and CLIP is
+order-sensitive — so `ep2-b13-canon-w4-0821` was queued ALONE and compared to
+r12d before the other eleven were released. It reproduces r12d. **All twelve
+beats of the wave are now on the card at w4.**

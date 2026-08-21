@@ -1,0 +1,260 @@
+id: ep2-b05-decontra-s20260871-0821
+task: ep2-b05-decontra-s20260871-0821
+node: 002b-first-citizen
+beat: 5
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: iteration-campaign lane A (beats 01-10), 2026-08-21 night
+consumer: 'BEAT 05''S SELECTION on the per-beat review page review/ep2-beats-0821, which the founder picks
+  from in the morning. Beat 05 has never been iterated and currently offers him exactly one take. This
+  cell is a candidate version, not a swap: lane A does not swap cuts, it stages options.'
+success: One 704x1280 121-frame mp4 in which BOTH GUARDS KEEP A DRAWN FACE FOR THE WHOLE CLIP -- no smear,
+  no featureless head, at f048, f060 and f070 where the incumbent loses guard 2 -- and in which the two
+  men are PLANTED, turning their heads to scan, with neither man jogging toward camera and neither leaving
+  frame. Read by eye at 1:1 on consecutive frames through the motion window (pipeline/coldread_frames.py),
+  never an evenly spread sheet. A clip that holds both faces and scans is a genuine option for the selection;
+  a clip that holds the faces but stands inertly is recorded as a partial and still shown.
+why: 'Beat 05''s prompt contradicts beat 05''s own ruling. done-definitions beats.05 records the lever
+  as ''stage them ALREADY STANDING and scanning rather than jogging in - motion toward camera is what
+  breaks it'', and the shipped spec''s positive still ends ''THE JOG IS THE SHOT - he is moving for most
+  of it, not standing'', while its negative forbids BOTH jogging AND standing still. Read frame by frame
+  tonight the clip does what a pulled-apart instruction produces: the pair drifts, and guard 2''s head
+  dissolves to a featureless orange smear across roughly f048-f070 -- a fault named in no list this beat
+  has. This is the cheapest lever on the ladder above a blind re-roll and it deletes rather than invents.
+  $0, ~6 minutes, and the card is idle.'
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b05-decontra-s20260871-0821\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop\
+    \ an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib,\
+    \ os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b05-decontra-s20260871-0821\b05-motion-prompt.txt: "2D anime, hand-drawn cel animation,\
+    \ static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art.\
+    \ Subject already in frame: THE TWO GUARDS ARE ALREADY STANDING STILL IN THE FIELD AND THEY DO NOT\
+    \ WALK OR RUN ANYWHERE. They stand side by side on their marks, planted, and the only movement in\
+    \ the shot is that they TURN THEIR HEADS SLOWLY TO SCAN the field - one looks left, the other looks\
+    \ right, their shoulders barely moving. Neither man steps toward the camera, neither crosses the frame,\
+    \ and neither leaves it. THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY IN THIS FRAME AND IT DOES NOT\
+    \ CHANGE - the green summer field, the grass, the hedge and the sky are all present from the first\
+    \ frame and stay exactly as they are for the whole shot. Nothing is added to the background and nothing\
+    \ is redrawn. BOTH MEN ARE ALREADY IN THIS FRAME TOO, from the first frame to the last, and no third\
+    \ man is anywhere in it. EXACTLY TWO GUARDS ARE IN THIS SHOT AND THERE IS NO THIRD MAN ANYWHERE IN\
+    \ THE FRAME - not behind them, not at an edge, not out of focus. Two men, a pair, and the frame is\
+    \ too tight to hold a third. TWO UNIFORMED PATROL GUARDS, BOTH GROWN MEN, ARE IN THIS SHOT TOGETHER\
+    \ FROM THE FIRST FRAME AND BOTH STAY IN IT: two different men side by side, not one man twice \u2014\
+    \ the near one carrying a bark clipboard, the second walking level with him a stride to his side.\
+    \ Both are in a brown patrol tunic with a cloth sash of office and a wide belt. BEHIND HIM THE WORLD\
+    \ IS FULLY DRAWN AND FILLS EVERY PART OF THE FRAME HE DOES NOT: green summer grass runs to the bottom\
+    \ edge of the frame, a low hedge and a dark treeline cross the middle distance behind him, and a pale\
+    \ blue midday sky with thin cloud fills the top of the frame. No part of the frame is left empty or\
+    \ white. a uniformed patrol guard in a summer field \u2014 short brown hair, a matching brown patrol\
+    \ tunic with a cloth SASH OF OFFICE across his chest and a small brass BADGE pinned on it, a wide\
+    \ belt, dark trousers and boots, a bark clipboard in one hand. HE IS ALREADY STOPPED AND HE STAYS\
+    \ STOPPED. Both feet are planted from the first frame. He rocks forward over them a little and settles\
+    \ back, his shoulders come up, and he looks off to one side and then slowly back across the field.\
+    \ THE SCAN IS THE SHOT \u2014 his head and his eyes are what move, and his feet do not leave their\
+    \ marks. A SECOND uniformed guard in the same brown patrol tunic and sash is planted beside him, a\
+    \ half step behind, and scans the other way. TWO MEN, both in frame, both standing on their marks.\
+    \ They stay large in frame \u2014 knees to head, near enough to read their faces; the field does not\
+    \ push them small. A green summer field behind, a dark treeline on the horizon. Bright midday sunlight,\
+    \ clear and even, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic."
+  C:\banyan-farm\ep2-b05-decontra-s20260871-0821\b05-negative.txt: jogging, running, walking toward camera,
+    approaching, camera lurch, motion blur, blurred figure, cropped torso, extreme close-up, one man alone,
+    background appearing, scene forming, world fading in, iris, wipe, dissolve, white background, third
+    guard, extra soldier, a crowd, peaked cap, military cap, three guards, third man, a crowd, a squad,
+    extra soldier, group of men, one man alone, single figure, solo, lone guard, second person arriving
+    late, empty field, boy, child, round soft body, white background, blank background, isolated on white,
+    character sheet, poster art, flat vector art, silhouette, frozen, still frame, no movement, reading
+    a clipboard, looking down at a clipboard, armor, armour, breastplate, helmet, chainmail, knight, plate
+    mail, weapon, sword, spear, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom,
+    push in, pull back, tripod, camera, camera equipment, face morphing, distorted face, warped face,
+    extra eyes, bald, walking out of frame, leaving the frame, floating head, disembodied head, scene
+    change, shot change, dark, night, dusk, sunset, dim lighting, low key, shadows dominant, photorealistic,
+    3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b05-decontra-s20260871-0821\b05-jobs-encode.json: "[{\"beat\": 5,\n  \"embeds\":\
+    \ \"C:\\\\banyan-farm\\\\ep2-b05-decontra-s20260871-0821\\\\b05-embeds.pt\",\n  \"prompt_file\": \"\
+    C:\\\\banyan-farm\\\\ep2-b05-decontra-s20260871-0821\\\\b05-motion-prompt.txt\",\n  \"negative_file\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b05-decontra-s20260871-0821\\\\b05-negative.txt\"}]"
+  C:\banyan-farm\ep2-b05-decontra-s20260871-0821\b05-jobs-render.json: "[{\"beat\": 5,\n  \"seed\": 20260871,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b05-decontra-s20260871-0821\\\\b05-embeds.pt\",\n  \"init\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b05-decontra-s20260871-0821\\\\b05-init-704x1280.png\",\n  \"out\": \"\
+    C:\\\\banyan-farm\\\\ep2-b05-decontra-s20260871-0821\\\\05-the-patrol-LTX-ep2-b05-decontra-s20260871-0821.mp4\"\
+    }]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b05-decontra-s20260871-0821\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b05-scene-0814\05-the-patrol-ipa-r0-w015-s0.png
+  - --sha256
+  - e99ff9e129c303f63f383b44cdd38a59ca895fd496c58a2fd6d59cc3b2fcd8fa
+  - --out
+  - C:\banyan-farm\ep2-b05-decontra-s20260871-0821\b05-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b05-decontra-s20260871-0821\b05-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b05-decontra-s20260871-0821\b05-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b05-decontra-s20260871-0821
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b05-decontra-s20260871-0821\bench-ep2-b05-decontra-s20260871-0821.jsonl
+  - --bench-label
+  - ep2-b05-decontra-s20260871-0821
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b05-decontra-s20260871-0821\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b05-decontra-s20260871-0821/05-the-patrol-LTX-ep2-b05-decontra-s20260871-0821.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b05-decontra-s20260871-0821/b05-init-704x1280.png\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b05-decontra-s20260871-0821/bench-ep2-b05-decontra-s20260871-0821.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b05-decontra-s20260871-0821.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b05-decontra-s20260871-0821\05-the-patrol-LTX-ep2-b05-decontra-s20260871-0821.mp4
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. `approval_condition` is None, so nothing in it touches beat 05. A register
+  test on an approved node, not an episode assembly.'
+pre_registered_fail_modes: 'D-STILL the deletion overshoots and the shot becomes a held photograph: both
+  faces survive because nothing happens. Scored as a partial, not a pass; it is why ''frozen, still frame,
+  no movement'' were KEPT in the negative.
+
+  D-DISSOLVE-ANYWAY the head smear is seed-shaped rather than instruction-shaped and reproduces at both
+  new seeds. That is the informative outcome: it moves beat 05 off the wording ladder and onto the plate,
+  and it is why two seeds run and not one.
+
+  D-COUNT the pair collapses to one man or overshoots to three. This beat has produced 1, 3 and 3+ on
+  words before; count now comes from the plate, so a count failure here would mean the deletion disturbed
+  something the plate was holding.
+
+  D-SASH neither guard wears the sash. EXPECTED AND NOT SCORED AS A FAIL -- the sash is not in the init
+  plate and the absent-object law says a prompt cannot summon it. It stays a plate job and this rung does
+  not pretend otherwise.'
+read_that_produced_this_rung: 'Every beat 01-10 clip named in review/ep2-ship-0821/ep2-ship-0821.mp4.meta.yaml
+  `sources:` was decoded and read on 2026-08-21 night: an overview plus consecutive-frame strips through
+  each motion window via pipeline/coldread_frames.py, and an interframe-difference sweep over every adjacent
+  pair at 176x320 BT.601 luma. The faults this spec cites by frame number come from that read and not
+  from any existing verdict.'
+the_one_variable: 'TWO EDITS, BOTH DELETIONS OF SELF-CONTRADICTION, PLUS THE SEED. The positive''s leftover
+  jog paragraph is replaced by the planted-and-scanning staging its own first paragraph and its own recorded
+  lever already call for; the negative stops forbidding standing. Nothing else moves: same init plate
+  at the same asserted sha, same 121-frame grid, same --image-crf 33, same guidance, same sigmas. The
+  two cells differ from each other by SEED ALONE.'
+derivation:
+  parent: pipeline/jobs/ep2-b05-standB-0814.yaml
+  by: pipeline/derive_spec.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - consumer
+  - owner
+  - pre_registered_fail_modes
+  - read_that_produced_this_rung
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - verdict
+  - verdict_by
+  - verdict_clauses
+  - verdict_contradicts_a_founder_ruling
+  - verdict_disagrees_with_the_record_and_leaves_it_standing
+  - verdict_judged
+  - verdict_measured
+  - verdict_next_instrument
+  - verdict_status_recommendation
+  retokened:
+  - 05-the-patrol-LTX-jog-b-0812 -> 05-the-patrol-LTX-ep2-b05-decontra-s20260871-0821
+  - ep2-b05-standB-0814 -> ep2-b05-decontra-s20260871-0821
+  overrides_applied_and_asserted:
+    payload:b05-motion-prompt.txt:
+    - payload b05-motion-prompt.txt (2946 -> 2865 chars)
+    payload:b05-negative.txt:
+    - payload b05-negative.txt (1295 -> 1199 chars)
+    seed:
+    - payload b05-jobs-render.json (20260914 -> 20260871, re-parsed)
+  seed: 20260871

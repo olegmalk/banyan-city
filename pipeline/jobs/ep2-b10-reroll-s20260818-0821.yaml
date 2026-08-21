@@ -1,0 +1,242 @@
+id: ep2-b10-reroll-s20260818-0821
+task: ep2-b10-reroll-s20260818-0821
+node: 002b-first-citizen
+beat: 10
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: iteration-campaign lane A (beats 01-10), 2026-08-21 night
+consumer: BEAT 10'S SELECTION on review/ep2-beats-0821 for the founder's morning pick. Never iterated;
+  one take on offer. A candidate version, not a swap.
+success: One 704x1280 121-frame mp4 in which THE CARRIED BOARD IS ONE OBJECT FROM FIRST FRAME TO LAST
+  -- same colour, same shape, same hands -- and both men's hands stay drawn hands at f044, f052 and f061
+  where the incumbent melts them, with two guards in frame throughout and the field present at frame one.
+  THE BOARD'S FACING IS NOT IN THIS BAR. It is pre-declared as out of scope here so that a clip cannot
+  be reported as a failure for missing a target this rung never aimed at, and so that a clip that DOES
+  land it cannot be claimed as the wording working.
+why: 'Beat 10''s headline fault -- the blank board faces the CAMERA instead of the partner -- is a CLOSED
+  WORDING ROUTE and this rung spends nothing on it. The positive already says partner-facing three times
+  (''extends it toward the other man at chest height so the empty back of it faces his partner''); round
+  3 and round 4 both failed the same way; and plate_lane_0817 isolated the mechanism -- ''A PROP DOES
+  NOT [bind to a person clause], it attaches to whichever figure is drawn nearest''. episode-loop-v2 step
+  3: two batch rounds failing the same way means the staging is wrong for the engine, not the words. What
+  IS seed-shaped are the two faults the frame-by-frame read found tonight and no list carries: the carried
+  board CHANGES IDENTITY TWICE inside the clip (teal clipboard -> pale sheet -> tan slab across f035-f061)
+  and both men''s hands melt into extra and merged fingers across f044-f061. This beat has been rolled
+  once, at 20260915. Its sibling beat 02, same engine, same one-plate-one-wording design, performed at
+  7 of 16 seeds. $0, ~6 minutes.'
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b10-reroll-s20260818-0821\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop\
+    \ an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib,\
+    \ os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b10-reroll-s20260818-0821\b05-motion-prompt.txt: '2D anime, hand-drawn cel animation,
+    static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art.
+    Subject already in frame: THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY IN THIS FRAME AND IT DOES NOT
+    CHANGE - the green field, the grass, the hedge and the sky are all present from the first frame and
+    stay exactly as they are. Nothing is added to the background and nothing is redrawn. TWO UNIFORMED
+    PATROL GUARDS, BOTH GROWN MEN, ARE ALREADY IN THIS FRAME TOGETHER from the first frame to the last,
+    standing close, and no third man is anywhere in it. THE NEAR GUARD FLIPS HIS BARK BOARD AND HOLDS
+    ITS COMPLETELY BLANK BACK OUT TOWARD HIS PARTNER at chest height, shakes it once, and holds it there
+    while his partner looks at it. Neither man walks anywhere. THE WHOLE SCENE IS ALREADY DRAWN AND ALREADY
+    IN THIS FRAME AND IT DOES NOT CHANGE - the green summer field, the low hedge, the treeline and the
+    pale sky are all present from the first frame and stay exactly as they are, unmoving, for the whole
+    shot. Nothing is added to the background and nothing is redrawn. TWO UNIFORMED PATROL GUARDS, BOTH
+    GROWN MEN, are in the field: the near one in a brown patrol tunic with a cloth sash and a bark clipboard
+    in his hands, and HIS PARTNER, a second guard in the same uniform, standing close beside him within
+    arm''s reach and facing him. THE NEAR GUARD FLIPS HIS BARK CLIPBOARD AROUND AND HOLDS ITS COMPLETELY
+    BLANK BACK OUT TOWARD HIS PARTNER: he turns the board over, extends it toward the other man at chest
+    height so the empty back of it faces his partner, shakes it once, and holds it there while his partner
+    looks at it. Both men stay in frame and neither walks off. The board stays hand-sized. Bright clear
+    daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b10-reroll-s20260818-0821\b05-negative.txt: background appearing, scene forming,
+    iris, wipe, dissolve, white background, blank background, one man alone, single figure, third guard,
+    walking away, peaked cap, military cap, background changing, background appearing, scene forming,
+    world fading in, iris, wipe, dissolve, empty field with one man, single figure, boy, child, bald guard,
+    white hair, giant clipboard, oversized board, standing still, standing in one spot, standing at attention,
+    stationary, motionless, frozen, still frame, no movement, loitering, armor, armour, breastplate, helmet,
+    chainmail, knight, weapon, sword, spear, giant clipboard, oversized prop, board filling the frame,
+    prop larger than his torso, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom,
+    push in, pull back, tripod, camera, face morphing, distorted face, warped face, extra eyes, bald,
+    walking out of frame, floating head, disembodied head, scene change, shot change, dark, night, dusk,
+    sunset, dim lighting, low key, shadows dominant, white background, blank background, empty background,
+    plain white backdrop, void, isolated on white, character sheet, studio backdrop, photorealistic, 3D
+    render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b10-reroll-s20260818-0821\b05-jobs-encode.json: "[{\"beat\": 10,\n  \"embeds\": \"\
+    C:\\\\banyan-farm\\\\ep2-b10-reroll-s20260818-0821\\\\b05-embeds.pt\",\n  \"prompt_file\": \"C:\\\\\
+    banyan-farm\\\\ep2-b10-reroll-s20260818-0821\\\\b05-motion-prompt.txt\",\n  \"negative_file\": \"\
+    C:\\\\banyan-farm\\\\ep2-b10-reroll-s20260818-0821\\\\b05-negative.txt\"}]"
+  C:\banyan-farm\ep2-b10-reroll-s20260818-0821\b05-jobs-render.json: "[{\"beat\": 10,\n  \"seed\": 20260818,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b10-reroll-s20260818-0821\\\\b05-embeds.pt\",\n  \"init\"\
+    : \"C:\\\\banyan-farm\\\\ep2-b10-reroll-s20260818-0821\\\\b05-init-704x1280.png\",\n  \"out\": \"\
+    C:\\\\banyan-farm\\\\ep2-b10-reroll-s20260818-0821\\\\10-no-form-LTX-ep2-b10-reroll-s20260818-0821.mp4\"\
+    }]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b10-reroll-s20260818-0821\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b05-scene-0814\05-the-patrol-ipa-r0-w015-s0.png
+  - --sha256
+  - e99ff9e129c303f63f383b44cdd38a59ca895fd496c58a2fd6d59cc3b2fcd8fa
+  - --out
+  - C:\banyan-farm\ep2-b10-reroll-s20260818-0821\b05-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b10-reroll-s20260818-0821\b05-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b10-reroll-s20260818-0821\b05-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b10-reroll-s20260818-0821
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b10-reroll-s20260818-0821\bench-b10-world.jsonl
+  - --bench-label
+  - ep2-b10-reroll-s20260818-0821
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b10-reroll-s20260818-0821\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b10-reroll-s20260818-0821/10-no-form-LTX-ep2-b10-reroll-s20260818-0821.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b10-reroll-s20260818-0821/b05-init-704x1280.png\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b10-reroll-s20260818-0821/bench-b10-world.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b10-reroll-s20260818-0821.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b10-reroll-s20260818-0821\10-no-form-LTX-ep2-b10-reroll-s20260818-0821.mp4
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`, read from genomes/sapling/nodes/002b-first-citizen/leaves/002b-t0-c.yaml, the leaf the
+  render gate itself reads. `approval_condition` is None, so nothing in it touches beat 05. A register
+  test on an approved node, not an episode assembly.'
+pre_registered_fail_modes: 'R-MORPH-AGAIN the board changes identity at these seeds too, which would make
+  it a plate/prop property rather than a draw and would close the seed ladder on this beat in one round.
+
+  R-COUNT one guard only. On record as round 2''s and round 3''s failure at some seeds; count now comes
+  from the plate, so a drop here is a real regression.
+
+  R-CAMERA-BOARD the board faces the lens again. PRE-DECLARED AS EXPECTED and not scored, in either direction.
+
+  R-JUDDER the alternating half-rate motion measured on this clip tonight (adjacent frame pairs differing
+  5.96 against 1.56, a ~3.8x alternation, where beat 01 on the same engine measures 1.00) persists. Nothing
+  in this rung targets it; it is recorded so the next lane has the number.'
+read_that_produced_this_rung: 'Every beat 01-10 clip named in review/ep2-ship-0821/ep2-ship-0821.mp4.meta.yaml
+  `sources:` was decoded and read on 2026-08-21 night: an overview plus consecutive-frame strips through
+  each motion window via pipeline/coldread_frames.py, and an interframe-difference sweep over every adjacent
+  pair at 176x320 BT.601 luma. The faults this spec cites by frame number come from that read and not
+  from any existing verdict.'
+the_one_variable: 'THE SEED. Nothing else -- not one byte of the positive, the negative, the plate, the
+  sha assertion or any sampler flag. This is the strictest one-variable rung available on this beat and
+  it is deliberate: see `why`.'
+derivation:
+  parent: pipeline/jobs/ep2-b10-pairB-0814.yaml
+  by: pipeline/derive_spec.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - consumer
+  - owner
+  - pre_registered_fail_modes
+  - read_that_produced_this_rung
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - verdict
+  - verdict_by
+  - verdict_clauses
+  - verdict_contradicts_a_founder_ruling
+  - verdict_disagrees_with_the_record_and_leaves_it_standing
+  - verdict_judged
+  - verdict_measured
+  - verdict_next_instrument
+  - verdict_reported_forward_for_the_lane_that_owns_the_in_hand_statistic
+  - verdict_status_recommendation
+  retokened:
+  - 10-no-form-LTX-world-0813 -> 10-no-form-LTX-ep2-b10-reroll-s20260818-0821
+  - ep2-b10-pairB-0814 -> ep2-b10-reroll-s20260818-0821
+  overrides_applied_and_asserted:
+    seed:
+    - payload b05-jobs-render.json (20260915 -> 20260818, re-parsed)
+  seed: 20260818
