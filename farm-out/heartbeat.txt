@@ -3949,3 +3949,5 @@
 17:04:46Z box-runner idle ready=0 failed=80
 17:08:31Z STARTED task=ep2-b07-twofig-0821-1787332108 attempt=1 on box-runner
 17:09:02Z DONE task=ep2-b07-twofig-0821-1787332108 rc=0 artifacts=1
+17:13:59Z STARTED task=ep2-b02-canonmotion-r2-0821-1787332435 attempt=1 on box-runner
+17:20:00Z DONE task=ep2-b02-canonmotion-r2-0821-1787332435 rc=0 artifacts=1
