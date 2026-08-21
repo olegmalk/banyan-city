@@ -284,3 +284,16 @@ derivation:
     - payload b04-motion-prompt.txt (1355 -> 719 chars)
     payload:b04-negative.txt:
     - payload b04-negative.txt (780 -> 746 chars)
+
+# ---------------------------------------------------------------------------
+# JUDGED 2026-08-21 by the ship-endgame lane, BY EYE at a contact strip, against
+# canon.yaml ep2-goblin-design-adult/correction_2026_08_20 (the B tile's pixels)
+# and against the slot render_t3.fit_duration will actually give this beat.
+# Evidence: review/motion-ageb-0821/JUDGING-0821.md and its STRIP-*.png.
+# The clip was sha-verified against the box's own manifest before a frame was
+# opened. No metric decided anything here; the strips did.
+# ---------------------------------------------------------------------------
+verdict_ageb_wave_0821: >-
+  PASS, NOT PICKED. Face holds all 121 frames, but the camera drifts back and the head is
+  meaningfully smaller by f120. On a beat that holds its last frame for 1.12 s that is the
+  deciding difference, and seed 1 took it.

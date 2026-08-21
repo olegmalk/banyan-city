@@ -284,3 +284,21 @@ derivation:
     - payload b02-motion-prompt.txt (1355 -> 672 chars)
     payload:b02-negative.txt:
     - payload b02-negative.txt (780 -> 746 chars)
+
+# ---------------------------------------------------------------------------
+# JUDGED 2026-08-21 by the ship-endgame lane, BY EYE at a contact strip, against
+# canon.yaml ep2-goblin-design-adult/correction_2026_08_20 (the B tile's pixels)
+# and against the slot render_t3.fit_duration will actually give this beat.
+# Evidence: review/motion-ageb-0821/JUDGING-0821.md and its STRIP-*.png.
+# The clip was sha-verified against the box's own manifest before a frame was
+# opened. No metric decided anything here; the strips did.
+# ---------------------------------------------------------------------------
+verdict_ageb_wave_0821: >-
+  PASS ON THE WINDOW AND CUT-PREFERRED, and the beat's action is the whole reason. Face, slit
+  eyes and open mouth are intact to f101 (4.21 s); the sprint, the push off and the dive into
+  the grass all complete inside that. The egg arrives only at f106. Slot is 4.04 s, so there
+  is 0.17 s of margin, and the take shipped is trimmed to 97 frames so the window is a
+  property of the file rather than of the script's paper timing. IT DOES NOT PASS DESIGN: the
+  ears are long tapering spikes where canon's B tile is short broad low-set flanges, and C1's
+  magenta collar is present. SWAPPED INTO review/ep2-ship-0821 as 02-the-sprint-
+  LTX-b02-ageb-s2-trim97-0821.mp4. STEWARD PICK, R4-VETO-ABLE IN ONE LINE.

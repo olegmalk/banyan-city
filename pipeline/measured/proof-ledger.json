@@ -1,5 +1,5 @@
 {
- "commits_in_window": 1790,
+ "commits_in_window": 1845,
  "covers_window": true,
  "cut": "ep2-ship-0821",
  "cut_files": [
@@ -15,21 +15,16 @@
  "cuts_shipped": 8,
  "generated": "2026-08-21",
  "generated_by": "python3 pipeline/proof_receipts.py --write",
- "head": "a6896dd5e",
+ "head": "1ac3c0fab",
  "landed": {
-  "02-the-sprint-b02-anchor-s20260834-0817.mp4": {
-   "date": "2026-08-17",
-   "sha": "2034710d",
-   "what": "first commit that added this take"
-  },
   "08-inside-him-b08-twohander.mp4": {
    "date": "2026-08-15",
    "sha": "36ca0734",
    "what": "first commit that added this take"
   },
-  "12-related-b12-tightB-untrimmed.mp4": {
-   "date": "2026-08-15",
-   "sha": "36ca0734",
+  "12-related-b12-tightB-trim13-0821.mp4": {
+   "date": "2026-08-21",
+   "sha": "37627926",
    "what": "first commit that added this take"
   },
   "19-the-drop-dropcomp-0819.mp4": {
@@ -42,14 +37,19 @@
    "sha": "b2fc6ec4",
    "what": "last commit that touched the spec"
   },
-  "pipeline/jobs/ep2-b03-covermid-s2-0820.yaml": {
-   "date": "2026-08-20",
-   "sha": "721eeb44",
+  "pipeline/jobs/ep2-b02-tilemotion-s2-0821.yaml": {
+   "date": "2026-08-21",
+   "sha": "7ac6a0b7",
    "what": "last commit that touched the spec"
   },
-  "pipeline/jobs/ep2-b04-eyes-crf10-0819.yaml": {
-   "date": "2026-08-20",
-   "sha": "c265c0a4",
+  "pipeline/jobs/ep2-b03-tilemotion-s2-0821.yaml": {
+   "date": "2026-08-21",
+   "sha": "7ac6a0b7",
+   "what": "last commit that touched the spec"
+  },
+  "pipeline/jobs/ep2-b04-tilemotion-s1-0821.yaml": {
+   "date": "2026-08-21",
+   "sha": "7ac6a0b7",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b05-standB-0814.yaml": {
@@ -69,7 +69,7 @@
   },
   "pipeline/jobs/ep2-b09-r2s2-m1-0821.yaml": {
    "date": "2026-08-21",
-   "sha": "a6896dd5",
+   "sha": "2895d91a",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b10-pairB-0814.yaml": {
@@ -82,9 +82,9 @@
    "sha": "08b46211",
    "what": "last commit that touched the spec"
   },
-  "pipeline/jobs/ep2-b13-shadelit-0820.yaml": {
-   "date": "2026-08-20",
-   "sha": "eb6440e7",
+  "pipeline/jobs/ep2-b13-tilemotion-s2-0821.yaml": {
+   "date": "2026-08-21",
+   "sha": "7ac6a0b7",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b14-mac-motion-0818.yaml": {
@@ -112,9 +112,9 @@
    "sha": "f11ba736",
    "what": "last commit that touched the spec"
   },
-  "pipeline/jobs/ep2-b20-motion-0819.yaml": {
-   "date": "2026-08-19",
-   "sha": "c2734786",
+  "pipeline/jobs/ep2-b20-tilemotion-s2-0821.yaml": {
+   "date": "2026-08-21",
+   "sha": "7ac6a0b7",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b21-daylight-0814.yaml": {
@@ -123,8 +123,8 @@
    "what": "last commit that touched the spec"
   }
  },
- "range_base": "5c0a8d3d",
- "resolved_blocks_added": 86,
+ "range_base": "9ae20605",
+ "resolved_blocks_added": 90,
  "shallow": true,
  "verdict_lines_added": 311,
  "window_days": 14

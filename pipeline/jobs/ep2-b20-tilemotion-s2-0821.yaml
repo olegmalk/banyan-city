@@ -284,3 +284,21 @@ derivation:
     - payload b20-motion-prompt.txt (1355 -> 650 chars)
     payload:b20-negative.txt:
     - payload b20-negative.txt (780 -> 746 chars)
+
+# ---------------------------------------------------------------------------
+# JUDGED 2026-08-21 by the ship-endgame lane, BY EYE at a contact strip, against
+# canon.yaml ep2-goblin-design-adult/correction_2026_08_20 (the B tile's pixels)
+# and against the slot render_t3.fit_duration will actually give this beat.
+# Evidence: review/motion-ageb-0821/JUDGING-0821.md and its STRIP-*.png.
+# The clip was sha-verified against the box's own manifest before a frame was
+# opened. No metric decided anything here; the strips did.
+# ---------------------------------------------------------------------------
+verdict_ageb_wave_0821: >-
+  PASS, AND IT IS THE ONLY CLIP IN THIS WAVE THAT CLOSES A done_when CLAUSE. Face holds all
+  121 frames AND HE LOOKS UP: the head rises from f055 and is up, slit eyes open and mouth
+  parted, by f076 -- completed at 3.17 s, inside a 3.74 s slot. The outgoing take's verdict
+  reads "STILL NOT A PASS ON THE BEAT ... HE NEVER LOOKS UP, and the tree is still the wrong
+  tree." The look-up is answered here; THE TREE IS NOT, and the fruit in his hands is RED
+  where canon has the fig purple -- a fault carried across from the outgoing take, not
+  introduced. Ears are long pointed spikes. SWAPPED INTO review/ep2-ship-0821 as 20-evidence-
+  LTX-b20-ageb-s2-0821.mp4. STEWARD PICK, R4-VETO-ABLE IN ONE LINE.

@@ -284,3 +284,21 @@ derivation:
     - payload b03-motion-prompt.txt (1355 -> 684 chars)
     payload:b03-negative.txt:
     - payload b03-negative.txt (780 -> 746 chars)
+
+# ---------------------------------------------------------------------------
+# JUDGED 2026-08-21 by the ship-endgame lane, BY EYE at a contact strip, against
+# canon.yaml ep2-goblin-design-adult/correction_2026_08_20 (the B tile's pixels)
+# and against the slot render_t3.fit_duration will actually give this beat.
+# Evidence: review/motion-ageb-0821/JUDGING-0821.md and its STRIP-*.png.
+# The clip was sha-verified against the box's own manifest before a frame was
+# opened. No metric decided anything here; the strips did.
+# ---------------------------------------------------------------------------
+verdict_ageb_wave_0821: >-
+  PASS, AND IT WINS ON WHAT IT DOES NOT DO. Face holds all 121 frames, no costume morph, no
+  dead tail. Motion is small -- seated, hands on knees, a lean at the end -- which is
+  defensible for a beat whose content is hiding badly and not moving, and is recorded as the
+  fault it is rather than argued away. It replaces a take whose own verdict names a 0.79 s
+  freeze at the end of the slot, 15 frames byte-identical; this clip has none. IT DOES NOT
+  PASS DESIGN: long pointed ears, C1 magenta collar, T4 ear-stud. SWAPPED INTO
+  review/ep2-ship-0821 as 03-bad-cover-LTX-b03-ageb-s2-0821.mp4. STEWARD PICK, R4-VETO-ABLE IN
+  ONE LINE.

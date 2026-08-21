@@ -283,3 +283,22 @@ derivation:
     - payload b07-motion-prompt.txt (1355 -> 552 chars)
     payload:b07-negative.txt:
     - payload b07-negative.txt (780 -> 746 chars)
+
+# ---------------------------------------------------------------------------
+# JUDGED 2026-08-21 by the ship-endgame lane, BY EYE at a contact strip, against
+# canon.yaml ep2-goblin-design-adult/correction_2026_08_20 (the B tile's pixels)
+# and against the slot render_t3.fit_duration will actually give this beat.
+# Evidence: review/motion-ageb-0821/JUDGING-0821.md and its STRIP-*.png.
+# The clip was sha-verified against the box's own manifest before a frame was
+# opened. No metric decided anything here; the strips did.
+# ---------------------------------------------------------------------------
+verdict_ageb_wave_0821: >-
+  FAIL, ACTION -- AND THE BEAT KEEPS ITS OLD TAKE BECAUSE OF IT. Identity holds to about f095,
+  then the slit structure smears; the only gesture in the clip is hands clasping at f098. THE
+  DECIDING FAULT IS NOT THE FACE: there is NO GUARD IN THE FRAME. Beat 07 is an authority
+  taking something off the scavenger, and this is a solo standing portrait, so the beat's
+  action is absent rather than weak. The age-B plate for this beat never staged a second
+  figure. review/ep2-ship-0821 KEEPS 07-confiscate-b07-point-crf10-0819.mp4, whose verdict
+  earns its place on exactly this axis ("the guard raises his OWN arm at f045 and the point
+  holds to f096") and whose costume fault -- the scavenger dressed in the guard's pale wrap
+  tunic and white sash -- is UNFIXED and still shipping.

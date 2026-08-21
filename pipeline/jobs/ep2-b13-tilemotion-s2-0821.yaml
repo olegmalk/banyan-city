@@ -285,3 +285,21 @@ derivation:
     - payload b13-motion-prompt.txt (1355 -> 636 chars)
     payload:b13-negative.txt:
     - payload b13-negative.txt (780 -> 746 chars)
+
+# ---------------------------------------------------------------------------
+# JUDGED 2026-08-21 by the ship-endgame lane, BY EYE at a contact strip, against
+# canon.yaml ep2-goblin-design-adult/correction_2026_08_20 (the B tile's pixels)
+# and against the slot render_t3.fit_duration will actually give this beat.
+# Evidence: review/motion-ageb-0821/JUDGING-0821.md and its STRIP-*.png.
+# The clip was sha-verified against the box's own manifest before a frame was
+# opened. No metric decided anything here; the strips did.
+# ---------------------------------------------------------------------------
+verdict_ageb_wave_0821: >-
+  PASS ON THE WINDOW. Face holds all 121 frames. Through the slot (f000-f085) he is seated,
+  head down, eyes closed, settling. NAMED RATHER THAN HIDDEN: this seed's own expressive lift
+  -- head up, blank slit eyes, mouth open -- begins at f087 / 3.62 s, which is 0.06 s PAST THE
+  END OF ITS SLOT, so the cut will not show it. The cheap next rung is staging the lift
+  earlier, not another seed. Design faults travel too: long pointed ears, C1 magenta collar,
+  T4 ear-stud. SWAPPED INTO review/ep2-ship-0821 as 13-the-shade-LTX-b13-ageb-s2-0821.mp4,
+  replacing the very frame the founder was shown when he said "this is one of the images where
+  the goblin looks like an adult, which is wrong." STEWARD PICK, R4-VETO-ABLE IN ONE LINE.

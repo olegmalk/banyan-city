@@ -30,35 +30,35 @@ frames:
   frame_sha256: 4bf90bc15ad42e6590a32bf0a22badb46b522514eed3723495817feecf385e5a
   frame_bytes: 7458
 - beat: 2
-  take: 02-the-sprint-b02-anchor-s20260834-0817.mp4
+  take: 02-the-sprint-LTX-b02-ageb-s2-trim97-0821.mp4
   frame: b02.jpg
   width: 240
   height: 436
   at_seconds: 2.02
   clip_duration_s: 4.04
-  clip_sha256: dfc6a44ab8729a9ef92643eee08bf85bbdc49e20c42647e770da209164ec6bdd
-  frame_sha256: 88d49d5746803cab47ae13c0a04388e0c8f810a6767534ddd74d6715bc78e5e0
-  frame_bytes: 10197
+  clip_sha256: a70235c49dab049cb1a5b9aa5dd9705521d951cf393c9fd94d8d8f3609860d8c
+  frame_sha256: 40687ae02943f854bae9667abaae06b4817481fb96b14635395b452147528c35
+  frame_bytes: 14287
 - beat: 3
-  take: 03-bad-cover-LTX-midend-s20260821-0820.mp4
+  take: 03-bad-cover-LTX-b03-ageb-s2-0821.mp4
   frame: b03.jpg
   width: 240
   height: 436
   at_seconds: 2.52
   clip_duration_s: 5.04
-  clip_sha256: 0c5fc0008e6f7fe6bd5099cc449c95e19e4222cd3cf1c9b81eb2504235f87e48
-  frame_sha256: 75071f0731f12618e1108a32a8035b4b4e7b96181f3e33d1757bf4f69b6f87db
-  frame_bytes: 13385
+  clip_sha256: 63127e52c0b60ab3cb0aafd644bbb37d1d2a3edd8c7f0ab3bd03486461a30f65
+  frame_sha256: d6ad96787b40115d5eb1e1c0130661b5445d5d3d8277a5f77800b1cc516b1d3a
+  frame_bytes: 13004
 - beat: 4
-  take: 04-the-footnote-b04-eyes-crf10-0819.mp4
+  take: 04-the-footnote-LTX-b04-ageb-s1-0821.mp4
   frame: b04.jpg
   width: 240
   height: 436
   at_seconds: 2.52
   clip_duration_s: 5.04
-  clip_sha256: e4def5393b3bd461f618c3af3d84a39c72100ae3d573bd44a8b0093984976d16
-  frame_sha256: e68fc3dd077b60f120065fb36d2f6e7fc5758bb8b509679b2f5493e934fbcd42
-  frame_bytes: 18015
+  clip_sha256: d0102928365ee7ae464ba56d6ff8476dbbead25bfda2ab2aa0177520308fd243
+  frame_sha256: b4507062f7fc7232d6b54640847a45026ab7fc5eb4d3b66d1776e42c22645df6
+  frame_bytes: 15952
 - beat: 5
   take: 05-the-patrol-b05-standB-trim.mp4
   frame: b05.jpg
@@ -140,15 +140,15 @@ frames:
   frame_sha256: 6a31f65d12795f89e2c197200c54a08bcbd9e600439f4d80fa88c371e4c475e0
   frame_bytes: 18989
 - beat: 13
-  take: 13-the-shade-b13-shadelit-0820.mp4
+  take: 13-the-shade-LTX-b13-ageb-s2-0821.mp4
   frame: b13.jpg
   width: 240
   height: 436
   at_seconds: 2.52
   clip_duration_s: 5.04
-  clip_sha256: a10f6997b4e3b07626fbc4cd81c96a13661e527a92fc81f45d9317f420ef57c2
-  frame_sha256: 474f64acb4aaae41580f8c37f2b57f2a2f1e97e17815a0725974f4f56c1a0161
-  frame_bytes: 15129
+  clip_sha256: edbffd0a3c45cedee96b8507b755ae8a98050b66e6c48e06f03d81152f166ab4
+  frame_sha256: 855870d25d3bc28ec12831d88a7639cdd477e2a2f644ef9c0b5d97c4b3764758
+  frame_bytes: 14334
 - beat: 14
   take: 14-the-defense-b14-macplate-r1s1-0818.mp4
   frame: b14.jpg
@@ -210,15 +210,15 @@ frames:
   frame_sha256: 25bd59a964dba7253520b91be2cdaedb289a108c4be181cb41646751dcfd313a
   frame_bytes: 14171
 - beat: 20
-  take: 20-evidence-LTX-macplate-r1s1.mp4
+  take: 20-evidence-LTX-b20-ageb-s2-0821.mp4
   frame: b20.jpg
   width: 240
   height: 436
   at_seconds: 2.52
   clip_duration_s: 5.04
-  clip_sha256: 57677573dce41b17f340385e75314012c22ff93fd9485fbaae820d7c14375783
-  frame_sha256: 05c05ea438ae9a6b15da86b9a6b273de41eecd4d23d38abd345360385e1e3d2e
-  frame_bytes: 17586
+  clip_sha256: d05d5f72598b5925f4c48710ef5e37fb26e7d1b78033e881890139cc31888297
+  frame_sha256: ecd9fdb47946ce331347ed7e39eae9ffc04820b641e623576488548c113e30f2
+  frame_bytes: 18124
 - beat: 21
   take: 21-the-answer-b21-daylight-trim8-0821.mp4
   frame: b21.jpg

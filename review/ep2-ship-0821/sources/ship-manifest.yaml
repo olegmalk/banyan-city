@@ -1,6 +1,7 @@
 cut: review/ep2-ship-0821/ep2-ship-0821.mp4
-sha256: df2df8095a75c223ff8f4fd1f8a7178b4e7c1363e10126549fe61c0fc989faaa
-duration_s: 115.61
+sha256: 577c66eb1cb90137d758fd9d0ab2300ea94c7b20989197cb143c610d5dda4b2a
+prior_cut_sha256: df2df8095a75c223ff8f4fd1f8a7178b4e7c1363e10126549fe61c0fc989faaa
+duration_s: 115.88
 size: 720x1280
 fps: 24
 footage_beats: 21
@@ -11,8 +12,36 @@ prior_manifest: review/ep2-demo-0820/sources/picks-0820.yaml
 readiness_ledger: review/ep2-picks/cut-readiness-0819.yaml
 cost_usd: 0.0
 gpu_seconds: 0
-assembly_cost: One render_t3 run on this Mac. No render, no voice synthesis, no GPU, no network, no spend.
-  Every clip in this cut already existed before the ship order was given.
+assembly_cost: Two render_t3 runs on this Mac, 26.8 s of wall clock for the second. No voice synthesis,
+  no network, no spend. The fourteen clips the second run chose from were rendered on the rtx5090 box at
+  $0.
+what_changed_2026_08_21_the_age_b_wave:
+  headline: "FIVE BEATS CHANGED FACE. Beats 02, 03, 04, 13 and 20 now carry the age-B expressive design;\
+    \ beats 07 and 08 were tried and kept their old takes because both their seeds failed. Nothing else\
+    \ in the cut moved — the other fourteen beats are the same files at the same shas, and render_t3 re-hashed\
+    \ every one of them at assembly."
+  why_it_happened_today: "On 2026-08-20 night the founder corrected his own 08-19 record: \"all of the\
+    \ goblin clips today has had him as an adult. very bad character consistency\", and, shown beat 13's\
+    \ best frame, \"this is one of the images where the goblin looks like an adult, which is wrong.\"\
+    \ The word `adult` in canon was steward drift — he had pointed at a PICTURE (the B tile) and the steward\
+    \ wrote down the SENTENCE beside it. pipeline/canon.yaml ep2-goblin-design-adult/correction_2026_08_20\
+    \ strikes it and lists what is legibly in the tile instead. The age-B wave is the first set of clips\
+    \ authored against that list."
+  how_the_picks_were_made: "BY EYE, at a 12-frame contact strip per seed, against two questions: does\
+    \ the face survive the slot render_t3.fit_duration will actually give this beat, and does the beat's\
+    \ action read. No metric decided anything. Every clip was sha-verified against the box's own manifest\
+    \ (28 of 28 files OK) before a frame was opened. Full ledger: review/motion-ageb-0821/JUDGING-0821.md."
+  the_one_failure_mode: "THE FACE STOPS BEING DRAWN. Six of the fourteen clips lose their eyes, brow bar\
+    \ and mouth line partway through, leaving a featureless green ovoid that keeps the head's silhouette\
+    \ and colour. It never recovers and it always arrives in the second half. Beats 07 and 08 are kept\
+    \ because of it (b08) or because the beat's action was absent (b07)."
+  runtime: 115.61 s -> 115.88 s. Beat 20's slot grew 0.01 s and beat 13's 0.02 s on rounding; beat 02 is
+    a 97-frame trim of a 121-frame clip and slots identically to the 97-frame take it replaces.
+  the_cut_is_still_mixed_and_this_is_the_honest_number: "canon.yaml counts the goblin in TWELVE of the\
+    \ twenty-one beats (2, 3, 4, 7, 8, 13, 14, 15, 16, 17, 19, 20). This wave covered seven of them and\
+    \ five passed. So FIVE BEATS NOW SHARE ONE EXACT FACE, where before no two goblin beats matched, and\
+    \ SEVEN STILL CARRY THE OLD ASSORTED ONES. More consistent, not consistent. Beats 07, 08, 14, 15, 16,\
+    \ 17 and 19 are the remaining work and it is post-ship."
 what_changed_from_ep2_demo_0820:
   two_beats: "BEAT 09 IS NO LONGER A SLATE, and BEAT 01 IS THE CHROMA COMPOSITE. Those are the only two\
     \ pictures that move. The other eighteen footage beats are the same file at the same sha as ep2-demo-0820\
@@ -190,39 +219,89 @@ beats:
     \ sorts first and would win a glob), re-assemble."
 - beat: 2
   slug: THE SPRINT
-  take: 02-the-sprint-b02-anchor-s20260834-0817.mp4
-  sha256: dfc6a44ab8729a9ef92643eee08bf85bbdc49e20c42647e770da209164ec6bdd
-  why: carry-forward
-  verdict_quoted: NONE. No bar has ever been answered for this file.
-  fault_shipping: "UNJUDGED. One of four beats in this cut that has never been scored against a written\
-    \ bar (2, 8, 12, 20 \u2014 and 20 was scored on the character rulings only). Silent by design; no\
-    \ spoken line in the script."
-  upgradeable_before_cutoff: no candidate exists.
+  take: 02-the-sprint-LTX-b02-ageb-s2-trim97-0821.mp4
+  sha256: a70235c49dab049cb1a5b9aa5dd9705521d951cf393c9fd94d8d8f3609860d8c
+  why: SWAPPED 2026-08-21 ON THE DESIGN AXIS by the ship-endgame lane, from the age-B expressive wave.
+  supersedes_take: 02-the-sprint-b02-anchor-s20260834-0817.mp4
+  supersedes_sha256: dfc6a44ab8729a9ef92643eee08bf85bbdc49e20c42647e770da209164ec6bdd
+  entered: "STEWARD PICK, 2026-08-21, R4-VETO-ABLE IN ONE LINE. The founder has screened neither this\
+    \ clip nor the one it replaces."
+  verdict: pipeline/jobs/ep2-b02-tilemotion-s2-0821.yaml verdict_ageb_wave_0821
+  verdict_quoted: "PASS ON THE WINDOW AND CUT-PREFERRED ... Face, slit eyes and open mouth are intact\
+    \ to f101 (4.21 s); the sprint, the push off and the dive into the grass all complete inside that.\
+    \ The egg arrives only at f106. Slot is 4.04 s, so there is 0.17 s of margin, and the take shipped\
+    \ is trimmed to 97 frames so the window is a property of the file rather than of the script's paper\
+    \ timing."
+  what_it_fixed: "THE WORST BREAK IN THE CUT, named as such by the 08-20 audit in canon.yaml: the outgoing\
+    \ take's goblin is BONE GREY, NOT GREEN, with a round child cranium, and beat 02 was never on any\
+    \ design sheet. This beat now carries the same face as beats 03, 04, 13 and 20."
+  fault_shipping: "THE EARS ARE WRONG, and so is the collar. canon.yaml ep2-goblin-design-adult/correction_2026_08_20\
+    \ reads the B tile as \"SHORT, BROAD, LOW-SET FLANGES ... NOT long tapering elf spikes\"; this clip\
+    \ draws long tapering spikes, as every clip in the age-B wave does. C1's magenta collar is present.\
+    \ The beat also remains SILENT BY DESIGN and still answers no bar about its staging \u2014 the verdict\
+    \ above is about the window and the face, not about whether the sprint is the right sprint."
+  the_trim_is_recorded_not_implied: "ffmpeg -frames:v 97 off the 121-frame source (sha 8e86a1f5\u2026),\
+    \ libx264 crf 10, no re-sample. Sidecar 02-the-sprint-LTX-b02-ageb-s2-trim97-0821.mp4.meta.yaml carries\
+    \ source_sha256, why_trimmed and an explicit `fps: 24` \u2014 the last of those is load-bearing: the\
+    \ sidecar honestly says `model: none` (ffmpeg ran, no sampler did) and without a declared frame rate\
+    \ render_t3.held_still() would classify it a computed camera move and be free to STRETCH it. That\
+    \ is the bug that played beat 01 at 0.53x on 08-20."
+  upgradeable_before_cutoff: "The wave's second seed is the pick; the first is the PARTIAL (egg from f055).\
+    \ A third seed is not the named next rung \u2014 the ears are a plate/prompt fault and are post-ship."
 - beat: 3
   slug: BAD COVER
-  take: 03-bad-cover-LTX-midend-s20260821-0820.mp4
-  sha256: 0c5fc0008e6f7fe6bd5099cc449c95e19e4222cd3cf1c9b81eb2504235f87e48
-  why: carry-forward
-  entered: steward pick, 2026-08-20 (revision b of picks-0820), swapped twice in one afternoon
-  verdict: pipeline/jobs/ep2-b03-covermid-s2-0820.yaml verdict_0820 / verdict_measured
-  verdict_quoted: "The clip performs 29 frames longer \u2014 the last interframe pair above 1.0 is f101->f102\
-    \ where rung 3's is f072->f073. AND H1 FAILS HARDER: 15 frames dead from f106 against rung 3's 7 from\
-    \ f114."
-  fault_shipping: "H1 FAIL, and a freeze the viewer will see. The last 19 frames are a held picture, 15\
-    \ of them byte-identical \u2014 0.79 s at the end of a 5.04 s slot. IT IS IN THE FOOTAGE, NOT THE\
-    \ ASSEMBLY: the clip outruns the slot floor so render_t3's hold never fires here."
-  what_it_fixed: "Not a measurement, a contradiction. The clip it replaced was a chibi CHILD holding a\
-    \ leafy TREE \u2014 both excluded by the founder's ratified adult design and by this beat's own negative\
-    \ prompt \u2014 and it had ridden five consecutive assemblies."
-  instrument_qualification_recorded_not_hidden: 'The exact-duplicate tail instrument RANKS THE TWO CLIPS
-    BACKWARDS on this beat: it counts byte-identical pairs, so it measures where the sampler stopped emitting
-    pixels, not where the performance stopped. H1 is scored FAIL and STAYS FAIL; the pick was made on
-    last-live-pair instead.'
+  take: 03-bad-cover-LTX-b03-ageb-s2-0821.mp4
+  sha256: 63127e52c0b60ab3cb0aafd644bbb37d1d2a3edd8c7f0ab3bd03486461a30f65
+  why: SWAPPED 2026-08-21 ON THE DESIGN AXIS by the ship-endgame lane, from the age-B expressive wave.
+  supersedes_take: 03-bad-cover-LTX-midend-s20260821-0820.mp4
+  supersedes_sha256: 0c5fc0008e6f7fe6bd5099cc449c95e19e4222cd3cf1c9b81eb2504235f87e48
+  entered: "STEWARD PICK, 2026-08-21, R4-VETO-ABLE IN ONE LINE. Beat 03 has now been swapped three times\
+    \ in two days; this is the first of the three whose incoming take was judged against the founder's\
+    \ own corrected design record rather than against a rung of its own wave."
+  verdict: pipeline/jobs/ep2-b03-tilemotion-s2-0821.yaml verdict_ageb_wave_0821
+  verdict_quoted: "PASS, AND IT WINS ON WHAT IT DOES NOT DO. Face holds all 121 frames, no costume morph,\
+    \ no dead tail. Motion is small \u2014 seated, hands on knees, a lean at the end \u2014 which is defensible\
+    \ for a beat whose content is hiding badly and not moving, and is recorded as the fault it is rather\
+    \ than argued away."
+  what_it_fixed: "THE FREEZE THE OUTGOING TAKE SHIPPED WITH. Its own verdict names 15 byte-identical\
+    \ frames from f106 \u2014 0.79 s of dead picture at the end of a 5.04 s slot, in the footage rather than\
+    \ the assembly, so render_t3's hold could not cover it. This clip has no dead tail. It also moves\
+    \ beat 03 onto the wave's face."
+  fault_shipping: "THE MOTION IS SMALL, and it is the smallest of the five swapped beats: he sits, hands\
+    \ on knees, and leans near the end. \"THE PICTURE CHANGED\" IS NOT \"THE ACTION PERFORMED\" and this\
+    \ clip is nearer the first than the second. Plus the wave's design faults \u2014 long pointed ears against\
+    \ canon's short low flanges, C1 magenta collar, T4 magenta ear-stud."
+  the_other_seed_and_why_not: "Seed 1 has the most real body motion in the whole wave \u2014 he shifts, comes\
+    \ up onto a knee, turns \u2014 and its COSTUME MORPHS ON SCREEN, a dark cloak becoming a brown plaid blanket\
+    \ between f065 and f076. A garment changing mid-shot at 3.0 s of a 5.04 s slot is a break the viewer\
+    \ sees, and it outweighs the motion it comes with."
 - beat: 4
   slug: THE FOOTNOTE
-  take: 04-the-footnote-b04-eyes-crf10-0819.mp4
-  sha256: e4def5393b3bd461f618c3af3d84a39c72100ae3d573bd44a8b0093984976d16
-  why: "SWAPPED 2026-08-20 ON THE DESIGN AXIS, by the goblin-design audit lane, to answer the founder's\
+  take: 04-the-footnote-LTX-b04-ageb-s1-0821.mp4
+  sha256: d0102928365ee7ae464ba56d6ff8476dbbead25bfda2ab2aa0177520308fd243
+  why: "SWAPPED AGAIN 2026-08-21 ON THE DESIGN AXIS by the ship-endgame lane, from the age-B expressive\
+    \ wave. This is the beat's SECOND design swap in two days and the first one that reaches the tile:\
+    \ 08-20 moved it off the pre-ruling child and onto an adult man, and the founder's 08-20 night ruling\
+    \ says the adult man is not the character either. The two paragraphs below are the 08-20 record and\
+    \ are kept because they are what the outgoing take was chosen under."
+  supersedes_take: 04-the-footnote-b04-eyes-crf10-0819.mp4
+  supersedes_sha256: e4def5393b3bd461f618c3af3d84a39c72100ae3d573bd44a8b0093984976d16
+  entered: "STEWARD PICK, 2026-08-21, R4-VETO-ABLE IN ONE LINE."
+  verdict: pipeline/jobs/ep2-b04-tilemotion-s1-0821.yaml verdict_ageb_wave_0821
+  verdict_quoted: "PASS, AND PICKED ON THE FRAME THAT GETS HELD. Face holds all 121 frames and stays\
+    \ large in frame; the head tilts and turns down through the clip. Beat 04's slot is 6.16 s against\
+    \ a 5.04 s clip, so render_t3 plays it once and HOLDS FRAME 120 FOR 1.12 s — roughly a fifth of the\
+    \ beat is one still picture, and this seed's f120 is the better of the two."
+  fault_shipping: "THE GAZE IS STILL NOT IN THE PUPILS — the eyes are blank slits by design, so the\
+    \ glance this beat asks for is carried by a head tilt, exactly as the outgoing take carried it by\
+    \ a head turn. THE E1 CLAUSE IS UNANSWERED BY BOTH TAKES AND THE SWAP DOES NOT CLAIM IT. Plus the\
+    \ wave's design faults: long pointed ears against canon's short low flanges, C1 magenta collar, T4\
+    \ magenta ear-stud. AND ONE FIFTH OF THE BEAT IS A FREEZE: the 1.12 s hold on frame 120 is the assembly\
+    \ doing what it should with a 5.04 s clip in a 6.16 s slot, and the viewer still sees a still picture."
+  the_08_20_record_kept_verbatim_below: "The `design_axis_correction_0820_night` and `why_this_is_still_the_better_ship`\
+    \ paragraphs describe the OUTGOING take. They are not struck, because they are the reasoning that\
+    \ put it in the cut and the reader should be able to see the chain."
+  superseded_why_0820: "SWAPPED 2026-08-20 ON THE DESIGN AXIS, by the goblin-design audit lane, to answer the founder's\
     \ 08-20 complaint that the cut FLIPS the goblin's age between shots. The outgoing 04-the-footnote-b04-refire-0814.mp4\
     \ is the PRE-RULING ROUND CHILD \u2014 picture C on /review/ep2-goblin-design-0819, the creature the\
     \ founder ruled against on 08-19 (\"c kinda is but still pretty bad so change it\"). This take holds\
@@ -238,13 +317,13 @@ beats:
     \ CHILD, this one reads ADULT MAN, and neither is the tile. This one is kept because it is strictly\
     \ better on MECHANISM (see why_this_is_still_the_better_ship) and because a design re-render cannot\
     \ reach the 12:00 cutoff. Beat 04 is on the named design patch wave."
-  verdict: pipeline/jobs/ep2-b04-eyes-crf10-0819.yaml verdict / verdict_measured
-  verdict_quoted: '"FAIL ON THE BEAT, PASS ON THE CHARACTER ... the founder-ratified adult goblin survives
+  superseded_verdict_0820: pipeline/jobs/ep2-b04-eyes-crf10-0819.yaml verdict / verdict_measured
+  superseded_verdict_quoted_0820: '"FAIL ON THE BEAT, PASS ON THE CHARACTER ... the founder-ratified adult goblin survives
     121 frames of i2v without drifting, which is the first time that has been shown." E3 identity: "Same
     green skin, same bald domed head, same long pointed ears, same adult face at frame 121 as at frame
     1 ... NO DRIFT TOWARD A CHILD." E2 mouth shut PASS, E4 camera locked PASS. E1 FAILS: the gaze shifts,
     but by a head rotation, not by the pupils.'
-  fault_shipping: "THE GAZE IS CARRIED BY A HEAD TURN, NOT THE PUPILS \u2014 the head-band centroid travels\
+  superseded_fault_shipping_0820: "THE GAZE IS CARRIED BY A HEAD TURN, NOT THE PUPILS \u2014 the head-band centroid travels\
     \ 64.7 px against a prompt that said the head stays still, and the framing is head-and-shoulders rather\
     \ than the face-fills-frame close-up the shot spec asks for."
   why_this_is_still_the_better_ship: "The outgoing take failed the SAME eye clause (\"THE EYES NEVER MOVE\"\
@@ -297,7 +376,16 @@ beats:
   fault_shipping: THE PLATE'S, AND IT TRAVELS WITH THE PASS. The init dresses the SCAVENGER in the guard's
     own pale wrap tunic and white sash, so a beat that must read as an authority pointing at a scavenger
     reads as two officials in matching kit. The plate is recorded UNAPPROVED AND PROVISIONAL by its own
-    spec.
+    spec. AND THE GOBLIN IS THE OLD DESIGN — beat 07 is one of the seven the age-B wave tried to replace
+    on 2026-08-21 and one of the two it failed to.
+  ageb_wave_result_0821: "KEPT, AND THE WAVE IS WHY IT IS STILL HERE. Both age-B seeds were judged by\
+    \ eye at a contact strip and both FAIL ON ACTION: NEITHER CLIP CONTAINS A GUARD. Beat 07 is an authority\
+    \ taking something off the scavenger, and the age-B plate staged a solo standing portrait, so the\
+    \ beat's action is absent rather than weak — seed 1's only gesture is hands clasping at f098, seed\
+    \ 2's motion is close to zero. The take in the cut earns its place on exactly the axis they fail:\
+    \ \"the guard raises his OWN arm at f045 and the point holds to f096.\" A CLIP THAT IS ON-MODEL AND\
+    \ DOES NOT PERFORM THE BEAT LOSES TO ONE THAT IS OFF-MODEL AND DOES. Specs:\
+    \ pipeline/jobs/ep2-b07-tilemotion-s1-0821.yaml and -s2-, both carrying verdict_ageb_wave_0821."
 - beat: 8
   slug: INSIDE HIM
   take: 08-inside-him-b08-twohander.mp4
@@ -305,10 +393,19 @@ beats:
   why: carry-forward
   verdict_quoted: NONE for the clip in the cut.
   fault_shipping: 'UNJUDGED, and identity is open: every geometric-conditioning rung returns two GREEN
-    figures with pointed ears, because `green skin` enters the pooled embedding and lands on both bodies.'
+    figures with pointed ears, because `green skin` enters the pooled embedding and lands on both bodies.
+    AND THE GOBLIN IS THE OLD DESIGN \u2014 beat 08 is the second of the two beats the age-B wave tried to
+    replace on 2026-08-21 and failed to.'
+  ageb_wave_result_0821: "KEPT. BOTH age-B seeds FAIL ON IDENTITY AT THE SAME FRAME: green egg from f055\
+    \ (2.29 s) \u2014 the head keeps its silhouette and its colour and stops carrying eyes, brow bar or mouth\
+    \ line \u2014 against a slot that needs f099 clean. Seed 2 adds a detached brow bar floating below the\
+    \ egg from f065. TWO SEEDS, ONE BEAT, ONE FAILURE FRAME IS A RECIPE FAULT AND NOT SEED LUCK, so the\
+    \ named next rung is the plate, not a third seed. Specs: pipeline/jobs/ep2-b08-tilemotion-s1-0821.yaml\
+    \ and -s2-, both carrying verdict_ageb_wave_0821."
   upgradeable_before_cutoff: "NO. Eleven b08 rungs ran on 08-20 and every one produced STILLS ONLY \u2014\
     \ no mp4 exists. The last of them closed the route (commit a2a668dc: \"the negative redrew 91% of\
-    \ the fill and left the same band\")."
+    \ the fill and left the same band\"). The 08-21 age-B round is the twelfth and thirteenth and both\
+    \ failed at f055."
   open_card: "/review/ep2-goblin-design-0819 \u2014 what is the goblin wearing below the waist? Explicitly\
     \ not blocking."
 - beat: 9
@@ -414,9 +511,32 @@ beats:
     intact.'
 - beat: 13
   slug: THE SHADE
-  take: 13-the-shade-b13-shadelit-0820.mp4
-  sha256: a10f6997b4e3b07626fbc4cd81c96a13661e527a92fc81f45d9317f420ef57c2
-  why: SWAPPED 2026-08-20 ON THE DESIGN AXIS, by the goblin-design audit lane, and it clears TWO founder
+  take: 13-the-shade-LTX-b13-ageb-s2-0821.mp4
+  sha256: edbffd0a3c45cedee96b8507b755ae8a98050b66e6c48e06f03d81152f166ab4
+  why: "SWAPPED AGAIN 2026-08-21 ON THE DESIGN AXIS by the ship-endgame lane, from the age-B expressive\
+    \ wave. THIS IS THE BEAT THE FOUNDER RULED ON. He was shown the outgoing take's best frame and said\
+    \ \"this is one of the images where the goblin looks like an adult, which is wrong.\" That frame is\
+    \ no longer in the cut."
+  supersedes_take: 13-the-shade-b13-shadelit-0820.mp4
+  supersedes_sha256: a10f6997b4e3b07626fbc4cd81c96a13661e527a92fc81f45d9317f420ef57c2
+  entered: "STEWARD PICK, 2026-08-21, R4-VETO-ABLE IN ONE LINE."
+  verdict: pipeline/jobs/ep2-b13-tilemotion-s2-0821.yaml verdict_ageb_wave_0821
+  verdict_quoted: "PASS ON THE WINDOW. Face holds all 121 frames. Through the slot (f000-f085) he is\
+    \ seated, head down, eyes closed, settling. NAMED RATHER THAN HIDDEN: this seed's own expressive lift\
+    \ — head up, blank slit eyes, mouth open — begins at f087 / 3.62 s, which is 0.06 s PAST THE END OF\
+    \ ITS SLOT, so the cut will not show it."
+  fault_shipping: "THE EXPRESSION MISSES ITS OWN SLOT BY 0.06 s. Beat 13's VO is 1.56 s, so fit_duration\
+    \ gives it max(min(5.04, 3.56), 1.96) = 3.56 s and the cut plays frames 000-085. The lift this whole\
+    \ wave was authored to get starts at f087. What ships is a seated figure with his head down. Plus:\
+    \ G8 IS STILL UNMET — the sapling casts no shade on his eyes, and that is geometry, not tone, on\
+    \ any staging where his eyes are 300 px above a 60 px seedling. Plus the wave's design faults: long\
+    \ pointed ears against canon's short low flanges, C1 magenta collar, T4 magenta ear-stud."
+  the_other_seed_and_why_not: "SEED 1 IS THE EXPENSIVE LOSS AND IT IS WORTH NAMING. It carries a real\
+    \ smile, frames 000-044 — the thing beat 13 was re-rendered for, and the two words that produced it\
+    \ are recorded in 57609ea2. Then its face is a green egg from f065 (2.71 s), inside the 3.56 s slot.\
+    \ The expression exists; the clip that has it cannot hold it. The named next rung is staging the lift\
+    \ earlier in the shot, not a third seed."
+  superseded_why_0820: SWAPPED 2026-08-20 ON THE DESIGN AXIS, by the goblin-design audit lane, and it clears TWO founder
     rulings the outgoing take broke. The outgoing 13-the-shade-b13-refire-0814.mp4 is the PRE-RULING ROUND
     CHILD (picture C on /review/ep2-goblin-design-0819) AND it grows a mature forked tree and climbs it,
     against the ruling that the sapling is tiny. This take is seated, with the real 60 px composited two-leaf
@@ -430,16 +550,17 @@ beats:
     \ reads CHILD, this one reads ADULT MAN. This one is kept because the outgoing ALSO breaks a live\
     \ founder ruling on the sapling (mature forked tree, climbed) on top of being wrong on design, so\
     \ the swap trades two faults for one. Beat 13 is the headline entry on the named design patch wave."
-  verdict: pipeline/jobs/ep2-b13-shadelit-0820.yaml verdict_0820 / verdict_measured
-  verdict_quoted: "A2_the_ratified_adult_holds: \"PASS ... At 1:1 he is the ratified lean adult goblin:\
+  superseded_verdict_0820: pipeline/jobs/ep2-b13-shadelit-0820.yaml verdict_0820 / verdict_measured
+  superseded_verdict_quoted_0820: "A2_the_ratified_adult_holds: \"PASS ... At 1:1 he is the ratified lean adult goblin:\
     \ green skin, bald, long pointed ears, cloak, one face, one figure.\" A5 exposure: \"PASS, AND IT\
     \ IS THE FLATTEST EXPOSURE TRACK IN THE WHOLE SET\" (\u22120.29 luma over 121 frames). \"IT REPAIRED\
     \ SHADEMID'S OWN FAILED SUB-CLAUSE: at f060 shademid shows dome, ear and shoulder with the face pressed\
     \ into his knee, and shadelit shows a legible face.\" G8 FAILS: \"it did not put a plant-cast shade\
     \ anywhere near his eyes.\""
-  fault_shipping: "G8 UNMET \u2014 the plant's shade never reaches his eyes. It cannot on this staging:\
+  superseded_fault_shipping_0820: "G8 UNMET \u2014 the plant's shade never reaches his eyes. It cannot on this staging:\
     \ his eyes are 300 px above a 60 px seedling, which is geometry, not tone. He sits in the seedling's\
-    \ company, not in its shade."
+    \ company, not in its shade. STILL TRUE OF THE INCOMING TAKE \u2014 carried forward into fault_shipping\
+    \ above, not resolved by the swap."
   why_this_is_still_the_better_ship: 'The outgoing take was FAIL NAMED on a founder ruling already (mature
     tree, climbed) and is the wrong creature; this one is the right creature, sits the beat as written
     ("slides down and sits, knees up around his ears"), and keeps the tiny sapling the founder ruled for.
@@ -562,23 +683,36 @@ beats:
     \ 48 px of travel on a 33 px fig in a 1280-tall frame."
 - beat: 20
   slug: EVIDENCE
-  take: 20-evidence-LTX-macplate-r1s1.mp4
-  sha256: 57677573dce41b17f340385e75314012c22ff93fd9485fbaae820d7c14375783
-  why: carry-forward
-  entered: steward pick, 2026-08-20, applying two ratified rulings
-  verdict: pipeline/jobs/ep2-b20-motion-0819.yaml verdict_cut (superseded) / review/ep2-picks/done-definitions.yaml
+  take: 20-evidence-LTX-b20-ageb-s2-0821.mp4
+  sha256: d05d5f72598b5925f4c48710ef5e37fb26e7d1b78033e881890139cc31888297
+  why: "SWAPPED 2026-08-21 ON THE DESIGN AXIS by the ship-endgame lane, from the age-B expressive wave\
+    \ — AND IT IS THE ONLY BEAT IN THE WAVE THAT ALSO CLOSES A done_when CLAUSE. The outgoing take's own\
+    \ verdict says \"HE NEVER LOOKS UP\". This one looks up."
+  supersedes_take: 20-evidence-LTX-macplate-r1s1.mp4
+  supersedes_sha256: 57677573dce41b17f340385e75314012c22ff93fd9485fbaae820d7c14375783
+  entered: "STEWARD PICK, 2026-08-21, R4-VETO-ABLE IN ONE LINE."
+  verdict: pipeline/jobs/ep2-b20-tilemotion-s2-0821.yaml verdict_ageb_wave_0821
+  verdict_quoted: "PASS, AND IT IS THE ONLY CLIP IN THIS WAVE THAT CLOSES A done_when CLAUSE. Face holds\
+    \ all 121 frames AND HE LOOKS UP: the head rises from f055 and is up, slit eyes open and mouth parted,\
+    \ by f076 — completed at 3.17 s, inside a 3.74 s slot."
+  fault_shipping: "THE TREE IS STILL THE WRONG TREE, and THE FRUIT IS RED where the 08-13/14 ruling makes\
+    \ the fig purple — the outgoing take carried the same wrong tree, so that half is a carry-across;\
+    \ the red fruit is a REGRESSION on colour against a take whose sidecar called its fig \"unmistakably\
+    \ purple\". Named, not hidden: this swap is a straight trade of the fig's colour for the look-up plus\
+    \ the wave's face, and the founder may take it back in one line. Plus the wave's ear fault: long tapering\
+    \ spikes against canon's short broad low-set flanges."
+  what_the_swap_traded: "GAINED — the look-up (beat 20's oldest unmet clause), the wave's face, and the\
+    \ end of the progressive darkening the outgoing take shipped with (about -25 luma across its length,\
+    \ a fault whose one-job fix was fileable on 08-19 and never filed). LOST — a purple fig. Two of the\
+    \ three faults on the outgoing row are answered and a fourth is introduced."
+  superseded_verdict_0820: pipeline/jobs/ep2-b20-motion-0819.yaml verdict_cut (superseded) / review/ep2-picks/done-definitions.yaml
     beats.'20' (done_when, colour_ruled_0816)
-  verdict_quoted: 'STILL NOT A PASS ON THE BEAT. Swapped in because the take it replaces violated two
+  superseded_verdict_quoted_0820: 'STILL NOT A PASS ON THE BEAT. Swapped in because the take it replaces violated two
     of the founder''s own ratified rulings and this one satisfies both, not because beat 20''s done_when
     is met. It is not met: HE NEVER LOOKS UP, and the tree is still the wrong tree.'
-  fault_shipping: He never looks up; the tree is the wrong tree; and the clip darkens progressively, about
+  superseded_fault_shipping_0820: He never looks up; the tree is the wrong tree; and the clip darkens progressively, about
     -25 luma across its length. The one-job fix for the darkening is now fileable (the goblin freeze lifted
     on 08-19) and was not filed.
-  what_it_fixed: 'The take it replaced had ridden EIGHT cuts unjudged and pre-dated the 08-19 ratification
-    of the adult goblin: it was the round-domed CHILD that ruling exists to retire, with a fig its own
-    sidecar called "dark rather than purple" against the 08-16 colour ruling. This one is the lean wiry
-    adult, the fig is unmistakably purple, and the pick-up completes inside the slot (verified on the
-    assembled frame).'
 - beat: 21
   slug: THE ANSWER
   take: 21-the-answer-b21-daylight-trim8-0821.mp4

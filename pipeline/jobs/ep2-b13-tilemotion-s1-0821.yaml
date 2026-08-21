@@ -285,3 +285,17 @@ derivation:
     - payload b13-motion-prompt.txt (1355 -> 636 chars)
     payload:b13-negative.txt:
     - payload b13-negative.txt (780 -> 746 chars)
+
+# ---------------------------------------------------------------------------
+# JUDGED 2026-08-21 by the ship-endgame lane, BY EYE at a contact strip, against
+# canon.yaml ep2-goblin-design-adult/correction_2026_08_20 (the B tile's pixels)
+# and against the slot render_t3.fit_duration will actually give this beat.
+# Evidence: review/motion-ageb-0821/JUDGING-0821.md and its STRIP-*.png.
+# The clip was sha-verified against the box's own manifest before a frame was
+# opened. No metric decided anything here; the strips did.
+# ---------------------------------------------------------------------------
+verdict_ageb_wave_0821: >-
+  FAIL, WINDOW -- AND IT IS THE EXPENSIVE ONE. This clip carries the win the whole wave was
+  chasing: a real smile, f000-f044. Then the face is an egg from f065 (2.71 s), inside a 3.56
+  s slot. The expression this round exists to get is in the clip that cannot hold it. NOT
+  PICKED.

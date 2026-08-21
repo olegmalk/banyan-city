@@ -283,3 +283,19 @@ derivation:
     - payload b08-motion-prompt.txt (1355 -> 548 chars)
     payload:b08-negative.txt:
     - payload b08-negative.txt (780 -> 746 chars)
+
+# ---------------------------------------------------------------------------
+# JUDGED 2026-08-21 by the ship-endgame lane, BY EYE at a contact strip, against
+# canon.yaml ep2-goblin-design-adult/correction_2026_08_20 (the B tile's pixels)
+# and against the slot render_t3.fit_duration will actually give this beat.
+# Evidence: review/motion-ageb-0821/JUDGING-0821.md and its STRIP-*.png.
+# The clip was sha-verified against the box's own manifest before a frame was
+# opened. No metric decided anything here; the strips did.
+# ---------------------------------------------------------------------------
+verdict_ageb_wave_0821: >-
+  FAIL, IDENTITY, AT THE SAME FRAME AS SEED 1. Green egg from f055, with a detached brow bar
+  floating below it from f065. Two seeds, one beat, one failure frame -- that is a beat/recipe
+  fault, not seed luck, and the named next rung is the plate, not a third seed.
+  review/ep2-ship-0821 KEEPS 08-inside-him-b08-twohander.mp4 and keeps its fault: unjudged,
+  and its identity is open -- every geometric-conditioning rung returns two green figures,
+  because `green skin` enters the pooled embedding and lands on both bodies.
