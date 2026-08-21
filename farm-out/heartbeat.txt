@@ -4250,3 +4250,5 @@
 23:22:51Z FAIL task=ep2-b05-guards-f-0822-1787354387 rc=1 step=dry
 23:22:56Z STARTED task=ep2-b06-guard1-0822-1787354108 attempt=1 on box-runner
 23:22:56Z FAIL task=ep2-b06-guard1-0822-1787354108 rc=12 step=dry
+23:23:00Z STARTED task=ep2-b06-guard1-0822-1787354385-againa6e748 attempt=1 on box-runner
+23:23:02Z FAIL task=ep2-b06-guard1-0822-1787354385-againa6e748 rc=1 step=dry

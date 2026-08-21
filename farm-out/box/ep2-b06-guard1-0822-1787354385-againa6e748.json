@@ -1,0 +1,124 @@
+{
+  "id": "ep2-b06-guard1-0822-1787354385-againa6e748",
+  "task": "ep2-b06-guard1-0822",
+  "node": "002b-first-citizen",
+  "beat": 6,
+  "worker": "box-runner",
+  "priority": 6,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "stage",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import hashlib, os, shutil, urllib.request\ndst = r\"C:\\banyan-farm\\ep2-b06-guard1-0822\\refs\"\nos.makedirs(dst, exist_ok=True)\nwant = \"f78336496ce9d1c7f67978b58885e5f1ac259b532a2f8e4aed578af4080ef22c\"\nwith urllib.request.urlopen(\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/taste/refs/guard1-canon-founder-0822-sq.png\", timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\nif got != want:\n    raise SystemExit(\"!! guard-1 reference sha %s, wanted %s -- \"\n                     \"refusing to condition on unknown bytes\"\n                     % (got, want))\nfirst = os.path.join(dst, \"guard1sq-s0.png\")\nwith open(first, \"wb\") as fh:\n    fh.write(blob)\nfor i in (1, 2, 3):\n    shutil.copy2(first, os.path.join(dst, \"guard1sq-s%d.png\" % i))\nprint(\"reference verified\", got[:12], \"-> 4 slots (3 are byte-copies; \"\n      \"dedup_cells drops them and one cell is drawn)\")\n"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py",
+        "--beat",
+        "6",
+        "--character",
+        "guard",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--refs",
+        "C:\\banyan-farm\\ep2-b06-guard1-0822\\refs",
+        "--ref-prefix",
+        "guard1sq",
+        "--out",
+        "C:\\banyan-farm\\ep2-b06-guard1-0822\\out",
+        "--draft-key",
+        "authored_b06_guard1canon_0822",
+        "--arm",
+        "window4",
+        "--seeds",
+        "1",
+        "--seed-start",
+        "0",
+        "--expect-drafts-sha256",
+        "3b69a82245bb78db256be12d4fbaa0f432f7bfe568301e87ac79bffbcbd9b0f6",
+        "--task",
+        "ep2-b06-guard1-0822",
+        "--dry"
+      ]
+    },
+    {
+      "name": "sample",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py",
+        "--beat",
+        "6",
+        "--character",
+        "guard",
+        "--harness",
+        "C:\\banyan-farm\\wave-goblin-prep",
+        "--root",
+        "C:\\banyan-farm\\wave-goblin-prep\\repo",
+        "--refs",
+        "C:\\banyan-farm\\ep2-b06-guard1-0822\\refs",
+        "--ref-prefix",
+        "guard1sq",
+        "--out",
+        "C:\\banyan-farm\\ep2-b06-guard1-0822\\out",
+        "--draft-key",
+        "authored_b06_guard1canon_0822",
+        "--arm",
+        "window4",
+        "--seeds",
+        "1",
+        "--seed-start",
+        "0",
+        "--expect-drafts-sha256",
+        "3b69a82245bb78db256be12d4fbaa0f432f7bfe568301e87ac79bffbcbd9b0f6",
+        "--task",
+        "ep2-b06-guard1-0822"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\nsrcdir = r\"C:\\banyan-farm\\ep2-b06-guard1-0822\\out\"\ndst = r\"C:\\banyan-farm\\courier-box\\farm-out\\ep2-b06-guard1-0822\"\nos.makedirs(dst, exist_ok=True)\nwant = \"06-the-clipboard-ipa-r0-w015-s0.png\"\npng = os.path.join(srcdir, want)\nif not os.path.isfile(png):\n    have = sorted(os.path.basename(f) for f in glob.glob(srcdir + \"/*.png\"))\n    raise SystemExit(\"!! %s was not written; the dir holds %s\" % (want, have))\nsrc = [png] + sorted(glob.glob(png + \".*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \"\n                     + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b06-guard1-0822.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) ->\", dst)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b06-guard1-0822\\out\\06-the-clipboard-ipa-r0-w015-s0.png"
+  ],
+  "backlog": {
+    "filed_at": 1787354385,
+    "filed_at_iso": "2026-08-21T23:19:45Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b06-guard1-0822.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "spec_sha256": "a1ad3c16d6613a79558477cc73f66e837697f11a796f95a405255429346942cc",
+  "started_at": "2026-08-21T23:23:00Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-21T23:23:02Z",
+  "rc": 1,
+  "failed_step": "dry",
+  "artifacts_present": []
+}

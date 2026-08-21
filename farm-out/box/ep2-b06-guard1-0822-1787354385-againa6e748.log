@@ -1,0 +1,32 @@
+#### job ep2-b06-guard1-0822-1787354385-againa6e748 attempt 1 start 2026-08-21T23:23:00Z
+
+==== step stage START 2026-08-21T23:23:00Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, os, shutil, urllib.request\ndst = r\"C:\\banyan-farm\\ep2-b06-guard1-0822\\refs\"\nos.makedirs(dst, exist_ok=True)\nwant = \"f78336496ce9d1c7f67978b58885e5f1ac259b532a2f8e4aed578af4080ef22c\"\nwith urllib.request.urlopen(\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/taste/refs/guard1-canon-founder-0822-sq.png\", timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\nif got != want:\n    raise SystemExit(\"!! guard-1 reference sha %s, wanted %s -- \"\n                     \"refusing to condition on unknown bytes\"\n                     % (got, want))\nfirst = os.path.join(dst, \"guard1sq-s0.png\")\nwith open(first, \"wb\") as fh:\n    fh.write(blob)\nfor i in (1, 2, 3):\n    shutil.copy2(first, os.path.join(dst, \"guard1sq-s%d.png\" % i))\nprint(\"reference verified\", got[:12], \"-> 4 slots (3 are byte-copies; \"\n      \"dedup_cells drops them and one cell is drawn)\")\n"]
+reference verified f78336496ce9 -> 4 slots (3 are byte-copies; dedup_cells drops them and one cell is drawn)
+==== step stage END rc=0 2026-08-21T23:23:00Z ====
+
+==== step dry START 2026-08-21T23:23:00Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py", "--beat", "6", "--character", "guard", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--refs", "C:\\banyan-farm\\ep2-b06-guard1-0822\\refs", "--ref-prefix", "guard1sq", "--out", "C:\\banyan-farm\\ep2-b06-guard1-0822\\out", "--draft-key", "authored_b06_guard1canon_0822", "--arm", "window4", "--seeds", "1", "--seed-start", "0", "--expect-drafts-sha256", "3b69a82245bb78db256be12d4fbaa0f432f7bfe568301e87ac79bffbcbd9b0f6", "--task", "ep2-b06-guard1-0822", "--dry"]
+== goblin window mechanism on BEAT 06, references held at beat 04. Recipe unchanged; the beat is the variable.
+   drafts checked at RUN time: 3b69a82245bb78db256be12d4fbaa0f432f7bfe568301e87ac79bffbcbd9b0f6 matches --expect-drafts-sha256
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+Token indices sequence length is longer than the specified maximum sequence length for this model (81 > 77). Running this sequence through the model will result in indexing errors
+
+== beat 06 the-clipboard [guard] — clipboard
+   AUTHORED: A grown guard man with dark cropped hair and round wire-rim glasses, cream shirt collar and white shoulder sash, stands in tall green grass, hedgerow behind, pale sky above, holding a large flat slab of rough brown bark in both hands at chest height, as wide as his shoulders, looking down at it, cinematic lighting, masterpiece, best quality, very aesthetic No girl, no child, no goblin, no green skin, no pointed ears, no armor, no helmet, no metal clip, no spring clip, no white paper, no small board, no white background, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: 1boy, a grown guard man with dark cropped hair and round wire-rim glasses, cream shirt collar and white shoulder sash, stands in tall green grass, hedgerow behind, pale sky above, holding a large flat slab of rough brown bark in both hands at chest height, as wide as his shoulders, looking down at it, cinematic lighting, masterpiece, best
+   NEG(sent): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, goblin, green skin, pointed ears, armor, helmet, metal clip, spring clip, white paper, small board, white background, dark, night, photorealism, text
+   positive tokens (real CLIP): 76/77   headroom for the goblin definition: 1
+   negative tokens: recipe 76 -> sent 76 (budget 77)
+   count tag: '1boy' (draft declares '1boy')
+   STYLE ANCHOR PRESENT: False
+   'text' negated: True
+   scale negatives: False   'tall tree' removed: 0
+   person singulars in negative: ['girl', 'child']
+   !! STYLE ANCHOR MISSING (`very aesthetic` not in positive)
+   !! POSITIVE DROPPED: quality | very aesthetic.
+
+!! FAULTS — nothing drawn: STYLE ANCHOR MISSING (`very aesthetic` not in positive); POSITIVE DROPPED: quality | very aesthetic.
+==== step dry END rc=1 2026-08-21T23:23:02Z ====
+#### job ep2-b06-guard1-0822-1787354385-againa6e748 finished rc=1 2026-08-21T23:23:02Z
