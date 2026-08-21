@@ -1,0 +1,272 @@
+id: ep2-b07-twofig-0821
+task: ep2-b07-twofig-0821
+node: 002b-first-citizen
+beat: 7
+runner: box
+priority: 16
+needs_gpu: true
+max_attempts: 1
+sample: false
+owner: canon-motion plate-fix lane, 2026-08-21
+consumer: 'THE INIT FOR BEAT 07''S RE-DERIVED MOTION SPEC, and nothing else until then. Named consumer:
+  the canon-motion lane, which cannot file beat 07''s next i2v rung until a plate exists that already
+  holds BOTH figures -- because the wave proved that summoning the guard by wording alone costs the frame
+  and then the goblin. review/ep2-ship-0821 is not touched by this job and no cut changes because this
+  plate landed.'
+success: 'ONE 832x1216 png holding EXACTLY TWO FIGURES, judged by eye at 1:1 on both of them. G1 two whole
+  figures on one ground line, goblin left, guard right; G2 the goblin is the founder''s goblin read against
+  taste/refs/goblin-canon-founder-0821.png -- bald, large pointed ears, off-white eyes with narrow vertical
+  slit pupils, mandarin-collar sage shirt; G3 the guard is a GROWN MAN, five heads, armoured and helmeted,
+  a full head taller; G4 the guard''s face is NOT the goblin''s -- he gets no adapter, so a leak means
+  the IP mask is wrong; G5 his arm is MID-RAISE toward the goblin, not completed and not down; G6 both
+  full body in tall grass in the plate''s dialect. The named degenerate outcome is TWO GOBLINS: the adapter
+  is masked to one head box and if it has painted the founder''s face on both figures this plate is a
+  FAIL and the mask is the fix, not the seed.'
+why: 'BEAT 07''S MOTION FAILED BECAUSE THE SECOND FIGURE ARRIVED BY WORDING INSTEAD OF BY PLATE, AND THE
+  ARRIVAL RE-STAGED THE SHOT.
+
+
+  The beat''s own canon-motion verdict is the licence and it corrected this lane''s prediction: the guard
+  DID appear from f024 once both figures were named and the second-figure terms left the negative -- ''the
+  point completes ... but THE GOBLIN IS GONE BY f096, so the guard points at empty grass. The camera also
+  pulls back at f024 to fit the second figure.''
+
+
+  That is one instance of the law the wave measured four times: a prompt naming something ABSENT from
+  the init makes the model build it and pull the camera back hunting for it, while the three beats whose
+  prompts ask only for motion the plate has a body for -- 04, 08 and 13 -- all held their frame. For b02,
+  b03 and b20 the absent thing is an object and the fix is a composite. Here it is a FIGURE, so the fix
+  is a two-figure plate.
+
+
+  WHAT THIS JOB DOES: beat 07''s accepted canon-plate rung with ONE input changed -- a two-figure openpose
+  skeleton instead of the solo one, the IP-Adapter mask re-derived to the goblin''s head box at his stature
+  in it, and wording that places both figures. Same checkpoint, controlnet, reference, ip-scale, sampler
+  and seed.
+
+
+  WHAT IT DOES NOT DO: it renders no motion and files no motion spec. The re-derived i2v rung waits on
+  a human opening this png, because the whole premise is that a plate must CONTAIN what the prompt names.'
+est_minutes: 4
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\b07twofig-0821\prompt.txt: best quality, 2boys, goblin, green skin, bald, pointy ears,
+    slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, standing at
+    left, arms at sides, and one tall armored city guard in a helmet at right, facing him, arm rising
+    to point, muted color, tall grass, full body
+  C:\banyan-farm\b07twofig-0821\negative.txt: lowres, worst quality, low quality, text, watermark, blank
+    eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face on the goblin, wrinkled skin,
+    old man, hair, beard, child, chibi, 3boys, crowd, multiple heads, disembodied head, glowing eyes,
+    orange eyes, third eye, eyepatch
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT\
+    \ -- driver, skeleton AND the IP-Adapter\n# reference. Emitted by pipeline/jerry_canon_0821.py.\n\
+    import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-canon-assets-0821/\"\
+    \nroot = r\"C:\\banyan-farm\\b07twofig-0821\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\"),\n\
+    \        (\"jerry-guard-twofig-0821.png\", os.path.join(root, \"pipeline\", \"control\"),\n      \
+    \   \"48bf4edd2d394549b9764215fca84c562b9099e0d155ece6e38ea29a349afcb8\"),\n        (\"jerry-canon-sq45-0821.png\"\
+    , os.path.join(root, \"pipeline\", \"control\"),\n         \"066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c\"\
+    )]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
+    \ + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
+    \    if got != sha:\n        print(\"!! %s fetched with sha %s, expected %s\"\n              % (name,\
+    \ got, sha))\n        raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n\
+    \        fh.write(blob)\n    print(\"staged\", name, got, \"->\", dst)\n"
+- name: posehint
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\b07twofig-0821\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\b07twofig-0821\src
+  - --repo-commit
+  - a4d49f06
+  - --task
+  - ep2-b07-twofig-0821
+  - --arm
+  - ipahead
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - pipeline/control/jerry-guard-twofig-0821.png
+  - --control-sha256
+  - 48bf4edd2d394549b9764215fca84c562b9099e0d155ece6e38ea29a349afcb8
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260899'
+  - --ip-ref
+  - pipeline/control/jerry-canon-sq45-0821.png
+  - --ip-mask
+  - 87,485,412,763
+  - --ip-ref-sha256
+  - 066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c
+  - --ip-scale
+  - '1.0'
+  - --ip-weight
+  - ip-adapter-plus-face_sdxl_vit-h.safetensors
+  - --prompt-file
+  - C:\banyan-farm\b07twofig-0821\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\b07twofig-0821\negative.txt
+  - --out
+  - C:\banyan-farm\b07twofig-0821\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The courier pushes from farm-out and from nowhere else.\n# The CONDITIONS travel with the frame:\
+    \ a reader scoring whether the\n# adapter carried the EAR needs the ear it was shown.\nimport glob,\
+    \ hashlib, os, shutil\nout_dir = \"C:/banyan-farm/b07twofig-0821/out\"\npay_dir = \"C:/banyan-farm/b07twofig-0821\"\
+    \nctl_dir = \"C:/banyan-farm/b07twofig-0821/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b07-twofig-0821\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b07-twofig-0821-ipahead.png*\"\
+    )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
+    /negative.txt\")\n               + glob.glob(ctl_dir + \"/jerry-guard-twofig-0821.png\")\n       \
+    \        + glob.glob(ctl_dir + \"/jerry-canon-sq45-0821.png\"))\nlines = []\nfor f in files:\n   \
+    \ shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as\
+    \ fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b07-twofig-0821.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\
+    \\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) + manifest ->\",\
+    \ dst)\nraise SystemExit(0 if len(files) >= 6 else 1)\n"
+artifacts:
+- C:\banyan-farm\b07twofig-0821\out\ep2-b07-twofig-0821-ipahead.png
+script_line: 'CONFISCATE -- ''Guard 1 points at the scavenger, decisive.'' He is the object of the sentence
+  and has just been identified. Apprehension, not panic: the guards are absurd and he is starting to notice.'
+bar: "JUDGED BY EYE AT 1:1, AND BOTH IDENTITIES ARE JUDGED, not just the goblin.\n\n  G1  TWO FIGURES,\
+  \ EXACTLY TWO, both whole and both standing on the same\n      ground. Not one figure with a shadow,\
+  \ not three.\n  G2  THE GOBLIN IS THE FOUNDER'S GOBLIN. Read against\n      taste/refs/goblin-canon-founder-0821.png:\
+  \ green skin, bald, large\n      pointed ears, off-white eyes with narrow vertical slit pupils, eyebags,\n\
+  \      mandarin-collar sage shirt, dark shorts, boots. The IP-Adapter is masked\n      to his head box\
+  \ alone, so a face that has drifted is a mask failure and\n      the box is the fix.\n  G3  THE GUARD\
+  \ IS A GROWN MAN. The founder's 2026-08-20 ruling is \"they\n      should look like grown men. yes.\
+  \ dumb grown men\". Five heads tall,\n      armoured, helmeted, a full head-and-then-some over the goblin.\
+  \ A chibi\n      guard, a second goblin, or a guard the goblin's size is a FAIL.\n  G4  THE GUARD'S\
+  \ FACE IS NOT THE GOBLIN'S. He gets no adapter; if the\n      founder's face has leaked onto him the\
+  \ mask leaked and G2's box is wrong.\n  G5  THE ARM IS MID-RAISE AND AIMED AT THE GOBLIN. Not down at\
+  \ his side, not\n      already fully extended. The beat needs travel left to do.\n  G6  STAGING SURVIVES:\
+  \ goblin at left, guard at right, both full body, tall\n      grass, the plate's own dialect and palette.\n\
+  \nG1, G3 and G4 are killing bars -- they are the whole reason this plate exists\ninstead of a reworded\
+  \ motion prompt. G5 is a strong preference: a completed\npoint is what froze beat 20's take, and it\
+  \ is worth one more round. Two rounds\nis the budget."
+clip77_measured_not_estimated: positive 75 of 77, negative 76 of 77, counted with animagine-xl-3.1's OWN
+  vocab by pipeline/clip_token_count.py before this spec was written. The overflow is silent and drops
+  from the tail, so an unmeasured prompt bans nothing at the end of itself -- and on this plate the tail
+  is where the guard is placed.
+control_provenance: 'farm-out/jerry-canon-assets-0821/jerry-guard-twofig-0821.png, 832x1216, sha256 48bf4edd2d394549b9764215fca84c562b9099e0d155ece6e38ea29a349afcb8,
+  authored by pipeline/author_b07_twofig_skel_0821.py and committed on origin/main. The deriver re-hashes
+  the file on disk before it writes, and the stage step re-hashes it on the box before a GPU second is
+  spent, so a re-authored skeleton stops the job rather than quietly conditioning on a different staging.
+  GEOMETRY: goblin head_frac 0.370 stature 0.53 at cx 0.30; guard head_frac 0.200 (FIVE HEADS -- a grown
+  man) stature 0.86 at cx 0.71; one shared ground line at y=1149; the guard''s screen-left arm mid-raise
+  with the wrist at (296,448), aimed at the goblin''s face.'
+failure_predicted_in_advance: 'TWO GOBLINS, and it is filed before the pixels. The adapter is masked to
+  ONE head box, but the box is a rectangle and the guard''s head at cx 0.71 is nowhere near it, so a leak
+  would mean the mask is not being honoured rather than that it is badly placed. SECOND: A CHIBI GUARD.
+  openpose gives the model proportion, not age, and every prior guard on this show was carried by words
+  alone -- if five heads of skeleton still yields a big child, the lever is the wording and the founder''s
+  ruling is the bar it has to clear. THIRD, AND CHEAPEST TO MISS: the arm reads as ALREADY POINTING. The
+  skeleton is mid-raise, but SDXL may resolve an ambiguous elbow into the completed gesture, and an end-state
+  plate is exactly what froze beat 20.'
+founder_rulings_this_plate_answers_to: 'TWO, AND THEY ARE BOTH IMAGES OR VERBATIM. (1) THE GOBLIN: taste/refs/goblin-canon-founder-0821.png,
+  supplied 2026-08-21 with ''dude, this is how the goblin should look''. It is carried here by the SAME
+  square reference and the SAME adapter weight as the accepted solo plate -- only the mask moved. (2)
+  THE GUARD: the founder''s 2026-08-20 ruling, ''they should look like grown men. yes. dumb grown men''.
+  That is why the guard''s skeleton is FIVE HEADS TALL and not a scaled goblin, and why G3 is a killing
+  bar rather than a note.'
+not_done_on_purpose: 'NO MOTION IS RENDERED BY THIS JOB and no motion spec is filed by it, for the same
+  reason as the b02/b03/b20 naturalize jobs: filing the motion rung in the same breath would assert the
+  plate passed before anyone looked at it. ALSO NOT DONE: the guard is not given an IP-Adapter reference.
+  There is no founder image of a guard, and inventing one to condition on would be this lane authoring
+  a character design -- which is taste, and reserved.'
+the_one_variable: 'THE CONTROL IMAGE, and the two things that cannot not move with it. Changed: the openpose
+  skeleton (solo -> two-figure), the IP mask (87,485,412,763, the goblin''s head-and-ears box re-derived
+  at his stature 0.53 -- the canon head_box() assumes 0.90 and would print a box around empty grass),
+  and the prompt and negative, which now PLACE a second figure where they used to ban one. Unchanged and
+  carried by copy: the checkpoint, xinsir/controlnet-openpose-sdxl-1.0 at scale 1.0, the square IP-Adapter
+  reference jerry-canon-sq45-0821.png at the same sha256 and ip-scale 1.0, ip-adapter-plus-face_sdxl_vit-h,
+  the sampler, seed 20260899, and the fetch-and-sha-check stage step.'
+derivation:
+  parent: pipeline/jobs/ep2-b07-canon-w2b-0821.yaml
+  by: pipeline/derive_b07_twofig_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - clip77_measured_not_estimated
+  - consumer
+  - control_provenance
+  - failure_predicted_in_advance
+  - founder_rulings_this_plate_answers_to
+  - not_done_on_purpose
+  - owner
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - clip77_measured_not_estimated
+  - derivation
+  - founder_ruling_verbatim
+  - guard_absence_warning
+  - ip_adapter
+  - one_sample_rule
+  - post_ship_patch
+  - round_2_lever
+  - stage_direction
+  - supersedes
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  retokened:
+  - ep2-b07-canon-w2b-0821 -> ep2-b07-twofig-0821
+  - b07canon-w2b-0821 -> b07twofig-0821
+  - jerry-canon-h37f-0821.png -> jerry-guard-twofig-0821.png
+  - 2b50d9e8076eab57373cafbe506f8f7ce73f6abbec3c65eacffcf877234ec13b -> 48bf4edd2d394549b9764215fca84c562b9099e0d155ece6e38ea29a349afcb8
+  - ep2-b07-canon-w2b-0821 -> ep2-b07-twofig-0821
+  overrides_applied_and_asserted:
+    argv:--ip-mask:
+    - step posehint --ip-mask (154,35,678,480 -> 87,485,412,763)
+    argv:--repo-commit:
+    - step posehint --repo-commit (fc346912 -> a4d49f06)
+    key:priority:
+    - key priority = 16
+    key:script_line:
+    - 'key script_line = "CONFISCATE -- ''Guard 1 points at the scavenger, decisive.'' He is the object
+      of the sentence and has just been identified. Apprehension, not panic: the guards are absurd and
+      he is starting to notice."'
+    payload:negative.txt:
+    - payload negative.txt (296 -> 287 chars)
+    payload:prompt.txt:
+    - payload prompt.txt (269 -> 302 chars)
