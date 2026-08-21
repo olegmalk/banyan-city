@@ -1,0 +1,135 @@
+# THE JERRY LoRA DATASET, RE-CURATED AND RE-CAPTIONED AT THE k6a
+# STANDARD. GENERATED -- edit pipeline/lora/build_jerry_0821.py, not this.
+#
+# This file discharges both gates train-jerry-0820 has been held on since
+# 2026-08-20. It does NOT modify manifest-jerry.yaml, dataset-jerry.yaml or
+# captions/jerry/, which stay on disk as the evidence of what was rejected.
+#
+# WHERE THE FRAMES COME FROM:
+#   7  survivors of curation-tile-0820.yaml's 1:1 read of the old 31
+#   8  rendered at the k6a standard (pipeline/jerry_standard_0821.py)
+#  15  total, in 9 distinct poses against the old set's FOUR.
+#
+# WHY THE CAPTIONS DO NOT SAY `green skin` OR `bald`. A character LoRA
+# learns the trigger token as whatever the caption leaves unexplained. Every
+# caption names the POSE, the FRAMING, the SETTING and the STYLE -- the
+# things that vary, or that belong to the checkpoint -- and names none of
+# the tile attributes, because a named attribute is one the token is excused
+# from carrying. The style tokens ARE named for the opposite reason: bar B3
+# tests that the LoRA did not learn `our look`, and it would by construction
+# if `anime style, cel shading` were left for the token to absorb.
+
+subject: jerry
+trigger: bnyjerry
+built_by: pipeline/lora/build_jerry_0821.py
+built_on: '2026-08-21'
+authority: pipeline/canon.yaml ep2-goblin-design-adult; the k6a steward
+  ruling of 2026-08-21 recorded in pipeline/jerry_standard_0821.py
+curated_against: review/ep2-goblin-design-0819/adult-b19-0819.jpg
+supersedes: pipeline/lora/manifest-jerry.yaml  # 31 frames, man-read, untouched
+count: 15
+poses: 9
+collar_note: >-
+  TWO of the fifteen (set-crouch, and to a lesser degree set-seat) carry a
+  pink-lilac tint at the collar. It appeared on FOLDED poses only -- every
+  standing frame reads clean -- and a seed control (b03-r2, b20-r2) failed to
+  clear it, which points at the mask: it translates down with the head, but a
+  compressed figure puts neck and shoulder inside the same box, and
+  k6b/k6c/k6d already proved this adapter transfers the tile's purple cowl
+  when the mask gives it more to act on. THEY ARE KEPT, and this is a
+  judgement rather than an oversight: the tile's own cloak is patchwork with
+  pink and red patches, so pink cloth is tile-true where a purple COWL would
+  not be, and 2 of 15 cannot make the majority read of the token. If B1 comes
+  back with a collar on frames that did not ask for one, this note is the
+  first suspect and the fix is geometric, not another caption.
+frames:
+- image: farm-out/ep2-b14-mac-plate-0816/14-the-defense-mac-plate-s1.png
+  sha256: df877b7bec5ad56c65638f66e32b934df9910dc0024e210ec1f66a05db021bdc
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-b14-mac-plate-0816__14-the-defense-mac-plate-s1.txt
+  caption: 'bnyjerry, 1boy, solo, kneeling on grass, hands forward, full body, side light, anime style, cel shading, detailed background'
+  provenance: curation-tile-0820 keep #4
+  why_kept: 'blank eyes, no nose, smooth mask; ears not drawn'
+- image: farm-out/ep2-b14-mac-plate-0818/14-the-defense-mac-plate-r1s1.png
+  sha256: df877b7bec5ad56c65638f66e32b934df9910dc0024e210ec1f66a05db021bdc
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-b14-mac-plate-0818__14-the-defense-mac-plate-r1s1.txt
+  caption: 'bnyjerry, 1boy, solo, kneeling on grass, hands forward, full body, side light, anime style, cel shading, detailed background'
+  provenance: curation-tile-0820 keep #5
+  why_kept: 'blank eyes, no nose, smooth mask; ears not drawn'
+- image: farm-out/ep2-b15-mac-plate-0819/15-good-listener-mac-plate-r1s1.png
+  sha256: 8a9bd14b00c45ff50d0996b75cb4023bfbf8022f393b9e62c31f89f20fbf4ebe
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-b15-mac-plate-0819__15-good-listener-mac-plate-r1s1.txt
+  caption: 'bnyjerry, 1boy, solo, sitting on grass, listening, full body, soft daylight, anime style, cel shading, detailed background'
+  provenance: curation-tile-0820 keep #12
+  why_kept: 'the beat-15 match -- blank eyes, no nose, small low ear'
+- image: farm-out/ep2-b15-mac-plate-0819/15-good-listener-mac-plate-r2s1.png
+  sha256: b4b28ab54f0ca7dace0b50f302a101fd085cc2f4fcdbfc45f13bd92446d9a103
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-b15-mac-plate-0819__15-good-listener-mac-plate-r2s1.txt
+  caption: 'bnyjerry, 1boy, solo, sitting on grass, listening, full body, soft daylight, anime style, cel shading, detailed background'
+  provenance: curation-tile-0820 keep #13
+  why_kept: 'the beat-15 match, second seed'
+- image: farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r1s1.png
+  sha256: 3cc0b6bcb67e1527c11d7df0a732e77d7cea68a9d9696dc7468b7cc93be60944
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-b19-mac-plate-0819__19-the-drop-mac-plate-r1s1.txt
+  caption: 'bnyjerry, 1boy, solo, sitting on grass, hands together in his lap, full body, open field, anime style, cel shading, detailed background'
+  provenance: curation-tile-0820 keep #18
+  why_kept: 'the beat-19 family; ear is pointed but short'
+- image: farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r2s1.png
+  sha256: 7075a4e8d8906711dbbab16bff950a7a689574070444d52eb9041073167693be
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-b19-mac-plate-0819__19-the-drop-mac-plate-r2s1.txt
+  caption: 'bnyjerry, 1boy, solo, sitting on grass, hands together in his lap, full body, open field, anime style, cel shading, detailed background'
+  provenance: curation-tile-0820 keep #19
+  why_kept: 'the tile pose -- purple cowl, patchwork cloak, blank eyes'
+- image: farm-out/ep2-b19-mac-plate-0819/19-the-drop-mac-plate-r3s1.png
+  sha256: de7a256c29b0a752b335e1e022c111e654c4c65cbe43b05fb98bd9573e1c6cbf
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-b19-mac-plate-0819__19-the-drop-mac-plate-r3s1.txt
+  caption: 'bnyjerry, 1boy, solo, sitting on grass, hands together in his lap, full body, open field, anime style, cel shading, detailed background'
+  provenance: curation-tile-0820 keep #20
+  why_kept: 'THE TILE ITSELF -- the plate adult-b19-0819.jpg was made from'
+- image: farm-out/ep2-jerry-face-k6a-0821/ep2-jerry-face-k6a-0821-ipahead.png
+  sha256: 5f232ae31dc00d40e748adc04e74fbc03753abb271422d0e3caf859150dbd199
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-jerry-face-k6a-0821__ep2-jerry-face-k6a-0821-ipahead.txt
+  caption: 'bnyjerry, 1boy, solo, standing, arms at sides, in tall grass, full body, anime style, cel shading, detailed background'
+  provenance: k6a standard, 2026-08-21
+  why_kept: 'THE STANDARD ITSELF -- the rung the 2026-08-21 ruling names'
+- image: farm-out/ep2-jerry-set-stride-0821/ep2-jerry-set-stride-0821-ipahead.png
+  sha256: fabee1d8bc2426ee245c5f123c391a7bbbdea8b7366e839285c139dc96bd3e0e
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-jerry-set-stride-0821__ep2-jerry-set-stride-0821-ipahead.txt
+  caption: 'bnyjerry, 1boy, solo, walking, arm outstretched, in tall grass, full body, anime style, cel shading, detailed background'
+  provenance: k6a standard, 2026-08-21
+  why_kept: 'the striding pose; face and proportion hold'
+- image: farm-out/ep2-jerry-set-reach-0821/ep2-jerry-set-reach-0821-ipahead.png
+  sha256: e1070c3d7d255ba89915244b2651d448c8b4501a89f40618c332c9f7764a8fd1
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-jerry-set-reach-0821__ep2-jerry-set-reach-0821-ipahead.txt
+  caption: 'bnyjerry, 1boy, solo, arms up, in tall grass, full body, anime style, cel shading, detailed background'
+  provenance: k6a standard, 2026-08-21
+  why_kept: 'arms raised; the only frame in the set with both hands above the head'
+- image: farm-out/ep2-jerry-set-point-0821/ep2-jerry-set-point-0821-ipahead.png
+  sha256: 3c386887019690cddbb46ce20291e5442c0fe94829a341d967ffc16b439f7763
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-jerry-set-point-0821__ep2-jerry-set-point-0821-ipahead.txt
+  caption: 'bnyjerry, 1boy, solo, arm outstretched, pointing, in tall grass, full body, anime style, cel shading, detailed background'
+  provenance: k6a standard, 2026-08-21
+  why_kept: 'pointing; cloak reads broad but proportion holds'
+- image: farm-out/ep2-jerry-set-hunch-0821/ep2-jerry-set-hunch-0821-ipahead.png
+  sha256: edbd71fac30cb85cd22028807dc7af06fd946cbf70bbf5165ff82ab43f9648bd
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-jerry-set-hunch-0821__ep2-jerry-set-hunch-0821-ipahead.txt
+  caption: 'bnyjerry, 1boy, solo, standing, hunched over, arms at sides, in tall grass, full body, anime style, cel shading, detailed background'
+  provenance: k6a standard, 2026-08-21
+  why_kept: 'hunched; distinct from `stand` rather than the duplicate that was feared'
+- image: farm-out/ep2-jerry-set-kneel-0821/ep2-jerry-set-kneel-0821-ipahead.png
+  sha256: a0c993260cebf70f7f6dffff285768aded34400041360b1f1a0c3ab72c88312d
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-jerry-set-kneel-0821__ep2-jerry-set-kneel-0821-ipahead.txt
+  caption: 'bnyjerry, 1boy, solo, kneeling, in tall grass, full body, barefoot, anime style, cel shading, detailed background'
+  provenance: k6a standard, 2026-08-21
+  why_kept: 'the strongest brow bar in the whole batch'
+- image: farm-out/ep2-jerry-set-seat-0821/ep2-jerry-set-seat-0821-ipahead.png
+  sha256: 36592c3775803d3276389380eab83234871dd90b21ced5834c51edd1fa4137a3
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-jerry-set-seat-0821__ep2-jerry-set-seat-0821-ipahead.txt
+  caption: 'bnyjerry, 1boy, solo, sitting, hands clasped between knees, head lowered, in tall grass, full body, anime style, cel shading, detailed background'
+  provenance: k6a standard, 2026-08-21
+  why_kept: 'the tile''s own stance, drawn at the standard'
+- image: farm-out/ep2-jerry-set-crouch-0821/ep2-jerry-set-crouch-0821-ipahead.png
+  sha256: f8e2f3064ad4e7f2765fe51b8a627cdae5135f9c4786f5d2fdd4d2aad63ba2d7
+  caption_file: pipeline/lora/captions/jerry-0821/ep2-jerry-set-crouch-0821__ep2-jerry-set-crouch-0821-ipahead.txt
+  caption: 'bnyjerry, 1boy, solo, squatting, in tall grass, full body, anime style, cel shading, detailed background'
+  provenance: k6a standard, 2026-08-21
+  why_kept: 'squatting; carries the folded-pose collar tint -- see collar_note'

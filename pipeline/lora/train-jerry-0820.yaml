@@ -1,49 +1,62 @@
 # JERRY CHARACTER LoRA — SDXL / animagine-xl-3.1 — the training run
 #
 # ══════════════════════════════════════════════════════════════════════════
-# ███ HELD — DO NOT FILE. Founder correction, 2026-08-20, late. ███
+# ███ THE HOLD IS LIFTED, 2026-08-21. BOTH GATES DISCHARGED. ███
 #
-# THE RULING: the goblin must read as the B TILE's goblin CREATURE, not as an
-# adult man. The word "adult" in `pipeline/canon.yaml` `ep2-goblin-design-adult`
-# was DRIFT, not his intent.
+# THE HOLD, for the record, because it is the reason this spec is trustworthy
+# now: on 2026-08-20 the founder ruled that the goblin must read as the B TILE's
+# CREATURE and not as an adult man, and the word "adult" in canon.yaml was DRIFT.
+# All 31 frames of `manifest-jerry.yaml` had been curated FOR the man-read and
+# every caption was written in its vocabulary. A character LoRA does not average
+# out a wrong premise, it LEARNS it. Two gates were named. Neither was waived.
 #
-# WHY THAT STOPS THIS JOB COLD, and why it is not a small edit. All 31 frames in
-# `manifest-jerry.yaml` were curated FOR the man-read design — that was the
-# selection criterion, applied frame by frame — and every caption was written in
-# its vocabulary. A character LoRA does not average out a wrong premise, it
-# LEARNS it: train on this set and the man-read becomes the trigger token's
-# meaning, permanently and invisibly, for every ep3 plate downstream. That is
-# the exact failure this spec's own bars were written to catch, arriving through
-# the dataset instead of through the hyperparameters. One card-hour is cheap;
-# a wrong identity baked into the enabler for "one day per episode" is not.
+# GATE 1 — DATASET RE-CURATED FOR TILE FIDELITY. DISCHARGED.
+#   `pipeline/lora/curation-tile-0820.yaml` read all 31 at 1:1 against
+#   adult-b19-0819.jpg on four clauses and kept SEVEN: 15 rejected outright for a
+#   human nose or human eyes (the whole beat-20 family, one an outright OLD MAN),
+#   9 rejected on the EAR alone — which cannot be prompted for, since Danbooru
+#   has no tag for a short low swept-back ear, and is therefore the one attribute
+#   the LoRA itself has to carry.
+#   That file then REFUSED to unblock on seven: "seven frames in four poses
+#   trains a pose, not a character, and a pose-locked character LoRA is worse
+#   than no LoRA because it appears to work on the beat it was trained on."
+#   Its gate was breadth AT A RECIPE THAT PASSES, and for five updates there was
+#   no such recipe — twelve tileset poses held the face and were bobbleheads, six
+#   skeleton poses held the proportion and drew a blank egg, six wording rungs
+#   drew a round eye or none.
+#   THE RECIPE NOW EXISTS. `pipeline/jerry_standard_0821.py` — the k6a rung, the
+#   2026-08-21 steward ruling, veto-able (R4). EIGHT new frames were rendered
+#   through it and judged by eye at 1:1. The set is FIFTEEN FRAMES IN NINE POSES
+#   against the old four, and it is `pipeline/lora/manifest-jerry-0821.yaml`.
 #
-# TWO GATES BEFORE THIS SPEC MAY BE FILED AGAIN, and neither is this lane's
-# unilateral call:
-#   1. DATASET RE-CURATED FOR TILE FIDELITY. The audit lane is re-deriving the
-#      design from the B tile on `/review/ep2-goblin-design-0819`; the frame set
-#      has to be re-selected against that read. Coordinate with them — do not
-#      re-curate in parallel and do not assume which frames survive. Some of the
-#      current 31 may; that is a finding, not an assumption.
-#   2. CAPTIONS RE-DERIVED from the corrected canon wording, once it exists.
-#      `pipeline/lora/captions/jerry/*.txt` are written in the old vocabulary and
-#      the prune/keep table in the research doc §4 was reasoned against it.
+# GATE 2 — CAPTIONS RE-DERIVED FROM THE CORRECTED CANON. DISCHARGED, and all
+#   FIFTEEN are rewritten rather than the eight new ones. Keeping the seven old
+#   captions because their frames survived curation would teach the trigger token
+#   the retired man-read vocabulary through the back door. New captions are in
+#   `captions/jerry-0821/`; `captions/jerry/` is left on disk as evidence.
+#   The caption rule is in `build_jerry_0821.py` and it is the one place this
+#   could quietly fail: pose, framing, setting and STYLE are named; `green skin`,
+#   `bald`, `blank eyes`, `no nose`, `patchwork cloak`, the ear and the
+#   proportion are NOT, because a named attribute is one the trigger token is
+#   excused from carrying. Style IS named so bar B3 is not failed by
+#   construction.
 #
-# STATUS OF THE FILING. This spec WAS filed to backlog on 2026-08-20
-# (`lora-jerry-0820-1787245756.json`) and was pulled back before any tick could
-# promote it. It is parked on the box as
-# `C:\banyan-queue\backlog\lora-jerry-0820-1787245756.json.HOLD-founder-tile-read-0820`
-# — the suffix takes it out of autofill's runnable set. IT NEVER RAN: it did not
-# reach `ready/` or `running/`, no GPU-second was spent, no weight file exists.
+# WHAT MOVED IN THIS FILE AND NOTHING ELSE DID: the stage step reads the new
+# manifest, and the repeat prefix goes 4 -> 8 so the step count survives the set
+# shrinking 31 -> 15 (15 x 8 = 120/epoch, /2 at batch 2 = 60, x10 epochs = ~600
+# optimizer steps, which is the number §5 argued for). Every hyperparameter,
+# every bar and the whole trainer install are untouched.
 #
-# WHAT SURVIVES THE HOLD, and should not be redone: the whole trainer install
-# (SETUP.md, sd-scripts v0.11.1, `venv-lora` on torch 2.11.0+cu128, bitsandbytes
-# AdamW8bit verified on the card, accelerate configured) is design-independent
-# and stands. So does the staged-input plumbing below and the sha256 discipline.
-# What does NOT survive is the frame selection and the captions.
+# WHERE IT SITS IN THE QUEUE, and this is deliberate: priority 70, BEHIND the
+# 14-job motion tranche at 24. This is a 55-minute job on a card with no
+# preemption, and the motion tranche is answering a question that could change
+# what this job is FOR — if LTX drifts every beat's face toward the man-read,
+# the LoRA stops being ep3 enabler work and becomes ep2's blocker.
 #
-# The five bars below also need a re-read before reuse: B2 STYLE PRESERVATION
-# measures against "the shipped ep2 plates", and if the creature read changes
-# what ships, that reference moves with it.
+# STALE FILING TO CLEAR: the 08-20 backlog file is parked on the box as
+# `lora-jerry-0820-*.json.HOLD-founder-tile-read-0820`. It NEVER RAN — never
+# reached ready/ or running/, no GPU-second, no weight file. It points at the
+# OLD manifest and must not be un-suffixed; this spec is re-filed fresh.
 # ══════════════════════════════════════════════════════════════════════════
 #
 # 2026-08-20. $0 (local card, no provider). ~35-50 GPU-minutes.
@@ -132,8 +145,10 @@ steps:
 # manifest and copies both halves in.
 #
 # The dir name encodes the repeat count. sd-scripts reads `<N>_<name>` and
-# repeats each image N times per epoch: 4 repeats x 31 images = 124 steps/epoch
-# at batch 1, /2 at batch 2 = 62. Ten epochs -> ~620 optimizer steps. See BARS.
+# repeats each image N times per epoch. THE SET IS NOW 15, NOT 31, so the
+# repeat goes 4 -> 8 to hold the step count where §5 argued for it:
+# 8 x 15 = 120 steps/epoch at batch 1, /2 at batch 2 = 60, ten epochs ->
+# ~600 optimizer steps. Leaving it at 4 would have quietly halved the run.
 #
 # It verifies every sha256 against the manifest before copying. A frame edited
 # or re-rendered under the same name since 61dfbca4 stops the run here, rather
@@ -163,13 +178,13 @@ steps:
     import hashlib, os, shutil, yaml
     CANDIDATES = [r"C:\banyan-farm\banyan-city",
                   r"C:\banyan-farm\lora-jerry-0820\src"]
-    REL = "pipeline/lora/manifest-jerry.yaml"
+    REL = "pipeline/lora/manifest-jerry-0821.yaml"
     repo = next((c for c in CANDIDATES if os.path.exists(os.path.join(c, REL))), None)
     if repo is None:
         raise SystemExit("NO DATASET ROOT. Tried:\n  " + "\n  ".join(CANDIDATES))
     print("dataset root:", repo)
     man  = yaml.safe_load(open(os.path.join(repo, REL), encoding="utf-8"))
-    dst  = r"C:\banyan-farm\lora-jerry-0820\img\4_bnyjerry"
+    dst  = r"C:\banyan-farm\lora-jerry-0820\img\8_bnyjerry"
     os.makedirs(dst, exist_ok=True)
     os.makedirs(r"C:\banyan-farm\lora-jerry-0820\out", exist_ok=True)
     n = 0
