@@ -8358,3 +8358,53 @@ put them at different token POSITIONS than r12d's appended flags, and CLIP is
 order-sensitive — so `ep2-b13-canon-w4-0821` was queued ALONE and compared to
 r12d before the other eleven were released. It reproduces r12d. **All twelve
 beats of the wave are now on the card at w4.**
+
+**THE W4 SWEEP, JUDGED ON ONE COMMON-SCALE SHEET
+(`review/ep2-goblin-eye-0822/W4-sweep-0822.png`, 13 plates).**
+
+Identity is uniform across every beat for the first time: broad low dome, thin
+high brow arcs, small off-white almond eyes with dark pupils, near-horizontal
+pointed ears, flat mouth, washed sage mandarin collar. One defect and one
+observation:
+
+* **b14 drew a SECOND GOBLIN** in the grass at the right edge — the same `solo`
+  violation 17 and 19 hit in w2. Re-plated as **w4b** with `second goblin,
+  crowd` in the negative and it came back single-figure. **The crowd negative is
+  now 3-for-3** (17, 19, 14), which is worth knowing: on this recipe a `solo`
+  violation IS reachable by a negative, unlike the ghost head, because the
+  positive is not drawing it — the empty grass is.
+* **b17 and b19 came back clean on their first w4 pass** with the same negative
+  carried from w2b.
+* b13 has two plates: `w4` (upright sit, arms crossed) and `w4curl` (hunched
+  forward, head tipped down and to one side) — **the founder's story ruling for
+  that beat, that he curls DOWN small into the hand-sized shade patch and never
+  rises**. Both are candidates; the pose is his call, not the lane's.
+* Not fixed, recorded: **b20's plate does not draw the fig** even though
+  `holding a small fruit` is in its pose words. The prompt-summons law says a
+  named-but-absent object is a re-plate, not a re-word — but b20's fig has a
+  composite route already (the sapcomp four-for-four), so it is cheaper there.
+
+**MOTION: `pipeline/file_w4motion_0822.py`, ten beats.** It carries each beat's
+EXISTING motion prompt verbatim and swaps exactly one phrase inside it:
+
+    off-white eyes with narrow vertical slit pupils
+      ->  small off-white almond eyes with tiny dark pupils, heavy upper
+          eyelids, eyebags, flat deadpan expression
+
+That is not tidying. Every motion prompt in the repo still described the vetoed
+eye, and this engine's measured behaviour is that a subject clause disagreeing
+with its own init drifts the face back to its prior over the clip — so the old
+words over a w4 plate would have spent the entire fix in the first second. **The
+BAR carries it too** and is corrected in the same place: its M1 check read
+"confirm eyes, slit pupils, brow and mouth are present at the LAST frame", which
+would PASS the frame he rejected and FAIL the one he approved.
+
+**The first draft grafted beat 04's head clause onto every beat and beat 07
+caught it.** 07 is the confiscation; its prompt names TWO figures, the goblin
+and the tall armoured guard placed left and right, and it has no `He is ` clause
+to split on. Beat 04's head would have deleted the guard from the only beat that
+needs one — the prompt-summons law that has already emptied 07 twice. Carrying
+each beat's own prompt makes the eye the single edit for all ten.
+
+`ep2-b13-w4motion-0822` is queued ALONE as the sample. The other nine are
+written and wait for it.
