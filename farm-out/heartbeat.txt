@@ -4015,3 +4015,4 @@
 18:58:44Z DONE task=ep3-saplora-s43-0821-1787338621 rc=0 artifacts=2
 18:58:53Z STARTED task=ep3-saplora-s44-0821-1787338625 attempt=1 on box-runner
 18:59:07Z DONE task=ep3-saplora-s44-0821-1787338625 rc=0 artifacts=2
+18:59:15Z box-runner idle ready=0 failed=80
