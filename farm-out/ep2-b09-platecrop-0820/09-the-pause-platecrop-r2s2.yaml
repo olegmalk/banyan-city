@@ -1,0 +1,31 @@
+platform: "cpu (numpy/PIL crop + LANCZOS, no GPU, no sampler)"
+model: "none -- this is a geometric operation on an existing plate"
+cost_usd: 0.0
+shot_beat: 9
+beat_slug: "the-pause"
+source_png: "farm-out/ep2-b09-cast-0817/09-the-pause-ipa-r2-w015-s2.png"
+source_branch: "origin/farm-results-rtx5090"
+source_sha256: "55a56b8faa5c1c8abcd3cc7306800a616e91210a65995b498e0b9a5e191e0e8e"
+why_this_source: "the largest head of the three c1 passes (~38%), so it needs only 1.45x -- the easy end of the same instrument"
+png_sha256: "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a"
+face_highpass_sigma1_before: 13.73
+face_highpass_sigma1_after: 8.83
+face_highpass_retained_pct: 64.3
+control_native_closeup: "farm-out/ep2-b09-mac-plate-0819/09-the-pause-mac-plate-r3s1.png"
+control_head_frac: 0.5674
+control_face_highpass_sigma1: 9.79
+vs_control_pct: 90.2
+hair_luma_source: {"central_band_darker_half_mean_luma": 53.1, "central_band_share_under_luma_60_pct": 25.6, "warm_mask_mean_luma": 65.0, "warm_mask_p25_luma": 58.5}
+approved: false
+provisional: true
+scored: false
+founder_verdict: null
+rung: "REFERENCE-PLUS-CROP, the instrument work-ladder-0819.md named and did not fire, after the wording ladder closed at 8 renders"
+date: "2026-08-20"
+crop_box_xyxy: [44, 13, 616, 850]
+crop_size: [572, 837]
+upscale_factor: 1.454
+head_px_source: 460
+head_frac_source: 0.3783
+head_frac_after: 0.55
+chin_at_frac_after: 0.57
