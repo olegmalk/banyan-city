@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Sapling ep2 — every beat, one at a time</title>
+<style>
+  :root {
+    --bg:#17181a; --panel:#1f2124; --panel2:#232629; --line:#33363b;
+    --ink:#eceef1; --muted:#9aa0a8; --accent:#c8b273;
+    --pass:#7fd68b; --fail:#e08b8b; --warn:#d8b46a; --new:#8fc4e8;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%; scroll-behavior:smooth; scroll-padding-top:96px}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+       padding:0 20px 120px}
+  .wrap{max-width:1080px;margin:0 auto}
+  a{color:#9dc2e6}
+  header.top{padding:34px 0 16px}
+  header.top h1{margin:0 0 6px;font-size:27px;letter-spacing:-.01em;font-weight:650}
+  header.top .sub{color:var(--muted);font-size:14.5px;margin:0 0 10px;max-width:80ch}
+  .callout{margin:18px 0 0;padding:15px 18px;background:var(--panel);
+           border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:5px}
+  .callout p{margin:0 0 9px;max-width:82ch} .callout p:last-child{margin-bottom:0}
+  .callout.blue{border-left-color:#5b83a8}
+
+  /* ---- sticky beat index ---- */
+  nav.index{position:sticky;top:0;z-index:50;background:rgba(23,24,26,.96);
+            backdrop-filter:blur(6px);border-bottom:1px solid var(--line);
+            margin:0 -20px;padding:9px 20px}
+  nav.index .inner{max-width:1080px;margin:0 auto;display:flex;flex-wrap:wrap;
+                   gap:5px;align-items:center}
+  nav.index a.chip{display:inline-block;min-width:31px;text-align:center;
+        padding:4px 6px;border-radius:4px;border:1px solid var(--line);
+        background:#26282c;color:var(--muted);font-size:12.5px;font-weight:700;
+        text-decoration:none;font-variant-numeric:tabular-nums}
+  nav.index a.chip:hover{border-color:#5f6570;color:var(--ink)}
+  nav.index a.chip.answered{background:#23331f;border-color:#416b45;color:#c9f0cd}
+  nav.index .legend{color:#6f757c;font-size:11.5px;margin-left:6px}
+
+  section.beat{border-top:1px solid var(--line);padding:30px 0 6px}
+  section.beat > h2{margin:0 0 2px;font-size:21px;font-weight:650;letter-spacing:-.01em}
+  .tc{color:var(--muted);font-size:12.5px;font-variant-numeric:tabular-nums;
+      letter-spacing:.03em;font-weight:600}
+  h3{font-size:12.5px;margin:22px 0 7px;font-weight:700;color:#8d939b;
+     letter-spacing:.07em;text-transform:uppercase}
+  p{max-width:82ch;margin:0 0 10px}
+  .story{margin:12px 0 0;padding:13px 16px;background:var(--panel);
+         border:1px solid var(--line);border-radius:5px}
+  .story .action{margin:0;font-size:15px}
+  .story .line{margin:9px 0 0;font-size:15px;color:#e6dcc3}
+  .story .line b{color:var(--accent);font-weight:700;font-size:12px;
+                 letter-spacing:.05em;display:block;margin-bottom:1px}
+  .story .bar{margin:11px 0 0;padding-top:10px;border-top:1px solid var(--line);
+              font-size:13.5px;color:var(--muted)}
+  .story .bar b{color:#b9bfc7;display:block;font-size:11.5px;letter-spacing:.06em;
+                text-transform:uppercase;margin-bottom:3px}
+
+  .now{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;margin:8px 0 0}
+  .now video{width:300px;max-width:100%;height:auto;border:1px solid var(--line);
+             border-radius:5px;display:block;background:#000}
+  .now .meta{flex:1 1 340px;min-width:280px}
+  .now .meta .fn{font:11.5px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;
+                 color:#7d838b;word-break:break-all;margin:0 0 8px}
+  .now .meta .fill{margin:0 0 10px;font-size:14px;color:#cfd4da}
+  .voline{margin:0;padding:11px 14px;background:#1b2126;border:1px solid #2c3740;
+          border-left:3px solid #5b83a8;border-radius:4px;font-size:15px}
+  .voline b{display:block;color:#8fc4e8;font-size:11px;letter-spacing:.06em;
+            font-weight:700;margin-bottom:2px}
+  .silent{color:var(--muted);font-size:13.5px;font-style:italic}
+
+  ul.faults{margin:0;padding-left:18px} ul.faults li{margin:0 0 7px;max-width:80ch}
+  ul.wins{margin:0;padding-left:18px} ul.wins li{margin:0 0 7px;max-width:80ch;color:#bfd9c2}
+
+  .cands{display:flex;flex-wrap:wrap;gap:14px;margin:2px 0 0}
+  .cand{flex:1 1 320px;min-width:290px;max-width:520px;background:var(--panel);
+        border:1px solid var(--line);border-radius:6px;padding:13px 15px}
+  .cand.quiet{background:var(--panel2)}
+  .cand video{width:100%;height:auto;border:1px solid var(--line);border-radius:4px;
+              display:block;background:#000;margin:0 0 9px}
+  .cand .lbl{font-size:14px;font-weight:650;margin:0 0 6px;display:flex;
+             gap:8px;align-items:baseline;flex-wrap:wrap}
+  .cand p{font-size:13.5px;margin:0 0 7px;max-width:none}
+  .cand .diff{color:var(--muted)}
+  .cand .src{font:11px ui-monospace,SFMono-Regular,Menlo,monospace;color:#6f757c;
+             word-break:break-all;margin:0}
+  .cand .swapid{font:11.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:#c8b273}
+
+  .tag{display:inline-block;padding:2px 7px;border-radius:3px;font-size:11px;
+       font-weight:700;letter-spacing:.03em;white-space:nowrap}
+  .tag.fail{background:#3a2a2a;border:1px solid #6b4141;color:#f0c9c9}
+  .tag.warn{background:#383021;border:1px solid #6b5a33;color:#f0dfb4}
+  .tag.pass{background:#23331f;border:1px solid #416b45;color:#c9f0cd}
+  .tag.new{background:#1c2a36;border:1px solid #3f6280;color:#c5e2f6}
+
+  .inflight{margin:0;padding:11px 14px;background:#20262b;border:1px solid #35424b;
+            border-left:3px solid #5b83a8;border-radius:4px;font-size:13.5px}
+  .nocand{color:var(--muted);font-size:13.5px;margin:0}
+  .goblink{margin:10px 0 0;font-size:13px;color:var(--muted)}
+
+  .answer{margin:20px 0 0;padding:13px 16px;background:#1c2418;
+          border:1px solid #3d5b3d;border-radius:5px}
+  .answer .h{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+             color:#93b894;font-weight:700;margin:0 0 8px}
+  .answer code{display:block;font:13px/1.75 ui-monospace,SFMono-Regular,Menlo,monospace;
+               background:#131a11;border:1px solid #2f462f;border-radius:4px;
+               padding:8px 11px;margin:0 0 6px;color:#d7ecd7;white-space:pre-wrap}
+  .answer code:last-child{margin-bottom:0}
+  code.inline{font:12.5px ui-monospace,SFMono-Regular,Menlo,monospace;
+              background:#26282c;padding:1px 5px;border-radius:3px}
+  footer{border-top:1px solid var(--line);margin-top:44px;padding:22px 0 0;
+         color:var(--muted);font-size:13px}
+  @media (max-width:640px){
+    .now video{width:100%}
+    body{padding:0 14px 120px}
+    nav.index{margin:0 -14px;padding:8px 14px}
+  }
+</style>
+</head>
+<body>
+<nav class="index"><div class="inner"><a class="chip" href="#b01">01</a><a class="chip" href="#b02">02</a><a class="chip" href="#b03">03</a><a class="chip" href="#b04">04</a><a class="chip" href="#b05">05</a><a class="chip" href="#b06">06</a><a class="chip" href="#b07">07</a><a class="chip" href="#b08">08</a><a class="chip" href="#b09">09</a><a class="chip" href="#b10">10</a><a class="chip" href="#b11">11</a><a class="chip" href="#b12">12</a><a class="chip" href="#b13">13</a><a class="chip" href="#b14">14</a><a class="chip" href="#b15">15</a><a class="chip" href="#b16">16</a><a class="chip" href="#b17">17</a><a class="chip" href="#b18">18</a><a class="chip" href="#b19">19</a><a class="chip" href="#b20">20</a><a class="chip" href="#b21">21</a><span class="legend">green = answered</span></div></nav>
+<div class="wrap">
+<header class="top">
+<h1>Episode 2, beat by beat</h1>
+<p class="sub">Twenty-one sections, one per beat. Each one has the clip that is in the cut right now, the line it plays under, what the beat is supposed to show, everything known to be wrong with it, and any other footage that exists for it. You never have to scroll back: each section is answerable on its own.</p>
+<div class="callout"><p><b>How to answer.</b> One line per beat, in chat, in any order and as few or as many as you want:</p><p><code class="inline">b07 ok</code> &nbsp; <code class="inline">b13 swap to 13-evidence-LTX-ep2-b13-canonmotion-0821</code> &nbsp; <code class="inline">b20 redo: he still never looks up</code></p><p>Every section repeats those three forms at the bottom with this beat's own number filled in, so you can copy one straight out.</p></div>
+<div class="callout blue"><p><b>What "the current clip" means here.</b> It is read out of the assembled episode's own sidecar — the file render_t3 wrote while muxing — not out of any manifest. That matters today: the ship manifest still describes five age-B face swaps and a beat-01 composite, and all six of those were reverted after you watched that cut. Every player below is a file that is in your episode as it stands.</p><p>Muted and looping on purpose. Nothing on this page can spend money, and no clip here is published anywhere.</p></div>
+</header>
+<section class="beat" id="b01">
+<h2>Beat 01 — Cold Open</h2>
+<div class="tc">COLD OPEN — 0:00–0:06</div>
+<div class="story"><p class="action">A tiny two-leaf banyan sapling in a green field. On the thinnest branch a green nub swells, darkens and rounds into a single fig — the only thing in frame that moves.</p><p class="line"><b>VO</b>“I used to be an engineer. Now I&#x27;m a tree.”</p><p class="line"><b>VO</b>“…Well. A sapling. Took three days to grow that. Total assets: two leaves and one fig.”</p><p class="bar"><b>What it has to show</b>No written bar has ever been filed for this beat — the stage direction above is the whole brief, which is itself worth knowing.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b01.jpg"><source src="/review/ep2-ship-0821/sources/01-cold-open-LTX-fignonly-s20260840.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">01-cold-open-LTX-fignonly-s20260840.mp4</p>
+<p class="fill">5.0 s of picture in a 9.5 s slot — the last 4.4 s (47%) of this beat is ONE FROZEN FRAME.</p>
+<p class="voline"><b>VO SAYS</b>“I used to be an engineer. Now I&#x27;m a tree.”</p>
+<p class="voline"><b>VO SAYS</b>“…Well. A sapling. Took three days to grow that. Total assets: two leaves and one fig.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>The grass moves with the fig. The field is supposed to be locked and it is not — on all three colour bands — and it is the first thing on screen.</li><li>Three other things about this beat have never been scored at all: nobody counts the leaves, nobody measures the grass line, and the camera probe refuses to give a reading.</li></ul>
+<h3>What it gets right</h3>
+<ul class="wins"><li>Seven of its eight scored clauses pass. The fig grows from green nub to full purple fig inside the clip.</li></ul>
+<p class="nocand"><b>Also:</b> A composite that fixed two of the three failing colour bands was swapped in on 08-20 and you ruled it back out on 08-21. This is the take you kept, and that decision is closed unless you reopen it.</p>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 1 (the row for the take this one replaced) + verdict_chromaticity_rung_0820</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b01 ok</code>
+<code>b01 swap to &lt;candidate&gt;</code>
+<code>b01 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b02">
+<h2>Beat 02 — The Sprint</h2>
+<div class="tc">THE SPRINT — 0:06–0:11</div>
+<div class="story"><p class="action">A SCAVENGER — goblin-ish, enormous ears, one broken tusk, patchwork cloak — sprints into frame, skids, and dives behind the sapling&#x27;s thin trunk.</p><p class="line silent">No spoken line — this beat is silent by design.</p><p class="bar"><b>What it has to show</b>No written bar has ever been filed for this beat — the stage direction above is the whole brief, which is itself worth knowing.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b02.jpg"><source src="/review/ep2-ship-0821/sources/02-the-sprint-b02-anchor-s20260834-0817.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">02-the-sprint-b02-anchor-s20260834-0817.mp4</p>
+<p class="fill">4.0 s of picture in a 4.0 s slot — it plays once, straight through.</p>
+<p class="voline"><b>NO LINE</b>Silent beat — the picture carries it alone.</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<div class="cands">
+<div class="cand"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/02-evidence-LTX-ep2-b02-canonmotion-r2-0821.jpg"><source src="/review/ep2-beats-0821/candidates/02-evidence-LTX-ep2-b02-canonmotion-r2-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>canon-motion, round 2 — tonight, newest</span></p><p>The frame HOLDS now. He is the same size at the first frame and the last, and the sapling from the plate is still there — no invented tree. But the move is wrong: he drifts back and to the left, then comes back to centre and bends over. No run in, no skid, no dive.</p><p class="diff"><b>What is different:</b> The sapling trunk is now IN the starting picture. Round 1 named a trunk the picture did not contain, and the model rebuilt the whole shot to fit one in.</p><p class="diff">To take this one, say: <span class="swapid">swap to 02-evidence-LTX-ep2-b02-canonmotion-r2-0821</span></p><p class="src">pipeline/jobs/ep2-b02-canonmotion-r2-0821.yaml verdict_canonmotion_r2_0821</p></div>
+<div class="cand"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/02-evidence-LTX-ep2-b02-canonmotion-0821.jpg"><source src="/review/ep2-beats-0821/candidates/02-evidence-LTX-ep2-b02-canonmotion-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>canon-motion, round 1 — today</span></p><p>The camera pulls back until he is a speck at the bottom right of a wide shot dominated by a big bare tree that is in none of our pictures. No sprint, no skid, no dive.</p><p class="diff"><b>What is different:</b> First clip built on the canon goblin plate — your tile&#x27;s face handed to the motion model as pixels. The face held; the camera did not.</p><p class="diff">To take this one, say: <span class="swapid">swap to 02-evidence-LTX-ep2-b02-canonmotion-0821</span></p><p class="src">review/canonmotion-0821/JUDGING-0821.md</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/02-the-sprint-LTX-b02-ageb-s2-trim97-0821.jpg"><source src="/review/ep2-beats-0821/candidates/02-the-sprint-LTX-b02-ageb-s2-trim97-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag warn">WARN</span><span>age-B seed 2 (the one that was swapped in, then reverted)</span></p><p>Face, eyes and mouth intact for the whole slot; the sprint, the push off and the dive all complete. The ears are long tapering spikes where your tile has short low flanges, and there is a magenta collar.</p><p class="diff"><b>What is different:</b> Rendered this morning in the age-B wave, swapped into the cut, and pulled back out the same day — you watched that cut and said it was worse than the last one, and these five swaps were steward picks you had never approved.</p><p class="diff">To take this one, say: <span class="swapid">swap to 02-the-sprint-LTX-b02-ageb-s2-trim97-0821</span></p><p class="src">pipeline/jobs/ep2-b02-tilemotion-s2-0821.yaml</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/02-the-sprint-LTX-ep2-b02-tilemotion-s1-0821.jpg"><source src="/review/ep2-beats-0821/candidates/02-the-sprint-LTX-ep2-b02-tilemotion-s1-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>age-B seed 1</span></p><p>The face stops being drawn partway — a featureless green head from frame 55.</p><p class="diff"><b>What is different:</b> Rendered this morning in the age-B wave, swapped into the cut, and pulled back out the same day — you watched that cut and said it was worse than the last one, and these five swaps were steward picks you had never approved.</p><p class="diff">To take this one, say: <span class="swapid">swap to 02-the-sprint-LTX-ep2-b02-tilemotion-s1-0821</span></p><p class="src">pipeline/jobs/ep2-b02-tilemotion-s1-0821.yaml</p></div>
+</div>
+<p class="goblink">The goblin is in this beat. His design — how old he reads, and which face is canon — is one question for the whole episode and it has its own page: <a href="/review/ep2-goblin-age-0821">the goblin age card</a>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>He is not green. He is bone-grey with a big round child skull, a chubby child body, grey shirt and shorts, barefoot. This is the worst character break in the episode.</li><li>No bar has ever been written for beat 02, so nothing has ever judged this clip. It was caught by an audit on 08-20, not by a test.</li><li>There is no sapling trunk in frame for him to dive behind — the beat&#x27;s own staging says he has not found the sapling yet.</li></ul>
+<p class="nocand"><b>Also:</b> Beat 02 is silent by design — there is no line here.</p>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml goblin_design_audit_0820 beats.2 + ship_status.2</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b02 ok</code>
+<code>b02 swap to 02-evidence-LTX-ep2-b02-canonmotion-r2-0821</code>
+<code>b02 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b03">
+<h2>Beat 03 — Bad Cover</h2>
+<div class="tc">BAD COVER — 0:11–0:16</div>
+<div class="story"><p class="action">The scavenger crouches behind a trunk that hides roughly one-sixth of him.</p><p class="line"><b>VO</b>“A creature is using me as cover. I am forty centimeters tall.”</p><p class="bar"><b>What it has to show</b>No written bar has ever been filed for this beat — the stage direction above is the whole brief, which is itself worth knowing.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b03.jpg"><source src="/review/ep2-ship-0821/sources/03-bad-cover-LTX-midend-s20260821-0820.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">03-bad-cover-LTX-midend-s20260821-0820.mp4</p>
+<p class="fill">5.0 s of picture in a 5.0 s slot — it plays once, straight through.</p>
+<p class="voline"><b>VO SAYS</b>“A creature is using me as cover. I am forty centimeters tall.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<div class="cands">
+<div class="cand"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/03-evidence-LTX-ep2-b03-canonmotion-0821.jpg"><source src="/review/ep2-beats-0821/candidates/03-evidence-LTX-ep2-b03-canonmotion-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>canon-motion, round 1 — today</span></p><p>A curved pointed horn grows out of the top of a bald head from about frame 72 and is still there at the end. The camera pulls back and he halves in height. And there is still no trunk in frame to hide behind.</p><p class="diff"><b>What is different:</b> Canon goblin plate, 105 frames. Features stay drawn the whole way — no dissolve — which the previous wave could not manage.</p><p class="diff">To take this one, say: <span class="swapid">swap to 03-evidence-LTX-ep2-b03-canonmotion-0821</span></p><p class="src">review/canonmotion-0821/JUDGING-0821.md</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/03-bad-cover-LTX-ep2-b03-tilemotion-s2-0821.jpg"><source src="/review/ep2-beats-0821/candidates/03-bad-cover-LTX-ep2-b03-tilemotion-s2-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag warn">WARN</span><span>age-B seed 2 (was swapped in, then reverted)</span></p><p>Face holds all 121 frames, no costume morph, no dead tail. The motion is very small — he sits, hands on knees, and leans near the end.</p><p class="diff"><b>What is different:</b> Rendered this morning in the age-B wave, swapped into the cut, and pulled back out the same day — you watched that cut and said it was worse than the last one, and these five swaps were steward picks you had never approved.</p><p class="diff">To take this one, say: <span class="swapid">swap to 03-bad-cover-LTX-ep2-b03-tilemotion-s2-0821</span></p><p class="src">pipeline/jobs/ep2-b03-tilemotion-s2-0821.yaml</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/03-bad-cover-LTX-ep2-b03-tilemotion-s1-0821.jpg"><source src="/review/ep2-beats-0821/candidates/03-bad-cover-LTX-ep2-b03-tilemotion-s1-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>age-B seed 1</span></p><p>The most real body motion in the whole wave — he shifts, comes up onto a knee, turns — and his costume changes on screen: a dark cloak becomes a brown plaid blanket between frames 65 and 76.</p><p class="diff"><b>What is different:</b> Rendered this morning in the age-B wave, swapped into the cut, and pulled back out the same day — you watched that cut and said it was worse than the last one, and these five swaps were steward picks you had never approved.</p><p class="diff">To take this one, say: <span class="swapid">swap to 03-bad-cover-LTX-ep2-b03-tilemotion-s1-0821</span></p><p class="src">pipeline/jobs/ep2-b03-tilemotion-s1-0821.yaml</p></div>
+</div>
+<p class="inflight"><b>In flight:</b> Round 2 of the canon-motion recipe is RUNNING on the box right now (ep2-b03-canonmotion-r2-0821) — same fix as beat 02&#x27;s: a starting picture that actually contains the trunk the prompt names.</p>
+<p class="goblink">The goblin is in this beat. His design — how old he reads, and which face is canon — is one question for the whole episode and it has its own page: <a href="/review/ep2-goblin-age-0821">the goblin age card</a>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>The last 0.79 s of the clip is a dead picture — 15 identical frames at the end. It is baked into the footage, so the assembly cannot cover it.</li><li>He reads as an adult man, not the creature in your tile: human nose with nostrils, a rounded human ear, folds either side of the mouth, flat olive skin instead of two-tone.</li></ul>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 3 what_it_fixed + goblin_design_audit_0820 beats.3</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b03 ok</code>
+<code>b03 swap to 03-evidence-LTX-ep2-b03-canonmotion-0821</code>
+<code>b03 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b04">
+<h2>Beat 04 — The Footnote</h2>
+<div class="tc">THE FOOTNOTE — 0:16–0:22</div>
+<div class="story"><p class="action">The scavenger leans out from behind the trunk to look, and pulls straight back the moment he has looked — the whole head and shoulder make the trip, twice, and he is still doing it when the shot ends.</p><p class="line"><b>VO</b>“Worst stealth plan I have ever seen — and I once watched an architect hide an outage in a footnote.”</p><p class="bar"><b>What it has to show</b>No written bar has ever been filed for this beat — the stage direction above is the whole brief, which is itself worth knowing.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b04.jpg"><source src="/review/ep2-ship-0821/sources/04-the-footnote-b04-refire-0814.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">04-the-footnote-b04-refire-0814.mp4</p>
+<p class="fill">4.0 s of picture in a 6.2 s slot — the last 2.1 s (34%) of this beat is ONE FROZEN FRAME.</p>
+<p class="voline"><b>VO SAYS</b>“Worst stealth plan I have ever seen — and I once watched an architect hide an outage in a footnote.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<div class="cands">
+<div class="cand"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/04-evidence-LTX-ep2-b04-canonmotion-0821.jpg"><source src="/review/ep2-beats-0821/candidates/04-evidence-LTX-ep2-b04-canonmotion-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag pass">PASS</span><span>canon-motion, round 1 — today</span></p><p>6 of 7, and the most encouraging clip of the seven. He leans out and across, is fully extended in the middle, and is back upright inside the trim — so the pull-back, which is the joke, lands in the slot. Frame holds. Bald head, big lateral pointed ears, off-white eyes with slit pupils, all held to the last frame. The one gap: with no trunk in frame there is nothing to lean out from, so it reads as a stumble-and-recover rather than a peek.</p><p class="diff"><b>What is different:</b> Canon goblin plate. This is the one missing-prop beat that did NOT re-stage itself, because its instruction never names the missing trunk — it only names body verbs.</p><p class="diff">To take this one, say: <span class="swapid">swap to 04-evidence-LTX-ep2-b04-canonmotion-0821</span></p><p class="src">review/canonmotion-0821/JUDGING-0821.md</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/04-the-footnote-LTX-ep2-b04-tilemotion-s1-0821.jpg"><source src="/review/ep2-beats-0821/candidates/04-the-footnote-LTX-ep2-b04-tilemotion-s1-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag warn">WARN</span><span>age-B seed 1 (was swapped in, then reverted)</span></p><p>Face holds all 121 frames and stays large in frame; the head tilts and turns down. The gaze is still not in the pupils, and a fifth of the beat would be a frozen frame.</p><p class="diff"><b>What is different:</b> Rendered this morning in the age-B wave, swapped into the cut, and pulled back out the same day — you watched that cut and said it was worse than the last one, and these five swaps were steward picks you had never approved.</p><p class="diff">To take this one, say: <span class="swapid">swap to 04-the-footnote-LTX-ep2-b04-tilemotion-s1-0821</span></p><p class="src">pipeline/jobs/ep2-b04-tilemotion-s1-0821.yaml</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/04-the-footnote-LTX-ep2-b04-tilemotion-s2-0821.jpg"><source src="/review/ep2-beats-0821/candidates/04-the-footnote-LTX-ep2-b04-tilemotion-s2-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag warn">WARN</span><span>age-B seed 2</span></p><p>Same recipe, second seed. Its last frame — the one the assembly would freeze on — is the weaker of the two.</p><p class="diff"><b>What is different:</b> Rendered this morning in the age-B wave, swapped into the cut, and pulled back out the same day — you watched that cut and said it was worse than the last one, and these five swaps were steward picks you had never approved.</p><p class="diff">To take this one, say: <span class="swapid">swap to 04-the-footnote-LTX-ep2-b04-tilemotion-s2-0821</span></p><p class="src">pipeline/jobs/ep2-b04-tilemotion-s2-0821.yaml</p></div>
+</div>
+<p class="goblink">The goblin is in this beat. His design — how old he reads, and which face is canon — is one question for the whole episode and it has its own page: <a href="/review/ep2-goblin-age-0821">the goblin age card</a>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>This is the round child you ruled against on 08-19 — &quot;c kinda is but still pretty bad so change it&quot;.</li><li>The clip abandons its own first frame: between frame 1 and frame 2 it jumps from the wide picture to a close-up in a single frame pair.</li><li>The glance is a head turn, not the eyes. The eyes never move.</li></ul>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 4 superseded_why_0820 + why_this_is_still_the_better_ship</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b04 ok</code>
+<code>b04 swap to 04-evidence-LTX-ep2-b04-canonmotion-0821</code>
+<code>b04 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b05">
+<h2>Beat 05 — The Patrol</h2>
+<div class="tc">THE PATROL — 0:22–0:27</div>
+<div class="story"><p class="action">Two PATROL GUARDS jog in and halt, scanning the field. Their armor doesn&#x27;t match.</p><p class="line"><b>GUARD 1</b>“He went this way. I saw him. Apple thief.”</p><p class="bar"><b>What it has to show</b>No written bar has ever been filed for this beat — the stage direction above is the whole brief, which is itself worth knowing.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b05.jpg"><source src="/review/ep2-ship-0821/sources/05-the-patrol-b05-standB-trim.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">05-the-patrol-b05-standB-trim.mp4</p>
+<p class="fill">4.9 s of picture in a 5.7 s slot — the last 0.8 s (13%) of this beat is ONE FROZEN FRAME.</p>
+<p class="voline"><b>GUARD 1 SAYS</b>“He went this way. I saw him. Apple thief.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>Four of its seven clauses fail.</li><li>Neither guard wears the sash you froze for the cast — the clip contradicts a ruling that is already final.</li></ul>
+<h3>What it gets right</h3>
+<ul class="wins"><li>Two figures in the field from the first frame to the 117th — never one, never three. Four rounds of rewording never got that.</li></ul>
+<p class="nocand"><b>Also:</b> Guard 1&#x27;s voice was re-pitched across the whole episode on 08-21 after you said he sounded like a little kid. He now renders at 99.6–122.8 Hz instead of 192 Hz. The picture is unchanged.</p>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 5 + pipeline/jobs/ep2-b05-standB-0814.yaml</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b05 ok</code>
+<code>b05 swap to &lt;candidate&gt;</code>
+<code>b05 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b06">
+<h2>Beat 06 — The Clipboard</h2>
+<div class="tc">THE CLIPBOARD — 0:27–0:34</div>
+<div class="story"><p class="action">GUARD 2 turns over a clipboard made of bark and reads.</p><p class="line"><b>GUARD 2</b>“Technically not theft. He ate it on the spot. That reclassifies it as unlicensed consumption.”</p><p class="bar"><b>What it has to show</b>No written bar has ever been filed for this beat — the stage direction above is the whole brief, which is itself worth knowing.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b06.jpg"><source src="/review/ep2-ship-0821/sources/06-the-clipboard-b06-scene-0814r-trim.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">06-the-clipboard-b06-scene-0814r-trim.mp4</p>
+<p class="fill">1.9 s of picture in a 6.5 s slot — the last 4.5 s (70%) of this beat is ONE FROZEN FRAME.</p>
+<p class="voline"><b>GUARD 2 SAYS</b>“Technically not theft. He ate it on the spot. That reclassifies it as unlicensed consumption.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>The bark board is the wrong size. Three of four clauses pass and that one fails.</li><li>1.9 s of picture in a 6.5 s slot — 4.5 s of this beat is one frozen frame. It is the biggest ratio in the episode.</li></ul>
+<h3>What it gets right</h3>
+<ul class="wins"><li>The freeze is a clean freeze. An earlier cut had this window turning the board over, back, and over again; that is gone.</li></ul>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 6 + pipeline/jobs/ep2-b06-scene-0814r.yaml</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b06 ok</code>
+<code>b06 swap to &lt;candidate&gt;</code>
+<code>b06 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b07">
+<h2>Beat 07 — Confiscate</h2>
+<div class="tc">CONFISCATE — 0:34–0:37</div>
+<div class="story"><p class="action">Guard 1 points at the scavenger, decisive.</p><p class="line"><b>GUARD 1</b>“So we confiscate the apple.”</p><p class="bar"><b>What it has to show</b>No written bar has ever been filed for this beat — the stage direction above is the whole brief, which is itself worth knowing.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b07.jpg"><source src="/review/ep2-ship-0821/sources/07-confiscate-b07-point-crf10-0819.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">07-confiscate-b07-point-crf10-0819.mp4</p>
+<p class="fill">4.0 s of picture trimmed into a 4.0 s slot — you never see the last 0.1 s of the render.</p>
+<p class="voline"><b>GUARD 1 SAYS</b>“So we confiscate the apple.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<div class="cands">
+<div class="cand"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/07-evidence-LTX-ep2-b07-canonmotion-0821.jpg"><source src="/review/ep2-beats-0821/candidates/07-evidence-LTX-ep2-b07-canonmotion-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>canon-motion, round 1 — today</span></p><p>THE GUARD ARRIVED, which nobody expected — a tall armoured guard in a helmet from frame 24, and his arm comes up and is fully aimed by frame 96. But THE GOBLIN IS GONE by then. The last frames are a guard pointing at empty grass.</p><p class="diff"><b>What is different:</b> The wording placed both figures before asking anything of either, and four &quot;no second figure&quot; terms were struck from the negative. A prompt cannot summon what its own negative deletes.</p><p class="diff">To take this one, say: <span class="swapid">swap to 07-evidence-LTX-ep2-b07-canonmotion-0821</span></p><p class="src">review/canonmotion-0821/JUDGING-0821.md</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/07-confiscate-LTX-ep2-b07-tilemotion-s1-0821.jpg"><source src="/review/ep2-beats-0821/candidates/07-confiscate-LTX-ep2-b07-tilemotion-s1-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>age-B seed 1</span></p><p>No guard anywhere in the clip. His only gesture is hands clasping near the end. The beat&#x27;s action is absent, not weak.</p><p class="diff"><b>What is different:</b> Rendered this morning in the age-B wave, swapped into the cut, and pulled back out the same day — you watched that cut and said it was worse than the last one, and these five swaps were steward picks you had never approved.</p><p class="diff">To take this one, say: <span class="swapid">swap to 07-confiscate-LTX-ep2-b07-tilemotion-s1-0821</span></p><p class="src">pipeline/jobs/ep2-b07-tilemotion-s1-0821.yaml</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/07-confiscate-LTX-ep2-b07-tilemotion-s2-0821.jpg"><source src="/review/ep2-beats-0821/candidates/07-confiscate-LTX-ep2-b07-tilemotion-s2-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>age-B seed 2</span></p><p>No guard either, and the motion is close to zero.</p><p class="diff"><b>What is different:</b> Rendered this morning in the age-B wave, swapped into the cut, and pulled back out the same day — you watched that cut and said it was worse than the last one, and these five swaps were steward picks you had never approved.</p><p class="diff">To take this one, say: <span class="swapid">swap to 07-confiscate-LTX-ep2-b07-tilemotion-s2-0821</span></p><p class="src">pipeline/jobs/ep2-b07-tilemotion-s2-0821.yaml</p></div>
+</div>
+<p class="inflight"><b>In flight:</b> A two-figure plate re-render is QUEUED on the box (ep2-b07-twofig-r2-0821). Its first round drew a good guard — armoured, helmeted, a grown man — but gave the goblin round green eyes instead of the canon slit, and a plain crew-neck tee instead of the collar. Round 2 buys the eye back. No clip yet.</p>
+<p class="goblink">The goblin is in this beat. His design — how old he reads, and which face is canon — is one question for the whole episode and it has its own page: <a href="/review/ep2-goblin-age-0821">the goblin age card</a>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>The scavenger is dressed in the guard&#x27;s own pale wrap tunic and white sash, so a beat that has to read &quot;an official points at a scavenger&quot; reads as two officials in matching kit.</li><li>The goblin has WHITE HAIR, on a character whose canon is bald — plus the guard&#x27;s round spectacles and a human nose.</li></ul>
+<h3>What it gets right</h3>
+<ul class="wins"><li>The action lands: the guard raises his own arm at frame 45 and holds the point to frame 96.</li></ul>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 7 + goblin_design_audit_0820 beats.7</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b07 ok</code>
+<code>b07 swap to 07-evidence-LTX-ep2-b07-canonmotion-0821</code>
+<code>b07 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b08">
+<h2>Beat 08 — Inside Him</h2>
+<div class="tc">INSIDE HIM — 0:37–0:42</div>
+<div class="story"><p class="action">Guard 2 lowers the clipboard and points at the scavenger&#x27;s belly.</p><p class="line"><b>GUARD 2</b>“The apple is inside him, Dren.”</p><p class="bar"><b>What it has to show</b>No written bar has ever been filed for this beat — the stage direction above is the whole brief, which is itself worth knowing.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b08.jpg"><source src="/review/ep2-ship-0821/sources/08-inside-him-b08-twohander.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">08-inside-him-b08-twohander.mp4</p>
+<p class="fill">5.0 s of picture trimmed into a 4.1 s slot — you never see the last 0.9 s of the render.</p>
+<p class="voline"><b>GUARD 2 SAYS</b>“The apple is inside him, Dren.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<div class="cands">
+<div class="cand"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/08-evidence-LTX-ep2-b08-canonmotion-0821.jpg"><source src="/review/ep2-beats-0821/candidates/08-evidence-LTX-ep2-b08-canonmotion-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag pass">PASS</span><span>canon-motion, round 1 — today</span></p><p>7 of 7, the only clean sweep of the seven. Hands reach the belly by frame 48, head bowed by 57 — the action completes early. Collar, frogging, shirt, shorts, cuffs and boots all hold, and the waist boundary survives, which is the fault this beat used to have. THE COST, and it is yours to price: from about frame 57 to the end, over half the clip is the top of his bowed head. It reads as looking down; his face is small.</p><p class="diff"><b>What is different:</b> Canon goblin plate, 105 frames, one figure. A first read of a tight crop called this the featureless green head; a taller crop shows the features ARE drawn, foreshortened at the bottom edge of a bowed skull.</p><p class="diff">To take this one, say: <span class="swapid">swap to 08-evidence-LTX-ep2-b08-canonmotion-0821</span></p><p class="src">review/canonmotion-0821/JUDGING-0821.md</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/08-inside-him-LTX-ep2-b08-tilemotion-s1-0821.jpg"><source src="/review/ep2-beats-0821/candidates/08-inside-him-LTX-ep2-b08-tilemotion-s1-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>age-B seed 1</span></p><p>The head goes uniformly bright yellow-green with no features at all from frame 55, while sitting roughly upright. A real dissolve.</p><p class="diff"><b>What is different:</b> Rendered this morning in the age-B wave, swapped into the cut, and pulled back out the same day — you watched that cut and said it was worse than the last one, and these five swaps were steward picks you had never approved.</p><p class="diff">To take this one, say: <span class="swapid">swap to 08-inside-him-LTX-ep2-b08-tilemotion-s1-0821</span></p><p class="src">pipeline/jobs/ep2-b08-tilemotion-s1-0821.yaml</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/08-inside-him-LTX-ep2-b08-tilemotion-s2-0821.jpg"><source src="/review/ep2-beats-0821/candidates/08-inside-him-LTX-ep2-b08-tilemotion-s2-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>age-B seed 2</span></p><p>Same failure at the same frame, plus a detached brow bar floating below the head from frame 65.</p><p class="diff"><b>What is different:</b> Rendered this morning in the age-B wave, swapped into the cut, and pulled back out the same day — you watched that cut and said it was worse than the last one, and these five swaps were steward picks you had never approved.</p><p class="diff">To take this one, say: <span class="swapid">swap to 08-inside-him-LTX-ep2-b08-tilemotion-s2-0821</span></p><p class="src">pipeline/jobs/ep2-b08-tilemotion-s2-0821.yaml</p></div>
+</div>
+<p class="goblink">The goblin is in this beat. His design — how old he reads, and which face is canon — is one question for the whole episode and it has its own page: <a href="/review/ep2-goblin-age-0821">the goblin age card</a>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>Nobody has ever judged this clip. There is no verdict for it, and there never was one.</li><li>Both figures come back green with pointed ears, because &quot;green skin&quot; lands on both bodies in the prompt.</li><li>He reads as a child — small body, big head, closed sad eyes, buttoned coat. The pre-ruling round one.</li></ul>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 8 + goblin_design_audit_0820 beats.8</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b08 ok</code>
+<code>b08 swap to 08-evidence-LTX-ep2-b08-canonmotion-0821</code>
+<code>b08 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b09">
+<h2>Beat 09 — The Pause</h2>
+<div class="tc">THE PAUSE — 0:42–0:45</div>
+<div class="story"><p class="action">Guard 1&#x27;s face works through it, slowly.</p><p class="line"><b>GUARD 1</b>“…We confiscate the goblin?”</p><p class="bar"><b>What it has to show</b>No written bar has ever been filed for this beat — the stage direction above is the whole brief, which is itself worth knowing.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b09.jpg"><source src="/review/ep2-ship-0821/sources/09-the-pause-LTX-ep2-b09-r2s2-m1-0821.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">09-the-pause-LTX-ep2-b09-r2s2-m1-0821.mp4</p>
+<p class="fill">5.0 s of picture trimmed into a 4.1 s slot — you never see the last 1.0 s of the render.</p>
+<p class="voline"><b>GUARD 1 SAYS</b>“…We confiscate the goblin?”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<div class="cands">
+<div class="cand"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/09-the-pause-LTX-ep2-b09-r2s2-c1-0821.jpg"><source src="/review/ep2-beats-0821/candidates/09-the-pause-LTX-ep2-b09-r2s2-c1-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag pass">PASS</span><span>same batch, cell c1</span></p><p>Also a pass. The hand holds the whole slot and the frame is nearly as locked. It loses to the clip in the cut on acting — the face does less.</p><p class="diff"><b>What is different:</b> Same crop, a different sentence describing the hand.</p><p class="diff">To take this one, say: <span class="swapid">swap to 09-the-pause-LTX-ep2-b09-r2s2-c1-0821</span></p><p class="src">pipeline/jobs/ep2-b09-r2s2-c1-0821.yaml</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/09-the-pause-LTX-ep2-b09-r2s2-c2-0821.jpg"><source src="/review/ep2-beats-0821/candidates/09-the-pause-LTX-ep2-b09-r2s2-c2-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>same batch, cell c2</span></p><p>His mouth is open at frames 50, 70 and 93, on a silent thinking beat. Best hand numbers in the batch and it does not matter.</p><p class="diff"><b>What is different:</b> Different seed.</p><p class="diff">To take this one, say: <span class="swapid">swap to 09-the-pause-LTX-ep2-b09-r2s2-c2-0821</span></p><p class="src">pipeline/jobs/ep2-b09-r2s2-c2-0821.yaml</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/09-the-pause-LTX-ep2-b09-r2s2-c3-0821.jpg"><source src="/review/ep2-beats-0821/candidates/09-the-pause-LTX-ep2-b09-r2s2-c3-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>same batch, cell c3</span></p><p>The longest hand hold in the batch, bought by stopping. Frames 1 to 70 are one held picture and then it jumps.</p><p class="diff"><b>What is different:</b> Different seed.</p><p class="diff">To take this one, say: <span class="swapid">swap to 09-the-pause-LTX-ep2-b09-r2s2-c3-0821</span></p><p class="src">pipeline/jobs/ep2-b09-r2s2-c3-0821.yaml</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/09-the-pause-LTX-ep2-b09-r2s2-m2-0821.jpg"><source src="/review/ep2-beats-0821/candidates/09-the-pause-LTX-ep2-b09-r2s2-m2-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>same batch, cell m2</span></p><p>Mouth opens, same as c2 and at the same seed — which is how we know the open mouth belongs to the seed and not to the wording.</p><p class="diff"><b>What is different:</b> Different seed.</p><p class="diff">To take this one, say: <span class="swapid">swap to 09-the-pause-LTX-ep2-b09-r2s2-m2-0821</span></p><p class="src">pipeline/jobs/ep2-b09-r2s2-m2-0821.yaml</p></div>
+</div>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>His hand changes pose mid-shot: it slides from covering his mouth to resting along his jaw, and the fingers merge into a thumb and a mitt rather than four drawn fingers. It is a move, and it is not a move the script asked for.</li><li>One eye is squinted from the first frame. It opens in the middle of the shot and narrows again by the end.</li><li>The picture is a 1.45x enlargement of a wider plate, not a native close-up.</li></ul>
+<h3>What it gets right</h3>
+<ul class="wins"><li>This beat played over a black card in every cut before 08-21. It now has a face on the episode&#x27;s biggest laugh.</li><li>The hand is present and readable at every checked frame of the slot, and both round spectacle rims survive the whole clip — the take this replaced lost a rim by frame 8 and nobody had noticed.</li></ul>
+<p class="nocand"><b>Also:</b> He reads young in close-up. You ruled on that on 08-20 — &quot;they should look like grown men. yes. dumb grown men.&quot; — so it is a known, accepted fact rather than an open question.</p>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 9 + pipeline/jobs/ep2-b09-r2s2-m1-0821.yaml verdict_0821</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b09 ok</code>
+<code>b09 swap to 09-the-pause-LTX-ep2-b09-r2s2-c1-0821</code>
+<code>b09 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b10">
+<h2>Beat 10 — No Form</h2>
+<div class="tc">NO FORM — 0:45–0:50</div>
+<div class="story"><p class="action">Guard 2 flips the clipboard around: the back is blank.</p><p class="line"><b>GUARD 2</b>“There&#x27;s no form for that. There&#x27;s barely a form for the apple.”</p><p class="bar"><b>What it has to show</b>TWO guards in frame; the near one flips the bark board and holds its blank back TOWARD HIS PARTNER; board hand-sized; field present at frame one.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b10.jpg"><source src="/review/ep2-ship-0821/sources/10-no-form-b10-pairB-trim.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">10-no-form-b10-pairB-trim.mp4</p>
+<p class="fill">4.0 s of picture in a 4.1 s slot — it plays once, straight through.</p>
+<p class="voline"><b>GUARD 2 SAYS</b>“There&#x27;s no form for that. There&#x27;s barely a form for the apple.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>He holds the blank board out to the CAMERA instead of to his partner. From frame 65 to 96 it is flat to the lens, so his partner would be seeing it edge-on. That is the clause that IS the beat, and it fails.</li></ul>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 10 + pipeline/jobs/ep2-b10-pairB-0814.yaml</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b10 ok</code>
+<code>b10 swap to &lt;candidate&gt;</code>
+<code>b10 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b11">
+<h2>Beat 11 — They Leave</h2>
+<div class="tc">THEY LEAVE — 0:50–0:55</div>
+<div class="story"><p class="action">The guards walk away arguing, backs to camera, genuinely trying to do their jobs.</p><p class="line"><b>VO</b>“Nobody in this scene is evil. Everybody in this scene is trapped in a workflow.”</p><p class="bar"><b>What it has to show</b>two guards walk away from camera, backs turned, still arguing; both present the whole clip; field present at frame one.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b11.jpg"><source src="/review/ep2-ship-0821/sources/11-they-leave-b11-w4-s20260903-0817.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">11-they-leave-b11-w4-s20260903-0817.mp4</p>
+<p class="fill">4.0 s of picture in a 4.6 s slot — the last 0.5 s (11%) of this beat is ONE FROZEN FRAME.</p>
+<p class="voline"><b>VO SAYS</b>“Nobody in this scene is evil. Everybody in this scene is trapped in a workflow.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>Guard B turns his face to camera in a beat whose whole point is backs turned.</li><li>It has no standing verdict. An earlier pass was withdrawn over &quot;total identity collapse away from the plate&quot; across frames 16 to 21, and nothing has passed it since.</li></ul>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 11</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b11 ok</code>
+<code>b11 swap to &lt;candidate&gt;</code>
+<code>b11 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b12">
+<h2>Beat 12 — Related</h2>
+<div class="tc">RELATED — 0:55–1:00</div>
+<div class="story"><p class="action">Tight on the sapling&#x27;s two leaves, perfectly still — the scavenger is still crouched in the grass behind them, out of frame.</p><p class="line"><b>VO</b>“I have never related to a fantasy world more.”</p><p class="bar"><b>What it has to show</b>tight on the sapling&#x27;s TWO leaves against the sky; exactly two cotyledons and one bare side-branch, per the growth ladder; no bush, no crown; the goblin NOT in frame.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b12.jpg"><source src="/review/ep2-ship-0821/sources/12-related-b12-tightB-trim13-0821.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">12-related-b12-tightB-trim13-0821.mp4</p>
+<p class="fill">4.5 s of picture in a 4.5 s slot — it plays once, straight through.</p>
+<p class="voline"><b>VO SAYS</b>“I have never related to a fantasy world more.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>The sapling GROWS across the shot — its tip climbs 140 px, 11% of the frame height, steadily — against an approved line that says &quot;perfectly still&quot;.</li></ul>
+<h3>What it gets right</h3>
+<ul class="wins"><li>Fixed on 08-21: the clip used to open on 13 frames of a completely different, warmer shot — four or five big pointed leaves — which breaks the canon leaf shape. Those frames are cut, and nothing after them was touched.</li></ul>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">review/ep2-picks/done-definitions.yaml beats.12 + review/ep2-b12-trim-0821/verdict-0821.yaml</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b12 ok</code>
+<code>b12 swap to &lt;candidate&gt;</code>
+<code>b12 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b13">
+<h2>Beat 13 — The Shade</h2>
+<div class="tc">THE SHADE — 1:00–1:04</div>
+<div class="story"><p class="action">The scavenger&#x27;s legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling&#x27;s hand-sized patch of shade — the only part of him it will cover — knees up around his ears.</p><p class="line"><b>SCAVENGER</b>“…Thanks for the shade.”</p><p class="bar"><b>What it has to show</b>he ends FOLDED SMALL in the sapling&#x27;s shade, knees up. SCRIPT CONFLICT, flagged not solved: the script says &quot;slides down the trunk&quot;, and the founder has ruled the sapling is tiny — &quot;thats ridiculous, lmao. the sapling is tiny&quot; — so there is no trunk to slide down. The END STATE is what the beat needs; how he gets there is an author call, not a steward one.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b13.jpg"><source src="/review/ep2-ship-0821/sources/13-the-shade-b13-refire-0814.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">13-the-shade-b13-refire-0814.mp4</p>
+<p class="fill">4.0 s of picture trimmed into a 3.6 s slot — you never see the last 0.5 s of the render.</p>
+<p class="voline"><b>SCAVENGER SAYS</b>“…Thanks for the shade.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<div class="cands">
+<div class="cand"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/13-evidence-LTX-ep2-b13-canonmotion-0821.jpg"><source src="/review/ep2-beats-0821/candidates/13-evidence-LTX-ep2-b13-canonmotion-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag pass">PASS</span><span>canon-motion, round 1 — today</span></p><p>6 of 7. No dissolve anywhere in 105 frames — the same creature start to finish, ears large and lateral, slit pupil visible whenever the lids are open, collar and shirt and waist all holding. The gap: the head-tip starts around frame 72 and is still travelling at the last frame the trim keeps, so inside the slot it reads as begun rather than finished. And his eyes CLOSE from about frame 48 and stay closed — defensible for exhaustion turning into relief, but the canon eye is only legible for the first two seconds.</p><p class="diff"><b>What is different:</b> Canon goblin plate. The previous wave&#x27;s best b13 seed lost its face to a featureless green head at frame 65; this one does not.</p><p class="diff">To take this one, say: <span class="swapid">swap to 13-evidence-LTX-ep2-b13-canonmotion-0821</span></p><p class="src">review/canonmotion-0821/JUDGING-0821.md</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/13-the-shade-LTX-ep2-b13-tilemotion-s2-0821.jpg"><source src="/review/ep2-beats-0821/candidates/13-the-shade-LTX-ep2-b13-tilemotion-s2-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag warn">WARN</span><span>age-B seed 2 (was swapped in, then reverted)</span></p><p>Face holds all 121 frames. Through the slot he is seated, head down, eyes closed. Its own expressive lift — head up, mouth open — starts 0.06 s AFTER the slot ends, so the cut would never show it.</p><p class="diff"><b>What is different:</b> Rendered this morning in the age-B wave, swapped into the cut, and pulled back out the same day — you watched that cut and said it was worse than the last one, and these five swaps were steward picks you had never approved.</p><p class="diff">To take this one, say: <span class="swapid">swap to 13-the-shade-LTX-ep2-b13-tilemotion-s2-0821</span></p><p class="src">pipeline/jobs/ep2-b13-tilemotion-s2-0821.yaml</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/13-the-shade-LTX-ep2-b13-tilemotion-s1-0821.jpg"><source src="/review/ep2-beats-0821/candidates/13-the-shade-LTX-ep2-b13-tilemotion-s1-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>age-B seed 1</span></p><p>It carries a real smile for the first 44 frames — the thing this beat was re-rendered for — and then its face becomes a featureless green head from frame 65, inside the slot.</p><p class="diff"><b>What is different:</b> Rendered this morning in the age-B wave, swapped into the cut, and pulled back out the same day — you watched that cut and said it was worse than the last one, and these five swaps were steward picks you had never approved.</p><p class="diff">To take this one, say: <span class="swapid">swap to 13-the-shade-LTX-ep2-b13-tilemotion-s1-0821</span></p><p class="src">pipeline/jobs/ep2-b13-tilemotion-s1-0821.yaml</p></div>
+</div>
+<p class="goblink">The goblin is in this beat. His design — how old he reads, and which face is canon — is one question for the whole episode and it has its own page: <a href="/review/ep2-goblin-age-0821">the goblin age card</a>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>This is the round child you ruled against on 08-19.</li><li>It grows a mature forked tree and he climbs it, against your ruling that the sapling is tiny — &quot;thats ridiculous, lmao. the sapling is tiny&quot;.</li></ul>
+<p class="nocand"><b>Also:</b> A seated take on a real 60 px seedling was swapped in on 08-20 and you ruled on its best frame — &quot;this is one of the images where the goblin looks like an adult, which is wrong&quot;. A second swap went in on 08-21 and came back out with the rest of the age-B wave. So this beat has been swapped and reverted twice and is back to the original.</p>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 13 superseded_why_0820</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b13 ok</code>
+<code>b13 swap to 13-evidence-LTX-ep2-b13-canonmotion-0821</code>
+<code>b13 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b14">
+<h2>Beat 14 — The Defense</h2>
+<div class="tc">THE DEFENSE — 1:04–1:10</div>
+<div class="story"><p class="action">He picks at the dirt, embarrassed, glancing around.</p><p class="line"><b>SCAVENGER</b>“It was one apple. It fell off the cart. On the ground, that&#x27;s — that&#x27;s foraging.”</p><p class="bar"><b>What it has to show</b>fingers at the dirt AND the glancing — embarrassment readable. Requires a plate where his hands and the ground are both in frame; a standing full-body plate cannot show this and should be sent back.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b14.jpg"><source src="/review/ep2-ship-0821/sources/14-the-defense-b14-macplate-r1s1-0818.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">14-the-defense-b14-macplate-r1s1-0818.mp4</p>
+<p class="fill">5.0 s of picture in a 5.1 s slot — it plays once, straight through.</p>
+<p class="voline"><b>SCAVENGER SAYS</b>“It was one apple. It fell off the cart. On the ground, that&#x27;s — that&#x27;s foraging.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<p class="goblink">The goblin is in this beat. His design — how old he reads, and which face is canon — is one question for the whole episode and it has its own page: <a href="/review/ep2-goblin-age-0821">the goblin age card</a>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>Two of its clauses fail and it is still the best footage this beat has. Three separate measurements say what is left is a taste gap, not a broken mechanism.</li><li>The ears are long tapering elf spikes where your tile has short low flanges, and he wears a red-and-white striped scarf instead of the purple cowl.</li></ul>
+<h3>What it gets right</h3>
+<ul class="wins"><li>On design this is one of the two closest matches to your tile in the whole episode. Eyes, dome, two-tone skin and folded stance all match; the ears are the whole gap.</li></ul>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 14 + goblin_design_audit_0820 beats.14</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b14 ok</code>
+<code>b14 swap to &lt;candidate&gt;</code>
+<code>b14 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b15">
+<h2>Beat 15 — Good Listener</h2>
+<div class="tc">GOOD LISTENER — 1:10–1:15</div>
+<div class="story"><p class="action">He tips his head down and sideways until his eyes are level with the two leaves, and talks to them from a hand&#x27;s width away; both of them share the frame.</p><p class="line"><b>SCAVENGER</b>“You&#x27;re a good listener. The last three people I talked to filed a report.”</p><p class="bar"><b>What it has to show</b>he LOOKS UP and the SAPLING IS IN THE SAME FRAME. Both in shot is the whole point of the beat — a close-up of him looking up at nothing fails it however well he acts.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b15.jpg"><source src="/review/ep2-ship-0821/sources/15-good-listener-LTX-mid-s20260821-0820.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">15-good-listener-LTX-mid-s20260821-0820.mp4</p>
+<p class="fill">5.0 s of picture in a 5.0 s slot — it plays once, straight through.</p>
+<p class="voline"><b>SCAVENGER SAYS</b>“You&#x27;re a good listener. The last three people I talked to filed a report.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<div class="cands">
+<div class="cand"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/15-good-listener-LTX-mid-0820.jpg"><source src="/review/ep2-beats-0821/candidates/15-good-listener-LTX-mid-0820.mp4" type="video/mp4"></video><p class="lbl"><span class="tag warn">WARN</span><span>the other seed of the same recipe</span></p><p>It leans in and stays there, and pays for it with a drooped leaf pair and a dead eye.</p><p class="diff"><b>What is different:</b> Same recipe, different seed. This is the swap named in the ship manifest&#x27;s own one-line reversal for beat 15.</p><p class="diff">To take this one, say: <span class="swapid">swap to 15-good-listener-LTX-mid-0820</span></p><p class="src">ship-manifest.yaml beat 15 veto_in_one_line</p></div>
+</div>
+<p class="goblink">The goblin is in this beat. His design — how old he reads, and which face is canon — is one question for the whole episode and it has its own page: <a href="/review/ep2-goblin-age-0821">the goblin age card</a>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>His face sits about 160 px from the leaves where the script says &quot;a hand&#x27;s width&quot;. No motion pass can fix that; it is baked into the plate.</li><li>The last three frames freeze.</li></ul>
+<h3>What it gets right</h3>
+<ul class="wins"><li>This is beat 15&#x27;s first footage in any cut, and the first take in seven attempts where his face is actually AT the two leaves, which is what the beat IS.</li><li>On design it is the second-best match to your tile in the episode: blank white eyes, no nose bridge, one lipless line, big chartreuse dome, seated small and folded, barefoot. Its one named break is costume — a plaid blanket-cloak instead of the purple cowl.</li></ul>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 15 + goblin_design_audit_0820 beats.15</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b15 ok</code>
+<code>b15 swap to 15-good-listener-LTX-mid-0820</code>
+<code>b15 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b16">
+<h2>Beat 16 — Why</h2>
+<div class="tc">WHY — 1:15–1:22</div>
+<div class="story"><p class="action">Close on the sapling&#x27;s leaf; the scavenger sits blurred behind it.</p><p class="line"><b>VO</b>“He talks to me because I&#x27;m the only thing here that won&#x27;t file a report. Buddy, I wish I could. I can&#x27;t even wave.”</p><p class="bar"><b>What it has to show</b>close on one leaf with the scavenger blurred behind it; the leaf is the subject and he is depth</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b16.jpg"><source src="/review/ep2-ship-0821/sources/16-why-b16-motion-trim-0821.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">16-why-b16-motion-trim-0821.mp4</p>
+<p class="fill">4.9 s of picture in a 8.6 s slot — the last 3.7 s (43%) of this beat is ONE FROZEN FRAME.</p>
+<p class="voline"><b>VO SAYS</b>“He talks to me because I&#x27;m the only thing here that won&#x27;t file a report. Buddy, I wish I could. I can&#x27;t even wave.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<p class="goblink">The goblin is in this beat. His design — how old he reads, and which face is canon — is one question for the whole episode and it has its own page: <a href="/review/ep2-goblin-age-0821">the goblin age card</a>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>The goblin behind the plant is the superseded adult-man design. He is blurred depth and it barely reads at that scale — but it is the old design and this page says so rather than letting depth cover for it.</li><li>Your eye goes to his face before it goes to the plant, because he is a face and the plant is a shape.</li><li>43% of this beat is a held final frame — the voice line outruns the picture by 3.7 s.</li></ul>
+<h3>What it gets right</h3>
+<ul class="wins"><li>This is beat 16&#x27;s first footage of any kind, and it retired the episode&#x27;s last black card.</li><li>Seven of seven on its own bar after a three-frame trim: the camera is locked, the plant holds, exactly two leaves survive to the last frame — the first time canon&#x27;s two-leaf sapling has survived a whole motion render in this tree — he is visibly talking, and the plant is still the subject.</li></ul>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 16</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b16 ok</code>
+<code>b16 swap to &lt;candidate&gt;</code>
+<code>b16 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b17">
+<h2>Beat 17 — Goodbye</h2>
+<div class="tc">GOODBYE — 1:22–1:27</div>
+<div class="story"><p class="action">The scavenger pushes himself up, gives his cloak a shake, and turns to go.</p><p class="line"><b>SCAVENGER</b>“If anyone asks — you didn&#x27;t see me. Which is true. You&#x27;re a plant.”</p><p class="bar"><b>What it has to show</b>stand, brush, turn — a departure. NOTE the turn takes his face away from the lens by design, so the staging law does not apply here: this is the one beat where turning away IS the action.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b17.jpg"><source src="/review/ep2-ship-0821/sources/17-goodbye-b17-navy-crf10-0819.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">17-goodbye-b17-navy-crf10-0819.mp4</p>
+<p class="fill">4.0 s of picture in a 4.7 s slot — the last 0.6 s (13%) of this beat is ONE FROZEN FRAME.</p>
+<p class="voline"><b>SCAVENGER SAYS</b>“If anyone asks — you didn&#x27;t see me. Which is true. You&#x27;re a plant.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<p class="goblink">The goblin is in this beat. His design — how old he reads, and which face is canon — is one question for the whole episode and it has its own page: <a href="/review/ep2-goblin-age-0821">the goblin age card</a>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>Two honest costs that no clause covers: one clause passes on a thin margin where its parent passed comfortably, and overall motion is 30% lower than the take it came from, on a shot that was already still.</li><li>APPROVAL FLAG (§6): this beat&#x27;s restaged script line has never been read by you — &quot;The scavenger pushes himself up, gives his cloak a shake, and turns to go.&quot; It is on the publish checklist for that reason.</li></ul>
+<h3>What it gets right</h3>
+<ul class="wins"><li>Passes all five of its clauses. Naming the colour held the colour: the cloak is navy and stays navy.</li></ul>
+<p class="nocand"><b>Also:</b> His face is never visible in this shot — he is turning away, by design — so no design claim can be made about him here either way.</p>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 17</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b17 ok</code>
+<code>b17 swap to &lt;candidate&gt;</code>
+<code>b17 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b18">
+<h2>Beat 18 — The Decision</h2>
+<div class="tc">THE DECISION — 1:27–1:34</div>
+<div class="story"><p class="action">Extreme close-up: the one fig on the thinnest branch, stem trembling.</p><p class="line"><b>VO</b>“Wait. Growth includes release. One fruit — everything I own. He said ground fruit is foraging. If they take him, I am alone in a field again.”</p><p class="bar"><b>What it has to show</b>extreme close-up of ONE fig on a trembling stem, and A STRANGER WOULD CALL IT A FIG - purple, teardrop, matte. Exactly one fruit in frame for the whole clip.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b18.jpg"><source src="/review/ep2-ship-0821/sources/18-the-decision-b18-tremble-s20260871.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">18-the-decision-b18-tremble-s20260871.mp4</p>
+<p class="fill">5.0 s of picture in a 10.9 s slot — the last 5.9 s (54%) of this beat is ONE FROZEN FRAME.</p>
+<p class="voline"><b>VO SAYS</b>“Wait. Growth includes release. One fruit — everything I own. He said ground fruit is foraging. If they take him, I am alone in a field again.”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>5.0 s of picture in an 11.0 s slot — 5.9 s of frozen frame, the longest hold in the episode.</li></ul>
+<h3>What it gets right</h3>
+<ul class="wins"><li>Passes. Motion in all four quarters, no light pumping; the named pick of three seeds, of which one strobed and one decayed.</li></ul>
+<p class="nocand"><b>Also:</b> Open and yours: matte or gloss on the fig.</p>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 18</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b18 ok</code>
+<code>b18 swap to &lt;candidate&gt;</code>
+<code>b18 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b19">
+<h2>Beat 19 — The Drop</h2>
+<div class="tc">THE DROP — 1:34–1:39</div>
+<div class="story"><p class="action">Wider — the sapling low in frame and the scavenger standing beside it, mid-stride away: the stem lets go and the fig drops the short distance into the grass by his heel. He stops mid-step and looks back down at it.</p><p class="line silent">No spoken line — this beat is silent by design.</p><p class="bar"><b>What it has to show</b>WIDE enough to hold the whole sapling and him at once; the fruit STARTS ON THE STEM, falls, and LANDS ON THE GROUND; and he NOTICES it. Three things, in that order: the fall, the landing, the noticing. NO CONTACT WITH HIS BODY — a take where the fruit touches him fails this beat now, however well it moves.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b19.jpg"><source src="/review/ep2-ship-0821/sources/19-the-drop-dropcomp-0819.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">19-the-drop-dropcomp-0819.mp4</p>
+<p class="fill">5.0 s of picture in a 5.0 s slot — it plays once, straight through.</p>
+<p class="voline"><b>NO LINE</b>Silent beat — the picture carries it alone.</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<p class="goblink">The goblin is in this beat. His design — how old he reads, and which face is canon — is one question for the whole episode and it has its own page: <a href="/review/ep2-goblin-age-0821">the goblin age card</a>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>He does not notice. The brief asks for the fall, the landing AND him noticing, in that order; this delivers the first two exactly and the third not at all.</li><li>The last 2.8 s is a still frame, and the event is small — 48 px of travel on a 33 px figure in a 1280-tall frame.</li></ul>
+<h3>What it gets right</h3>
+<ul class="wins"><li>Eight of eight on a bar that was written before the tool that made it existed. And on design it is not merely close to your tile — it IS the tile, with the fig moved.</li></ul>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 19 + farm-out/ep2-b19-dropcomp-0819/</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b19 ok</code>
+<code>b19 swap to &lt;candidate&gt;</code>
+<code>b19 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b20">
+<h2>Beat 20 — Evidence</h2>
+<div class="tc">EVIDENCE — 1:39–1:42</div>
+<div class="story"><p class="action">The scavenger crouches back down, picks the fig up with both hands, and looks from it to the sapling&#x27;s thinnest branch beside him — level with his face now, and bare.</p><p class="line"><b>SCAVENGER</b>“…Did you just answer me?”</p><p class="bar"><b>What it has to show</b>BOTH HANDS to the fruit, then the look UP to a branch that is visibly BARE — the empty stem is the evidence and must be in frame.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b20.jpg"><source src="/review/ep2-ship-0821/sources/20-evidence-LTX-macplate-r1s1.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">20-evidence-LTX-macplate-r1s1.mp4</p>
+<p class="fill">5.0 s of picture trimmed into a 3.7 s slot — you never see the last 1.3 s of the render.</p>
+<p class="voline"><b>SCAVENGER SAYS</b>“…Did you just answer me?”</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<div class="cands">
+<div class="cand"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/20-evidence-LTX-ep2-b20-canonmotion-0821.jpg"><source src="/review/ep2-beats-0821/candidates/20-evidence-LTX-ep2-b20-canonmotion-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>canon-motion, round 1 — today</span></p><p>He still never looks up — a branch enters at the top right and he never turns to it. And the pose barely changes across all 105 frames: this is close to a still with a runtime. The fruit is yellow-green where canon has the fig purple, so it is the same fault as the red fruit in a new colour.</p><p class="diff"><b>What is different:</b> Canon goblin plate. Arguably the cleanest face in the wave: bald, large lateral pointed ears, off-white sclera with vertical slit pupils, all held to the last frame.</p><p class="diff">To take this one, say: <span class="swapid">swap to 20-evidence-LTX-ep2-b20-canonmotion-0821</span></p><p class="src">review/canonmotion-0821/JUDGING-0821.md</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/20-evidence-LTX-ep2-b20-tilemotion-s2-0821.jpg"><source src="/review/ep2-beats-0821/candidates/20-evidence-LTX-ep2-b20-tilemotion-s2-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag warn">WARN</span><span>age-B seed 2 (was swapped in, then reverted)</span></p><p>THE ONLY CLIP OF THE WHOLE AGE-B WAVE THAT CLOSED A BRIEF CLAUSE: he looks up. The head rises from frame 55 and is up, eyes open and mouth parted, by frame 76 — inside the slot. It pays with a RED fig where canon says purple.</p><p class="diff"><b>What is different:</b> Rendered this morning in the age-B wave, swapped into the cut, and pulled back out the same day — you watched that cut and said it was worse than the last one, and these five swaps were steward picks you had never approved.</p><p class="diff">To take this one, say: <span class="swapid">swap to 20-evidence-LTX-ep2-b20-tilemotion-s2-0821</span></p><p class="src">pipeline/jobs/ep2-b20-tilemotion-s2-0821.yaml</p></div>
+<div class="cand quiet"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/20-evidence-LTX-ep2-b20-tilemotion-s1-0821.jpg"><source src="/review/ep2-beats-0821/candidates/20-evidence-LTX-ep2-b20-tilemotion-s1-0821.mp4" type="video/mp4"></video><p class="lbl"><span class="tag warn">WARN</span><span>age-B seed 1</span></p><p>Same recipe, first seed; seed 2 was picked over it.</p><p class="diff"><b>What is different:</b> Rendered this morning in the age-B wave, swapped into the cut, and pulled back out the same day — you watched that cut and said it was worse than the last one, and these five swaps were steward picks you had never approved.</p><p class="diff">To take this one, say: <span class="swapid">swap to 20-evidence-LTX-ep2-b20-tilemotion-s1-0821</span></p><p class="src">pipeline/jobs/ep2-b20-tilemotion-s1-0821.yaml</p></div>
+</div>
+<p class="inflight"><b>In flight:</b> Round 2 of the canon-motion recipe is QUEUED on the box (ep2-b20-canonmotion-r2-0821) with the branch composited into the starting picture. No clip yet.</p>
+<p class="goblink">The goblin is in this beat. His design — how old he reads, and which face is canon — is one question for the whole episode and it has its own page: <a href="/review/ep2-goblin-age-0821">the goblin age card</a>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>He never looks up. The look up is the beat.</li><li>The tree is the wrong tree.</li><li>The clip darkens progressively across its length, about 25 luma levels.</li><li>He reads as an OLD MAN — wrinkled forehead and jowls, heavy human nose, an ear with no point at all, and pupils.</li></ul>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 20 superseded_fault_shipping_0820 + goblin_design_audit_0820 beats.20</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b20 ok</code>
+<code>b20 swap to 20-evidence-LTX-ep2-b20-canonmotion-0821</code>
+<code>b20 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<section class="beat" id="b21">
+<h2>Beat 21 — The Answer</h2>
+<div class="tc">THE ANSWER — 1:42–1:47</div>
+<div class="story"><p class="action">The sapling&#x27;s leaf, in absolutely still air, tilts — slowly, deliberately, the first thing he has ever moved on purpose — and holds.</p><p class="line silent">No spoken line — this beat is silent by design.</p><p class="bar"><b>What it has to show</b>the leaf tilts slowly and deliberately in still air and HOLDS; it reads as a deliberate movement, not a wind wobble; outdoors, scene at frame one.</p></div>
+<h3>The clip in the cut right now</h3>
+<div class="now">
+<video data-auto autoplay loop muted playsinline preload="metadata" poster="/review/ep2-ship-0821/proof/b21.jpg"><source src="/review/ep2-ship-0821/sources/21-the-answer-b21-daylight-trim8-0821.mp4" type="video/mp4"></video>
+<div class="meta">
+<p class="fn">21-the-answer-b21-daylight-trim8-0821.mp4</p>
+<p class="fill">fill: stretch, clip 4.7 s, slot 4.7 s</p>
+<p class="voline"><b>NO LINE</b>Silent beat — the picture carries it alone.</p>
+</div></div>
+<h3>Other footage that exists for this beat</h3>
+<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<h3>What is wrong with it</h3>
+<ul class="faults"><li>The plant is a single LANCE-shaped leaf, not two cotyledons. Wrong plant — it fails both sapling canon rules at once, the same wrong-plant fault as beats 16 and 20.</li></ul>
+<h3>What it gets right</h3>
+<ul class="wins"><li>The only beat in the episode whose definition is fully met — all four clauses, and the hard one is measured. The leaf tilts steadily in one direction over about 90 frames, with no oscillation and no reversal, AND IT STOPS.</li><li>Fixed on 08-21: the opening colour jump is trimmed off, and nothing after it was touched.</li></ul>
+<p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 21 + pipeline/jobs/ep2-b21-daylight-0814.yaml</p>
+<div class="answer"><p class="h">Answer in chat</p>
+<code>b21 ok</code>
+<code>b21 swap to &lt;candidate&gt;</code>
+<code>b21 redo: &lt;one line of what is wrong&gt;</code>
+</div>
+</section>
+<footer><p>Built by <code class="inline">review/ep2-beats-0821/build_page.py</code> from the assembled episode's own sidecar, the script node, the done-definitions and the judging logs named under each beat. No render, no voice, no spend — $0. Candidate clips pulled off the rtx5090 box and sha-verified against its own manifest, 8 of 8, before a frame was shown.</p><p>Related pages: <a href="/review/ep2-ship-0821">the assembled cut</a> · <a href="/review/ep2-goblin-age-0821">the goblin age card</a> · <a href="/review">the review board</a></p></footer>
+</div>
+<script>
+// Only the CURRENT clip of the beat you are looking at plays. Twenty-one
+// autoplaying videos at once is a page that stutters and a laptop that heats;
+// an IntersectionObserver keeps exactly the visible ones running and pauses the
+// rest. Candidates never autoplay — they have controls and start on a click.
+(function () {
+  var live = document.querySelectorAll('video[data-auto]');
+  if (!('IntersectionObserver' in window)) {
+    live.forEach(function (v) { v.play().catch(function () {}); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var v = e.target;
+      if (e.isIntersecting) { v.play().catch(function () {}); }
+      else { v.pause(); }
+    });
+  }, { rootMargin: '150px 0px', threshold: 0.15 });
+  live.forEach(function (v) { io.observe(v); });
+})();
+</script>
+</body></html>
