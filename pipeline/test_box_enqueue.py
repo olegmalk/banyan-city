@@ -966,6 +966,160 @@ def test_the_guard_actually_runs_on_the_enqueue_path():
           "cannot tell you whether this job already ran" in body)
 
 
+# ---------------------------------------------------------------------------
+# THE ARM-NAME GUARD.
+#
+# 2026-08-21: the eight ep2-b04-tileread rungs rendered rc=0 and the eight JOBS
+# exited rc=1. The publish step globbed `<task>-hintskel.png` -- the arm the
+# spec was derived FROM -- while `--arm nocontrol` makes controlnet_plate.py
+# write `<task>-nocontrol.png`. Publish copied nothing, the `>= 4` gate failed,
+# and the queue recorded eight failures whose pictures were sitting in out\.
+# Six ep2-b02-adultplate specs beside them carried the same defect: fourteen.
+#
+# The check is pure string work on spec data -- no ssh, no box, no filesystem,
+# so nothing here needs prior_runs stubbed the way the already-ran cases do.
+# What it MUST get right is the multi-arm spec: ep2-cnet-probe-0817 runs four
+# arms into one out dir, so "this path does not name step 3's arm" is true of
+# every correct path in it. Both those cases are below.
+# ---------------------------------------------------------------------------
+
+ARM_OUT = r"C:\banyan-farm\b04tileread-v4-0820\out"
+
+
+def _publish_body(*globs, out_dir="C:/banyan-farm/b04tileread-v4-0820/out"):
+    """A publish step in the shape every spec of this era actually uses."""
+    calls = "\n               + ".join(
+        'glob.glob(out_dir + "%s")' % g for g in globs)
+    return ("import glob, hashlib, os, shutil\n"
+            'out_dir = "%s"\n'
+            'dst = "C:/banyan-farm/courier-box/farm-out/ep2-b04-tileread-v4-0820"\n'
+            "os.makedirs(dst, exist_ok=True)\n"
+            "files = sorted(%s)\n"
+            "for f in files:\n"
+            "    shutil.copy2(f, dst)\n"
+            'print("published", len(files))\n' % (out_dir, calls))
+
+
+def _arm_spec(arms, globs, artifacts, out=ARM_OUT):
+    """A controlnet_plate job: one render step per arm, plus a publish step."""
+    steps = []
+    for name, arm in arms:
+        steps.append({"name": name, "argv": [
+            r"C:\banyan-farm\venv\Scripts\python.exe",
+            r"C:\banyan-farm\b04tileread-v4-0820\src\pipeline\controlnet_plate.py",
+            "--task", "ep2-b04-tileread-v4-0820", "--arm", arm,
+            "--seed", "20260823", "--out", out]})
+    steps.append({"name": "publish", "argv": [
+        r"C:\banyan-farm\venv\Scripts\python.exe", "-c", _publish_body(*globs)]})
+    return {"id": "ep2-b04-tileread-v4-0820", "consumer": "the b04 read lane",
+            "steps": steps,
+            "artifacts": [out + "\\" + a for a in artifacts]}
+
+
+GOOD_GLOB = "/ep2-b04-tileread-v4-0820-nocontrol.png*"
+GOOD_ART = "ep2-b04-tileread-v4-0820-nocontrol.png"
+BAD_GLOB = "/ep2-b04-tileread-v4-0820-hintskel.png*"
+BAD_ART = "ep2-b04-tileread-v4-0820-hintskel.png"
+
+
+def test_a_spec_whose_glob_matches_its_arm_passes():
+    """The corrected v4: --arm nocontrol, and both sites say nocontrol."""
+    spec = _arm_spec([("hintskel", "nocontrol")], [GOOD_GLOB], [GOOD_ART])
+    check("a publish glob that names the step's own arm is not refused",
+          be.arm_name_problems(spec) == [])
+
+
+def test_the_glob_that_stranded_eight_renders_is_refused():
+    spec = _arm_spec([("hintskel", "nocontrol")], [BAD_GLOB], [GOOD_ART])
+    probs = be.arm_name_problems(spec)
+    check("a publish glob naming an arm no step renders is REFUSED", probs)
+    check("and the refusal names the glob that was typed",
+          any("hintskel" in p and "publish glob" in p for p in probs))
+    check("and the arm the tool will actually write",
+          any("--arm nocontrol" in p for p in probs))
+
+
+def test_the_artifacts_entry_is_checked_too():
+    """Both sites carried the bug in all fourteen specs, so both are checked."""
+    spec = _arm_spec([("hintskel", "nocontrol")], [GOOD_GLOB], [BAD_ART])
+    probs = be.arm_name_problems(spec)
+    check("an artifacts: entry naming an arm no step renders is REFUSED",
+          any("declared artifact" in p and "hintskel" in p for p in probs))
+
+
+def test_an_arm_nothing_publishes_is_refused_from_the_other_side():
+    """Direction 2: rendered, then left on the card because nothing names it.
+
+    In a one-arm spec this is the same bug as above seen from the other end --
+    which is why the real v4 tripped both. In a multi-arm spec it is the only
+    direction that sees an arm quietly dropped from the publish list.
+    """
+    spec = _arm_spec([("hint", "hint"), ("plain", "nocontrol")],
+                     ["/ep2-b04-tileread-v4-0820-hint.png*"],
+                     ["ep2-b04-tileread-v4-0820-hint.png"])
+    probs = be.arm_name_problems(spec)
+    check("an arm rendered into a directory nothing names is REFUSED",
+          any("renders --arm 'nocontrol'" in p for p in probs))
+    check("and the arm that IS published is not also refused",
+          not any("renders --arm 'hint'" in p for p in probs))
+
+
+def test_a_multi_arm_spec_that_names_every_arm_passes():
+    """THE FALSE POSITIVE THIS CHECK MUST NOT HAVE.
+
+    ep2-cnet-probe-0817 runs four arms into ONE out dir. Asking each path to
+    name EVERY step's arm refuses all four correct paths; the question is
+    whether a path names SOME arm the job writes there.
+    """
+    arms = [(a, a) for a in ("nocontrol", "left", "right", "polarity")]
+    spec = _arm_spec(
+        arms,
+        ["/ep2-b04-tileread-v4-0820-%s.png*" % a for _n, a in arms],
+        ["ep2-b04-tileread-v4-0820-%s.png" % a for _n, a in arms])
+    check("four arms into one directory, each named once, is not refused",
+          be.arm_name_problems(spec) == [])
+
+
+def test_a_bare_wildcard_names_no_arm_and_so_cannot_name_the_wrong_one():
+    spec = _arm_spec([("hintskel", "nocontrol")], ["/*.png*"], [])
+    check("a wildcard publish glob is left alone",
+          be.arm_name_problems(spec) == [])
+
+
+def test_a_spec_with_no_arm_named_output_is_untouched():
+    """The 1066 specs that render some other way must not notice this check."""
+    spec = {"id": "ep2-b19-dropmotion-0819", "steps": [
+        {"name": "render", "argv": ["python.exe", "ltx_i2v.py", "--stage",
+                                    "render", "--out", r"C:\banyan-farm\b19\out"]},
+        {"name": "publish", "argv": ["python.exe", "-c",
+                                     _publish_body("/b19-drop.mp4")]}],
+        "artifacts": [r"C:\banyan-farm\b19\out\b19-drop.mp4"]}
+    check("a job with no arm-named output is never arm-checked",
+          be.arm_name_problems(spec) == [])
+    check("and neither is a job with no steps at all",
+          be.arm_name_problems({"id": "x"}) == [])
+
+
+def test_a_tool_whose_output_is_NOT_its_arm_is_deliberately_absent():
+    """render_b06r7 names its frame after arm['set'], not after --arm.
+
+    A whitelist is only honest if what it excludes is excluded on purpose, and
+    a guard that is false somewhere gets switched off everywhere.
+    """
+    spec = _arm_spec([("A", "A")], [BAD_GLOB], [BAD_ART])
+    spec["steps"][0]["argv"][1] = r"C:\banyan-farm\x\src\pipeline\render_b06r7.py"
+    check("a --arm tool that does not name its output after the arm is skipped",
+          be.arm_name_problems(spec) == [])
+
+
+def test_the_arm_guard_actually_runs_on_the_enqueue_path():
+    """A guard defined and never called is the hole it was written to close."""
+    src = open(os.path.join(os.path.dirname(os.path.abspath(be.__file__)),
+                            "box_enqueue.py"), encoding="utf-8").read()
+    body = src[src.index("def gate_checks("):src.index("def correlation_note(")]
+    check("gate_checks calls the arm-name guard", "arm_name_problems(spec)" in body)
+
+
 def main():
     print("box_enqueue payload-collision guard")
     test_the_overwrite_that_happened_is_refused()
@@ -1017,6 +1171,17 @@ def main():
     test_a_job_already_queued_is_refused_whatever_its_sha()
     test_again_overrides_and_mints_an_id_that_cannot_land_on_the_old_one()
     test_the_guard_actually_runs_on_the_enqueue_path()
+    print()
+    print("box_enqueue arm-name guard")
+    test_a_spec_whose_glob_matches_its_arm_passes()
+    test_the_glob_that_stranded_eight_renders_is_refused()
+    test_the_artifacts_entry_is_checked_too()
+    test_an_arm_nothing_publishes_is_refused_from_the_other_side()
+    test_a_multi_arm_spec_that_names_every_arm_passes()
+    test_a_bare_wildcard_names_no_arm_and_so_cannot_name_the_wrong_one()
+    test_a_spec_with_no_arm_named_output_is_untouched()
+    test_a_tool_whose_output_is_NOT_its_arm_is_deliberately_absent()
+    test_the_arm_guard_actually_runs_on_the_enqueue_path()
     print()
     if FAILURES:
         print("✗ %d failure(s): %s" % (len(FAILURES), ", ".join(FAILURES)))

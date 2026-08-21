@@ -1346,6 +1346,200 @@ def courier_problems(spec: dict) -> list:
             ".sha256 beside them." % ", ".join(ntpath.basename(a) for a in stranded)]
 
 
+# Tools whose OUTPUT FILENAME is derived from an `--arm` flag rather than
+# written out anywhere in the spec. Both write into their `--out` DIRECTORY
+# under a basename that carries the arm verbatim:
+#
+#   controlnet_plate.py:491/528  out_dir / ("%s-%s.png" % (--task, --arm))
+#   controlnet_probe.py:243      out_dir / f"{TASK}-{a.arm}.png"
+#
+# The list is a WHITELIST and stays one. Three other scripts in this tree take
+# `--arm` and are deliberately absent, because for them the arm is NOT the
+# filename: render_b06r6.py:584 and render_b06r7.py name the frame after
+# `arm["set"]`, and goblin_ipa_sample.py:884 after a `tag` -- so the assertion
+# below would be false on them, and a guard that is false somewhere gets
+# switched off everywhere. render_b01r9.py does embed the literal arm
+# (`{BEAT}-{slug}-{SET}-{arm}-s{i}.png`) but adds a `-s{i}` seed suffix, which
+# is a second derivation this check does not model; three specs use it, none
+# has stranded, and inventing the rule for it is exactly what was not asked.
+ARM_NAMED_OUTPUT_TOOLS = ("controlnet_plate.py", "controlnet_probe.py")
+
+
+def _inline_str_vars(body: str) -> dict:
+    """`name = "literal"` assignments in an inline `python -c` program.
+
+    Publish steps are written as `glob.glob(out_dir + "/<task>-<arm>.png*")`,
+    so the directory the pattern is rooted in is a variable and the check
+    cannot see where the pattern points without resolving it.
+    """
+    vals = {}
+    for pat in (r'^\s*(\w+)\s*=\s*"([^"\n]*)"\s*$', r"^\s*(\w+)\s*=\s*'([^'\n]*)'\s*$"):
+        for m in re.finditer(pat, body, re.M):
+            vals.setdefault(m.group(1), m.group(2))
+    return vals
+
+
+def _glob_call_args(body: str) -> list:
+    """The argument expression of every `glob.glob(...)` in an inline program."""
+    args, i = [], 0
+    while True:
+        j = body.find("glob.glob(", i)
+        if j < 0:
+            return args
+        k = j + len("glob.glob(")
+        depth = 1
+        while k < len(body) and depth:
+            if body[k] == "(":
+                depth += 1
+            elif body[k] == ")":
+                depth -= 1
+            k += 1
+        args.append(body[j + len("glob.glob("):k - 1])
+        i = k
+
+
+def _concat_value(expr: str, vals: dict):
+    """`out_dir + "/x-y.png*"` -> the string it builds, or None if it cannot.
+
+    None means "not resolvable", and a pattern this cannot resolve is left
+    alone rather than guessed at.
+    """
+    parts = []
+    for term in expr.split("+"):
+        t = term.strip()
+        if len(t) >= 2 and t[0] in "\"'" and t[-1] == t[0]:
+            parts.append(t[1:-1])
+        elif t in vals:
+            parts.append(vals[t])
+        else:
+            return None
+    return "".join(parts) if parts else None
+
+
+def arm_name_problems(spec: dict) -> list:
+    """Does the spec look for the file the `--arm` flag actually makes?
+
+    WHAT THIS IS FOR, measured 2026-08-21 and it fired on fourteen specs. The
+    eight `ep2-b04-tileread-*-0820` rungs rendered rc=0 -- eight good pictures,
+    on the card, in their out\\ directories -- and every one of the eight JOBS
+    exited rc=1. Their publish step globbed `<task>-hintskel.png` while
+    `--arm nocontrol` makes controlnet_plate.py write `<task>-nocontrol.png`,
+    so the publish copied nothing, the `>= 4` gate failed, the artifacts check
+    found nothing, and the queue recorded eight failures it did not have. The
+    same defect sat in six `ep2-b02-adultplate-*-0820` specs beside them.
+
+    The arm name is TYPED into the glob and into `artifacts:`, and DERIVED by
+    the tool from a flag three lines further up the same argv. Nothing compared
+    the two. Every check above this one asks whether the job may run or whether
+    its output can be found at all; this one asks whether the two spellings of
+    the same filename, in the same spec, agree. It is one string compare, it
+    needs no box and no render, and it refuses before the GPU pays.
+
+    The refusal names BOTH strings, because the fix is a choice between them --
+    the arm may be the typo just as easily as the glob is.
+
+    IT IS PER OUTPUT DIRECTORY, NOT PER STEP, AND THAT IS NOT A DETAIL. A
+    four-arm spec runs four steps into ONE out dir -- `ep2-cnet-probe-0817` is
+    exactly that -- so "this path does not name step 3's arm" is TRUE of every
+    correct path in it. The question a multi-arm spec can actually answer is
+    whether a path names SOME arm the job writes into that directory, and
+    whether every arm it writes is named by SOMETHING. Both directions are
+    checked because both are the same strand:
+
+      1. a path naming an arm no step produces -- the b04 failure exactly, and
+         it publishes nothing while the picture sits in out\\
+      2. an arm no path names -- the same picture stranded, reached from the
+         other side. In a one-arm spec these are one bug seen twice, which is
+         why b04 tripped both; in a multi-arm spec only direction 2 sees an
+         arm that was rendered and then quietly left behind.
+
+    BLAST RADIUS MEASURED BEFORE THIS WENT IN, over all 1211 specs in
+    pipeline/jobs: 145 declare a step with an arm-named output, and with the
+    fourteen sites already corrected by hand it refuses none of them.
+
+    Returns a list of problems, empty when the spec is sound.
+    """
+    steps = spec.get("steps") or []
+    by_dir = {}                     # normalised out dir -> [(step name, arm)]
+    for st in steps:
+        argv = [str(x) for x in (st.get("argv") or [])]
+        if not any(ntpath.basename(a).lower() in ARM_NAMED_OUTPUT_TOOLS
+                   for a in argv):
+            continue
+        arm = argv_value(argv, "--arm")
+        out = argv_value(argv, "--out")
+        if arm and out:
+            by_dir.setdefault(norm_dest(out), []).append((st.get("name"), arm))
+    if not by_dir:
+        return []
+
+    WHY = ("This is the defect that made eight good ep2-b04-tileread renders "
+           "exit rc=1 on 2026-08-21 with the pictures already on the card.")
+
+    def named(base: str, arm: str) -> bool:
+        return ("-" + arm).lower() in base.lower()
+
+    def arms_of(d):
+        return ", ".join("%s (step %r)" % (a, s) for s, a in by_dir[d])
+
+    # Every png path this spec points at an arm directory, with where it came
+    # from, so both directions below read the same list.
+    paths = []                      # [(kind, out dir, pattern, basename)]
+    for art in spec.get("artifacts") or []:
+        art = str(art)
+        base = ntpath.basename(art)
+        if base.lower().endswith((".png", ".png.meta.yaml")):
+            paths.append(("declared artifact", norm_dest(ntpath.dirname(art)),
+                          art, base))
+    for st in steps:
+        argv = [str(x) for x in (st.get("argv") or [])]
+        if len(argv) < 3 or argv[1] != "-c":
+            continue
+        body = argv[2]
+        vals = _inline_str_vars(body)
+        for expr in _glob_call_args(body):
+            pat = _concat_value(expr, vals)
+            if not pat:
+                continue            # unresolvable is left alone, never guessed
+            win = pat.replace("/", "\\")
+            base = ntpath.basename(win)
+            if ".png" not in base.lower():
+                continue
+            paths.append(("publish glob", norm_dest(ntpath.dirname(win)),
+                          pat, base))
+
+    problems = []
+    # DIRECTION 1: a path in an arm directory that names none of its arms.
+    for kind, d, pat, base in paths:
+        if d not in by_dir:
+            continue
+        # A bare wildcard names no arm, so it cannot name the WRONG one.
+        if base.startswith("*"):
+            continue
+        if any(named(base, arm) for _s, arm in by_dir[d]):
+            continue
+        problems.append(
+            "BLOCKED: %s %r names an arm this job never renders. The steps "
+            "writing into %s pass --arm %s, and the tool derives its output "
+            "filename from that flag -- so nothing it writes will ever match "
+            "that path. Fix ONE of the two strings (the arm may be the typo as "
+            "easily as the path is). %s" % (kind, pat, d, arms_of(d), WHY))
+
+    # DIRECTION 2: an arm rendered into a directory nothing names.
+    for d, entries in by_dir.items():
+        here = [b for _k, dd, _p, b in paths if dd == d]
+        for step, arm in entries:
+            if any(b.startswith("*") or named(b, arm) for b in here):
+                continue
+            problems.append(
+                "BLOCKED: step %r renders --arm %r into %s and NO publish glob "
+                "or artifacts: entry names %r, so that picture is written and "
+                "then left on the card. Named here: %s. %s"
+                % (step, arm, d, "-" + arm, ", ".join(sorted(here)) or "nothing",
+                   WHY))
+    return problems
+
+
 def gate_checks(spec: dict, job: dict) -> list:
     problems = []
     for key in ("gate", "gate_ref"):
@@ -1390,6 +1584,10 @@ def gate_checks(spec: dict, job: dict) -> list:
     # exactly what it promised, exactly where it promised, and still never reach
     # this tree because nothing carries it to the courier's directory.
     problems += courier_problems(spec)
+    # And the third way an output goes missing, which neither of those two can
+    # see: the job publishes a filename the tool never writes, because the arm
+    # in the path was typed and the arm in the filename is derived from a flag.
+    problems += arm_name_problems(spec)
     return problems
 
 
