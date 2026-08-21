@@ -329,7 +329,13 @@ def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
     # copy-paste, not a decision, and a guard is the only thing that catches it.
     pay = child["payload"][r"C:\banyan-farm\%s\prompt.txt" % job_dir]
     for dead in ("blank eyes", "thick eyebrows", "patchwork", "cloak",
-                 "adult", "half-closed eyes"):
+                 "adult", "half-closed eyes",
+                 # ADDED 2026-08-22, and they were REQUIRED here this morning.
+                 # Both name the pupil; on animagine both draw a large rendered
+                 # iris, which is the eye the founder vetoed the whole w2 sweep
+                 # for. r12d reaches his eye with `eyebags, jitome` and no pupil
+                 # word at all, so these two may not come back by copy-paste.
+                 "slit pupils", "constricted pupils"):
         if dead in pay:
             raise SystemExit("!! %s: struck tag %r is back in the positive "
                              "-- the founder's image has none of it" % (new_id,
@@ -347,7 +353,7 @@ def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
     # and round nine's rungs strip the word side to zero so the two stop
     # competing. `pointy ears` and `mandarin collar` stay required: both are
     # silhouette, both survived every round, and neither is contested.
-    for live in ("pointy ears", "mandarin collar"):
+    for live in ("pointy ears", "mandarin collar", "eyebags", "jitome"):
         if live not in pay:
             raise SystemExit("!! %s: %r is not in the positive" % (new_id, live))
     if pose_words not in pay:

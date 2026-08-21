@@ -178,9 +178,28 @@ MEASURED = {
 #                   pointed ears with `large ears` still IN, so the tag is now
 #                   redundant with geometry rather than load-bearing. If the
 #                   ears shrink on the next wave, this is the first term back.
+#
+# ROUND TWELVE REWROTE THE EYE HALF OF THIS CLAUSE AND THE FOUNDER'S VETO IS WHY.
+# It read `slit pupils, constricted pupils, eyebags, thin eyebrows` and it drew
+# the frame he threw out: a large rendered iris in a white sclera. What his
+# image actually draws is a SMALL WHITE ALMOND WITH A TINY DARK PUPIL in a very
+# large dome, and four rounds of measurement say the eye is not reachable by
+# naming the pupil at all:
+#   * `slit pupils` / `constricted pupils` name the pupil and get an IRIS.
+#     Struck, and struck in the deriver's required list too, where `slit pupils`
+#     had been ASSERTED onto every spec in the wave.
+#   * `eyebags` (r10b) was the first term ever to change the FILL from rendered
+#     iris to white field with dark pupils. Kept.
+#   * `jitome` (r12a) is the term that changed the SIZE AND SHAPE. It is booru's
+#     name for the flat, deadpan, narrow eye -- a RENDERING CONVENTION, not a
+#     feature -- and convention tags are the only kind of eye word that has ever
+#     moved this render. Same shape as the guard-1 finding: the style tail
+#     decides the feature.
+#   * `thin eyebrows` came out with the pupil tags: the brow is the adapter's
+#     job once the eye stops being argued about in words, and r12d draws the two
+#     high thin arcs without being asked.
 IDENTITY = ("best quality, 1boy, solo, goblin, green skin, bald, "
-            "pointy ears, slit pupils, constricted pupils, eyebags, "
-            "thin eyebrows, "
+            "pointy ears, eyebags, jitome, "
             "mandarin collar, green shirt, black shorts, boots, muted color")
 # TRIMMED ON THE SAME BUDGET AS THE POSITIVE, and for a reason the sample
 # supplied: round two has to ADD terms to the negative (the second floating head,
@@ -193,8 +212,14 @@ IDENTITY = ("best quality, 1boy, solo, goblin, green skin, bald, "
 #                              feature that is now canon.
 #   `scarf`                    Redundant beside `cloak, hood` for a costume the
 #                              image draws with a bare neck.
+# `blank eyes, no pupils` LEFT THE NEGATIVE ON 2026-08-22, and they were the
+# mirror of the positive's mistake: his eye very nearly IS a blank field with a
+# dot, so the negative was forbidding the thing being drawn. `large eyes, big
+# eyes` replace them -- the size clause r12c/r12d measured, which is the one
+# place a negative has helped here, because by then the positive was already
+# drawing a narrow eye and the negative only had to hold the scale down.
 NEGATIVE = ("lowres, worst quality, low quality, text, watermark, "
-            "blank eyes, no pupils, thick eyebrows, "
+            "large eyes, big eyes, thick eyebrows, "
             "cloak, hood, patchwork, "
             "human face, wrinkled skin, old man, hair, beard, "
             "child, chibi, 2boys, "
@@ -694,12 +719,21 @@ def selftest():
     for dead in ("blank eyes", "thick eyebrows", "patchwork", "adult", "man,",
                  "half-closed eyes"):
         want(dead not in IDENTITY, "positive still carries %r" % dead)
-    for revived in ("pointy ears", "slit pupils"):
+    # `slit pupils` LEFT THIS LIST 2026-08-22 and `eyebags, jitome` took its
+    # place: the eye is reached by naming its RENDERING CONVENTION and never by
+    # naming the pupil, which is what r9-r12 cost to learn. The pupil tags are
+    # now in the deriver's dead list.
+    for revived in ("pointy ears", "eyebags", "jitome"):
         want(revived in IDENTITY, "positive is missing %r" % revived)
         want(revived not in NEGATIVE, "negative still bans %r" % revived)
     for gone in ("elf", "monster boy", "pale skin", "grey skin"):
         want(gone not in NEGATIVE, "negative still carries %r" % gone)
-    want("blank eyes" in NEGATIVE, "negative does not fight blank eyes")
+    # ...and the negative fights the eye's SIZE, not its emptiness. Banning
+    # `blank eyes` was banning his own design; r12c/r12d measured that the size
+    # clause is the one that helps.
+    want("large eyes" in NEGATIVE, "negative does not hold the eye size down")
+    want("blank eyes" not in NEGATIVE,
+         "the negative bans `blank eyes` again -- that is HIS EYE")
     # Geometry.
     want(abs(HEAD_FRAC - MEASURED["head_frac"]) < 1e-9, "HEAD_FRAC drifted")
     want(abs(MEASURED["head_px"] / float(MEASURED["figure_px"])
