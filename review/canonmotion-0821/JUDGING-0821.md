@@ -264,3 +264,47 @@ WHAT THE WAVE NOW KNOWS, AND IT IS TWO LEVERS AND NOT ONE
   stillness still drift. That is an action-wording / motion-strength question,
   a different lever, and it is NOT opened here: two rounds is the budget.
   NOTHING IN review/ep2-ship-0821 WAS TOUCHED. No cut moved. No swaps.
+
+--------------------------------------------------------------------------------
+b07 ROUND 3 — muted color + boots restored, tokens taken from the guard clause
+--------------------------------------------------------------------------------
+  K1 slit pupils  PASS  off-white sclera, narrow vertical slit pupils at 1:1.
+  K2 collar       PASS  mandarin collar + frog closure, eyebags.
+  P1 palette      PASS  muted sage back; blue sky / gold trim gone.
+  P2 no halo      PASS  THE PRE-REGISTERED TEST CAME TRUE. R2's rectangle was
+                        claimed to be a palette split across the mask boundary,
+                        not a mask fault; restoring `muted color` with the mask
+                        BYTE-IDENTICAL removed it. The IP mask is exonerated a
+                        third time and ip-scale is not implicated by the halo.
+  P3 guard hand   PASS  armoured gauntlet again, aimed down at him.
+  P4 boots        PASS  dark boots, not sandals.
+  G3/G4 guard     FAIL  the degenerate this spec named in advance: "unhelmeted
+                        → the budget is the cause". He is unhelmeted AND his
+                        head is a bare green goblin skull with pointed ears.
+                        Stature and plate armour survived (openpose carries
+                        those); the helmet and his species did not survive his
+                        wording losing `city`, `in a helmet`, `facing him`.
+
+THE THREE ROUNDS AS ONE RESULT — A TOKEN BUDGET, NOT A WORDING PROBLEM
+  attribute            R1     R2     R3
+  goblin slit pupils   FAIL   PASS   PASS
+  muted palette        PASS   FAIL   PASS
+  no mask halo         PASS   FAIL   PASS
+  guard hand armoured  PASS   FAIL   PASS
+  boots                PASS   FAIL   PASS
+  guard helmeted human PASS   PASS   FAIL
+  Every attribute has been achieved in some round and never all in one. Each
+  round was a zero-sum reallocation of the same 77 CLIP tokens. The positive
+  prompt provably cannot carry the founder's canon goblin identity in WORDS and
+  enough guard description to keep him a helmeted human, on this checkpoint.
+
+  NEXT LEVER (not opened — three rounds authorised, three spent): stop paying
+  for the goblin's identity in tokens. The IP-Adapter reference already carries
+  his face and the mask is verified correct three times over. Delete `white
+  eyes, slit pupils, constricted pupils, eyebags, thin eyebrows` (~12 tokens)
+  and raise ip-scale to compensate, freeing the whole budget for the guard.
+  That is a RECIPE change, so it is one sample and its own question.
+
+  BEAT 07 STANDING STATE: no plate passes on both figures; NO MOTION SPEC HAS
+  BEEN FILED off any of the three rounds. R1 is the only round with a correct
+  guard, R3 the only round with a correct goblin.

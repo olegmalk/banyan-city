@@ -251,3 +251,62 @@ derivation:
   carried_verbatim_by_the_callers_own_hand: 'bar -- authored as `extra` but byte-identical to the parent''s
     value under the same name. Recorded rather than implied: a pre-registered bar carried unchanged is
     legitimate, and it should say so.'
+verdict_b07_twofig_r3_0821: |
+  ALL THREE ROUND-2 REGRESSIONS CLEARED, THE HALO DIAGNOSIS CONFIRMED, AND THE
+  GUARD FELL OVER. Judged by eye at 1:1 against rounds 1 and 2 side by side.
+  rc=0, seed 20260899, mask and ip-scale untouched.
+
+  K1 SLIT PUPILS    PASS. Off-white sclera with narrow vertical slit pupils,
+                    unmistakable at 1:1. Round 2's eye clause carried verbatim
+                    and it held.
+  K2 COLLAR         PASS. Mandarin collar with frog closure, eyebags present.
+  P1 MUTED PALETTE  PASS. The blue sky, golden grass and gold armour trim are
+                    gone; the plate is back in the muted sage dialect.
+  P2 NO HALO        PASS -- AND THIS CONFIRMS THE PRE-REGISTERED DIAGNOSIS.
+                    This spec claimed round 2's hard-edged rectangle was a
+                    PALETTE SPLIT across the mask boundary and not a mask
+                    fault, and filed a falsifiable test: restore `muted color`
+                    with the mask untouched and the box should vanish. IT
+                    VANISHED. The mask, the ip-scale and the reference are
+                    byte-identical to round 2. So the IP mask is exonerated for
+                    the third time and ip-scale is NOT implicated by the halo.
+  P3 GUARD'S HAND   PASS. The pointing hand is an armoured gauntlet again, not
+                    green goblin skin, and it is aimed down toward him rather
+                    than up and away.
+  P4 BOOTS          PASS. Dark boots, not sandals.
+
+  G3/G4 THE GUARD   FAIL, AND IT IS THE DEGENERATE OUTCOME THIS SPEC NAMED
+                    BEFORE THE PIXELS. The success bar read: "if he comes back
+                    shorter than five heads, UNHELMETED, or absent, the budget
+                    is the cause". He is unhelmeted. Worse: his head is a BARE
+                    GREEN GOBLIN SKULL WITH LARGE POINTED EARS. He kept his
+                    five-head stature and his plate armour -- openpose held
+                    what openpose carries -- but he lost his helmet and his
+                    species the moment his wording lost `city`, `in a helmet`
+                    as a phrase, and `facing him`. Rounds 1 and 2 both had a
+                    correct helmeted human guard; this is the first round that
+                    does not.
+
+  THE THREE ROUNDS TOGETHER SAY SOMETHING STRUCTURAL, and it is the real
+  finding. Every attribute has now been achieved in SOME round and never all in
+  one: R1 had the guard and missed the eye; R2 had the eye and lost palette,
+  halo, hand and boots; R3 has the eye, the palette, no halo, the hand and the
+  boots, and lost the guard. Each round was a zero-sum reallocation of the SAME
+  77 CLIP tokens. THIS IS NOT A WORDING PROBLEM ANY MORE -- the positive prompt
+  provably cannot carry the founder's canon goblin identity in words AND enough
+  guard description to keep him a helmeted human, on this checkpoint, at this
+  ceiling.
+
+  THE NEXT LEVER IS THEREFORE NOT A FOURTH WORDING ROUND. Stop paying for the
+  goblin's identity in tokens at all: the IP-Adapter reference already carries
+  his face, and the mask has now been verified correct three times. Delete
+  `white eyes, slit pupils, constricted pupils, eyebags, thin eyebrows` (~12
+  tokens) and raise ip-scale to compensate, which frees the whole budget for
+  the guard. That is a RECIPE change rather than a wording change, so it is one
+  sample and its own question -- and it is NOT opened here. Three rounds were
+  authorised and three were spent.
+
+  STANDING STATE FOR BEAT 07: still no plate that passes on both figures, and
+  still NO MOTION SPEC FILED off any of the three. R1 remains the only round
+  with a correct guard, R3 the only round with a correct goblin. Nothing in
+  review/ep2-ship-0821 was touched by any of them.
