@@ -55,7 +55,12 @@ import sys
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TOOL = os.path.join(REPO, "pipeline", "beat16_sapling_composite.py")
 PLATES = "farm-out/ep3-sapling-dataset-0821/plates"
-OUT = "farm-out/ep3-sapling-dataset-0821/init"
+# ONE SEGMENT UNDER farm-out/, ON PURPOSE. derive_fetch_guard's URL
+# regex is `farm-out/[A-Za-z0-9._-]+/` -- it reads exactly one path
+# segment, so an init at farm-out/<set>/init/<file> makes the guard
+# report the wrong directory and refuse. The convention is flat and
+# this batch follows it rather than loosening the regex.
+OUT = "farm-out/ep3-saplora-init-0821"
 OVERLAY = "farm-out/ep3-sapling-dataset-0821/overlay"
 
 # Scene descriptors, one per plate. These are what the captions' SCENE and
