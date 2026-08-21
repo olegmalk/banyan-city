@@ -3712,3 +3712,5 @@
 11:18:21Z DONE task=ep2-b04-tilemotion-s2-0821-1787308845 rc=0 artifacts=1
 11:18:28Z STARTED task=ep2-b07-tilemotion-s1-0821-1787308850 attempt=1 on box-runner
 11:24:42Z DONE task=ep2-b07-tilemotion-s1-0821-1787308850 rc=0 artifacts=1
+11:24:48Z STARTED task=ep2-b07-tilemotion-s2-0821-1787308855 attempt=1 on box-runner
+11:31:02Z DONE task=ep2-b07-tilemotion-s2-0821-1787308855 rc=0 artifacts=1
