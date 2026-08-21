@@ -1,0 +1,44 @@
+#### job ep3-sapfld3-t03-0821-1787306387 attempt 1 start 2026-08-21T10:03:15Z
+
+==== step stage START 2026-08-21T10:03:15Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# The parent and its twelve siblings only ran because a human scp'd\n# this file into <payload dir>\\src\\pipeline\\ by hand. This lane is\n# not awake to do that, so the job stages its own interpreter and\n# refuses to reach the GPU if the bytes are not the ones asserted.\nimport hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\ndst = r\"C:\\banyan-farm\\sapfld3-t03-0821\\src\\pipeline\"\nwant = (\"controlnet_plate.py\", \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")\nos.makedirs(dst, exist_ok=True)\nwith urllib.request.urlopen(base + want[0], timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\nif got != want[1]:\n    print(\"!! %s fetched with sha %s, expected %s\"\n          % (want[0], got, want[1]))\n    raise SystemExit(1)\nwith open(os.path.join(dst, want[0]), \"wb\") as fh:\n    fh.write(blob)\nprint(\"staged\", want[0], got, \"->\", dst)\n"]
+staged controlnet_plate.py ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32 -> C:\banyan-farm\sapfld3-t03-0821\src\pipeline
+==== step stage END rc=0 2026-08-21T10:03:16Z ====
+
+==== step stage START 2026-08-21T10:03:16Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# The parent and its twelve siblings only ran because a human scp'd\n# this file into <payload dir>\\src\\pipeline\\ by hand. This lane is\n# not awake to do that, so the job stages its own interpreter and\n# refuses to reach the GPU if the bytes are not the ones asserted.\nimport hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\ndst = r\"C:\\banyan-farm\\sapfld3-t03-0821\\src\\pipeline\"\nwant = (\"controlnet_plate.py\", \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")\nos.makedirs(dst, exist_ok=True)\nwith urllib.request.urlopen(base + want[0], timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\nif got != want[1]:\n    print(\"!! %s fetched with sha %s, expected %s\"\n          % (want[0], got, want[1]))\n    raise SystemExit(1)\nwith open(os.path.join(dst, want[0]), \"wb\") as fh:\n    fh.write(blob)\nprint(\"staged\", want[0], got, \"->\", dst)\n"]
+staged controlnet_plate.py ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32 -> C:\banyan-farm\sapfld3-t03-0821\src\pipeline
+==== step stage END rc=0 2026-08-21T10:03:16Z ====
+
+==== step stage START 2026-08-21T10:03:16Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# The parent and its twelve siblings only ran because a human scp'd\n# this file into <payload dir>\\src\\pipeline\\ by hand. This lane is\n# not awake to do that, so the job stages its own interpreter and\n# refuses to reach the GPU if the bytes are not the ones asserted.\nimport hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\ndst = r\"C:\\banyan-farm\\sapfld3-t03-0821\\src\\pipeline\"\nwant = (\"controlnet_plate.py\", \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")\nos.makedirs(dst, exist_ok=True)\nwith urllib.request.urlopen(base + want[0], timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\nif got != want[1]:\n    print(\"!! %s fetched with sha %s, expected %s\"\n          % (want[0], got, want[1]))\n    raise SystemExit(1)\nwith open(os.path.join(dst, want[0]), \"wb\") as fh:\n    fh.write(blob)\nprint(\"staged\", want[0], got, \"->\", dst)\n"]
+staged controlnet_plate.py ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32 -> C:\banyan-farm\sapfld3-t03-0821\src\pipeline
+==== step stage END rc=0 2026-08-21T10:03:16Z ====
+
+==== step hintskel START 2026-08-21T10:03:16Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\sapfld3-t03-0821\\src\\pipeline\\controlnet_plate.py", "--root", "C:\\banyan-farm\\sapfld3-t03-0821\\src", "--repo-commit", "d1d559d2a475b6d6260ac18a345bd2f65546b0f6", "--task", "ep3-sapfld3-t03-0821", "--arm", "nocontrol", "--control", "pipeline/control/b08-pose-skel-0819.png", "--control-sha256", "09200bdf0d293f2555a4ee5430c3f9787dcccba8a6d783b7ff62cebafae89ac3", "--scale", "0.45", "--seed", "20260933", "--prompt-file", "C:\\banyan-farm\\sapfld3-t03-0821\\prompt.txt", "--negative-file", "C:\\banyan-farm\\sapfld3-t03-0821\\negative.txt", "--out", "C:\\banyan-farm\\sapfld3-t03-0821\\out"]
+  prompt tokens: 35 (limit 77)
+  negative tokens: 71 (limit 77)
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:20: FutureWarning: `VQEncoderOutput` is deprecated and will be removed in version 0.31. Importing `VQEncoderOutput` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQEncoderOutput`, instead.
+  deprecate("VQEncoderOutput", "0.31", deprecation_message)
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:25: FutureWarning: `VQModel` is deprecated and will be removed in version 0.31. Importing `VQModel` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQModel`, instead.
+  deprecate("VQModel", "0.31", deprecation_message)
+Couldn't connect to the Hub: Cannot reach https://huggingface.co/api/models/cagliostrolab/animagine-xl-3.1: offline mode is enabled. To disable it, please unset the `HF_HUB_OFFLINE` environment variable..
+Will try to load from local cache.
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:01<00:02,  1.83it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:02<00:01,  1.83it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:00,  2.29it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.85it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+OK ep3-sapfld3-t03-0821-nocontrol.png load=4.3s render=9.7s
+rc=0
+==== step hintskel END rc=0 2026-08-21T10:03:34Z ====
+
+==== step publish START 2026-08-21T10:03:34Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# Required by box_enqueue.courier_problems (2026-08-19): a job whose\n# artifacts live outside courier-box\\farm-out must have a step that\n# carries them there, because the courier pushes from farm-out and from\n# nowhere else. ep2-cnet-probe-0817 rendered perfectly and was invisible\n# for two days for want of exactly this.\nimport glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/sapfld3-t03-0821/out\"\npay_dir = \"C:/banyan-farm/sapfld3-t03-0821\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep3-sapfld3-t03-0821\"\nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep3-sapfld3-t03-0821-nocontrol.png*\")\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"/negative.txt\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep3-sapfld3-t03-0821.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 4 else 1)"]
+published 4 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep3-sapfld3-t03-0821
+==== step publish END rc=0 2026-08-21T10:03:34Z ====
+#### job ep3-sapfld3-t03-0821-1787306387 finished rc=0 2026-08-21T10:03:34Z
