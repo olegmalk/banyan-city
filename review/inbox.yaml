@@ -2002,6 +2002,34 @@
     nobody has made - the 0814 clip failed on the leaf itself, which the licence does not
     un-reject / name a third staging. Answering changes no picture before 12:00 either way,
     because the picture already changed.'
+  resolved:
+    date: '2026-08-21'
+    verdict: 'CLOSED-MOOT, STEWARD DECISION, not a founder answer - and the distinction is the
+      whole content of this close. NOBODY SAID "restage" AND NOBODY SAID "licence". The card
+      is closed because its PREMISE expired: it asked whether to grant a canon exception so a
+      leaf-as-subject macro could be shot for a beat that had no footage, and beat 16 has
+      footage. 16-why-b16-motion-trim-0821.mp4 entered review/ep2-ship-0821 at 01:05 on
+      2026-08-21 (commit 1dce7e70, "the last slate is gone"), 7/7 on its own pre-registered
+      bar, and it obtains the brief''s relation - the sapling large in front, him behind it -
+      WITHOUT an exception to the "average leaves" ruling. A question about how to unblock a
+      slate cannot stay open once the slate is gone.
+      WHAT IS NOT DECIDED HERE, said plainly so this close is not read as more than it is: the
+      MACRO is not refused, and whether the shipped restage is the staging he wants is R4 and
+      still his. If he prefers the macro he reopens it in one word and the licence question
+      comes back exactly as written - nothing about this close makes that harder. What it
+      removes is only the URGENCY the card was carrying, which was the urgency of a slate.
+      THE CHAIN IS DISARMED. pipeline/decisions-pending/ep2-b16-leaf-0820/ is DELETED in this
+      same commit under that directory''s own rule 4 ("when a card resolves, its directory is
+      either fired or deleted in the same commit that records the verdict"). Neither branch
+      fires: "restage" was always "nothing to file", and "licence" pointed at a canon exception
+      plus a derive-b16-leafmotion.py that was never written. A pre-staged chain left armed
+      behind a closed card is a trap for the next lane, and this is the third one disarmed in
+      two days.'
+    provenance: 'THE STEWARD CLOSED THIS, not the founder. It is recorded as a steward decision
+      because it is one: the taste question (macro vs restage) is R4 and is untouched; what the
+      steward is entitled to rule is whether a card whose premise has expired keeps occupying
+      the founder''s ~1-open-question budget, and this one does not. Reopening costs him one
+      word.'
   note_for_lanes: 'SUPERSEDED IN ITS PREMISE 2026-08-21 - BEAT 16 IS NO LONGER A SLATE. The
     restage route was built and it came out: the canon sapling DRAWN (not prompted - the
     strongest wording returns two leaves 0 times in 16) into ep2-b15-mac-plate-0819''s

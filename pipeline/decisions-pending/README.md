@@ -36,9 +36,13 @@ every option that has one — a job spec, a script, a checklist.
 
 ## Open right now
 
+**NOTHING.** The table is empty for the first time since this directory was
+made, and an empty table is the correct state — a pre-staged chain is only ever
+justified while a card is genuinely waiting on one word.
+
 | card | dir | options |
 |---|---|---|
-| `/review/ep2-b16-leaf-0820` | `ep2-b16-leaf-0820/` | **restage** → nothing to file (R4 writes the staging) · **licence** → canon exception first; the motion spec is *not yet written* and the README says why |
+| *(none)* | | |
 
 `/review/ep2-b04-action-0820` deliberately had **no** directory here: it asked the
 author to pick among three action lines, and the pick *was* the spec. Pre-staging
@@ -55,6 +59,7 @@ followed:
 |---|---|---|
 | `/review/ep2-guards-0818` | **pass** ("they should look like grown men. yes. dumb grown men.") | deleted 2026-08-21. `swap-b09-into-cut.sh` had been overtaken twice — beat 09 entered `review/ep2-ship-0821` on 08-20 under a steward override, and its live successor is `pipeline/swap_b09_r2s2_into_ship.sh`, which takes the take id as an argument and asserts the traps the old script only listed |
 | `/review/ep2-b13-shade-0820` | **A** ("this does satisfy it…") | deleted 2026-08-21. A's chain was "file nothing, enqueue nothing, record the verdict, delete this directory", and the four records it named are written. `derive-b13-tallmotion.py`, the emitter for **B**, went with it — the ruling kills B |
+| `/review/ep2-b16-leaf-0820` | **NEITHER — CLOSED-MOOT by the steward** | deleted 2026-08-21. The only one of the three closed without an answer, and the distinction matters: its premise expired rather than being decided. It asked how to unblock a SLATE; beat 16 got footage at 01:05 (`1dce7e70`, 7/7 on its bar) and the slate stopped existing. Neither branch fires — *restage* was always "nothing to file" and *licence* pointed at a canon exception plus a `derive-b16-leafmotion.py` nobody wrote. The macro is **not refused**; reopening costs one word |
 
 Both sat armed for a day after their cards were answered, which is exactly the
 failure rule 4 names. **Rule 3 is doing real work here too**: "nothing fires, and
