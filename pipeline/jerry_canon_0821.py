@@ -149,14 +149,35 @@ MEASURED = {
 # terms were cut for tokens and each cut is named, with what it costs:
 #   `very aesthetic`      -3, quality preamble, the weakest of the three.
 #   `colored skin`        -4, Danbooru parent of `green skin`; implied by it.
-#   `constricted pupils`  -5, THE REAL COST. The measured pupil is small AND a
-#                         vertical slit; `slit pupils` keeps the shape and drops
-#                         the size. First thing to buy back if the sample's
-#                         pupil comes back large -- there are 5 tokens spare.
+#   `constricted pupils`  -5, THE REAL COST -- AND IT WAS BOUGHT BACK IN ROUND
+#                         NINE, which is why the two trims above happened. The
+#                         w1 wave came back with a pale-green IRIS filling the
+#                         eye where the founder's image has an off-white sclera
+#                         and a 7x17 dark vertical slit. Three rungs on beat 07,
+#                         one variable each: e1 `constricted pupils`, e2 `white
+#                         eyes`, e3 both. ALL THREE FIXED IT -- off-white sclera,
+#                         narrow vertical slit, no iris. e1 is taken because it
+#                         is ONE variable and leaves 3 tokens of headroom; e3
+#                         reads marginally crisper and measures 77 of 77 exactly,
+#                         which is the knife-edge this repo has been bitten by
+#                         before. `white eyes` is held in reserve, measured.
 #   `long sleeves`, `belt` -5, both measured, both minor at full-body scale.
 # Worst case across all 7 poses x 6 emotions is now 72 of 77, asserted below.
-IDENTITY = ("masterpiece, best quality, 1boy, solo, goblin, green skin, bald, "
-            "pointy ears, large ears, slit pupils, eyebags, thin eyebrows, "
+# ROUND NINE TRIM, to buy tokens for the EYE. Two more terms out, each with what
+# it costs, on the same discipline as the first trim:
+#   `masterpiece`   -3. Three quality words was always one too many for
+#                   animagine; `best quality` carries it.
+#   `large ears`    -3, and this one is only affordable BECAUSE of r8. The ear
+#                   was the axis the whole ruling turned on and it was carried
+#                   by words when the reference was 6.7% of the encoder. At
+#                   28.3% the adapter draws the ear from the founder's own
+#                   pixels -- r8 and the whole w1 wave have large lateral
+#                   pointed ears with `large ears` still IN, so the tag is now
+#                   redundant with geometry rather than load-bearing. If the
+#                   ears shrink on the next wave, this is the first term back.
+IDENTITY = ("best quality, 1boy, solo, goblin, green skin, bald, "
+            "pointy ears, slit pupils, constricted pupils, eyebags, "
+            "thin eyebrows, "
             "mandarin collar, green shirt, black shorts, boots, muted color")
 # TRIMMED ON THE SAME BUDGET AS THE POSITIVE, and for a reason the sample
 # supplied: round two has to ADD terms to the negative (the second floating head,
@@ -606,7 +627,7 @@ def selftest():
     for dead in ("blank eyes", "thick eyebrows", "patchwork", "adult", "man,",
                  "half-closed eyes"):
         want(dead not in IDENTITY, "positive still carries %r" % dead)
-    for revived in ("pointy ears", "large ears", "slit pupils"):
+    for revived in ("pointy ears", "slit pupils"):
         want(revived in IDENTITY, "positive is missing %r" % revived)
         want(revived not in NEGATIVE, "negative still bans %r" % revived)
     for gone in ("elf", "monster boy", "pale skin", "grey skin"):
