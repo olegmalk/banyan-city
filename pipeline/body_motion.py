@@ -5,6 +5,35 @@ Written 2026-08-16 by the motion lane, because every number this investigation
 has produced answers a different question than the one that matters.
 
 ================================================================================
+RETIRED_METRICS -- READ THIS FIRST, IT IS FOUR LINES
+================================================================================
+Exactly ONE number in this module is validated: `median_disp_px`, read across a
+LADDER of pairs (f0->f4, f24, f48, f72, f96). It is the ONLY one that may be
+quoted, and even it has a floor -- on the b13 control it reads 12-19px with the
+figure provably frozen, so anything under ~20px on this material is "did not
+move", not a small move.
+
+RETIRED, DO NOT QUOTE, IN THIS MODULE OR ANY OTHER (727de28b, verified 77cc8277):
+  * p90_disp_px, max_disp_px, moved_frac_*, articulation_* -- they read p90 110px
+    and 85% of blocks moved on a clip whose figure does not move. Nested in the
+    result dict and in --json under UNRELIABLE_ON_LINE_ART_DO_NOT_QUOTE so they
+    cannot be picked up by accident.
+  * `depth` (vae_roundtrip.depth) as an ACTION signal -- it is INVERTED. Observed:
+    0.038 b13 control (holds) < 0.293 b17-full-s1 (a complete stand-up) < 0.516
+    b06-d1neg (no human motion at all). Never rank or judge by it. See
+    judge_clip.py.
+  * `cadence` (the pre-hold_period metric) -- structurally blind, odd hold periods
+    alias to exactly 1.00x.
+  * distinct_pictures / effective_fps as an ACTION signal -- the one clip on
+    record that performs its action (b17-full-s1) scores the WORST of its
+    comparison set: 24.0 pictures against a frozen control's 32.0 and two
+    "improved" frozen arms' 48.0.
+  * chained-NCC camera scale -- same railing pathology (c870f08f). Align frames.
+
+Nothing above is a filter you may quietly re-enable. A metric is a filter, never
+a verdict: OPEN THE FRAMES.
+
+================================================================================
 WHY THIS EXISTS AND WHAT IT IS NOT
 ================================================================================
 `hold_period.py` answers HOW OFTEN A NEW PICTURE ARRIVES. It replaced `cadence`,
@@ -233,18 +262,38 @@ def summarise(dy, dx, conf, n_kept, n_total, radius, scale=1):
     return {
         "kept_blocks": int(n_kept),
         "textured_frac": round(n_kept / float(n_total), 3),
+        # THE ONE VALIDATED NUMBER. Read it across a LADDER of pairs, never alone.
         "median_disp_px": round(float(np.median(mag)), 2),
-        "p90_disp_px": round(float(np.percentile(mag, 90)), 2),
-        "max_disp_px": round(float(mag.max()), 2),
-        "moved_frac_4px": round(float(np.mean(mag >= 4)), 3),
-        "moved_frac_8px": round(float(np.mean(mag >= 8)), 3),
-        "moved_frac_16px": round(float(np.mean(mag >= 16)), 3),
+        "VALIDATED_METRIC": "median_disp_px, read across a LADDER of pairs",
         "global_shift_px": [round(gy * scale, 2), round(gx * scale, 2)],
-        "articulation_p90_px": round(float(np.percentile(res, 90)), 2),
-        "articulation_max_px": round(float(res.max()), 2),
         "saturated_frac": round(sat, 3),
         "median_confidence": round(float(np.median(conf)), 3),
+        # RETIRED 2026-08-16 (727de28b, verified 77cc8277). These are NESTED, and
+        # the key spells out why, so that a lane reading this dict or the --json
+        # file cannot pick one up without reading the retirement. They read p90
+        # 110px and 85% of blocks moved on the b13 control -- a clip whose figure
+        # provably does not move. See RETIRED_METRICS in the module docstring.
+        "UNRELIABLE_ON_LINE_ART_DO_NOT_QUOTE": {
+            "p90_disp_px": round(float(np.percentile(mag, 90)), 2),
+            "max_disp_px": round(float(mag.max()), 2),
+            "moved_frac_4px": round(float(np.mean(mag >= 4)), 3),
+            "moved_frac_8px": round(float(np.mean(mag >= 8)), 3),
+            "moved_frac_16px": round(float(np.mean(mag >= 16)), 3),
+            "articulation_p90_px": round(float(np.percentile(res, 90)), 2),
+            "articulation_max_px": round(float(res.max()), 2),
+            "why": "blocks rail to the +-radius corner on cel line art; "
+                   "read p90 110px / 85% moved on a provably frozen clip",
+        },
     }
+
+
+def retired(r: dict, key: str):
+    """Read a RETIRED column. Only body_motion's own selftest may call this.
+
+    It exists so the nested dict has exactly one accessor and `grep -rn retired(`
+    finds every place in the tree that still touches a retired number.
+    """
+    return r["UNRELIABLE_ON_LINE_ART_DO_NOT_QUOTE"][key]
 
 
 # ------------------------------------------------------------- clip decoding
@@ -348,9 +397,9 @@ def selftest(verbose=True):
     frozen = run(base, base.copy())
     if verbose:
         print("  frozen pair            median %.2f  p90 %.2f  moved>=4px %.3f"
-              % (frozen["median_disp_px"], frozen["p90_disp_px"],
-                 frozen["moved_frac_4px"]))
-    if frozen["p90_disp_px"] != 0.0 or frozen["moved_frac_4px"] != 0.0:
+              % (frozen["median_disp_px"], retired(frozen, "p90_disp_px"),
+                 retired(frozen, "moved_frac_4px")))
+    if retired(frozen, "p90_disp_px") != 0.0 or retired(frozen, "moved_frac_4px") != 0.0:
         fails.append("a frozen pair must read 0 displacement, read %r" % frozen)
 
     shifted = np.roll(np.roll(base, 11, axis=0), -7, axis=1)
@@ -358,13 +407,13 @@ def selftest(verbose=True):
     if verbose:
         print("  translated by (11,-7)  median %.2f  global %s  articulation p90 %.2f"
               % (tr["median_disp_px"], tr["global_shift_px"],
-                 tr["articulation_p90_px"]))
+                 retired(tr, "articulation_p90_px")))
     if tr["global_shift_px"] != [11.0, -7.0]:
         fails.append("a pure translation must be recovered exactly, read %r"
                      % (tr["global_shift_px"],))
-    if tr["articulation_p90_px"] > 0.0:
+    if retired(tr, "articulation_p90_px") > 0.0:
         fails.append("a pure translation has no articulation, read %r"
-                     % tr["articulation_p90_px"])
+                     % retired(tr, "articulation_p90_px"))
 
     # THE ONE THAT MATTERS: redrawn in place. Fresh noise and a contrast change,
     # zero displacement. This is what every arm of this investigation looks like.
@@ -372,8 +421,9 @@ def selftest(verbose=True):
     ri = run(base, reinked)
     if verbose:
         print("  re-inked in place      median %.2f  p90 %.2f  moved>=4px %.3f"
-              % (ri["median_disp_px"], ri["p90_disp_px"], ri["moved_frac_4px"]))
-    if ri["p90_disp_px"] > 2.0 or ri["moved_frac_4px"] > 0.02:
+              % (ri["median_disp_px"], retired(ri, "p90_disp_px"),
+                 retired(ri, "moved_frac_4px")))
+    if retired(ri, "p90_disp_px") > 2.0 or retired(ri, "moved_frac_4px") > 0.02:
         fails.append("a redrawn-in-place pair must not read as motion, read %r" % ri)
 
     for f in fails:
@@ -424,14 +474,18 @@ def main() -> int:
         print("  MEDIAN DISPLACEMENT %.2fpx   <- the only number validated against a"
               % r["median_disp_px"])
         print("                                  clip known to move and one known to hold")
-        print("  UNRELIABLE ON LINE ART, printed only so nobody re-derives them:")
+        u = r["UNRELIABLE_ON_LINE_ART_DO_NOT_QUOTE"]
+        print("  RETIRED 2026-08-16 -- UNRELIABLE ON LINE ART, DO NOT QUOTE.")
+        print("  Printed only so nobody re-derives them and believes them:")
         print("    p90 %.2fpx  max %.2fpx  >=8px %.1f%%  articulation p90 %.2fpx"
-              % (r["p90_disp_px"], r["max_disp_px"], 100 * r["moved_frac_8px"],
-                 r["articulation_p90_px"]))
-        print("    (these read p90 110px and 85%% moved on a clip whose figure provably")
-        print("     does not move; max %.2f near 181 means blocks RAILED to the corner"
-              % r["max_disp_px"])
-        print("     of the search box. See the docstring. Do not quote them.)")
+              % (u["p90_disp_px"], u["max_disp_px"], 100 * u["moved_frac_8px"],
+                 u["articulation_p90_px"]))
+        print("    (these read p90 110px and 85% moved on the b13 control, a clip")
+        print("     whose figure provably does not move; max %.2f near %.0f means"
+              % (u["max_disp_px"], (2 ** 0.5) * r["search_radius_px"]))
+        print("     blocks RAILED to the corner of the +-%dpx search box. In the"
+              % r["search_radius_px"])
+        print("     --json file they are nested under the same shouting key.)")
         print("  global shift %s px   saturated %.1f%%   median confidence %.3f"
               % (r["global_shift_px"], 100 * r["saturated_frac"],
                  r["median_confidence"]))

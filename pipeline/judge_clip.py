@@ -152,8 +152,21 @@ def print_report(r: dict) -> None:
         return
     print("  HOLD    period %s  strength %s  distinct %s  eff-fps %s"
           % (r["period"], r["strength"], r["distinct_pictures"], r["effective_fps"]))
-    print("  DEPTH   %s   (b13 0.029 hold | b06-DONE 0.215 | b02-FIXED 0.397)"
+    print("          (HOW OFTEN A NEW PICTURE ARRIVES, and NOT whether the body")
+    print("           acted: b17-full-s1, the one clip on record that performs")
+    print("           its action, reads 24.0 distinct -- WORSE than the frozen")
+    print("           b13 control's 32.0. For 'did the body move' use")
+    print("           pipeline/body_motion.py median over a LADDER of pairs.)")
+    # The old line here printed "(b13 0.029 hold | b06-DONE 0.215 | b02-FIXED
+    # 0.397)", which reads as a ladder where higher is better. IT IS NOT ONE.
+    # Depth is INVERTED as an action signal and the reference points that prove
+    # it are printed instead, every run, so no lane can rank by depth without
+    # reading why it must not. (727de28b / 77cc8277; docstring above.)
+    print("  DEPTH   %s   RETIRED AS AN ACTION SIGNAL -- IT IS INVERTED."
           % r["depth"])
+    print("          observed: 0.038 b13 control (FROZEN) < 0.293 b17-full-s1")
+    print("          (A COMPLETE STAND-UP) < 0.516 b06-d1neg (NO HUMAN MOTION).")
+    print("          Do not rank, threshold or judge by it in either direction.")
     if r["terminal_freeze_frames"]:
         print("  FREEZE  %d frames dead at the tail, from frame %d -- ncc 1.0000"
               % (r["terminal_freeze_frames"], r["terminal_freeze_starts_at_frame"]))

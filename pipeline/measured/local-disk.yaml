@@ -12,13 +12,13 @@
 # `python3 pipeline/box_cache.py disk` (and by every plan/reclaim run) on
 # the machine it describes, and the page prints the date so it ages in
 # public rather than pretending to be current.
-measured_on: 2026-08-15T02:21:50
+measured_on: 2026-08-21T17:48:12
 host: Artovons-MacBook-Pro.local
-free_bytes: 12587417600
+free_bytes: 32538120192
 total_bytes: 494384795648
 warn_below_bytes: 21474836480
-cached_media_bytes: 739767697
+cached_media_bytes: 768222648
 box: rtx5090
-box_free_bytes: 217402703872
+box_free_bytes: 253658812416
 reclaimable_bytes: 406815492
-box_checked_on: 2026-08-11T15:54:20
+box_checked_on: 2026-08-15T10:45:05

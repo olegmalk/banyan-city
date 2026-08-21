@@ -3,7 +3,31 @@
 .......... poscontrol-a2-human-runner.mp4
 .......... poscontrol-a3-b13-standup.mp4
 
-== CADENCE (hold_period + depth) ==
+################################################################################
+# RETIREMENT BANNER, added 2026-08-16 with the report that reads this file
+# (pipeline/research/ltx23-poscontrol-b13-0816.md). The tables below print
+# retired columns. THEY ARE HERE SO NOBODY RE-DERIVES THEM, NOT TO BE QUOTED.
+#
+#   QUOTABLE:  med  -- median block displacement, read across the LADDER of
+#              pairs. It has a FLOOR: the provably-frozen a0 control reads
+#              12-19px, so on this material under ~20px means "did not move".
+#
+#   RETIRED:   depth       INVERTED as an action signal. In the table below the
+#                          full stand-up (a3) reads 0.031 and the frozen control
+#                          (a0) reads 0.038 -- the acting clip scores LOWER.
+#                          b06-d1neg, with zero human motion, reads 0.516.
+#              pics / eff  a3 (a COMPLETE STAND-UP) reads 48.0 pics, the same
+#                          number guidance-1.0 and the blurred plate reached
+#                          with no body motion at all. a2 (a full running gait)
+#                          reads 12.0, the worst here.
+#              period/str  cadence, not action. Same reason.
+#              p90 max     railed to the +-128px search-box corner on cel line
+#              >=8px%      art. 76-91% "moved" on the frozen a0 control.
+#              artic sat   Do not quote. See pipeline/body_motion.py
+#                          RETIRED_METRICS.
+################################################################################
+
+== CADENCE (hold_period + depth) -- RETIRED COLUMNS, SEE BANNER ABOVE ==
 clip                                     period    str    pics    eff   depth  meanMAD
 poscontrol-a0-b13-control.mp4                 3  0.923    32.0    8.0  0.0377    3.188
 poscontrol-a1-world-waterfall.mp4             2  0.917    48.0   12.0  0.8159    8.182
@@ -11,6 +35,8 @@ poscontrol-a2-human-runner.mp4                8  0.622    12.0    3.0  0.8838   
 poscontrol-a3-b13-standup.mp4                 2  0.956    48.0   12.0   0.031    4.857
 
 == BODY DISPLACEMENT LADDER (px at 704x1280; artic = after removing the global median) ==
+   ONLY THE `med` COLUMN IS QUOTABLE. p90 / max / >=8px% / >=16px% / art90 / sat
+   are RETIRED -- see the banner at the top of this file.
 poscontrol-a0-b13-control.mp4
    pair           med      p90      max   >=8px%  >=16px%  global(dy,dx)  art90   sat%
    f0  >f4       16.00   122.32   181.02     87.6     53.8    (12.0, 0.0) 120.90    5.0
