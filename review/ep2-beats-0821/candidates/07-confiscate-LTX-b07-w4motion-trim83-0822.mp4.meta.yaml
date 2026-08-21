@@ -1,0 +1,33 @@
+# Shot provenance (7.2) - EDIT of a rendered mp4. No sampler ran for this file.
+platform: local-deterministic (ffmpeg trim of a rendered mp4)
+model: none - no sampler ran for this clip
+model_licence: n/a - the edit adds no model output
+source_clip: 07-confiscate-LTX-ep2-b07-w4motion-0822.mp4
+source_path: farm-out/ep2-b07-w4motion-0822/07-confiscate-LTX-ep2-b07-w4motion-0822.mp4
+source_sha256: 4959b40e24012c121a5f70bb7bf515f1b255777de0ef5956892608c12adb143a
+source_frames: 105
+source_platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+source_model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+source_model_licence: LTX-2 Community License Agreement
+shot_beat: 20
+size: 704x1280
+fps: 24.0
+frames: 83
+seconds: 3.458
+edit: ffmpeg select frames 0..82 of 105, re-encoded libx264 crf 10
+frames_cut_head: 0
+frames_cut_tail: 22
+seed: 20260877
+guidance: 2.0
+steps: 8@352x640+3@704x1280
+task: ep2-b07-w4motion-trim-0822
+cost_usd: 0
+mode: production
+why_trimmed: 'TWO FIGURES FOR 83 FRAMES AND THEN THE GOBLIN LEAVES. Stepped at 6-frame intervals
+  from f80: through f82 both figures are present and the guard''s finger is aimed AT the goblin''s
+  face, which is the beat. By f86 the guard''s hand has lifted off the point into a raised
+  finger and the goblin has begun shrinking out of frame; by f104 the goblin is gone entirely
+  and a stray boot is drawn in the grass. Cut where the point is still landing. Beat 07 came
+  back with NO GUARD AT ALL on both previous attempts, so a clip with two figures and a completed
+  point is the thing this beat has been missing, and the tail is the usual per-clip window
+  rather than a staging fault.'

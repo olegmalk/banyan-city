@@ -314,6 +314,12 @@ BEATS = {
         faults_from="ship-manifest.yaml beat 7 + goblin_design_audit_0820 beats.7",
         inflight="A two-figure plate re-render is QUEUED on the box (ep2-b07-twofig-r2-0821). Its first round drew a good guard — armoured, helmeted, a grown man — but gave the goblin round green eyes instead of the canon slit, and a plain crew-neck tee instead of the collar. Round 2 buys the eye back. No clip yet.",
         candidates=[
+            dict(file=f"{CAND_URL}/07-confiscate-LTX-b07-w4motion-trim83-0822.mp4",
+                 poster=f"{POSTER_URL}/07-confiscate-LTX-b07-w4motion-trim83-0822.jpg",
+                 label="TWO FIGURES AND A POINT THAT LANDS — tonight, newest", tag="warn",
+                 verdict="For the first time this beat has a guard in it. He is the man you picked — dark cropped hair, round wire glasses, no helmet — he is taller, he raises his arm and his finger ends up aimed at the goblin's face, and the goblin is your goblin: small off-white eyes, dark pupils, broad head, no white hair, no spectacles. Cut at frame 83, where the point is still landing. TWO THINGS STILL WRONG: the guard is wearing the goblin's mandarin-collar tunic instead of his own tan tunic and white sash, and past frame 86 the goblin shrinks out of frame and leaves the guard alone with a stray boot in the grass.",
+                 diff="This beat came back with NO GUARD AT ALL on both previous tries, because the wording never PLACED him — a figure this model is not told to put somewhere is a figure it does not draw. He is placed now. The old wording also called him \"one tall armoured city guard in a helmet\", which stopped being the character on 08-22 when you picked the beat-09 close-up; a helmet would also have hidden the hair that ruling is about. Wardrobe is the next thing to fix and it is a wording fix, not a new plate.",
+                 src="pipeline/jobs/ep2-b07-w4motion-0822.yaml + taste/refs/guard1-canon-founder-0822.png"),
             dict(file=f"{CAND_URL}/07-evidence-LTX-ep2-b07-canonmotion-0821.mp4",
                  poster=f"{POSTER_URL}/07-evidence-LTX-ep2-b07-canonmotion-0821.jpg",
                  label="canon-motion, round 1 — today", tag="fail",
