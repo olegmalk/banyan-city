@@ -2,17 +2,1325 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "24042064c09e9c1f552e1714e1a4a0d257ce9d36",
-  "measured_at": "2026-08-21T09:01:56Z",
-  "job_count": 1187,
-  "ok": 1119,
-  "failed": 68,
-  "upcoming_count": 82,
+  "source_commit": "aadb3c6295bd4b30a0d02cae6b9b153455bd5ba0",
+  "measured_at": "2026-08-21T09:55:02Z",
+  "job_count": 1215,
+  "ok": 1137,
+  "failed": 78,
+  "upcoming_count": 86,
   "skipped_sidecars": null,
   "skipped_specs": null,
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep3-sapfld2-r04-0821-1787305788",
+   "task": "ep3-sapfld2-r04-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:52:26Z",
+   "finished_at": "2026-08-21T09:52:44Z",
+   "duration_s": 18,
+   "sidecar": "farm-out/box/ep3-sapfld2-r04-0821-1787305788.json",
+   "spec_file": "pipeline/jobs/ep3-sapfld2-r04-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA DATASET's scene axis, and the crop that gives it a scale axis. pipeline/lora/README.md wants >=20 composited saplings across distinct scenes, scales and lighting; round 1 returned exactly one usable ground plane out of ten and this batch buys the breadth off the cell that worked. Nothing here enters a cut and nothing here is a beat.",
+    "why": "LIGHTING, cool end. Backlight is the hardest case for the crescent highlight b19 authored against a front-lit plate. ROUND 1 WENT 1 FOR 10 AND THE FRAMING WORD WAS THE CAUSE. `close-up` and `medium shot` on a prompt with every figure tag stripped had nothing to be close to, so the sampler magnified the grass: six of ten came back as macro texture with no ground plane. p09, the only wide cell and the one the spec argued against filing, is the only plate worth keeping. Its framing is frozen here…",
+    "success": "One 832x1216 png at seed 20260924, cel dialect, of in a green meadow, tall grass, morning, mist, backlighting at 'wide shot, low angle', WITH NO PLANT AND NO FIGURE IN IT and a clean drawable ground plane in the lower centre. Judged by eye at 1:1 against the five D-clauses, as one contact sheet with its seven siblings.",
+    "owner": "sapling-dataset lane, 2026-08-21 round 2",
+    "est_minutes": 3,
+    "priority": 39
+   },
+   "artifacts_dir": "farm-out/ep3-sapfld2-r04-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfld2-r04-0821/ep3-sapfld2-r04-0821-nocontrol.png",
+     "name": "ep3-sapfld2-r04-0821-nocontrol.png",
+     "bytes": 1190517,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a green meadow, tall grass, morning, mist, backlighting, wide shot, low angle",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfld2-r04-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfld2-r03-0821-1787305785",
+   "task": "ep3-sapfld2-r03-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:52:01Z",
+   "finished_at": "2026-08-21T09:52:20Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep3-sapfld2-r03-0821-1787305785.json",
+   "spec_file": "pipeline/jobs/ep3-sapfld2-r03-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA DATASET's scene axis, and the crop that gives it a scale axis. pipeline/lora/README.md wants >=20 composited saplings across distinct scenes, scales and lighting; round 1 returned exactly one usable ground plane out of ten and this batch buys the breadth off the cell that worked. Nothing here enters a cut and nothing here is a beat.",
+    "why": "LIGHTING, warm end. Long shadows give the composite's light-carry step the strongest gradient to measure. Round 1's sunset cells failed on framing, not on light, so the lighting axis is untested rather than closed. ROUND 1 WENT 1 FOR 10 AND THE FRAMING WORD WAS THE CAUSE. `close-up` and `medium shot` on a prompt with every figure tag stripped had nothing to be close to, so the sampler magnified the grass: six of ten came back as macro texture with no ground plane. p09, the only wide cell and th…",
+    "success": "One 832x1216 png at seed 20260923, cel dialect, of in a green meadow, tall grass, sunset, orange sky, long shadows at 'wide shot, low angle', WITH NO PLANT AND NO FIGURE IN IT and a clean drawable ground plane in the lower centre. Judged by eye at 1:1 against the five D-clauses, as one contact sheet with its seven siblings.",
+    "owner": "sapling-dataset lane, 2026-08-21 round 2",
+    "est_minutes": 3,
+    "priority": 39
+   },
+   "artifacts_dir": "farm-out/ep3-sapfld2-r03-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfld2-r03-0821/ep3-sapfld2-r03-0821-nocontrol.png",
+     "name": "ep3-sapfld2-r03-0821-nocontrol.png",
+     "bytes": 1274812,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a green meadow, tall grass, sunset, orange sky, long shadows, wide shot, low angle",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfld2-r03-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfld2-r02-0821-1787305782",
+   "task": "ep3-sapfld2-r02-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:51:34Z",
+   "finished_at": "2026-08-21T09:51:52Z",
+   "duration_s": 18,
+   "sidecar": "farm-out/box/ep3-sapfld2-r02-0821-1787305782.json",
+   "spec_file": "pipeline/jobs/ep3-sapfld2-r02-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA DATASET's scene axis, and the crop that gives it a scale axis. pipeline/lora/README.md wants >=20 composited saplings across distinct scenes, scales and lighting; round 1 returned exactly one usable ground plane out of ten and this batch buys the breadth off the cell that worked. Nothing here enters a cut and nothing here is a beat.",
+    "why": "WILDFLOWERS REMOVED. They are the one structure in p09's foreground the composite would have to paint over, and the negative already bans `flower` -- p09 passed with its positive and negative contradicting each other. This cell says which side of that contradiction the ground plane was on. ROUND 1 WENT 1 FOR 10 AND THE FRAMING WORD WAS THE CAUSE. `close-up` and `medium shot` on a prompt with every figure tag stripped had nothing to be close to, so the sampler magnified the grass: six of ten cam…",
+    "success": "One 832x1216 png at seed 20260922, cel dialect, of in a green meadow, tall grass, clear sky, day at 'wide shot, low angle', WITH NO PLANT AND NO FIGURE IN IT and a clean drawable ground plane in the lower centre. Judged by eye at 1:1 against the five D-clauses, as one contact sheet with its seven siblings.",
+    "owner": "sapling-dataset lane, 2026-08-21 round 2",
+    "est_minutes": 3,
+    "priority": 39
+   },
+   "artifacts_dir": "farm-out/ep3-sapfld2-r02-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfld2-r02-0821/ep3-sapfld2-r02-0821-nocontrol.png",
+     "name": "ep3-sapfld2-r02-0821-nocontrol.png",
+     "bytes": 1863830,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a green meadow, tall grass, clear sky, day, wide shot, low angle",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfld2-r02-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfld2-r01-0821-1787305777",
+   "task": "ep3-sapfld2-r01-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:51:07Z",
+   "finished_at": "2026-08-21T09:51:27Z",
+   "duration_s": 20,
+   "sidecar": "farm-out/box/ep3-sapfld2-r01-0821-1787305777.json",
+   "spec_file": "pipeline/jobs/ep3-sapfld2-r01-0821.yaml",
+   "purpose": {
+    "consumer": "THE SAPLING LoRA DATASET's scene axis, and the crop that gives it a scale axis. pipeline/lora/README.md wants >=20 composited saplings across distinct scenes, scales and lighting; round 1 returned exactly one usable ground plane out of ten and this batch buys the breadth off the cell that worked. Nothing here enters a cut and nothing here is a beat.",
+    "why": "p09's OWN scene words at a new seed. Not filler -- it is the control, and the batch cannot tell a scene finding from a seed lottery without it. One clean cell can be luck; the b12 lane learned that at a cost of four takes. ROUND 1 WENT 1 FOR 10 AND THE FRAMING WORD WAS THE CAUSE. `close-up` and `medium shot` on a prompt with every figure tag stripped had nothing to be close to, so the sampler magnified the grass: six of ten came back as macro texture with no ground plane. p09, the only wide cel…",
+    "success": "One 832x1216 png at seed 20260921, cel dialect, of in a green meadow, wildflowers in the distance, clear sky, day at 'wide shot, low angle', WITH NO PLANT AND NO FIGURE IN IT and a clean drawable ground plane in the lower centre. Judged by eye at 1:1 against the five D-clauses, as one contact sheet with its seven siblings.",
+    "owner": "sapling-dataset lane, 2026-08-21 round 2",
+    "est_minutes": 3,
+    "priority": 39
+   },
+   "artifacts_dir": "farm-out/ep3-sapfld2-r01-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfld2-r01-0821/ep3-sapfld2-r01-0821-nocontrol.png",
+     "name": "ep3-sapfld2-r01-0821-nocontrol.png",
+     "bytes": 1367312,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a green meadow, wildflowers in the distance, clear sky, day, wide shot, low angle",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfld2-r01-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b13-ageb-e1-0821-1787305571",
+   "task": "ep2-b13-ageb-e1-0821",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:46:20Z",
+   "finished_at": "2026-08-21T09:46:47Z",
+   "duration_s": 27,
+   "sidecar": "farm-out/box/ep2-b13-ageb-e1-0821-1787305571.json",
+   "spec_file": "pipeline/jobs/ep2-b13-ageb-e1-0821.yaml",
+   "purpose": {
+    "consumer": "THE SEVEN-BEAT WAVE, still held on one clause. Everything else the age pivot needed is settled: the age reads, the identity holds with `blank eyes` struck, the tusk arrives. This is the last open question before the wave is emitted -- and it is emitted either way, because a recorded engine limit is an answer and an unrendered wave is not.",
+    "why": "THE TWO TAGS I KEPT AND DEFENDED ARE THE SUSPECT. A NEW QUESTION'S FIRST ROUND, NOT THIS QUESTION'S THIRD, and the distinction is load-bearing rather than a way around the cap. m1 and m2 asked IS IT THE ADAPTER -- where it acts, how hard it acts -- and the answer came back NO twice. That question is closed. What sets the mood is a DIFFERENT question, it was raised by m2's own result, and this is its first rung. ONE VARIABLE: `tsurime, thick eyebrows` OUT of the identity clause. Everything else…",
+    "success": "ONE 832x1216 png. Judged on THREE clauses against the sample at 1:1: E1 (did the exhausted relief arrive), T1 (did the blank eyes survive losing `tsurime`) and P1 (is there still a brow). C1 is measured and reported but is NOT this rung's question.",
+    "owner": "wave lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 2
+   },
+   "artifacts_dir": "farm-out/ep2-b13-ageb-e1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-ageb-e1-0821/ep2-b13-ageb-e1-0821-ipahead.png",
+     "name": "ep2-b13-ageb-e1-0821-ipahead.png",
+     "bytes": 1425895,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-ageb-e1-0821/jerry-skel-h240seat-0821.png",
+     "name": "jerry-skel-h240seat-0821.png",
+     "bytes": 9027,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-ageb-e1-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, 1boy, solo, young goblin, slim, green skin, bald head, patchwork cloak, tusks, broken tusk, tired, half-closed eyes, light smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin, old man, hair, beard, chibi, super deformed, round-bellied, squat, grey skin, pale skin",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-ageb-e1-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p10-0821-1787304826-again07a650",
+   "task": "ep3-sapfield-p10-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:43:35Z",
+   "finished_at": "2026-08-21T09:43:54Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep3-sapfield-p10-0821-1787304826-again07a650.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p10-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "SCENE, and the only cell with a MAN-MADE edge in it. A path gives the composite a clean unvegetated strip to root into, which is the D2 clause bought by the scene words instead of hoped for from the sampler. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out, ~3 minutes of card time, and the alternat…",
+    "success": "One 832x1216 png at seed 20260910, cel dialect, of beside a dirt path, tall grass, late afternoon, warm light framed 'close-up, low angle, ground level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p10-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p10-0821/ep3-sapfield-p10-0821-nocontrol.png",
+     "name": "ep3-sapfield-p10-0821-nocontrol.png",
+     "bytes": 1411982,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, beside a dirt path, tall grass, late afternoon, warm light, close-up, low angle, ground level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p10-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b13-ageb-m2-0821-1787305349",
+   "task": "ep2-b13-ageb-m2-0821",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:43:01Z",
+   "finished_at": "2026-08-21T09:43:29Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b13-ageb-m2-0821-1787305349.json",
+   "spec_file": "pipeline/jobs/ep2-b13-ageb-m2-0821.yaml",
+   "purpose": {
+    "consumer": "THE SEVEN-BEAT WAVE, which is held on this. The sample settled the age and the identity and left ONE thing open -- whether the beat's own emotion can reach the face. These two frames name the mechanism; the wave is emitted against whichever wins, and if neither does the wave ships at the sample's recipe with E1 recorded as an engine limit rather than a defect we keep re-asking.",
+    "why": "ROUND TWO FOR THE AGE-B SAMPLE. THE ADAPTER'S GRIP, LOOSENED SO THE WORDING CAN BE HEARD. MECHANISM 2: the adapter pins the EXPRESSION along with the identity. ip-scale 0.7 -> 0.45, and nothing else -- same mask as the sample, so this is one variable from it. THE REASONING IS THE SAMPLE'S OWN CONTROL. Option B wears the same scowl with no expression tags, and this sample wears it with three. The tags are not weak, they are OUTVOTED: inside the mask the reference is worth 0.7 and the reference h…",
+    "success": "ONE 832x1216 png. Judged against ep2-b13-ageb-s1-0821 at 1:1 on exactly three clauses -- E1 (did the exhaustion arrive), T1 (did the blank eyes survive) and C1 (magenta in the mask region, measured against the sample's 1.17%).",
+    "owner": "wave lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 2
+   },
+   "artifacts_dir": "farm-out/ep2-b13-ageb-m2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-ageb-m2-0821/ep2-b13-ageb-m2-0821-ipahead.png",
+     "name": "ep2-b13-ageb-m2-0821-ipahead.png",
+     "bytes": 1485573,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-ageb-m2-0821/jerry-skel-h240seat-0821.png",
+     "name": "jerry-skel-h240seat-0821.png",
+     "bytes": 9027,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-ageb-m2-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, 1boy, solo, young goblin, slim, green skin, bald head, patchwork cloak, tsurime, thick eyebrows, tusks, broken tusk, tired, half-closed eyes, light smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin, old man, hair, beard, chibi, super deformed, round-bellied, squat, grey skin, pale skin",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-ageb-m2-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-b13-ageb-m1-0821-1787305346",
+   "task": "ep2-b13-ageb-m1-0821",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:42:28Z",
+   "finished_at": "2026-08-21T09:42:56Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b13-ageb-m1-0821-1787305346.json",
+   "spec_file": "pipeline/jobs/ep2-b13-ageb-m1-0821.yaml",
+   "purpose": {
+    "consumer": "THE SEVEN-BEAT WAVE, which is held on this. The sample settled the age and the identity and left ONE thing open -- whether the beat's own emotion can reach the face. These two frames name the mechanism; the wave is emitted against whichever wins, and if neither does the wave ships at the sample's recipe with E1 recorded as an engine limit rather than a defect we keep re-asking.",
+    "why": "ROUND TWO FOR THE AGE-B SAMPLE. THE MASK, FITTED TO THE HEAD IT IS SUPPOSED TO MASK. MECHANISM 1: the adapter is acting on the wrong region. The box is derived from the skeleton -- crown to chin, head width -- instead of inherited from a standing figure at another head_frac, and on this pose that is 323,440,509,673 against the sample's 289,364,541,642. It drops the sky, and it PICKS UP THE MOUTH. THE PREDICTION IS SPLIT AND BOTH HALVES ARE INFORMATIVE. C1 should improve -- less non-head area fo…",
+    "success": "ONE 832x1216 png. Judged against ep2-b13-ageb-s1-0821 at 1:1 on exactly three clauses -- E1 (did the exhaustion arrive), T1 (did the blank eyes survive) and C1 (magenta in the mask region, measured against the sample's 1.17%).",
+    "owner": "wave lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 2
+   },
+   "artifacts_dir": "farm-out/ep2-b13-ageb-m1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-ageb-m1-0821/ep2-b13-ageb-m1-0821-ipahead.png",
+     "name": "ep2-b13-ageb-m1-0821-ipahead.png",
+     "bytes": 1516669,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-ageb-m1-0821/jerry-skel-h240seat-0821.png",
+     "name": "jerry-skel-h240seat-0821.png",
+     "bytes": 9027,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-ageb-m1-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, 1boy, solo, young goblin, slim, green skin, bald head, patchwork cloak, tsurime, thick eyebrows, tusks, broken tusk, tired, half-closed eyes, light smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin, old man, hair, beard, chibi, super deformed, round-bellied, squat, grey skin, pale skin",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-ageb-m1-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p09-0821-1787304823-again81ef98",
+   "task": "ep3-sapfield-p09-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:42:03Z",
+   "finished_at": "2026-08-21T09:42:22Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep3-sapfield-p09-0821-1787304823-again81ef98.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p09-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "THE WIDEST CELL, and the one the ep2-b16-field batch's failure argues against. `wide shot` without `scenery` is the untested half of that finding: if p09 holds the cel dialect, the vista was the word and not the framing, and the 1.2m-1.6m end of the growth ladder gets a ground plane. If it breaks, the finding is confirmed at a cost of 3 minutes. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic d…",
+    "success": "One 832x1216 png at seed 20260909, cel dialect, of in a green meadow, wildflowers in the distance, clear sky, day framed 'wide shot, low angle', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p09-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p09-0821/ep3-sapfield-p09-0821-nocontrol.png",
+     "name": "ep3-sapfield-p09-0821-nocontrol.png",
+     "bytes": 1433391,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a green meadow, wildflowers in the distance, clear sky, day, wide shot, low angle",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p09-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p08-0821-1787304820-againee5ef0",
+   "task": "ep3-sapfield-p08-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:40:18Z",
+   "finished_at": "2026-08-21T09:40:36Z",
+   "duration_s": 18,
+   "sidecar": "farm-out/box/ep3-sapfield-p08-0821-1787304820-againee5ef0.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p08-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "THE FLAT CELL, filed deliberately against D4. If a directionless plate produces a composite that still reads as belonging, the light-carry step is doing less than its docstring claims and that is worth one plate to find out. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out, ~3 minutes of card time,…",
+    "success": "One 832x1216 png at seed 20260908, cel dialect, of on bare dirt ground, patchy grass, overcast, soft light framed 'medium shot, eye level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p08-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p08-0821/ep3-sapfield-p08-0821-nocontrol.png",
+     "name": "ep3-sapfield-p08-0821-nocontrol.png",
+     "bytes": 1238921,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, on bare dirt ground, patchy grass, overcast, soft light, medium shot, eye level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p08-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p07-0821-1787304817-again05e930",
+   "task": "ep3-sapfield-p07-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:39:54Z",
+   "finished_at": "2026-08-21T09:40:12Z",
+   "duration_s": 18,
+   "sidecar": "farm-out/box/ep3-sapfield-p07-0821-1787304817-again05e930.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p07-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "LIGHTING, the cool end. Backlight is the hardest case for the composite's crescent highlight -- b19 authored that highlight against a front-lit plate -- so it is the cell most likely to expose the instrument rather than the words. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out, ~3 minutes of card…",
+    "success": "One 832x1216 png at seed 20260907, cel dialect, of in tall grass, morning, mist, backlighting framed 'close-up, low angle, ground level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p07-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p07-0821/ep3-sapfield-p07-0821-nocontrol.png",
+     "name": "ep3-sapfield-p07-0821-nocontrol.png",
+     "bytes": 1266525,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in tall grass, morning, mist, backlighting, close-up, low angle, ground level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p07-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p06-0821-1787304814-againd64ab0",
+   "task": "ep3-sapfield-p06-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:39:29Z",
+   "finished_at": "2026-08-21T09:39:48Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep3-sapfield-p06-0821-1787304814-againd64ab0.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p06-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "SCENE + a horizon, without the word that bought a vista last time. The hillside is the one cell where a high horizon is asked for by the ground plane rather than by a framing word. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out, ~3 minutes of card time, and the alternative is compositing frame tw…",
+    "success": "One 832x1216 png at seed 20260906, cel dialect, of on a grassy hillside, blue sky, white clouds, midday framed 'medium shot, eye level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p06-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p06-0821/ep3-sapfield-p06-0821-nocontrol.png",
+     "name": "ep3-sapfield-p06-0821-nocontrol.png",
+     "bytes": 951501,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, on a grassy hillside, blue sky, white clouds, midday, medium shot, eye level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p06-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p05-0821-1787304811-again3eae40",
+   "task": "ep3-sapfield-p05-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:39:06Z",
+   "finished_at": "2026-08-21T09:39:23Z",
+   "duration_s": 17,
+   "sidecar": "farm-out/box/ep3-sapfield-p05-0821-1787304811-again3eae40.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p05-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "SCENE, the furthest cell from tall grass. Wet stone and dapple are the hardest palette for the composite's plate-sampled greens; if the drawn sapling cannot be lit into this one, that is a finding about the instrument and it is cheaper to learn here than at frame twenty. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent…",
+    "success": "One 832x1216 png at seed 20260905, cel dialect, of beside a shallow creek, wet stones, dappled sunlight, day framed 'close-up, low angle, ground level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p05-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p05-0821/ep3-sapfield-p05-0821-nocontrol.png",
+     "name": "ep3-sapfield-p05-0821-nocontrol.png",
+     "bytes": 1241156,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, beside a shallow creek, wet stones, dappled sunlight, day, close-up, low angle, ground level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p05-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p04-0821-1787304808-again178658",
+   "task": "ep3-sapfield-p04-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:37:18Z",
+   "finished_at": "2026-08-21T09:37:36Z",
+   "duration_s": 18,
+   "sidecar": "farm-out/box/ep3-sapfield-p04-0821-1787304808-again178658.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p04-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "The p03 x p02 corner, so the two axes are crossed and not merely sampled. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out, ~3 minutes of card time, and the alternative is compositing frame twenty of a training set onto the same tall-grass backdrop as frames one to nineteen.",
+    "success": "One 832x1216 png at seed 20260904, cel dialect, of in a field of dry grass, sunset, orange sky, long shadows framed 'medium shot, eye level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p04-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p04-0821/ep3-sapfield-p04-0821-nocontrol.png",
+     "name": "ep3-sapfield-p04-0821-nocontrol.png",
+     "bytes": 907339,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a field of dry grass, sunset, orange sky, long shadows, medium shot, eye level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p04-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p03-0821-1787304805-againf56b80",
+   "task": "ep3-sapfield-p03-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:36:54Z",
+   "finished_at": "2026-08-21T09:37:12Z",
+   "duration_s": 18,
+   "sidecar": "farm-out/box/ep3-sapfield-p03-0821-1787304805-againf56b80.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p03-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "LIGHTING, one variable from p01. Long shadows give the composite step the strongest light direction to measure and carry into the plant; a flat plate makes that step a no-op. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out, ~3 minutes of card time, and the alternative is compositing frame twenty o…",
+    "success": "One 832x1216 png at seed 20260903, cel dialect, of in a field of dry grass, sunset, orange sky, long shadows framed 'close-up, low angle, ground level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p03-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p03-0821/ep3-sapfield-p03-0821-nocontrol.png",
+     "name": "ep3-sapfield-p03-0821-nocontrol.png",
+     "bytes": 1396003,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a field of dry grass, sunset, orange sky, long shadows, close-up, low angle, ground level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p03-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p02-0821-1787304802-again6f8ca8",
+   "task": "ep3-sapfield-p02-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:36:30Z",
+   "finished_at": "2026-08-21T09:36:48Z",
+   "duration_s": 18,
+   "sidecar": "farm-out/box/ep3-sapfield-p02-0821-1787304802-again6f8ca8.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p02-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "SCALE, one variable from p01. The ground plane a 55-90 cm sapling needs -- ep3's node 003b sits at ~55 cm, three leaves. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out, ~3 minutes of card time, and the alternative is compositing frame twenty of a training set onto the same tall-grass backdrop as…",
+    "success": "One 832x1216 png at seed 20260902, cel dialect, of in tall grass, sunlight, day framed 'medium shot, eye level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p02-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p02-0821/ep3-sapfield-p02-0821-nocontrol.png",
+     "name": "ep3-sapfield-p02-0821-nocontrol.png",
+     "bytes": 1342379,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in tall grass, sunlight, day, medium shot, eye level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p02-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p01-0821-1787304798-againd53828",
+   "task": "ep3-sapfield-p01-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:36:06Z",
+   "finished_at": "2026-08-21T09:36:24Z",
+   "duration_s": 18,
+   "sidecar": "farm-out/box/ep3-sapfield-p01-0821-1787304798-againd53828.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p01-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "CONTROL. The ratified recipe's own location clause and the tightest scale. Nearest cell to a picture this checkpoint has returned fourteen times; if THIS one breaks dialect the cause is `no humans`, not the scene words, and the whole route changes. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out,…",
+    "success": "One 832x1216 png at seed 20260901, cel dialect, of in tall grass, sunlight, day framed 'close-up, low angle, ground level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p01-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p01-0821/ep3-sapfield-p01-0821-nocontrol.png",
+     "name": "ep3-sapfield-p01-0821-nocontrol.png",
+     "bytes": 1329783,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in tall grass, sunlight, day, close-up, low angle, ground level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p01-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b13-ageb-s1-0821-1787304927",
+   "task": "ep2-b13-ageb-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:35:31Z",
+   "finished_at": "2026-08-21T09:36:00Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b13-ageb-s1-0821-1787304927.json",
+   "spec_file": "pipeline/jobs/ep2-b13-ageb-s1-0821.yaml",
+   "purpose": {
+    "consumer": "THE JUDGEMENT THAT UNBLOCKS THE WHOLE AGE PIVOT, and nothing else renders until it is made. On this one frame depend: the seven-beat plate wave at age B, seven motion tranches derived from those plates, the LoRA dataset re-curation at age B with expression variety, and `train-jerry`. All of them are HELD -- 14 motion jobs, 20 dataset scene jobs, 2 plates and the training job were renamed `.HOLD-age-pivot-0821` the moment the founder ruled, because every one of them would have rendered the adult…",
+    "why": "THE ONE SAMPLE FOR THE 2026-08-21 AGE PIVOT. Three rulings land in this frame at once and no set is rendered until it is judged by eye at 1:1. 1. AGE = OPTION B, head_frac 0.240, 4.17 heads, wording column w2. The founder ruled the axis younger and then handed the pick back: \"these are practically the same and they look lifeless... i already approved enough goblin images for you to decide\". B is the steward's call and is veto-able. 2. EXPRESSIVE FACES. `blank eyes`, `jitome` and `half-closed ey…",
+    "success": "ONE 832x1216 png at seed 20260823. A PASS is: the creature clauses hold (T4 ear first, then T1 eyes with `blank eyes` GONE, T2, T3, T7, C1), he reads as Option B (A1/A2), the beat's exhausted relief is legible with the caption covered (E1/E2/E3), and there is ONE tusk and it is broken (K1/K2). A PASS releases the seven-beat wave. A BREAK releases the isolate rungs and nothing else.",
+    "owner": "wave lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 2
+   },
+   "artifacts_dir": "farm-out/ep2-b13-ageb-s1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-ageb-s1-0821/ep2-b13-ageb-s1-0821-ipahead.png",
+     "name": "ep2-b13-ageb-s1-0821-ipahead.png",
+     "bytes": 1435139,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-ageb-s1-0821/jerry-skel-h240seat-0821.png",
+     "name": "jerry-skel-h240seat-0821.png",
+     "bytes": 9027,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-ageb-s1-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, 1boy, solo, young goblin, slim, green skin, bald head, patchwork cloak, tsurime, thick eyebrows, tusks, broken tusk, tired, half-closed eyes, light smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin, old man, hair, beard, chibi, super deformed, round-bellied, squat, grey skin, pale skin",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-ageb-s1-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p10-0821-1787303096",
+   "task": "ep3-sapfield-p10-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 9,
+   "failed_step": "hintskel",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:12:15Z",
+   "finished_at": "2026-08-21T09:12:19Z",
+   "duration_s": 4,
+   "sidecar": "farm-out/box/ep3-sapfield-p10-0821-1787303096.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p10-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "SCENE, and the only cell with a MAN-MADE edge in it. A path gives the composite a clean unvegetated strip to root into, which is the D2 clause bought by the scene words instead of hoped for from the sampler. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out, ~3 minutes of card time, and the alternat…",
+    "success": "One 832x1216 png at seed 20260910, cel dialect, of beside a dirt path, tall grass, late afternoon, warm light framed 'close-up, low angle, ground level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p10-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p10-0821/ep3-sapfield-p10-0821-nocontrol.png",
+     "name": "ep3-sapfield-p10-0821-nocontrol.png",
+     "bytes": 1411982,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, beside a dirt path, tall grass, late afternoon, warm light, close-up, low angle, ground level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p10-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p09-0821-1787303093",
+   "task": "ep3-sapfield-p09-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 9,
+   "failed_step": "hintskel",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:12:06Z",
+   "finished_at": "2026-08-21T09:12:10Z",
+   "duration_s": 4,
+   "sidecar": "farm-out/box/ep3-sapfield-p09-0821-1787303093.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p09-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "THE WIDEST CELL, and the one the ep2-b16-field batch's failure argues against. `wide shot` without `scenery` is the untested half of that finding: if p09 holds the cel dialect, the vista was the word and not the framing, and the 1.2m-1.6m end of the growth ladder gets a ground plane. If it breaks, the finding is confirmed at a cost of 3 minutes. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic d…",
+    "success": "One 832x1216 png at seed 20260909, cel dialect, of in a green meadow, wildflowers in the distance, clear sky, day framed 'wide shot, low angle', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p09-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p09-0821/ep3-sapfield-p09-0821-nocontrol.png",
+     "name": "ep3-sapfield-p09-0821-nocontrol.png",
+     "bytes": 1433391,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a green meadow, wildflowers in the distance, clear sky, day, wide shot, low angle",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p09-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p08-0821-1787303091",
+   "task": "ep3-sapfield-p08-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 9,
+   "failed_step": "hintskel",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:09:28Z",
+   "finished_at": "2026-08-21T09:09:31Z",
+   "duration_s": 3,
+   "sidecar": "farm-out/box/ep3-sapfield-p08-0821-1787303091.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p08-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "THE FLAT CELL, filed deliberately against D4. If a directionless plate produces a composite that still reads as belonging, the light-carry step is doing less than its docstring claims and that is worth one plate to find out. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out, ~3 minutes of card time,…",
+    "success": "One 832x1216 png at seed 20260908, cel dialect, of on bare dirt ground, patchy grass, overcast, soft light framed 'medium shot, eye level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p08-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p08-0821/ep3-sapfield-p08-0821-nocontrol.png",
+     "name": "ep3-sapfield-p08-0821-nocontrol.png",
+     "bytes": 1238921,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, on bare dirt ground, patchy grass, overcast, soft light, medium shot, eye level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p08-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p07-0821-1787303088",
+   "task": "ep3-sapfield-p07-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 9,
+   "failed_step": "hintskel",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:09:20Z",
+   "finished_at": "2026-08-21T09:09:23Z",
+   "duration_s": 3,
+   "sidecar": "farm-out/box/ep3-sapfield-p07-0821-1787303088.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p07-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "LIGHTING, the cool end. Backlight is the hardest case for the composite's crescent highlight -- b19 authored that highlight against a front-lit plate -- so it is the cell most likely to expose the instrument rather than the words. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out, ~3 minutes of card…",
+    "success": "One 832x1216 png at seed 20260907, cel dialect, of in tall grass, morning, mist, backlighting framed 'close-up, low angle, ground level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p07-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p07-0821/ep3-sapfield-p07-0821-nocontrol.png",
+     "name": "ep3-sapfield-p07-0821-nocontrol.png",
+     "bytes": 1266525,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in tall grass, morning, mist, backlighting, close-up, low angle, ground level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p07-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p06-0821-1787303085",
+   "task": "ep3-sapfield-p06-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 9,
+   "failed_step": "hintskel",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:09:12Z",
+   "finished_at": "2026-08-21T09:09:15Z",
+   "duration_s": 3,
+   "sidecar": "farm-out/box/ep3-sapfield-p06-0821-1787303085.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p06-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "SCENE + a horizon, without the word that bought a vista last time. The hillside is the one cell where a high horizon is asked for by the ground plane rather than by a framing word. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out, ~3 minutes of card time, and the alternative is compositing frame tw…",
+    "success": "One 832x1216 png at seed 20260906, cel dialect, of on a grassy hillside, blue sky, white clouds, midday framed 'medium shot, eye level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p06-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p06-0821/ep3-sapfield-p06-0821-nocontrol.png",
+     "name": "ep3-sapfield-p06-0821-nocontrol.png",
+     "bytes": 951501,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, on a grassy hillside, blue sky, white clouds, midday, medium shot, eye level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p06-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p05-0821-1787303082",
+   "task": "ep3-sapfield-p05-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 9,
+   "failed_step": "hintskel",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:09:04Z",
+   "finished_at": "2026-08-21T09:09:07Z",
+   "duration_s": 3,
+   "sidecar": "farm-out/box/ep3-sapfield-p05-0821-1787303082.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p05-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "SCENE, the furthest cell from tall grass. Wet stone and dapple are the hardest palette for the composite's plate-sampled greens; if the drawn sapling cannot be lit into this one, that is a finding about the instrument and it is cheaper to learn here than at frame twenty. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent…",
+    "success": "One 832x1216 png at seed 20260905, cel dialect, of beside a shallow creek, wet stones, dappled sunlight, day framed 'close-up, low angle, ground level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p05-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p05-0821/ep3-sapfield-p05-0821-nocontrol.png",
+     "name": "ep3-sapfield-p05-0821-nocontrol.png",
+     "bytes": 1241156,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, beside a shallow creek, wet stones, dappled sunlight, day, close-up, low angle, ground level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p05-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p04-0821-1787303079",
+   "task": "ep3-sapfield-p04-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 9,
+   "failed_step": "hintskel",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:06:32Z",
+   "finished_at": "2026-08-21T09:06:35Z",
+   "duration_s": 3,
+   "sidecar": "farm-out/box/ep3-sapfield-p04-0821-1787303079.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p04-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "The p03 x p02 corner, so the two axes are crossed and not merely sampled. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out, ~3 minutes of card time, and the alternative is compositing frame twenty of a training set onto the same tall-grass backdrop as frames one to nineteen.",
+    "success": "One 832x1216 png at seed 20260904, cel dialect, of in a field of dry grass, sunset, orange sky, long shadows framed 'medium shot, eye level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p04-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p04-0821/ep3-sapfield-p04-0821-nocontrol.png",
+     "name": "ep3-sapfield-p04-0821-nocontrol.png",
+     "bytes": 907339,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a field of dry grass, sunset, orange sky, long shadows, medium shot, eye level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p04-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p03-0821-1787303077",
+   "task": "ep3-sapfield-p03-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 9,
+   "failed_step": "hintskel",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:06:23Z",
+   "finished_at": "2026-08-21T09:06:27Z",
+   "duration_s": 4,
+   "sidecar": "farm-out/box/ep3-sapfield-p03-0821-1787303077.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p03-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "LIGHTING, one variable from p01. Long shadows give the composite step the strongest light direction to measure and carry into the plant; a flat plate makes that step a no-op. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out, ~3 minutes of card time, and the alternative is compositing frame twenty o…",
+    "success": "One 832x1216 png at seed 20260903, cel dialect, of in a field of dry grass, sunset, orange sky, long shadows framed 'close-up, low angle, ground level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p03-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p03-0821/ep3-sapfield-p03-0821-nocontrol.png",
+     "name": "ep3-sapfield-p03-0821-nocontrol.png",
+     "bytes": 1396003,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a field of dry grass, sunset, orange sky, long shadows, close-up, low angle, ground level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p03-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p02-0821-1787303074",
+   "task": "ep3-sapfield-p02-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 9,
+   "failed_step": "hintskel",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:06:15Z",
+   "finished_at": "2026-08-21T09:06:18Z",
+   "duration_s": 3,
+   "sidecar": "farm-out/box/ep3-sapfield-p02-0821-1787303074.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p02-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "SCALE, one variable from p01. The ground plane a 55-90 cm sapling needs -- ep3's node 003b sits at ~55 cm, three leaves. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out, ~3 minutes of card time, and the alternative is compositing frame twenty of a training set onto the same tall-grass backdrop as…",
+    "success": "One 832x1216 png at seed 20260902, cel dialect, of in tall grass, sunlight, day framed 'medium shot, eye level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p02-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p02-0821/ep3-sapfield-p02-0821-nocontrol.png",
+     "name": "ep3-sapfield-p02-0821-nocontrol.png",
+     "bytes": 1342379,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in tall grass, sunlight, day, medium shot, eye level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p02-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep3-sapfield-p01-0821-1787303071",
+   "task": "ep3-sapfield-p01-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 9,
+   "failed_step": "hintskel",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T09:06:06Z",
+   "finished_at": "2026-08-21T09:06:10Z",
+   "duration_s": 4,
+   "sidecar": "farm-out/box/ep3-sapfield-p01-0821-1787303071.json",
+   "spec_file": "pipeline/jobs/ep3-sapfield-p01-0821.yaml",
+   "purpose": {
+    "consumer": "pipeline/lora/manifest-sapling.yaml, WHICH DOES NOT EXIST YET AND IS THE POINT. The sapling gate in pipeline/lora/README.md is blocked on variety -- ~23 composites across five near-identical tall-grass scenes, every one of them on a plate with the scavenger in it. This plate is a goblin-free ground plane for step 2, where beat16_sapling_composite.py draws the canon two-leaf sapling into it at a height off the growth ladder. NOTHING HERE ENTERS A CUT and nothing here is a beat: an empty field wi…",
+    "why": "CONTROL. The ratified recipe's own location clause and the tightest scale. Nearest cell to a picture this checkpoint has returned fourteen times; if THIS one breaks dialect the cause is `no humans`, not the scene words, and the whole route changes. The batch exists because the ep2-b16-field-f1..f4 batch measured the cause of its own failure -- the word `scenery` bought a vista and a photographic dialect on all four plates, independent of framing -- and that word is absent here. $0 to find out,…",
+    "success": "One 832x1216 png at seed 20260901, cel dialect, of in tall grass, sunlight, day framed 'close-up, low angle, ground level', WITH NO PLANT AND NO FIGURE IN IT. Judged by eye at 1:1 against the five D-clauses in `bar`, as one contact sheet with its nine siblings. A plate carrying any figure is deleted rather than curated.",
+    "owner": "sapling-dataset lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 38
+   },
+   "artifacts_dir": "farm-out/ep3-sapfield-p01-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-sapfield-p01-0821/ep3-sapfield-p01-0821-nocontrol.png",
+     "name": "ep3-sapfield-p01-0821-nocontrol.png",
+     "bytes": 1329783,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in tall grass, sunlight, day, close-up, low angle, ground level",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep3-sapfield-p01-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
   {
    "id": "ep2-jerry-age-h265w2-0821-1787298082",
    "task": "ep2-jerry-age-h265w2-0821",
@@ -78990,6 +80298,62 @@
    "hold_reason": null,
    "spec_file": "pipeline/jobs/ep1-b14-v34-motion-r3.yaml",
    "authored_at": 1786333067
+  },
+  {
+   "id": "ep3-sapfld2-r05-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "state": "authored",
+   "priority": 39,
+   "est_minutes": 3,
+   "consumer": "THE SAPLING LoRA DATASET's scene axis, and the crop that gives it a scale axis. pipeline/lora/README.md wants >=20 composited saplings across distinct scenes, scales and lighting; round 1 returned exactly one usable ground plane out of ten and this batch buys the breadth off the cell that worked. N…",
+   "why_first": "TERRAIN.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep3-sapfld2-r05-0821.yaml",
+   "authored_at": 1787305729
+  },
+  {
+   "id": "ep3-sapfld2-r06-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "state": "authored",
+   "priority": 39,
+   "est_minutes": 3,
+   "consumer": "THE SAPLING LoRA DATASET's scene axis, and the crop that gives it a scale axis. pipeline/lora/README.md wants >=20 composited saplings across distinct scenes, scales and lighting; round 1 returned exactly one usable ground plane out of ten and this batch buys the breadth off the cell that worked. N…",
+   "why_first": "TERRAIN, the furthest cell from meadow.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep3-sapfld2-r06-0821.yaml",
+   "authored_at": 1787305729
+  },
+  {
+   "id": "ep3-sapfld2-r07-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "state": "authored",
+   "priority": 39,
+   "est_minutes": 3,
+   "consumer": "THE SAPLING LoRA DATASET's scene axis, and the crop that gives it a scale axis. pipeline/lora/README.md wants >=20 composited saplings across distinct scenes, scales and lighting; round 1 returned exactly one usable ground plane out of ten and this batch buys the breadth off the cell that worked. N…",
+   "why_first": "PALETTE.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep3-sapfld2-r07-0821.yaml",
+   "authored_at": 1787305729
+  },
+  {
+   "id": "ep3-sapfld2-r08-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "state": "authored",
+   "priority": 39,
+   "est_minutes": 3,
+   "consumer": "THE SAPLING LoRA DATASET's scene axis, and the crop that gives it a scale axis. pipeline/lora/README.md wants >=20 composited saplings across distinct scenes, scales and lighting; round 1 returned exactly one usable ground plane out of ten and this batch buys the breadth off the cell that worked. N…",
+   "why_first": "THE UNVEGETATED STRIP.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep3-sapfld2-r08-0821.yaml",
+   "authored_at": 1787305729
   },
   {
    "id": "ep2-b14-tilefix-p1-0821",
