@@ -551,3 +551,83 @@ gate_status_2026_08_21_DISCHARGED: >-
   stands as the reason the set is worth training on: it said no to ten beat-20
   man-reads, twelve bobbleheads, six blank eggs and sixteen browless round-eyed
   frames, and each of those would have been learned.
+
+# ══════════════════════════════════════════════════════════════════════════
+# UPDATE 9 — THE AGE-B RE-CURATION, AND IT IS REFUSED ON THE EAR (2026-08-21)
+# ══════════════════════════════════════════════════════════════════════════
+#
+# THE ASK. Re-curate this set at the round-two age-B recipe: seven new plates
+# (beats 02/03/04/07/08/13/20), head_frac 0.240, blank eyes restored, per-beat
+# emotions, the broken tusk. On paper it is everything this file has been
+# waiting for -- SEVEN FRAMES IN FIVE DISTINCT POSES (stride, crouch x2, hunch,
+# stand x2, seatspan) against the seven-in-four that has held the LoRA since
+# 08-20, and the majority read of the trigger token finally stops being seated.
+#
+# THE ANSWER IS NO, AND THIS FILE'S OWN GATE IS WHY.
+# Pixels: review/ep2-goblin-age-0821/CONTACT-r2-ears.png, all seven ear regions
+# at 1:1.
+#
+# Every one of the seven draws a POINTY, UPSWEPT EAR -- several with pale
+# spike ornaments on top of it. Not the tile's short, broad, low-set,
+# swept-back flange. This file already established the finding that makes that
+# disqualifying rather than a blemish:
+#
+#     "DANBOORU HAS NO TAG FOR THE TILE'S EAR ... No prompt can ask for a
+#      short, broad, low-set, swept-back ear. THE LoRA IS THEREFORE THE ONLY
+#      INSTRUMENT THAT CAN TEACH IT -- and that only works if the training set
+#      does not contain the spikes."
+#
+# Nine frames were rejected on exactly this in the original pass, while being
+# otherwise tile-faithful. The same rule applied to the same defect gives the
+# same answer, and applying it to a set I authored today rather than to
+# somebody's older frames is the whole point of having written it down.
+#
+# AND THE NEGATIVE WAS ALREADY FIGHTING THIS AND LOSING. `pointy ears` and
+# `long pointy ears` are both in the age-B negative, unchanged from the ladder,
+# and the ears came out pointy anyway across all seven. That is not a wording
+# rung waiting to be tried -- it is the third independent confirmation of this
+# file's finding that the ear is unreachable from the prompt. Suppression has
+# now failed at head_frac 0.190 (the tile-set poses), at 0.240 (here), and
+# under two different adapter scales.
+#
+# WHY THE TWO SETS CANNOT SIMPLY BE ADDED TOGETHER EITHER, which is the other
+# thing someone will reach for. The seven surviving frames in this file are the
+# ADULT at head_frac 0.190; the age-B frames are 0.240. Training both under one
+# trigger token teaches TWO proportions and the token averages them -- which is
+# the same class of error as a pose-locked LoRA, one axis over. The age is
+# DECIDED (Option B, founder-delegated steward pick, 2026-08-21), so the adult
+# frames are not a supplement, they are the superseded proportion.
+#
+# WHAT WOULD ACTUALLY UNBLOCK THIS, named so the next lane does not re-derive
+# it: a set of age-B frames whose ears are RIGHT. Since no prompt can ask for
+# the ear, that means either (a) hand-correcting the ear region on the seven
+# plates -- the same inpaint machinery the expressive-reference attempt built
+# and the same reason to be wary of it, since that attempt smeared a brow it
+# was asked to soften -- or (b) accepting that the LoRA cannot be trained until
+# a source of correct-eared age-B frames exists at all. This lane does not pick
+# between those; it records that the gate is UNCHANGED and now has a third
+# confirmation behind it.
+#
+# ══════════════════════════════════════════════════════════════════════════
+# THE ITEM-18 GATE, folded in here as asked (2026-08-21)
+# ══════════════════════════════════════════════════════════════════════════
+#
+# `DECISIONS.md` item 18 reads "Never train on the output. No LoRA, no
+# finetune, no distillation from LTX frames."
+#
+# READ ITS SCOPE HONESTLY, IN BOTH DIRECTIONS.
+#   * The text scopes itself to LTX FRAMES, twice -- "from LTX frames" and
+#     "this forecloses it for LTX material specifically". This dataset is
+#     animagine-xl-3.1 SDXL plates. On the words, it is outside the ban.
+#   * But the HEADLINE of the item is "Never train on the output", and every
+#     frame here is our own model's output. A reading that leans only on the
+#     subordinate clause is a lawyer's reading of a rule the founder wrote to
+#     stop a category of thing.
+#
+# SO IT IS FLAGGED AND NOT RESOLVED BY THIS LANE, which is the same disposition
+# `ep3-sapfield-p0*` recorded and for the same reason: the scope question is
+# governance, and governance changes are founder-reserved. What this lane WILL
+# say is that the question is not urgent, because the ear gate above blocks
+# training on technical grounds regardless of how item 18 is read. Nobody has
+# to decide the governance question today to know that `train-jerry` does not
+# run today.
