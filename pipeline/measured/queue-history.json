@@ -2,17 +2,1862 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "aefcb08bda474cf9f2afcff1143b1756581380b4",
-  "measured_at": "2026-08-21T14:02:30Z",
-  "job_count": 1309,
-  "ok": 1228,
+  "source_commit": "402858bb96c1f3aa2996676ca5c382589f29baed",
+  "measured_at": "2026-08-21T14:57:21Z",
+  "job_count": 1339,
+  "ok": 1258,
   "failed": 81,
-  "upcoming_count": 70,
+  "upcoming_count": 85,
   "skipped_sidecars": null,
   "skipped_specs": null,
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-b01-clearing-d02-0821-1787322799",
+   "task": "ep2-b01-clearing-d02-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:33:45Z",
+   "finished_at": "2026-08-21T14:34:04Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep2-b01-clearing-d02-0821-1787322799.json",
+   "spec_file": "pipeline/jobs/ep2-b01-clearing-d02-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 01'S COLD OPEN, as an INIT for beat16_sapling_composite -- the canon two-leaf sapling drawn at FINAL SIZE so the motion model has nothing left to grow. The shipping take (01-cold-open-LTX-fignonly-s20260840) is 7 of 8 scored clauses and fails G5a because the sapling and the shaft are redrawn across the clip; its own verdict closed the prompt-side door and named plate-side as one of two routes left. This is that route's plate. NOT A SWAP: the founder reverted beat 01 by hand on 2026-08-21 a…",
+    "why": "d01 PLUS BEAT 01'S LIGHT, one variable. `warm backlight` is asked for as light and not as `orange theme`, which is the word that took beat 01's own round 1 to a sunset. This is the closer match to the shipping take if the plane survives it. Pre-registered risk unchanged from c02: backlight silhouettes the near grass and eats the plane, which is how the closed ladder's r03 and r04 both died. $0 beyond ~10 GPU-seconds. THE ONE VARIABLE AGAINST THE PARENT IS THE SCENE CLAUSE. Round 4's u01 is the…",
+    "success": "One 832x1216 png at seed 20260964, cel dialect, of in a green field, a small clearing of bare earth, tall grass closing in behind it, warm backlight, day at 'wide shot', with (1) NO HORIZON AND NO SKY -- a landform or a skyline is a FAIL here even though it passes for the dataset lane, because beat 01's approved look has neither; (2) a clean drawable ground plane in the lower centre, flat enough to stand a vertical stem on; (3) no plant and no figure; and (4) green-dominant pixels in the lower…",
+    "owner": "the ship-repair lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 31
+   },
+   "artifacts_dir": null,
+   "outputs": [],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a green field, a small clearing of bare earth, tall grass closing in behind it, warm backlight, day, wide shot",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b01-clearing-d02-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 1,
+    "episode": null,
+    "label": "Beat 01",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b01-clearing-d01-0821-1787322796",
+   "task": "ep2-b01-clearing-d01-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:33:19Z",
+   "finished_at": "2026-08-21T14:33:39Z",
+   "duration_s": 20,
+   "sidecar": "farm-out/box/ep2-b01-clearing-d01-0821-1787322796.json",
+   "spec_file": "pipeline/jobs/ep2-b01-clearing-d01-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 01'S COLD OPEN, as an INIT for beat16_sapling_composite -- the canon two-leaf sapling drawn at FINAL SIZE so the motion model has nothing left to grow. The shipping take (01-cold-open-LTX-fignonly-s20260840) is 7 of 8 scored clauses and fails G5a because the sapling and the shaft are redrawn across the clip; its own verdict closed the prompt-side door and named plate-side as one of two routes left. This is that route's plate. NOT A SWAP: the founder reverted beat 01 by hand on 2026-08-21 a…",
+    "why": "ROUND 2, ONE CLAUSE FROM c01. `in the distance` is deleted -- it is the measured cause of c01's skyline -- and the far ground is NAMED as grass so the model has something to put there other than sky. The clearing is unchanged. If this returns a bounded gap with grass behind it, beat 01 has its plate class and the depth cue is a PLACE rather than a horizon. If it returns macro grass, then bounding the clearing removed the only depth the cell had and the no-horizon route is closed on this checkpo…",
+    "success": "One 832x1216 png at seed 20260963, cel dialect, of in a green field, a small clearing of bare earth, tall grass closing in behind it, day at 'wide shot', with (1) NO HORIZON AND NO SKY -- a landform or a skyline is a FAIL here even though it passes for the dataset lane, because beat 01's approved look has neither; (2) a clean drawable ground plane in the lower centre, flat enough to stand a vertical stem on; (3) no plant and no figure; and (4) green-dominant pixels in the lower half, because be…",
+    "owner": "the ship-repair lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 31
+   },
+   "artifacts_dir": null,
+   "outputs": [],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a green field, a small clearing of bare earth, tall grass closing in behind it, day, wide shot",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b01-clearing-d01-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 1,
+    "episode": null,
+    "label": "Beat 01",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b01-clearing-c01-0821-1787322627",
+   "task": "ep2-b01-clearing-c01-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:30:29Z",
+   "finished_at": "2026-08-21T14:30:50Z",
+   "duration_s": 21,
+   "sidecar": "farm-out/box/ep2-b01-clearing-c01-0821-1787322627.json",
+   "spec_file": "pipeline/jobs/ep2-b01-clearing-c01-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 01'S COLD OPEN, as an INIT for beat16_sapling_composite -- the canon two-leaf sapling drawn at FINAL SIZE so the motion model has nothing left to grow. The shipping take (01-cold-open-LTX-fignonly-s20260840) is 7 of 8 scored clauses and fails G5a because the sapling and the shaft are redrawn across the clip; its own verdict closed the prompt-side door and named plate-side as one of two routes left. This is that route's plate. NOT A SWAP: the founder reverted beat 01 by hand on 2026-08-21 a…",
+    "why": "THE CELL, COLD. A receding feature that is not a landform and brings no sky with it. If this returns a rootable plane, the ladder's rule is wider than the ladder proved -- depth does not require a horizon, only something far away -- and beat 01 has a plate class it can use. If it returns macro grass, the clearing is not readable as distance and the no-horizon route is closed for this checkpoint. $0 beyond ~10 GPU-seconds. THE ONE VARIABLE AGAINST THE PARENT IS THE SCENE CLAUSE. Round 4's u01 is…",
+    "success": "One 832x1216 png at seed 20260961, cel dialect, of in a green field of tall grass, a small clearing of bare earth in the distance, day at 'wide shot', with (1) NO HORIZON AND NO SKY -- a landform or a skyline is a FAIL here even though it passes for the dataset lane, because beat 01's approved look has neither; (2) a clean drawable ground plane in the lower centre, flat enough to stand a vertical stem on; (3) no plant and no figure; and (4) green-dominant pixels in the lower half, because beat1…",
+    "owner": "the ship-repair lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 31
+   },
+   "artifacts_dir": null,
+   "outputs": [],
+   "prompt": "masterpiece, best quality, very aesthetic, no humans, in a green field of tall grass, a small clearing of bare earth in the distance, day, wide shot",
+   "negative": "lowres, worst quality, low quality, text, watermark, 1boy, 1other, solo, people, silhouette, goblin, animal, flower, tree, bush, shrub, sapling, seedling, scenery, landscape, bokeh, blurry, depth of field, painterly, photo, realistic, 3d, architecture",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b01-clearing-c01-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 1,
+    "episode": null,
+    "label": "Beat 01",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b08-canon-w2b-0821-1787322384",
+   "task": "ep2-b08-canon-w2b-0821",
+   "node": "002b-first-citizen",
+   "beat": 8,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:27:25Z",
+   "finished_at": "2026-08-21T14:27:53Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b08-canon-w2b-0821-1787322384.json",
+   "spec_file": "pipeline/jobs/ep2-b08-canon-w2b-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 08. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 08 OF THE CANON PATCH WAVE, ROUND w2b. INSIDE HIM -- 'Guard 2 lowers the clipboard and points at the scavenger's belly.' He is caught, and the thing he is caught with is already eaten. Sheepish. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the skin and the clothes. Every frame rendere…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 08's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b08-canon-w2b-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b08-canon-w2b-0821/ep2-b08-canon-w2b-0821-ipahead.png",
+     "name": "ep2-b08-canon-w2b-0821-ipahead.png",
+     "bytes": 1412354,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b08-canon-w2b-0821/jerry-canon-h37f-0821.png",
+     "name": "jerry-canon-h37f-0821.png",
+     "bytes": 9625,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b08-canon-w2b-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, slit pupils, constricted pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, blush, embarrassed, standing, head bowed, looking down, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch, background characters, group",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b08-canon-w2b-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO PASSING VERDICT — both 0817 motion takes are is_show_content:false engine probes and ep2-b08-boardcomp-0818 is a pre-registered FAIL. Five conditioning rungs are now CLOSED BY MEASUREMENT across three axes (scale, stroke weight, hint class), and the reason is s…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 8,
+    "episode": null,
+    "label": "Beat 08",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b07-canon-w2b-0821-1787322380",
+   "task": "ep2-b07-canon-w2b-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:26:52Z",
+   "finished_at": "2026-08-21T14:27:19Z",
+   "duration_s": 27,
+   "sidecar": "farm-out/box/ep2-b07-canon-w2b-0821-1787322380.json",
+   "spec_file": "pipeline/jobs/ep2-b07-canon-w2b-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 07. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 07 OF THE CANON PATCH WAVE, ROUND w2b. CONFISCATE -- 'Guard 1 points at the scavenger, decisive.' He is the object of the sentence and has just been identified. Apprehension, not panic: the guards are absurd and he is starting to notice. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, th…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 07's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b07-canon-w2b-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-canon-w2b-0821/ep2-b07-canon-w2b-0821-ipahead.png",
+     "name": "ep2-b07-canon-w2b-0821-ipahead.png",
+     "bytes": 1334944,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-w2b-0821/jerry-canon-h37f-0821.png",
+     "name": "jerry-canon-h37f-0821.png",
+     "bytes": 9625,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-w2b-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, slit pupils, constricted pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, worried, standing, arms at sides, beside tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch, background characters, group",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b07-canon-w2b-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b02-canon-w2b-0821-1787322376",
+   "task": "ep2-b02-canon-w2b-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:26:18Z",
+   "finished_at": "2026-08-21T14:26:46Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b02-canon-w2b-0821-1787322376.json",
+   "spec_file": "pipeline/jobs/ep2-b02-canon-w2b-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 02. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 02 OF THE CANON PATCH WAVE, ROUND w2b. THE SPRINT -- 'sprints into frame, skids, and dives behind the sapling's thin trunk'. He is running from the guards and has not seen the sapling yet. This is the most frightened he is in the episode. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, t…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 02's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b02-canon-w2b-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b02-canon-w2b-0821/ep2-b02-canon-w2b-0821-ipahead.png",
+     "name": "ep2-b02-canon-w2b-0821-ipahead.png",
+     "bytes": 1386434,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b02-canon-w2b-0821/jerry-canon-h37fstride-0821.png",
+     "name": "jerry-canon-h37fstride-0821.png",
+     "bytes": 11197,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b02-canon-w2b-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, slit pupils, constricted pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, open mouth, surprised, walking, arm outstretched, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch, background characters, group",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b02-canon-w2b-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 2,
+    "episode": null,
+    "label": "Beat 02",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b20-canon-w2-0821-1787322099",
+   "task": "ep2-b20-canon-w2-0821",
+   "node": "002b-first-citizen",
+   "beat": 20,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:24:55Z",
+   "finished_at": "2026-08-21T14:25:23Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b20-canon-w2-0821-1787322099.json",
+   "spec_file": "pipeline/jobs/ep2-b20-canon-w2-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 20. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 20 OF THE CANON PATCH WAVE, ROUND w2. EVIDENCE -- 'crouches back down, picks the fig up with both hands, and looks from it to the sapling's thinnest branch beside him'. Line: '...Did you just ANSWER me?' Awe. The episode's turn. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the skin an…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 20's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b20-canon-w2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b20-canon-w2-0821/ep2-b20-canon-w2-0821-ipahead.png",
+     "name": "ep2-b20-canon-w2-0821-ipahead.png",
+     "bytes": 1194007,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b20-canon-w2-0821/jerry-canon-h37fcrouch-0821.png",
+     "name": "jerry-canon-h37fcrouch-0821.png",
+     "bytes": 10906,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b20-canon-w2-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, slit pupils, constricted pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, open mouth, surprised, squatting, holding a small fruit, looking up, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b20-canon-w2-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO VERDICT YET against its own done_when — BOTH HANDS to the fruit, then the look UP to a branch that is visibly BARE, the empty stem being the evidence and having to be in frame. Stills only since; review/ep2-mac-plates-0818 rejects the new b20 plates — \"all the…",
+    "gate": "rendering now (2 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 20,
+    "episode": null,
+    "label": "Beat 20",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b13-canon-w2-0821-1787322096",
+   "task": "ep2-b13-canon-w2-0821",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:24:22Z",
+   "finished_at": "2026-08-21T14:24:49Z",
+   "duration_s": 27,
+   "sidecar": "farm-out/box/ep2-b13-canon-w2-0821-1787322096.json",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-w2-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND w2. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", a…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b13-canon-w2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-canon-w2-0821/ep2-b13-canon-w2-0821-ipahead.png",
+     "name": "ep2-b13-canon-w2-0821-ipahead.png",
+     "bytes": 1100776,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-canon-w2-0821/jerry-canon-h37fsit-0821.png",
+     "name": "jerry-canon-h37fsit-0821.png",
+     "bytes": 12349,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-canon-w2-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, slit pupils, constricted pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-w2-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 13,
+    "episode": null,
+    "label": "Beat 13",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b08-canon-w2-0821-1787322092",
+   "task": "ep2-b08-canon-w2-0821",
+   "node": "002b-first-citizen",
+   "beat": 8,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:23:42Z",
+   "finished_at": "2026-08-21T14:24:11Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b08-canon-w2-0821-1787322092.json",
+   "spec_file": "pipeline/jobs/ep2-b08-canon-w2-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 08. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 08 OF THE CANON PATCH WAVE, ROUND w2. INSIDE HIM -- 'Guard 2 lowers the clipboard and points at the scavenger's belly.' He is caught, and the thing he is caught with is already eaten. Sheepish. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the skin and the clothes. Every frame rendered…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 08's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b08-canon-w2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b08-canon-w2-0821/ep2-b08-canon-w2-0821-ipahead.png",
+     "name": "ep2-b08-canon-w2-0821-ipahead.png",
+     "bytes": 1297839,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b08-canon-w2-0821/jerry-canon-h37f-0821.png",
+     "name": "jerry-canon-h37f-0821.png",
+     "bytes": 9625,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b08-canon-w2-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, slit pupils, constricted pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, blush, embarrassed, standing, head bowed, looking down, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b08-canon-w2-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO PASSING VERDICT — both 0817 motion takes are is_show_content:false engine probes and ep2-b08-boardcomp-0818 is a pre-registered FAIL. Five conditioning rungs are now CLOSED BY MEASUREMENT across three axes (scale, stroke weight, hint class), and the reason is s…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 8,
+    "episode": null,
+    "label": "Beat 08",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b07-canon-w2-0821-1787322089",
+   "task": "ep2-b07-canon-w2-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:23:08Z",
+   "finished_at": "2026-08-21T14:23:36Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b07-canon-w2-0821-1787322089.json",
+   "spec_file": "pipeline/jobs/ep2-b07-canon-w2-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 07. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 07 OF THE CANON PATCH WAVE, ROUND w2. CONFISCATE -- 'Guard 1 points at the scavenger, decisive.' He is the object of the sentence and has just been identified. Apprehension, not panic: the guards are absurd and he is starting to notice. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 07's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b07-canon-w2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-canon-w2-0821/ep2-b07-canon-w2-0821-ipahead.png",
+     "name": "ep2-b07-canon-w2-0821-ipahead.png",
+     "bytes": 1308490,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-w2-0821/jerry-canon-h37f-0821.png",
+     "name": "jerry-canon-h37f-0821.png",
+     "bytes": 9625,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-w2-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, slit pupils, constricted pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, worried, standing, arms at sides, beside tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b07-canon-w2-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b04-canon-w2-0821-1787322086",
+   "task": "ep2-b04-canon-w2-0821",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:22:34Z",
+   "finished_at": "2026-08-21T14:23:03Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b04-canon-w2-0821-1787322086.json",
+   "spec_file": "pipeline/jobs/ep2-b04-canon-w2-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 04. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 04 OF THE CANON PATCH WAVE, ROUND w2. THE FOOTNOTE -- 'leans out from behind the trunk to look, and pulls straight back the moment he has looked'. THE PEEK, the founder's own restaging pick (A, 2026-08-20). The eyes are the whole beat. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 04's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b04-canon-w2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b04-canon-w2-0821/ep2-b04-canon-w2-0821-ipahead.png",
+     "name": "ep2-b04-canon-w2-0821-ipahead.png",
+     "bytes": 1346384,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b04-canon-w2-0821/jerry-canon-h37fhunch-0821.png",
+     "name": "jerry-canon-h37fhunch-0821.png",
+     "bytes": 10582,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b04-canon-w2-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, slit pupils, constricted pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, worried, hunched over, leaning out sideways, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b04-canon-w2-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: a clean close-up on his face holding his breath. The recorded residual is that it reads young, and the record says that is the s0 reference HE chose rather than a prompt fault — so there is no fix for the card to run. The only new artefact is a recovered 0813 balloo…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 4,
+    "episode": null,
+    "label": "Beat 04",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b03-canon-w2-0821-1787322083",
+   "task": "ep2-b03-canon-w2-0821",
+   "node": "002b-first-citizen",
+   "beat": 3,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:21:59Z",
+   "finished_at": "2026-08-21T14:22:28Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b03-canon-w2-0821-1787322083.json",
+   "spec_file": "pipeline/jobs/ep2-b03-canon-w2-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 03. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 03 OF THE CANON PATCH WAVE, ROUND w2. BAD COVER -- 'crouches behind a trunk that hides roughly one-sixth of him'. The comedy is that he believes it is working, so the face is furtive rather than terrified -- held breath, not a scream. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the s…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 03's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b03-canon-w2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b03-canon-w2-0821/ep2-b03-canon-w2-0821-ipahead.png",
+     "name": "ep2-b03-canon-w2-0821-ipahead.png",
+     "bytes": 1170385,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b03-canon-w2-0821/jerry-canon-h37fcrouch-0821.png",
+     "name": "jerry-canon-h37fcrouch-0821.png",
+     "bytes": 10906,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b03-canon-w2-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, slit pupils, constricted pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, furrowed brow, squatting, hiding behind a thin trunk, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b03-canon-w2-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: refire-0814 reads the beat — he crouches and the cover is comically inadequate — but the size-mismatch joke reads weakly. The one available swap is deliberately NOT taken: s20260846 is the 0817 st-wave pick, yet all fifteen of its seeds carry done_when FAIL because…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 3,
+    "episode": null,
+    "label": "Beat 03",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b02-canon-w2-0821-1787322080",
+   "task": "ep2-b02-canon-w2-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:21:26Z",
+   "finished_at": "2026-08-21T14:21:53Z",
+   "duration_s": 27,
+   "sidecar": "farm-out/box/ep2-b02-canon-w2-0821-1787322080.json",
+   "spec_file": "pipeline/jobs/ep2-b02-canon-w2-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 02. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 02 OF THE CANON PATCH WAVE, ROUND w2. THE SPRINT -- 'sprints into frame, skids, and dives behind the sapling's thin trunk'. He is running from the guards and has not seen the sapling yet. This is the most frightened he is in the episode. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, th…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 02's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b02-canon-w2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b02-canon-w2-0821/ep2-b02-canon-w2-0821-ipahead.png",
+     "name": "ep2-b02-canon-w2-0821-ipahead.png",
+     "bytes": 1254294,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b02-canon-w2-0821/jerry-canon-h37fstride-0821.png",
+     "name": "jerry-canon-h37fstride-0821.png",
+     "bytes": 11197,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b02-canon-w2-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, slit pupils, constricted pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, open mouth, surprised, walking, arm outstretched, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b02-canon-w2-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 2,
+    "episode": null,
+    "label": "Beat 02",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b01-field-r2s1-0821-1787322050",
+   "task": "ep2-b01-field-r2s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:21:02Z",
+   "finished_at": "2026-08-21T14:21:20Z",
+   "duration_s": 18,
+   "sidecar": "farm-out/box/ep2-b01-field-r2s1-0821-1787322050.json",
+   "spec_file": "pipeline/jobs/ep2-b01-field-r2s1-0821.yaml",
+   "purpose": {
+    "consumer": "STEP 1 OF THE BEAT-01 PLATE-SIDE ROUTE. The cold open's shipping take (01-cold-open-LTX-fignonly-s20260840) is 7 of 8 scored clauses and fails G5a because the SAPLING and the SHAFT are redrawn across the clip. Its own verdict closed the prompt-side door -- the six plant-growth negatives moved the sapling NCC 0.092 -> 0.055, i.e. nothing -- and named two routes left, plate-side and compositor-side. This is plate-side's first rung: a field with NO PLANT IN IT, so beat16_sapling_composite can draw…",
+    "why": "$0 beyond ~3 GPU-minutes, no download, nothing to fetch. THE ONE VARIABLE AGAINST THE PARENT IS THE PROMPT: same controlnet_plate.py, same nocontrol arm, same scale 0.45, same publish. Four seeds of one recipe, because the recipe is what changed and the seed is the only thing left to sample.",
+    "success": "ONE 832x1216 png of a backlit grass field with NO PLANT, NO FIGURE and NO FRUIT anywhere in it, carrying b01's approved look: warm amber backlight, a visible light shaft, dark grass silhouettes across the foreground, shallow depth of field. JUDGED BY EYE against the shipping take's own frame 0, because the thing being matched is a look the founder approved and there is no instrument for that. A plate with any seedling, sprout or fruit in it is a FAIL for this purpose however pretty it is -- the…",
+    "owner": "the ship-repair lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 32
+   },
+   "artifacts_dir": "farm-out/ep2-b01-field-r2s1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b01-field-r2s1-0821/ep2-b01-field-r2s1-0821-nocontrol.png",
+     "name": "ep2-b01-field-r2s1-0821-nocontrol.png",
+     "bytes": 1251417,
+     "kind": "image"
+    }
+   ],
+   "prompt": "no humans, grass, tall grass, field, outdoors, backlighting, glowing, orange theme, blurry, depth of field, blurry foreground, masterpiece, best quality, very aesthetic",
+   "negative": "lowres, worst quality, low quality, text, watermark, signature, jpeg artifacts, flower, tree, branch, sapling, seedling, sprout, potted plant, bush, shrub, fruit, sky, cloud, horizon, sun, sunset, mountain, scenery, landscape",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b01-field-r2s1-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 1,
+    "episode": null,
+    "label": "Beat 01",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b01-field-s3-0821-1787321813",
+   "task": "ep2-b01-field-s3-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:19:24Z",
+   "finished_at": "2026-08-21T14:19:43Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep2-b01-field-s3-0821-1787321813.json",
+   "spec_file": "pipeline/jobs/ep2-b01-field-s3-0821.yaml",
+   "purpose": {
+    "consumer": "STEP 1 OF THE BEAT-01 PLATE-SIDE ROUTE. The cold open's shipping take (01-cold-open-LTX-fignonly-s20260840) is 7 of 8 scored clauses and fails G5a because the SAPLING and the SHAFT are redrawn across the clip. Its own verdict closed the prompt-side door -- the six plant-growth negatives moved the sapling NCC 0.092 -> 0.055, i.e. nothing -- and named two routes left, plate-side and compositor-side. This is plate-side's first rung: a field with NO PLANT IN IT, so beat16_sapling_composite can draw…",
+    "why": "$0 beyond ~3 GPU-minutes, no download, nothing to fetch. THE ONE VARIABLE AGAINST THE PARENT IS THE PROMPT: same controlnet_plate.py, same nocontrol arm, same scale 0.45, same publish. Four seeds of one recipe, because the recipe is what changed and the seed is the only thing left to sample.",
+    "success": "ONE 832x1216 png of a backlit grass field with NO PLANT, NO FIGURE and NO FRUIT anywhere in it, carrying b01's approved look: warm amber backlight, a visible light shaft, dark grass silhouettes across the foreground, shallow depth of field. JUDGED BY EYE against the shipping take's own frame 0, because the thing being matched is a look the founder approved and there is no instrument for that. A plate with any seedling, sprout or fruit in it is a FAIL for this purpose however pretty it is -- the…",
+    "owner": "the ship-repair lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 32
+   },
+   "artifacts_dir": "farm-out/ep2-b01-field-s3-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b01-field-s3-0821/ep2-b01-field-s3-0821-nocontrol.png",
+     "name": "ep2-b01-field-s3-0821-nocontrol.png",
+     "bytes": 1272866,
+     "kind": "image"
+    }
+   ],
+   "prompt": "no humans, scenery, tall grass, grass, field, outdoors, backlighting, sunbeam, light rays, evening, orange theme, glowing, depth of field, blurry foreground, masterpiece, best quality, very aesthetic",
+   "negative": "lowres, worst quality, low quality, text, watermark, signature, jpeg artifacts, flower, tree, branch, sapling, seedling, sprout, potted plant, bush, shrub, fruit",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b01-field-s3-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 1,
+    "episode": null,
+    "label": "Beat 01",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b01-field-s2-0821-1787321810",
+   "task": "ep2-b01-field-s2-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:18:59Z",
+   "finished_at": "2026-08-21T14:19:18Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep2-b01-field-s2-0821-1787321810.json",
+   "spec_file": "pipeline/jobs/ep2-b01-field-s2-0821.yaml",
+   "purpose": {
+    "consumer": "STEP 1 OF THE BEAT-01 PLATE-SIDE ROUTE. The cold open's shipping take (01-cold-open-LTX-fignonly-s20260840) is 7 of 8 scored clauses and fails G5a because the SAPLING and the SHAFT are redrawn across the clip. Its own verdict closed the prompt-side door -- the six plant-growth negatives moved the sapling NCC 0.092 -> 0.055, i.e. nothing -- and named two routes left, plate-side and compositor-side. This is plate-side's first rung: a field with NO PLANT IN IT, so beat16_sapling_composite can draw…",
+    "why": "$0 beyond ~3 GPU-minutes, no download, nothing to fetch. THE ONE VARIABLE AGAINST THE PARENT IS THE PROMPT: same controlnet_plate.py, same nocontrol arm, same scale 0.45, same publish. Four seeds of one recipe, because the recipe is what changed and the seed is the only thing left to sample.",
+    "success": "ONE 832x1216 png of a backlit grass field with NO PLANT, NO FIGURE and NO FRUIT anywhere in it, carrying b01's approved look: warm amber backlight, a visible light shaft, dark grass silhouettes across the foreground, shallow depth of field. JUDGED BY EYE against the shipping take's own frame 0, because the thing being matched is a look the founder approved and there is no instrument for that. A plate with any seedling, sprout or fruit in it is a FAIL for this purpose however pretty it is -- the…",
+    "owner": "the ship-repair lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 32
+   },
+   "artifacts_dir": "farm-out/ep2-b01-field-s2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b01-field-s2-0821/ep2-b01-field-s2-0821-nocontrol.png",
+     "name": "ep2-b01-field-s2-0821-nocontrol.png",
+     "bytes": 1175433,
+     "kind": "image"
+    }
+   ],
+   "prompt": "no humans, scenery, tall grass, grass, field, outdoors, backlighting, sunbeam, light rays, evening, orange theme, glowing, depth of field, blurry foreground, masterpiece, best quality, very aesthetic",
+   "negative": "lowres, worst quality, low quality, text, watermark, signature, jpeg artifacts, flower, tree, branch, sapling, seedling, sprout, potted plant, bush, shrub, fruit",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b01-field-s2-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 1,
+    "episode": null,
+    "label": "Beat 01",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b07-canon-e3-0821-1787321818",
+   "task": "ep2-b07-canon-e3-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:18:23Z",
+   "finished_at": "2026-08-21T14:18:51Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b07-canon-e3-0821-1787321818.json",
+   "spec_file": "pipeline/jobs/ep2-b07-canon-e3-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 07. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 07 OF THE CANON PATCH WAVE, ROUND e3. CONFISCATE -- 'Guard 1 points at the scavenger, decisive.' He is the object of the sentence and has just been identified. Apprehension, not panic: the guards are absurd and he is starting to notice. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 07's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b07-canon-e3-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-canon-e3-0821/ep2-b07-canon-e3-0821-ipahead.png",
+     "name": "ep2-b07-canon-e3-0821-ipahead.png",
+     "bytes": 1406609,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-e3-0821/jerry-canon-h37f-0821.png",
+     "name": "jerry-canon-h37f-0821.png",
+     "bytes": 9625,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-e3-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, constricted pupils, white eyes, closed mouth, frown, worried, standing, arms at sides, beside tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b07-canon-e3-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b07-canon-e2-0821-1787321814",
+   "task": "ep2-b07-canon-e2-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:17:48Z",
+   "finished_at": "2026-08-21T14:18:17Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b07-canon-e2-0821-1787321814.json",
+   "spec_file": "pipeline/jobs/ep2-b07-canon-e2-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 07. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 07 OF THE CANON PATCH WAVE, ROUND e2. CONFISCATE -- 'Guard 1 points at the scavenger, decisive.' He is the object of the sentence and has just been identified. Apprehension, not panic: the guards are absurd and he is starting to notice. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 07's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b07-canon-e2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-canon-e2-0821/ep2-b07-canon-e2-0821-ipahead.png",
+     "name": "ep2-b07-canon-e2-0821-ipahead.png",
+     "bytes": 1378402,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-e2-0821/jerry-canon-h37f-0821.png",
+     "name": "jerry-canon-h37f-0821.png",
+     "bytes": 9625,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-e2-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, white eyes, closed mouth, frown, worried, standing, arms at sides, beside tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b07-canon-e2-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b07-canon-e1-0821-1787321811",
+   "task": "ep2-b07-canon-e1-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:17:14Z",
+   "finished_at": "2026-08-21T14:17:43Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b07-canon-e1-0821-1787321811.json",
+   "spec_file": "pipeline/jobs/ep2-b07-canon-e1-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 07. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 07 OF THE CANON PATCH WAVE, ROUND e1. CONFISCATE -- 'Guard 1 points at the scavenger, decisive.' He is the object of the sentence and has just been identified. Apprehension, not panic: the guards are absurd and he is starting to notice. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 07's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b07-canon-e1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-canon-e1-0821/ep2-b07-canon-e1-0821-ipahead.png",
+     "name": "ep2-b07-canon-e1-0821-ipahead.png",
+     "bytes": 1340229,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-e1-0821/jerry-canon-h37f-0821.png",
+     "name": "jerry-canon-h37f-0821.png",
+     "bytes": 9625,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-e1-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, constricted pupils, closed mouth, frown, worried, standing, arms at sides, beside tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b07-canon-e1-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b01-field-s1-0821-1787321807",
+   "task": "ep2-b01-field-s1-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:16:49Z",
+   "finished_at": "2026-08-21T14:17:08Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep2-b01-field-s1-0821-1787321807.json",
+   "spec_file": "pipeline/jobs/ep2-b01-field-s1-0821.yaml",
+   "purpose": {
+    "consumer": "STEP 1 OF THE BEAT-01 PLATE-SIDE ROUTE. The cold open's shipping take (01-cold-open-LTX-fignonly-s20260840) is 7 of 8 scored clauses and fails G5a because the SAPLING and the SHAFT are redrawn across the clip. Its own verdict closed the prompt-side door -- the six plant-growth negatives moved the sapling NCC 0.092 -> 0.055, i.e. nothing -- and named two routes left, plate-side and compositor-side. This is plate-side's first rung: a field with NO PLANT IN IT, so beat16_sapling_composite can draw…",
+    "why": "$0 beyond ~3 GPU-minutes, no download, nothing to fetch. THE ONE VARIABLE AGAINST THE PARENT IS THE PROMPT: same controlnet_plate.py, same nocontrol arm, same scale 0.45, same publish. Four seeds of one recipe, because the recipe is what changed and the seed is the only thing left to sample.",
+    "success": "ONE 832x1216 png of a backlit grass field with NO PLANT, NO FIGURE and NO FRUIT anywhere in it, carrying b01's approved look: warm amber backlight, a visible light shaft, dark grass silhouettes across the foreground, shallow depth of field. JUDGED BY EYE against the shipping take's own frame 0, because the thing being matched is a look the founder approved and there is no instrument for that. A plate with any seedling, sprout or fruit in it is a FAIL for this purpose however pretty it is -- the…",
+    "owner": "the ship-repair lane, 2026-08-21",
+    "est_minutes": 3,
+    "priority": 32
+   },
+   "artifacts_dir": "farm-out/ep2-b01-field-s1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b01-field-s1-0821/ep2-b01-field-s1-0821-nocontrol.png",
+     "name": "ep2-b01-field-s1-0821-nocontrol.png",
+     "bytes": 1216977,
+     "kind": "image"
+    }
+   ],
+   "prompt": "no humans, scenery, tall grass, grass, field, outdoors, backlighting, sunbeam, light rays, evening, orange theme, glowing, depth of field, blurry foreground, masterpiece, best quality, very aesthetic",
+   "negative": "lowres, worst quality, low quality, text, watermark, signature, jpeg artifacts, flower, tree, branch, sapling, seedling, sprout, potted plant, bush, shrub, fruit",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b01-field-s1-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 1,
+    "episode": null,
+    "label": "Beat 01",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b20-canon-w1-0821-1787321208",
+   "task": "ep2-b20-canon-w1-0821",
+   "node": "002b-first-citizen",
+   "beat": 20,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:10:01Z",
+   "finished_at": "2026-08-21T14:10:29Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b20-canon-w1-0821-1787321208.json",
+   "spec_file": "pipeline/jobs/ep2-b20-canon-w1-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 20. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 20 OF THE CANON PATCH WAVE, ROUND w1. EVIDENCE -- 'crouches back down, picks the fig up with both hands, and looks from it to the sapling's thinnest branch beside him'. Line: '...Did you just ANSWER me?' Awe. The episode's turn. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the skin an…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 20's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b20-canon-w1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b20-canon-w1-0821/ep2-b20-canon-w1-0821-ipahead.png",
+     "name": "ep2-b20-canon-w1-0821-ipahead.png",
+     "bytes": 1176319,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b20-canon-w1-0821/jerry-canon-h37fcrouch-0821.png",
+     "name": "jerry-canon-h37fcrouch-0821.png",
+     "bytes": 10906,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b20-canon-w1-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, open mouth, surprised, squatting, holding a small fruit, looking up, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b20-canon-w1-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO VERDICT YET against its own done_when — BOTH HANDS to the fruit, then the look UP to a branch that is visibly BARE, the empty stem being the evidence and having to be in frame. Stills only since; review/ep2-mac-plates-0818 rejects the new b20 plates — \"all the…",
+    "gate": "rendering now (2 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 20,
+    "episode": null,
+    "label": "Beat 20",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b13-canon-w1-0821-1787321204",
+   "task": "ep2-b13-canon-w1-0821",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:09:26Z",
+   "finished_at": "2026-08-21T14:09:55Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b13-canon-w1-0821-1787321204.json",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-w1-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND w1. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", a…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b13-canon-w1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-canon-w1-0821/ep2-b13-canon-w1-0821-ipahead.png",
+     "name": "ep2-b13-canon-w1-0821-ipahead.png",
+     "bytes": 1097411,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-canon-w1-0821/jerry-canon-h37fsit-0821.png",
+     "name": "jerry-canon-h37fsit-0821.png",
+     "bytes": 12349,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-canon-w1-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-w1-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 13,
+    "episode": null,
+    "label": "Beat 13",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b08-canon-w1-0821-1787321201",
+   "task": "ep2-b08-canon-w1-0821",
+   "node": "002b-first-citizen",
+   "beat": 8,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:08:53Z",
+   "finished_at": "2026-08-21T14:09:21Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b08-canon-w1-0821-1787321201.json",
+   "spec_file": "pipeline/jobs/ep2-b08-canon-w1-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 08. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 08 OF THE CANON PATCH WAVE, ROUND w1. INSIDE HIM -- 'Guard 2 lowers the clipboard and points at the scavenger's belly.' He is caught, and the thing he is caught with is already eaten. Sheepish. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the skin and the clothes. Every frame rendered…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 08's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b08-canon-w1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b08-canon-w1-0821/ep2-b08-canon-w1-0821-ipahead.png",
+     "name": "ep2-b08-canon-w1-0821-ipahead.png",
+     "bytes": 1304809,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b08-canon-w1-0821/jerry-canon-h37f-0821.png",
+     "name": "jerry-canon-h37f-0821.png",
+     "bytes": 9625,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b08-canon-w1-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, blush, embarrassed, standing, head bowed, looking down, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b08-canon-w1-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO PASSING VERDICT — both 0817 motion takes are is_show_content:false engine probes and ep2-b08-boardcomp-0818 is a pre-registered FAIL. Five conditioning rungs are now CLOSED BY MEASUREMENT across three axes (scale, stroke weight, hint class), and the reason is s…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 8,
+    "episode": null,
+    "label": "Beat 08",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b07-canon-w1-0821-1787321198",
+   "task": "ep2-b07-canon-w1-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:08:18Z",
+   "finished_at": "2026-08-21T14:08:47Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b07-canon-w1-0821-1787321198.json",
+   "spec_file": "pipeline/jobs/ep2-b07-canon-w1-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 07. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 07 OF THE CANON PATCH WAVE, ROUND w1. CONFISCATE -- 'Guard 1 points at the scavenger, decisive.' He is the object of the sentence and has just been identified. Apprehension, not panic: the guards are absurd and he is starting to notice. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 07's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b07-canon-w1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-canon-w1-0821/ep2-b07-canon-w1-0821-ipahead.png",
+     "name": "ep2-b07-canon-w1-0821-ipahead.png",
+     "bytes": 1370821,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-w1-0821/jerry-canon-h37f-0821.png",
+     "name": "jerry-canon-h37f-0821.png",
+     "bytes": 9625,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-w1-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, worried, standing, arms at sides, beside tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b07-canon-w1-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b04-canon-w1-0821-1787321195",
+   "task": "ep2-b04-canon-w1-0821",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:07:45Z",
+   "finished_at": "2026-08-21T14:08:13Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b04-canon-w1-0821-1787321195.json",
+   "spec_file": "pipeline/jobs/ep2-b04-canon-w1-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 04. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 04 OF THE CANON PATCH WAVE, ROUND w1. THE FOOTNOTE -- 'leans out from behind the trunk to look, and pulls straight back the moment he has looked'. THE PEEK, the founder's own restaging pick (A, 2026-08-20). The eyes are the whole beat. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 04's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b04-canon-w1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b04-canon-w1-0821/ep2-b04-canon-w1-0821-ipahead.png",
+     "name": "ep2-b04-canon-w1-0821-ipahead.png",
+     "bytes": 1312570,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b04-canon-w1-0821/jerry-canon-h37fhunch-0821.png",
+     "name": "jerry-canon-h37fhunch-0821.png",
+     "bytes": 10582,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b04-canon-w1-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, worried, hunched over, leaning out sideways, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b04-canon-w1-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: a clean close-up on his face holding his breath. The recorded residual is that it reads young, and the record says that is the s0 reference HE chose rather than a prompt fault — so there is no fix for the card to run. The only new artefact is a recovered 0813 balloo…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 4,
+    "episode": null,
+    "label": "Beat 04",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b03-canon-w1-0821-1787321192",
+   "task": "ep2-b03-canon-w1-0821",
+   "node": "002b-first-citizen",
+   "beat": 3,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:07:11Z",
+   "finished_at": "2026-08-21T14:07:39Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b03-canon-w1-0821-1787321192.json",
+   "spec_file": "pipeline/jobs/ep2-b03-canon-w1-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 03. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 03 OF THE CANON PATCH WAVE, ROUND w1. BAD COVER -- 'crouches behind a trunk that hides roughly one-sixth of him'. The comedy is that he believes it is working, so the face is furtive rather than terrified -- held breath, not a scream. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the s…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 03's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b03-canon-w1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b03-canon-w1-0821/ep2-b03-canon-w1-0821-ipahead.png",
+     "name": "ep2-b03-canon-w1-0821-ipahead.png",
+     "bytes": 1240412,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b03-canon-w1-0821/jerry-canon-h37fcrouch-0821.png",
+     "name": "jerry-canon-h37fcrouch-0821.png",
+     "bytes": 10906,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b03-canon-w1-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, furrowed brow, squatting, hiding behind a thin trunk, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b03-canon-w1-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: refire-0814 reads the beat — he crouches and the cover is comically inadequate — but the size-mismatch joke reads weakly. The one available swap is deliberately NOT taken: s20260846 is the 0817 st-wave pick, yet all fifteen of its seeds carry done_when FAIL because…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 3,
+    "episode": null,
+    "label": "Beat 03",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b02-canon-w1-0821-1787321189",
+   "task": "ep2-b02-canon-w1-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:06:36Z",
+   "finished_at": "2026-08-21T14:07:03Z",
+   "duration_s": 27,
+   "sidecar": "farm-out/box/ep2-b02-canon-w1-0821-1787321189.json",
+   "spec_file": "pipeline/jobs/ep2-b02-canon-w1-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 02. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 02 OF THE CANON PATCH WAVE, ROUND w1. THE SPRINT -- 'sprints into frame, skids, and dives behind the sapling's thin trunk'. He is running from the guards and has not seen the sapling yet. This is the most frightened he is in the episode. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, th…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 02's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b02-canon-w1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b02-canon-w1-0821/ep2-b02-canon-w1-0821-ipahead.png",
+     "name": "ep2-b02-canon-w1-0821-ipahead.png",
+     "bytes": 1210661,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b02-canon-w1-0821/jerry-canon-h37fstride-0821.png",
+     "name": "jerry-canon-h37fstride-0821.png",
+     "bytes": 11197,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b02-canon-w1-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, open mouth, surprised, walking, arm outstretched, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b02-canon-w1-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 2,
+    "episode": null,
+    "label": "Beat 02",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b13-canon-r8-0821-1787320988",
+   "task": "ep2-b13-canon-r8-0821",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:03:45Z",
+   "finished_at": "2026-08-21T14:04:13Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b13-canon-r8-0821-1787320988.json",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-r8-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND r8. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", a…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b13-canon-r8-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-canon-r8-0821/ep2-b13-canon-r8-0821-ipahead.png",
+     "name": "ep2-b13-canon-r8-0821-ipahead.png",
+     "bytes": 1056576,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-canon-r8-0821/jerry-canon-h37fsit-0821.png",
+     "name": "jerry-canon-h37fsit-0821.png",
+     "bytes": 12349,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-canon-r8-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, extra eyes, forehead mark, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-r8-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 13,
+    "episode": null,
+    "label": "Beat 13",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b07-canon-r8-0821-1787320992",
+   "task": "ep2-b07-canon-r8-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:03:14Z",
+   "finished_at": "2026-08-21T14:03:42Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b07-canon-r8-0821-1787320992.json",
+   "spec_file": "pipeline/jobs/ep2-b07-canon-r8-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 07. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 07 OF THE CANON PATCH WAVE, ROUND r8. CONFISCATE -- 'Guard 1 points at the scavenger, decisive.' He is the object of the sentence and has just been identified. Apprehension, not panic: the guards are absurd and he is starting to notice. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, the…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 07's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b07-canon-r8-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-canon-r8-0821/ep2-b07-canon-r8-0821-ipahead.png",
+     "name": "ep2-b07-canon-r8-0821-ipahead.png",
+     "bytes": 1321607,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-r8-0821/jerry-canon-h37f-0821.png",
+     "name": "jerry-canon-h37f-0821.png",
+     "bytes": 9625,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-canon-r8-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, worried, standing, arms at sides, beside tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, extra eyes, forehead mark, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b07-canon-r8-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b13-canon-s4-0821-1787320789",
+   "task": "ep2-b13-canon-s4-0821",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T14:00:42Z",
+   "finished_at": "2026-08-21T14:01:09Z",
+   "duration_s": 27,
+   "sidecar": "farm-out/box/ep2-b13-canon-s4-0821-1787320789.json",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-s4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND s4. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", a…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b13-canon-s4-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-canon-s4-0821/ep2-b13-canon-s4-0821-ipahead.png",
+     "name": "ep2-b13-canon-s4-0821-ipahead.png",
+     "bytes": 1277185,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-canon-s4-0821/jerry-canon-h37fsit-0821.png",
+     "name": "jerry-canon-h37fsit-0821.png",
+     "bytes": 12349,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-canon-s4-0821/jerry-canon-sq22-0821.png",
+     "name": "jerry-canon-sq22-0821.png",
+     "bytes": 16727,
+     "kind": "image"
+    }
+   ],
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, extra eyes, forehead mark",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-s4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 13,
+    "episode": null,
+    "label": "Beat 13",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
   {
    "id": "ep2-b13-canon-s3-0821-1787320768",
    "task": "ep2-b13-canon-s3-0821",
@@ -27,9 +1872,15 @@
    "finished_at": "2026-08-21T14:00:36Z",
    "duration_s": 28,
    "sidecar": "farm-out/box/ep2-b13-canon-s3-0821-1787320768.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-s3-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND s3. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", a…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
    "artifacts_dir": "farm-out/ep2-b13-canon-s3-0821",
    "outputs": [
     {
@@ -51,13 +1902,13 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, extra eyes, forehead mark",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-s3-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
    "recipe": null,
    "init": null,
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "spec",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
@@ -86,9 +1937,15 @@
    "finished_at": "2026-08-21T14:00:03Z",
    "duration_s": 28,
    "sidecar": "farm-out/box/ep2-b13-canon-s2-0821-1787320765.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-s2-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND s2. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", a…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
    "artifacts_dir": "farm-out/ep2-b13-canon-s2-0821",
    "outputs": [
     {
@@ -110,13 +1967,13 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, extra eyes, forehead mark",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-s2-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
    "recipe": null,
    "init": null,
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "spec",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
@@ -145,9 +2002,15 @@
    "finished_at": "2026-08-21T13:58:39Z",
    "duration_s": 27,
    "sidecar": "farm-out/box/ep2-b13-canon-r7b-0821-1787320654.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-r7b-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND r7b. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\",…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
    "artifacts_dir": "farm-out/ep2-b13-canon-r7b-0821",
    "outputs": [
     {
@@ -169,13 +2032,13 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, extra eyes, forehead mark",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-r7b-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
    "recipe": null,
    "init": null,
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "spec",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
@@ -204,9 +2067,15 @@
    "finished_at": "2026-08-21T13:58:06Z",
    "duration_s": 28,
    "sidecar": "farm-out/box/ep2-b13-canon-r7a-0821-1787320651.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-r7a-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND r7a. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\",…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
    "artifacts_dir": "farm-out/ep2-b13-canon-r7a-0821",
    "outputs": [
     {
@@ -228,13 +2097,13 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, extra eyes, forehead mark",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-r7a-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
    "recipe": null,
    "init": null,
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "spec",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
@@ -263,9 +2132,15 @@
    "finished_at": "2026-08-21T13:56:49Z",
    "duration_s": 28,
    "sidecar": "farm-out/box/ep2-b13-canon-r6b-0821-1787320540.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-r6b-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND r6b. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\",…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
    "artifacts_dir": "farm-out/ep2-b13-canon-r6b-0821",
    "outputs": [
     {
@@ -287,13 +2162,13 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, extra eyes, forehead mark",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-r6b-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
    "recipe": null,
    "init": null,
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "spec",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
@@ -322,9 +2197,15 @@
    "finished_at": "2026-08-21T13:56:15Z",
    "duration_s": 28,
    "sidecar": "farm-out/box/ep2-b13-canon-r6a-0821-1787320536.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-r6a-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND r6a. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\",…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
    "artifacts_dir": "farm-out/ep2-b13-canon-r6a-0821",
    "outputs": [
     {
@@ -346,13 +2227,13 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, extra eyes, forehead mark",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-r6a-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
    "recipe": null,
    "init": null,
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "spec",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
@@ -381,9 +2262,15 @@
    "finished_at": "2026-08-21T13:54:50Z",
    "duration_s": 27,
    "sidecar": "farm-out/box/ep2-b13-canon-r5b-0821-1787320425.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-r5b-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND r5b. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\",…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
    "artifacts_dir": "farm-out/ep2-b13-canon-r5b-0821",
    "outputs": [
     {
@@ -405,13 +2292,13 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, eyepatch, facial mark, one eye closed, scar",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-r5b-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
    "recipe": null,
    "init": null,
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "spec",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
@@ -440,9 +2327,15 @@
    "finished_at": "2026-08-21T13:54:17Z",
    "duration_s": 28,
    "sidecar": "farm-out/box/ep2-b13-canon-r5a-0821-1787320420.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-r5a-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND r5a. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\",…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
    "artifacts_dir": "farm-out/ep2-b13-canon-r5a-0821",
    "outputs": [
     {
@@ -464,13 +2357,13 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, eyepatch, facial mark, one eye closed, scar",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-r5a-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
    "recipe": null,
    "init": null,
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "spec",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
@@ -499,9 +2392,15 @@
    "finished_at": "2026-08-21T13:52:23Z",
    "duration_s": 29,
    "sidecar": "farm-out/box/ep2-b13-canon-r4-0821-1787320310.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-r4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND r4. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", a…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
    "artifacts_dir": "farm-out/ep2-b13-canon-r4-0821",
    "outputs": [
     {
@@ -523,13 +2422,13 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-r4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
    "recipe": null,
    "init": null,
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "spec",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
@@ -558,9 +2457,15 @@
    "finished_at": "2026-08-21T13:48:29Z",
    "duration_s": 1,
    "sidecar": "farm-out/box/ep2-b13-canon-r4-0821-1787320098.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b13-canon-r4-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 13. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 13 OF THE CANON PATCH WAVE, ROUND r4. THE SHADE -- 'The scavenger's legs give out and he drops to sit in the grass at the base of the stem, then tips his head sideways into the sapling's hand-sized patch of shade'. Line: '...Thanks for the shade.' EXHAUSTED, and the first moment he is not being chased. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", a…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 13's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
    "artifacts_dir": "farm-out/ep2-b13-canon-r4-0821",
    "outputs": [
     {
@@ -582,13 +2487,13 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "prompt": "masterpiece, best quality, 1boy, solo, goblin, green skin, bald, pointy ears, large ears, slit pupils, eyebags, thin eyebrows, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, slight smile, sitting, hands clasped between knees, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, blank eyes, no pupils, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-canon-r4-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
    "recipe": null,
    "init": null,
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "spec",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
@@ -14868,9 +16773,15 @@
    "finished_at": "2026-08-20T17:12:24Z",
    "duration_s": 379,
    "sidecar": "farm-out/box/ep2-b04-tightcrop-0820-1787245395.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b04-tightcrop-0820.yaml",
+   "purpose": {
+    "consumer": "Beat 04's slot in review/ep2-ship-0821. That slot currently holds rung 1's clip, swapped in tonight on the DESIGN axis to answer the founder's 08-20 complaint that the cut flips the goblin's age between shots -- it is the ratified adult and it is shipping with its action fault named ('the gaze is carried by a head turn, not the pupils'). This rung is what would clear that fault: the same character, at a framing where the movement the engine gives actually reads. If it lands before 12:00 it swap…",
+    "why": "$0, ~7 minutes, and it is the rung BOTH of beat 04's wording rungs named in their own verdicts and neither fired. The card measured 0 ready / 0 running / 0 backlog at 20:57 tonight -- the exact state that wasted last night -- and this is zero-dependency work whose plate is already on the box and whose consumer is a beat the founder complained about today. Filed to backlog so autofill runs it with no session alive.",
+    "success": "One 704x1280 121-frame mp4 of the ratified adult goblin in which A GLANCE READS AT 1:1 -- he looks away and back -- with his mouth shut, the camera locked, both ears in frame and no drift toward a child. The primary, on rung 1's own seed so the framing is the only difference. The instrument for the head-band number is rung 1's, unchanged, so the three rungs sit on one scale; the number is PUBLISHED and NOT SCORED, because rungs 1 and 2 already proved that scoring it is what closes the wording l…",
+    "owner": "goblin-design audit lane, 2026-08-20 (beat 04, rung 3 -- staging)",
+    "est_minutes": 7,
+    "priority": 22
+   },
    "artifacts_dir": "farm-out/ep2-b04-tightcrop-0820",
    "outputs": [
     {
@@ -14886,9 +16797,9 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — spec missing or carries no payload",
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE lean wiry adult goblin man alone, green skin, bald head, long pointed ears, patchwork cloak, crouched low in deep tall grass in bright daylight, seen close on his face and shoulders. HE IS HOLDING HIS BREATH AND ONLY HIS EYES MOVE: his eyes flick to one side, hold, then travel slowly back across to the other side. HIS MOUTH STAYS SHUT the whole time and his jaw stays set -- he is listening for something, not speaking, and no word is said. His head and shoulders stay STILL. He stays THE SAME GOBLIN from the first frame to the last: the same green skin, the same bald head, the same long pointed ears, one face and one figure only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "open mouth, talking, speaking, shouting, teeth, tongue, lip sync, second face, second goblin, two goblins, 2boys, crowd, child, chibi, baby, girl, round head, big eyes, cute, different face, changing face, face changing, morphing, melting face, skin colour change, human skin, pale skin, hair, wig, glasses, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
    "recipe": {
     "size": "704x1280",
     "frames": "121",
@@ -14900,8 +16811,12 @@
     "seed": 20260819,
     "seconds": 5.042
    },
+   "init": {
+    "path": "farm-out/ep2-b04-mac-plate-0819/04-the-footnote-mac-plate-r1s1.png",
+    "sha256": "5dd35da532612e5d85c15ef3353068bf1e44675f8ddfc73c316ac2f654d4e350"
+   },
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "record",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT WITH ITS FAULT NAMED: a clean close-up on his face holding his breath. The recorded residual is that it reads young, and the record says that is the s0 reference HE chose rather than a prompt fault — so there is no fix for the card to run. The only new artefact is a recovered 0813 balloo…",
@@ -36098,9 +38013,15 @@
    "finished_at": "2026-08-16T08:47:42Z",
    "duration_s": 1041,
    "sidecar": "farm-out/box/motion-poscontrol-r2-0816-1786869003.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/motion-poscontrol-r2-0816.yaml",
+   "purpose": {
+    "consumer": "This lane's report to the founder, answering the question underneath every motion experiment we have run and that none of them has tested: can LTX-2.3 distilled make a figure ACT at all. Six lanes have moved CADENCE -- how often a new picture arrives -- and in every arm of every one of them the figure holds the same pose from f0 to f96. This job asks the capability question directly under conditions rigged for the engine to succeed, and it is the gate on whether spending disk and hours on non-d…",
+    "why": "Every intervention this investigation has made was measured against cadence. Prompt wording (5 wordings x 3 seeds), the init plate as an onset lever, the 13-latent count, the whole VAE/decode side, STG at upstream's recommended setting, the 200-word ceiling and the negative's content are all eliminated by measurement, and guidance turned out to be a STEP at the CFG on/off boundary rather than a ramp. Two levers reached period 2 / 48 pictures and BOTH were rejected on the cold read: guidance 1.0…",
+    "success": "Four 704x1280 97-frame mp4s from three crops of three asserted plate shas and ONE encoder process, with four render argvs the generator proves differ by NO recipe flag. THE BAR IS WRITTEN ABOVE THE FRAMES. A0 is the tripwire: beat 13's control has returned clip sha256 42043851da4b246cfcd4e858cda828da992d0d48f15ef10d81d3a99c1ceb445a five times across four nights and must do so a sixth; a non-matching control INVALIDATES this job rather than being explained away. A1 (waterfall) establishes whethe…",
+    "owner": "motion lane (can the engine act a body at all), 2026-08-16",
+    "est_minutes": 35,
+    "priority": 45
+   },
    "artifacts_dir": "farm-out/motion-poscontrol-r2-0816",
    "outputs": [
     {
@@ -36159,6 +38080,10 @@
     "steps": "8@352x640+3@704x1280",
     "seed": 20260815,
     "seconds": 4.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b13-plate-0814/13-the-shade-ipa-r0-w015-s0.png",
+    "sha256": "1745a491db3c95c7c6d1d6a601a18e7ff1f825ef90f6169140de35ed10a4e921"
    },
    "reference": null,
    "prompt_from": null,
@@ -49169,9 +51094,15 @@
    "finished_at": "2026-08-14T21:28:53Z",
    "duration_s": 378,
    "sidecar": "farm-out/box/ep2-b18-loop1B-0814-1786733501.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b18-loop1B-0814.yaml",
+   "purpose": {
+    "consumer": "His morning screening, and the answer to whether beat 18 is solved or seed-luck.",
+    "why": "Twenty-six live prompts mention a fig and exactly one carries the shape language I proved a day ago; he is seeing the other twenty-five.",
+    "success": "A 704x1280 mp4 of beat 18 in which the fig reads as a FIG — a teardrop with a narrow neck and matte skin — and NOT as a green ball, in BOTH seeds. The failure worth reporting is the fruit staying spherical after explicit teardrop wording plus a sphere ban, which would mean fig shape is not reachable by words and needs a plate.",
+    "owner": "ep2 motion lane, 2026-08-12",
+    "est_minutes": 6,
+    "priority": 19
+   },
    "artifacts_dir": "farm-out/ep2-b18-loop1B",
    "outputs": [
     {
@@ -49187,9 +51118,9 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — spec missing or carries no payload",
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: The fruit is a small deep PURPLE-BLACK fruit on a short woody stem. It PINCHES IN just below the stem into a narrow neck and FLARES OUT into a broad body wider than it is tall, with a flat underside. In the CENTRE OF THAT FLAT UNDERSIDE, facing down, is one small dark PUCKERED EYE - a closed round opening in the skin. The surface is otherwise completely SMOOTH and PLAIN: no ribs, no lines, no bands, no speckles, no pattern of any kind. MATTE skin and a faint pale bloom. Its surface is SMOOTH and PLAIN — no ribs, no ridges, no grooves, no pattern, no markings. ONE SINGLE PURPLE FIG and the few centimetres of thin stem it hangs from are the whole of the shot, and EXACTLY ONE FIG IS IN THIS SHOT AND THERE IS NO OTHER FRUIT ANYWHERE IN THE FRAME - not beside it, not behind it, not drifting in at an edge, not out of focus: no second fruit, no branch, no leaves, no plant. It is an extreme close-up of ONE SINGLE PURPLE FIG — one fruit, not a leaf — hanging from the end of one very thin branch, lit warmly from behind. No creature and no person is in this shot. THE THIN STEM TREMBLES: the branch it hangs from quivers and shivers finely, and the heavy fig sways a little on it, trembling as though it is about to let go. The fig stays ONE fruit the whole time and stays attached to the stem. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "ribbed, ribbing, ridges, bands, banded, stripes, striped, lines on the skin, segmented, melon, pumpkin, gourd, planet, speckles, spots, mould, white patch, plum, ribbed, ribbing, ridges, grooves, fluted, segmented, pumpkin, gourd, squash, melon, striped fruit, patterned skin, spiral, target, bullseye, mouldy, rotten, white patch, green fig, green fruit, unripe green, all green, featureless, smooth blank surface, flat even colour, glossy, shiny, glowing, backlit glow, light bulb, lamp, lantern, balloon, plastic, billiard ball, leaf, leaves, foliage, midrib, apple, creature, goblin, person, face, hands, dark, dusk, dim lighting, low key, night, two figs, second fig, a second fruit, another fruit, cluster of fruit, bunch of fruit, fruit at the edge of frame, green ball, round ball, sphere, spherical fruit, apple, marble, pointed leaves, lance-shaped leaves, narrow leaves, spiky leaves, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
    "recipe": {
     "size": "704x1280",
     "frames": "121",
@@ -49201,8 +51132,12 @@
     "seed": 20260991,
     "seconds": 5.042
    },
+   "init": {
+    "path": "farm-out/ep2-b18-plantneg-0812/18-the-decision-wave1-s3.png",
+    "sha256": "ef48879d61fa93e4102b2d73714a9524b087f5ed72789657658e42a5303aef61"
+   },
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "record",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT, NEW, AND PASSING: motion in all four quarters (interframe medians 5.56 / 6.67 / 6.05 / 5.16), zero specular pumping on 120 of 120 adjacent pairs, hue held at 315 degrees with a spread of 4.1 degrees over all 121 frames. Named pick of three seeds off one recipe — 1 pass, 1 FAIL-STROBE, 1…",
@@ -50307,9 +52242,15 @@
    "finished_at": "2026-08-14T19:49:45Z",
    "duration_s": 375,
    "sidecar": "farm-out/box/ep2-b18-loop1-0814-1786733498.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b18-loop1-0814.yaml",
+   "purpose": {
+    "consumer": "His morning screening, and the answer to whether beat 18 is solved or seed-luck.",
+    "why": "Twenty-six live prompts mention a fig and exactly one carries the shape language I proved a day ago; he is seeing the other twenty-five.",
+    "success": "A 704x1280 mp4 of beat 18 in which the fig reads as a FIG — a teardrop with a narrow neck and matte skin — and NOT as a green ball, in BOTH seeds. The failure worth reporting is the fruit staying spherical after explicit teardrop wording plus a sphere ban, which would mean fig shape is not reachable by words and needs a plate.",
+    "owner": "ep2 motion lane, 2026-08-12",
+    "est_minutes": 6,
+    "priority": 19
+   },
    "artifacts_dir": "farm-out/ep2-b18-loop1",
    "outputs": [
     {
@@ -50325,9 +52266,9 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — spec missing or carries no payload",
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: The fruit is a small deep PURPLE-BLACK fruit on a short woody stem. It PINCHES IN just below the stem into a narrow neck and FLARES OUT into a broad body wider than it is tall, with a flat underside. In the CENTRE OF THAT FLAT UNDERSIDE, facing down, is one small dark PUCKERED EYE - a closed round opening in the skin. The surface is otherwise completely SMOOTH and PLAIN: no ribs, no lines, no bands, no speckles, no pattern of any kind. MATTE skin and a faint pale bloom. Its surface is SMOOTH and PLAIN — no ribs, no ridges, no grooves, no pattern, no markings. ONE SINGLE PURPLE FIG and the few centimetres of thin stem it hangs from are the whole of the shot, and EXACTLY ONE FIG IS IN THIS SHOT AND THERE IS NO OTHER FRUIT ANYWHERE IN THE FRAME - not beside it, not behind it, not drifting in at an edge, not out of focus: no second fruit, no branch, no leaves, no plant. It is an extreme close-up of ONE SINGLE PURPLE FIG — one fruit, not a leaf — hanging from the end of one very thin branch, lit warmly from behind. No creature and no person is in this shot. THE THIN STEM TREMBLES: the branch it hangs from quivers and shivers finely, and the heavy fig sways a little on it, trembling as though it is about to let go. The fig stays ONE fruit the whole time and stays attached to the stem. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "ribbed, ribbing, ridges, bands, banded, stripes, striped, lines on the skin, segmented, melon, pumpkin, gourd, planet, speckles, spots, mould, white patch, plum, ribbed, ribbing, ridges, grooves, fluted, segmented, pumpkin, gourd, squash, melon, striped fruit, patterned skin, spiral, target, bullseye, mouldy, rotten, white patch, green fig, green fruit, unripe green, all green, featureless, smooth blank surface, flat even colour, glossy, shiny, glowing, backlit glow, light bulb, lamp, lantern, balloon, plastic, billiard ball, leaf, leaves, foliage, midrib, apple, creature, goblin, person, face, hands, dark, dusk, dim lighting, low key, night, two figs, second fig, a second fruit, another fruit, cluster of fruit, bunch of fruit, fruit at the edge of frame, green ball, round ball, sphere, spherical fruit, apple, marble, pointed leaves, lance-shaped leaves, narrow leaves, spiky leaves, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
    "recipe": {
     "size": "704x1280",
     "frames": "121",
@@ -50339,8 +52280,12 @@
     "seed": 20260806,
     "seconds": 5.042
    },
+   "init": {
+    "path": "farm-out/ep2-b18-plantneg-0812/18-the-decision-wave1-s3.png",
+    "sha256": "ef48879d61fa93e4102b2d73714a9524b087f5ed72789657658e42a5303aef61"
+   },
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "record",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "IN THE CUT, NEW, AND PASSING: motion in all four quarters (interframe medians 5.56 / 6.67 / 6.05 / 5.16), zero specular pumping on 120 of 120 adjacent pairs, hue held at 315 degrees with a spread of 4.1 degrees over all 121 frames. Named pick of three seeds off one recipe — 1 pass, 1 FAIL-STROBE, 1…",
@@ -93184,9 +95129,15 @@
    "finished_at": "2026-08-10T09:48:29Z",
    "duration_s": 183,
    "sidecar": "farm-out/box/ep2-b04-goblin-ipa-content-1786355115.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b04-goblin-ipa-content.yaml",
+   "purpose": {
+    "consumer": "The same decision arm 1 serves — how episode 2 gets one goblin across fifteen beats — with the question arm 1 left open: whether the identity gain can be had WITHOUT the colour loss. If it can, the recommendation is a mechanism the founder's \"green\" and \"nothing complex\" both survive. If it cannot, that trade-off is the finding and he is the one who should hear it.",
+    "why": "One variable against arm 1: the adapter is scoped to down block_2 instead of every block at 0.6. Sequential, one image at a time — batch-of-4 configs are banned on this card.",
+    "success": "16 PNGs at C:\\banyan-farm\\goblin-ipa-0810\\out2 (4 references x 4 seeds) with per-frame 7.2 sidecars, plus identity-agreement-content.yaml measuring the wave-1 baseline, the arm-1 cells and these four with ONE build of one metric. A result showing the scoped adapter loses the identity gain is a success: the job produces the measurement, not a preferred answer.",
+    "owner": "goblin-consistency lane",
+    "est_minutes": 6,
+    "priority": 40
+   },
    "artifacts_dir": null,
    "outputs": [],
    "prompt": null,
@@ -93225,9 +95176,15 @@
    "finished_at": "2026-08-10T09:36:12Z",
    "duration_s": 30,
    "sidecar": "farm-out/box/ep2-b04-goblin-ipa-content-1786354532.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b04-goblin-ipa-content.yaml",
+   "purpose": {
+    "consumer": "The same decision arm 1 serves — how episode 2 gets one goblin across fifteen beats — with the question arm 1 left open: whether the identity gain can be had WITHOUT the colour loss. If it can, the recommendation is a mechanism the founder's \"green\" and \"nothing complex\" both survive. If it cannot, that trade-off is the finding and he is the one who should hear it.",
+    "why": "One variable against arm 1: the adapter is scoped to down block_2 instead of every block at 0.6. Sequential, one image at a time — batch-of-4 configs are banned on this card.",
+    "success": "16 PNGs at C:\\banyan-farm\\goblin-ipa-0810\\out2 (4 references x 4 seeds) with per-frame 7.2 sidecars, plus identity-agreement-content.yaml measuring the wave-1 baseline, the arm-1 cells and these four with ONE build of one metric. A result showing the scoped adapter loses the identity gain is a success: the job produces the measurement, not a preferred answer.",
+    "owner": "goblin-consistency lane",
+    "est_minutes": 6,
+    "priority": 40
+   },
    "artifacts_dir": null,
    "outputs": [],
    "prompt": null,
@@ -93266,9 +95223,15 @@
    "finished_at": "2026-08-10T09:31:27Z",
    "duration_s": 461,
    "sidecar": "farm-out/box/ep2-b04-goblin-ipa-1786353822.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b04-goblin-ipa.yaml",
+   "purpose": {
+    "consumer": "The decision about how episode 2 gets a goblin who is the same character in all fifteen beats. Wave-1 answered \"he is green and he has tusks\" and left the wave unshippable; until a mechanism is measured, every one of the fourteen staged specs would render a fifteenth different creature. The output of this job is a number and a contact sheet the founder can look at, not a candidate he is asked to rank.",
+    "why": "One variable against the wave-1 sample: the conditioning. The headline arm is all four references at scale 0.6 (the diffusers docs put 0.5 at \"balanced between the text and image prompt\"); a 0.4/0.8 sweep on one reference follows so the knob is measured rather than asserted. Sequential, one image at a time — batch-of-4 configs are banned on this card.",
+    "success": "24 PNGs at C:\\banyan-farm\\goblin-ipa-0810\\out (6 cells x 4 seeds), each with its .yaml provenance sidecar written at render time (7.2), plus identity-agreement.yaml carrying mean pairwise DINOv2 and CLIP-I agreement for the wave-1 baseline and for every cell. The job succeeds by producing the measurement, INCLUDING a measurement that says the mechanism failed — a low number here is a result, not a failed job.",
+    "owner": "goblin-consistency lane",
+    "est_minutes": 9,
+    "priority": 40
+   },
    "artifacts_dir": null,
    "outputs": [],
    "prompt": null,
@@ -94829,6 +96792,336 @@
     "beat": 14,
     "episode": null,
     "label": "Beat 14",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b01-clearing-c02-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "state": "authored",
+   "priority": 31,
+   "est_minutes": 3,
+   "consumer": "BEAT 01'S COLD OPEN, as an INIT for beat16_sapling_composite -- the canon two-leaf sapling drawn at FINAL SIZE so the motion model has nothing left to grow. The shipping take (01-cold-open-LTX-fignonly-s20260840) is 7 of 8 scored clauses and fails G5a because the sapling and the shaft are redrawn a…",
+   "why_first": "THE CELL PLUS BEAT 01'S LIGHT, one variable from c01.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b01-clearing-c02-0821.yaml",
+   "authored_at": 1787322974,
+   "story": {
+    "kind": "beat",
+    "beat": 1,
+    "episode": null,
+    "label": "Beat 01",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b01-field-s4-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "state": "authored",
+   "priority": 32,
+   "est_minutes": 3,
+   "consumer": "STEP 1 OF THE BEAT-01 PLATE-SIDE ROUTE. The cold open's shipping take (01-cold-open-LTX-fignonly-s20260840) is 7 of 8 scored clauses and fails G5a because the SAPLING and the SHAFT are redrawn across the clip. Its own verdict closed the prompt-side door -- the six plant-growth negatives moved the s…",
+   "why_first": "$0 beyond ~3 GPU-minutes, no download, nothing to fetch.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b01-field-s4-0821.yaml",
+   "authored_at": 1787322057,
+   "story": {
+    "kind": "beat",
+    "beat": 1,
+    "episode": null,
+    "label": "Beat 01",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b14-s49-0815",
+   "node": "002b-first-citizen",
+   "beat": 14,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 19,
+   "est_minutes": 6,
+   "consumer": "The goblin remake wave, first re-animation. Also the first motion clip beat 02 has ever had.",
+   "why_first": "The adult plate passed and beat 02 is the beat it was proved on — and the one beat excluded from every wave because its old plate was not him.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b14-s49-0815.yaml",
+   "authored_at": 1787321165,
+   "story": {
+    "kind": "beat",
+    "beat": 14,
+    "episode": null,
+    "label": "Beat 14",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b14-s49B-0815",
+   "node": "002b-first-citizen",
+   "beat": 14,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 19,
+   "est_minutes": 6,
+   "consumer": "The goblin remake wave, first re-animation. Also the first motion clip beat 02 has ever had.",
+   "why_first": "The adult plate passed and beat 02 is the beat it was proved on — and the one beat excluded from every wave because its old plate was not him.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b14-s49B-0815.yaml",
+   "authored_at": 1787321165,
+   "story": {
+    "kind": "beat",
+    "beat": 14,
+    "episode": null,
+    "label": "Beat 14",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b15-s49-0815",
+   "node": "002b-first-citizen",
+   "beat": 15,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 19,
+   "est_minutes": 6,
+   "consumer": "The goblin remake wave, first re-animation. Also the first motion clip beat 02 has ever had.",
+   "why_first": "The adult plate passed and beat 02 is the beat it was proved on — and the one beat excluded from every wave because its old plate was not him.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b15-s49-0815.yaml",
+   "authored_at": 1787321165,
+   "story": {
+    "kind": "beat",
+    "beat": 15,
+    "episode": null,
+    "label": "Beat 15",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b15-s49B-0815",
+   "node": "002b-first-citizen",
+   "beat": 15,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 19,
+   "est_minutes": 6,
+   "consumer": "The goblin remake wave, first re-animation. Also the first motion clip beat 02 has ever had.",
+   "why_first": "The adult plate passed and beat 02 is the beat it was proved on — and the one beat excluded from every wave because its old plate was not him.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b15-s49B-0815.yaml",
+   "authored_at": 1787321165,
+   "story": {
+    "kind": "beat",
+    "beat": 15,
+    "episode": null,
+    "label": "Beat 15",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b04-tightcrop-s2-0820",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 22,
+   "est_minutes": 7,
+   "consumer": "Beat 04's slot in review/ep2-ship-0821. That slot currently holds rung 1's clip, swapped in tonight on the DESIGN axis to answer the founder's 08-20 complaint that the cut flips the goblin's age between shots -- it is the ratified adult and it is shipping with its action fault named ('the gaze is c…",
+   "why_first": "$0, ~7 minutes, and it is the rung BOTH of beat 04's wording rungs named in their own verdicts and neither fired.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b04-tightcrop-s2-0820.yaml",
+   "authored_at": 1787321165,
+   "story": {
+    "kind": "beat",
+    "beat": 4,
+    "episode": null,
+    "label": "Beat 04",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b04-tightcrop-s3-0820",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 22,
+   "est_minutes": 7,
+   "consumer": "Beat 04's slot in review/ep2-ship-0821. That slot currently holds rung 1's clip, swapped in tonight on the DESIGN axis to answer the founder's 08-20 complaint that the cut flips the goblin's age between shots -- it is the ratified adult and it is shipping with its action fault named ('the gaze is c…",
+   "why_first": "$0, ~7 minutes, and it is the rung BOTH of beat 04's wording rungs named in their own verdicts and neither fired.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b04-tightcrop-s3-0820.yaml",
+   "authored_at": 1787321165,
+   "story": {
+    "kind": "beat",
+    "beat": 4,
+    "episode": null,
+    "label": "Beat 04",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b04-tightcrop-z24-0820",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 22,
+   "est_minutes": 7,
+   "consumer": "Beat 04's slot in review/ep2-ship-0821. That slot currently holds rung 1's clip, swapped in tonight on the DESIGN axis to answer the founder's 08-20 complaint that the cut flips the goblin's age between shots -- it is the ratified adult and it is shipping with its action fault named ('the gaze is c…",
+   "why_first": "$0, ~7 minutes, and it is the rung BOTH of beat 04's wording rungs named in their own verdicts and neither fired.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b04-tightcrop-z24-0820.yaml",
+   "authored_at": 1787321165,
+   "story": {
+    "kind": "beat",
+    "beat": 4,
+    "episode": null,
+    "label": "Beat 04",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b02-adultplate-s20260820-0820",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 34,
+   "est_minutes": 3,
+   "consumer": "A six-tile sheet, judged by eye in the morning, whose winner becomes the init plate for a beat 02 motion job on the proven `anchor` recipe -- and through that, beat 02's slot in review/ep2-ship-0821, which today opens the episode on the wrong creature. Nothing consumes a single one of these tiles o…",
+   "why_first": "$0, ~2 minutes, zero dependencies, and it is the ONLY missing input for the one goblin beat in this episode that has never had an adult plate drawn for it.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b02-adultplate-s20260820-0820.yaml",
+   "authored_at": 1787321165,
+   "story": {
+    "kind": "beat",
+    "beat": 2,
+    "episode": null,
+    "label": "Beat 02",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b02-adultplate-s20260821-0820",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 34,
+   "est_minutes": 3,
+   "consumer": "A six-tile sheet, judged by eye in the morning, whose winner becomes the init plate for a beat 02 motion job on the proven `anchor` recipe -- and through that, beat 02's slot in review/ep2-ship-0821, which today opens the episode on the wrong creature. Nothing consumes a single one of these tiles o…",
+   "why_first": "$0, ~2 minutes, zero dependencies, and it is the ONLY missing input for the one goblin beat in this episode that has never had an adult plate drawn for it.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b02-adultplate-s20260821-0820.yaml",
+   "authored_at": 1787321165,
+   "story": {
+    "kind": "beat",
+    "beat": 2,
+    "episode": null,
+    "label": "Beat 02",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b02-adultplate-s20260822-0820",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 34,
+   "est_minutes": 3,
+   "consumer": "A six-tile sheet, judged by eye in the morning, whose winner becomes the init plate for a beat 02 motion job on the proven `anchor` recipe -- and through that, beat 02's slot in review/ep2-ship-0821, which today opens the episode on the wrong creature. Nothing consumes a single one of these tiles o…",
+   "why_first": "$0, ~2 minutes, zero dependencies, and it is the ONLY missing input for the one goblin beat in this episode that has never had an adult plate drawn for it.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b02-adultplate-s20260822-0820.yaml",
+   "authored_at": 1787321165,
+   "story": {
+    "kind": "beat",
+    "beat": 2,
+    "episode": null,
+    "label": "Beat 02",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b02-adultplate-s20260823-0820",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 34,
+   "est_minutes": 3,
+   "consumer": "A six-tile sheet, judged by eye in the morning, whose winner becomes the init plate for a beat 02 motion job on the proven `anchor` recipe -- and through that, beat 02's slot in review/ep2-ship-0821, which today opens the episode on the wrong creature. Nothing consumes a single one of these tiles o…",
+   "why_first": "$0, ~2 minutes, zero dependencies, and it is the ONLY missing input for the one goblin beat in this episode that has never had an adult plate drawn for it.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b02-adultplate-s20260823-0820.yaml",
+   "authored_at": 1787321165,
+   "story": {
+    "kind": "beat",
+    "beat": 2,
+    "episode": null,
+    "label": "Beat 02",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b02-adultplate-s20260824-0820",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 34,
+   "est_minutes": 3,
+   "consumer": "A six-tile sheet, judged by eye in the morning, whose winner becomes the init plate for a beat 02 motion job on the proven `anchor` recipe -- and through that, beat 02's slot in review/ep2-ship-0821, which today opens the episode on the wrong creature. Nothing consumes a single one of these tiles o…",
+   "why_first": "$0, ~2 minutes, zero dependencies, and it is the ONLY missing input for the one goblin beat in this episode that has never had an adult plate drawn for it.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b02-adultplate-s20260824-0820.yaml",
+   "authored_at": 1787321165,
+   "story": {
+    "kind": "beat",
+    "beat": 2,
+    "episode": null,
+    "label": "Beat 02",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b02-adultplate-s20260825-0820",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "state": "authored",
+   "priority": 34,
+   "est_minutes": 3,
+   "consumer": "A six-tile sheet, judged by eye in the morning, whose winner becomes the init plate for a beat 02 motion job on the proven `anchor` recipe -- and through that, beat 02's slot in review/ep2-ship-0821, which today opens the episode on the wrong creature. Nothing consumes a single one of these tiles o…",
+   "why_first": "$0, ~2 minutes, zero dependencies, and it is the ONLY missing input for the one goblin beat in this episode that has never had an adult plate drawn for it.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b02-adultplate-s20260825-0820.yaml",
+   "authored_at": 1787321165,
+   "story": {
+    "kind": "beat",
+    "beat": 2,
+    "episode": null,
+    "label": "Beat 02",
     "moment": null,
     "why": "the script on main has no beat by this number"
    }
