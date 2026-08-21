@@ -1,0 +1,162 @@
+id: ep2-guardcast-a-0822
+task: ep2-guardcast-a-0822
+node: 002b-first-citizen
+beat: 5
+runner: box
+priority: 3
+needs_gpu: true
+max_attempts: 1
+sample: false
+est_minutes: 2
+needs:
+- cuda
+- vram12
+- sdxl-venv
+owner: guard-casting lane, 2026-08-22
+consumer: 'THE FOUNDER, tonight, on review/ep2-guardcast-0822 -- one picker page, twelve labelled candidates,
+  one answer of the form `guardcast <letter>+<letter>`. His pick becomes the guards'' reference image,
+  which is what the goblin got on 2026-08-21 and what the guards have never had. NOTHING downstream consumes
+  this frame until he picks: no beat plate, no motion spec, and review/ep2-ship-0821 is not touched.'
+why: 'GUARD CASTING, CELL A OF TWELVE: bald / burly / slack-jawed. The founder reviewed every guard reference
+  we have and ruled "not the best... some have girls, and theyre just improper", and had already said
+  what he wants -- "they should look like grown men. yes. dumb grown men". Five 0812 rounds never asked
+  him that question; they repaired wording against a cast nobody had drawn to a brief. He chose to GENERATE
+  a sheet. This is the ratified still stack with the goblin adapter and every goblin term removed, the
+  adult ratio carried by the 5.2-head openpose skeleton rather than by a word, and gender asserted positively
+  in the first six tokens. See pipeline/derive_guardcast_0822.py.'
+success: ONE 832x1216 png at seed 20260901, scored at 1:1 on the bar in `bar`. A pass here is a CANDIDATE
+  on the picker page and nothing more -- the cast is the founder's call (R4) and this job does not make
+  it.
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-guardcast-a-0822\prompt.txt: masterpiece, best quality, very aesthetic, 1boy, solo,
+    mature male, muscular male, broad shoulders, bald, open mouth, half-closed eyes, thick eyebrows, expressionless,
+    cream shirt, white sash, brown wrap skirt, muted color, standing, arms at sides, in tall grass, full
+    body
+  C:\banyan-farm\ep2-guardcast-a-0822\negative.txt: lowres, worst quality, low quality, text, watermark,
+    1girl, girl, woman, female, breasts, child, male child, shota, toddler, chibi, loli, teenager, young,
+    armor, helmet, knight, goblin, green skin, pointy ears, elf, cloak, hood, photorealistic, 3d
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT.\
+    \ Two inputs, not three: there is NO\n# IP-Adapter reference here because there is no guard reference\
+    \ yet --\n# making one is what this sheet is for. Emitted by\n# pipeline/derive_guardcast_0822.py.\n\
+    import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \nroot = r\"C:\\banyan-farm\\ep2-guardcast-a-0822\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\"),\n\
+    \        (\"jerry-skel-h19-0820.png\", os.path.join(root, \"pipeline\", \"control\"),\n         \"\
+    244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c\")]\nfor name, dst, sha in want:\n\
+    \    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base + name, timeout=120) as\
+    \ r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n    if got != sha:\n  \
+    \      print(\"!! %s fetched with sha %s, expected %s\"\n              % (name, got, sha))\n     \
+    \   raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n\
+    \    print(\"staged\", name, got, \"->\", dst)\n"
+- name: cast
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-guardcast-a-0822\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\ep2-guardcast-a-0822\src
+  - --task
+  - ep2-guardcast-a-0822
+  - --arm
+  - cast
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - pipeline/control/jerry-skel-h19-0820.png
+  - --control-sha256
+  - 244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260901'
+  - --prompt-file
+  - C:\banyan-farm\ep2-guardcast-a-0822\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\ep2-guardcast-a-0822\negative.txt
+  - --out
+  - C:\banyan-farm\ep2-guardcast-a-0822\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The courier pushes from farm-out and from nowhere else --\n# ep2-cnet-probe-0817 rendered perfectly\
+    \ and was invisible for two\n# days for want of this step. The conditions travel with the frame.\n\
+    import glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/ep2-guardcast-a-0822/out\"\npay_dir =\
+    \ \"C:/banyan-farm/ep2-guardcast-a-0822\"\nctl_dir = \"C:/banyan-farm/ep2-guardcast-a-0822/src/pipeline/control\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-guardcast-a-0822\"\nos.makedirs(dst, exist_ok=True)\n\
+    files = sorted(glob.glob(out_dir + \"/ep2-guardcast-a-0822-cast.png*\")\n               + glob.glob(pay_dir\
+    \ + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"/negative.txt\")\n               + glob.glob(ctl_dir\
+    \ + \"/jerry-skel-h19-0820.png\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c =\
+    \ os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-guardcast-a-0822.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 4 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-guardcast-a-0822\out\ep2-guardcast-a-0822-cast.png
+bar: "THE CASTING BAR. Scored at 1:1, per frame, before the founder sees it.\n\nREJECT OUTRIGHT -- these\
+  \ frames are not shown to him at all, because his own\nwords already ruled on them and spending his\
+  \ eye on a repeat of the defect is\nthe thing this sheet exists to stop:\n  R1  A FEMALE READ. Any of\
+  \ it -- breasts, a female face, a female silhouette.\n      \"some have girls, and theyre just improper\"\
+  \ (founder, 2026-08-21).\n  R2  A CHILD READ. Under about 5 heads, a child's face, a child's build.\n\
+  \      \"they should look like grown men\" (founder, 2026-08-20).\n  R3  NOT ONE WHOLE MAN. Two figures,\
+  \ a cropped head, a floating head, a\n      dismembered limb, or a body the skeleton clearly lost.\n\
+  \nSCORE AND REPORT, but do not silently drop:\n  S1  DUMB IS LEGIBLE IN THE FACE with the caption covered\
+  \ -- carried by the\n      MOUTH and the BROW, per the law. Not \"ugly\", not \"deranged\": slow.\n\
+  \  S2  THE WARDROBE IS THREE GARMENTS -- cream shirt, white sash, brown wrap --\n      not one merged\
+  \ robe. This is beat 08's measured failure mode.\n  S3  NO ARMOUR, NO HELMET, NO KNIGHT. The founder's\
+  \ anti-helmet intent is\n      what `bald` was mistranslated from on 2026-08-12; the intent stands.\n\
+  \  S4  HUMAN, NOT GOBLIN. No green skin, no pointy ears. Different cast.\n  S5  THE THREE AXES ARE VISIBLY\
+  \ DIFFERENT ACROSS THE SHEET -- if all twelve\n      read as one man the sheet has failed as a sheet\
+  \ even if every frame\n      passes on its own.\n\nThe founder's job on this sheet is ONE taste call\
+  \ and nothing else: which face\nis guard 1 and which is guard 2. Everything above is the steward's."
+the_one_variable: 'ACROSS THE SHEET: hair (bald / dark cropped / light sandy), build (burly / lean) and
+  face (slack / dopey), 3x2x2, one seed each. Everything else -- driver, checkpoint, skeleton, controlnet
+  scale, wardrobe, pose, location, negative -- is byte-identical in all twelve, so a difference between
+  two frames is attributable to the cell and not to the recipe.'
+no_ip_adapter_on_purpose: There is no --ip-* flag in this spec and that is the design. The goblin was
+  solved by pointing the k6a adapter at an image the founder picked; the guards have no such image, and
+  this sheet is how one gets made. Conditioning these frames on the goblin's face reference would draw
+  twelve goblins in guard clothes.
+adult_stature_is_geometry_not_a_word: 'head_frac 0.190 = 5.2 heads, carried by farm-out/jerry-skel-assets-0820/jerry-skel-h19-0820.png
+  through xinsir/controlnet-openpose-sdxl-1.0 at scale 1.0. Every 0812 round also carried `child` in its
+  negative and still produced children, because a negative cannot set a ratio. jerry_standard_0821 records
+  the same dial from the other end: n5 moved head_frac 0.190 -> 0.320 alone and manufactured a bobblehead
+  on demand.'
+wardrobe_is_held_not_recast: cream shirt, white sash, brown wrap skirt -- the garments the founder ratified
+  2026-08-16 ("the cast stands as drawn") and which beats 05, 06 and 08 shipped. Held CONSTANT across
+  all twelve so the only things moving are the three axes he is being asked about. A pick off this sheet
+  is a face and a build, NOT a new costume ruling.
+clip77_measured_not_estimated: positive 66 of 77 for this cell (longest of the twelve is 72), negative
+  72 of 77, counted with animagine-xl-3.1's OWN vocab by pipeline/clip_token_count.py and asserted by
+  `derive_guardcast_0822.py --selftest`.
+one_sample_rule: 'THE BATCH IS THE SAMPLE, and the reason is written out in full in pipeline/derive_guardcast_0822.py.
+  Short form: the RECIPE is the ratified stack already sampled across the thirteen-rung k-ladder, what
+  changes is a character brief''s WORDING, the founder has already looked at the previous wording''s output
+  and rejected it, and a casting sheet cannot be sampled with one candidate because one candidate cannot
+  answer "which of these".'
+pre_registered_fail_modes: '1. A CHILD OR FEMALE READ SURVIVES the positive assertion plus the skeleton
+  -> raise --scale, or move `mature male, facial hair` earlier. Such a frame is DROPPED, not shown.
+
+  2. DUMB READS AS UGLY OR DERANGED rather than slow -> drop `expressionless`, keep `half-closed eyes`,
+  add `:o`.
+
+  3. ALL TWELVE READ AS ONE MAN -> widen the build axis with `fat man` / `tall`. The seeds are already
+  distinct.'
+founder_words_verbatim: '2026-08-20, guards card: "they should look like grown men. yes. dumb grown men".
+  2026-08-21, on the existing references: "not the best... some have girls, and theyre just improper".'
+post_ship_patch: review/ep2-ship-0821 IS NOT TOUCHED BY THIS JOB OR BY ITS ELEVEN SIBLINGS. A frame here
+  is a candidate; a candidate becomes a founder pick, a pick becomes a guard reference, a reference becomes
+  a plate spec, a plate becomes a motion spec. Five judgements, none of them this job's.
