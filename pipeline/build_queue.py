@@ -770,7 +770,13 @@ def card_html(job: dict, i: int) -> str:
                f'<span>{_e(clock(job.get("finished_at")))}</span>')
     n = len(job.get("outputs") or [])
     files = f'<span>{n} file{"" if n == 1 else "s"}</span>' if n else ""
-    line = (snippet(job["prompt"]) if job.get("prompt") else NO_PROMPT)
+    # `prompt_absent` is the prompt-gap lane's honest label for a job that has
+    # no prompt because it never had one — a file transfer, an encode — as
+    # opposed to one whose prompt this page failed to find. NO_PROMPT is right
+    # for the second and a small lie about the first: "PROMPT NOT RECORDED"
+    # reads as lost data on a card where there was never any data to lose.
+    line = (snippet(job["prompt"]) if job.get("prompt")
+            else job.get("prompt_absent") or NO_PROMPT)
     gap = "" if job.get("prompt") else " gap"
 
     return (
@@ -861,6 +867,11 @@ def index_row(job: dict) -> dict:
         # The gap and its reason travel with the row, so the page can print the
         # honest marker without a second fetch and without inventing a cause.
         row["prompt_gap"] = job.get("prompt_source") or "no reason recorded"
+        # …and when the ledger knows the gap is not a gap at all — a job of a
+        # kind that never carries a prompt — that label travels too, so the
+        # record says the same thing the card does.
+        if job.get("prompt_absent"):
+            row["prompt_absent"] = job["prompt_absent"]
     return row
 
 
@@ -1657,9 +1668,18 @@ LIVE_JS = """
       frag.appendChild(el("p", "qprose", pos));
     } else {
       frag.appendChild(el("p", "qh", "Prompt"));
-      var gap = el("p", "qgap", NO_PROMPT + " ");
-      gap.appendChild(el("i", null, "\\u2014 " + (row.prompt_gap ||
-        (det && det.prompt_source) || "no reason recorded")));
+      /* A job that never had a prompt says so in its own words and stops
+         there — the label IS the reason, and printing NO_PROMPT beside it
+         would say "not recorded" about something there was nothing to
+         record. Only a genuine gap gets the marker-plus-cause form. */
+      var gap;
+      if (row.prompt_absent) {
+        gap = el("p", "qgap", row.prompt_absent);
+      } else {
+        gap = el("p", "qgap", NO_PROMPT + " ");
+        gap.appendChild(el("i", null, "\\u2014 " + (row.prompt_gap ||
+          (det && det.prompt_source) || "no reason recorded")));
+      }
       frag.appendChild(gap);
     }
     var neg = det && det.negative;
