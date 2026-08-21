@@ -40,3 +40,12 @@ watch, ship.
   it runs the local gates and refuses to push onto a red main (`--fixing-main`
   only if your commit IS the repair). Six lanes pushed onto one broken main on
   2026-08-20 and each push re-mailed the founder the same failure.
+
+## Amendment (founder, 2026-08-21 night): SELF-ITERATE TO A SELECTION
+"what you could've done is done iteration yourself, try to find problems,
+reiterate, fix problems, and then give me a selection of versions of a clip
+for each beat." The per-beat loop does NOT stop at a fault list: the steward
+iterates (find→fix→re-render, batches, eye judging) until a beat has 2-4
+genuinely good DISTINCT versions, then presents that selection for the pick.
+The founder picks from finished options; he is never handed a defect report
+as if it were his job to fix.
