@@ -293,8 +293,14 @@ def poseset(force=False):
 
 
 # beat, skeleton stem, pose words, the audit's named break, the framing note
+#
+# THE POSE WORDS ARE THE BEAT'S OWN ACTION, read off
+# genomes/sapling/nodes/002b-first-citizen/shots.md, and the skeleton is the
+# published one nearest that action. Where the nearest is not near, the spec
+# says so in `framing_gap` rather than pretending -- see beats 04 and 07.
 WAVE = [
-    ("02", "jerry-skel-h19-0820", S.POSE_STAND,
+    ("02", "jerry-skel-h19stride-0820",
+     "running, leaning forward, in tall grass, full body, wide shot",
      "CHILD AND GREY. Not green at all -- bone-grey/white with a huge round "
      "cranium, low pointed ears, closed eyes, a chubby child body, grey shirt "
      "and shorts. Breaks the tile on SPECIES COLOUR and on BUILD at once, and "
@@ -302,36 +308,45 @@ WAVE = [
      "re-render list. Its ship_status has read UNJUDGED since 08-17 because "
      "nobody looked.",
      "THE WORST IDENTITY BREAK IN THE CUT."),
-    ("03", "jerry-skel-h19-0820", S.POSE_STAND,
+    ("03", "jerry-skel-h19crouch-0820",
+     "squatting, hiding behind a thin trunk, in tall grass, full body",
      "ADULT MAN. Human nose with nostrils, rounded human ear, nasolabial "
      "folds, flat olive rather than the tile's two-tone.",
      "on the 08-19 split."),
-    ("04", "jerry-skel-h19-0820", S.POSE_STAND,
+    ("04", "jerry-skel-h19hunch-0820",
+     "standing, hunched over, leaning out past tall grass blades, upper body",
      "ADULT MAN, and the worst offender. Iris and pupil in a human eye, a full "
      "human nose, long swept-back elf spikes, brow furrows and cheekbones.",
      "THE TIGHTEST CROP IN THE CUT, which is why it is the worst offender -- "
      "the audit's own framing finding. Every clause of the bar is legible at "
      "this size, so this beat is the wave's hardest test and also its clearest "
      "read."),
-    ("07", "jerry-skel-h19-0820", S.POSE_STAND,
+    ("07", "jerry-skel-h19-0820",
+     "standing, arms at sides, beside tall grass, full body",
      "ADULT MAN WITH WHITE HAIR ON A CHARACTER WHOSE CANON IS BALD, plus the "
      "guard's round spectacles, a human nose, and adult male height beside the "
      "guard.",
      "FILED AMONG THE FOUR THAT WERE 'RIGHT' on 08-19. It is not. `bald` is "
      "canon and this frame has hair; `hair` and `beard` are both in the "
      "standard's negative."),
-    ("08", "jerry-skel-h19-0820", S.POSE_STAND,
+    ("08", "jerry-skel-h19-0820",
+     "standing, looking down at his own belly, arms at sides, in tall grass, "
+     "full body",
      "CHILD. Small body, big head, closed sad eyes, buttoned coat -- the "
      "pre-ruling round one.",
      "on the 08-19 split. `child` and `chibi` are both in the standard's "
      "negative and head_frac 0.190 is the geometric answer to the big head."),
-    ("13", "jerry-skel-h19-0820", S.POSE_STAND,
+    ("13", "jerry-skel-h19seat-0820",
+     "sitting, hands clasped between knees, head lowered, in tall grass, "
+     "full body",
      "ADULT MAN. Human eye and lid, human nose, small human ear, a lined male "
      "face, normal head-to-shoulder ratio.",
      "THIS IS THE FRAME THE FOUNDER RULED ON, verbatim: 'this is one of the "
      "images where the goblin looks like an adult, which is wrong.' If any "
      "beat in the wave has to land, it is this one."),
-    ("20", "jerry-skel-h19-0820", S.POSE_STAND,
+    ("20", "jerry-skel-h19crouch-0820",
+     "squatting, holding a small fruit with both hands, looking up, in tall "
+     "grass, full body",
      "OLD MAN. Wrinkled forehead and jowls, a heavy human nose, an ear with no "
      "point at all, pupils.",
      "the 08-18 result 'the adult goblin draws, the chibi child is gone' was "
@@ -339,6 +354,55 @@ WAVE = [
      "not a repair. Nine of its 26 seeds also wore the guard's wire-rim "
      "glasses."),
 ]
+
+
+# THE BEATS WHOSE FRAMING THE STANDARD DOES NOT YET COVER, named rather than
+# papered over. Every one of the thirteen ladder rungs was a FULL-BODY STANDING
+# figure at head_frac 0.190 in tall grass; two of these seven beats are not that
+# shot, and filing them anyway is a deliberate round-one choice, not an oversight.
+FRAMING_GAP = {
+    "02": "NONE NAMED. shots.md wants a wide shot of a sprinting dive; "
+          "jerry-skel-h19stride-0820 is a striding figure at the tile's "
+          "proportion and the words carry the lean. Full body, tall grass, "
+          "which is the regime the standard was measured in.",
+    "03": "NONE NAMED. A crouch behind a thin trunk is the crouch skeleton "
+          "plus the trunk in words. The trunk is the sapling's business, not "
+          "the goblin's, and this plate is judged on the goblin.",
+    "04": "YES, AND IT IS THE BIGGEST IN THE WAVE. shots.md calls beat 04 a "
+          "CLOSE-UP -- head and one shoulder past the grass blades -- and the "
+          "audit calls it 'the tightest crop in the cut and the worst "
+          "offender'. The standard has NO close-up rung: every skeleton "
+          "published is a full-body figure, the ip mask is a head box sized "
+          "for one, and canon's own close-up finding is that `patchwork "
+          "cloak` paints the SKULL at a head-and-shoulders crop while "
+          "`ragged cloak` does not. This round-one frame is therefore the "
+          "standard at its own framing with the beat's ACTION, and it "
+          "answers a narrower question: does the k6a face survive a hunched "
+          "lean-out at all. If it does, the close-up is round two and it is "
+          "two variables (crop and cloak tag), which is a rung of its own and "
+          "not a tweak to this one.",
+    "07": "YES. The beat's SUBJECT is a guard -- shots.md: 'a round guard in "
+          "mismatched armor thrusts one arm out, pointing off-frame' -- and "
+          "the goblin is in frame beside him at adult male height with white "
+          "hair and the guard's spectacles. This plate supplies THE GOBLIN "
+          "ONLY, standing at the tile's proportion with `hair`, `beard` and "
+          "`old man` in the negative. Composing him back beside the guard is "
+          "the motion/composite step's problem and it is not solved here; "
+          "what is solved here is whether a bald tile-true goblin is "
+          "available to compose at all, which today he is not.",
+    "08": "PARTIAL. shots.md is a deadpan TWO-SHOT, guard and goblin. Same "
+          "answer as 07: the goblin alone, at proportion, looking down at his "
+          "own belly, and the two-shot is composed downstream. The child read "
+          "this beat carries is a BUILD defect and build is exactly what "
+          "head_frac 0.190 supplies as geometry.",
+    "13": "NONE NAMED. The goblin folding into the sapling's shade is the "
+          "seatspan skeleton, which is the tile's own stance.",
+    "20": "PARTIAL. The 08-17 knee-height rewrite has him crouched, holding "
+          "the fig in both hands, looking level at the thinnest branch. The "
+          "crouch skeleton and the words carry the stance; THE FIG'S COLOUR "
+          "AND THE BRANCH are beat 20's own long-running canon question and "
+          "are NOT touched here -- this plate is judged on the creature.",
+}
 
 
 def patchwave(force=False):
@@ -366,7 +430,8 @@ def patchwave(force=False):
                       "somebody re-typed."),
             bar=S.BAR, predicted=PATCHWAVE_PREDICTED,
             beat=int(beat), priority=22,
-            extra_keys={"post_ship_patch": (
+            extra_keys={"framing_gap": FRAMING_GAP[beat],
+                        "post_ship_patch": (
                 "review/ep2-ship-0821 IS NOT TOUCHED BY THIS JOB. The audit "
                 "that named this wave says so in as many words: 'This is an "
                 "audit, not a swap. No beat changes in the 2026-08-21 cut; "
