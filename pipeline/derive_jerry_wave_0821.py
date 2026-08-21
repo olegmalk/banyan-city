@@ -1,0 +1,411 @@
+#!/usr/bin/env python3
+r"""SPECS FROM THE GOBLIN STANDARD. One deriver, two consumers, no hand-copying.
+
+    python3 pipeline/derive_jerry_wave_0821.py poseset
+    python3 pipeline/derive_jerry_wave_0821.py patchwave
+    python3 pipeline/derive_jerry_wave_0821.py --selftest
+
+WHY ONE FILE FOR BOTH. `pipeline/jerry_standard_0821.py` holds the recipe the
+2026-08-21 steward ruling names; this file is the only thing that turns it into
+job yaml. Two consumers want the same eighteen values and the way they have gone
+wrong before is by copying seventeen of them:
+
+  POSESET   -- the LoRA dataset's remaining gate. `curation-tile-0820.yaml` has
+               been HELD since 08-20 on SEVEN usable frames in FOUR poses, and
+               its own words are that a pose-locked character LoRA is worse than
+               none. Eight poses at the standard is the arithmetic that changes.
+  PATCHWAVE -- the seven ep2 beats where the goblin does not read as the tile.
+               `ship-manifest.yaml goblin_design_audit_0820` names them: 02, 03,
+               04, 07, 08, 13, 20. Post-ship patches; nothing here touches
+               review/ep2-ship-0821 until a plate is judged and picked.
+
+EVERY SPEC IS ONE VARIABLE FROM `ep2-jerry-face-k6a-0821`, and the variable is
+named per rung. The wording, negative, seed, controlnet, scale, adapter, weight,
+reference and head_frac are the standard's and are not this file's to move; what
+moves is the SKELETON, the POSE WORDS that match it, and the MASK -- and the mask
+is DERIVED from the skeleton rather than chosen, because the five head keypoints
+translate as a rigid block and so does the box the adapter acts in.
+
+THE ONE-SAMPLE RULE, DISCHARGED AND NOT WAIVED. Each mode files ONE frame per
+question -- one per pose, one per beat -- not a seed fan. The recipe itself was
+sampled thirteen times (k1..k6d). What these batches vary is the thing a single
+sample cannot vary. Seeds fan in ROUND TWO, on the rungs that miss, which is
+episode-loop-v2's two-rounds-per-question and not a scaled recipe.
+
+$0 to emit. No model, no network, no GPU.
+"""
+from __future__ import annotations
+
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import derive_fetch_guard      # noqa: E402
+import derive_spec             # noqa: E402
+import jerry_standard_0821 as S  # noqa: E402
+
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+# ── THE POSE SET ─────────────────────────────────────────────────────────────
+# suffix, skeleton stem, pose words
+#
+# `stand` IS NOT IN THIS LIST AND THAT IS DELIBERATE, not an omission. The
+# standing pose at this recipe is `ep2-jerry-face-k6a-0821` itself -- same
+# skeleton, same words, same mask, same seed -- and it is already rendered and
+# published in farm-out/. Re-deriving it would emit a spec byte-identical to its
+# own parent, which derive_spec refuses on the payload clause and which would
+# burn a GPU minute to reproduce a frame we have. The standing frame enters the
+# set from k6a's own output; these seven are the poses it cannot supply.
+POSESET = [
+    ("stride", "jerry-skel-h19stride-0820",
+     "walking, arm outstretched, in tall grass, full body"),
+    ("reach",  "jerry-skel-h19reach-0820",
+     "arms up, in tall grass, full body"),
+    ("point",  "jerry-skel-h19point-0820",
+     "arm outstretched, pointing, in tall grass, full body"),
+    ("hunch",  "jerry-skel-h19hunch-0820",
+     "standing, hunched over, arms at sides, in tall grass, full body"),
+    ("crouch", "jerry-skel-h19crouch-0820",
+     "squatting, in tall grass, full body"),
+    ("kneel",  "jerry-skel-h19kneel-0820",
+     "kneeling, in tall grass, full body"),
+    ("seat",   "jerry-skel-h19seat-0820",
+     "sitting, hands clasped between knees, head lowered, in tall grass, "
+     "full body"),
+]
+
+POSESET_WHY = """POSE %s of seven, at the standard the 2026-08-21 steward ruling
+names. `pipeline/lora/curation-tile-0820.yaml` has been HELD since 08-20 and the
+hold's reason has changed four times -- "no proportion", then "no face", then
+"the wording cannot reach it", then "one clause and a dial" -- while the set
+itself has never moved off SEVEN FRAMES IN FOUR POSES (b14 kneel x2, b15 sit x2,
+b19 seat x3). That file's own gate says a pose-locked character LoRA is worse
+than no LoRA, because it appears to work on the beat it was trained on and fails
+silently everywhere else. Three of those four poses are seated.
+
+So the gate is BREADTH AT A RECIPE THAT PASSES, and until k6a there was no recipe
+that passed. Twelve tileset poses held the face and were bobbleheads; six skel
+poses held the proportion and drew a blank egg; six wording rungs drew an eye
+that was round or absent. k6a is the first frame in thirteen whose eye is not
+oversized (1.07x) AND which keeps a mouth AND holds containment.
+
+THE ONE VARIABLE HERE is the SKELETON and the two or three pose words that
+describe it, moving together -- a kneeling skeleton under `standing, arms at
+sides` is a contradiction rather than a control -- plus the MASK, which is not a
+choice: it is k6a's own mask translated by this pose's head-block offset, and for
+`stand` it is k6a's mask byte-for-byte."""
+
+POSESET_CONSUMER = """THE JERRY LoRA TRAINING SET, and nothing else. A frame
+passing every clause of the bar joins pipeline/lora/curation-tile-0820.yaml with
+its caption written against canon's corrected tile read; a frame failing any
+clause is REJECTED, because keeping near-misses is precisely what made the
+31-frame set untrainable. No beat plate here, nothing promoted to a cut.
+
+WHY REJECTION IS THE DEFAULT AND NOT PEDANTRY, in that file's own accounting: ten
+beat-20 man-reads would have taught the trigger token a human face, twelve
+bobbleheads a mascot, six blank eggs a blank egg. A LoRA learns what it is shown,
+and after training the trigger token OUTRANKS every prompt that would argue with
+the defect."""
+
+POSESET_PREDICTED = """THE UPRIGHT POSES LAND AND THE FOLDED ONES ARE THE RISK,
+and this time the risk has a NEW name, because the adapter is new. k6b/k6c/k6d
+put the tile's PURPLE COWL back at 47.3%/17.8%/39.2% where the general adapter
+had held it out for seven straight rungs -- the face weight transfers costume
+through a mask that used to contain it, and it is coverage-gated. k6a at 20% read
+0.0%. Nothing about this batch changes coverage, so the prediction is that the
+cowl stays out; a cowl appearing on a FOLDED pose would say the mask translation
+is letting the adapter act somewhere it did not before, and that is a mechanism
+finding worth the rung.
+
+SECOND PREDICTION, from the pose set that ran before this one: `crouch` and
+`kneel` compress the skeleton, so if the net reads a folded skeleton as a SMALL
+figure rather than a folded one they come back correctly posed and BOBBLEHEADED.
+`reach` and `point` are the safest -- legs identical to `stand`'s, arms the only
+change. `hunch` is the one I expect the net to soften into a duplicate of
+`stand`: it differs by a quarter of a head height.
+
+IF FIVE OF SEVEN PASS, the set reaches eight poses (these plus k6a's standing frame) at the tile's proportion
+against seven frames in four, the majority read of the trigger token stops being
+seated, and the LoRA's pose gate discharges on arithmetic rather than on hope."""
+
+
+# ── THE PATCH WAVE ───────────────────────────────────────────────────────────
+# Filled by patchwave(); see WAVE below.
+PATCHWAVE_CONSUMER = """THE ep2 PATCH WAVE. A judged plate for beat %s, which
+feeds that beat's motion re-derive; the motion spec is written when the plate is
+picked, not before. THIS IS A POST-SHIP PATCH: review/ep2-ship-0821 is NOT
+touched by this job and no frame is swapped into the cut until a plate is judged,
+picked and its motion take passes its own bar.
+
+WHY THIS BEAT IS IN THE WAVE: %s"""
+
+PATCHWAVE_WHY = """BEAT %s OF THE SEVEN-BEAT WAVE, at the standard the
+2026-08-21 steward ruling names. `review/ep2-ship-0821/sources/ship-manifest.yaml
+goblin_design_audit_0820` read all 21 beats at 1:1 against the B tile and found
+the goblin in ELEVEN, of which TWO are tile-faithful (15, 19), one is near-tile
+on one attribute (14), one is unjudgeable (17), and SEVEN read as somebody else.
+canon's 08-19 list said five; the audit adds 02 (grey child, on no design sheet
+and never audited) and 07 (a full head of WHITE HAIR on a character whose canon
+is bald, and it was filed among the four that were RIGHT).
+
+This beat's break: %s
+
+THE ONE VARIABLE against ep2-jerry-face-k6a-0821 is the SKELETON, the pose words
+that match it, and the mask that follows the skeleton. The face wording, the
+negative, the seed, the controlnet, the conditioning scale, the adapter, its
+weight, its reference and head_frac 0.190 are the standard's and are untouched --
+which is the whole point: if this beat's goblin comes back wrong, the wrongness
+is attributable to the framing and not to a recipe someone re-typed."""
+
+PATCHWAVE_PREDICTED = """THE FRAMING IS THE UNTESTED AXIS AND IT IS NAMED AS SUCH.
+Every one of the thirteen ladder rungs was a FULL-BODY STANDING figure at
+head_frac 0.190 in tall grass. This wave asks the same recipe for other stances
+and other ground, and two things could break that no rung has tested:
+
+  1. THE MASK. It is derived, not guessed -- k6a's box translated by the pose's
+     head-block offset, exact because the head keypoints move rigidly -- but a
+     DERIVED mask has never been rendered. If the adapter acts on the wrong
+     region the face will be somewhere other than the head, and that is visible
+     in one glance.
+  2. THE COWL. k6b/k6c/k6d put the tile's purple cowl back through the same mask
+     that held it for seven rungs, coverage-gated at 25%+ and clean at k6a's 20%.
+     Coverage does not change here, so the cowl should stay out. If it appears,
+     the mask translation is the cause and the finding is worth more than the
+     plate.
+
+WHAT I DO NOT PREDICT AND WILL NOT PRETEND TO: whether one seed lands the beat.
+It is ONE frame per beat on purpose -- one sample per new framing -- and round
+two fans seeds only on the beats that miss."""
+
+
+def _emit(new_id, job_dir, hint, pose_words, why, consumer, success, variable,
+          bar, predicted, beat, priority, extra_keys=None, seed=None,
+          force=False):
+    pose = S.SKELETONS[hint][0]
+    extra = {
+        "bar": bar,
+        "the_one_variable": variable,
+        "the_rung_this_is_one_variable_from": S.PARENT_ID,
+        "failure_predicted_in_advance": predicted,
+        "one_sample_rule": S.ONE_SAMPLE,
+        "ip_adapter": S.ip_adapter_block(hint, pose),
+    }
+    extra.update(extra_keys or {})
+    overrides = {
+        "argv:--control": "pipeline/control/%s.png" % hint,
+        "argv:--control-sha256": S.SKELETONS[hint][1],
+        "argv:--ip-mask": S.mask_for(pose),
+        "argv:--repo-commit": S.ASSET_COMMIT,
+        "payload:prompt.txt": S.prompt_for(pose_words),
+        "key:beat": beat,
+        "key:priority": priority,
+        "key:est_minutes": 4,
+    }
+    if seed is not None and seed != S.SEED:
+        overrides["seed"] = seed
+    child = derive_spec.derive(
+        src=S.PARENT,
+        new_id=new_id,
+        fresh={"owner": "goblin standard lane, 2026-08-21",
+               "why": why, "consumer": consumer, "success": success},
+        overrides=overrides,
+        retoken=[(S.PARENT_DIR_TOKEN, job_dir)],
+        extra=extra,
+        by="pipeline/derive_jerry_wave_0821.py",
+    )
+    # Stage and publish are REPLACED rather than retokened: the parent's stage
+    # step pins jerry-skel-h19-0820's name against its sha, and a retoken that
+    # renamed the file without renaming the digest would emit a job that fetches
+    # the right bytes under the wrong name or dies on a mismatch. Authoring them
+    # from the standard is the only way the three digests stay together.
+    py = r"C:\banyan-farm\venv\Scripts\python.exe"
+    child["steps"][0] = {"name": "stage",
+                         "argv": [py, "-c", S.stage_step(job_dir, hint)]}
+    child["steps"][-1] = {"name": "publish",
+                          "argv": [py, "-c",
+                                   S.publish_step(job_dir, new_id, hint)]}
+    child["artifacts"] = [r"C:\banyan-farm\%s\out\%s-%s.png"
+                          % (job_dir, new_id, S.ARM)]
+
+    # Assert what was asked for is what came out. derive_spec already refuses an
+    # override that matched nothing; this catches the opposite -- a value that
+    # matched somewhere unintended, or a step the parent carried that we forgot.
+    argv = [t for s in child["steps"] for t in s.get("argv", [])]
+    for flag, want in (("--control", "pipeline/control/%s.png" % hint),
+                       ("--control-sha256", S.SKELETONS[hint][1]),
+                       ("--ip-mask", S.mask_for(pose)),
+                       ("--ip-ref-sha256", S.IP_REF_SHA),
+                       ("--ip-scale", S.IP_SCALE),
+                       ("--ip-weight", S.IP_WEIGHT),
+                       ("--scale", S.CONTROL_SCALE),
+                       ("--arm", S.ARM),
+                       ("--task", new_id)):
+        if argv.count(flag) != 1:
+            raise SystemExit("!! %s: %s appears %d times"
+                             % (new_id, flag, argv.count(flag)))
+        got = argv[argv.index(flag) + 1]
+        if got != want:
+            raise SystemExit("!! %s: %s is %r, want %r"
+                             % (new_id, flag, got, want))
+    # The `derivation` block RECORDS the retoken pair, so it names the parent
+    # job dir on purpose and is excluded -- everywhere else the token surviving
+    # would mean a path pointing at another job's directory on the card.
+    joined = repr({k: v for k, v in child.items() if k != "derivation"})
+    if S.PARENT_DIR_TOKEN in joined:
+        raise SystemExit("!! %s still names the parent job dir" % new_id)
+    if S.IP_WEIGHT_SHA not in joined:
+        raise SystemExit("!! %s does not record the adapter digest" % new_id)
+
+    out = "pipeline/jobs/%s.yaml" % new_id
+    derive_spec.write(child, out, force=force)
+    derive_fetch_guard.assert_fetch_urls_resolve(
+        os.path.join(REPO, out),
+        must_hold=(S.DRIVER, hint + ".png", S.IP_REF + ".png"))
+    print("wrote %s   skel=%-28s mask=%s" % (out, hint, S.mask_for(pose)))
+    return out
+
+
+def poseset(force=False):
+    written = []
+    for suffix, hint, pose_words in POSESET:
+        written.append(_emit(
+            new_id="ep2-jerry-set-%s-0821" % suffix,
+            job_dir="jerryset-%s-0821" % suffix,
+            hint=hint, pose_words=pose_words,
+            why=POSESET_WHY % suffix.upper(),
+            consumer=POSESET_CONSUMER,
+            success=("ONE 832x1216 png at seed %d, the k6a standard entire, "
+                     "conditioned on %s.png at scale %s with the pose words "
+                     "'%s' and the adapter masked to %s. Scored on the k6a bar; "
+                     "any failure rejects it from the training set."
+                     % (S.SEED, hint, S.CONTROL_SCALE, pose_words,
+                        S.mask_for(S.SKELETONS[hint][0]))),
+            variable=("the SKELETON and the pose words that describe it, moving "
+                      "together ('%s'), plus the mask that follows the skeleton "
+                      "by translation. Everything else -- wording, negative, "
+                      "seed, controlnet, scale, adapter, weight, reference, "
+                      "head_frac -- is ep2-jerry-face-k6a-0821's to the byte."
+                      % pose_words),
+            bar=S.BAR, predicted=POSESET_PREDICTED,
+            beat=2, priority=44, force=force))
+    return written
+
+
+# beat, skeleton stem, pose words, the audit's named break, the framing note
+WAVE = [
+    ("02", "jerry-skel-h19-0820", S.POSE_STAND,
+     "CHILD AND GREY. Not green at all -- bone-grey/white with a huge round "
+     "cranium, low pointed ears, closed eyes, a chubby child body, grey shirt "
+     "and shorts. Breaks the tile on SPECIES COLOUR and on BUILD at once, and "
+     "it has never appeared on a design sheet, in the 08-19 split, or in any "
+     "re-render list. Its ship_status has read UNJUDGED since 08-17 because "
+     "nobody looked.",
+     "THE WORST IDENTITY BREAK IN THE CUT."),
+    ("03", "jerry-skel-h19-0820", S.POSE_STAND,
+     "ADULT MAN. Human nose with nostrils, rounded human ear, nasolabial "
+     "folds, flat olive rather than the tile's two-tone.",
+     "on the 08-19 split."),
+    ("04", "jerry-skel-h19-0820", S.POSE_STAND,
+     "ADULT MAN, and the worst offender. Iris and pupil in a human eye, a full "
+     "human nose, long swept-back elf spikes, brow furrows and cheekbones.",
+     "THE TIGHTEST CROP IN THE CUT, which is why it is the worst offender -- "
+     "the audit's own framing finding. Every clause of the bar is legible at "
+     "this size, so this beat is the wave's hardest test and also its clearest "
+     "read."),
+    ("07", "jerry-skel-h19-0820", S.POSE_STAND,
+     "ADULT MAN WITH WHITE HAIR ON A CHARACTER WHOSE CANON IS BALD, plus the "
+     "guard's round spectacles, a human nose, and adult male height beside the "
+     "guard.",
+     "FILED AMONG THE FOUR THAT WERE 'RIGHT' on 08-19. It is not. `bald` is "
+     "canon and this frame has hair; `hair` and `beard` are both in the "
+     "standard's negative."),
+    ("08", "jerry-skel-h19-0820", S.POSE_STAND,
+     "CHILD. Small body, big head, closed sad eyes, buttoned coat -- the "
+     "pre-ruling round one.",
+     "on the 08-19 split. `child` and `chibi` are both in the standard's "
+     "negative and head_frac 0.190 is the geometric answer to the big head."),
+    ("13", "jerry-skel-h19-0820", S.POSE_STAND,
+     "ADULT MAN. Human eye and lid, human nose, small human ear, a lined male "
+     "face, normal head-to-shoulder ratio.",
+     "THIS IS THE FRAME THE FOUNDER RULED ON, verbatim: 'this is one of the "
+     "images where the goblin looks like an adult, which is wrong.' If any "
+     "beat in the wave has to land, it is this one."),
+    ("20", "jerry-skel-h19-0820", S.POSE_STAND,
+     "OLD MAN. Wrinkled forehead and jowls, a heavy human nose, an ear with no "
+     "point at all, pupils.",
+     "the 08-18 result 'the adult goblin draws, the chibi child is gone' was "
+     "recorded as a FIX. Measured against the tile it is a different failure, "
+     "not a repair. Nine of its 26 seeds also wore the guard's wire-rim "
+     "glasses."),
+]
+
+
+def patchwave(force=False):
+    written = []
+    for beat, hint, pose_words, break_note, framing in WAVE:
+        written.append(_emit(
+            new_id="ep2-b%s-tilefix-p1-0821" % beat,
+            job_dir="b%stilefix-p1-0821" % beat,
+            hint=hint, pose_words=pose_words,
+            why=PATCHWAVE_WHY % (beat, break_note),
+            consumer=PATCHWAVE_CONSUMER % (beat, framing),
+            success=("ONE 832x1216 png at seed %d, the k6a standard entire, "
+                     "conditioned on %s.png at scale %s with the pose words "
+                     "'%s' and the adapter masked to %s. Scored on the k6a bar "
+                     "by eye at 1:1 against adult-b19-0819.jpg. A PASS is a "
+                     "plate candidate for beat %s and nothing more -- the pick "
+                     "is a separate judgement and the motion re-derive is a "
+                     "separate spec."
+                     % (S.SEED, hint, S.CONTROL_SCALE, pose_words,
+                        S.mask_for(S.SKELETONS[hint][0]), beat)),
+            variable=("the FRAMING -- this beat's stance and pose words -- and "
+                      "the mask that follows the skeleton. Everything else is "
+                      "ep2-jerry-face-k6a-0821's to the byte, so a bad result "
+                      "here is attributable to the framing and not to a recipe "
+                      "somebody re-typed."),
+            bar=S.BAR, predicted=PATCHWAVE_PREDICTED,
+            beat=int(beat), priority=22,
+            extra_keys={"post_ship_patch": (
+                "review/ep2-ship-0821 IS NOT TOUCHED BY THIS JOB. The audit "
+                "that named this wave says so in as many words: 'This is an "
+                "audit, not a swap. No beat changes in the 2026-08-21 cut; "
+                "every re-render it names is a post-ship patch.' A plate here "
+                "becomes a candidate, a candidate becomes a pick, a pick "
+                "becomes a motion spec, and only a passing motion take is "
+                "swapped -- four judgements, none of them this job's.")},
+            force=force))
+    return written
+
+
+def _selftest():
+    rc = derive_spec.selftest() or derive_fetch_guard.selftest()
+    import jerry_standard_0821
+    return rc or jerry_standard_0821._selftest()
+
+
+def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    force = "--force" in argv
+    modes = [a for a in argv if not a.startswith("-")]
+    if "--selftest" in argv:
+        return _selftest()
+    if not modes:
+        print(__doc__)
+        return 2
+    written = []
+    for m in modes:
+        if m == "poseset":
+            written += poseset(force=force)
+        elif m == "patchwave":
+            written += patchwave(force=force)
+        else:
+            print("!! unknown mode %r -- poseset | patchwave" % m,
+                  file=sys.stderr)
+            return 2
+    print("\n%d spec(s). Next: box_enqueue each one --backlog." % len(written))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
