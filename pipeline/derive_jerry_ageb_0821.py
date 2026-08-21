@@ -456,7 +456,7 @@ def head_fit_mask(pose, head_frac=AGE_B_HEAD_FRAC):
 
 def _emit(new_id, job_dir, hint, pose_words, expression, why, consumer, success,
           variable, beat, priority, extra_keys=None, prompt=None,
-          mask=None, ip_scale=None, force=False):
+          mask=None, ip_scale=None, identity=None, force=False):
     pose = S.SKELETONS[hint][0]
     mask = mask or age_mask(pose)
     ipa = S.ip_adapter_block(hint, pose)
@@ -583,12 +583,22 @@ def _emit(new_id, job_dir, hint, pose_words, expression, why, consumer, success,
     # working; the same tag arriving in the identity clause on every plate is the
     # mannequin coming back. So: absent from the identity clause always, allowed
     # in the expression group, and never both.
-    ident = ", ".join([PROMPT_LEAD, AGE_B_CLAUSE, IDENTITY, TUSK])
+    # ROUND TWO PUTS `blank eyes` BACK, so the guard is told which identity
+    # clause this spec actually uses instead of assuming round one's. The rule
+    # it enforces is unchanged and is the point of ruling 2: a struck tag may
+    # never be a silent DEFAULT, but it may be deliberately restored by a named
+    # round or earned by a beat's own emotion.
+    ident = ", ".join([PROMPT_LEAD, AGE_B_CLAUSE, identity or IDENTITY, TUSK])
+    deliberate = set()
+    if identity:
+        deliberate = {t for t in STRUCK if t in identity}
     for t in STRUCK:
+        if t in deliberate:
+            continue
         if t in ident:
             raise SystemExit("!! %s: struck tag %r is back in the DEFAULT "
                              "identity clause" % (new_id, t))
-        if t in pay and t not in (expression or ""):
+        if t in pay and t not in (expression or "") and t not in deliberate:
             raise SystemExit("!! %s: struck tag %r is in the positive but is "
                              "not this beat's emotion" % (new_id, t))
     if TUSK not in pay:
@@ -1121,6 +1131,159 @@ def e1(force=False):
         force=force)]
 
 
+# ── ROUND TWO OF THE WAVE: `blank eyes` BACK, THE EMOTION IN MOUTH AND BROW. ──
+# Round one of the wave answered the question beat 13's four samples could not,
+# and it answered it in BOTH directions at once:
+#
+#   THE EXPRESSION TAGS LAND. All six read their beat -- b02 wide open mouth and
+#   real fear, b08 a blush across the whole face, b03 a sweatdrop, b04 parted
+#   lips, b20 open-mouthed surprise. Ruling 2 is VINDICATED, and my "the
+#   expression is invariant" reading of the four b13 samples was WRONG: it
+#   generalised from one beat whose emotion happened to be the subtlest in the
+#   episode (`tired, half-closed eyes, light smile` -- three weak tags against a
+#   strong default).
+#
+#   AND T1 IS LOST IN ALL SIX. Every eye came back with an iris and a pupil. The
+#   tile's blank white slit is gone from the entire wave.
+#
+# THOSE TWO FACTS ARE THE SAME FACT. `wide-eyed` and its neighbours are requests
+# for an EYE, and with `blank eyes` struck there was nothing left arguing for the
+# blank one. Beat 13 kept its blank eyes and lost its expression; these six
+# gained the expression and lost the eyes. It is a trade, and the pre-registered
+# prediction on ep2-b13-ageb-s1-0821 called both the failure and the fix:
+# "the answer is NOT a fourth wording -- it is to restore `blank eyes` and carry
+# the emotion in the MOUTH and BROW."
+#
+# SO THAT IS EXACTLY WHAT THIS ROUND DOES, and nothing else moves.
+#   * `blank eyes` RETURNS to the identity clause. `jitome` and `half-closed
+#     eyes` stay struck -- they are the MANNEQUIN tags, and the ruling was never
+#     about the eye being blank, it was about the face being dead.
+#   * EVERY EYE-SHAPE TAG LEAVES THE EMOTION GROUP. `wide-eyed` is dropped from
+#     02, 04 and 20 because it is the single tag that most directly demands an
+#     iris-bearing eye, and it is the thing `blank eyes` is being restored to
+#     prevent. Asking for both in one prompt is asking the checkpoint to pick.
+#   * THE EMOTION IS NOW CARRIED BY MOUTH, BROW, SKIN AND GAZE -- `open mouth`,
+#     `parted lips`, `smile`, `frown`, `blush`, `sweatdrop`, `looking to the
+#     side`, `closed eyes`. Every one of these landed visibly in round one, so
+#     this is not a hope; it is the subset of round one's tags that works,
+#     minus the one that cost T1.
+#   * BEAT 13 REJOINS THE WAVE with STRONGER WARM TAGS: `closed eyes, smile,
+#     parted lips` against round one's `tired, half-closed eyes, light smile`.
+#     Round one is the evidence for this -- `blush` and `open mouth` moved the
+#     face hard while `light smile` moved nothing, so beat 13's problem was
+#     never that warmth is unreachable, it was that its three tags were the
+#     weakest in the set. `smile` has orders of magnitude more Danbooru posts
+#     behind it than `light smile`, and `closed eyes` is unambiguous geometry.
+WAVE2_NOTE = """ROUND ONE LANDED THE EXPRESSION AND LOST THE EYE, in all six
+frames, and those are the same fact: with `blank eyes` struck there was nothing
+arguing for the tile's blank slit while `wide-eyed` and its neighbours were
+actively asking for an ordinary one. Beat 13 kept its blank eyes and lost its
+expression; the six gained the expression and lost the eyes.
+
+This round restores `blank eyes` and moves the emotion off the eyes entirely --
+mouth, brow, skin and gaze, which is the subset of round one's tags that
+visibly worked. `jitome` and `half-closed eyes` stay struck: those are the
+MANNEQUIN tags, and ruling 2 was never about the eye being blank, it was about
+the face being dead."""
+
+WAVE2_EXPRESSION = {
+    "02": "scared, open mouth",
+    "03": "sweatdrop, looking to the side",
+    "04": "parted lips, looking to the side",
+    "07": "nervous, sweatdrop, frown",
+    "08": "blush, frown",
+    "13": "closed eyes, smile, parted lips",
+    "20": "open mouth",
+}
+
+# k6a's identity clause with ONLY the two mannequin tags still struck.
+IDENTITY_R2 = ("green skin, bald head, patchwork cloak, blank eyes, tsurime, "
+               "thick eyebrows")
+
+WAVE2_PREDICTED = """THE TRADE IS THE WHOLE QUESTION AND IT CAN LAND THREE WAYS.
+
+BEST: `blank eyes` restores T1 and the mouth-and-brow tags keep E1, because the
+two groups no longer describe the same organ. That is what round one's own
+evidence points at -- `blush`, `sweatdrop` and `open mouth` are not eye tags and
+all three landed hard.
+
+WORST: `blank eyes` is strong enough to flatten the whole face again and we are
+back at beat 13's mannequin with a mouth. If that happens the finding is that
+T1 and E1 are genuinely exclusive on this checkpoint, the founder gets the
+choice with both pictures side by side, and it is HIS call -- an identity clause
+against a liveliness complaint is exactly a taste question and not a steward
+one.
+
+MOST LIKELY, and I will say it before the pixels: A SPLIT. `open mouth` and
+`blush` survive `blank eyes` because they are elsewhere on the face; `scared`
+and `nervous` do not, because the checkpoint draws those THROUGH the eyes and
+the eyes are now spoken for. If that is the result, the per-beat emotion set
+gets rewritten once more against what actually survives -- and that is a
+one-line table change in this file, not a new instrument.
+
+BEAT 13 IS THE ONE I AM LEAST SURE OF. `closed eyes` and `blank eyes` are an
+argument about the same pixels, and `closed eyes` may simply win and give a
+seated goblin with two closed lids and no tile-eye at all. For THIS beat that
+might be the right answer anyway -- he is exhausted and grateful with his head
+tipped into the shade, and closed eyes read as both. Recorded so that outcome is
+scored as a PASS on its own terms and not filed as a T1 failure."""
+
+
+def wave2(force=False, beats=None):
+    written = []
+    beats = beats or [b for b, *_ in WAVE]
+    for beat, hint, pose_words, _old, direction in WAVE:
+        if beat not in beats:
+            continue
+        expression = WAVE2_EXPRESSION[beat]
+        prompt = ", ".join([PROMPT_LEAD, AGE_B_CLAUSE, IDENTITY_R2, TUSK,
+                            expression, pose_words])
+        n = tokens(prompt)
+        if n > MAX_TOKENS:
+            raise SystemExit("!! b%s round two is %d tokens" % (beat, n))
+        written.append(_emit(
+            new_id="ep2-b%s-ageb-r2-0821" % beat,
+            job_dir="b%sageb-r2-0821" % beat,
+            hint=hint, pose_words=pose_words, expression=expression,
+            prompt=prompt, identity=IDENTITY_R2,
+            why=("ROUND TWO FOR BEAT %s. `blank eyes` RESTORED, the emotion "
+                 "moved into the mouth and brow.\n\n%s\n\nTHIS BEAT'S "
+                 "DIRECTION: %s" % (beat, WAVE2_NOTE, direction)),
+            consumer=("Beat %s's plate at the decided age. Round one's plate "
+                      "is REJECTED on T1 -- it has an iris and a pupil and the "
+                      "character does not. This round either replaces it or "
+                      "the beat goes to the founder as a taste question with "
+                      "both frames side by side. review/ep2-ship-0821 is not "
+                      "touched." % beat),
+            success=("ONE 832x1216 png. Judged on TWO clauses that round one "
+                     "split between them: T1 (blank, no iris, no pupil) and E1 "
+                     "(the beat's emotion legible with the caption covered). "
+                     "Round one got exactly one of the two on every frame; a "
+                     "PASS here is BOTH."),
+            variable=("TWO, and they are one decision: `blank eyes` back into "
+                      "the identity clause, and every EYE-SHAPE tag out of the "
+                      "emotion group. Asking for `blank eyes` and `wide-eyed` "
+                      "in one prompt is asking the checkpoint to choose, which "
+                      "is what round one did by accident."),
+            beat=beat, priority=3,
+            extra_keys={
+                "round": ("TWO of two for this beat. If the trade cannot be "
+                          "won, the finding is recorded and the founder gets "
+                          "the choice with both pictures -- an identity clause "
+                          "against a liveliness complaint is a taste question."),
+                "round_one_result": (
+                    "E1 PASSED, T1 FAILED. The expression landed -- this beat's "
+                    "tags drew a visible, correct emotion -- and the eye came "
+                    "back with an iris and a pupil in all six frames. Round "
+                    "one's plates are kept as evidence and are not swapped."),
+                "failure_predicted_in_advance": WAVE2_PREDICTED,
+                **({"c1_folded_fault": C1_FAULT} if beat in FOLDED else {}),
+                "post_ship_patch": (
+                    "review/ep2-ship-0821 IS NOT TOUCHED BY THIS JOB.")},
+            force=force))
+    return written
+
+
 def _refuses(fn):
     """True if fn() raises. A guard nobody has watched fail is not a guard."""
     try:
@@ -1256,6 +1419,8 @@ def main(argv=None):
             written += sample(force=force)
         elif m == "wave":
             written += wave(force=force)
+        elif m == "wave2":
+            written += wave2(force=force)
         elif m == "e1":
             written += e1(force=force)
         elif m == "round2":
