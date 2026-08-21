@@ -329,7 +329,7 @@ def prompt_for(pose_words, emotion="deadpan"):
 
 
 def skeleton_stem(pose):
-    return "jerry-canon-h37%s-0821" % ("" if pose == "stand" else pose)
+    return "jerry-canon-h37f%s-0821" % ("" if pose == "stand" else pose)
 
 
 # ── THE FRAME-FILL CORRECTION, AND IT IS THE ROUND-THREE FINDING. ────────────
@@ -366,32 +366,45 @@ MAX_EMPTY_TOP = 0.28      # asserted for every pose in --selftest
 
 # The poses the ep2 wave needs, and the sha each skeleton must have. Built by
 # `--build-skeletons`, asserted by `--selftest`, pinned by every spec.
+#
+# THE STEM IS `h37f`, NOT `h37`, AND THE `f` IS THE FRAME-FILL FIX. The first
+# eight skeletons shipped as `jerry-canon-h37*-0821.png`; applying STATURE_FOR
+# rewrote those same eight FILENAMES with different pixels. The stage step
+# refused the very next job -- "jerry-canon-h37sit-0821.png fetched with sha
+# 5a37c536, expected 3db75427" -- because raw.githubusercontent.com was still
+# serving the pre-fix bytes from cache. Waiting out a CDN TTL was the tempting
+# fix and it is the wrong one: the real defect is that `ep2-b13-canon-s1-0821`
+# and `ep2-b13-canon-r4-0821` would both have pinned the string
+# "jerry-canon-h37sit-0821.png" while meaning two different pictures, and no
+# sha in either spec would ever have said so. AN ASSET WHOSE CONTENT CHANGES
+# GETS A NEW NAME. The h37 set stays on disk and in origin/main exactly as the
+# first five rungs were rendered through it.
 SKELETONS = {
-    "stand":  "jerry-canon-h37-0821",
-    "stride": "jerry-canon-h37stride-0821",
-    "crouch": "jerry-canon-h37crouch-0821",
-    "hunch":  "jerry-canon-h37hunch-0821",
-    "kneel":  "jerry-canon-h37kneel-0821",
-    "reach":  "jerry-canon-h37reach-0821",
-    "point":  "jerry-canon-h37point-0821",
-    "sit":    "jerry-canon-h37sit-0821",
+    "stand":  "jerry-canon-h37f-0821",
+    "stride": "jerry-canon-h37fstride-0821",
+    "crouch": "jerry-canon-h37fcrouch-0821",
+    "hunch":  "jerry-canon-h37fhunch-0821",
+    "kneel":  "jerry-canon-h37fkneel-0821",
+    "reach":  "jerry-canon-h37freach-0821",
+    "point":  "jerry-canon-h37fpoint-0821",
+    "sit":    "jerry-canon-h37fsit-0821",
 }
 SKELETON_SHA = {
-    "jerry-canon-h37-0821":
+    "jerry-canon-h37f-0821":
         "2b50d9e8076eab57373cafbe506f8f7ce73f6abbec3c65eacffcf877234ec13b",
-    "jerry-canon-h37stride-0821":
+    "jerry-canon-h37fstride-0821":
         "677ee4904bc54b823eee45cb592d4ca10618920fbb238d9718dd5394a1e1b24a",
-    "jerry-canon-h37crouch-0821":
+    "jerry-canon-h37fcrouch-0821":
         "df84ac615d3cc830dd8634cfee905dba0937a3380910911fe81a0427cacbd5af",
-    "jerry-canon-h37hunch-0821":
+    "jerry-canon-h37fhunch-0821":
         "799f7bce4525a0b2c02bfc920b39a2943bb2e8002b4daed2022d4ce9cb781986",
-    "jerry-canon-h37kneel-0821":
+    "jerry-canon-h37fkneel-0821":
         "83583d5c3c9205171ba70a7c1e3d2b006428e1905d897f509f3cd7531395eee9",
-    "jerry-canon-h37reach-0821":
+    "jerry-canon-h37freach-0821":
         "a327e3e532d314da88cecb88a962791f0dbfab429bb83a55beba44dd4df34df1",
-    "jerry-canon-h37point-0821":
+    "jerry-canon-h37fpoint-0821":
         "8072e9710df19783b397e7afee4bcf8cd566fdb327cacdbf3bbc96d2965cc19d",
-    "jerry-canon-h37sit-0821":
+    "jerry-canon-h37fsit-0821":
         "3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e",
 }
 
