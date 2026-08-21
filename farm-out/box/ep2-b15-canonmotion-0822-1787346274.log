@@ -1,0 +1,47 @@
+#### job ep2-b15-canonmotion-0822-1787346274 attempt 1 start 2026-08-21T21:10:52Z
+
+==== step crop START 2026-08-21T21:10:52Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b15-canonmotion-0822\\cover_crop.py", "--src", "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b15-canon-w2-0821\\ep2-b15-canon-w2-0821-ipahead.png", "--sha256", "e337714f16d0a91753e08e91f65f8b8d92ba9c32e2dd94d67a798ab834f0750b", "--out", "C:\\banyan-farm\\ep2-b15-canonmotion-0822\\b15-init-704x1280.png", "--size", "704x1280"]
+src 832x1216 sha e337714f16d0a91753e08e91f65f8b8d92ba9c32e2dd94d67a798ab834f0750b
+cover-crop scale=1.0526 -> 876x1280, centre box (86,0)
+WROTE C:\banyan-farm\ep2-b15-canonmotion-0822\b15-init-704x1280.png
+==== step crop END rc=0 2026-08-21T21:10:52Z ====
+
+==== step encode START 2026-08-21T21:10:52Z ====
+argv: ["C:\\banyan-video\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py", "--stage", "encode", "--jobs", "C:\\banyan-farm\\ep2-b15-canonmotion-0822\\b15-jobs-encode.json"]
+-- begin-encode: phys 11.1/68.1GB, commit 13.1/115.3GB (load 16%)
+loading text encoder from C:\Users\artvn\.cache\huggingface\hub\models--Lightricks--gemma-3-12b-it-qat-q4_0-unquantized\snapshots\d62fe4f1995ade703b49a0f3c0d0f161237ef437
+
+Loading weights:   0%|          | 0/1065 [00:00<?, ?it/s]
+Loading weights:  30%|███       | 324/1065 [00:00<00:00, 2911.71it/s]
+Loading weights:  62%|██████▏   | 658/1065 [00:00<00:00, 2979.87it/s]
+Loading weights: 100%|██████████| 1065/1065 [00:00<00:00, 3368.21it/s]
+-- encode-beat-20: phys 12.3/68.1GB, commit 39.9/115.3GB (load 18%)
+!! DIED in stage 'encode-beat-20': RuntimeError: [enforce fail at inline_container.cc:672] . unexpected pos 385361152 vs 385361040
+{"peak_commit_gb": 42.0, "peak_phys_gb": 37.9, "last_stage": "encode-beat-20"}
+Traceback (most recent call last):
+  File "C:\banyan-video\venv\Lib\site-packages\torch\serialization.py", line 1004, in save
+    _save(
+  File "C:\banyan-video\venv\Lib\site-packages\torch\serialization.py", line 1313, in _save
+    zip_file.write_record(name, storage, num_bytes)
+RuntimeError: ios_base::badbit set: iostream stream error
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py", line 1633, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py", line 1617, in main
+    return stage_encode(a) if a.stage == "encode" else stage_render(a)
+           ^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py", line 656, in stage_encode
+    torch.save({"prompt_embeds": pos.to(torch.bfloat16),
+  File "C:\banyan-video\venv\Lib\site-packages\torch\serialization.py", line 1003, in save
+    with _open_zipfile_writer(f) as opened_zipfile:
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-video\venv\Lib\site-packages\torch\serialization.py", line 835, in __exit__
+    self.file_like.write_end_of_file()
+RuntimeError: [enforce fail at inline_container.cc:672] . unexpected pos 385361152 vs 385361040
+==== step encode END rc=1 2026-08-21T21:12:26Z ====
+#### job ep2-b15-canonmotion-0822-1787346274 finished rc=1 2026-08-21T21:12:26Z
