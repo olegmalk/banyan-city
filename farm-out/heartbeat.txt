@@ -4153,3 +4153,5 @@
 21:35:41Z DONE task=ep2-b13-canon-r12a-0821-1787348089 rc=0 artifacts=1
 21:35:46Z STARTED task=ep2-b13-canon-r12b-0821-1787348093 attempt=1 on box-runner
 21:36:15Z DONE task=ep2-b13-canon-r12b-0821-1787348093 rc=0 artifacts=1
+21:36:21Z STARTED task=ep2-b13-canon-r12c-0821-1787348096 attempt=1 on box-runner
+21:36:49Z DONE task=ep2-b13-canon-r12c-0821-1787348096 rc=0 artifacts=1
