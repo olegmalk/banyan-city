@@ -250,3 +250,66 @@ derivation:
     - key priority = 15
     payload:prompt.txt:
     - payload prompt.txt (291 -> 297 chars)
+verdict_b07_twofig_r5_0821: |
+  FAIL, AND IT INVERTS THE READING OF ROUND 4. Adding `white eyes, eyebags` did
+  not buy the sclera -- IT DESTROYED THE SLIT PUPIL THE ADAPTER HAD BEEN
+  SUPPLYING. 4 of 9. ROUND 4 REMAINS THE BETTER PLATE. Judged by eye at 1:1
+  against round 4 side by side. rc=0, seed 20260899, ip-scale 1.25 unchanged.
+
+  E1 OFF-WHITE SCLERA  FAIL. Still pale green, not off-white. The term bought
+                       nothing on the axis it was added for.
+  E2 EYEBAGS           FAIL. Absent. A faint line under the eye, not the canon
+                       eyebags round 3 had.
+  E3 SLIT PUPILS       FAIL, AND THIS IS A REGRESSION FROM ROUND 4. Round 4
+                       returned clear narrow vertical slits from the adapter
+                       alone. Round 5's pupils are small round dots. The whole
+                       eye is flatter and washed out, and so is the mouth.
+  A3 CONTAINMENT       FAIL, CLEARLY REGRESSED. Round 4 had faint ring
+                       ghosting; round 5 has a DISTINCT GREEN DISC around the
+                       head -- the reference's flooded square field bleeding
+                       through and now obvious rather than subtle. This is the
+                       k2 containment failure mode arriving at last, and NOT
+                       from a scale change: ip-scale is byte-identical to round
+                       4 at 1.25. It arrived with the words.
+  A2 NO BOBBLEHEAD     PASS. Head size relative to body unchanged from round 4.
+  G1/G2/G3/G4          PASS. THE TRADE DID NOT COST THE GUARD -- closed helmet,
+                       human, five heads, full plate, armoured gauntlet. Taking
+                       the token from `arms at sides` rather than his clause
+                       worked exactly as intended, and that much of the
+                       reasoning is confirmed.
+  P1 PALETTE/BOOTS     PASS on palette and boots; the halo half of P1 is
+                       covered by A3 above and fails there.
+  watched, not scored  the collar frogging is still plain round buttons.
+
+  THE FINDING, AND IT IS THE OPPOSITE OF THE OBVIOUS ONE. Round 4 showed the
+  adapter supplies eye SHAPE and the words had been supplying eye COLOUR, and
+  the natural inference was that the two are ADDITIVE -- put the colour words
+  back beside a strong adapter and get both. THEY ARE NOT ADDITIVE, THEY
+  COMPETE. At ip-scale 1.25 the adapter is driving the eye hard; adding
+  word-side eye terms introduces a second, conflicting instruction and the
+  result is a washed compromise that satisfies neither -- no slit, no off-white,
+  no eyebags, and the adapter's grip loosened enough that its background field
+  came through as a visible disc.
+
+  SO THERE ARE EXACTLY TWO WORKING CONFIGURATIONS ON RECORD, and they are
+  mutually exclusive under a 77-token budget:
+    R3  ip-scale 1.0 + the full eye clause  -> correct goblin eye, GUARD FAILS
+        (no budget left to keep him a helmeted human).
+    R4  ip-scale 1.25 + NO eye words        -> correct slit pupil and a correct
+        guard, but the sclera reads green.
+  R4 is the better of the two because its single defect -- sclera colour -- is
+  the smaller one, and because it is the only round in five where the guard,
+  the palette, the halo, the boots and a canon slit pupil are simultaneously
+  right.
+
+  WHAT THE NEXT LEVER IS NOT: more wording. Round 5 is the proof that the eye
+  cannot be reached from the prompt while the adapter is strong. If the green
+  sclera is worth fixing, it has to come from the REFERENCE side -- a canon
+  reference whose sclera reads unambiguously off-white -- or from a masked
+  recolour pass after the plate exists, which is the same 0.30 naturalize
+  machinery beats 02, 03 and 20 used. Neither is a wording round and neither is
+  opened here.
+
+  NO MOTION SPEC FILED. The standing agreement was to file it at nine of nine;
+  this is four. Beat 07 goes to the founder's per-beat page with the five-round
+  table and all five plates, and R4 named as the standing best.

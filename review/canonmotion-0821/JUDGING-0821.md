@@ -359,3 +359,57 @@ b07 ROUND 4 — RECIPE change: face words deleted, ip-scale 1.0→1.25, budget t
 
   NO MOTION SPEC FILED off this plate — A1 did not land, and a green sclera
   would be baked into 105 frames. Beat 07 keeps its slot in the per-beat queue.
+
+--------------------------------------------------------------------------------
+b07 ROUND 5 — `white eyes, eyebags` back in (−`arms at sides` to pay the 6 tokens)
+--------------------------------------------------------------------------------
+  FAIL, 4 of 9, AND IT INVERTS ROUND 4'S READING. R4 REMAINS THE BEST PLATE.
+  E1 off-white sclera FAIL  still pale green — the term bought nothing.
+  E2 eyebags          FAIL  absent.
+  E3 slit pupils      FAIL  REGRESSED. R4 had clear narrow vertical slits from
+                            the adapter alone; R5's pupils are small round dots
+                            and the whole eye is flat and washed.
+  A3 containment      FAIL  REGRESSED. R4 had faint ring ghosting; R5 has a
+                            DISTINCT GREEN DISC around the head — the
+                            reference's flooded field bleeding through. This is
+                            k2's containment failure mode arriving, and NOT from
+                            scale: ip-scale is byte-identical to R4 at 1.25.
+                            It arrived with the WORDS.
+  A2 no bobblehead    PASS  head size unchanged from R4.
+  G1/G2/G3/G4         PASS  THE TRADE DID NOT COST THE GUARD — closed helmet,
+                            human, five heads, armoured gauntlet. Taking the
+                            token from `arms at sides` instead of his clause
+                            worked exactly as designed.
+  P1 palette/boots    PASS  (halo half fails under A3).
+
+THE RESULT — WORDS AND ADAPTER COMPETE, THEY DO NOT ADD
+  R4 showed the adapter supplies eye SHAPE and words had been supplying eye
+  COLOUR. The natural inference — put the colour words back beside a strong
+  adapter and get both — IS WRONG. At ip-scale 1.25 the adapter drives the eye
+  hard; word-side eye terms are a second conflicting instruction and the result
+  satisfies neither, and loosens the adapter's grip enough that its background
+  field shows as a disc.
+
+  TWO WORKING CONFIGURATIONS EXIST, MUTUALLY EXCLUSIVE UNDER 77 TOKENS:
+    R3  ip 1.0 + full eye clause -> correct goblin eye, GUARD FAILS (no budget)
+    R4  ip 1.25 + NO eye words   -> correct slit pupil AND correct guard,
+                                    sclera reads green
+  R4 is the better: one small defect, and the only round in five where guard,
+  palette, halo, boots and a canon slit pupil are all right at once.
+
+  THE NEXT LEVER IS NOT WORDING — R5 is the proof. A green sclera would have to
+  be fixed from the REFERENCE side (a canon ref whose sclera reads clearly
+  off-white) or by a masked recolour pass after the plate exists, reusing the
+  same 0.30 naturalize machinery b02/b03/b20 used. Neither is opened here.
+
+  NO MOTION SPEC FILED (agreement was 9/9; this is 4/9). Beat 07 goes to the
+  per-beat page with the five-round table, all five plates, and R4 as standing best.
+
+  attribute            R1     R2     R3     R4     R5
+  goblin slit pupils   FAIL   PASS   PASS   PASS   FAIL
+  sclera / eyebags     PASS   PASS   PASS   FAIL   FAIL
+  no containment disc  PASS   FAIL   PASS   PASS   FAIL
+  muted palette        PASS   FAIL   PASS   PASS   PASS
+  guard hand armoured  PASS   FAIL   PASS   PASS   PASS
+  boots                PASS   FAIL   PASS   PASS   PASS
+  guard helmeted human PASS   PASS   FAIL   PASS   PASS
