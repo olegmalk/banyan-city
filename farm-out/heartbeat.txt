@@ -4244,3 +4244,5 @@
 23:10:25Z DONE task=ep2-b13-w4motioncurl-0822-1787350510 rc=0 artifacts=1
 23:10:32Z STARTED task=ep2-b14-w4motion-0822-1787349806 attempt=1 on box-runner
 23:16:36Z DONE task=ep2-b14-w4motion-0822-1787349806 rc=0 artifacts=1
+23:16:42Z STARTED task=ep2-b15-w4motion-0822-1787349811 attempt=1 on box-runner
+23:22:42Z DONE task=ep2-b15-w4motion-0822-1787349811 rc=0 artifacts=1
