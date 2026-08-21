@@ -8200,7 +8200,7 @@ everything above the checkpoint:
 |---|---|---|
 | driver | `pipeline/controlnet_plate.py` via `derive_guardcast_0822.py` | `pipeline/goblin_ipa_beat.py --character guard --arm window4` |
 | prompt | booru tag list ending `muted color, … full body` | prose, closing on `cinematic lighting, masterpiece, best quality, very aesthetic` |
-| conditioning | openpose skeleton, **no reference** | **IP-Adapter window @ w=0.15** over a reference set |
+| conditioning | openpose skeleton, **no reference** | **IP-Adapter at scale 0.6, off after the first 15% of the denoise** (6 steps of 40) over a reference set |
 | negative | `photorealistic, 3d` | `No photorealism, no 3D render look` |
 | reference rung | the twelve `ep2-guardcast-{a..l}-0822` specs | `pipeline/jobs/ep2-b09-cast-0817.yaml` — **the recipe that drew the frame he just called canon** |
 
@@ -8216,7 +8216,7 @@ watching it in the ep2 cut. He answered the sheet by posting our own frame back
 at us. The lesson is a canon entry now, not a paragraph: before a casting rung
 fires, check the register for a reference that already exists.
 
-**Next rung, running:** guard 2 re-cast on the cinematic stack, IP-Adapter at
-0.15 over `taste/refs/guard1-canon-founder-0822.png` so the costume family and
+**Next rung, running:** guard 2 re-cast on the cinematic stack, the `window4`
+adapter over `taste/refs/guard1-canon-founder-0822.png` so the costume family and
 the style come from guard 1 while the prompt varies hair and build. Sheet at
 `/review/ep2-guardcast2-0822`. Guard 1 is **not** re-asked.

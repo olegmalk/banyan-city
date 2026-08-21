@@ -1524,8 +1524,9 @@ subjects:
         standing, arms at sides, in tall grass, full body`, openpose skeleton
         control, no reference conditioning.
       * RIGHT FOR HUMANS — pipeline/goblin_ipa_beat.py at `--character guard
-        --arm window4`, i.e. an IP-ADAPTER WINDOW AT WEIGHT 0.15 over a
-        reference set, and a PROSE prompt closing on the 14-token style tail
+        --arm window4`, i.e. an IP-ADAPTER AT SCALE 0.6 SWITCHED OFF AFTER THE
+        FIRST 15% OF THE DENOISE (6 steps of 40) over a reference set, and a
+        PROSE prompt closing on the 14-token style tail
         `cinematic lighting, masterpiece, best quality, very aesthetic`. This is
         the recipe of pipeline/jobs/ep2-b09-cast-0817.yaml, and it is the recipe
         that drew the frame the founder just called canon. Its negative carries

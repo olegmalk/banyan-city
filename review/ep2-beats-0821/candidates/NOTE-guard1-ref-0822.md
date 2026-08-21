@@ -65,7 +65,7 @@ difference is above the checkpoint:
 |---|---|---|
 | driver | `pipeline/controlnet_plate.py` | `pipeline/goblin_ipa_beat.py --character guard --arm window4` |
 | prompt | booru tag list, `muted color`, no style tail | prose, closing `cinematic lighting, masterpiece, best quality, very aesthetic` |
-| conditioning | openpose skeleton, **no reference** | **IP-Adapter window @ w=0.15** over a reference set |
+| conditioning | openpose skeleton, **no reference** | **IP-Adapter at scale 0.6, off after the first 15% of the denoise** (6 of 40 steps) over a reference set |
 | negative | `photorealistic, 3d` | `No photorealism, no 3D render look` |
 
 If a b05/07/08 re-plate is currently pointed at the flat stack, that is the
