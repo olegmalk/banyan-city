@@ -1,0 +1,7 @@
+#### job ep2-b09-r2s2-c1-0821-1787270381 attempt 1 start 2026-08-21T00:00:09Z
+
+==== step crop START 2026-08-21T00:00:09Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b09-r2s2-c1-0821\\cover_crop.py", "--src", "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b09-platecrop-0820\\09-the-pause-platecrop-r2s2.png", "--sha256", "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a", "--out", "C:\\banyan-farm\\ep2-b09-r2s2-c1-0821\\b09-init-704x1280.png", "--size", "704x1280"]
+!! src not found: C:\banyan-farm\courier-box\farm-out\ep2-b09-platecrop-0820\09-the-pause-platecrop-r2s2.png
+==== step crop END rc=1 2026-08-21T00:00:09Z ====
+#### job ep2-b09-r2s2-c1-0821-1787270381 finished rc=1 2026-08-21T00:00:09Z
