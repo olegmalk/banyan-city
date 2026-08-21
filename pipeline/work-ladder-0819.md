@@ -439,6 +439,11 @@ mechanism that has ever put this beat's pointing arm on the guard.
   it vague.
 - **Taste is R4.** Bars, tradeoffs, routes and staging that applies a ruling are
   the steward's. Picks, promotion and `plate_ack` are not made in a job spec.
+- **Every commit goes through `./pipeline/safe_commit.sh -m "msg" <pathspecs>`**,
+  never a bare `git commit`. In this shared worktree a commit without pathspecs
+  commits every peer's staged work (2026-08-21, twice: swept a peer's 10 staged
+  deletions, broke the licence gate + pages). The wrapper refuses zero pathspecs,
+  warns which staged entries belong to a peer, and commits only your paths.
 - **Every push goes through `./pipeline/safe_push.sh <the git push args>`**, never
   a bare `git push`. It runs the local gates, reads their exit codes, and refuses
   to push onto a main whose lint-genome is red — `--fixing-main` only if your

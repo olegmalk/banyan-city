@@ -88,6 +88,12 @@ jobs:
       # `gh` call and drive it through green / red / in-progress / in-progress-
       # behind-red. No network, no remote, no real git.
       - run: python pipeline/test_safe_push.py
+      # The commit guard. Twice a lane ran `git add -- <paths>` then a BARE
+      # `git commit`, sweeping every peer's staged work in the shared worktree
+      # (2026-08-21: a peer's 10 staged deletions, licence gate + pages broken).
+      # safe_commit.sh refuses zero pathspecs and commits only the named paths;
+      # these drive it against real throwaway git repos.
+      - run: python pipeline/test_safe_commit.py
       # 40% of the IP-Adapter renders drawn to 2026-08-15 (112 of 280) were exact
       # byte-duplicates, because reference sets smaller than four were poured into
       # four fixed slots. The dedup that stops it and the sidecar header that used

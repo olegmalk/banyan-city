@@ -31,6 +31,11 @@ watch, ship.
 - A failed batch gets ONE line in the ladder, not a verdict document.
 
 ## Pushing
+- **Every commit goes through `./pipeline/safe_commit.sh -m "msg" <pathspecs>`** —
+  it refuses zero pathspecs, warns about staged entries that are a peer's
+  mid-work, and commits ONLY your paths. A bare `git commit` sweeps the whole
+  shared index; it did exactly that twice (2026-08-21: a peer's 10 staged
+  deletions, licence gate + pages broken for everyone behind).
 - **Every push goes through `./pipeline/safe_push.sh <the git push args>`** —
   it runs the local gates and refuses to push onto a red main (`--fixing-main`
   only if your commit IS the repair). Six lanes pushed onto one broken main on
