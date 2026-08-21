@@ -20,8 +20,15 @@
 # `ship_path.assembly_minutes()` reads this file and falls back to
 # build_status.STEPS when it cannot, so a bad edit here degrades to the older
 # figure rather than to silence.
+#
+# THE RENDER FIGURES ARE NOT IN THIS FILE ON PURPOSE. A plate batch and a motion
+# job are measured hundreds of times a day in
+# `pipeline/measured/queue-history.json`, which carries a dated row per job;
+# `ship_path` takes their medians off that file at build time so they move with
+# the recipe instead of going stale in a hand-typed line here. The only render
+# facts below are the ones no job record holds: WHICH scenes the wave covers.
 
-measured_at: 2026-08-20
+measured_at: 2026-08-21
 measured_by: the /status path-section lane
 
 order:
@@ -38,32 +45,87 @@ order:
   # prefers this and falls back to parsing STATE.md, so forgetting to transcribe
   # degrades to the older, slower path rather than to a blank section.
   #
-  # THE RECORD NAMES NO TIMEZONE. STATE.md writes "12:00 2026-08-21" flat. UTC
-  # is what every other stamp this repo publishes means, so that is how it is
-  # read — and the page says on its face that it did so.
-  date: 2026-08-20
-  headline: episode 2 ships within 24h
-  cutoff_utc: 2026-08-21 12:00
+  # THE RECORD NAMES NO TIMEZONE. STATE.md writes "12:00" flat. UTC is what
+  # every other stamp this repo publishes means, so that is how it is read —
+  # and the page says on its face that it did so.
+  date: 2026-08-21
+  headline: episode 2 finishes TODAY
+  # THE TARGET IS A DAY, NOT A CLOCK, because that is what he said. The 08-20
+  # order had a 12:00 upgrade cutoff and this one replaces it: there is no
+  # cutoff any more, there is a day. `target_date` is the whole of it, so the
+  # page can say "today" and can say, tomorrow, that today has passed — WITHOUT
+  # editing this line. A target that gets rewritten when it is missed is not a
+  # target, it is a diary of successes.
+  target_date: 2026-08-21
   source: >-
-    STATE.md, heading "## 2026-08-20 — SHIP ORDER (founder): episode 2 ships
-    within 24h"
+    STATE.md, heading "## 2026-08-21 morning — SHIP TODAY (founder): episode 2
+    finishes TODAY"
   words: >-
-    Best-available takes ship with named faults; open taste cards answered
-    before assembly get applied, unanswered ones ship the current take. Takes
-    landing by the cutoff enter the final cut; then assembly, founder
-    watch-through (his kept publish gate), then live.
+    "you must aim to finish it today." The design patch wave — seven goblin
+    scenes — moves INSIDE today's ship rather than waiting for a later pass:
+    plates by midday, motion through the afternoon, swaps into the ship cut as
+    they pass, founder watch-through this evening, publish on his word tonight.
+  supersedes: >-
+    the 2026-08-20 SHIP ORDER and its 12:00 2026-08-21 upgrade cutoff. That
+    plan shipped the cut at noon and patched the goblin design afterwards; this
+    one folds the patch into the same day. The noon cutoff is GONE, not moved,
+    and nothing on the page should still count down to it.
+  # The one clock inside today that the founder did name. Used for a SLIP LINE
+  # and for nothing else: when it passes with the wave still running the page
+  # prints how far past it we are. It never becomes a deadline the page
+  # re-draws, and it never shortens or lengthens the day he named.
+  plates_by_utc: 2026-08-21 12:00
+
+patch_wave:
+  # THE DESIGN PATCH WAVE. Seven scenes whose goblin does not match the tile the
+  # founder ruled on 2026-08-20 ("all of the goblin clips today has had him as
+  # an adult. very bad character consistency"). Re-rendered to the committed
+  # standard and swapped into the ship cut one at a time as each one passes.
+  #
+  # WHICH SEVEN IS A FACT NO JOB RECORD HOLDS, so it is transcribed here with
+  # its source named. The audit that produced it is a table in the ship
+  # manifest, not a judgement of this lane's.
+  beats: [2, 3, 4, 7, 8, 13, 20]
+  reference_beats: [15, 19]
+  source: >-
+    review/ep2-ship-0821/sources/ship-manifest.yaml, block
+    `goblin_design_audit_0820` — every one of the 21 scenes read at 1:1 against
+    the B tile; the goblin appears in eleven, two are tile-faithful (15 and 19,
+    which are the reference rather than the work), and these seven carry a
+    named, visible break. Recorded in STATE.md, "## 2026-08-20 night — the
+    goblin design axis is the TILE, not the word 'adult'".
+  # HOW THE PAGE KNOWS A SCENE HAS LANDED, and it is a test rather than a
+  # declaration: the ship manifest names one take file per scene, and a take
+  # re-rendered for this wave carries today's date stamp in its own filename.
+  # So a scene counts as swapped when — and only when — the manifest's take for
+  # it carries `-<stamp>` as a whole field. Nobody ticks a box; the render lane
+  # writing the manifest moves this page.
+  #
+  # IT IS A FIELD MATCH AND NOT A SUBSTRING, and that distinction was a real
+  # bug: takes also carry SEEDS, spelled `s20260821`, so asking whether "0821"
+  # appeared anywhere read `03-bad-cover-LTX-midend-s20260821-0820.mp4` — the
+  # 20th's take, seeded 20260821 — as a scene the wave had finished. The stamp
+  # must follow a hyphen and end there. The test can still only be wrong in the
+  # direction of a same-day take that was not wave work, and the page names the
+  # test it applied so a reader can check it against the manifest.
+  stamp: "0821"
+  standard: >-
+    pipeline/canon.yaml `ep2-goblin-design-adult`, which leads with
+    `correction_2026_08_20`: blank white slit eyes, no nose bridge, one lipless
+    line, short low flange ears, dome with no neck, two-tone chartreuse over
+    green, no age modelling.
 
 assembly:
-  # One full T3 assembly of the actual ship candidate: 21 scenes, 20 of them
-  # footage and one slate, captions burned in, 18 voice tracks muxed in sync,
-  # title and end cards, loudness-normalised master.
+  # One full T3 assembly of the actual ship candidate: 21 scenes, all 21 of them
+  # footage, captions burned in, 18 voice tracks muxed in sync, title and end
+  # cards, loudness-normalised master.
   seconds: 26.8
   command: >-
     /usr/bin/time -p python3 pipeline/render_t3.py sapling 002b
     --clips review/ep2-ship-0821/sources --out <scratch>/timing-probe.mp4
   host: macbook (Apple silicon, ffmpeg
     /opt/homebrew/bin/ffmpeg)
-  produced: 21 beats (20 footage, 1 slate), ~116 s of video, $0.00
+  produced: 21 beats, ~116 s of video, $0.00
   note: >-
     Wall clock, single run, on the ship candidate's own sources — not a
     synthetic input and not an average. It wrote to a scratch path with --out,

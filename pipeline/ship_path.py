@@ -71,9 +71,12 @@ DIGEST_HOURS = 24
 
 # The heading STATE.md writes for a ship order, and the one line inside it that
 # carries a time. Anchored on the heading rather than on free prose so a later
-# entry about shipping something else cannot be read as this order.
-SHIP_HEAD = re.compile(r"^##\s*(\d{4}-\d{2}-\d{2})\s*[-—–]\s*SHIP ORDER\b(.*)$",
-                       re.M)
+# entry about shipping something else cannot be read as this order. Two spellings
+# because the founder has used two — `SHIP ORDER` on 08-20, `SHIP TODAY` on
+# 08-21 — and a heading shape this file does not know reads as no order at all,
+# which would silently drop the newest one.
+SHIP_HEAD = re.compile(
+    r"^##\s*(\d{4}-\d{2}-\d{2})[^\n]*?[-—–]\s*SHIP (?:ORDER|TODAY)\b(.*)$", re.M)
 CUTOFF_RE = re.compile(r"cutoff:.*?by\s+(\d{1,2}:\d{2})\s+(\d{4}-\d{2}-\d{2})",
                        re.I | re.S)
 
@@ -143,6 +146,39 @@ def minutes_words(minutes) -> str:
     return f"{round(m)} min" if m < 90 else f"about {m / 60:.1f} h"
 
 
+def secs_words(seconds) -> str:
+    """'24 s' · '6.2 min' — a duration in the unit it was actually timed in.
+
+    minutes_words ROUNDS TO THE WHOLE MINUTE and that is right for a step's
+    headline figure and wrong for a range: the day's motion jobs run 6.15 to
+    6.40 minutes, which minutes_words printed as "6 min–6 min each" — a range
+    with no width, published beside the word measured.
+    """
+    try:
+        s = float(seconds)
+    except (TypeError, ValueError):
+        return ""
+    if s <= 0:
+        return ""
+    if s < 90:
+        return f"{round(s)} s"
+    if s < 5400:
+        return f"{s / 60:.1f} min"
+    return f"{s / 3600:.1f} h"
+
+
+def span_words(low_s, high_s) -> str:
+    """'6.2–6.4 min' — a low-to-high range, or "" when either end is unusable."""
+    lo, hi = secs_words(low_s), secs_words(high_s)
+    if not lo or not hi:
+        return ""
+    # One unit for the pair, so "24 s–1.2 min" cannot happen: the reader is
+    # comparing two numbers and they must be in the same units to compare.
+    if lo.split()[-1] != hi.split()[-1]:
+        return f"{lo}–{hi}"
+    return f"{lo.split()[0]}–{hi}"
+
+
 def gap_words(delta: datetime.timedelta) -> str:
     """A future gap in the words a person uses. Negative is the caller's problem
     — a countdown that has run out is a different sentence, not a negative one."""
@@ -157,16 +193,48 @@ def gap_words(delta: datetime.timedelta) -> str:
 
 
 # ---------------------------------------------------------------- the order ---
+def _utc_stamp(value):
+    """"YYYY-MM-DD HH:MM" -> aware UTC datetime, or None. Nothing is guessed."""
+    try:
+        return datetime.datetime.strptime(
+            str(value), "%Y-%m-%d %H:%M").replace(tzinfo=datetime.timezone.utc)
+    except (ValueError, TypeError):
+        return None
+
+
+def _end_of_day(value):
+    """The last instant of "YYYY-MM-DD" in UTC, or None.
+
+    A DAY IS NOT A CLOCK. The 08-21 order names a day — "finish it today" — and
+    the only honest way to ask "has the target passed" of a day is to ask it of
+    the day's end. Reading it as midnight-at-the-start would have the page
+    declaring a slip before breakfast.
+    """
+    try:
+        d = datetime.datetime.strptime(str(value), "%Y-%m-%d")
+    except (ValueError, TypeError):
+        return None
+    return d.replace(hour=23, minute=59, second=59,
+                     tzinfo=datetime.timezone.utc)
+
+
 def read_ship_order(repo: Path = None) -> dict:
-    """The founder's ship order and its upgrade cutoff, off STATE.md. {} if none.
+    """The founder's ship order and the day or clock in it. {} if none.
 
     Shape-checked rather than trusted: an order whose block carries no parsable
-    cutoff returns the order WITHOUT one, and the page then says there is no
-    cutoff on record instead of inventing a deadline. A half-read record must
-    never become a countdown.
+    time returns the order WITHOUT one, and the page then says there is no time
+    on record instead of inventing a deadline. A half-read record must never
+    become a countdown.
 
-    THE ZONE IS NOT IN THE RECORD. STATE.md writes "12:00 2026-08-21" and names
-    no timezone. This reads it as UTC because every other stamp this repo
+    TWO SHAPES, because the orders have two shapes. The 2026-08-20 order set an
+    upgrade CUTOFF — a clock inside the day, after which nothing new entered the
+    cut. The 2026-08-21 order that replaced it sets a TARGET DAY — "you must aim
+    to finish it today" — with no cutoff at all. Both are read; neither is
+    invented from the other, and a page holding a target day never prints a
+    countdown to a cutoff nobody set.
+
+    THE ZONE IS NOT IN THE RECORD. STATE.md writes "12:00" and names no
+    timezone. This reads it as UTC because every other stamp this repo
     publishes is UTC, and the page SAYS it did so — a clock printed without
     saying which clock it is, is the defect this project keeps re-finding.
     """
@@ -182,15 +250,18 @@ def read_ship_order(repo: Path = None) -> dict:
         # in a file that IS an input, so the page moves when the order does.
         out = {"date": str(row["date"]), "headline": str(row.get("headline") or ""),
                "words": " ".join(str(row.get("words") or "").split()),
-               "cutoff": None, "cutoff_text": ""}
-        try:
-            out["cutoff"] = datetime.datetime.strptime(
-                str(row.get("cutoff_utc")), "%Y-%m-%d %H:%M"
-            ).replace(tzinfo=datetime.timezone.utc)
+               "supersedes": " ".join(str(row.get("supersedes") or "").split()),
+               "cutoff": None, "cutoff_text": "",
+               "target_date": str(row.get("target_date") or ""),
+               "target_end": _end_of_day(row.get("target_date")),
+               "plates_by": _utc_stamp(row.get("plates_by_utc")),
+               "plates_by_text": ""}
+        if out["plates_by"]:
+            out["plates_by_text"] = str(row["plates_by_utc"]).split()[1]
+        out["cutoff"] = _utc_stamp(row.get("cutoff_utc"))
+        if out["cutoff"]:
             hh, dd = str(row["cutoff_utc"]).split()[1], str(row["cutoff_utc"]).split()[0]
             out["cutoff_text"] = f"{hh} on {dd}"
-        except (ValueError, TypeError, IndexError):
-            out["cutoff"] = None
         return out
     try:
         text = (repo / STATE_FILE).read_text(encoding="utf-8", errors="replace")
@@ -208,7 +279,9 @@ def read_ship_order(repo: Path = None) -> dict:
     # parenthetical is dropped rather than printed twice in one line.
     head = re.sub(r"^\s*\([^)]*\)\s*", "", m.group(2)).strip(" :—-")
     out = {"date": m.group(1), "headline": head,
-           "words": " ".join(block.split()), "cutoff": None, "cutoff_text": ""}
+           "words": " ".join(block.split()), "supersedes": "",
+           "cutoff": None, "cutoff_text": "", "target_date": "",
+           "target_end": None, "plates_by": None, "plates_by_text": ""}
     c = CUTOFF_RE.search(block)
     if c:
         try:
@@ -219,6 +292,64 @@ def read_ship_order(repo: Path = None) -> dict:
         except ValueError:
             out["cutoff"] = None
     return out
+
+
+# ------------------------------------------------------- the design patch wave ---
+def read_patch_wave(repo: Path = None) -> dict:
+    """The scenes being re-rendered to the ruled goblin design. {} if none.
+
+    WHICH SCENES IS THE ONE RENDER FACT NO JOB RECORD HOLDS. A job knows its own
+    beat and its own seconds; nothing in the queue knows that seven particular
+    scenes failed a design audit. So the list is transcribed into
+    `pipeline/measured/ship-path.yaml` with the audit block that produced it
+    named, and this reads it. An absent or shapeless block returns {} and the
+    page describes the wave as unlisted rather than guessing at its size.
+    """
+    repo = repo or REPO
+    doc = _load_yaml(repo / SHIP_PATH_MEASURED)
+    row = doc.get("patch_wave") if isinstance(doc, dict) else None
+    if not isinstance(row, dict):
+        return {}
+    beats = sorted({int(n) for n in (row.get("beats") or [])
+                    if str(n).strip().lstrip("-").isdigit()})
+    if not beats:
+        return {}
+    return {"beats": beats,
+            "reference": sorted({int(n) for n in (row.get("reference_beats") or [])
+                                 if str(n).strip().lstrip("-").isdigit()}),
+            "stamp": str(row.get("stamp") or "").strip(),
+            "source": " ".join(str(row.get("source") or "").split()),
+            "standard": " ".join(str(row.get("standard") or "").split())}
+
+
+def wave_progress(wave: dict, cut: dict) -> dict:
+    """How many of the wave's scenes have actually landed in the ship cut.
+
+    DERIVED FROM THE CUT, NEVER DECLARED. The manifest names one take file per
+    scene and a take re-rendered for this wave carries the wave's date stamp in
+    its own filename, so a scene counts as swapped when the manifest says so and
+    at no other moment. Nobody ticks a box here; the render lane writing the
+    manifest moves this page, and if it writes nothing the page reports nothing
+    landed rather than reporting progress it cannot see.
+
+    A SUBSTRING TEST WAS WRONG AND THE BUG IS WORTH KEEPING WRITTEN DOWN. Takes
+    carry two kinds of number: a date stamp `-0821` and a SEED `s20260821`. The
+    first version asked whether "0821" appeared anywhere in the filename and so
+    read `03-bad-cover-LTX-midend-s20260821-0820.mp4` — a take from the 20th,
+    seeded 20260821 — as a scene the wave had already landed. The stamp must sit
+    behind a hyphen and end there, which is how the render lane writes it.
+
+    With no stamp on record every scene reads as still to come — the safe
+    direction, because the failure it produces is a page under-claiming.
+    """
+    beats = (wave or {}).get("beats") or []
+    stamp = (wave or {}).get("stamp") or ""
+    takes = {b["n"]: (b.get("take") or "") for b in (cut or {}).get("beats", [])}
+    pat = re.compile("-" + re.escape(stamp) + r"(?![0-9])") if stamp else None
+    done = [n for n in beats if pat and pat.search(str(takes.get(n, "")))]
+    return {"beats": beats, "swapped": done,
+            "remaining": [n for n in beats if n not in done],
+            "stamp": stamp, "checked": bool(takes)}
 
 
 # ------------------------------------------------------------- the ship cut ---
@@ -445,6 +576,62 @@ def kind_median(jobs: list, kind: str, since=None) -> dict:
             "low": min(secs) / 60.0, "high": max(secs) / 60.0}
 
 
+def _outputs(j) -> list:
+    return [o for o in (j.get("outputs") or []) if isinstance(o, dict)]
+
+
+def is_motion_job(j) -> bool:
+    """A job that produced moving pictures.
+
+    CLASSIFIED BY WHAT CAME OUT, not by the label on the way in. The `kind`
+    field is written by whoever authored the spec and today's plate wave runs
+    under `kind: other` — a page that trusted the label counted 37 of the day's
+    plate jobs as neither plates nor motion. The outputs cannot be mislabelled
+    that way: a video came out or it did not. `kind` stays as the fallback for
+    the older rows that list no outputs at all.
+    """
+    outs = _outputs(j)
+    if outs:
+        return any(str(o.get("kind")) == "video" for o in outs)
+    return str(j.get("kind")) in ("motion", "ltx")
+
+
+def is_plate_job(j) -> bool:
+    """A job that produced still images and no video — one plate batch."""
+    outs = _outputs(j)
+    if outs:
+        return all(str(o.get("kind")) == "image" for o in outs)
+    return str(j.get("kind")) in ("still", "still-ipa", "inpaint")
+
+
+def window_median(jobs: list, pred, now=None, hours: int = DIGEST_HOURS) -> dict:
+    """{seconds, minutes, n, low, high} over the jobs in the window that match.
+
+    NEVER A FALLBACK NUMBER. Nothing matching returns {} and the caller prints
+    that it is not measured; widening the window until a number appears would be
+    this page inventing the one thing it exists to stop inventing.
+
+    THE WINDOW IS THE POINT. A recipe changes daily here, so the median of every
+    run ever made is not the cost of the next run. `duration_s > 0` and not
+    merely present: the record holds jobs that finished in the second they
+    started — a resumed run, a cache hit — and a zero in the sample once
+    rendered a printed range as "–14 min each".
+    """
+    now = now or utcnow()
+    since = now - datetime.timedelta(hours=hours)
+    secs = [j["duration_s"] for j in jobs
+            if isinstance(j.get("duration_s"), (int, float))
+            and j["duration_s"] > 0
+            and (_dt(j.get("finished_at")) or since -
+                 datetime.timedelta(days=1)) >= since
+            and pred(j)]
+    if not secs:
+        return {}
+    med = statistics.median(secs)
+    return {"seconds": med, "minutes": med / 60.0, "n": len(secs),
+            "low": min(secs), "high": max(secs)}
+
+
 def digest(jobs: list, now=None, hours: int = DIGEST_HOURS) -> dict:
     """What the machines actually did in the last `hours`, off their own stamps."""
     now = now or utcnow()
@@ -511,73 +698,123 @@ def rollup(cut: dict, ready: dict, worked: set) -> list:
 
 
 # ------------------------------------------------------------------ the steps ---
+def nums_words(ns) -> str:
+    """'02, 03 and 04' — scene numbers in a sentence, never a bare python list."""
+    xs = ["%02d" % int(n) for n in ns or []]
+    if len(xs) <= 1:
+        return xs[0] if xs else ""
+    return ", ".join(xs[:-1]) + " and " + xs[-1]
+
+
 def steps(order: dict, cut: dict, ready: dict, jobs: list, rows: list,
-          now=None) -> list:
+          now=None, wave: dict = None) -> list:
     """The five remaining steps, each with a state, an owner and a time.
 
-    A step's STATE is derived, never declared: step 1 is in flight until its
-    own cutoff passes, and every later step is waiting on the one in front of
-    it. That is the only ordering the files support, and writing it as a chain
-    means a page built after the cutoff moves on its own.
+    A step's STATE is derived, never declared: step 1 is in flight until the
+    last of its scenes is in the cut, and every later step waits on the one in
+    front of it. That is the only ordering the files support, and writing it as
+    a chain means a page built after the last swap moves on its own.
 
     Each step's `measured` flag is what licenses the word on the page. True and
     the figure is the median of dated runs with its n; False and the page says
     "estimate" out loud.
+
+    A SLIP IS SHOWN, NEVER ABSORBED. Where the order names a clock and the clock
+    has passed with the work still running, the step carries a `slip` line
+    saying by how much. The target is not re-drawn to meet the present; a page
+    that quietly moves its own deadline is a diary of successes.
     """
     now = now or utcnow()
-    cutoff = (order or {}).get("cutoff")
-    open_window = bool(cutoff and cutoff > now)
     out = []
 
-    # 1 — the upgrade window. Its own clock, so its state needs nothing else.
-    if cutoff:
-        est = (gap_words(cutoff - now) + " left when this page was built"
-               if open_window else "closed")
-        note = ("Any better take that lands before the cutoff goes into the "
-                "final cut. Anything after it waits for the next episode.")
+    # 1 — the design patch wave. Its state is read off the cut: a scene has
+    # landed when the manifest's take for it carries the wave's date stamp.
+    wp = wave_progress(wave, cut)
+    left, done = wp["remaining"], wp["swapped"]
+    plate = window_median(jobs, is_plate_job, now)
+    motion = window_median(jobs, is_motion_job, now)
+    if not wp["beats"]:
+        est, label, measured = "not on record", "On record", False
+        basis = ("No patch wave is listed in "
+                 f"{SHIP_PATH_MEASURED}, so this page names no scenes and puts "
+                 "no time on them.")
+    elif not left:
+        est, label, measured = "all landed", "On record", False
+        basis = ("Every scene in the wave now carries a take stamped "
+                 f"{wp['stamp']} in the ship cut's own manifest — that is the "
+                 "whole test, and it is one a reader can run against the file.")
+    elif plate and motion:
+        est, label, measured = (
+            minutes_words(len(left) * (plate["seconds"] + motion["seconds"])
+                          / 60.0), "Estimate", False)
+        basis = (
+            f"One plate batch and one motion job for each of the {len(left)} "
+            "scenes still to come, at the medians this box measured in the last "
+            f"{DIGEST_HOURS} hours: a plate batch {secs_words(plate['seconds'])} "
+            f"(middle of {plate['n']} dated runs, "
+            f"{span_words(plate['low'], plate['high'])} each) and a motion job "
+            f"{secs_words(motion['seconds'])} (middle of {motion['n']}, "
+            f"{span_words(motion['low'], motion['high'])} each), off "
+            f"{QUEUE_HISTORY}. Both halves are measured and the SUM IS AN "
+            "ESTIMATE, because it assumes one plate and one motion attempt per "
+            "scene: in practice a scene takes several of each before one "
+            "passes, and the judging in between is a person looking, which is "
+            "the other clock.")
     else:
-        est, note = "no cutoff on record", (
-            "The ship order on file names no cutoff time, so this page will not "
-            "put a countdown on it.")
+        est, label, measured = "not measured", "Estimate", False
+        basis = ("Neither a plate batch nor a moving-picture job has finished "
+                 f"inside the last {DIGEST_HOURS} hours that this page can "
+                 "see, so it claims no time for the scenes still to come.")
+    ref = (wp["beats"] and (wave or {}).get("reference")) or []
     out.append({
-        "n": 1, "title": "Upgrade window for takes still in flight",
-        "state": "flight" if open_window else ("done" if cutoff else "unknown"),
-        # NOT AN ESTIMATE AND NOT A MEASUREMENT — a deadline somebody set. The
-        # page had three kinds of number and two words for them, so the cutoff
-        # shipped under the word "Estimate", which is the page miscategorising a
-        # fact it holds a written record of.
-        "owner": "the machines", "estimate": est, "measured": False,
-        "label": "On record",
-        "basis": (f"Cutoff {order['cutoff_text']} UTC, written in STATE.md's "
-                  f"ship order of {order.get('date','')}. The record names no "
-                  "timezone; this page reads it as UTC and says so."
-                  if cutoff else "STATE.md's ship order, which states no time."),
-        "note": note})
+        "n": 1,
+        "title": (f"Re-render the {len(wp['beats'])} scenes whose goblin is "
+                  "off-model" if wp["beats"] else
+                  "Re-render the scenes whose goblin is off-model"),
+        "state": ("unknown" if not wp["beats"]
+                  else ("done" if not left else "flight")),
+        "owner": "the machines (the design patch wave)",
+        "estimate": est, "measured": measured, "label": label, "basis": basis,
+        "note": (
+            (f"{len(wp['beats'])} scenes — {nums_words(wp['beats'])} — draw the "
+             "goblin as somebody other than the character you ruled, so each is "
+             "being drawn again to the committed design and dropped into the "
+             "ship cut the moment it passes, not held back to the end. Plates "
+             "through the middle of the day, moving pictures through the "
+             "afternoon."
+             + (f" Scenes {nums_words(ref)} already match him and are the "
+                "reference for the rest, not work." if ref else "")
+             + (f" {len(done)} of {len(wp['beats'])} are in the cut already "
+                f"({nums_words(done)})." if done else
+                " None of them is in the cut yet."))
+            if wp["beats"] else
+            "The wave's scene list is not on file, so this page will not "
+            "describe one."),
+        "slip": _wave_slip(order, wp, now)})
 
-    # 2 — assembly and the screening gate. Measured on episode 1's runs, which
-    # were fifteen scenes against this one's twenty-one, so it is a FLOOR.
+    # 2 — assembly and the screening gate, both timed on this episode's files.
     asm = assembly_minutes()
     out.append({
-        "n": 2, "title": "Put the final cut together and check it",
-        "state": "wait-machine" if open_window else "ready",
+        "n": 2, "title": "Assemble the final cut and run the screening gate",
+        "state": "ready" if (wp["beats"] and not left) else "wait-machine",
         "owner": "the machines (the ship lane)",
         "estimate": minutes_words(asm["minutes"]) if asm else "not measured",
         "measured": bool(asm and asm.get("measured")),
         "basis": (asm or {}).get("basis", ""),
-        "note": ("One run of the assembler stitches every scene, burns the "
-                 "captions, lays the voice tracks in and writes the record of "
-                 "what went in. Then the site's own screening gate re-walks "
-                 "every page before anyone is handed a link.")})
+        "note": ("It starts the moment the last swap lands. One run of the "
+                 "assembler stitches every scene, burns the captions, lays the "
+                 "voice tracks in and writes the record of what went in. Then "
+                 "the site's own screening gate re-walks every page before "
+                 "anyone is handed a link.")})
 
     # 3 — the author's watch-through. HIS step, and the gate he kept.
     runtime = (cut or {}).get("runtime_s")
     watch = ""
     if isinstance(runtime, (int, float)) and runtime > 0:
         watch = f"{int(runtime) // 60}:{int(runtime) % 60:02d}"
-    cards = open_cards(ready)
     out.append({
         "n": 3, "title": "You watch it through and answer the open cards",
-        "state": "wait-you", "owner": "you — the author",
+        "state": "wait-you", "owner": "you — the author, this evening",
         "estimate": f"~{WATCH_ALLOWANCE_MIN} min", "measured": False,
         "basis": (f"The cut itself runs {watch}, measured off the assembled "
                   f"file. The rest is an ESTIMATE — how long a person takes to "
@@ -587,31 +824,33 @@ def steps(order: dict, cut: dict, ready: dict, jobs: list, rows: list,
                   "thing on this page nobody can measure."),
         "note": ("This is the gate you chose to keep: nothing publishes until "
                  "you have watched it. It is the only step here that stops "
-                 "everything behind it.")})
+                 "everything behind it, and it is the evening's work in the "
+                 "plan you set.")})
 
     # 4 — applying whatever he says. Costed per swap off TODAY's own runs.
     swap = swap_minutes(jobs, now)
     out.append({
-        "n": 4, "title": "Apply your verdicts — the last swaps",
+        "n": 4, "title": "Apply your verdicts — the last swaps, if any",
         "state": "wait-you", "owner": "the machines, once you have ruled",
         "estimate": (f"{minutes_words(swap['minutes'])} per swap"
                      if swap else "not measured"),
         "measured": bool(swap),
-        "basis": ((f"Median of the {swap['n']} moving-picture jobs this box "
+        "basis": ((f"Middle of the {swap['n']} moving-picture jobs this box "
                    f"finished in the last day "
-                   f"({minutes_words(swap['low'])}–{minutes_words(swap['high'])} "
-                   "each), off pipeline/measured/queue-history.json. Add one "
-                   "more assembly run for the round.")
+                   f"({span_words(swap['low'] * 60, swap['high'] * 60)} each), "
+                   f"off {QUEUE_HISTORY}. Add one more assembly run for "
+                   "the round.")
                   if swap else
                   "No moving-picture job has finished inside the window, so "
                   "nothing is claimed."),
-        "note": ("A swap is one scene re-rendered and dropped into the cut. "
-                 "Several swaps ride in one re-assembly, so a round costs the "
-                 "slowest swap plus one assembly — not the sum of them.")})
+        "note": ("IF ANY — you may have none. A swap is one scene re-rendered "
+                 "and dropped into the cut. Several swaps ride in one "
+                 "re-assembly, so a round costs the slowest swap plus one "
+                 "assembly, not the sum of them.")})
 
     # 5 — publication. His word, and then a chain of machine steps.
     out.append({
-        "n": 5, "title": "You say publish",
+        "n": 5, "title": "You say publish, and it goes out tonight",
         "state": "wait-you", "owner": "you — the author",
         "estimate": "minutes, once you say it", "measured": False,
         "basis": "An ESTIMATE of the deploy, which nobody here has timed.",
@@ -620,6 +859,24 @@ def steps(order: dict, cut: dict, ready: dict, jobs: list, rows: list,
                  "push goes to the host, which builds and serves it. Nothing "
                  "in that chain needs a person after the word.")})
     return out
+
+
+def _wave_slip(order: dict, wp: dict, now) -> str:
+    """The one sentence a missed clock earns, or "".
+
+    THE PAGE SHOWS THE SLIP AND LEAVES THE TARGET ALONE. The founder's plan puts
+    plates at midday; when midday passes with scenes still to draw, this says by
+    how much rather than the page quietly re-drawing midday to suit. It costs
+    nothing when the work is on time, because then there is nothing to say.
+    """
+    by = (order or {}).get("plates_by")
+    if not by or not wp.get("remaining") or now <= by:
+        return ""
+    return (f"Behind the plan: plates were due {order.get('plates_by_text') or ''} "
+            f"UTC and that was {gap_words(now - by)} ago, with "
+            f"{len(wp['remaining'])} of {len(wp['beats'])} scenes still to "
+            f"land ({nums_words(wp['remaining'])}). The plan is not re-drawn to "
+            "meet the clock — this is what running late looks like here.")
 
 
 SHIP_PATH_MEASURED = "pipeline/measured/ship-path.yaml"
@@ -690,16 +947,17 @@ def swap_minutes(jobs: list, now=None, hours: int = DIGEST_HOURS) -> dict:
     same box's motion median over the whole record is not the median of the
     recipe currently being run, and the estimate that matters is the cost of the
     next swap, not the average of every swap ever made.
+
+    CLASSIFIED BY OUTPUT, see `is_motion_job` — the `kind` label is written by
+    whoever authored the spec and today's wave runs under `kind: other`.
     """
-    now = now or utcnow()
-    since = now - datetime.timedelta(hours=hours)
-    for kind in ("motion", "ltx"):
-        m = kind_median([j for j in jobs
-                         if (_dt(j.get("finished_at")) or since -
-                             datetime.timedelta(days=1)) >= since], kind)
-        if m:
-            return m
-    return {}
+    m = window_median(jobs, is_motion_job, now, hours)
+    if not m:
+        return {}
+    # The older callers read `low`/`high` in minutes; window_median speaks
+    # seconds because a plate batch is not a thing you say in minutes.
+    return {"minutes": m["minutes"], "n": m["n"],
+            "low": m["low"] / 60.0, "high": m["high"] / 60.0}
 
 
 def open_cards(ready: dict) -> int:
@@ -716,13 +974,15 @@ def collect(repo: Path = None, now=None) -> dict:
     order = read_ship_order(repo)
     cut = read_ship_cut(repo)
     ready = read_readiness(repo)
+    wave = read_patch_wave(repo)
     jr = read_jobs(repo)
     jobs = jr.get("jobs", [])
     dig = digest(jobs, now)
     rows = rollup(cut, ready, set(dig["beats"]))
     return {"order": order, "cut": cut, "ready": ready, "jobs": jr,
+            "wave": wave, "progress": wave_progress(wave, cut),
             "digest": dig, "rows": rows,
-            "steps": steps(order, cut, ready, jobs, rows, now),
+            "steps": steps(order, cut, ready, jobs, rows, now, wave),
             "now": now}
 
 
@@ -816,6 +1076,17 @@ PATH_CSS = """
 .spstep .sb { margin: .3rem 0 0; font: 400 .72rem/1.65 var(--sans, inherit);
   color: var(--faint); }
 .spstep .sb b { color: var(--muted); font-weight: 700; }
+/* A SLIP. Amber, because a plan running late is the author's clock intruding on
+   the machine's, and it is set apart so it cannot be skimmed past. It appears
+   only when a clock on record has passed with work still to do, and it never
+   edits the clock it is late against. */
+.spstep .sl { margin: .35rem 0 0; padding: .3rem .5rem; border-radius: 6px;
+  border-left: 2px solid var(--sap); background: var(--panel-2);
+  font: 400 .74rem/1.6 var(--sans, inherit); color: var(--muted); }
+.spath .target { margin: 0 0 .9rem; padding: .45rem .6rem; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--panel-2);
+  font: 400 .78rem/1.6 var(--sans, inherit); color: var(--muted); }
+.spath .target b { color: var(--ink); }
 .spath .cnote { margin: .8rem 0 0; text-align: left;
   font: 400 .72rem/1.65 var(--sans, inherit); color: var(--faint); }
 .spath .cnote code { font: 400 .68rem/1.5 var(--mono); }
@@ -913,6 +1184,7 @@ def html(data: dict = None, repo: Path = None, now=None) -> str:
         return ""
     order, cut, ready = d["order"], d["cut"], d["ready"]
     rows, dig, sts = d["rows"], d["digest"], d["steps"]
+    wp = d.get("progress") or {}
     if not order and not cut and not rows:
         return ""
 
@@ -942,7 +1214,11 @@ def html(data: dict = None, repo: Path = None, now=None) -> str:
             f'<li class="you"><b>You gave the ship order</b> on '
             f'{_e(order["date"])} — {_e(one_sentence(order.get("headline") or "", 90))}'
             '. Best-available takes ship, with what is wrong with them named '
-            'out loud.</li>')
+            'out loud, and the design patch goes in today rather than after.'
+            + (f' It replaces '
+               f'{_e(one_sentence(order.get("supersedes") or "", 120))}.'
+               if order.get("supersedes") else "")
+            + '</li>')
 
     # ---- ② what is happening -------------------------------------------------
     foot = [r for r in rows if r["state"] in ("foot", "up")]
@@ -965,11 +1241,25 @@ def html(data: dict = None, repo: Path = None, now=None) -> str:
             'fault</b> — footage good enough to ship that nobody is calling '
             'clean. Each one has a written reason, and they are listed '
             'below.</li>')
+    if wp.get("beats"):
+        left = wp.get("remaining") or []
+        now_facts.append(
+            '<li><b>The design patch wave is running now</b> — '
+            + (f'{len(wp["swapped"])} of {len(wp["beats"])} scenes re-drawn to '
+               f'the goblin you ruled are already in the cut '
+               f'({_e(nums_words(wp["swapped"]))})'
+               + (f', and {len(left)} still to come '
+                  f'({_e(nums_words(left))})' if left else
+                  ', which is all of them')
+               if wp.get("swapped") else
+               f'all {len(wp["beats"])} of its scenes are still to land '
+               f'({_e(nums_words(left))})')
+            + '. Each one goes in the moment it passes, not at the end.</li>')
     if dig["beats"]:
         now_facts.append(
             f'<li><b>{len(dig["beats"])} scenes were worked on today</b> '
             f'({_e(", ".join("%02d" % n for n in dig["beats"]))}) — those are '
-            'the ones that can still change before the cutoff.</li>')
+            'the ones that can still change before the cut is final.</li>')
     if not cut:
         now_facts.append(
             '<li class="hollow"><b>The ship lane is still assembling</b> — no '
@@ -988,9 +1278,32 @@ def html(data: dict = None, repo: Path = None, now=None) -> str:
             + f'<span class="when{" you" if you else ""}">{_e(s["estimate"])}'
               '</span></div>'
             f'<p class="sd">{_e(s["note"])}</p>'
-            f'<p class="sb"><b>'
+            + (f'<p class="sl">{_e(s["slip"])}</p>' if s.get("slip") else "")
+            + f'<p class="sb"><b>'
             f'{_e(s.get("label") or ("Measured" if s["measured"] else "Estimate"))}'
             f':</b> {_e(s["basis"])} <b>Waits on:</b> {_e(s["owner"])}.</p></li>')
+
+    # ---- the target, and what it looks like when it is missed ----------------
+    # THE DATE IS THE FOUNDER'S AND THE PAGE DOES NOT OWN IT. It is printed as
+    # he set it, and when the day runs out the page says the day ran out instead
+    # of sliding the date along to keep the panel looking on schedule.
+    tnow = d.get("now") or now or utcnow()
+    td, tend = order.get("target_date"), order.get("target_end")
+    target = ""
+    if td and tend and tnow > tend:
+        target = ('<p class="target"><b>Target: episode 2 finished on '
+                  f'{_e(td)}</b> — the day you named. It has passed. The date '
+                  'stays where you set it and the steps below show what is '
+                  'still open; this page does not move a target to meet a '
+                  'clock.</p>')
+    elif td:
+        target = ('<p class="target"><b>Target: episode 2 finishes today, '
+                  f'{_e(td)}</b> — your own date, from that morning\'s ship '
+                  'order. '
+                  + (f'{_e(gap_words(tend - tnow))} of the day left when this '
+                     'page was built.' if tend else "")
+                  + ' Times are UTC: the record names no timezone and every '
+                    'other stamp on this site is UTC.</p>')
 
     src = []
     if cut.get("dir"):
@@ -1006,7 +1319,9 @@ def html(data: dict = None, repo: Path = None, now=None) -> str:
         '<p class="sub">Every step still between here and the episode being '
         'published, with how long each one takes and who it is waiting on. '
         'Machine time is measured; a person deciding is not, and this page '
-        'never adds the two together.</p>'
+        'never adds the two together. When a step runs past the time on '
+        'record, the page says so and leaves the time alone.</p>'
+        + target +
 
         '<div class="tense"><p class="sh">① What happened — the last 24 hours'
         f'</p><ul class="pl">{"".join(was)}</ul></div>'
@@ -1032,8 +1347,14 @@ def html(data: dict = None, repo: Path = None, now=None) -> str:
 def main():
     d = collect()
     o, c, r = d["order"], d["cut"], d["ready"]
-    print("SHIP ORDER:", o.get("date") or "none on file", "· cutoff",
+    print("SHIP ORDER:", o.get("date") or "none on file", "· target",
+          o.get("target_date") or "none", "· cutoff",
           o.get("cutoff_text") or "none")
+    wp = d.get("progress") or {}
+    if wp.get("beats"):
+        print(f"PATCH WAVE: {len(wp['swapped'])} of {len(wp['beats'])} landed "
+              f"({nums_words(wp['swapped']) or 'none'}) · still to come "
+              f"{nums_words(wp['remaining']) or 'none'}")
     print("SHIP CUT  :", c.get("dir") or "PENDING",
           f"(read from its {c.get('source')})" if c else "")
     print("READINESS :", r.get("file") or "unread")

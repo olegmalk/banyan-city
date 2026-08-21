@@ -2,17 +2,1207 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "913c02114a247961fdf735fd9af43a3b7a05c878",
-  "measured_at": "2026-08-21T06:40:51Z",
-  "job_count": 1148,
-  "ok": 1085,
-  "failed": 63,
-  "upcoming_count": 66,
+  "source_commit": "821366e0929677b7e4e9a895783bb2f1bbad9fd0",
+  "measured_at": "2026-08-21T07:02:52Z",
+  "job_count": 1168,
+  "ok": 1100,
+  "failed": 68,
+  "upcoming_count": 65,
   "skipped_sidecars": null,
   "skipped_specs": null,
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-b20-tilefix-p1-0821-1787295261",
+   "task": "ep2-b20-tilefix-p1-0821",
+   "node": "002b-first-citizen",
+   "beat": 20,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:01:49Z",
+   "finished_at": "2026-08-21T07:02:16Z",
+   "duration_s": 27,
+   "sidecar": "farm-out/box/ep2-b20-tilefix-p1-0821-1787295261.json",
+   "spec_file": "pipeline/jobs/ep2-b20-tilefix-p1-0821.yaml",
+   "purpose": {
+    "consumer": "THE ep2 PATCH WAVE. A judged plate for beat 20, which feeds that beat's motion re-derive; the motion spec is written when the plate is picked, not before. THIS IS A POST-SHIP PATCH: review/ep2-ship-0821 is NOT touched by this job and no frame is swapped into the cut until a plate is judged, picked and its motion take passes its own bar. WHY THIS BEAT IS IN THE WAVE: the 08-18 result 'the adult goblin draws, the chibi child is gone' was recorded as a FIX. Measured against the tile it is a differ…",
+    "why": "BEAT 20 OF THE SEVEN-BEAT WAVE, at the standard the 2026-08-21 steward ruling names. `review/ep2-ship-0821/sources/ship-manifest.yaml goblin_design_audit_0820` read all 21 beats at 1:1 against the B tile and found the goblin in ELEVEN, of which TWO are tile-faithful (15, 19), one is near-tile on one attribute (14), one is unjudgeable (17), and SEVEN read as somebody else. canon's 08-19 list said five; the audit adds 02 (grey child, on no design sheet and never audited) and 07 (a full head of WH…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a standard entire, conditioned on jerry-skel-h19crouch-0820.png at scale 1.0 with the pose words 'squatting, holding a small fruit with both hands, looking up, in tall grass, full body' and the adapter masked to 315,484,515,704. Scored on the k6a bar by eye at 1:1 against adult-b19-0819.jpg. A PASS is a plate candidate for beat 20 and nothing more -- the pick is a separate judgement and the motion re-derive is a separate spec.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b20-tilefix-p1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b20-tilefix-p1-0821/ep2-b20-tilefix-p1-0821-ipahead.png",
+     "name": "ep2-b20-tilefix-p1-0821-ipahead.png",
+     "bytes": 1453796,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b20-tilefix-p1-0821/jerry-skel-h19crouch-0820.png",
+     "name": "jerry-skel-h19crouch-0820.png",
+     "bytes": 8332,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b20-tilefix-p1-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO VERDICT YET against its own done_when — BOTH HANDS to the fruit, then the look UP to a branch that is visibly BARE, the empty stem being the evidence and having to be in frame. Stills only since; review/ep2-mac-plates-0818 rejects the new b20 plates — \"all the…",
+    "gate": "rendering now (2 jobs)"
+   }
+  },
+  {
+   "id": "ep2-b13-tilefix-p1-0821-1787295258",
+   "task": "ep2-b13-tilefix-p1-0821",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:01:14Z",
+   "finished_at": "2026-08-21T07:01:43Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b13-tilefix-p1-0821-1787295258.json",
+   "spec_file": "pipeline/jobs/ep2-b13-tilefix-p1-0821.yaml",
+   "purpose": {
+    "consumer": "THE ep2 PATCH WAVE. A judged plate for beat 13, which feeds that beat's motion re-derive; the motion spec is written when the plate is picked, not before. THIS IS A POST-SHIP PATCH: review/ep2-ship-0821 is NOT touched by this job and no frame is swapped into the cut until a plate is judged, picked and its motion take passes its own bar. WHY THIS BEAT IS IN THE WAVE: THIS IS THE FRAME THE FOUNDER RULED ON, verbatim: 'this is one of the images where the goblin looks like an adult, which is wrong.…",
+    "why": "BEAT 13 OF THE SEVEN-BEAT WAVE, at the standard the 2026-08-21 steward ruling names. `review/ep2-ship-0821/sources/ship-manifest.yaml goblin_design_audit_0820` read all 21 beats at 1:1 against the B tile and found the goblin in ELEVEN, of which TWO are tile-faithful (15, 19), one is near-tile on one attribute (14), one is unjudgeable (17), and SEVEN read as somebody else. canon's 08-19 list said five; the audit adds 02 (grey child, on no design sheet and never audited) and 07 (a full head of WH…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a standard entire, conditioned on jerry-skel-h19seat-0820.png at scale 1.0 with the pose words 'sitting, hands clasped between knees, head lowered, in tall grass, full body' and the adapter masked to 315,398,515,618. Scored on the k6a bar by eye at 1:1 against adult-b19-0819.jpg. A PASS is a plate candidate for beat 13 and nothing more -- the pick is a separate judgement and the motion re-derive is a separate spec.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b13-tilefix-p1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-tilefix-p1-0821/ep2-b13-tilefix-p1-0821-ipahead.png",
+     "name": "ep2-b13-tilefix-p1-0821-ipahead.png",
+     "bytes": 1409349,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-tilefix-p1-0821/jerry-skel-h19seat-0820.png",
+     "name": "jerry-skel-h19seat-0820.png",
+     "bytes": 9057,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-tilefix-p1-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-b08-tilefix-p1-0821-1787295255",
+   "task": "ep2-b08-tilefix-p1-0821",
+   "node": "002b-first-citizen",
+   "beat": 8,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T07:00:32Z",
+   "finished_at": "2026-08-21T07:01:05Z",
+   "duration_s": 33,
+   "sidecar": "farm-out/box/ep2-b08-tilefix-p1-0821-1787295255.json",
+   "spec_file": "pipeline/jobs/ep2-b08-tilefix-p1-0821.yaml",
+   "purpose": {
+    "consumer": "THE ep2 PATCH WAVE. A judged plate for beat 08, which feeds that beat's motion re-derive; the motion spec is written when the plate is picked, not before. THIS IS A POST-SHIP PATCH: review/ep2-ship-0821 is NOT touched by this job and no frame is swapped into the cut until a plate is judged, picked and its motion take passes its own bar. WHY THIS BEAT IS IN THE WAVE: on the 08-19 split. `child` and `chibi` are both in the standard's negative and head_frac 0.190 is the geometric answer to the big…",
+    "why": "BEAT 08 OF THE SEVEN-BEAT WAVE, at the standard the 2026-08-21 steward ruling names. `review/ep2-ship-0821/sources/ship-manifest.yaml goblin_design_audit_0820` read all 21 beats at 1:1 against the B tile and found the goblin in ELEVEN, of which TWO are tile-faithful (15, 19), one is near-tile on one attribute (14), one is unjudgeable (17), and SEVEN read as somebody else. canon's 08-19 list said five; the audit adds 02 (grey child, on no design sheet and never audited) and 07 (a full head of WH…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a standard entire, conditioned on jerry-skel-h19-0820.png at scale 1.0 with the pose words 'standing, looking down at his own belly, arms at sides, in tall grass, full body' and the adapter masked to 315,130,515,350. Scored on the k6a bar by eye at 1:1 against adult-b19-0819.jpg. A PASS is a plate candidate for beat 08 and nothing more -- the pick is a separate judgement and the motion re-derive is a separate spec.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b08-tilefix-p1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b08-tilefix-p1-0821/ep2-b08-tilefix-p1-0821-ipahead.png",
+     "name": "ep2-b08-tilefix-p1-0821-ipahead.png",
+     "bytes": 1509463,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b08-tilefix-p1-0821/jerry-skel-h19-0820.png",
+     "name": "jerry-skel-h19-0820.png",
+     "bytes": 9175,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b08-tilefix-p1-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD WITH NO PASSING VERDICT — both 0817 motion takes are is_show_content:false engine probes and ep2-b08-boardcomp-0818 is a pre-registered FAIL. Five conditioning rungs are now CLOSED BY MEASUREMENT across three axes (scale, stroke weight, hint class), and the reason is s…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-jerry-set-kneel-0821-1787295099",
+   "task": "ep2-jerry-set-kneel-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T06:59:39Z",
+   "finished_at": "2026-08-21T07:00:08Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-jerry-set-kneel-0821-1787295099.json",
+   "spec_file": "pipeline/jobs/ep2-jerry-set-kneel-0821.yaml",
+   "purpose": {
+    "consumer": "THE JERRY LoRA TRAINING SET, and nothing else. A frame passing every clause of the bar joins pipeline/lora/curation-tile-0820.yaml with its caption written against canon's corrected tile read; a frame failing any clause is REJECTED, because keeping near-misses is precisely what made the 31-frame set untrainable. No beat plate here, nothing promoted to a cut. WHY REJECTION IS THE DEFAULT AND NOT PEDANTRY, in that file's own accounting: ten beat-20 man-reads would have taught the trigger token a…",
+    "why": "POSE KNEEL of seven, at the standard the 2026-08-21 steward ruling names. `pipeline/lora/curation-tile-0820.yaml` has been HELD since 08-20 and the hold's reason has changed four times -- \"no proportion\", then \"no face\", then \"the wording cannot reach it\", then \"one clause and a dial\" -- while the set itself has never moved off SEVEN FRAMES IN FOUR POSES (b14 kneel x2, b15 sit x2, b19 seat x3). That file's own gate says a pose-locked character LoRA is worse than no LoRA, because it appears to w…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a standard entire, conditioned on jerry-skel-h19kneel-0820.png at scale 1.0 with the pose words 'kneeling, in tall grass, full body' and the adapter masked to 315,399,515,619. Scored on the k6a bar; any failure rejects it from the training set.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 44
+   },
+   "artifacts_dir": "farm-out/ep2-jerry-set-kneel-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-jerry-set-kneel-0821/ep2-jerry-set-kneel-0821-ipahead.png",
+     "name": "ep2-jerry-set-kneel-0821-ipahead.png",
+     "bytes": 1512064,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-set-kneel-0821/jerry-skel-h19kneel-0820.png",
+     "name": "jerry-skel-h19kneel-0820.png",
+     "bytes": 8508,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-set-kneel-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-b07-tilefix-p1-0821-1787295253",
+   "task": "ep2-b07-tilefix-p1-0821",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T06:59:04Z",
+   "finished_at": "2026-08-21T06:59:33Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b07-tilefix-p1-0821-1787295253.json",
+   "spec_file": "pipeline/jobs/ep2-b07-tilefix-p1-0821.yaml",
+   "purpose": {
+    "consumer": "THE ep2 PATCH WAVE. A judged plate for beat 07, which feeds that beat's motion re-derive; the motion spec is written when the plate is picked, not before. THIS IS A POST-SHIP PATCH: review/ep2-ship-0821 is NOT touched by this job and no frame is swapped into the cut until a plate is judged, picked and its motion take passes its own bar. WHY THIS BEAT IS IN THE WAVE: FILED AMONG THE FOUR THAT WERE 'RIGHT' on 08-19. It is not. `bald` is canon and this frame has hair; `hair` and `beard` are both i…",
+    "why": "BEAT 07 OF THE SEVEN-BEAT WAVE, at the standard the 2026-08-21 steward ruling names. `review/ep2-ship-0821/sources/ship-manifest.yaml goblin_design_audit_0820` read all 21 beats at 1:1 against the B tile and found the goblin in ELEVEN, of which TWO are tile-faithful (15, 19), one is near-tile on one attribute (14), one is unjudgeable (17), and SEVEN read as somebody else. canon's 08-19 list said five; the audit adds 02 (grey child, on no design sheet and never audited) and 07 (a full head of WH…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a standard entire, conditioned on jerry-skel-h19-0820.png at scale 1.0 with the pose words 'standing, arms at sides, beside tall grass, full body' and the adapter masked to 315,130,515,350. Scored on the k6a bar by eye at 1:1 against adult-b19-0819.jpg. A PASS is a plate candidate for beat 07 and nothing more -- the pick is a separate judgement and the motion re-derive is a separate spec.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b07-tilefix-p1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b07-tilefix-p1-0821/ep2-b07-tilefix-p1-0821-ipahead.png",
+     "name": "ep2-b07-tilefix-p1-0821-ipahead.png",
+     "bytes": 1400131,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-tilefix-p1-0821/jerry-skel-h19-0820.png",
+     "name": "jerry-skel-h19-0820.png",
+     "bytes": 9175,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b07-tilefix-p1-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "PASSING FOOTAGE EXISTS FOR THE FIRST TIME IN THIS BEAT'S LIFE AND HE HAS NOT SEEN IT. Both 2026-08-19 takes PASS all four clauses on the first attempt, and the pre-registered most-likely failure — the GOBLIN points — never fired: the guard raises his own arm at f050, the fingertip lands on the gobl…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b04-tilefix-p1-0821-1787295250",
+   "task": "ep2-b04-tilefix-p1-0821",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T06:58:29Z",
+   "finished_at": "2026-08-21T06:58:58Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-b04-tilefix-p1-0821-1787295250.json",
+   "spec_file": "pipeline/jobs/ep2-b04-tilefix-p1-0821.yaml",
+   "purpose": {
+    "consumer": "THE ep2 PATCH WAVE. A judged plate for beat 04, which feeds that beat's motion re-derive; the motion spec is written when the plate is picked, not before. THIS IS A POST-SHIP PATCH: review/ep2-ship-0821 is NOT touched by this job and no frame is swapped into the cut until a plate is judged, picked and its motion take passes its own bar. WHY THIS BEAT IS IN THE WAVE: THE TIGHTEST CROP IN THE CUT, which is why it is the worst offender -- the audit's own framing finding. Every clause of the bar is…",
+    "why": "BEAT 04 OF THE SEVEN-BEAT WAVE, at the standard the 2026-08-21 steward ruling names. `review/ep2-ship-0821/sources/ship-manifest.yaml goblin_design_audit_0820` read all 21 beats at 1:1 against the B tile and found the goblin in ELEVEN, of which TWO are tile-faithful (15, 19), one is near-tile on one attribute (14), one is unjudgeable (17), and SEVEN read as somebody else. canon's 08-19 list said five; the audit adds 02 (grey child, on no design sheet and never audited) and 07 (a full head of WH…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a standard entire, conditioned on jerry-skel-h19hunch-0820.png at scale 1.0 with the pose words 'standing, hunched over, leaning out past tall grass blades, upper body' and the adapter masked to 315,176,515,396. Scored on the k6a bar by eye at 1:1 against adult-b19-0819.jpg. A PASS is a plate candidate for beat 04 and nothing more -- the pick is a separate judgement and the motion re-derive is a separate spec.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b04-tilefix-p1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b04-tilefix-p1-0821/ep2-b04-tilefix-p1-0821-ipahead.png",
+     "name": "ep2-b04-tilefix-p1-0821-ipahead.png",
+     "bytes": 1387194,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b04-tilefix-p1-0821/jerry-skel-h19hunch-0820.png",
+     "name": "jerry-skel-h19hunch-0820.png",
+     "bytes": 9500,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b04-tilefix-p1-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: a clean close-up on his face holding his breath. The recorded residual is that it reads young, and the record says that is the s0 reference HE chose rather than a prompt fault — so there is no fix for the card to run. The only new artefact is a recovered 0813 balloo…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-b03-tilefix-p1-0821-1787295248",
+   "task": "ep2-b03-tilefix-p1-0821",
+   "node": "002b-first-citizen",
+   "beat": 3,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T06:57:56Z",
+   "finished_at": "2026-08-21T06:58:24Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b03-tilefix-p1-0821-1787295248.json",
+   "spec_file": "pipeline/jobs/ep2-b03-tilefix-p1-0821.yaml",
+   "purpose": {
+    "consumer": "THE ep2 PATCH WAVE. A judged plate for beat 03, which feeds that beat's motion re-derive; the motion spec is written when the plate is picked, not before. THIS IS A POST-SHIP PATCH: review/ep2-ship-0821 is NOT touched by this job and no frame is swapped into the cut until a plate is judged, picked and its motion take passes its own bar. WHY THIS BEAT IS IN THE WAVE: on the 08-19 split.",
+    "why": "BEAT 03 OF THE SEVEN-BEAT WAVE, at the standard the 2026-08-21 steward ruling names. `review/ep2-ship-0821/sources/ship-manifest.yaml goblin_design_audit_0820` read all 21 beats at 1:1 against the B tile and found the goblin in ELEVEN, of which TWO are tile-faithful (15, 19), one is near-tile on one attribute (14), one is unjudgeable (17), and SEVEN read as somebody else. canon's 08-19 list said five; the audit adds 02 (grey child, on no design sheet and never audited) and 07 (a full head of WH…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a standard entire, conditioned on jerry-skel-h19crouch-0820.png at scale 1.0 with the pose words 'squatting, hiding behind a thin trunk, in tall grass, full body' and the adapter masked to 315,484,515,704. Scored on the k6a bar by eye at 1:1 against adult-b19-0819.jpg. A PASS is a plate candidate for beat 03 and nothing more -- the pick is a separate judgement and the motion re-derive is a separate spec.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b03-tilefix-p1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b03-tilefix-p1-0821/ep2-b03-tilefix-p1-0821-ipahead.png",
+     "name": "ep2-b03-tilefix-p1-0821-ipahead.png",
+     "bytes": 1477718,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b03-tilefix-p1-0821/jerry-skel-h19crouch-0820.png",
+     "name": "jerry-skel-h19crouch-0820.png",
+     "bytes": 8332,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b03-tilefix-p1-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: refire-0814 reads the beat — he crouches and the cover is comically inadequate — but the size-mismatch joke reads weakly. The one available swap is deliberately NOT taken: s20260846 is the 0817 st-wave pick, yet all fifteen of its seeds carry done_when FAIL because…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-b02-tilefix-p1-0821-1787295244",
+   "task": "ep2-b02-tilefix-p1-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T06:57:18Z",
+   "finished_at": "2026-08-21T06:57:46Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b02-tilefix-p1-0821-1787295244.json",
+   "spec_file": "pipeline/jobs/ep2-b02-tilefix-p1-0821.yaml",
+   "purpose": {
+    "consumer": "THE ep2 PATCH WAVE. A judged plate for beat 02, which feeds that beat's motion re-derive; the motion spec is written when the plate is picked, not before. THIS IS A POST-SHIP PATCH: review/ep2-ship-0821 is NOT touched by this job and no frame is swapped into the cut until a plate is judged, picked and its motion take passes its own bar. WHY THIS BEAT IS IN THE WAVE: THE WORST IDENTITY BREAK IN THE CUT.",
+    "why": "BEAT 02 OF THE SEVEN-BEAT WAVE, at the standard the 2026-08-21 steward ruling names. `review/ep2-ship-0821/sources/ship-manifest.yaml goblin_design_audit_0820` read all 21 beats at 1:1 against the B tile and found the goblin in ELEVEN, of which TWO are tile-faithful (15, 19), one is near-tile on one attribute (14), one is unjudgeable (17), and SEVEN read as somebody else. canon's 08-19 list said five; the audit adds 02 (grey child, on no design sheet and never audited) and 07 (a full head of WH…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a standard entire, conditioned on jerry-skel-h19stride-0820.png at scale 1.0 with the pose words 'running, leaning forward, in tall grass, full body, wide shot' and the adapter masked to 315,130,515,350. Scored on the k6a bar by eye at 1:1 against adult-b19-0819.jpg. A PASS is a plate candidate for beat 02 and nothing more -- the pick is a separate judgement and the motion re-derive is a separate spec.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b02-tilefix-p1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b02-tilefix-p1-0821/ep2-b02-tilefix-p1-0821-ipahead.png",
+     "name": "ep2-b02-tilefix-p1-0821-ipahead.png",
+     "bytes": 1440583,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b02-tilefix-p1-0821/jerry-skel-h19stride-0820.png",
+     "name": "jerry-skel-h19stride-0820.png",
+     "bytes": 10861,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b02-tilefix-p1-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-jerry-set-hunch-0821-1787295092",
+   "task": "ep2-jerry-set-hunch-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T06:55:47Z",
+   "finished_at": "2026-08-21T06:56:16Z",
+   "duration_s": 29,
+   "sidecar": "farm-out/box/ep2-jerry-set-hunch-0821-1787295092.json",
+   "spec_file": "pipeline/jobs/ep2-jerry-set-hunch-0821.yaml",
+   "purpose": {
+    "consumer": "THE JERRY LoRA TRAINING SET, and nothing else. A frame passing every clause of the bar joins pipeline/lora/curation-tile-0820.yaml with its caption written against canon's corrected tile read; a frame failing any clause is REJECTED, because keeping near-misses is precisely what made the 31-frame set untrainable. No beat plate here, nothing promoted to a cut. WHY REJECTION IS THE DEFAULT AND NOT PEDANTRY, in that file's own accounting: ten beat-20 man-reads would have taught the trigger token a…",
+    "why": "POSE HUNCH of seven, at the standard the 2026-08-21 steward ruling names. `pipeline/lora/curation-tile-0820.yaml` has been HELD since 08-20 and the hold's reason has changed four times -- \"no proportion\", then \"no face\", then \"the wording cannot reach it\", then \"one clause and a dial\" -- while the set itself has never moved off SEVEN FRAMES IN FOUR POSES (b14 kneel x2, b15 sit x2, b19 seat x3). That file's own gate says a pose-locked character LoRA is worse than no LoRA, because it appears to w…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a standard entire, conditioned on jerry-skel-h19hunch-0820.png at scale 1.0 with the pose words 'standing, hunched over, arms at sides, in tall grass, full body' and the adapter masked to 315,176,515,396. Scored on the k6a bar; any failure rejects it from the training set.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 44
+   },
+   "artifacts_dir": "farm-out/ep2-jerry-set-hunch-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-jerry-set-hunch-0821/ep2-jerry-set-hunch-0821-ipahead.png",
+     "name": "ep2-jerry-set-hunch-0821-ipahead.png",
+     "bytes": 1502278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-set-hunch-0821/jerry-skel-h19hunch-0820.png",
+     "name": "jerry-skel-h19hunch-0820.png",
+     "bytes": 9500,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-set-hunch-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-jerry-set-crouch-0821-1787295096",
+   "task": "ep2-jerry-set-crouch-0821",
+   "node": "002b-first-citizen",
+   "beat": 2,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T06:54:06Z",
+   "finished_at": "2026-08-21T06:54:45Z",
+   "duration_s": 39,
+   "sidecar": "farm-out/box/ep2-jerry-set-crouch-0821-1787295096.json",
+   "spec_file": "pipeline/jobs/ep2-jerry-set-crouch-0821.yaml",
+   "purpose": {
+    "consumer": "THE JERRY LoRA TRAINING SET, and nothing else. A frame passing every clause of the bar joins pipeline/lora/curation-tile-0820.yaml with its caption written against canon's corrected tile read; a frame failing any clause is REJECTED, because keeping near-misses is precisely what made the 31-frame set untrainable. No beat plate here, nothing promoted to a cut. WHY REJECTION IS THE DEFAULT AND NOT PEDANTRY, in that file's own accounting: ten beat-20 man-reads would have taught the trigger token a…",
+    "why": "POSE CROUCH of seven, at the standard the 2026-08-21 steward ruling names. `pipeline/lora/curation-tile-0820.yaml` has been HELD since 08-20 and the hold's reason has changed four times -- \"no proportion\", then \"no face\", then \"the wording cannot reach it\", then \"one clause and a dial\" -- while the set itself has never moved off SEVEN FRAMES IN FOUR POSES (b14 kneel x2, b15 sit x2, b19 seat x3). That file's own gate says a pose-locked character LoRA is worse than no LoRA, because it appears to…",
+    "success": "ONE 832x1216 png at seed 20260823, the k6a standard entire, conditioned on jerry-skel-h19crouch-0820.png at scale 1.0 with the pose words 'squatting, in tall grass, full body' and the adapter masked to 315,484,515,704. Scored on the k6a bar; any failure rejects it from the training set.",
+    "owner": "goblin standard lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 44
+   },
+   "artifacts_dir": "farm-out/ep2-jerry-set-crouch-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-jerry-set-crouch-0821/ep2-jerry-set-crouch-0821-ipahead.png",
+     "name": "ep2-jerry-set-crouch-0821-ipahead.png",
+     "bytes": 1421760,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-set-crouch-0821/jerry-skel-h19crouch-0820.png",
+     "name": "jerry-skel-h19crouch-0820.png",
+     "bytes": 8332,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-jerry-set-crouch-0821/jerry-tile-sq20-0821.png",
+     "name": "jerry-tile-sq20-0821.png",
+     "bytes": 15615,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "IN THE CUT AND MISSING ITS BAR, with the cause structural rather than seed-luck: all SIXTEEN judged seeds of the anchor wording FAIL, because done_when requires the plate to already contain the sapling and this plate has none. No seed of this wording can close the beat. Route: a plate that carries…",
+    "gate": "ships under the two-round rule"
+   }
+  },
+  {
+   "id": "ep2-b09-r2s2-m2-0821-1787270961-againb64190",
+   "task": "ep2-b09-r2s2-m2-0821",
+   "node": "002b-first-citizen",
+   "beat": 9,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T00:41:39Z",
+   "finished_at": "2026-08-21T00:47:54Z",
+   "duration_s": 375,
+   "sidecar": "farm-out/box/ep2-b09-r2s2-m2-0821-1787270961-againb64190.json",
+   "spec_file": "pipeline/jobs/ep2-b09-r2s2-m2-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is an UPGRADE to a shipping clip before the 12:00 cutoff, judged against that clip's own measured numbers, and a clip that does not beat it changes nothing. Cell m2 of five, seed 20260851, mouth arm.",
+    "why": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route. The remaining lever is the sharper plate: 1.454x against 2.157x, 90.2% of a native close-up's high-frequency energy against 45%, on a beat whose hand is the softest object in frame and the first to dissolve. $0, ~7 minutes, an idle card and a 12:00 cutoff. Cell m2, seed 20260851, mouth arm.",
+    "success": "One 704x1280 121-frame mp4 at seed 20260851 off the r2s2 crop IN WHICH THE HAND IS STILL A WHOLE HAND AT f008 AND f030, and ideally at f093, the last frame the cut shows. Scored by eye at 1:1 at f001/f008/f030/f050/f070/f093 and by pipeline/judge_b09_crop_0821.py --geom r2s2: T0 pan residual within 1.5x the incumbent's, last live pair reaching 93, face-band interframe mean >= 1.0 with no slot third under 0.15, mouth closed, one man, no second hand. ONE EYE IS SQUINTED SHUT FROM f001 AND THAT IS…",
+    "owner": "beat-09 crop-trade lane, 2026-08-21 morning",
+    "est_minutes": 7,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b09-r2s2-m2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b09-r2s2-m2-0821/09-the-pause-LTX-ep2-b09-r2s2-m2-0821.mp4",
+     "name": "09-the-pause-LTX-ep2-b09-r2s2-m2-0821.mp4",
+     "bytes": 299074,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b09-r2s2-m2-0821/b09-init-704x1280.png",
+     "name": "b09-init-704x1280.png",
+     "bytes": 880590,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE adult man alone, dark cropped hair, round wire-rim glasses on his face, standing in bright daylight with deep tall grass behind him. HIS HAND IS AT HIS FACE AND STAYS THERE: his curled fingers rest against his mouth with the thumb under his chin, the knuckles and fingers drawn whole against his lips, and they stay resting there the whole time, shifting a little against his mouth as he thinks. HIS FACE WORKS THROUGH A THOUGHT, SLOWLY: his brows draw together and then ease, his eyes shift and settle, his head tilts a few degrees. HIS MOUTH STAYS CLOSED the whole time -- he is thinking, not speaking, and no word is said. He stays THE SAME MAN from the first frame to the last: the same dark cropped hair, the same round wire-rim glasses, one face and one man only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "open mouth, talking, speaking, shouting, teeth, tongue, lip sync, second face, second man, two men, 2boys, crowd, child, chibi, baby, girl, different man, changing face, face changing, morphing, melting face, hair colour change, blond hair, silver hair, brown hair, bald, no glasses, sunglasses, goggles, eye patch, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260851,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png",
+    "sha256": "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a"
+   },
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "SLATE, AND THE RUNG UNDER IT IS THE CARD'S AND RUNNABLE NOW. Both existing clips are is_show_content:false and barred from the cut by their own headers, so this slot has never held footage. Two things were settled on 2026-08-19: the engine CAN move a face (a slow eye close-and-reopen over forty fra…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b09-r2s2-m1-0821-1787270957-again14d920",
+   "task": "ep2-b09-r2s2-m1-0821",
+   "node": "002b-first-citizen",
+   "beat": 9,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T00:34:17Z",
+   "finished_at": "2026-08-21T00:40:37Z",
+   "duration_s": 380,
+   "sidecar": "farm-out/box/ep2-b09-r2s2-m1-0821-1787270957-again14d920.json",
+   "spec_file": "pipeline/jobs/ep2-b09-r2s2-m1-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is an UPGRADE to a shipping clip before the 12:00 cutoff, judged against that clip's own measured numbers, and a clip that does not beat it changes nothing. Cell m1 of five, seed 20260819, mouth arm.",
+    "why": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route. The remaining lever is the sharper plate: 1.454x against 2.157x, 90.2% of a native close-up's high-frequency energy against 45%, on a beat whose hand is the softest object in frame and the first to dissolve. $0, ~7 minutes, an idle card and a 12:00 cutoff. Cell m1, seed 20260819, mouth arm.",
+    "success": "One 704x1280 121-frame mp4 at seed 20260819 off the r2s2 crop IN WHICH THE HAND IS STILL A WHOLE HAND AT f008 AND f030, and ideally at f093, the last frame the cut shows. Scored by eye at 1:1 at f001/f008/f030/f050/f070/f093 and by pipeline/judge_b09_crop_0821.py --geom r2s2: T0 pan residual within 1.5x the incumbent's, last live pair reaching 93, face-band interframe mean >= 1.0 with no slot third under 0.15, mouth closed, one man, no second hand. ONE EYE IS SQUINTED SHUT FROM f001 AND THAT IS…",
+    "owner": "beat-09 crop-trade lane, 2026-08-21 morning",
+    "est_minutes": 7,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b09-r2s2-m1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b09-r2s2-m1-0821/09-the-pause-LTX-ep2-b09-r2s2-m1-0821.mp4",
+     "name": "09-the-pause-LTX-ep2-b09-r2s2-m1-0821.mp4",
+     "bytes": 279329,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b09-r2s2-m1-0821/b09-init-704x1280.png",
+     "name": "b09-init-704x1280.png",
+     "bytes": 880590,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE adult man alone, dark cropped hair, round wire-rim glasses on his face, standing in bright daylight with deep tall grass behind him. HIS HAND IS AT HIS FACE AND STAYS THERE: his curled fingers rest against his mouth with the thumb under his chin, the knuckles and fingers drawn whole against his lips, and they stay resting there the whole time, shifting a little against his mouth as he thinks. HIS FACE WORKS THROUGH A THOUGHT, SLOWLY: his brows draw together and then ease, his eyes shift and settle, his head tilts a few degrees. HIS MOUTH STAYS CLOSED the whole time -- he is thinking, not speaking, and no word is said. He stays THE SAME MAN from the first frame to the last: the same dark cropped hair, the same round wire-rim glasses, one face and one man only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "open mouth, talking, speaking, shouting, teeth, tongue, lip sync, second face, second man, two men, 2boys, crowd, child, chibi, baby, girl, different man, changing face, face changing, morphing, melting face, hair colour change, blond hair, silver hair, brown hair, bald, no glasses, sunglasses, goggles, eye patch, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260819,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png",
+    "sha256": "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a"
+   },
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "SLATE, AND THE RUNG UNDER IT IS THE CARD'S AND RUNNABLE NOW. Both existing clips are is_show_content:false and barred from the cut by their own headers, so this slot has never held footage. Two things were settled on 2026-08-19: the engine CAN move a face (a slow eye close-and-reopen over forty fra…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b09-r2s2-c3-0821-1787270952-again19aea8",
+   "task": "ep2-b09-r2s2-c3-0821",
+   "node": "002b-first-citizen",
+   "beat": 9,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T00:26:53Z",
+   "finished_at": "2026-08-21T00:33:14Z",
+   "duration_s": 381,
+   "sidecar": "farm-out/box/ep2-b09-r2s2-c3-0821-1787270952-again19aea8.json",
+   "spec_file": "pipeline/jobs/ep2-b09-r2s2-c3-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is an UPGRADE to a shipping clip before the 12:00 cutoff, judged against that clip's own measured numbers, and a clip that does not beat it changes nothing. Cell c3 of five, seed 20260852, cheek arm.",
+    "why": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route. The remaining lever is the sharper plate: 1.454x against 2.157x, 90.2% of a native close-up's high-frequency energy against 45%, on a beat whose hand is the softest object in frame and the first to dissolve. $0, ~7 minutes, an idle card and a 12:00 cutoff. Cell c3, seed 20260852, cheek arm.",
+    "success": "One 704x1280 121-frame mp4 at seed 20260852 off the r2s2 crop IN WHICH THE HAND IS STILL A WHOLE HAND AT f008 AND f030, and ideally at f093, the last frame the cut shows. Scored by eye at 1:1 at f001/f008/f030/f050/f070/f093 and by pipeline/judge_b09_crop_0821.py --geom r2s2: T0 pan residual within 1.5x the incumbent's, last live pair reaching 93, face-band interframe mean >= 1.0 with no slot third under 0.15, mouth closed, one man, no second hand. ONE EYE IS SQUINTED SHUT FROM f001 AND THAT IS…",
+    "owner": "beat-09 crop-trade lane, 2026-08-21 morning",
+    "est_minutes": 7,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b09-r2s2-c3-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b09-r2s2-c3-0821/09-the-pause-LTX-ep2-b09-r2s2-c3-0821.mp4",
+     "name": "09-the-pause-LTX-ep2-b09-r2s2-c3-0821.mp4",
+     "bytes": 304904,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b09-r2s2-c3-0821/b09-init-704x1280.png",
+     "name": "b09-init-704x1280.png",
+     "bytes": 880590,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE adult man alone, dark cropped hair, round wire-rim glasses on his face, standing in bright daylight with deep tall grass behind him. HIS HAND IS AT HIS FACE AND STAYS THERE: his fingers rest against his cheek with the thumb under his jaw, four fingers drawn whole against the skin, and they stay resting there the whole time, shifting a little against his cheek as he thinks. HIS FACE WORKS THROUGH A THOUGHT, SLOWLY: his brows draw together and then ease, his eyes shift and settle, his head tilts a few degrees. HIS MOUTH STAYS CLOSED the whole time -- he is thinking, not speaking, and no word is said. He stays THE SAME MAN from the first frame to the last: the same dark cropped hair, the same round wire-rim glasses, one face and one man only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "open mouth, talking, speaking, shouting, teeth, tongue, lip sync, second face, second man, two men, 2boys, crowd, child, chibi, baby, girl, different man, changing face, face changing, morphing, melting face, hair colour change, blond hair, silver hair, brown hair, bald, no glasses, sunglasses, goggles, eye patch, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260852,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png",
+    "sha256": "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a"
+   },
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "SLATE, AND THE RUNG UNDER IT IS THE CARD'S AND RUNNABLE NOW. Both existing clips are is_show_content:false and barred from the cut by their own headers, so this slot has never held footage. Two things were settled on 2026-08-19: the engine CAN move a face (a slow eye close-and-reopen over forty fra…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b09-r2s2-c2-0821-1787270948-againd8d4a8",
+   "task": "ep2-b09-r2s2-c2-0821",
+   "node": "002b-first-citizen",
+   "beat": 9,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T00:19:26Z",
+   "finished_at": "2026-08-21T00:25:51Z",
+   "duration_s": 385,
+   "sidecar": "farm-out/box/ep2-b09-r2s2-c2-0821-1787270948-againd8d4a8.json",
+   "spec_file": "pipeline/jobs/ep2-b09-r2s2-c2-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is an UPGRADE to a shipping clip before the 12:00 cutoff, judged against that clip's own measured numbers, and a clip that does not beat it changes nothing. Cell c2 of five, seed 20260851, cheek arm.",
+    "why": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route. The remaining lever is the sharper plate: 1.454x against 2.157x, 90.2% of a native close-up's high-frequency energy against 45%, on a beat whose hand is the softest object in frame and the first to dissolve. $0, ~7 minutes, an idle card and a 12:00 cutoff. Cell c2, seed 20260851, cheek arm.",
+    "success": "One 704x1280 121-frame mp4 at seed 20260851 off the r2s2 crop IN WHICH THE HAND IS STILL A WHOLE HAND AT f008 AND f030, and ideally at f093, the last frame the cut shows. Scored by eye at 1:1 at f001/f008/f030/f050/f070/f093 and by pipeline/judge_b09_crop_0821.py --geom r2s2: T0 pan residual within 1.5x the incumbent's, last live pair reaching 93, face-band interframe mean >= 1.0 with no slot third under 0.15, mouth closed, one man, no second hand. ONE EYE IS SQUINTED SHUT FROM f001 AND THAT IS…",
+    "owner": "beat-09 crop-trade lane, 2026-08-21 morning",
+    "est_minutes": 7,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b09-r2s2-c2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b09-r2s2-c2-0821/09-the-pause-LTX-ep2-b09-r2s2-c2-0821.mp4",
+     "name": "09-the-pause-LTX-ep2-b09-r2s2-c2-0821.mp4",
+     "bytes": 306344,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b09-r2s2-c2-0821/b09-init-704x1280.png",
+     "name": "b09-init-704x1280.png",
+     "bytes": 880590,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE adult man alone, dark cropped hair, round wire-rim glasses on his face, standing in bright daylight with deep tall grass behind him. HIS HAND IS AT HIS FACE AND STAYS THERE: his fingers rest against his cheek with the thumb under his jaw, four fingers drawn whole against the skin, and they stay resting there the whole time, shifting a little against his cheek as he thinks. HIS FACE WORKS THROUGH A THOUGHT, SLOWLY: his brows draw together and then ease, his eyes shift and settle, his head tilts a few degrees. HIS MOUTH STAYS CLOSED the whole time -- he is thinking, not speaking, and no word is said. He stays THE SAME MAN from the first frame to the last: the same dark cropped hair, the same round wire-rim glasses, one face and one man only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "open mouth, talking, speaking, shouting, teeth, tongue, lip sync, second face, second man, two men, 2boys, crowd, child, chibi, baby, girl, different man, changing face, face changing, morphing, melting face, hair colour change, blond hair, silver hair, brown hair, bald, no glasses, sunglasses, goggles, eye patch, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260851,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png",
+    "sha256": "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a"
+   },
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "SLATE, AND THE RUNG UNDER IT IS THE CARD'S AND RUNNABLE NOW. Both existing clips are is_show_content:false and barred from the cut by their own headers, so this slot has never held footage. Two things were settled on 2026-08-19: the engine CAN move a face (a slow eye close-and-reopen over forty fra…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b09-r2s2-c1-0821-1787270943-again5d73a8",
+   "task": "ep2-b09-r2s2-c1-0821",
+   "node": "002b-first-citizen",
+   "beat": 9,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T00:12:10Z",
+   "finished_at": "2026-08-21T00:18:24Z",
+   "duration_s": 374,
+   "sidecar": "farm-out/box/ep2-b09-r2s2-c1-0821-1787270943-again5d73a8.json",
+   "spec_file": "pipeline/jobs/ep2-b09-r2s2-c1-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is an UPGRADE to a shipping clip before the 12:00 cutoff, judged against that clip's own measured numbers, and a clip that does not beat it changes nothing. Cell c1 of five, seed 20260819, cheek arm.",
+    "why": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route. The remaining lever is the sharper plate: 1.454x against 2.157x, 90.2% of a native close-up's high-frequency energy against 45%, on a beat whose hand is the softest object in frame and the first to dissolve. $0, ~7 minutes, an idle card and a 12:00 cutoff. Cell c1, seed 20260819, cheek arm.",
+    "success": "One 704x1280 121-frame mp4 at seed 20260819 off the r2s2 crop IN WHICH THE HAND IS STILL A WHOLE HAND AT f008 AND f030, and ideally at f093, the last frame the cut shows. Scored by eye at 1:1 at f001/f008/f030/f050/f070/f093 and by pipeline/judge_b09_crop_0821.py --geom r2s2: T0 pan residual within 1.5x the incumbent's, last live pair reaching 93, face-band interframe mean >= 1.0 with no slot third under 0.15, mouth closed, one man, no second hand. ONE EYE IS SQUINTED SHUT FROM f001 AND THAT IS…",
+    "owner": "beat-09 crop-trade lane, 2026-08-21 morning",
+    "est_minutes": 7,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b09-r2s2-c1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b09-r2s2-c1-0821/09-the-pause-LTX-ep2-b09-r2s2-c1-0821.mp4",
+     "name": "09-the-pause-LTX-ep2-b09-r2s2-c1-0821.mp4",
+     "bytes": 300594,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b09-r2s2-c1-0821/b09-init-704x1280.png",
+     "name": "b09-init-704x1280.png",
+     "bytes": 880590,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE adult man alone, dark cropped hair, round wire-rim glasses on his face, standing in bright daylight with deep tall grass behind him. HIS HAND IS AT HIS FACE AND STAYS THERE: his fingers rest against his cheek with the thumb under his jaw, four fingers drawn whole against the skin, and they stay resting there the whole time, shifting a little against his cheek as he thinks. HIS FACE WORKS THROUGH A THOUGHT, SLOWLY: his brows draw together and then ease, his eyes shift and settle, his head tilts a few degrees. HIS MOUTH STAYS CLOSED the whole time -- he is thinking, not speaking, and no word is said. He stays THE SAME MAN from the first frame to the last: the same dark cropped hair, the same round wire-rim glasses, one face and one man only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "open mouth, talking, speaking, shouting, teeth, tongue, lip sync, second face, second man, two men, 2boys, crowd, child, chibi, baby, girl, different man, changing face, face changing, morphing, melting face, hair colour change, blond hair, silver hair, brown hair, bald, no glasses, sunglasses, goggles, eye patch, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260819,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png",
+    "sha256": "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a"
+   },
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "SLATE, AND THE RUNG UNDER IT IS THE CARD'S AND RUNNABLE NOW. Both existing clips are is_show_content:false and barred from the cut by their own headers, so this slot has never held footage. Two things were settled on 2026-08-19: the engine CAN move a face (a slow eye close-and-reopen over forty fra…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b09-r2s2-m2-0821-1787270398",
+   "task": "ep2-b09-r2s2-m2-0821",
+   "node": "002b-first-citizen",
+   "beat": 9,
+   "kind": "motion",
+   "rc": 1,
+   "failed_step": "crop",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T00:04:17Z",
+   "finished_at": "2026-08-21T00:04:17Z",
+   "duration_s": 0,
+   "sidecar": "farm-out/box/ep2-b09-r2s2-m2-0821-1787270398.json",
+   "spec_file": "pipeline/jobs/ep2-b09-r2s2-m2-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is an UPGRADE to a shipping clip before the 12:00 cutoff, judged against that clip's own measured numbers, and a clip that does not beat it changes nothing. Cell m2 of five, seed 20260851, mouth arm.",
+    "why": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route. The remaining lever is the sharper plate: 1.454x against 2.157x, 90.2% of a native close-up's high-frequency energy against 45%, on a beat whose hand is the softest object in frame and the first to dissolve. $0, ~7 minutes, an idle card and a 12:00 cutoff. Cell m2, seed 20260851, mouth arm.",
+    "success": "One 704x1280 121-frame mp4 at seed 20260851 off the r2s2 crop IN WHICH THE HAND IS STILL A WHOLE HAND AT f008 AND f030, and ideally at f093, the last frame the cut shows. Scored by eye at 1:1 at f001/f008/f030/f050/f070/f093 and by pipeline/judge_b09_crop_0821.py --geom r2s2: T0 pan residual within 1.5x the incumbent's, last live pair reaching 93, face-band interframe mean >= 1.0 with no slot third under 0.15, mouth closed, one man, no second hand. ONE EYE IS SQUINTED SHUT FROM f001 AND THAT IS…",
+    "owner": "beat-09 crop-trade lane, 2026-08-21 morning",
+    "est_minutes": 7,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b09-r2s2-m2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b09-r2s2-m2-0821/09-the-pause-LTX-ep2-b09-r2s2-m2-0821.mp4",
+     "name": "09-the-pause-LTX-ep2-b09-r2s2-m2-0821.mp4",
+     "bytes": 299074,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b09-r2s2-m2-0821/b09-init-704x1280.png",
+     "name": "b09-init-704x1280.png",
+     "bytes": 880590,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE adult man alone, dark cropped hair, round wire-rim glasses on his face, standing in bright daylight with deep tall grass behind him. HIS HAND IS AT HIS FACE AND STAYS THERE: his curled fingers rest against his mouth with the thumb under his chin, the knuckles and fingers drawn whole against his lips, and they stay resting there the whole time, shifting a little against his mouth as he thinks. HIS FACE WORKS THROUGH A THOUGHT, SLOWLY: his brows draw together and then ease, his eyes shift and settle, his head tilts a few degrees. HIS MOUTH STAYS CLOSED the whole time -- he is thinking, not speaking, and no word is said. He stays THE SAME MAN from the first frame to the last: the same dark cropped hair, the same round wire-rim glasses, one face and one man only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "open mouth, talking, speaking, shouting, teeth, tongue, lip sync, second face, second man, two men, 2boys, crowd, child, chibi, baby, girl, different man, changing face, face changing, morphing, melting face, hair colour change, blond hair, silver hair, brown hair, bald, no glasses, sunglasses, goggles, eye patch, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260851,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png",
+    "sha256": "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a"
+   },
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "SLATE, AND THE RUNG UNDER IT IS THE CARD'S AND RUNNABLE NOW. Both existing clips are is_show_content:false and barred from the cut by their own headers, so this slot has never held footage. Two things were settled on 2026-08-19: the engine CAN move a face (a slow eye close-and-reopen over forty fra…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b09-r2s2-m1-0821-1787270394",
+   "task": "ep2-b09-r2s2-m1-0821",
+   "node": "002b-first-citizen",
+   "beat": 9,
+   "kind": "motion",
+   "rc": 1,
+   "failed_step": "crop",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T00:03:15Z",
+   "finished_at": "2026-08-21T00:03:15Z",
+   "duration_s": 0,
+   "sidecar": "farm-out/box/ep2-b09-r2s2-m1-0821-1787270394.json",
+   "spec_file": "pipeline/jobs/ep2-b09-r2s2-m1-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is an UPGRADE to a shipping clip before the 12:00 cutoff, judged against that clip's own measured numbers, and a clip that does not beat it changes nothing. Cell m1 of five, seed 20260819, mouth arm.",
+    "why": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route. The remaining lever is the sharper plate: 1.454x against 2.157x, 90.2% of a native close-up's high-frequency energy against 45%, on a beat whose hand is the softest object in frame and the first to dissolve. $0, ~7 minutes, an idle card and a 12:00 cutoff. Cell m1, seed 20260819, mouth arm.",
+    "success": "One 704x1280 121-frame mp4 at seed 20260819 off the r2s2 crop IN WHICH THE HAND IS STILL A WHOLE HAND AT f008 AND f030, and ideally at f093, the last frame the cut shows. Scored by eye at 1:1 at f001/f008/f030/f050/f070/f093 and by pipeline/judge_b09_crop_0821.py --geom r2s2: T0 pan residual within 1.5x the incumbent's, last live pair reaching 93, face-band interframe mean >= 1.0 with no slot third under 0.15, mouth closed, one man, no second hand. ONE EYE IS SQUINTED SHUT FROM f001 AND THAT IS…",
+    "owner": "beat-09 crop-trade lane, 2026-08-21 morning",
+    "est_minutes": 7,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b09-r2s2-m1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b09-r2s2-m1-0821/09-the-pause-LTX-ep2-b09-r2s2-m1-0821.mp4",
+     "name": "09-the-pause-LTX-ep2-b09-r2s2-m1-0821.mp4",
+     "bytes": 279329,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b09-r2s2-m1-0821/b09-init-704x1280.png",
+     "name": "b09-init-704x1280.png",
+     "bytes": 880590,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE adult man alone, dark cropped hair, round wire-rim glasses on his face, standing in bright daylight with deep tall grass behind him. HIS HAND IS AT HIS FACE AND STAYS THERE: his curled fingers rest against his mouth with the thumb under his chin, the knuckles and fingers drawn whole against his lips, and they stay resting there the whole time, shifting a little against his mouth as he thinks. HIS FACE WORKS THROUGH A THOUGHT, SLOWLY: his brows draw together and then ease, his eyes shift and settle, his head tilts a few degrees. HIS MOUTH STAYS CLOSED the whole time -- he is thinking, not speaking, and no word is said. He stays THE SAME MAN from the first frame to the last: the same dark cropped hair, the same round wire-rim glasses, one face and one man only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "open mouth, talking, speaking, shouting, teeth, tongue, lip sync, second face, second man, two men, 2boys, crowd, child, chibi, baby, girl, different man, changing face, face changing, morphing, melting face, hair colour change, blond hair, silver hair, brown hair, bald, no glasses, sunglasses, goggles, eye patch, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260819,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png",
+    "sha256": "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a"
+   },
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "SLATE, AND THE RUNG UNDER IT IS THE CARD'S AND RUNNABLE NOW. Both existing clips are is_show_content:false and barred from the cut by their own headers, so this slot has never held footage. Two things were settled on 2026-08-19: the engine CAN move a face (a slow eye close-and-reopen over forty fra…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b09-r2s2-c3-0821-1787270390",
+   "task": "ep2-b09-r2s2-c3-0821",
+   "node": "002b-first-citizen",
+   "beat": 9,
+   "kind": "motion",
+   "rc": 1,
+   "failed_step": "crop",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T00:02:13Z",
+   "finished_at": "2026-08-21T00:02:13Z",
+   "duration_s": 0,
+   "sidecar": "farm-out/box/ep2-b09-r2s2-c3-0821-1787270390.json",
+   "spec_file": "pipeline/jobs/ep2-b09-r2s2-c3-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is an UPGRADE to a shipping clip before the 12:00 cutoff, judged against that clip's own measured numbers, and a clip that does not beat it changes nothing. Cell c3 of five, seed 20260852, cheek arm.",
+    "why": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route. The remaining lever is the sharper plate: 1.454x against 2.157x, 90.2% of a native close-up's high-frequency energy against 45%, on a beat whose hand is the softest object in frame and the first to dissolve. $0, ~7 minutes, an idle card and a 12:00 cutoff. Cell c3, seed 20260852, cheek arm.",
+    "success": "One 704x1280 121-frame mp4 at seed 20260852 off the r2s2 crop IN WHICH THE HAND IS STILL A WHOLE HAND AT f008 AND f030, and ideally at f093, the last frame the cut shows. Scored by eye at 1:1 at f001/f008/f030/f050/f070/f093 and by pipeline/judge_b09_crop_0821.py --geom r2s2: T0 pan residual within 1.5x the incumbent's, last live pair reaching 93, face-band interframe mean >= 1.0 with no slot third under 0.15, mouth closed, one man, no second hand. ONE EYE IS SQUINTED SHUT FROM f001 AND THAT IS…",
+    "owner": "beat-09 crop-trade lane, 2026-08-21 morning",
+    "est_minutes": 7,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b09-r2s2-c3-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b09-r2s2-c3-0821/09-the-pause-LTX-ep2-b09-r2s2-c3-0821.mp4",
+     "name": "09-the-pause-LTX-ep2-b09-r2s2-c3-0821.mp4",
+     "bytes": 304904,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b09-r2s2-c3-0821/b09-init-704x1280.png",
+     "name": "b09-init-704x1280.png",
+     "bytes": 880590,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE adult man alone, dark cropped hair, round wire-rim glasses on his face, standing in bright daylight with deep tall grass behind him. HIS HAND IS AT HIS FACE AND STAYS THERE: his fingers rest against his cheek with the thumb under his jaw, four fingers drawn whole against the skin, and they stay resting there the whole time, shifting a little against his cheek as he thinks. HIS FACE WORKS THROUGH A THOUGHT, SLOWLY: his brows draw together and then ease, his eyes shift and settle, his head tilts a few degrees. HIS MOUTH STAYS CLOSED the whole time -- he is thinking, not speaking, and no word is said. He stays THE SAME MAN from the first frame to the last: the same dark cropped hair, the same round wire-rim glasses, one face and one man only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "open mouth, talking, speaking, shouting, teeth, tongue, lip sync, second face, second man, two men, 2boys, crowd, child, chibi, baby, girl, different man, changing face, face changing, morphing, melting face, hair colour change, blond hair, silver hair, brown hair, bald, no glasses, sunglasses, goggles, eye patch, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260852,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png",
+    "sha256": "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a"
+   },
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "SLATE, AND THE RUNG UNDER IT IS THE CARD'S AND RUNNABLE NOW. Both existing clips are is_show_content:false and barred from the cut by their own headers, so this slot has never held footage. Two things were settled on 2026-08-19: the engine CAN move a face (a slow eye close-and-reopen over forty fra…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b09-r2s2-c2-0821-1787270385",
+   "task": "ep2-b09-r2s2-c2-0821",
+   "node": "002b-first-citizen",
+   "beat": 9,
+   "kind": "motion",
+   "rc": 1,
+   "failed_step": "crop",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T00:01:11Z",
+   "finished_at": "2026-08-21T00:01:11Z",
+   "duration_s": 0,
+   "sidecar": "farm-out/box/ep2-b09-r2s2-c2-0821-1787270385.json",
+   "spec_file": "pipeline/jobs/ep2-b09-r2s2-c2-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is an UPGRADE to a shipping clip before the 12:00 cutoff, judged against that clip's own measured numbers, and a clip that does not beat it changes nothing. Cell c2 of five, seed 20260851, cheek arm.",
+    "why": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route. The remaining lever is the sharper plate: 1.454x against 2.157x, 90.2% of a native close-up's high-frequency energy against 45%, on a beat whose hand is the softest object in frame and the first to dissolve. $0, ~7 minutes, an idle card and a 12:00 cutoff. Cell c2, seed 20260851, cheek arm.",
+    "success": "One 704x1280 121-frame mp4 at seed 20260851 off the r2s2 crop IN WHICH THE HAND IS STILL A WHOLE HAND AT f008 AND f030, and ideally at f093, the last frame the cut shows. Scored by eye at 1:1 at f001/f008/f030/f050/f070/f093 and by pipeline/judge_b09_crop_0821.py --geom r2s2: T0 pan residual within 1.5x the incumbent's, last live pair reaching 93, face-band interframe mean >= 1.0 with no slot third under 0.15, mouth closed, one man, no second hand. ONE EYE IS SQUINTED SHUT FROM f001 AND THAT IS…",
+    "owner": "beat-09 crop-trade lane, 2026-08-21 morning",
+    "est_minutes": 7,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b09-r2s2-c2-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b09-r2s2-c2-0821/09-the-pause-LTX-ep2-b09-r2s2-c2-0821.mp4",
+     "name": "09-the-pause-LTX-ep2-b09-r2s2-c2-0821.mp4",
+     "bytes": 306344,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b09-r2s2-c2-0821/b09-init-704x1280.png",
+     "name": "b09-init-704x1280.png",
+     "bytes": 880590,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE adult man alone, dark cropped hair, round wire-rim glasses on his face, standing in bright daylight with deep tall grass behind him. HIS HAND IS AT HIS FACE AND STAYS THERE: his fingers rest against his cheek with the thumb under his jaw, four fingers drawn whole against the skin, and they stay resting there the whole time, shifting a little against his cheek as he thinks. HIS FACE WORKS THROUGH A THOUGHT, SLOWLY: his brows draw together and then ease, his eyes shift and settle, his head tilts a few degrees. HIS MOUTH STAYS CLOSED the whole time -- he is thinking, not speaking, and no word is said. He stays THE SAME MAN from the first frame to the last: the same dark cropped hair, the same round wire-rim glasses, one face and one man only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "open mouth, talking, speaking, shouting, teeth, tongue, lip sync, second face, second man, two men, 2boys, crowd, child, chibi, baby, girl, different man, changing face, face changing, morphing, melting face, hair colour change, blond hair, silver hair, brown hair, bald, no glasses, sunglasses, goggles, eye patch, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260851,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png",
+    "sha256": "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a"
+   },
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "SLATE, AND THE RUNG UNDER IT IS THE CARD'S AND RUNNABLE NOW. Both existing clips are is_show_content:false and barred from the cut by their own headers, so this slot has never held footage. Two things were settled on 2026-08-19: the engine CAN move a face (a slow eye close-and-reopen over forty fra…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
+  {
+   "id": "ep2-b09-r2s2-c1-0821-1787270381",
+   "task": "ep2-b09-r2s2-c1-0821",
+   "node": "002b-first-citizen",
+   "beat": 9,
+   "kind": "motion",
+   "rc": 1,
+   "failed_step": "crop",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-21T00:00:09Z",
+   "finished_at": "2026-08-21T00:00:09Z",
+   "duration_s": 0,
+   "sidecar": "farm-out/box/ep2-b09-r2s2-c1-0821-1787270381.json",
+   "spec_file": "pipeline/jobs/ep2-b09-r2s2-c1-0821.yaml",
+   "purpose": {
+    "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is an UPGRADE to a shipping clip before the 12:00 cutoff, judged against that clip's own measured numbers, and a clip that does not beat it changes nothing. Cell c1 of five, seed 20260819, cheek arm.",
+    "why": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route. The remaining lever is the sharper plate: 1.454x against 2.157x, 90.2% of a native close-up's high-frequency energy against 45%, on a beat whose hand is the softest object in frame and the first to dissolve. $0, ~7 minutes, an idle card and a 12:00 cutoff. Cell c1, seed 20260819, cheek arm.",
+    "success": "One 704x1280 121-frame mp4 at seed 20260819 off the r2s2 crop IN WHICH THE HAND IS STILL A WHOLE HAND AT f008 AND f030, and ideally at f093, the last frame the cut shows. Scored by eye at 1:1 at f001/f008/f030/f050/f070/f093 and by pipeline/judge_b09_crop_0821.py --geom r2s2: T0 pan residual within 1.5x the incumbent's, last live pair reaching 93, face-band interframe mean >= 1.0 with no slot third under 0.15, mouth closed, one man, no second hand. ONE EYE IS SQUINTED SHUT FROM f001 AND THAT IS…",
+    "owner": "beat-09 crop-trade lane, 2026-08-21 morning",
+    "est_minutes": 7,
+    "priority": 22
+   },
+   "artifacts_dir": "farm-out/ep2-b09-r2s2-c1-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b09-r2s2-c1-0821/09-the-pause-LTX-ep2-b09-r2s2-c1-0821.mp4",
+     "name": "09-the-pause-LTX-ep2-b09-r2s2-c1-0821.mp4",
+     "bytes": 300594,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b09-r2s2-c1-0821/b09-init-704x1280.png",
+     "name": "b09-init-704x1280.png",
+     "bytes": 880590,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE adult man alone, dark cropped hair, round wire-rim glasses on his face, standing in bright daylight with deep tall grass behind him. HIS HAND IS AT HIS FACE AND STAYS THERE: his fingers rest against his cheek with the thumb under his jaw, four fingers drawn whole against the skin, and they stay resting there the whole time, shifting a little against his cheek as he thinks. HIS FACE WORKS THROUGH A THOUGHT, SLOWLY: his brows draw together and then ease, his eyes shift and settle, his head tilts a few degrees. HIS MOUTH STAYS CLOSED the whole time -- he is thinking, not speaking, and no word is said. He stays THE SAME MAN from the first frame to the last: the same dark cropped hair, the same round wire-rim glasses, one face and one man only. The light on him is CONSTANT and does not flicker, pulse or strobe. Soft steady daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "open mouth, talking, speaking, shouting, teeth, tongue, lip sync, second face, second man, two men, 2boys, crowd, child, chibi, baby, girl, different man, changing face, face changing, morphing, melting face, hair colour change, blond hair, silver hair, brown hair, bald, no glasses, sunglasses, goggles, eye patch, flickering light, strobe, strobing, pulsing light, flashing light, blinking glow, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, standing up, sitting down, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260819,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png",
+    "sha256": "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a"
+   },
+   "reference": null,
+   "verdict": {
+    "beat_state": "fix-known",
+    "beat_note": "SLATE, AND THE RUNG UNDER IT IS THE CARD'S AND RUNNABLE NOW. Both existing clips are is_show_content:false and barred from the cut by their own headers, so this slot has never held footage. Two things were settled on 2026-08-19: the engine CAN move a face (a slow eye close-and-reopen over forty fra…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   }
+  },
   {
    "id": "ep2-jerry-face-k6d-0821-1787267990",
    "task": "ep2-jerry-face-k6d-0821",
@@ -74845,74 +76035,60 @@
    "authored_at": 1786333067
   },
   {
-   "id": "ep2-b09-r2s2-c1-0821",
+   "id": "ep2-jerry-set-point-0821",
    "node": "002b-first-citizen",
-   "beat": 9,
-   "kind": "motion",
+   "beat": 2,
+   "kind": "other",
    "state": "authored",
-   "priority": 22,
-   "est_minutes": 7,
-   "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is…",
-   "why_first": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route.",
+   "priority": 44,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else. A frame passing every clause of the bar joins pipeline/lora/curation-tile-0820.yaml with its caption written against canon's corrected tile read; a frame failing any clause is REJECTED, because keeping near-misses is precisely what made the 31-frame se…",
+   "why_first": "POSE POINT of seven, at the standard the 2026-08-21 steward ruling names.",
    "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b09-r2s2-c1-0821.yaml",
-   "authored_at": 1787274212
+   "spec_file": "pipeline/jobs/ep2-jerry-set-point-0821.yaml",
+   "authored_at": 1787295074
   },
   {
-   "id": "ep2-b09-r2s2-c2-0821",
+   "id": "ep2-jerry-set-reach-0821",
    "node": "002b-first-citizen",
-   "beat": 9,
-   "kind": "motion",
+   "beat": 2,
+   "kind": "other",
    "state": "authored",
-   "priority": 22,
-   "est_minutes": 7,
-   "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is…",
-   "why_first": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route.",
+   "priority": 44,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else. A frame passing every clause of the bar joins pipeline/lora/curation-tile-0820.yaml with its caption written against canon's corrected tile read; a frame failing any clause is REJECTED, because keeping near-misses is precisely what made the 31-frame se…",
+   "why_first": "POSE REACH of seven, at the standard the 2026-08-21 steward ruling names.",
    "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b09-r2s2-c2-0821.yaml",
-   "authored_at": 1787274212
+   "spec_file": "pipeline/jobs/ep2-jerry-set-reach-0821.yaml",
+   "authored_at": 1787295074
   },
   {
-   "id": "ep2-b09-r2s2-c3-0821",
+   "id": "ep2-jerry-set-seat-0821",
    "node": "002b-first-citizen",
-   "beat": 9,
-   "kind": "motion",
+   "beat": 2,
+   "kind": "other",
    "state": "authored",
-   "priority": 22,
-   "est_minutes": 7,
-   "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is…",
-   "why_first": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route.",
+   "priority": 44,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else. A frame passing every clause of the bar joins pipeline/lora/curation-tile-0820.yaml with its caption written against canon's corrected tile read; a frame failing any clause is REJECTED, because keeping near-misses is precisely what made the 31-frame se…",
+   "why_first": "POSE SEAT of seven, at the standard the 2026-08-21 steward ruling names.",
    "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b09-r2s2-c3-0821.yaml",
-   "authored_at": 1787274212
+   "spec_file": "pipeline/jobs/ep2-jerry-set-seat-0821.yaml",
+   "authored_at": 1787295074
   },
   {
-   "id": "ep2-b09-r2s2-m1-0821",
+   "id": "ep2-jerry-set-stride-0821",
    "node": "002b-first-citizen",
-   "beat": 9,
-   "kind": "motion",
+   "beat": 2,
+   "kind": "other",
    "state": "authored",
-   "priority": 22,
-   "est_minutes": 7,
-   "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is…",
-   "why_first": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route.",
+   "priority": 44,
+   "est_minutes": 4,
+   "consumer": "THE JERRY LoRA TRAINING SET, and nothing else. A frame passing every clause of the bar joins pipeline/lora/curation-tile-0820.yaml with its caption written against canon's corrected tile read; a frame failing any clause is REJECTED, because keeping near-misses is precisely what made the 31-frame se…",
+   "why_first": "POSE STRIDE of seven, at the standard the 2026-08-21 steward ruling names.",
    "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b09-r2s2-m1-0821.yaml",
-   "authored_at": 1787274212
-  },
-  {
-   "id": "ep2-b09-r2s2-m2-0821",
-   "node": "002b-first-citizen",
-   "beat": 9,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 22,
-   "est_minutes": 7,
-   "consumer": "BEAT 09'S SLOT IN review/ep2-ship-0821, WHICH IS ALREADY FILLED. This is not a slate any more: the cut ships 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 today, with a hand that is gone by f005 of a 93-frame slot, and the guards card that withheld the beat has been ruled a PASS. So the consumer is…",
-   "why_first": "The h-batch proved the hand sentence is a real mechanism and could not make it reach the end of the clip, and it paid the r2s2 route's own price -- a shut eye -- while declining the route.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b09-r2s2-m2-0821.yaml",
-   "authored_at": 1787274212
+   "spec_file": "pipeline/jobs/ep2-jerry-set-stride-0821.yaml",
+   "authored_at": 1787295074
   },
   {
    "id": "ep2-b01-figcomp-heldfield-0820",
