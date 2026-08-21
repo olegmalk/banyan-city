@@ -44,10 +44,13 @@ CARDS = [
         answers=["A", "B", "a third staging"],
         gates="beat 13",
         changes_cut=False,
-        effect="<b>A</b> retires beat 13's named fault without changing a frame — the take you see "
-               "stays and stops being a contradiction. <b>B</b> needs a render, and the card's own "
-               "section 5 shows B coming back as “a balloon on a wire”. Neither lands new footage "
-               "by 12:00."),
+        effect="<b>THE TAKE UNDER THIS CARD CHANGED ON 08-21</b> — beat 13 is now the age-B clip, "
+               "and it is the frame you ruled on that left the cut, not the fault this card asks "
+               "about. <b>A</b> still retires the named fault without changing a frame. <b>B</b> "
+               "still needs a render, and the card's own section 5 shows B coming back as “a "
+               "balloon on a wire”. Post-ship either way. The new take adds one fault this card "
+               "does not cover: its own head-lift starts 0.06 s after the beat's slot ends, so the "
+               "expression the swap was made for is in the file and not on screen."),
     dict(
         url="/review/ep2-b16-leaf-0820", since="2026-08-20",
         title="Beat 16's brief asks for a leaf-as-subject macro that your “average leaves” "
@@ -69,9 +72,12 @@ CARDS = [
                  "or write a fourth"],
         gates="beat 04",
         changes_cut=False,
-        effect="Nothing is pre-staged on purpose: the pick <i>is</i> the spec, so this cannot reach "
-               "the cut before 12:00. Both 08-20 wording rungs failed and closed the wording route — "
-               "the answer is staging, and staging starts with your letter."),
+        effect="Nothing is pre-staged on purpose: the pick <i>is</i> the spec. Both 08-20 wording "
+               "rungs failed and closed the wording route — the answer is staging, and staging "
+               "starts with your letter. <b>The 08-21 swap did not touch this:</b> beat 04's new "
+               "take is on-design and still carries the glance with a head move rather than the "
+               "pupils, because the design's eyes are blank slits by construction. Changing the "
+               "face could never have answered this card."),
     dict(
         url="/review/ep2-goblin-design-0819", since="2026-08-20",
         title="What is the goblin wearing below the waist? Canon names the cloak and nothing "
@@ -230,11 +236,12 @@ def main():
 
 <header class="top">
   <h1>Sapling — episode 2, SHIP CANDIDATE</h1>
-  <p class="sub"><strong>This is the cut you ordered on 08-20.</strong> 1:56, and as of 01:05 <strong>twenty-one beats of footage and no slate at all</strong> — the first cut
-  of this episode in which every beat has a picture.
-  Best-available takes, every fault named, nothing hidden behind a passing score. No render, no
-  voice synthesis, no GPU, no spend: <strong>$0</strong>. Every clip in it already existed when
-  you gave the order.</p>
+  <p class="sub"><strong>This is the cut you ordered on 08-20.</strong> 1:56, <strong>twenty-one
+  beats of footage and no slate at all</strong> — the first cut of this episode in which every
+  beat has a picture. <strong>And five of them changed face this afternoon</strong>: beats 02, 03,
+  04, 13 and 20 now carry the design your 08-20 correction asked for. Best-available takes, every
+  fault named, nothing hidden behind a passing score. No voice synthesis, no network, no spend:
+  <strong>$0</strong>.</p>
 </header>
 
 <p class="stamp">SHIP CANDIDATE — NOT PUBLISHED, NOT CANON, NO LEAF. YOUR WATCH-THROUGH IS THE GATE.</p>
@@ -252,6 +259,38 @@ def main():
   <li><b>{n_pass}</b> clean passes</li>
   <li><b>$0</b> to assemble</li>
 </ul>
+
+<div class="callout blue">
+  <h2 style="margin-top:0">The goblin, in one paragraph — because it is the thing you keep
+  catching, and it changed today</h2>
+  <p><strong>You have caught this creature drifting three times, and each time the record moved
+  further from what you actually pointed at.</strong> On 08-19 you were shown six tiles and you
+  pointed at one — the B tile, <code>review/ep2-goblin-design-0819/adult-b19-0819.jpg</code>. The
+  steward wrote down the WORDS printed beside it, <em>“lean wiry adult goblin man”</em>, and put
+  them in canon; every plate drawn after that inherited the phrase, and the phrase contains
+  <em>adult</em> and <em>man</em> where the picture contains neither. On 08-20 night you said so:
+  <em>“all of the goblin clips today has had him as an adult. very bad character consistency”</em>,
+  and, shown beat 13's best frame, <em>“this is one of the images where the goblin looks like an
+  adult, which is wrong.”</em> That correction struck the word from canon and replaced it with a
+  LIST READ OFF YOUR PICTURE — blank white slit eyes under one heavy brow bar, no human nose, one
+  thin lipless mouth line, short low-set ears, a big smooth dome. <strong>Today's wave is the first
+  set of clips authored against that list rather than against a sentence.</strong> Fourteen clips,
+  seven beats, two seeds each, $0 on the box. Five passed and are in the cut above; two beats
+  (07 and 08) failed and kept their old takes, with the reasons on their rows. <strong>What it did
+  not fix, and you should hear it here rather than find it: the ears are still wrong in all
+  five</strong> — long tapering spikes where your tile has short flanges almost flush at the jaw —
+  and the cut is <strong>more consistent, not consistent</strong>: canon counts the goblin in twelve
+  beats, this wave reached seven, so five beats now share one exact face and seven still carry the
+  old assorted ones. Before today, no two goblin beats matched at all.</p>
+  <p class="sub">Judged by eye at a contact strip per seed, not by a metric — one failure mode
+  decided nearly all of it, and it is worth knowing while you watch: <strong>on six of the fourteen
+  clips the face simply stops being drawn partway through</strong>, leaving a featureless green head
+  that keeps its silhouette and its colour. Every pick is the seed whose face survives its own slot.
+  Full ledger with the strips:
+  <a href="/review/motion-ageb-0821/JUDGING-0821.md">review/motion-ageb-0821/JUDGING-0821.md</a>.
+  <strong>All five swaps are steward picks, each vetoable in one line</strong> — “beat NN: back to
+  the old take” puts it back in minutes, $0.</p>
+</div>
 
 <div class="callout red">
   <p><strong>ONE DECISION IN THIS CUT IS CONTESTED AND IT IS BEAT 09, so it goes first rather
@@ -304,15 +343,27 @@ def main():
 </div>
 
 <div class="callout">
-  <p><strong>What is worth watching for, in order.</strong> Beat 09 at 0:44 (above). Beat 01 at
-  0:00 — a NEW cold open that landed inside the window tonight: it is not a render but a composite,
-  the growing fig from one take joined to the held field of its crf-10 sibling, which is the first
-  time this beat has had both. Its remaining fault is one band of grass that still moves. Beat 18
-  at 1:28 — 5.9&nbsp;s of held frame, the longest freeze in the episode and an honest cost of
-  killing the palindrome. Beat 16 at 1:15 — <strong>the last slate, filled tonight</strong>. It is the beat
-  whose brief asks for a shot your own canon forbids; the restage gives the brief’s relation — the
-  sapling is the subject, he is depth behind it — without the exception. Its goblin is the
-  SUPERSEDED adult design, blurred, and barely readable at that scale; that is named, not hidden.</p>
+  <p><strong>What is worth watching for, in order.</strong>
+  <strong>Beat 02 at 0:09</strong> — the new face's first appearance, and the beat canon called the
+  worst break in the cut (he was bone grey, not green). He runs at you and dives into the grass.
+  <strong>Beat 09 at 0:44</strong> (above).
+  <strong>Beat 13 at 1:01</strong> — the shot you ruled on. The frame you called an adult is out of
+  the cut; what replaces it is seated with his head down, and its own smile starts 0.06&nbsp;s after
+  the beat ends, which is the fault it ships with.
+  <strong>Beat 20 at 1:44</strong> — he looks up, which beat 20 has never done; his fruit is red
+  where your fig is purple.
+  <strong>Beat 01 at 0:00</strong> — the cold open is a composite, not a render: the growing fig
+  from one take joined to the held field of its crf-10 sibling. One band of grass still moves.
+  <strong>Beat 18 at 1:28</strong> — 5.9&nbsp;s of held frame, the longest freeze in the episode and
+  the honest cost of killing the palindrome.
+  <strong>Beat 16 at 1:15</strong> — the last slate, filled last night, and one of the seven beats
+  whose goblin is still the SUPERSEDED adult design. He is blurred depth behind the plant and it
+  barely reads at that scale; named, not hidden.</p>
+  <p><strong>And the seam to watch for, because it is the cost of doing this in one afternoon
+  instead of a week:</strong> beats 03 → 04 are both new and match each other, then <strong>07 and
+  08 are the old creature</strong> — two beats where he changes species mid-scene. Those are the two
+  the wave tried and failed on. If that seam is worse than the drift it replaced, say so and all
+  five go back in one line.</p>
 </div>
 
 <div class="callout green">
@@ -335,8 +386,10 @@ def main():
 <h2>Every beat, and what is wrong with it</h2>
 <p class="sub">Generated from <code>sources/ship-manifest.yaml</code> at build time — this table
 cannot drift from the manifest, because it is the manifest. Thumbnails are the middle frame of
-each take, extracted by <code>proof_receipts --frames</code>; all 20 were re-hashed against the
-manifest tonight and 20 of 20 match.</p>
+each take, extracted by <code>proof_receipts --frames</code>; <strong>all 21 were re-hashed against
+the manifest after the swap and 21 of 21 match</strong>, 0 differ, 0 missing. Every beat also has a
+verdict quoted verbatim from the job spec that licensed it, except the four that have never been
+scored against any bar (08, 12, 14, 19) — those say so in those words.</p>
 
 <div class="scroll">
 <table>
@@ -348,62 +401,84 @@ manifest tonight and 20 of 20 match.</p>
 </table>
 </div>
 
-<h2>The six things still open — and whether they can reach this cut</h2>
-<p class="sub"><strong>The cutoff is 12:00 tomorrow, 2026-08-21.</strong> Anything answered,
-judged and swapped in before then enters the shipped cut; anything after goes to a post-ship patch
-list. Of the six, <strong>one</strong> can actually move a picture in that window.</p>
+<h2>The six things still open — and none of them is holding this cut</h2>
+<p class="sub"><strong>The 12:00 cutoff passed; the age-B wave landed after it and is in the cut
+anyway, because you ordered SHIP TODAY and a better picture at 15:00 beats a worse one at 11:59.</strong>
+That is a steward call and it is on the record as one. From here everything below is a
+<strong>post-ship patch</strong>: answering any of it changes a later cut, not this one. The single
+exception is the last row — a silence-accepts window that a ship is the wrong moment to leave
+unread.</p>
 
 {chr(10).join(card_html)}
 
-<h2>Publish checklist</h2>
-<p class="sub">What you are approving, and exactly what happens on your word. Nothing below runs
-without it.</p>
-
-<div class="callout red">
-  <p><strong>ONE THING GENUINELY BLOCKS PUBLICATION AND IT IS NOT A PICTURE.</strong>
-  STEWARDSHIP §6 — narrative approval precedes media. <strong>Beat 17's restaged script line has
-  never been read by you:</strong> “The scavenger pushes himself up, gives his cloak a shake, and
-  turns to go.” The node's <code>002b-t0-c.yaml</code> records it as unapproved. It is eleven words
-  and it is item 1 for that reason. The beat is meanwhile a clean PASS and is in this cut.</p>
-</div>
+<h2>Publish checklist — it is two words now</h2>
+<p class="sub">This list was seven items this morning. Five of them have closed: the guards card
+came back <b>pass</b>, so beat 09's override is discharged and it is an ordinary row; beat 16's
+restage delivered, so the macro exception is moot; and the three design beats the age-B wave was
+waiting on are swapped and on the table above. <strong>Two words are left, and one of them is
+“publish”.</strong></p>
 
 <ol class="check">
-  <li><strong>Read beat 17's line</strong> (above) and say yes or restage it. This is the §6 gate
-  and it is the only hard blocker in the list.</li>
-  <li><strong>Watch the cut.</strong> Your watch-through is the publish gate you kept on 08-19;
-  no leaf is written and nothing goes live until it happens.</li>
-  <li><strong>Beat 16: in or out.</strong> “beat 16: back to a slate” removes it. Same class as
-  beat 09 — a steward entry on a beat that was held only by an unanswered taste card — so silence
-  is not acceptance here either. Answering <a href="/review/ep2-b16-leaf-0820">/review/ep2-b16-leaf-0820</a>
-  with <b>restage</b> ratifies what you are watching; <b>licence</b> reopens the macro and needs a
-  render nobody has made.</li>
-  <li><strong>Beat 09: in or out — and this one is no longer a question I am pressing.</strong>
-  “beat 09: back to a slate” still removes it, like any other row. But when this list was written
-  beat 09 was a steward override of a written declaration and I said silence was not acceptance;
-  <a href="/review/ep2-guards-0818">/review/ep2-guards-0818</a> has since been answered
-  <b>pass</b> — “they should look like grown men. yes. dumb grown men.” — so the override is
-  discharged and beat 09 is an ordinary pick you can veto in one line like the rest. Nothing about
-  the picture changed; the answer was the one the cut was already staged for. <span class="sub">The
-  words were relayed by the orchestrating lane on 08-21, quoting his 08-20 message — provenance
-  noted on the card and in <code>review/inbox.yaml</code>.</span></li>
-  <li><strong>Any other beat you want out.</strong> Every row above has a one-line veto in the
-  manifest; each one is a file swap and a re-assemble, minutes, $0.</li>
-  <li><strong>Then say “publish”.</strong> On that word, and not before: the cut is promoted from
-  a bench assembly to a T3 leaf under the node, gets its row in <code>lineage.yaml</code> with
-  full provenance, the site rebuilds and it goes live at banyan.city. That step is mechanical and
-  takes minutes.</li>
-  <li><strong>Posting it anywhere is yours alone.</strong> TikTok, Reddit, HN — founder-reserved,
-  never autonomous. Publishing to the site and announcing it are two different words and I will
-  wait for the second one separately.</li>
+  <li><strong>WATCH IT, AND SAY WHAT YOU THINK.</strong> That is the publish gate you kept on
+  08-19, and it is the only judgement in this list. One line is enough — “ship it”, or “beat NN is
+  wrong”, or the whole thing back. Every row in the table above is a one-line veto: a file swap and
+  a re-assemble, minutes, $0. <span class="sub">Two things to have in your eye while you watch,
+  because they are mine and not yours: the five swapped faces, and the seam at beats 07–08 where he
+  is still the old creature.</span>
+  <div class="callout red" style="margin-top:12px">
+    <p><strong>ELEVEN WORDS TO READ WHILE YOU WATCH, and they are the §6 gate.</strong>
+    Beat 17's restaged stage direction has never been in front of you:
+    <em>“The scavenger pushes himself up, gives his cloak a shake, and turns to go.”</em>
+    That is the whole change — a brush became a shake, no spoken line moved, and
+    <code>002b-t0-c.yaml</code> records it unapproved. Say yes to it and §6 is discharged for beat
+    17; say no and the beat restages. The clip you will watch is a clean PASS either way.</p>
+  </div></li>
+  <li><strong>Then say “publish”.</strong> On that word, and not before: the cut is promoted from a
+  bench assembly to a T3 leaf under the node, gets its row in <code>lineage.yaml</code> with full
+  provenance, the site rebuilds and it goes live at banyan.city. Mechanical, minutes.
+  <span class="sub">Posting it anywhere is a separate word and it is yours alone — TikTok, Reddit,
+  HN are founder-reserved, never autonomous, and I will wait for that second word on its own.</span></li>
 </ol>
 
+<div class="callout">
+  <p><strong>ONE GOVERNANCE QUESTION, QUEUED AND NOT BLOCKING — the letter of §6 against its
+  spirit, on beat 17.</strong> Read literally, §6 says no media may be produced from a script line
+  you have not read, and beat 17's line is unread, so its clip is illegal and this cut cannot
+  publish. Read for what §6 is FOR — it exists because on 2026-07-25 seven scripts were voiced and
+  8.7 GPU-hours burned before you had read any of them — beat 17 is the opposite case in every
+  particular: <strong>the footage predates the line.</strong> All eight beat-17 takes were rendered
+  under the line you DID approve (“brushes off”); they came back 8/8 stand-and-turn and 0/8 brush;
+  and the restage then rewrote the script to describe what the footage already showed. Nothing was
+  spent to serve the unread words — <em>the words were written to serve the spend that had already
+  happened</em>. No voice was re-synthesised, because no spoken line moved.</p>
+  <p><strong>Which reading governs is yours, not mine, and it is a governance change either way, so
+  I am not acting on it.</strong> I have kept the letter: beat 17's eleven words are in the checklist
+  above, in front of you, before the word “publish”. The question I am queueing for a calmer moment
+  is whether §6 should say so explicitly — that it gates <em>media produced from</em> an unread
+  line, and not <em>media that an unread line was later written to describe</em>. If it should, that
+  is a one-paragraph amendment to STEWARDSHIP.md and it is your signature, not mine. If it should
+  not, the rule is doing exactly what you built it to do and this paragraph is the receipt for
+  asking.</p>
+</div>
+
 <div class="callout blue">
-  <p><strong>What I did not do.</strong> No render, no voice synthesis, no GPU, no network, no
-  spend. No script text touched. No verdict authored, edited or reinterpreted — every quotation in
-  the manifest is its own lane's words. No leaf, nothing in <code>lineage.yaml</code>, no
-  <code>plate_ack</code>, not canon. <code>review/inbox.yaml</code> untouched. Exactly one thing
-  was overridden and it is beat 09's <code>is_show_content</code> declaration, which has its own
-  block in the manifest and its own callout at the top of this page.</p>
+  <p><strong>What I did not do.</strong> No voice synthesis, no network, no spend — the fourteen
+  age-B clips were rendered on the rtx5090 box at $0 and the assembly is one 26.8-second
+  <code>render_t3</code> run on a Mac. No script text touched. No verdict of another lane authored,
+  edited or reinterpreted — every quotation in the manifest is its own lane's words, and the
+  superseded ones are RENAMED beside the new ones rather than deleted, so the chain reads. No leaf,
+  nothing in <code>lineage.yaml</code>, no <code>plate_ack</code>, not canon.</p>
+  <p><strong>What I DID decide, so you can reverse any of it in one line.</strong> Which of two
+  seeds wins each of five beats, by eye. That two beats keep their old takes because both their
+  seeds failed. That a 121-frame clip on beat 02 is trimmed to 97 so the dissolved frames cannot
+  reach the slot. That the age-B wave enters the cut although it landed after the 12:00 cutoff,
+  because you ordered SHIP TODAY. And beat 09's <code>is_show_content</code> override, which
+  predates today and has its own block in the manifest and its own callout above.</p>
+  <p><strong>Gates, run and not asserted:</strong> <code>qa_episode</code> 16 checks pass, 1 warning
+  (a 10-second music-free tail under the end card, which is beats 19 and 21 being silent by design);
+  <code>qa_local</code> 87 of 87 routes; <code>proof_receipts</code> 21 beats / 21 takes / 21 frames
+  / sha recheck 21 match, 0 differ, 0 missing; every one of the fourteen source clips sha-verified
+  against the render box's own manifest before a frame was opened.</p>
 </div>
 
 <footer>

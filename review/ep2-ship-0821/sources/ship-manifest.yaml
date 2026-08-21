@@ -894,17 +894,17 @@ ship_status:
     class: warn
     of: "G5a \u2014 the grass floor still moves with the fig"
   2:
-    word: FAIL NAMED
-    class: fail
-    of: HE IS GREY, NOT GREEN, AND A CHILD - and no bar was ever answered
+    word: NEW FACE
+    class: new
+    of: "AGE-B SWAP — the grey child is gone; ears wrong, magenta collar; still no bar on the staging"
   3:
-    word: FAIL NAMED
-    class: fail
-    of: H1 - 0.79 s freeze at the tail; and he reads as an adult man
+    word: NEW FACE
+    class: new
+    of: "AGE-B SWAP — the 0.79 s tail freeze and the adult read are both gone; the motion is the      \ smallest of the five swaps, and the ears are wrong"
   4:
-    word: FAIL NAMED
-    class: fail
-    of: the glance is a head turn, not the pupils; and he reads as an adult man
+    word: NEW FACE
+    class: new
+    of: "AGE-B SWAP — the adult man is gone; the glance is STILL a head move, not the pupils, and      \ 1.12 s of the beat is a held frame"
   5:
     word: FAIL NAMED
     class: fail
@@ -916,12 +916,11 @@ ship_status:
   7:
     word: PASS, DESIGN FAIL
     class: fail
-    of: scavenger dressed as a second official; AND THE GOBLIN HAS WHITE HAIR on a character whose canon
-      is bald
+    of: "scavenger dressed as a second official; AND THE GOBLIN HAS WHITE HAIR on a character whose canon      \ is bald. AGE-B TRIED AND FAILED: neither seed put a guard in the frame, so the confiscation was      \ absent, not weak"
   8:
     word: UNJUDGED
     class: warn
-    of: two green figures, identity open; and he reads as a child
+    of: "two green figures, identity open; and he reads as a child. AGE-B TRIED AND FAILED: both seeds      \ lose the face to a featureless green head at the same frame, f055"
   9:
     word: SHIP-MODE ENTRY
     class: new
@@ -939,9 +938,9 @@ ship_status:
     class: warn
     of: colour shifts warm-to-cool
   13:
-    word: FAIL NAMED
-    class: fail
-    of: no shade reaches his eyes; and this is the frame you called an adult, which is wrong
+    word: NEW FACE
+    class: new
+    of: "AGE-B SWAP — THE FRAME YOU CALLED AN ADULT IS OUT OF THE CUT. Still no shade on his eyes,      \ and the new take's own smile starts 0.06 s after its slot ends, so you will not see it"
   14:
     word: FAIL NAMED
     class: fail
@@ -967,9 +966,11 @@ ship_status:
     class: warn
     of: he does not notice
   20:
-    word: NOT A PASS
-    class: fail
-    of: never looks up; wrong tree; darkens; and he reads as an OLD MAN
+    word: NEW FACE, LOOKS UP
+    class: new
+    of: "AGE-B SWAP and the only one that closes a done_when clause \u2014 HE LOOKS UP. The old\
+      \ man and the darkening are gone. Still the wrong tree, and the fruit is RED where canon has\
+      \ the fig purple."
   21:
     word: PASS
     class: pass
