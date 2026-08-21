@@ -7913,3 +7913,12 @@ and **17** (blue-teal legs) were taken out by the audit as one-attribute misses
 and are filed anyway, because the standard closes both for free — the ear is
 *unpromptable* and arrives only from absence-plus-suppression, which the standard
 already does, and eleven plates came back green to the soles.
+
+## Standing rule: the ledger is GENERATED, never merged (2026-08-21)
+The hourly queue-refresh workflow commits pipeline/measured/queue-history.json
+on its own schedule, so any lane holding a ledger diff will conflict with it —
+and both textual resolutions are wrong ("theirs" reverts reader fixes, "ours"
+drops newer rows). On conflict: regenerate with the CURRENT queue_history.py
+(`python3 pipeline/queue_history.py --fetch`), add, continue. Same principle
+for any generated-and-committed artifact: resolve by regeneration, never by
+picking a side.
