@@ -3845,3 +3845,4 @@
 14:09:55Z DONE task=ep2-b13-canon-w1-0821-1787321204 rc=0 artifacts=1
 14:10:01Z STARTED task=ep2-b20-canon-w1-0821-1787321208 attempt=1 on box-runner
 14:10:29Z DONE task=ep2-b20-canon-w1-0821-1787321208 rc=0 artifacts=1
+14:10:34Z box-runner idle ready=0 failed=80
