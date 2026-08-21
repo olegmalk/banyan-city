@@ -2,6 +2,7 @@
 r"""SPECS FROM THE GOBLIN STANDARD. One deriver, two consumers, no hand-copying.
 
     python3 pipeline/derive_jerry_wave_0821.py poseset
+    python3 pipeline/derive_jerry_wave_0821.py sceneset
     python3 pipeline/derive_jerry_wave_0821.py patchwave
     python3 pipeline/derive_jerry_wave_0821.py round2
     python3 pipeline/derive_jerry_wave_0821.py --selftest
@@ -293,6 +294,147 @@ def poseset(force=False):
     return written
 
 
+# ── THE SCENE x SCALE GRID ───────────────────────────────────────────────────
+# The pose set moved ONE axis and left two standing. Every one of its seven
+# frames is `in tall grass` at `full body` -- one scene, one scale -- and a LoRA
+# trained on frames that share a background learns the background. The dataset
+# gate wants breadth, and pose is only the axis that was cheapest to see.
+#
+# THE SCALE AXIS HAS ONE END AND IT IS THE WIDE END, and that is a committed
+# ruling and not a shortcut. canon: `the tile is a wide full-body at which scale
+# the model draws the face as a blank-eyed mask; THE CLOSER THE CROP, THE MORE IT
+# RESOLVES THAT MASK INTO A DETAILED ADULT HUMAN MALE.` round2 closed beat 04's
+# close-up rung on that measurement WITHOUT RUNNING IT and routed the beat's
+# crop to post. So this grid does not file a medium or a close rung: those would
+# be GPU minutes spent on a defect the record already measured. The dataset's
+# close scale comes from cropping these plates, which is the same route round2
+# named, and it is the curation lane's crop to make.
+#
+# What is left is genuinely two scales -- `full body` and `full body, wide shot`
+# (the latter is committed precedent, patchwave beat 02) -- crossed with five
+# backdrops taken from the episode's own prompt vocabulary rather than invented.
+SCENESET_SCENES = [
+    ("grass", "in tall grass"),
+    ("field", "in an open green grass field, short grass"),
+    ("hill",  "on a grassy hillside"),
+    ("sky",   "in an empty field, low horizon, peach and gold sunrise sky"),
+    ("noon",  "in an empty field under a midday-blue sky"),
+]
+SCENESET_SCALES = [("f", "full body"), ("w", "full body, wide shot")]
+# Rotated across the grid so no cell repeats a triple and the poses spread too.
+SCENESET_POSES = [
+    ("st", "jerry-skel-h19-0820",       "standing, arms at sides"),
+    ("rc", "jerry-skel-h19reach-0820",  "arms up"),
+    ("pt", "jerry-skel-h19point-0820",  "arm outstretched, pointing"),
+    ("sd", "jerry-skel-h19stride-0820", "walking, arm outstretched"),
+    ("hn", "jerry-skel-h19hunch-0820",  "standing, hunched over, arms at sides"),
+    ("cr", "jerry-skel-h19crouch-0820", "squatting"),
+    ("kn", "jerry-skel-h19kneel-0820",  "kneeling"),
+    ("si", "jerry-skel-h19sit-0820",    "sitting"),
+    ("se", "jerry-skel-h19seat-0820",
+     "sitting, hands clasped between knees, head lowered"),
+]
+
+SCENESET_WHY = """SCENE %s x SCALE %s, a DATASET-GATE FILLER and nothing else.
+
+`pipeline/lora/curation-tile-0820.yaml` is held on SEVEN frames in FOUR poses and
+its gate asks for BREADTH from a recipe that passes. The pose set answered the
+pose axis and left the other two untouched: all seven of its frames are `in tall
+grass` at `full body`, one scene and one scale, and a character LoRA trained on
+frames that share a backdrop learns the backdrop as part of the trigger token --
+the same failure mode the file already names for pose, one axis over.
+
+THE ONE VARIABLE HERE IS THE BACKGROUND WORDS AND THE FRAMING WORD. The skeleton
+comes from the committed set, the mask follows it by translation, and everything
+the standard pins -- face wording, negative, seed, controlnet, scale, adapter,
+weight, reference, head_frac -- is k6a's to the byte.
+
+NO MEDIUM AND NO CLOSE RUNG IS FILED, on canon's own measurement that the closer
+the crop the more the blank-eyed mask resolves into a detailed adult human male;
+round2 closed that question without running it and routed the crop to post. The
+close scale of this dataset is a crop of these plates, made by the lane that
+curates it."""
+
+SCENESET_CONSUMER = """THE JERRY LoRA TRAINING SET, and nothing else -- these are
+DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns
+`ep2-jerry-face-k6a-0821` and `curation-tile-0820.yaml` scores every frame on the
+k6a bar and decides what joins the set; a frame failing any clause is REJECTED,
+because keeping near-misses is exactly what made the 31-frame set untrainable. No
+beat plate here, nothing promoted to a cut, nothing touching
+review/ep2-ship-0821."""
+
+SCENESET_PREDICTED = """THE BACKGROUND IS THE CHEAP AXIS AND THAT IS THE POINT.
+Nothing in this grid touches the identity clauses, the adapter or its mask, so
+the prediction is that pass rate tracks the POSE the cell drew and not the
+backdrop -- upright cells land, folded cells carry the pose set's two known
+risks (bobblehead compression, and the magenta neck that b03-r2/b20-r2 are
+measuring at a second seed right now).
+
+THE ONE THING THIS GRID CAN TEACH BEYOND FILLING THE SET: if a backdrop clause
+moves a bar clause -- a sunrise sky warming the skin off the tile's green, a
+hillside horizon tilting the figure out of containment -- that is a finding about
+the recipe's robustness that the single-backdrop pose set could not have seen.
+If it teaches nothing, the set still gains the breadth the gate asked for, which
+is what these were filed for.
+
+SEEDS ARE PINNED AT THE STANDARD'S %d ACROSS EVERY CELL, deliberately: with the
+seed held, a cell that differs from k6a only in backdrop shows what the backdrop
+did and nothing else."""
+
+
+def sceneset(force=False):
+    written, n = [], 0
+    for scene_tag, scene_words in SCENESET_SCENES:
+        for scale_tag, scale_words in SCENESET_SCALES:
+            for _ in range(2):
+                pose_tag, hint, pose_verb = SCENESET_POSES[n % len(SCENESET_POSES)]
+                n += 1
+                pose_words = "%s, %s, %s" % (pose_verb, scene_words, scale_words)
+                # The `stand` x `tall grass` x `full body` cell IS k6a itself --
+                # same skeleton, same words, same seed, already rendered and
+                # published. derive_spec refuses it on the payload clause and it
+                # would burn a GPU minute reproducing a frame we have, so the
+                # rotation advances one and the cell keeps its two rungs.
+                if pose_words == S.POSE_STAND:
+                    pose_tag, hint, pose_verb = SCENESET_POSES[
+                        n % len(SCENESET_POSES)]
+                    n += 1
+                    pose_words = "%s, %s, %s" % (pose_verb, scene_words,
+                                                 scale_words)
+                suffix = "%s%s%s" % (scene_tag, scale_tag, pose_tag)
+                written.append(_emit(
+                    new_id="ep2-jerry-scene-%s-0821" % suffix,
+                    job_dir="jerryscene-%s-0821" % suffix,
+                    hint=hint, pose_words=pose_words,
+                    why=SCENESET_WHY % (scene_tag.upper(), scale_words.upper()),
+                    consumer=SCENESET_CONSUMER,
+                    success=("ONE 832x1216 png at seed %d, the k6a standard "
+                             "entire, conditioned on %s.png at scale %s with the "
+                             "pose words '%s' and the adapter masked to %s. "
+                             "Scored on the k6a bar BY THE CHAIN LANE; any "
+                             "failure rejects it from the training set."
+                             % (S.SEED, hint, S.CONTROL_SCALE, pose_words,
+                                S.mask_for(S.SKELETONS[hint][0]))),
+                    variable=("the BACKGROUND WORDS ('%s') and the FRAMING WORD "
+                              "('%s'), with the skeleton drawn from the committed "
+                              "set and the mask following it by translation. "
+                              "Everything else -- face wording, negative, seed, "
+                              "controlnet, scale, adapter, weight, reference, "
+                              "head_frac -- is ep2-jerry-face-k6a-0821's to the "
+                              "byte." % (scene_words, scale_words)),
+                    bar=S.BAR, predicted=SCENESET_PREDICTED % S.SEED,
+                    beat=2, priority=46,
+                    extra_keys={"dataset_gate_filler": (
+                        "FILED BY THE FILER LANE, JUDGED BY THE CHAIN LANE. This "
+                        "spec exists to give pipeline/lora/curation-tile-0820.yaml "
+                        "breadth on the SCENE and SCALE axes the pose set left at "
+                        "one value each. It makes no verdict and picks nothing."),
+                        "scene_axis": scene_words,
+                        "scale_axis": scale_words},
+                    force=force))
+    return written
+
+
 # beat, skeleton stem, pose words, the audit's named break, the framing note
 #
 # THE POSE WORDS ARE THE BEAT'S OWN ACTION, read off
@@ -559,6 +701,88 @@ def round2(force=False):
     return written
 
 
+
+# ── THE TWO BEATS THE AUDIT OWED THAT ARE NOT MAN-READS ──────────────────────
+# The seven-beat wave is the beats where the goblin reads as somebody else. The
+# audit also named two beats that read as HIM and miss on ONE attribute each,
+# and said so in as many words: "Beat 14 needs one attribute changed, the ears,
+# not a re-render. Beat 17 needs nothing until a frame shows his face."
+#
+# BOTH ARE NOW CHEAPER TO FIX THAN TO ARGUE ABOUT, because the standard fixes
+# each one for free as a side effect of what it already does:
+#   b14's break is LONG TAPERING ELF SPIKES where the tile has short low
+#   flanges. `pointy ears, long pointy ears, elf` are all in the standard's
+#   negative and canon's measured finding is that the tile's ear ARRIVES
+#   WITHOUT BEING ASKED FOR under exactly that suppression -- Danbooru has no
+#   tag for it, so absence plus suppression is the only lever there is, and it
+#   is already pulled. Every one of the eleven wave plates came back with short
+#   low flanges and not one grew a spike.
+#   b17's break is LEGS THAT RENDER BLUE-TEAL RATHER THAN GREEN on a back view.
+#   `grey skin, pale skin` are in the negative and `colored skin, green skin`
+#   is the wording's core; the eleven plates are uniformly green head to foot.
+#
+# b17 IS FILED AS A FRONT VIEW AND THAT IS A DEPARTURE, NAMED. The shipped beat
+# is a back view and there is no back-view skeleton; every published hint is
+# front-facing. This plate therefore cannot replace b17's framing on its own --
+# what it can do is establish that the standard draws him green to the soles,
+# which is the only thing b17's row actually complains about. If the colour
+# holds, the b17 patch is a recolour or a re-pose, and that is a smaller
+# question than it looks today.
+WAVE2 = [
+    ("14", "jerry-skel-h19kneel-0820",
+     "kneeling, arms forward, in tall grass, full body",
+     "NEAR TILE, ONE NAMED BREAK: long tapering elf spikes where the tile has "
+     "short low flanges, plus a red-and-white striped scarf and no purple cowl. "
+     "Eyes, dome, skin and folded stance already match the tile -- the audit's "
+     "words are 'the ears are the whole gap'.",
+     "THE EAR IS UNPROMPTABLE AND THAT IS WHY THE STANDARD FIXES IT. Danbooru "
+     "has NO tag for a short low swept-back ear -- `short pointy ears` has zero "
+     "posts, `round ears` does not exist, `long ears` is an ALIAS to `pointy "
+     "ears` -- so no positive can request it. Canon's measured finding is that "
+     "naming no ear tag at all and NEGATING both spike tags produces it anyway. "
+     "The standard does exactly that, and eleven plates came back with flanges."),
+    ("17", "jerry-skel-h19-0820",
+     "standing, arms at sides, in tall grass, full body, barefoot",
+     "UNJUDGEABLE ON THE FACE -- it is a back view -- but its LEGS RENDER "
+     "BLUE-TEAL RATHER THAN GREEN, which is a species-colour break and is "
+     "judgeable from any angle.",
+     "A FRONT VIEW, WHICH IS A DEPARTURE AND IS NOT A REPLACEMENT FOR THE SHOT. "
+     "There is no back-view skeleton; every published hint faces front. What "
+     "this frame can settle is whether the standard draws him GREEN TO THE "
+     "SOLES, which is b17's only actual complaint. Barefoot is in the words "
+     "because beat 17 already ships barefoot and it matches the steward "
+     "lower-half pick."),
+]
+
+
+def wave2(force=False):
+    written = []
+    for beat, hint, pose_words, break_note, note in WAVE2:
+        written.append(_emit(
+            new_id="ep2-b%s-tilefix-p1-0821" % beat,
+            job_dir="b%stilefix-p1-0821" % beat,
+            hint=hint, pose_words=pose_words,
+            why=(PATCHWAVE_WHY % (beat, break_note)) + "\n\n" + note,
+            consumer=PATCHWAVE_CONSUMER % (beat, note),
+            success=("ONE 832x1216 png, the k6a standard entire, at seed %d. "
+                     "Scored on the k6a bar by eye at 1:1, AND on this beat's "
+                     "single named attribute, which is the reason it exists."
+                     % S.SEED),
+            variable=("the FRAMING for beat %s. The standard is otherwise "
+                      "ep2-jerry-face-k6a-0821's to the byte." % beat),
+            bar=S.BAR, predicted=PATCHWAVE_PREDICTED,
+            beat=int(beat), priority=26,
+            extra_keys={"the_single_attribute_this_beat_is_about": note,
+                        "post_ship_patch": (
+                            "review/ep2-ship-0821 IS NOT TOUCHED BY THIS JOB. "
+                            "Beats 14 and 17 are the two the audit explicitly "
+                            "took OUT of the re-render wave; this is the "
+                            "cheaper check that the standard closes them "
+                            "anyway, not a re-opening of them.")},
+            force=force))
+    return written
+
+
 def _selftest():
     rc = derive_spec.selftest() or derive_fetch_guard.selftest()
     import jerry_standard_0821
@@ -578,12 +802,17 @@ def main(argv=None):
     for m in modes:
         if m == "poseset":
             written += poseset(force=force)
+        elif m == "sceneset":
+            written += sceneset(force=force)
         elif m == "patchwave":
             written += patchwave(force=force)
         elif m == "round2":
             written += round2(force=force)
+        elif m == "wave2":
+            written += wave2(force=force)
         else:
-            print("!! unknown mode %r -- poseset | patchwave | round2" % m,
+            print("!! unknown mode %r -- poseset | sceneset | patchwave | round2"
+                  % m,
                   file=sys.stderr)
             return 2
     print("\n%d spec(s). Next: box_enqueue each one --backlog." % len(written))

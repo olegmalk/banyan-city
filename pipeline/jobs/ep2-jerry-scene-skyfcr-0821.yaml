@@ -1,0 +1,315 @@
+id: ep2-jerry-scene-skyfcr-0821
+task: ep2-jerry-scene-skyfcr-0821
+node: 002b-first-citizen
+beat: 2
+runner: box
+priority: 46
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: goblin standard lane, 2026-08-21
+consumer: 'THE JERRY LoRA TRAINING SET, and nothing else -- these are
+
+  DATASET-GATE FILLERS. THIS LANE DOES NOT JUDGE THEM. The chain lane that owns
+
+  `ep2-jerry-scene-skyfcr-0821` and `curation-tile-0820.yaml` scores every frame on the
+
+  k6a bar and decides what joins the set; a frame failing any clause is REJECTED,
+
+  because keeping near-misses is exactly what made the 31-frame set untrainable. No
+
+  beat plate here, nothing promoted to a cut, nothing touching
+
+  review/ep2-ship-0821.'
+success: ONE 832x1216 png at seed 20260823, the k6a standard entire, conditioned on jerry-skel-h19crouch-0820.png
+  at scale 1.0 with the pose words 'squatting, in an empty field, low horizon, peach and gold sunrise
+  sky, full body' and the adapter masked to 315,484,515,704. Scored on the k6a bar BY THE CHAIN LANE;
+  any failure rejects it from the training set.
+why: 'SCENE SKY x SCALE FULL BODY, a DATASET-GATE FILLER and nothing else.
+
+
+  `pipeline/lora/curation-tile-0820.yaml` is held on SEVEN frames in FOUR poses and
+
+  its gate asks for BREADTH from a recipe that passes. The pose set answered the
+
+  pose axis and left the other two untouched: all seven of its frames are `in tall
+
+  grass` at `full body`, one scene and one scale, and a character LoRA trained on
+
+  frames that share a backdrop learns the backdrop as part of the trigger token --
+
+  the same failure mode the file already names for pose, one axis over.
+
+
+  THE ONE VARIABLE HERE IS THE BACKGROUND WORDS AND THE FRAMING WORD. The skeleton
+
+  comes from the committed set, the mask follows it by translation, and everything
+
+  the standard pins -- face wording, negative, seed, controlnet, scale, adapter,
+
+  weight, reference, head_frac -- is k6a''s to the byte.
+
+
+  NO MEDIUM AND NO CLOSE RUNG IS FILED, on canon''s own measurement that the closer
+
+  the crop the more the blank-eyed mask resolves into a detailed adult human male;
+
+  round2 closed that question without running it and routed the crop to post. The
+
+  close scale of this dataset is a crop of these plates, made by the lane that
+
+  curates it.'
+est_minutes: 4
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\jerryscene-skyfcr-0821\prompt.txt: masterpiece, best quality, very aesthetic, 1boy, solo,
+    lean wiry adult goblin man, green skin, bald head, patchwork cloak, blank eyes, tsurime, jitome, thick
+    eyebrows, half-closed eyes, squatting, in an empty field, low horizon, peach and gold sunrise sky,
+    full body
+  C:\banyan-farm\jerryscene-skyfcr-0821\negative.txt: lowres, worst quality, low quality, text, watermark,
+    pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin,
+    old man, hair, beard, child, chibi, grey skin, pale skin
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT\
+    \ -- driver, skeleton AND the IP-Adapter\n# reference, because the reference is as much a condition\
+    \ as the\n# skeleton is. Emitted by pipeline/jerry_standard_0821.py.\nimport hashlib, os, urllib.request\n\
+    base = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \nroot = r\"C:\\banyan-farm\\jerryscene-skyfcr-0821\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\"),\n\
+    \        (\"jerry-skel-h19crouch-0820.png\", os.path.join(root, \"pipeline\", \"control\"),\n    \
+    \     \"b3028a04ed18ed992cfa884900443d8ee547423e0dcfd72e42c4dfa52d2352fe\"),\n        (\"jerry-tile-sq20-0821.png\"\
+    , os.path.join(root, \"pipeline\", \"control\"),\n         \"f65c9bb412e541fbe9b6024ddaec5a78b78028afd87e325baa06d6d430dded14\"\
+    )]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
+    \ + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
+    \    if got != sha:\n        print(\"!! %s fetched with sha %s, expected %s\"\n              % (name,\
+    \ got, sha))\n        raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n\
+    \        fh.write(blob)\n    print(\"staged\", name, got, \"->\", dst)\n"
+- name: posehint
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\jerryscene-skyfcr-0821\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\jerryscene-skyfcr-0821\src
+  - --repo-commit
+  - 894b6214ce4ce3f88e8d518ae33de73fbc71f909
+  - --task
+  - ep2-jerry-scene-skyfcr-0821
+  - --arm
+  - ipahead
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - pipeline/control/jerry-skel-h19crouch-0820.png
+  - --control-sha256
+  - b3028a04ed18ed992cfa884900443d8ee547423e0dcfd72e42c4dfa52d2352fe
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260823'
+  - --ip-ref
+  - pipeline/control/jerry-tile-sq20-0821.png
+  - --ip-mask
+  - 315,484,515,704
+  - --ip-ref-sha256
+  - f65c9bb412e541fbe9b6024ddaec5a78b78028afd87e325baa06d6d430dded14
+  - --ip-scale
+  - '0.7'
+  - --ip-weight
+  - ip-adapter-plus-face_sdxl_vit-h.safetensors
+  - --prompt-file
+  - C:\banyan-farm\jerryscene-skyfcr-0821\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\jerryscene-skyfcr-0821\negative.txt
+  - --out
+  - C:\banyan-farm\jerryscene-skyfcr-0821\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The courier pushes from farm-out and from nowhere else --\n# ep2-cnet-probe-0817 rendered perfectly\
+    \ and was invisible for two\n# days for want of this step. The CONDITIONS travel with the frame.\n\
+    import glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/jerryscene-skyfcr-0821/out\"\npay_dir\
+    \ = \"C:/banyan-farm/jerryscene-skyfcr-0821\"\nctl_dir = \"C:/banyan-farm/jerryscene-skyfcr-0821/src/pipeline/control\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-jerry-scene-skyfcr-0821\"\nos.makedirs(dst, exist_ok=True)\n\
+    files = sorted(glob.glob(out_dir + \"/ep2-jerry-scene-skyfcr-0821-ipahead.png*\")\n              \
+    \ + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"/negative.txt\")\n\
+    \               + glob.glob(ctl_dir + \"/jerry-skel-h19crouch-0820.png\")\n               + glob.glob(ctl_dir\
+    \ + \"/jerry-tile-sq20-0821.png\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c\
+    \ = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-jerry-scene-skyfcr-0821.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)\n"
+artifacts:
+- C:\banyan-farm\jerryscene-skyfcr-0821\out\ep2-jerry-scene-skyfcr-0821-ipahead.png
+bar: "THE k6a BAR, AS RECALIBRATED BY THE 2026-08-21 STEWARD RULING.\nRead at 1:1 against review/ep2-goblin-design-0819/adult-b19-0819.jpg.\n\
+  \  T1  BLANK EYES -- no iris, no pupil, no lashes.\n  T1b EYE SIZE <= 1.4x the tile's, relative to the\
+  \ head box. NOT widened.\n      EYE SHAPE (h/w aspect) <= 0.65. RECALIBRATED from 0.52-0.54: only\n\
+  \      defective frames ever met the old value -- k1 met it with a 1.87x eye,\n      k3 with horns and\
+  \ the cowl, k5a with no mouth -- while 0.59-0.63 frames\n      read as the tile. k6a sits at 0.63.\n\
+  \  T2  NO HUMAN NOSE -- no bridge, no tip, no drawn nostrils.\n  T3  NO AGE MODELLING -- no brow furrows,\
+  \ no folds, no jowls.\n  T7  NO PATCHWORK ON THE SKULL.\n  T8  HEAD-TO-BODY >= 4.5 heads with lean limbs.\
+  \ k6a reads 5.51.\n  P1  A BROW ABOVE THE LID WITH SKIN BETWEEN. A lash arc welded to the eye\n    \
+  \  rim is NOT a brow -- that is what the wording rungs drew.\n  P3  A MOUTH. A line, however thin. k5a\
+  \ had NONE and that is why it lost.\n  C1  CONTAINMENT -- no purple cowl at the neck, no horns, no portrait\n\
+  \      composition. k6b/k6c/k6d put the cowl back at 47.3%/17.8%/39.2% and\n      failed on it; k6a\
+  \ reads 0.0%.\n  C2  THE POSE IS THE ONE ASKED FOR. A frame whose skeleton the net ignored is\n    \
+  \  not the pose, however good the figure is.\nA frame failing ANY clause is REJECTED. The whole reason\
+  \ the old 31-frame LoRA\nset was untrainable is that near-misses were kept."
+dataset_gate_filler: FILED BY THE FILER LANE, JUDGED BY THE CHAIN LANE. This spec exists to give pipeline/lora/curation-tile-0820.yaml
+  breadth on the SCENE and SCALE axes the pose set left at one value each. It makes no verdict and picks
+  nothing.
+failure_predicted_in_advance: 'THE BACKGROUND IS THE CHEAP AXIS AND THAT IS THE POINT.
+
+  Nothing in this grid touches the identity clauses, the adapter or its mask, so
+
+  the prediction is that pass rate tracks the POSE the cell drew and not the
+
+  backdrop -- upright cells land, folded cells carry the pose set''s two known
+
+  risks (bobblehead compression, and the magenta neck that b03-r2/b20-r2 are
+
+  measuring at a second seed right now).
+
+
+  THE ONE THING THIS GRID CAN TEACH BEYOND FILLING THE SET: if a backdrop clause
+
+  moves a bar clause -- a sunrise sky warming the skin off the tile''s green, a
+
+  hillside horizon tilting the figure out of containment -- that is a finding about
+
+  the recipe''s robustness that the single-backdrop pose set could not have seen.
+
+  If it teaches nothing, the set still gains the breadth the gate asked for, which
+
+  is what these were filed for.
+
+
+  SEEDS ARE PINNED AT THE STANDARD''S 20260823 ACROSS EVERY CELL, deliberately: with the
+
+  seed held, a cell that differs from k6a only in backdrop shows what the backdrop
+
+  did and nothing else.'
+ip_adapter:
+  ruling: STEWARD PICK, coordinator 2026-08-21, VETO-ABLE (R4). k6a is THE goblin recipe; the T1b shape
+    bar is recalibrated 0.52-0.54 -> <= 0.65 because only defective frames ever met the old value (k1
+    eye 1.87x, k3 horns and cowl, k5a no mouth) while 0.59-0.63 frames read as the tile. See pipeline/jerry_standard_0821.py
+    and canon.yaml.
+  ref: farm-out/jerry-skel-assets-0820/jerry-tile-sq20-0821.png
+  ref_sha256: f65c9bb412e541fbe9b6024ddaec5a78b78028afd87e325baa06d6d430dded14
+  ref_provenance: 'adult-b19-0819.jpg cropped (176,280)-(332,432), sky flood-filled with the tile''s own
+    field green, pasted CENTRED at 20% of a 448x448 SQUARE canvas. Square is load-bearing: diffusers builds
+    CLIPImageProcessor() with no arguments, which resizes the SHORT edge to 224 and CENTRE CROPS to a
+    square, so only on a square canvas is the authored head-to-frame ratio the ratio the encoder receives.
+    k3''s 416x608 portrait lost the top 30% of the subject -- the whole cranial dome -- to that crop and
+    grew horns out of the cut. Encoder coverage here is 3.9%. Rebuild with `pipeline/author_jerry_squareref_0821.py
+    --head-frac 0.20`; assert with `--check f65c9bb412e541fbe9b6024ddaec5a78b78028afd87e325baa06d6d430dded14`.'
+  mask: 315,484,515,704
+  mask_frame: RENDER pixels, 832x1216
+  mask_rule: k6a's authored mask 315,130,515,350 TRANSLATED by this pose's head-block offset. The five
+    head keypoints move as one rigid block between poses (ear span 136.0 px in every pose at head_frac
+    0.190), so the head box translates rigidly and so does the mask. For `stand` the delta is zero and
+    this IS k6a's mask. Derived by pipeline/jerry_standard_0821.mask_for('crouch').
+  scale: '0.7'
+  weights: h94/IP-Adapter sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors, apache-2.0, sha256
+    677ad8860204f7d0bfba12d29e6c31ded9beefdf3e4bbd102518357d31a292c1, 847517512 bytes. THE GENERAL ADAPTER
+    ip-adapter-plus_sdxl_vit-h.safetensors IS THE SAME NUMBER OF BYTES, so only the digest separates them;
+    controlnet_plate.py carries an IP_WEIGHTS allowlist keyed by name and carrying the digest, and the
+    sidecar records which one actually rendered the frame.
+  skeleton: farm-out/jerry-skel-assets-0820/jerry-skel-h19crouch-0820.png
+  skeleton_sha256: b3028a04ed18ed992cfa884900443d8ee547423e0dcfd72e42c4dfa52d2352fe
+  head_frac: 0.19
+  controlnet: xinsir/controlnet-openpose-sdxl-1.0 at scale 1.0
+one_sample_rule: 'DISCHARGED BY THE THIRTEEN-RUNG LADDER, not waived. The recipe change under test here
+  is NOT new: k1..k6d walked the reference route one variable at a time across thirteen samples (pipeline/work-ladder-0819.md;
+  pipeline/lora/curation-tile-0820.yaml updates 4-8), and k6a is the rung the steward ruling names. What
+  varies below is the POSE and the FRAMING, which no single sample could vary, and every frame is judged
+  by eye against the tile before anything is promoted.'
+scale_axis: full body
+scene_axis: in an empty field, low horizon, peach and gold sunrise sky
+the_one_variable: the BACKGROUND WORDS ('in an empty field, low horizon, peach and gold sunrise sky')
+  and the FRAMING WORD ('full body'), with the skeleton drawn from the committed set and the mask following
+  it by translation. Everything else -- face wording, negative, seed, controlnet, scale, adapter, weight,
+  reference, head_frac -- is ep2-jerry-face-k6a-0821's to the byte.
+the_rung_this_is_one_variable_from: ep2-jerry-face-k6a-0821
+derivation:
+  parent: pipeline/jobs/ep2-jerry-face-k6a-0821.yaml
+  by: pipeline/derive_jerry_wave_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - dataset_gate_filler
+  - failure_predicted_in_advance
+  - ip_adapter
+  - one_sample_rule
+  - owner
+  - scale_axis
+  - scene_axis
+  - success
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - ip_adapter
+  - one_sample_rule
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  retokened:
+  - jerryface-k6a-0821 -> jerryscene-skyfcr-0821
+  - ep2-jerry-face-k6a-0821 -> ep2-jerry-scene-skyfcr-0821
+  overrides_applied_and_asserted:
+    argv:--control:
+    - step posehint --control (pipeline/control/jerry-skel-h19-0820.png -> pipeline/control/jerry-skel-h19crouch-0820.png)
+    argv:--control-sha256:
+    - step posehint --control-sha256 (244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c
+      -> b3028a04ed18ed992cfa884900443d8ee547423e0dcfd72e42c4dfa52d2352fe)
+    argv:--ip-mask:
+    - step posehint --ip-mask (315,130,515,350 -> 315,484,515,704)
+    argv:--repo-commit:
+    - step posehint --repo-commit (894b6214ce4ce3f88e8d518ae33de73fbc71f909 -> 894b6214ce4ce3f88e8d518ae33de73fbc71f909)
+    key:beat:
+    - key beat = 2
+    key:est_minutes:
+    - key est_minutes = 4
+    key:priority:
+    - key priority = 46
+    payload:prompt.txt:
+    - payload prompt.txt (235 -> 266 chars)

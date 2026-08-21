@@ -7780,3 +7780,7 @@ that the workflow exists, runs BOTH halves, is hourly, is off :00 and :30, and
 commits only when the feed moved. The threshold and the cron are asserted in the
 same test on purpose: an early-firing banner with no loop clearing it is a red
 box the founder learns to ignore by Tuesday.
+
+### 20 dataset-gate fillers on the SCENE x SCALE grid (filer lane, 2026-08-21)
+
+`derive_jerry_wave_0821.py sceneset` emits 20 k6a-standard samples (`ep2-jerry-scene-*-0821`, priority 46, all filed `--backlog`) crossing five backdrops from the episode's own vocabulary with `full body` / `full body, wide shot`, skeletons rotated across the committed nine. **These are dataset-gate fillers for `pipeline/lora/curation-tile-0820.yaml` and THIS LANE DOES NOT JUDGE THEM — the chain lane scores them on the k6a bar and owns curation.** The pose set moved one axis and left scene and scale at one value each; a character LoRA whose frames share a backdrop learns the backdrop. No medium or close rung is filed: canon measures that the closer the crop the more the blank-eyed mask resolves into an adult human male, round2 closed that rung without running it, and the dataset's close scale is a post-crop of these plates.
