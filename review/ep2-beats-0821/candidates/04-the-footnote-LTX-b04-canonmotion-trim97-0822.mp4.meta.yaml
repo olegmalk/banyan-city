@@ -1,0 +1,27 @@
+# Shot provenance (7.2) - EDIT of a rendered mp4. No sampler ran for this file.
+platform: local-deterministic (ffmpeg trim of a rendered mp4)
+model: none - no sampler ran for this clip
+model_licence: n/a - the edit adds no model output
+source_clip: 04-evidence-LTX-ep2-b04-canonmotion-0821.mp4
+source_path: review/ep2-beats-0821/candidates/04-evidence-LTX-ep2-b04-canonmotion-0821.mp4
+source_sha256: 2fc38968b43c4d3c0cf77de227caa3be454fd88e07e11e8ba07878803299f72a
+source_frames: 105
+source_platform: unrecorded
+source_model: unrecorded
+source_model_licence: unrecorded
+size: 704x1280
+fps: 24.0
+frames: 97
+seconds: 4.042
+edit: ffmpeg select frames 0..96 of 105, re-encoded libx264 crf 10
+frames_cut_head: 0
+frames_cut_tail: 8
+task: ep2-b04-canonmotion-trim97-0822
+cost_usd: 0
+mode: production
+why_trimmed: 'The canon-motion wave''s own trim-to-97 plan, applied so this candidate occupies
+  beat 04''s slot exactly as the take in the cut does (04-the-footnote-b04-refire-0814.mp4
+  is also 97 frames). Nothing is being hidden: f097-f104 were opened at 1:1 and are clean
+  here -- he is upright and back at f096 and still upright at f104 -- so this trim is slot
+  arithmetic, not a cover-up. The 8 dropped frames are the wave''s standard tail margin, written
+  before any of these clips existed.'

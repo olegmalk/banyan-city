@@ -98,8 +98,23 @@ BEATS = {
             "Three other things about this beat have never been scored at all: nobody counts the leaves, nobody measures the grass line, and the camera probe refuses to give a reading.",
         ],
         wins=["Seven of its eight scored clauses pass. The fig grows from green nub to full purple fig inside the clip."],
-        note="A composite that fixed two of the three failing colour bands was swapped in on 08-20 and you ruled it back out on 08-21. This is the take you kept, and that decision is closed unless you reopen it.",
+        note=(
+            "TWO ANSWERS TO YOUR NOTE, AND ONE OF THEM IS THAT THE COLOUR IS SUPPOSED TO DO THAT. "
+            "Your own approved script for this beat reads: \"On the thinnest branch a green nub swells, "
+            "darkens and rounds into a single fig — the only thing in frame that moves.\" The green-to-purple "
+            "IS the ripening, and it is the entire event of the cold open; beat 20's fig was corrected TO "
+            "purple on the same canon. So it has been left in the picture rather than quietly frozen — say "
+            "the word and it changes, but that is a script change and it is yours. "
+            "THE SHAPE IS A REAL DEFECT AND ITS CAUSE WAS IN THE PROMPT: the instruction under this clip "
+            "literally says the nub \"swells, darkens and ROUNDS into a single deep purple fig\", and nothing "
+            "in it or its ban list ever said what a fig looks like. A re-render is running with the "
+            "silhouette written out — teardrop, heavy at the bottom, necked at the top where it meets the "
+            "branch — and ball, sphere, berry and lollipop banned. "
+            "Separately: a composite that fixed two of the three failing colour bands was swapped in on "
+            "08-20 and you ruled it back out on 08-21. This is the take you kept, and that decision is "
+            "closed unless you reopen it."),
         faults_from="ship-manifest.yaml beat 1 (the row for the take this one replaced) + verdict_chromaticity_rung_0820",
+        inflight="ep2-b01-figshape-0822 is on the box now — same plate, same recipe, same everything, one clause of fig silhouette added to the wording and the ball vocabulary banned. If words will not bind the shape, the next rung is drawing the fig-shaped nub into the plate instead of the ellipse the tool draws today; that is written down and deliberately not fired alongside this one.",
         candidates=[],
     ),
     2: dict(
@@ -110,8 +125,21 @@ BEATS = {
             "There is no sapling trunk in frame for him to dive behind — the beat's own staging says he has not found the sapling yet.",
         ],
         wins=[],
-        note="Beat 02 is silent by design — there is no line here.",
+        note=(
+            "Beat 02 is silent by design — there is no line here. "
+            "ON \"TOO SERIOUS, LIKE A SOLDIER\": that is not something this engine will take from words. "
+            "It was measured four separate ways on this exact recipe — moving the mask, halving the "
+            "adapter's strength, dropping the expression tags — and the face came back the same every "
+            "time; a version with NO expression tags at all wore it too. What DID move it was repainting "
+            "the brow and the mouth of the picture itself. So the panic is being painted into the plate, "
+            "over those two bands, with the eyes left alone because the slit pupil is the thing this "
+            "character loses most often. "
+            "ON \"HE JUST FACEPLANTS\": the last round's own notes say the same thing from the other side — "
+            "the dive \"reads as a duck\". The landing is now written as a placement rather than an "
+            "adjective: forearms take it, chin off the ground, and he ends lying flat behind the stem with "
+            "his head up. Your script says he dives BEHIND the trunk, not into the dirt."),
         faults_from="ship-manifest.yaml goblin_design_audit_0820 beats.2 + ship_status.2",
+        inflight="Two jobs, in order. ep2-b02-panicface-0822 repaints the brow and mouth of the round-2 plate (queued, 4 min); the motion job then runs on it with the prone-landing wording. The plate gets looked at at 1:1 first — the queue refused to let one job do both, and it was right to.",
         candidates=[
             dict(file=f"{CAND_URL}/02-evidence-LTX-ep2-b02-canonmotion-r2-0821.mp4",
                  poster=f"{POSTER_URL}/02-evidence-LTX-ep2-b02-canonmotion-r2-0821.jpg",
@@ -145,8 +173,23 @@ BEATS = {
         ],
         wins=[],
         faults_from="ship-manifest.yaml beat 3 what_it_fixed + goblin_design_audit_0820 beats.3",
-        inflight="Round 2 of the canon-motion recipe is RUNNING on the box right now (ep2-b03-canonmotion-r2-0821) — same fix as beat 02's: a starting picture that actually contains the trunk the prompt names.",
+        note=(
+            "\"Looks like an old man\" is this clip, and the 08-20 audit agrees with you in almost the same "
+            "words — human nose with nostrils, a rounded human ear, folds either side of the mouth. THAT "
+            "FACE IS ALREADY FIXED IN A CLIP YOU HAVE NOT SEEN: the round-2 candidate below is drawn off "
+            "your own tile — no horn, no dissolve, features held in all 105 frames — and it also finally "
+            "has the trunk this beat is supposed to be hiding behind. Its one fault is that nothing "
+            "happens in it. That is a wording problem, not a design one: the instruction told a motion "
+            "model to hold still, and it did. A re-render is running with an action that has a start, a "
+            "bottom and a return."),
+        inflight="ep2-b03-crouchlife-0822 is queued on the box — the round-2 candidate's exact plate and recipe, with \"crouch low and hold still, eyes flicking sideways\" replaced by three head-and-shoulder moves. The eye flicks are dropped on purpose: this engine was measured refusing gaze-only motion from both directions on beat 04, and asking again would be re-running a closed experiment.",
         candidates=[
+            dict(file=f"{CAND_URL}/03-evidence-LTX-ep2-b03-canonmotion-r2-0821.mp4",
+                 poster=f"{POSTER_URL}/03-evidence-LTX-ep2-b03-canonmotion-r2-0821.jpg",
+                 label="canon-motion, round 2 — your design, and the trunk is there", tag="warn",
+                 verdict="THE FACE IS FIXED: it is your tile's creature, the horn round 1 grew is gone, and the features are drawn in all 105 frames. The composited two-leaf stem is present, unmoved, crossing his chest and hiding about the sixth of him the script asks for. WHAT IS WRONG: almost nothing happens — the pose barely changes from the first frame to the last and the only event is that his eyes close near the end. He also still recedes, by 27% across the clip, down from about 50% in round 1.",
+                 diff="The starting picture now contains the trunk the prompt names. That is the whole change from round 1, and it removed the horn, halved the recede and gave the beat its cover — at the cost of the model's reason to move at all.",
+                 src="pipeline/jobs/ep2-b03-canonmotion-r2-0821.yaml verdict_canonmotion_r2_0821"),
             dict(file=f"{CAND_URL}/03-evidence-LTX-ep2-b03-canonmotion-0821.mp4",
                  poster=f"{POSTER_URL}/03-evidence-LTX-ep2-b03-canonmotion-0821.jpg",
                  label="canon-motion, round 1 — today", tag="fail",
@@ -174,7 +217,14 @@ BEATS = {
         ],
         wins=[],
         faults_from="ship-manifest.yaml beat 4 superseded_why_0820 + why_this_is_still_the_better_ship",
+        note="You said \"wouldn't be bad if he didnt look so chibi in this\". The first clip below is the answer and it needed no new render — it already existed, unwatched, and it is trimmed to this beat's slot so it drops straight in. Side by side with what is in the cut: the cut is a teal head filling the frame with red eyes and no ears; the candidate is a whole body in your design — bald, big lateral ears, slit pupils, mandarin collar, boots — leaning out and back inside the slot.",
         candidates=[
+            dict(file=f"{CAND_URL}/04-the-footnote-LTX-b04-canonmotion-trim97-0822.mp4",
+                 poster=f"{POSTER_URL}/04-the-footnote-LTX-b04-canonmotion-trim97-0822.jpg",
+                 label="THE CHIBI FIX — canon-motion, trimmed to the slot", tag="pass",
+                 verdict="This is your design instead of the round child, and the peek still lands: he leans out and across, is fully extended in the middle, and is back upright before the clip ends. Same 97 frames as the take in the cut, so it occupies the slot identically. The one gap is the same one the untrimmed clip has: with no trunk in frame there is nothing to lean out FROM, so it reads as a stumble-and-recover rather than a peek.",
+                 diff="The same canon-motion clip below, cut from 105 frames to 97 — the wave's own trim plan, and the length the take in the cut already is. f097–f104 were opened first and are clean, so nothing is being hidden by the trim.",
+                 src="review/ep2-beats-0821/candidates/04-the-footnote-LTX-b04-canonmotion-trim97-0822.mp4.meta.yaml"),
             dict(file=f"{CAND_URL}/04-evidence-LTX-ep2-b04-canonmotion-0821.mp4",
                  poster=f"{POSTER_URL}/04-evidence-LTX-ep2-b04-canonmotion-0821.jpg",
                  label="canon-motion, round 1 — today", tag="pass",
