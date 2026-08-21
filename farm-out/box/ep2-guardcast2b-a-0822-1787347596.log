@@ -1,0 +1,12 @@
+#### job ep2-guardcast2b-a-0822-1787347596 attempt 1 start 2026-08-21T21:26:46Z
+
+==== step stage START 2026-08-21T21:26:46Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\nroot = r\"C:\\banyan-farm\\ep2-guardcast2b-a-0822\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root, \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base + \"pipeline/\" + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n    if got != sha:\n        raise SystemExit(\"!! %s sha %s, wanted %s\" % (name, got, sha))\n    with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n    print(\"staged\", name, got[:12])\n"]
+staged controlnet_plate.py ece54f687d89
+==== step stage END rc=0 2026-08-21T21:26:47Z ====
+
+==== step cast START 2026-08-21T21:26:47Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-guardcast2b-a-0822\\src\\pipeline\\controlnet_plate.py", "--root", "C:\\banyan-farm\\ep2-guardcast2b-a-0822\\src", "--task", "ep2-guardcast2b-a-0822", "--arm", "noipa", "--seed", "20260725", "--steps", "40", "--cfg", "7.5", "--width", "832", "--height", "1216", "--prompt-file", "C:\\banyan-farm\\ep2-guardcast2b-a-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\ep2-guardcast2b-a-0822\\negative.txt", "--out", "C:\\banyan-farm\\ep2-guardcast2b-a-0822\\out"]
+--control is required for a control arm
+==== step cast END rc=6 2026-08-21T21:26:48Z ====
+#### job ep2-guardcast2b-a-0822-1787347596 finished rc=6 2026-08-21T21:26:48Z
