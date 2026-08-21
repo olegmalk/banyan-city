@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The eye — is this your goblin now?</title>
+<style>
+  :root {
+    --bg: #17181a; --panel: #1f2124; --line: #33363b;
+    --ink: #eceef1; --muted: #9aa0a8; --accent: #c8b273;
+    --pass: #7fd68b; --fail: #e08b8b; --new: #8fc4e8;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+         padding: 0 20px 96px; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  header.top { padding: 36px 0 18px; border-bottom: 1px solid var(--line); }
+  header.top h1 { margin: 0 0 8px; font-size: 27px; letter-spacing: -0.01em; font-weight: 650; }
+  header.top .sub { color: var(--muted); font-size: 14.5px; margin: 0; max-width: 76ch; }
+  h2 { font-size: 18px; margin: 44px 0 6px; font-weight: 650; }
+  p { max-width: 76ch; }
+  p.sub { color: var(--muted); font-size: 14.5px; }
+  figure { margin: 14px 0 8px; }
+  figure img { width: 100%; height: auto; display: block;
+               border: 1px solid var(--line); border-radius: 5px; background: #000; }
+  figcaption { color: var(--muted); font-size: 13.5px; margin-top: 7px; max-width: 90ch; }
+  .quote { border-left: 3px solid var(--accent); padding: 2px 0 2px 14px;
+           margin: 16px 0; font-size: 18px; }
+  table { border-collapse: collapse; margin: 14px 0; font-size: 14.5px; width: 100%;
+          max-width: 900px; }
+  th, td { border: 1px solid var(--line); padding: 7px 10px; text-align: left;
+           vertical-align: top; }
+  th { background: var(--panel); font-weight: 600; }
+  code { background: var(--panel); padding: 1px 5px; border-radius: 3px; font-size: 13px; }
+  .ask { background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+         padding: 16px 18px; margin: 34px 0 0; }
+  .ask h2 { margin-top: 0; }
+  .scroll { overflow-x: auto; }
+  a { color: var(--new); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>The eye — is this your goblin now?</h1>
+  <p class="sub">You said <strong>“that aint my goblin”</strong> of the sweep. It was the eye,
+  and it took four rounds on beat 13 to find the two words that fix it. Every plate in the
+  episode has been re-rendered on the result. One question at the bottom.</p>
+</header>
+
+<h2>What was wrong</h2>
+<p>Your picture draws a <strong>small off-white almond with a tiny dark pupil</strong>, low and
+wide-set in a very large dome — the face is mostly forehead. Every frame we were making drew a
+<strong>big rendered iris in a white sclera</strong>. Side by side at the same scale they are two
+different characters, which is what you saw at a glance.</p>
+
+<figure>
+  <img src="/review/ep2-goblin-eye-0822/EYE-b13-ladder-0822.jpg" alt="Five goblin faces at matched scale: the founder's image, the vetoed frame, and three test rounds.">
+  <figcaption>Your image, the frame you vetoed, and the first three attempts — all cropped to
+  the same face height. Nothing here is his eye yet: r10b gets the right <em>kind</em> of eye
+  (a white field with dark pupils) and then draws it far too big, with two pupils in each.</figcaption>
+</figure>
+
+<h2>Why the obvious fixes did nothing</h2>
+<p>The prompt had been naming the pupil — <code>slit pupils</code>, <code>constricted pupils</code> —
+and a rule in our own code was <em>requiring</em> it on every render. On this model that tag draws a
+large iris with a slit through it, which is exactly the thing you rejected. Negating it did not help
+either; the negative was also banning <code>blank eyes</code>, which is very nearly what your eye
+actually is.</p>
+
+<p>What worked was not a feature word at all. Two tags that describe <em>how an eye is drawn</em>
+rather than what it looks like:</p>
+
+<div class="scroll">
+<table>
+  <tr><th>tag</th><th>what it changed</th></tr>
+  <tr><td><code>eyebags</code></td><td>the FILL — iris becomes an off-white field with a dark pupil</td></tr>
+  <tr><td><code>jitome</code></td><td>the SIZE and shape — the flat, deadpan, narrow eye</td></tr>
+  <tr><td><code>large eyes, big eyes</code> (negative)</td><td>holds the scale down</td></tr>
+</table>
+</div>
+
+<figure>
+  <img src="/review/ep2-goblin-eye-0822/EYE-b13-r12d-0822.jpg" alt="Your image, the vetoed frame, and the final three rounds at matched scale.">
+  <figcaption>The last round. <strong>r12d</strong> is the one — small white almond, dark pupil,
+  two thin brow arcs high on the dome, flat mouth, washed-out sage.</figcaption>
+</figure>
+
+<h2>Every beat, re-rendered on it</h2>
+<figure>
+  <img src="/review/ep2-goblin-eye-0822/W4-sweep-0822.jpg" alt="Thirteen goblin plates, one per beat, all on the corrected recipe.">
+  <figcaption>Twelve beats plus one alternate, all on the new recipe. This is the first time the
+  face is the same character in every beat. <strong>b13&nbsp;curl</strong> (bottom right) is your
+  note about beat 13 — he curls down small into the shade patch instead of sitting up.
+  One defect caught here and already re-rendered: b14 drew a second goblin in the grass.</figcaption>
+</figure>
+
+<div class="ask">
+  <h2>The one question</h2>
+  <p><strong>Is r12d your goblin?</strong> If it is, the clips are already being made on it and
+  they will be waiting on the beats page. If something is still off, the most useful thing you can
+  say is <em>which part of the face</em> — we now know the eye responds to how it is drawn, not to
+  what it is called, so a pointed note is cheap to act on.</p>
+  <p class="sub">Full working: <code>pipeline/work-ladder-0819.md</code>, rounds nine to twelve.</p>
+</div>
+
+</div>
+</body>
+</html>
