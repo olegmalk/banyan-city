@@ -9758,3 +9758,10 @@ midday, motion by afternoon, founder watch-through this evening, publish on his
 word tonight. LoRA training runs today only if it doesn't displace patch-wave
 renders (no-preemption card); it is an ep3 enabler, not a ship blocker.
 /status path section re-times accordingly. 24/7 queue, no churn, both standing.
+
+## 2026-08-21 evening — ship-today ends; PER-BEAT ITERATION begins (founder)
+"i dont think we will be able to finish today. let me review each beat one by
+one. iteration. im talking about the clip for each beat." The process is now:
+founder reviews beat-by-beat on the site, one verdict per beat in chat, lanes
+iterate each beat on his notes. The ship gate stays his; no date pressure
+applied by the steward.
