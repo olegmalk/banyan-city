@@ -8096,3 +8096,33 @@ that led to it was sound on the evidence available and the evidence changed.
   since the age pivot and is not in either ruler.
 - **C1 MAGENTA COLLAR** on folded poses (03, 13, 20), per the standing decision.
 
+
+### The expressive-reference route, finished and filed as a dead end (2026-08-21)
+
+Pixels: `review/ep2-goblin-age-0821/CONTACT-expref.png`.
+
+It rendered after beat 13 had already been solved by two words, so it is a
+post-hoc check rather than a decision — and it fails on its own terms too. Both
+strengths **smear the brow into mush and paste a magenta blob where the mouth
+was**; 0.45 is worse than 0.35 and both are worse than the untouched tile. The
+predicted overshoot happened at both ends of the coordinator's range.
+
+So the route is closed twice over: unnecessary (beat 13 smiles with `closed
+eyes, smile, parted lips`) and ineffective (the edit degrades the reference).
+`author_jerry_expref_0821.py` is kept because it found two real things:
+
+1. **SDXL's inpaint pipeline refuses height 1236** (`1236/8 = 154.5`), which is
+   why the job died twice before producing a pixel. Any future full-frame
+   inpaint of the tile hits this.
+2. **The tile's mouth at y=428–435 is clipped by `HEAD_CROP`'s y=432.** The
+   IP-Adapter reference this whole tree runs on barely contains a mouth. That is
+   why the adapter has been carrying the BROW and leaving the mouth to the
+   checkpoint — and it is the mechanical reason mouth tags (`open mouth`,
+   `smile`, `parted lips`) turned out to be the levers that work.
+
+**Next step is MOTION, and it is deliberately not started.** `derive_jerry_motion_0821.py`
+carries a hardcoded beat→plate table pointing at the `tilefix` plates; pointing
+it at `ep2-bNN-ageb-r2-0821` is a table edit. It is held because 14 motion
+renders would be scaling a character look the founder has not seen yet: he ruled
+the AGE, but the age-B plates with restored blank eyes, per-beat emotions and the
+tusk are a new face. One look at `CONTACT-wave-r2-heads.png` gates it.
