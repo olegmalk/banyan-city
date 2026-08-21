@@ -65,6 +65,8 @@ REF_REPO_PATH = "taste/refs/guard1-canon-founder-0822-sq.png"
 RAW = ("https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
        + REF_REPO_PATH)
 REF_PREFIX = "guard1sq"
+# The sampler prepends this before encoding -- see assert_compiled_positive_fits.
+COUNT_TAG = "2boys"
 WORK = r"C:\banyan-farm\ep2-b05-guards-f-0822"
 REFS = WORK + r"\refs"
 OUT = WORK + r"\out"
@@ -101,6 +103,42 @@ BAR = (
     "third figure, which four rounds of rewording on this beat did eventually beat "
     "and which `no third man, no crowd` is carrying."
 )
+
+
+# ---------------------------------------------------------------------------
+# THE COUNT TAG IS PART OF THE POSITIVE AND assert_under_clip77 DOES NOT SEE IT.
+# Learned at 23:23 on 2026-08-22, twice in one minute, for zero GPU seconds
+# because the `dry` step caught it: both this job and its beat-06 sibling were
+# authored at 77 bare tokens, which is exactly the ceiling -- and then
+# goblin_ipa_sample PREPENDS the beat's count tag (`1boy, ` / `2boys, `) before
+# encoding. The compiled positive came to 80, the compressor dropped from the
+# TAIL, and the tail is the ratified style anchor. Result: `STYLE ANCHOR
+# MISSING (`very aesthetic` not in positive)` and `POSITIVE DROPPED: quality |
+# very aesthetic.`, rc=1, nothing drawn.
+#
+# assert_under_clip77 was doing its job correctly and the job was the wrong one:
+# it measures the string in the yaml, and the string the sampler encodes is a
+# different, longer string. Counting the wrong string is the same class of
+# error as judging a face at the wrong scale, which is the other thing this
+# night has been about.
+def assert_compiled_positive_fits(label, positive, count_tag):
+    """Count what the SAMPLER will encode, not what the drafts file holds."""
+    import clip_token_count
+    clip = clip_token_count.Clip()
+    compiled = "%s, %s%s" % (count_tag, positive[:1].lower(), positive[1:])
+    n = clip.count(compiled)[0] + clip_token_count.SPECIALS
+    if not positive.rstrip().endswith("very aesthetic"):
+        raise SystemExit("!! %s does not end on the ratified style anchor "
+                         "`very aesthetic`" % label)
+    if n > clip_token_count.CEILING - 1:
+        raise SystemExit(
+            "!! %s compiles to %d tokens once the `%s` count tag is prepended, "
+            "against CLIP's %d with one token of headroom reserved. The "
+            "compressor drops from the TAIL, and the tail is the style anchor, "
+            "so this does not render badly -- it refuses at the dry step with "
+            "STYLE ANCHOR MISSING. Shorten the positive."
+            % (label, n, count_tag, clip_token_count.CEILING))
+    return n
 
 
 def refs_sha():
@@ -316,6 +354,8 @@ def _selftest():
     npos = assert_under_clip77("b05 guards-f positive", text[:i].strip())
     nneg = assert_under_clip77("b05 guards-f negative", text[i:].strip())
     assert npos <= 77 and nneg <= 77, (npos, nneg)
+    ncomp = assert_compiled_positive_fits("b05 guards-f compiled positive",
+                                          text[:i].strip(), COUNT_TAG)
 
     argv = spec["steps"][2]["argv"]
     assert "--arm" in argv and argv[argv.index("--arm") + 1] == "window4"
@@ -355,8 +395,8 @@ def _selftest():
     assert text.rstrip().split("aesthetic")[0].endswith(
         "cinematic lighting, masterpiece, best quality, very ")
     assert spec["artifacts"] == [OUT + "\\" + frame_name()]
-    print("SELFTEST OK  %s  pos=%d neg=%d  seed=%d  drafts=%s"
-          % (SPEC_ID, npos, nneg, SEED, drafts_sha()[:12]))
+    print("SELFTEST OK  %s  pos=%d (compiled %d with `%s`) neg=%d  seed=%d  drafts=%s"
+          % (SPEC_ID, npos, ncomp, COUNT_TAG, nneg, SEED, drafts_sha()[:12]))
     return 0
 
 

@@ -94,7 +94,7 @@ steps:
   - --seed-start
   - '0'
   - --expect-drafts-sha256
-  - 3b69a82245bb78db256be12d4fbaa0f432f7bfe568301e87ac79bffbcbd9b0f6
+  - 0f103d85cc3afbaf8f76896a5f9830a179cb25473a62629dc035513ae22e6805
   - --task
   - ep2-b06-guard1-0822
   - --dry
@@ -125,7 +125,7 @@ steps:
   - --seed-start
   - '0'
   - --expect-drafts-sha256
-  - 3b69a82245bb78db256be12d4fbaa0f432f7bfe568301e87ac79bffbcbd9b0f6
+  - 0f103d85cc3afbaf8f76896a5f9830a179cb25473a62629dc035513ae22e6805
   - --task
   - ep2-b06-guard1-0822
 - name: publish
@@ -153,7 +153,7 @@ recipe_trace: 'driver + conditioning: pipeline/jobs/ep2-guardcast2-a-0822.yaml (
   reference, same arm, ran 2026-08-22); the recipe''s own parent is pipeline/jobs/ep2-b09-cast-0817.yaml,
   which drew the frame the founder ratified. Reference taste/refs/guard1-canon-founder-0822-sq.png sha
   f78336496ce9d1c7, a top-anchored 832x832 crop of taste/refs/guard1-canon-founder-0822.png. Prompt pipeline/wave-drafts.yaml
-  beats.6.authored_b06_guard1canon_0822, file sha 3b69a82245bb78db, enforced at RUN time by --expect-drafts-sha256
+  beats.6.authored_b06_guard1canon_0822, file sha 0f103d85cc3afbaf, enforced at RUN time by --expect-drafts-sha256
   so a hand-sync between filing and firing cannot swap the wording underneath it.'
 one_sample_rule: ONE CELL, ONE SEED. Two things change against the guardcast2-a parent -- the draft (a
   casting head with `no hands, no clipboard` becomes a medium shot with a prop in both hands) and the

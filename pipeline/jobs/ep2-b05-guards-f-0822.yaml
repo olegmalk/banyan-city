@@ -101,7 +101,7 @@ steps:
   - --seed-start
   - '0'
   - --expect-drafts-sha256
-  - 3b69a82245bb78db256be12d4fbaa0f432f7bfe568301e87ac79bffbcbd9b0f6
+  - 0f103d85cc3afbaf8f76896a5f9830a179cb25473a62629dc035513ae22e6805
   - --task
   - ep2-b05-guards-f-0822
   - --dry
@@ -132,7 +132,7 @@ steps:
   - --seed-start
   - '0'
   - --expect-drafts-sha256
-  - 3b69a82245bb78db256be12d4fbaa0f432f7bfe568301e87ac79bffbcbd9b0f6
+  - 0f103d85cc3afbaf8f76896a5f9830a179cb25473a62629dc035513ae22e6805
   - --task
   - ep2-b05-guards-f-0822
 - name: publish
@@ -160,7 +160,7 @@ recipe_trace: 'driver + conditioning: pipeline/jobs/ep2-guardcast2-a-0822.yaml (
   same arm, ran 2026-08-22); the recipe''s own parent is pipeline/jobs/ep2-b09-cast-0817.yaml, which drew
   the frame the founder ratified. Reference taste/refs/guard1-canon-founder-0822-sq.png sha f78336496ce9d1c7,
   a top-anchored 832x832 crop of taste/refs/guard1-canon-founder-0822.png. Prompt pipeline/wave-drafts.yaml
-  beats.5.authored_b05_guards_f_0822, file sha 3b69a82245bb78db, enforced at RUN time by --expect-drafts-sha256
+  beats.5.authored_b05_guards_f_0822, file sha 0f103d85cc3afbaf, enforced at RUN time by --expect-drafts-sha256
   so a hand-sync between filing and firing cannot swap the wording underneath it.'
 one_sample_rule: 'ONE CELL, ONE SEED, AND THE OTHER TWO CASTING READS ARE HELD. The night order names
   cells B, F and J as the sheet''s strongest reads; only F is fired. The reason is not thrift: running

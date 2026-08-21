@@ -2579,13 +2579,15 @@ beats:
     # BOTH MEN ARE PLACED -- "left" and "right" -- because beat 07 came back
     # with no guard at all twice for describing a figure without placing him.
     #
-    # 77 positive / 61 negative CLIP tokens, counted before writing.
+    # 71 positive bare / 74 COMPILED with the '2boys' count tag / 61 negative.
+    # Same correction as beat 6's draft above -- the count tag is prepended by
+    # the sampler and must be counted at authoring time.
     authored_b05_guards_f_0822: >-
-      Two grown guard men stand side by side in tall green grass, hedgerow
-      behind, pale sky above, looking out over an empty field. The left man
-      has dark cropped hair and round wire-rim glasses. The right man has a
-      thick grey moustache and a jowly face. Both wear white shoulder sashes,
-      cinematic lighting, masterpiece, best quality, very aesthetic No girl,
+      Two grown guard men side by side in tall grass, hedgerow behind,
+      looking out over an empty field. The left man has dark cropped hair and
+      round wire-rim glasses. The right man has a thick grey moustache and a
+      jowly face. Both wear white shoulder sashes, cinematic lighting,
+      masterpiece, best quality, very aesthetic No girl,
       no child, no goblin, no green skin, no pointed ears, no armor, no
       helmet, no third man, no crowd, no white background, no dark, no night.
       No photorealism, no 3D render look. 9:16 vertical, no text.
@@ -3624,15 +3626,17 @@ beats:
     # from a second, but the checkpoint's guard prior is now measurably
     # contaminated and the negative costs 6 tokens.
     #
-    # 77 positive / 70 negative CLIP tokens, counted with
-    # assert_under_clip77 before writing.
+    # 72 positive bare / 75 COMPILED with the '1boy' count tag the sampler
+    # prepends / 70 negative. The compiled figure is the one that matters and
+    # the first version of this draft did not have it: at 77 bare it compiled to
+    # 80, the compressor dropped the tail, and the run died on STYLE ANCHOR
+    # MISSING with nothing drawn. assert_compiled_positive_fits() is the guard.
     authored_b06_guard1canon_0822: >-
       A grown guard man with dark cropped hair and round wire-rim glasses,
-      cream shirt collar and white shoulder sash, stands in tall green grass,
-      hedgerow behind, pale sky above, holding a large flat slab of rough
-      brown bark in both hands at chest height, as wide as his shoulders,
-      looking down at it, cinematic lighting, masterpiece, best quality, very
-      aesthetic No girl, no child, no goblin, no green skin, no pointed ears,
+      cream shirt collar and white shoulder sash, in tall grass with a
+      hedgerow behind, holding a large flat slab of rough brown bark in both
+      hands at chest height, as wide as his shoulders, looking down at it,
+      cinematic lighting, masterpiece, best quality, very aesthetic No girl, no child, no goblin, no green skin, no pointed ears,
       no armor, no helmet, no metal clip, no spring clip, no white paper, no
       small board, no white background, no dark, no night. No photorealism,
       no 3D render look. 9:16 vertical, no text.
