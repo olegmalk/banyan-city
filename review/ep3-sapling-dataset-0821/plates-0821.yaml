@@ -626,3 +626,47 @@ round_6_dataset_after: >-
   ask for it under WARM light with no season word, which is now the one
   lighting shape proved to keep a green ground. Nothing is trained.
   DECISIONS.md item 18 is open.
+
+# ---------------------------------------------------------------------------
+# ROUND 7, FILED 2026-08-21 and NOT YET RUN. Filed at the end of this lane's
+# night and left in the box BACKLOG at priority 120 -- behind the queue default
+# of 100 and far behind the beat campaign's 15 -- because two iteration-campaign
+# lanes (beats 01-10 and 11-21) are shipping to the same card and a variety
+# probe does not preempt ship work. This lane does not refill after it.
+
+round_7_filed: >-
+  ep3-sapfld7-x01..x04-0821, derived by pipeline/derive_sapling_field_r7_0821.py
+  from the same round-4 control rounds 5 and 6 used, with the LIGHTING FROZEN at
+  w02's `low sun behind thin cloud, warm diffuse glow` -- the one clause round 6
+  proved keeps a green ground -- so the single variable is the scene. Every cell
+  names a RECEDING FEATURE THAT IS NOT A LANDFORM, which is the half of round
+  2's rule that sixty-odd cells across six rounds have never once tested: x01 a
+  grassy courtyard with a colonnade receding, x02 a low stone wall running into
+  the distance, x03 a cobbled lane between houses with grass verges. x04 is the
+  CONTROL and is w02's exact words at a new seed.
+
+round_7_why_the_control_matters_most: >-
+  Round 6's warm-light finding -- the one this whole round is built on -- rests
+  on ONE PICTURE. x04 re-runs w02's words at a new seed. If it comes back tan or
+  plane-less, w02 was seed luck, the finding is unsupported and the three built
+  cells cannot be read at all. Read x04 first, the same way w03 was read first
+  in round 6.
+
+round_7_failure_predicted_in_advance: >-
+  FIRST, AND THIS TREE HAS THE WORST RECORD ON IT: A FIGURE. The negatives have
+  failed to hold position five times, and the only reason rounds 5 and 6 went 22
+  for 22 clean is that they asked for EMPTY LANDSCAPES, where there is nobody to
+  draw. A courtyard and a village lane are places people live. A populated batch
+  costs its card time and returns the finding that built scenes are unreachable
+  at this negative -- which is worth knowing and is NOT worth a sixth rewording
+  of a ban that has failed five times.
+  SECOND: STONE IS GREY AND GREY STARVES THE PALETTE. w01 was refused at step 2
+  with zero green-dominant pixels. A flagstone courtyard or a cobbled lane is
+  that same refusal arriving through a MATERIAL word instead of a lighting one.
+  Every cell names grass, lawn or verges first -- and round 5 already proved
+  that putting the green word first did not save the water cells.
+  THIRD: THE BUILDING STANDS IN THE ROOTABLE STRIP. Round 3 pre-registered this
+  shape for treelines and it did not happen; round 5 pre-registered it for water
+  and it happened 3 of 3.
+  A BATCH THAT FAILS ON ALL FOUR IS STILL A RESULT: it closes an axis open since
+  round 2 and stops a later round paying for it again.
