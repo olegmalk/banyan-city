@@ -894,7 +894,10 @@ def story_short(text, cap=STORY_CARD_CAP):
             break
     out = out.strip()
     if not out or len(out) > cap:
-        out = t[: cap - 1].rstrip() + "…"
+        # One long sentence and no clause boundary inside the cap. Cut on a WORD
+        # boundary — "hand-sized pat…" is a typo the reader has to decode.
+        head = t[: cap - 1]
+        out = (head.rsplit(" ", 1)[0] or head).rstrip(" ,;—-") + "…"
     return out
 
 
@@ -1020,7 +1023,7 @@ SUPPORT_JOBS = [
      "Character design work — the goblin",
      "Not a story beat. These build the reference pictures of him that the "
      "real shots are drawn from, so he looks like the same creature twice."),
-    (r"guards?-(sheet|derived)|charref-guards?",
+    (r"charref-guards?|guards?-(?:[a-z0-9]+-)?(?:sheet|derived)",
      "Character design work — the two patrol guards",
      "Not a story beat. Reference pictures of the guards, so the pair look "
      "like the same two men in every shot they appear in."),
@@ -1036,7 +1039,7 @@ SUPPORT_JOBS = [
      "Character design work — the magistrate",
      "Not a story beat. Reference pictures of a character from a later "
      "episode, drawn ahead of the shots that need him."),
-    (r"sapfield|sapfld|sapling-reference",
+    (r"sapfield|sapfld|saplora|sapling-(reference|dataset|lora)",
      "Sapling dataset — episode 3 prep",
      "Not a story beat. Pictures of the sapling in many places, sizes and "
      "lights, collected to teach the model to draw it the same way every time."),

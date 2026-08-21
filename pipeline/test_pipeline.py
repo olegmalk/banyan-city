@@ -10281,6 +10281,7 @@ def test_every_beat_plate_scratch_can_draw_is_visible_to_the_filer():
 def main():
     import tempfile
     test_the_queue_page_says_so_when_its_own_feed_has_died()
+    test_a_render_card_says_what_part_of_the_story_it_is()
     test_every_beat_plate_scratch_can_draw_is_visible_to_the_filer()
     test_a_derived_spec_carries_structure_and_never_a_verdict()
     test_a_stale_harness_cannot_render_a_killed_wording()
@@ -12142,6 +12143,103 @@ def test_a_derived_spec_carries_structure_and_never_a_verdict():
                     and k != "derivation"]
         check("%s's own findings keys were authored here, not carried" % name,
               not [k for k in findings if k in carried])
+
+
+def test_a_render_card_says_what_part_of_the_story_it_is():
+    """The founder, 2026-08-21: "in the queue history it should also show what
+    the clip is supposed to express, like what part of the story it is, it helps
+    alot." A /queue card that reads `beat 13` names a slot in a list. What he
+    wants under it is the story — and the one way to get that wrong that matters
+    is to print it where it does not apply.
+
+    THE TRAP THIS GUARDS. The box stamps `beat` from whatever spec a job was
+    copied from, so non-beat work inherits a beat number it has nothing to do
+    with: every episode-3 LoRA dataset cell is filed under beat 16. Read that
+    field and a picture of empty grass gets captioned "Beat 16 — WHY, close on
+    one leaf with the scavenger blurred behind it" — a confident lie in the one
+    place the page exists to be trusted. So the resolver reads the JOB ID, and
+    build_queue drops the inherited number from the label AND from the beat
+    filter for anything the resolver calls support work.
+    """
+    import queue_history as qh
+    import build_queue as bq
+
+    s = qh.story_context("ep2-b13-tallsample-0821")
+    check("a beat job is placed in the story by its job id",
+          s and s["kind"] == "beat" and s["beat"] == 13)
+    check("and named the way the script names it",
+          s["label"] == "Beat 13 — The Shade")
+    check("the moment is the beat's own stage direction, not a paraphrase",
+          "shade" in s["moment"] and "legs give out" in s["moment"])
+    check("the spoken line travels with it",
+          "Thanks for the shade" in (s.get("line") or ""))
+    check("and what the clip has to show comes off the shipping bar",
+          "FOLDED SMALL" in (s.get("expresses") or ""))
+    check("the card line is card-sized and never cut mid-word",
+          len(s["moment_short"]) <= qh.STORY_CARD_CAP + 1
+          and not s["moment_short"].rstrip("…").endswith(("pat", "-")))
+
+    # Same beat, three id dialects the queue has actually used.
+    check("an episode-numbered id resolves",
+          qh.story_context("ep1-b06-r6a-tallgrass-0810")["beat"] == 6)
+    check("a node-numbered id resolves to the same beat",
+          qh.story_context("001-b06-r8c-clear5-0810")["label"]
+          == qh.story_context("ep1-b06-r6a-tallgrass-0810")["label"])
+    two = qh.story_context("ep2-b0708-twofig-pub-0817")
+    check("a two-beat job names both beats", two["label"].startswith("Beats 07 and 08"))
+
+    # Non-beat work: an honest label, and NO beat.
+    ds = qh.story_context("ep3-sapfld2-r04-0821")
+    check("a dataset cell is called dataset work, not a beat",
+          ds and ds["kind"] == "support" and "Sapling dataset" in ds["label"])
+    check("and says in words that it is not a story beat",
+          "Not a story beat" in ds["moment"])
+    gob = qh.story_context("ep2-jerry-face-k4a-0818")
+    check("goblin design work is named as design work",
+          gob["kind"] == "support" and "the goblin" in gob["label"])
+    check("a guard sheet with a letter in the middle is still a guard sheet",
+          "guards" in qh.story_context("ep2-guard-b-derived-0814")["label"])
+    check("a machine check is not dressed up as story",
+          qh.story_context("box-preflight-0810")["kind"] == "support")
+    check("a beat render OF the goblin is still a beat, not design work",
+          qh.story_context("ep2-b02-goblin-staged-0811")["kind"] == "beat")
+
+    # Unknown stays unknown. Absent, never invented.
+    check("a job shape the resolver cannot place gets no story at all",
+          qh.story_context("index") is None
+          and qh.story_context("totally-unknown-thing-0821") is None)
+    check("a beat number the script does not have states the number and stops",
+          (qh.story_context("ep2-b99-nonesuch") or {}).get("moment") is None)
+    check("an empty task id resolves to nothing rather than beat 0",
+          qh.story_context("") is None and qh.story_context(None) is None)
+
+    # attach_story does not leave a stale story on a row it can no longer place.
+    rows = [{"task": "ep2-b13-x", "story": {"kind": "beat"}},
+            {"task": "index", "story": {"kind": "beat", "label": "Beat 16 — Why"}}]
+    qh.attach_story(rows)
+    check("a refreshed row keeps a story the resolver still finds",
+          rows[0]["story"]["label"] == "Beat 13 — The Shade")
+    check("and loses one it no longer does", "story" not in rows[1])
+
+    # The page half: the inherited beat number must not survive to the filter.
+    ds_job = {"id": "j", "beat": 16, "task": "ep3-sapfld2-r04-0821",
+              "story": ds}
+    check("support work is filed under no beat, not under the one it inherited",
+          bq.story_beat(ds_job) is None)
+    check("and its card leads with the honest label instead of `beat 16`",
+          "Sapling dataset" in bq.card_html(ds_job, 0)
+          and "beat 16" not in bq.card_html(ds_job, 0))
+    beat_job = {"id": "k", "beat": 2, "task": "ep2-b13-tallsample-0821",
+                "story": s}
+    check("a beat job's number comes from its id when the stamp disagrees",
+          bq.story_beat(beat_job) == 13)
+    plain = {"id": "m", "beat": 7, "task": "index"}
+    check("a job with no story keeps whatever the record recorded",
+          bq.story_beat(plain) == 7)
+    html = bq.card_html(beat_job, 0)
+    check("the card prints the moment and the bar under the beat name",
+          "Beat 13 — The Shade" in html and "has to show:" in html
+          and "shade" in html)
 
 
 if __name__ == "__main__":

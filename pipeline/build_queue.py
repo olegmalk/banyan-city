@@ -303,6 +303,16 @@ main { max-width: 1180px; }
 .qc .p { margin: .3rem 0 0; font: 500 .7rem/1.45 var(--mono); color: var(--muted);
   overflow-wrap: anywhere; }
 .qc .p.gap { color: var(--sap); }
+/* What part of the story this is. It sits ABOVE the prompt because the prompt
+   is how the picture was asked for and this is what the picture is FOR — the
+   founder reads the second one first. Serif against the card's mono so the
+   story reads as story and not as another machine field. */
+.qc .story { display: block; margin: .3rem 0 0; font: 400 .78rem/1.42 var(--body);
+  color: var(--ink); overflow-wrap: anywhere; }
+.qc .story .said { color: var(--leaf); font-style: italic; }
+.qc .story.support { color: var(--faint); font-style: italic; }
+.qc .expr { display: block; margin: .18rem 0 0; font: 500 .66rem/1.4 var(--mono);
+  color: var(--faint); overflow-wrap: anywhere; }
 .qhide { display: none !important; }
 
 .qmore { margin: 1rem 0 0; }
@@ -338,6 +348,11 @@ main { max-width: 1180px; }
   border: 1px solid var(--line-soft); border-radius: 10px; padding: .65rem .8rem;
   margin: 0; overflow-wrap: anywhere; }
 .qprose.neg { color: var(--muted); }
+/* The story, in the record. Set in the body serif at reading size: the rest of
+   this panel is machine record and this part is the show. */
+.qstory { font: 400 1rem/1.6 var(--body); color: var(--ink); margin: .25rem 0 0;
+  overflow-wrap: anywhere; }
+.qstory.said { color: var(--leaf); font-style: italic; margin: .35rem 0 0; }
 .qgap { font: 700 .8rem/1.6 var(--mono); color: var(--sap); margin: 0; }
 .qgap i { color: var(--faint); font-style: normal; font-weight: 500; }
 .qmeta { font: 500 .78rem/1.7 var(--mono); color: var(--faint); margin: .3rem 0 0;
@@ -725,6 +740,28 @@ def snippet(text: str, limit: int = SNIPPET) -> str:
     return (cut or t[:limit]) + "…"
 
 
+def story_beat(job: dict):
+    """The beat this job really belongs to, or None.
+
+    The sidecar's `beat` field is stamped from whatever spec the job was copied
+    from, so non-beat work inherits a beat it has nothing to do with — the
+    episode-3 LoRA dataset cells are all filed under beat 16, and before this
+    they printed `beat 16` over a picture of empty grass and answered the beat-16
+    filter. When queue_history's resolver says a job is support work, the number
+    is dropped from the label AND from the filter; when it names a beat, its
+    number (read from the job id) wins over the stamped one. A job the resolver
+    cannot place keeps whatever the record says, because absence of knowledge is
+    not evidence of a wrong beat.
+    """
+    story = job.get("story") or {}
+    if story.get("kind") == "support":
+        return None
+    if story.get("kind") == "beat" and isinstance(story.get("beat"), int):
+        return story["beat"]
+    b = job.get("beat")
+    return b if isinstance(b, int) else None
+
+
 def first_of(job: dict, kind: str) -> dict | None:
     for out in job.get("outputs") or []:
         if isinstance(out, dict) and out.get("kind") == kind and out.get("path"):
@@ -741,7 +778,7 @@ def card_html(job: dict, i: int) -> str:
     by keyboard and announced as pressable, and every card on this grid does the
     same thing when you hit it.
     """
-    beat = job.get("beat")
+    beat = story_beat(job)
     rc = job.get("rc")
     failed = bool(rc)
     img = first_of(job, "image")
@@ -765,7 +802,13 @@ def card_html(job: dict, i: int) -> str:
         shot = f'<div class="none">{NO_ARTIFACT}</div>'
 
     play = '<span class="play">&#9654;</span>' if vid else ""
+    story = job.get("story") or {}
     beat_txt = f"beat {int(beat):02d}" if isinstance(beat, int) else "no beat"
+    if story.get("label"):
+        # `Beat 13 — The Shade` in the slot that used to read `beat 13`, and for
+        # support work the honest name of the job in the slot that used to read
+        # a beat number it inherited by accident.
+        beat_txt = story["label"]
     outcome = ('<span class="rc-bad">FAILED</span>' if failed else
                f'<span>{_e(clock(job.get("finished_at")))}</span>')
     n = len(job.get("outputs") or [])
@@ -779,6 +822,21 @@ def card_html(job: dict, i: int) -> str:
             else job.get("prompt_absent") or NO_PROMPT)
     gap = "" if job.get("prompt") else " gap"
 
+    # What part of the story this is, and what the clip has to get across. Both
+    # are read out of the tree by queue_history.story_context — the beat's own
+    # stage direction, its spoken line, and the shipping bar somebody wrote to
+    # judge it against. A job the resolver could not place prints nothing here.
+    story_html = ""
+    if story.get("moment_short") or story.get("moment"):
+        cls = "story" + (" support" if story.get("kind") == "support" else "")
+        text = story.get("moment_short") or story.get("moment")
+        said = (f' <span class="said">&ldquo;{_e(snippet(story["line"], 70))}&rdquo;</span>'
+                if story.get("line") else "")
+        story_html = f'<span class="{cls}">{_e(text)}{said}</span>'
+    if story.get("expresses_short"):
+        story_html += (f'<span class="expr">has to show: '
+                       f'{_e(story["expresses_short"])}</span>')
+
     return (
         f'<button type="button" class="qc{" failed" if failed else ""}" '
         f'data-i="{i}" data-b="{_e(beat) if beat is not None else ""}" '
@@ -788,6 +846,7 @@ def card_html(job: dict, i: int) -> str:
         f'<span class="row"><span class="beat">{_e(beat_txt)}</span>'
         f'<span class="kind">{_e(kind_word(job.get("kind")))}</span>'
         f'{outcome}{files}</span>'
+        f'{story_html}'
         f'<span class="p{gap}">{_e(line)}</span>'
         f'</span></button>')
 
@@ -810,10 +869,20 @@ def day_section(key: str, jobs: list, start: int) -> str:
 def upcoming_card(row: dict, success: str | None) -> str:
     state = row.get("state") or "authored"
     colour, words = STATE_WORDS.get(state, ("green", state.upper()))
-    beat = row.get("beat")
+    beat = story_beat(row)
     beat_txt = f"beat {int(beat):02d}" if isinstance(beat, int) else "no beat"
+    story = row.get("story") or {}
+    if story.get("label"):
+        beat_txt = story["label"]
     est = row.get("est_minutes")
     body = []
+    if story.get("moment_short") or story.get("moment"):
+        body.append(f'<p class="qh">What part of the story it is</p>'
+                    f'<p class="qmeta">'
+                    f'{_e(story.get("moment_short") or story["moment"])}'
+                    + (f' &ldquo;{_e(snippet(story["line"], 70))}&rdquo;'
+                       if story.get("line") else "")
+                    + '</p>')
     if row.get("consumer"):
         body.append(f'<p class="qh">Consumer — who is waiting for it</p>'
                     f'<p class="qmeta">{_e(row["consumer"])}</p>')
@@ -850,7 +919,7 @@ def index_row(job: dict) -> dict:
     img, vid = first_of(job, "image"), first_of(job, "video")
     row = {
         "id": job.get("id"),
-        "beat": job.get("beat"),
+        "beat": story_beat(job),
         "kind": job.get("kind") or "other",
         "rc": 1 if job.get("rc") else 0,
         "finished": job.get("finished_at"),
@@ -878,10 +947,12 @@ def index_row(job: dict) -> dict:
 def detail_row(job: dict) -> dict:
     """Everything the opened record shows. Fetched on the first click, once."""
     out = {}
-    for key in ("id", "beat", "kind", "rc", "failed_step", "attempts", "node",
+    if story_beat(job) is not None:
+        out["beat"] = story_beat(job)
+    for key in ("id", "kind", "rc", "failed_step", "attempts", "node",
                 "runner_host", "started_at", "finished_at", "duration_s",
                 "prompt", "negative", "prompt_source", "recipe", "spec_file",
-                "sidecar", "artifacts_dir", "purpose_note"):
+                "sidecar", "artifacts_dir", "purpose_note", "story"):
         val = job.get(key)
         if val not in (None, "", [], {}):
             out[key] = val
@@ -975,12 +1046,16 @@ def render(data: dict | None, now: datetime.datetime = None) -> str:
     # 21 beats will not fit the bar as chips on a phone. A native <select> is one
     # control tall, opens as the platform's own picker, and carries the count so
     # the choice is informed before it is made.
+    # story_beat and not j["beat"]: the picker's counts have to be the same
+    # number of cards the filter then shows, and both now read the resolver.
     beat_counts: dict = {}
+    beatless = 0
     for j in jobs:
-        b = j.get("beat")
+        b = story_beat(j)
         if isinstance(b, int):
             beat_counts[b] = beat_counts.get(b, 0) + 1
-    beatless = sum(1 for j in jobs if not isinstance(j.get("beat"), int))
+        else:
+            beatless += 1
 
     days: dict = {}
     for job in jobs:
@@ -1738,6 +1813,29 @@ LIVE_JS = """
     clear(body);
     who.textContent = (row.beat === null || row.beat === "" || row.beat === undefined
       ? "No beat" : "Beat " + row.beat) + " \\u00b7 " + (KINDS[row.kind] || row.kind);
+
+    /* What part of the story this is, first thing in the record — before the
+       pictures, before the prompt. The prompt says how the render was asked
+       for; this says what it is FOR, and that is the question the founder
+       opens a card with. */
+    if (det && det.story) {
+      var s = det.story;
+      if (s.label) who.textContent = s.label + " \\u00b7 " + (KINDS[row.kind] || row.kind);
+      if (s.moment) {
+        body.appendChild(el("p", "qh", s.kind === "beat"
+          ? "What happens here" : "What this job is"));
+        body.appendChild(el("p", "qstory", s.moment));
+      }
+      if (s.line) {
+        body.appendChild(el("p", "qstory said",
+          "\\u201c" + s.line + "\\u201d" + (s.speaker ? "  \\u2014 " + s.speaker : "")));
+      }
+      if (s.expresses) {
+        body.appendChild(el("p", "qh", "What the clip has to get across"));
+        body.appendChild(el("p", "qmeta", s.expresses));
+      }
+      if (s.why) body.appendChild(el("p", "qmeta", s.why));
+    }
 
     var top = el("p", "qmeta");
     top.appendChild(el("span", row.rc ? "rc-bad" : "rc-ok",
