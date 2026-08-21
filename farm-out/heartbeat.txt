@@ -3514,3 +3514,5 @@
 07:02:50Z DONE task=ep2-jerry-set-point-0821-1787295090 rc=0 artifacts=1
 07:02:56Z STARTED task=ep2-jerry-set-reach-0821-1787295087 attempt=1 on box-runner
 07:03:24Z DONE task=ep2-jerry-set-reach-0821-1787295087 rc=0 artifacts=1
+07:03:30Z STARTED task=ep2-jerry-set-seat-0821-1787295101 attempt=1 on box-runner
+07:03:56Z DONE task=ep2-jerry-set-seat-0821-1787295101 rc=0 artifacts=1
