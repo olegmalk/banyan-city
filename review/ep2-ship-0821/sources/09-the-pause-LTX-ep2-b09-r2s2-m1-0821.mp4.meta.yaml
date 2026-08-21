@@ -8,7 +8,7 @@ seconds: 5.042
 steps: 8@352x640+3@704x1280
 guidance: 2.0
 seed: 20260819
-task: ep2-b09-cropmotion-0820
+task: ep2-b09-r2s2-m1-0821
 cost_usd: 0
 prompt: ''
 negative: ''
@@ -16,5 +16,5 @@ mode: production
 batch: 1
 batch_slot: 0
 offload: sequential
-throughput_s_video_per_s_wall: 0.0191
-compute_s_per_video_s: 52.4
+throughput_s_video_per_s_wall: 0.0185
+compute_s_per_video_s: 53.9

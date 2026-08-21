@@ -13,7 +13,11 @@
 # below that is a steward pick says so, and carries its one-line veto.
 
 cut: review/ep2-ship-0821/ep2-ship-0821.mp4
-sha256: 46749b284721c4589088504f05ea80c0ec703c5db97a4863a71c73160bdde893
+sha256: 5037a7142a236cc4a9172e5cd32748d9dd640922204d33240241edf180d83a8e
+# RE-ASSEMBLED 2026-08-21 morning: beat 09's take was upgraded to the r2s2 crop
+# (09-the-pause-LTX-ep2-b09-r2s2-m1-0821.mp4). Same 21 beats, same 116.33 s, same
+# audio, same everything else — one picture. Previous bytes
+# 46749b284721c4589088504f05ea80c0ec703c5db97a4863a71c73160bdde893.
 # RE-ASSEMBLED 2026-08-20 night after the beat 04 + beat 13 swap. The previous
 # bytes (5a68646d24b24bf72b25f1a75cc9a5747c66d3b3c4e3757d2803700978c1a27d) were
 # assembled at 20:05 from the OUTGOING refire takes; the manifest was swapped at
@@ -134,10 +138,32 @@ ship_mode_rules_applied:
     16 and to nothing else, and it stopped applying at 01:05 on 2026-08-21 when
     the restage produced legal footage. Kept because it was right while it held.
 
-# ------------------------------------------------- the one contested entry --
+# --------------------------------- the entry that was contested, and is not --
 
 beat_09_ship_mode_entry:
-  take: 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4
+  THE_CARD_THIS_ENTRY_WAITED_ON_IS_ANSWERED: >-
+    2026-08-20, founder, verbatim: "they should look like grown men. yes. dumb
+    grown men." That is a PASS on the adult-guard read (and a yes to the plain
+    green man, which is the other half of the same card). THIS BLOCK IS NO
+    LONGER AN OVERRIDE. Everything below it is left standing unedited because
+    the reasoning was written before the answer existed and the record should
+    show what was overridden and why, not a tidied version where the question
+    never happened. What changes is only this: beat 09 is an ORDINARY STEWARD
+    PICK, veto-able in one line like every other pick in this cut.
+    Recorded with its provenance on /review/ep2-guards-0818 and in
+    review/inbox.yaml: the words were RELAYED by the orchestrating lane on
+    2026-08-21, not read out of a transcript held in this tree, and the beat-09
+    lane refused to write them into this manifest until they arrived verbatim
+    with a date.
+  AND_THE_CLIP_ITSELF_HAS_BEEN_REPLACED: >-
+    The take this block describes is no longer in the cut. It was swapped on
+    2026-08-21 for 09-the-pause-LTX-ep2-b09-r2s2-m1-0821.mp4, a different crop
+    of the same plate whose hand survives the whole slot and whose glasses do
+    not dissolve. See the beat-09 row in `beats:` for the take, the numbers, the
+    four faults it ships with and the one-line reversal. The paragraphs below
+    describe the OUTGOING clip and are kept as the record of how the beat got a
+    picture at all.
+  take: 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4   # OUTGOING, see above
   sha256: 247ecf6ca592127642ecf1f37c28b54fea327b5e992b3264ad505169f7e7d5ea
   source: farm-out/ep2-b09-cropmotion-0820/ (byte-identical, sha verified against
     the box's own ep2-b09-cropmotion-0820.sha256 before the copy)
@@ -436,29 +462,73 @@ beats:
 
   - beat: 9
     slug: THE PAUSE
-    take: 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4
-    sha256: 247ecf6ca592127642ecf1f37c28b54fea327b5e992b3264ad505169f7e7d5ea
-    why: new — SHIP-MODE ENTRY over a pre-registered is_show_content:false. VETO-ABLE ON WATCH.
-    verdict: pipeline/jobs/ep2-b09-cropmotion-0820.yaml verdict / is_show_content_why
+    take: 09-the-pause-LTX-ep2-b09-r2s2-m1-0821.mp4
+    sha256: 9764a2e61068195b7c3a0ffa0305aae6d764c4f2b0e9fa5f7e22d7918a412fd2
+    why: >-
+      UPGRADE, 2026-08-21 morning. Same beat, same slot, same 121 frames, same
+      VO — a different crop of the plate. It replaces
+      09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4
+      (247ecf6ca592127642ecf1f37c28b54fea327b5e992b3264ad505169f7e7d5ea),
+      which shipped with its hand gone by f005 of a 93-frame slot. STEWARD PICK,
+      VETO-ABLE ON WATCH.
+    job: pipeline/jobs/ep2-b09-r2s2-m1-0821.yaml
+    verdict: pipeline/jobs/ep2-b09-r2s2-m1-0821.yaml verdict_0821 / verdict_batch_0821
     verdict_quoted: >-
-      FOUR OF FOUR, and the clause that carries the result is the one named as
-      MOST LIKELY TO FAIL. REFERENCE-PLUS-CROP IS NOT A STILLS-ONLY INSTRUMENT.
-      Beat 09's framing axis is closed by geometry. One thing did break and it
-      is not the softness: the hand at his cheek dissolves over the first eight
-      frames.
+      Best acting and the most locked frame in the batch. Hand present and
+      readable at f001 f008 f030 f050 f070 f093 — the whole slot — where the
+      clip it replaces measures 46.98 hand-box drift by f005 and never recovers.
+      Face-band 1.891 mean in slot against the outgoing take's 1.390, thirds
+      1.787 / 2.484 / 1.386 so its worst third beats the outgoing take's middle
+      third of 0.187. Background residual 0.47 / 0.28 against 7.02 / 2.84: the
+      most locked frame beat 09 has had. Mouth closed for 121 frames.
+    what_it_fixed: >-
+      TWO THINGS, AND ONLY ONE OF THEM WAS ON THE CARD. (1) The hand, which the
+      outgoing row named. (2) THE GLASSES, WHICH NOTHING NAMED: on the outgoing
+      take one round wire rim dissolves by f008 and does not come back, on a
+      character whose round wire-rims are in every prompt in this beat family.
+      All five clips in the r2s2 batch keep both rims for 121 frames. That fault
+      rode the cut unrecorded and is written down here rather than quietly
+      deleted along with the clip.
     fault_shipping: >-
-      TWO. (1) HE READS ADOLESCENT in close-up, which is the open guards card
-      at full size — the reason this clip was withheld. (2) THE HAND DISSOLVES
-      inside the slot: full hand on the cheek at f001, gone by f008, and the
-      slot is f001-f093. C4 passes as written and would not pass with the hand
-      excluded (0.844 against a 1.0 bar).
-    plate: head fraction 0.255 -> 0.55 by crop (pipeline/beat09_plate_crop.py,
-      no sampler, no model, no GPU), meeting the 55% bar for the first time.
-    see: beat_09_ship_mode_entry, above — the full warrant, the override it
-      makes, the precedent it stands on and its one-line veto.
-    open_card: /review/ep2-guards-0818 — pass / recast / stage. A "pass" or
-      "stage" retroactively makes this an ordinary pick; a "recast" is the
-      veto.
+      FOUR, NAMED. (1) THE HAND CHANGES POSE across f030-f050 — it slides from
+      covering his mouth to resting along his jaw, and the fingers merge from
+      there into a hand with a readable thumb rather than four drawn fingers. It
+      is a move, not a dissolve, and it is not a move the script asked for.
+      (2) ONE EYE IS SQUINTED from f001; it OPENS at f040-f070, both irises
+      visible, and narrows again by f093. That squint is a property of the r2s2
+      plate and is the priced cost of this route — the ladder called it "sharper
+      hand, shut eye" — but it opens, so what ships is an eye that acts rather
+      than an eye that is shut. (3) last_live_pair_in_slot 90 against the
+      outgoing take's 92: it settles two frames earlier. (4) 59 of 92
+      whole-frame pairs sit under the dead-pair floor, which is what a LOCKED
+      world costs on a whole-frame ruler; the face band is where this beat's
+      motion is and it wins there 1.891 to 1.390.
+    plate: >-
+      farm-out/ep2-b09-platecrop-0820/09-the-pause-platecrop-r2s2.png, sha256
+      420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a. A 1.454x
+      LANCZOS crop taking a 37.83% head to the 55% bar (pipeline/beat09_plate_crop.py
+      — no sampler, no model, no GPU), retaining 90.2% of a native close-up's
+      high-frequency energy where the outgoing take's 2.157x crop retained 45%.
+      NOT NATIVE, and that is a standing fault of both takes.
+    measured_by: >-
+      pipeline/judge_b09_crop_0821.py, over the SLOT f001-f093 and not the clip:
+      the slot is 3.92 s at 24 fps and frames f094-f121 are rendered and never
+      shown. Both takes measured by the same file in their own declared
+      geometry, so the comparison is a measurement and not a claim.
+    how_to_reverse_it_in_one_line: >-
+      "beat 09: put the old one back" — delete
+      review/ep2-ship-0821/sources/09-the-pause-LTX-ep2-b09-r2s2-m1-0821.mp4 and
+      its .meta.yaml, copy 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4 back in
+      from farm-out/ep2-b09-cropmotion-0820/, re-run the command in
+      `assembled_by`. Leaving BOTH files in place is not a reversal: get_clip()
+      globs 09-*.mp4 and takes the sorted first, and `cropmotion` sorts before
+      `r2s2`, so a stray copy silently wins.
+    open_card: >-
+      NONE ANY MORE. /review/ep2-guards-0818 was ANSWERED on 2026-08-20 —
+      "they should look like grown men. yes. dumb grown men." — so the adult
+      read is a PASS and this beat is an ordinary pick rather than an override.
+      He still reads young in close-up and that is now a ruled-acceptable fact
+      rather than an open question.
 
   - beat: 10
     slug: NO FORM

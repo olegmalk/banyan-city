@@ -100,15 +100,15 @@ frames:
   frame_sha256: c3d57c7c64bb3b00706f839814a140441a33e6f67f9504976169abe1569cab5d
   frame_bytes: 19442
 - beat: 9
-  take: 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4
+  take: 09-the-pause-LTX-ep2-b09-r2s2-m1-0821.mp4
   frame: b09.jpg
   width: 240
   height: 436
   at_seconds: 2.52
   clip_duration_s: 5.04
-  clip_sha256: 247ecf6ca592127642ecf1f37c28b54fea327b5e992b3264ad505169f7e7d5ea
-  frame_sha256: fd576f49d9a163789a34092a1bf4edeed49aa6c5f1e2b5f2416f82473e56ddbd
-  frame_bytes: 15890
+  clip_sha256: 9764a2e61068195b7c3a0ffa0305aae6d764c4f2b0e9fa5f7e22d7918a412fd2
+  frame_sha256: a961ef5ee6855f4cb0ae16d86317a21a83fcdeb644825eab1264b464b964055b
+  frame_bytes: 17820
 - beat: 10
   take: 10-no-form-b10-pairB-trim.mp4
   frame: b10.jpg

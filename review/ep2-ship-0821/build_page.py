@@ -27,14 +27,16 @@ BASE = "/review/ep2-ship-0821"
 CARDS = [
     dict(
         url="/review/ep2-guards-0818", since="2026-08-17",
-        title="Do the guards read as grown men — and if they do not, does that matter?",
-        answers=["pass", "recast", "stage"],
-        gates="beats 05, 06, 10, 11 — and beat 09's entry into this cut",
-        changes_cut=True,
-        effect="THE ONLY CARD THAT MOVES A PICTURE BEFORE 12:00. "
-               "<b>recast</b> takes beat 09 back out and restores the slate (19 footage / 2 slates). "
-               "<b>pass</b> or <b>stage</b> turns beat 09's override into an ordinary pick and "
-               "the cut stands as you see it. Either way it is one line and no render."),
+        title="ANSWERED 2026-08-20 — Do the guards read as grown men? "
+              "“they should look like grown men. yes. dumb grown men.”",
+        answers=["answered: pass"],
+        gates="nothing any more — beats 05, 06, 10, 11 and beat 09 are all off this card",
+        changes_cut=False,
+        effect="<b>PASS on the adult read</b>, and <b>yes to the plain green man</b>. "
+               "Beat 09's entry stops being a steward override and becomes an ordinary pick; "
+               "no picture moves, because the answer is the one the cut was already staged for. "
+               "Recorded with its provenance on the card and in review/inbox.yaml — the words were "
+               "relayed by the orchestrating lane on 08-21, not read out of an in-tree transcript."),
     dict(
         url="/review/ep2-b13-shade-0820", since="2026-08-20",
         title="Does beat 13 satisfy “tips his head sideways into the sapling's hand-sized "

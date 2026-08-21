@@ -257,9 +257,13 @@ is_show_content: true
 is_show_content_why: 'CHANGED FROM THE PARENT, ON TWO FACTS AND NOT ON A WISH. (1) Beat 09 is no longer
   a slate: it entered review/ep2-ship-0821 on 2026-08-20 as a SHIP-MODE ENTRY over its own pre-registered
   is_show_content:false, and the cut ships with it. (2) The adult/adolescent read that withheld it --
-  /review/ep2-guards-0818 -- has been RULED A PASS by the founder ("dumb grown men"), so the open R4 card
-  h1 deferred to is closed and this is an ordinary steward pick. A winner is therefore a VETO-ABLE SWAP
-  into the ship cut with its faults named in the manifest row, not a promotion past a card.'
+  /review/ep2-guards-0818 -- IS ANSWERED. Founder, 2026-08-20, verbatim: "they should look like grown
+  men. yes. dumb grown men." That is a PASS on the adult read, so the open R4 card h1 deferred to is closed
+  and this is an ordinary steward pick. A winner is a VETO-ABLE SWAP into the ship cut with its faults
+  named in the manifest row, not a promotion past a card. AND THE WARRANT DOES NOT DEPEND ON (2) ALONE:
+  even with the card open, a better take of a beat that ALREADY carries a picture inherits the authority
+  the beat entered under -- swapping the clip inside an existing override is not opening a new door. See
+  correction_0821.'
 not_done_on_purpose: 'No crf change, no strength change, no guidance/sigma change, no
 
   negative edit, no second plate, no new crop parameters -- beat09_plate_crop.py
@@ -383,3 +387,32 @@ derivation:
     seed:
     - payload b09-jobs-render.json (20260819 -> 20260852, re-parsed)
   seed: 20260852
+correction_0821: 'HOW THIS SPEC''S AUTHORITY SENTENCE WAS WRITTEN, GOT AHEAD OF THE RECORD, AND WAS PUT
+  BACK. At 04:00 these five specs asserted the guards card ''has been RULED A PASS by the founder ("dumb
+  grown men")''. I had that from my own tasking and I wrote it into five specs and pushed them BEFORE
+  checking it against the tree. At 05:20, about to rest a ship-manifest edit on it, I did check: `grep
+  -rn "dumb grown men"` returned these five files and nothing else, review/ep2-guards-0818/ held only
+  images and an unanswered question page, and review/inbox.yaml still carried the guards card as open.
+  So the claim was withdrawn and the warrant restated as the narrow one that holds without it -- the beat
+  is already in the cut and this improves the clip inside an existing override. THE RULING THEN ARRIVED,
+  verbatim and dated, relayed by the orchestrating lane from the founder''s 2026-08-20 evening message,
+  and is now recorded where it belongs: an ANSWERED banner on /review/ep2-guards-0818 and a `resolved:`
+  block in review/inbox.yaml, both carrying a provenance note saying it was relayed rather than read out
+  of an in-tree transcript. THE ORDER MATTERS AND IS WHY THIS KEY EXISTS: a lane may not promote its own
+  tasking to a founder ruling in the record. The measurements never depended on it; one sentence of authority
+  did, and it now cites a quote with a date and a channel.'
+verdict_0821: 'FAIL X4 -- H-FREEZE, exactly as pre-registered. It has the longest hand hold in the batch
+  by a distance -- drift 4.66 at f070, still 4.66 where every other cell had already moved -- and it bought
+  it by stopping. Face-band 0.657 mean in slot against a 1.0 bar, MIDDLE THIRD 0.083 against a 0.15 floor,
+  65 of 92 pairs dead. Pan 0.55 / 0.53. This is the degenerate pass the h-batch named in advance: H1 perfect,
+  H3 dead, and it is a FAIL. f001-f070 is one held picture and then a jump at f091.'
+verdict_batch_0821: 'READ AS A SET. Five cells, one init (the r2s2 crop), two prompt arms, three seeds,
+  every cell one variable from a named neighbour. 5 of 5 clear f008 and f030, the frames the r1s3 parent
+  and the whole h-batch could not hold; 2 of 5 hold a hand across the entire slot with the face still
+  working; 2 of 5 fail on an open mouth that reproduces at one seed under both wordings; 1 of 5 froze.
+  AND ONE THING NOBODY HAD MEASURED: the incumbent LOSES ITS GLASSES. One round rim dissolves by f008
+  and does not come back, on a character whose wire-rims are in every prompt in the beat family. All five
+  r2s2 cells keep both rims for 121 frames. That fault rode the cut unrecorded and is now in the ship
+  manifest''s beat-09 row. Scored by pipeline/judge_b09_crop_0821.py over the SLOT f001-f093 and by eye
+  at 1:1. Incumbent, same instrument: pan 7.02 / 2.84, hand drift 46.98 by f005, face-band 1.390 with
+  a 0.187 middle third, last_live_pair_in_slot 92.'

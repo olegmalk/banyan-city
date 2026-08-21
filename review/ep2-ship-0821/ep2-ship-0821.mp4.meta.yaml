@@ -139,8 +139,8 @@ ingredients:
   publishable: true
 - beat: 9
   kind: clip
-  path: review/ep2-ship-0821/sources/09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4
-  sha256: 247ecf6ca592127642ecf1f37c28b54fea327b5e992b3264ad505169f7e7d5ea
+  path: review/ep2-ship-0821/sources/09-the-pause-LTX-ep2-b09-r2s2-m1-0821.mp4
+  sha256: 9764a2e61068195b7c3a0ffa0305aae6d764c4f2b0e9fa5f7e22d7918a412fd2
   publishable: true
 - beat: 9
   kind: audio
@@ -354,7 +354,7 @@ sources:
   cost_usd: 0.0
 - beat: 9
   slug: THE PAUSE — 0:42–0:45
-  clip: 09-the-pause-LTX-ep2-b09-cropmotion-0820.mp4
+  clip: 09-the-pause-LTX-ep2-b09-r2s2-m1-0821.mp4
   audio: 09-vo.mp3
   fill: once
   clip_s: 5.042

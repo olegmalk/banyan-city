@@ -1,7 +1,7 @@
 {
- "commits_in_window": 1683,
+ "commits_in_window": 1790,
  "covers_window": true,
- "cut": "ep2-demo-0820",
+ "cut": "ep2-ship-0821",
  "cut_files": [
   "review/ep2-demo-0815/ep2-demo-0815.mp4",
   "review/ep2-demo-0816/ep2-demo-0816.mp4",
@@ -13,9 +13,9 @@
   "review/ep2-demo-0820/ep2-demo-0820.mp4"
  ],
  "cuts_shipped": 8,
- "generated": "2026-08-20",
+ "generated": "2026-08-21",
  "generated_by": "python3 pipeline/proof_receipts.py --write",
- "head": "c7914dc07",
+ "head": "a6896dd5e",
  "landed": {
   "02-the-sprint-b02-anchor-s20260834-0817.mp4": {
    "date": "2026-08-17",
@@ -39,7 +39,7 @@
   },
   "pipeline/jobs/ep2-b01-figcomp-heldfield-0820.yaml": {
    "date": "2026-08-20",
-   "sha": "c7914dc0",
+   "sha": "b2fc6ec4",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b03-covermid-s2-0820.yaml": {
@@ -47,9 +47,9 @@
    "sha": "721eeb44",
    "what": "last commit that touched the spec"
   },
-  "pipeline/jobs/ep2-b04-refire-0814.yaml": {
-   "date": "2026-08-19",
-   "sha": "61772721",
+  "pipeline/jobs/ep2-b04-eyes-crf10-0819.yaml": {
+   "date": "2026-08-20",
+   "sha": "c265c0a4",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b05-standB-0814.yaml": {
@@ -67,9 +67,9 @@
    "sha": "5b4e6b8a",
    "what": "last commit that touched the spec"
   },
-  "pipeline/jobs/ep2-b09-faceturn-crf10-0819.yaml": {
-   "date": "2026-08-19",
-   "sha": "7dd53049",
+  "pipeline/jobs/ep2-b09-r2s2-m1-0821.yaml": {
+   "date": "2026-08-21",
+   "sha": "a6896dd5",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b10-pairB-0814.yaml": {
@@ -82,9 +82,9 @@
    "sha": "08b46211",
    "what": "last commit that touched the spec"
   },
-  "pipeline/jobs/ep2-b13-refire-0814.yaml": {
-   "date": "2026-08-19",
-   "sha": "5756b279",
+  "pipeline/jobs/ep2-b13-shadelit-0820.yaml": {
+   "date": "2026-08-20",
+   "sha": "eb6440e7",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b14-mac-motion-0818.yaml": {
@@ -97,9 +97,9 @@
    "sha": "225bc8db",
    "what": "last commit that touched the spec"
   },
-  "pipeline/jobs/ep2-b16-anim-0814.yaml": {
-   "date": "2026-08-19",
-   "sha": "f2790402",
+  "pipeline/jobs/ep2-b16-motion-0820.yaml": {
+   "date": "2026-08-21",
+   "sha": "6db1279b",
    "what": "last commit that touched the spec"
   },
   "pipeline/jobs/ep2-b17-navy-crf10-0819.yaml": {
@@ -123,7 +123,7 @@
    "what": "last commit that touched the spec"
   }
  },
- "range_base": "ac02bf65",
+ "range_base": "5c0a8d3d",
  "resolved_blocks_added": 86,
  "shallow": true,
  "verdict_lines_added": 311,

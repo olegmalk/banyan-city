@@ -257,9 +257,13 @@ is_show_content: true
 is_show_content_why: 'CHANGED FROM THE PARENT, ON TWO FACTS AND NOT ON A WISH. (1) Beat 09 is no longer
   a slate: it entered review/ep2-ship-0821 on 2026-08-20 as a SHIP-MODE ENTRY over its own pre-registered
   is_show_content:false, and the cut ships with it. (2) The adult/adolescent read that withheld it --
-  /review/ep2-guards-0818 -- has been RULED A PASS by the founder ("dumb grown men"), so the open R4 card
-  h1 deferred to is closed and this is an ordinary steward pick. A winner is therefore a VETO-ABLE SWAP
-  into the ship cut with its faults named in the manifest row, not a promotion past a card.'
+  /review/ep2-guards-0818 -- IS ANSWERED. Founder, 2026-08-20, verbatim: "they should look like grown
+  men. yes. dumb grown men." That is a PASS on the adult read, so the open R4 card h1 deferred to is closed
+  and this is an ordinary steward pick. A winner is a VETO-ABLE SWAP into the ship cut with its faults
+  named in the manifest row, not a promotion past a card. AND THE WARRANT DOES NOT DEPEND ON (2) ALONE:
+  even with the card open, a better take of a beat that ALREADY carries a picture inherits the authority
+  the beat entered under -- swapping the clip inside an existing override is not opening a new door. See
+  correction_0821.'
 not_done_on_purpose: 'No crf change, no strength change, no guidance/sigma change, no
 
   negative edit, no second plate, no new crop parameters -- beat09_plate_crop.py
@@ -383,3 +387,40 @@ derivation:
     seed:
     - payload b09-jobs-render.json (20260819 -> 20260819, re-parsed)
   seed: 20260819
+correction_0821: 'HOW THIS SPEC''S AUTHORITY SENTENCE WAS WRITTEN, GOT AHEAD OF THE RECORD, AND WAS PUT
+  BACK. At 04:00 these five specs asserted the guards card ''has been RULED A PASS by the founder ("dumb
+  grown men")''. I had that from my own tasking and I wrote it into five specs and pushed them BEFORE
+  checking it against the tree. At 05:20, about to rest a ship-manifest edit on it, I did check: `grep
+  -rn "dumb grown men"` returned these five files and nothing else, review/ep2-guards-0818/ held only
+  images and an unanswered question page, and review/inbox.yaml still carried the guards card as open.
+  So the claim was withdrawn and the warrant restated as the narrow one that holds without it -- the beat
+  is already in the cut and this improves the clip inside an existing override. THE RULING THEN ARRIVED,
+  verbatim and dated, relayed by the orchestrating lane from the founder''s 2026-08-20 evening message,
+  and is now recorded where it belongs: an ANSWERED banner on /review/ep2-guards-0818 and a `resolved:`
+  block in review/inbox.yaml, both carrying a provenance note saying it was relayed rather than read out
+  of an in-tree transcript. THE ORDER MATTERS AND IS WHY THIS KEY EXISTS: a lane may not promote its own
+  tasking to a founder ruling in the record. The measurements never depended on it; one sentence of authority
+  did, and it now cites a quote with a date and a channel.'
+verdict_0821: 'PASS -- the crop is the fix, and it holds the WHOLE SLOT. T0 pan residual 0.74 / 0.39 against
+  the incumbent''s 7.02 / 2.84 -- the most locked frame beat 09 has had. Hand-box drift f005 2.94, f008
+  3.24, f030 4.55 where the r1s3 parent was 46.98 / 48.78 / 50.16: THE HAND IS A HAND AT EVERY CHECKED
+  FRAME OF THE SLOT, f001 f008 f030 f050 f070 f093, which is X2, the promotion clause the whole h-batch
+  could not reach at any seed. Face-band 1.752 mean in slot (incumbent 1.390), thirds 1.584 / 2.836 /
+  0.806, no dead third. Mouth closed throughout. Glasses intact for 121 frames. last_live_pair_in_slot
+  90 against the incumbent''s 92 -- two frames worse, the only figure it loses on. FAULTS: the hand CHANGES
+  POSE across f033-f050 (drift 4.55 -> 29.97), sliding from the mouth to the jaw -- a move, not a dissolve,
+  and not a move the script asked for; the fingers merge from ~f050 into a hand-with-a-thumb rather than
+  four drawn fingers, so X3 passes MARGINALLY and is recorded as marginal. THE ACCEPTED COST DID NOT COME
+  DUE: the r2s2 squint OPENS at f040-f070, both eyes with visible irises, and narrows again by f093. The
+  route was priced at a shut eye and delivered an eye that acts. NOT THE PICK: m1 beats it at the same
+  seed on pan, on face-band mean and on worst third.'
+verdict_batch_0821: 'READ AS A SET. Five cells, one init (the r2s2 crop), two prompt arms, three seeds,
+  every cell one variable from a named neighbour. 5 of 5 clear f008 and f030, the frames the r1s3 parent
+  and the whole h-batch could not hold; 2 of 5 hold a hand across the entire slot with the face still
+  working; 2 of 5 fail on an open mouth that reproduces at one seed under both wordings; 1 of 5 froze.
+  AND ONE THING NOBODY HAD MEASURED: the incumbent LOSES ITS GLASSES. One round rim dissolves by f008
+  and does not come back, on a character whose wire-rims are in every prompt in the beat family. All five
+  r2s2 cells keep both rims for 121 frames. That fault rode the cut unrecorded and is now in the ship
+  manifest''s beat-09 row. Scored by pipeline/judge_b09_crop_0821.py over the SLOT f001-f093 and by eye
+  at 1:1. Incumbent, same instrument: pan 7.02 / 2.84, hand drift 46.98 by f005, face-band 1.390 with
+  a 0.187 middle third, last_live_pair_in_slot 92.'
