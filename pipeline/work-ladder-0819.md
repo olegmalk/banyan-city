@@ -7236,3 +7236,98 @@ pupils** (T1), and heavy age modelling: brow furrows, crow's feet, nasolabial
 folds, jowls (T3). t2_head_travel, published and scored against nothing as that
 spec asks: **head-band ink centroid travel 25.9 px** over 121 frames on a
 704-wide frame, i.e. 3.7% of frame width, std 7.5 px.
+
+---
+
+## Appended 2026-08-21 by the beat-09 crop-trade lane — the route rejected for costing an eye now ships, and the eye opens
+
+`ep2-b09-r2s2-c1/c2/c3/m1/m2-0821`, off `ep2-b09-hand-h1-0820`. **The h-batch
+closed by declining the r2s2 crop as "a trade and not a fix" — sharper hand,
+shut eye — and then paid the eye anyway:** all three scored h-cells ended eyes
+shut and two were dead in their last twenty frames. So the cost side of the
+trade had already been spent on the route that was chosen. That is the re-price,
+and it is why this batch fired.
+
+**AND THE CUT MOVES THE PRICE AGAIN, WHICH NOTHING HAD FACTORED IN. Beat 09's
+slot is f001-f093** — 3.92 s at 24 fps against a 121-frame clip. The h-batch's
+headline cost lands at f100+, *off the end of the slot*. What is inside the slot
+is the shipping clip's own fault: hand-box drift 46.98 by f005 and flat at ~50
+for the rest of the beat.
+
+### Five cells, three of them one variable from a scored sibling
+
+Crop is the only thing that moves (`--src`/`--sha256` to the r2s2 platecrop);
+c1/c2/c3 carry h1/h2/h3's own seeds. **m1/m2 exist because the init is not the
+picture the carried sentence describes** — r1s3 has the hand flat on the cheek,
+r2s2 has it curled at the mouth — so the cheek wording is swapped for a
+pose-matched one at two seeds the c arm also runs. Every cell is one variable
+from a named neighbour; nothing is a fresh draw.
+
+| cell | seed | arm | pan resid. | hand @f030 | hand @f093 | face-band | worst third | verdict |
+|---|---|---|---|---|---|---|---|---|
+| incumbent | — | r1s3 | 7.02 / 2.84 | **absent** | absent | 1.390 | 0.187 | shipping |
+| c1 | 20260819 | cheek | 0.74 / 0.39 | 4.55 | **present** | 1.752 | 0.806 | PASS |
+| c2 | 20260851 | cheek | 2.81 / 1.07 | 1.90 | present | 1.555 | 0.579 | **FAIL X5 mouth** |
+| c3 | 20260852 | cheek | 0.55 / 0.53 | 4.60 | present | 0.657 | **0.083** | **FAIL X4 freeze** |
+| **m1** | 20260819 | mouth | **0.47 / 0.28** | 4.21 | **present** | **1.891** | **1.386** | **PASS — PICK** |
+| m2 | 20260851 | mouth | 1.73 / 0.74 | 1.45 | present | 1.471 | 0.398 | **FAIL X5 mouth** |
+
+**5 of 5 clear f008 and f030** — the frames the r1s3 parent died on and the
+h-batch could only push to f025-f075. **2 of 5 hold a hand across the entire
+slot with the face still working.** The crop is the fix; the sentence was the
+mechanism.
+
+**THE OPEN MOUTH IS THE SEED, NOT THE WORDING.** c2 and m2 both open it; c1 and
+m1 both do not; the pairs share seeds. Four fresh draws could not have said
+that, and this is what the paired design bought.
+
+**AND A FAULT NOBODY HAD MEASURED: THE INCUMBENT LOSES A LENS.** One round wire
+rim dissolves by f008 and never returns, on a character whose round wire-rims
+are in every prompt in this beat family. All five r2s2 cells keep both rims for
+121 frames. It rode the cut unrecorded; it is in the manifest row now rather
+than being quietly deleted along with the clip.
+
+**THE PRICED COST DID NOT COME DUE.** m1's squint OPENS at f040-f070, both
+irises visible, and narrows again by f093. The ladder charged this route a shut
+eye and it delivered an eye that acts.
+
+### A ruler retracted in its raw form, and kept in a corrected one
+
+The b04 camera-lock ruler is *mean abs luma of a background patch against f001,
+under ~3 = locked*. **Run raw on beat 09 it reports 8.1 on the sky corner of the
+SHIPPING clip.** The cause is not a camera: whole-frame luma falls 95.96 → 88.98
+over thirty frames, the crf-10 darkening this tree already has a diagnostic for.
+So the patch is measured with **its own mean removed** — zero for a pure exposure
+shift, large for a translation — and that residual is what ranks. The absolute
+3.0 bar is printed and **not used**: a bar that fails the thing it protects is
+not a bar. **The top-right corner is excluded by name on both crops: it is his
+hair, not the world.** Committed as `pipeline/judge_b09_crop_0821.py`.
+
+Second instrument note: **whole-frame dead-pair counts rank a LOCKED clip
+worse.** m1 has 59 of 92 pairs under the floor against the incumbent's 38, and
+also 36% more face-band motion. The incumbent's whole-frame numbers are inflated
+by a background that will not sit still. On this beat the face band is the
+acting instrument and the whole frame is not.
+
+### Two process faults from this lane, written down because they were mine
+
+**1. THE PLATE GUARD READS A BRANCH THE PUSH DOES NOT REACH.** `box_enqueue`
+checks `--src` against `origin/farm-results-rtx5090`, and the box's
+`courier-box` is a long-lived local checkout of that branch **with no upstream
+configured**, so pushing the plate to origin left five jobs to die on the card
+with `!! src not found` in one second each. Publishing to the branch is not
+enough; the bytes have to reach the box. `scp` into
+`C:\banyan-farm\courier-box\farm-out\<dir>\` is the reliable route and the job's
+own sha assertion makes a hand-copy safe by construction.
+
+**2. A LANE MAY NOT PROMOTE ITS OWN TASKING TO A FOUNDER RULING.** These five
+specs were written at 04:00 asserting the guards card "has been RULED A PASS by
+the founder (\"dumb grown men\")" — from my tasking, unchecked, pushed. At 05:20,
+about to rest a ship-manifest edit on it, I checked: `grep -rn "dumb grown men"`
+returned those five files and nothing else. The claim was withdrawn and the
+warrant restated as the narrow one that holds without it (the beat is already in
+the cut; improving a clip inside an existing override needs no new authority).
+The ruling then arrived verbatim with a date and is now recorded on the card and
+in `review/inbox.yaml` **with a provenance note saying it was relayed**. See
+`correction_0821` in each spec. Verifying it also turned up that beat 13's and
+beat 04's rulings from the same message were recorded nowhere either.

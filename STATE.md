@@ -9683,3 +9683,31 @@ Ship cut re-assembled after the b04/b13 swap (the manifest had described a cut
 nobody had built for an hour) — sha `e4ecfce2…ccc5`, 116.33 s, qa_local PASS 85.
 `train-jerry-0820` stays HELD; six uncommitted `ep2-b02-adultplate-*` specs are
 authored on the retired wording and are flagged, not touched.
+
+## 2026-08-21 — beat 09 upgraded in the ship cut; the guards card is answered
+
+`ep2-b09-r2s2-m1-0821` replaces `ep2-b09-cropmotion-0820` in
+`review/ep2-ship-0821`. Same slot, same 121 frames, same VO, same 116.33 s
+runtime — a different crop of the same plate. Over the slot f001-f093: hand
+present and readable at f001/f008/f030/f050/f070/f093 where the outgoing take's
+hand was gone by f005; face-band interframe 1.891 against 1.390; background
+residual 0.47/0.28 against 7.02/2.84. Both round wire rims survive 121 frames —
+the outgoing take was losing one by f008 and no record said so.
+
+Five cells, $0, ~35 min on the 5090, no spend. c1 also passes; c3 froze; c2 and
+m2 open the mouth at the same seed under both wordings, so the open mouth is a
+seed property. Full table and the two retracted-instrument notes in
+`pipeline/work-ladder-0819.md` (2026-08-21 entry). Judge:
+`pipeline/judge_b09_crop_0821.py`. Swap: `pipeline/swap_b09_r2s2_into_ship.sh`.
+qa_local PASS routes=85; proof_receipts 21 of 21 sha match.
+
+**/review/ep2-guards-0818 is ANSWERED** — founder, 2026-08-20, verbatim: "they
+should look like grown men. yes. dumb grown men." PASS on the adult read, yes to
+the plain green man. Beat 09's ship-mode override becomes an ordinary pick.
+Beat 13 staging = A ("this does satisfy it") and beat 04 action = A (the peek)
+came in the same message and were recorded nowhere until now. All three carry a
+provenance note: **relayed by the orchestrating lane, not read out of an in-tree
+transcript.** Still owed by the lanes that own those cards: an answered banner on
+/review/ep2-b13-shade-0820, deletion of `pipeline/decisions-pending/ep2-b13-shade-0820/`
+and of `pipeline/decisions-pending/ep2-guards-0818/` (both have fired), and beat
+04's action written into node.md and done-definitions.yaml.
