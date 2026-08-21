@@ -4045,3 +4045,5 @@
 20:11:03Z DONE task=ep2-b01-fignonly-s20260871-0821-1787339929 rc=0 artifacts=2
 20:11:09Z STARTED task=ep2-b01-figshape-0822-1787342852 attempt=1 on box-runner
 20:17:21Z DONE task=ep2-b01-figshape-0822-1787342852 rc=0 artifacts=2
+20:17:26Z STARTED task=ep2-b02-panicface-0822-1787343064 attempt=1 on box-runner
+20:17:45Z DONE task=ep2-b02-panicface-0822-1787343064 rc=0 artifacts=1

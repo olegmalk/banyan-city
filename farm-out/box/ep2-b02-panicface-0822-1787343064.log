@@ -1,0 +1,41 @@
+#### job ep2-b02-panicface-0822-1787343064 attempt 1 start 2026-08-21T20:17:26Z
+
+==== step mask START 2026-08-21T20:17:26Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# The mask is BUILT HERE, not shipped as a blob, so the two bands are\n# readable as numbers in the spec that a reviewer can check against\n# the plate. No model, no network, no GPU.\nfrom PIL import Image, ImageDraw\nimport os\nroot = r'C:\\banyan-farm\\b02panicface-0822'\nos.makedirs(root, exist_ok=True)\nm = Image.new('L', (832, 1216), 0)\nd = ImageDraw.Draw(m)\nd.rectangle([268, 90, 604, 166], fill=255)   # BROW band\nd.rectangle([334, 274, 506, 350], fill=255)   # MOUTH band\nout = os.path.join(root, 'b02-panic-mask.png')\nm.save(out)\nprint('mask 832x1216 ->', out)\nprint('brow  [268, 90, 604, 166]')\nprint('mouth [334, 274, 506, 350]')\nprint('THE EYES (about y 177-268) ARE IN NEITHER BAND.')\n"]
+mask 832x1216 -> C:\banyan-farm\b02panicface-0822\b02-panic-mask.png
+brow  [268, 90, 604, 166]
+mouth [334, 274, 506, 350]
+THE EYES (about y 177-268) ARE IN NEITHER BAND.
+==== step mask END rc=0 2026-08-21T20:17:27Z ====
+
+==== step dry START 2026-08-21T20:17:27Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b02panicface-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b02-sapnat-0821\\b02-sapnat-s20260820.png", "--init-sha256", "30dce0fabd444fdf5e0727eb4c6a317d65004f71a7df0dbe5cb126224dbf46ea", "--mask-png", "C:\\banyan-farm\\b02panicface-0822\\b02-panic-mask.png", "--prompt-file", "C:\\banyan-farm\\b02panicface-0822\\b02-face-prompt.txt", "--negative-file", "C:\\banyan-farm\\b02panicface-0822\\b02-face-negative.txt", "--out", "C:\\banyan-farm\\b02panicface-0822\\b02-panic-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.42", "--pad-crop", "64", "--blur", "8", "--seed", "20260822", "--note", "MASK GEOMETRY CHECK. Asserts the plate's digest and resolves the mask BEFORE a model loads, so wrong bands cost seconds instead of a GPU fire.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 30dce0fabd444fdf5e0727eb4c6a317d65004f71a7df0dbe5cb126224dbf46ea
+mask png corners=- bbox=[268, 90, 604, 350]  0.4038 x 0.2138 of 832x1216
+WROTE C:\banyan-farm\b02panicface-0822\b02-panic-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-21T20:17:27Z ====
+
+==== step face START 2026-08-21T20:17:27Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b02panicface-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b02-sapnat-0821\\b02-sapnat-s20260820.png", "--init-sha256", "30dce0fabd444fdf5e0727eb4c6a317d65004f71a7df0dbe5cb126224dbf46ea", "--mask-png", "C:\\banyan-farm\\b02panicface-0822\\b02-panic-mask.png", "--prompt-file", "C:\\banyan-farm\\b02panicface-0822\\b02-face-prompt.txt", "--negative-file", "C:\\banyan-farm\\b02panicface-0822\\b02-face-negative.txt", "--out", "C:\\banyan-farm\\b02panicface-0822\\b02-panic-plate.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.42", "--pad-crop", "64", "--blur", "8", "--seed", "20260822", "--note", "THE PANIC GOES IN AS PIXELS. Strength 0.42 over two bands of the canon plate's face -- brow and mouth -- with the eyes outside the mask. ep2-jerry-expref-r2-0821 measured that expression does not bind through the prompt on this recipe (four interventions, same face every time) and that repainting these same two bands is what moved it. 0.42 sits in the band this repo has measured preserving layout and identity while still redrawing what is inside the mask."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:03<00:09,  1.96s/it]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:05<00:01,  1.12it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:05<00:00,  1.30it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:05<00:00,  1.26it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 9s
+WROTE C:\banyan-farm\b02panicface-0822\b02-panic-plate.png
+WROTE C:\banyan-farm\b02panicface-0822\b02-panic-plate-mask.png
+WROTE C:\banyan-farm\b02panicface-0822\b02-panic-plate.png.meta.yaml
+rc=0 render_s=5.6
+==== step face END rc=0 2026-08-21T20:17:45Z ====
+
+==== step publish START 2026-08-21T20:17:45Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob, and the exit\n# code asserts the count -- the parent spec's own rule, kept.\n# THE MASK AND THE PROMPTS TRAVEL WITH THE PLATE: a reader scoring\n# whether the expression moved needs the hole it was painted through.\nimport hashlib, os, shutil\nfrom_dir = 'C:/banyan-farm/b02panicface-0822'\ndst = 'C:/banyan-farm/courier-box/farm-out/ep2-b02-panicface-0822'\nNAMES = ['b02-panic-plate.png', 'b02-panic-plate.png.meta.yaml',\n         'b02-panic-mask.png', 'b02-face-prompt.txt',\n         'b02-face-negative.txt']\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit('!! missing %s -- refusing to call the job clean.' % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), 'rb') as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + '  ' + name)\nwith open(os.path.join(dst, 'ep2-b02-panicface-0822.sha256'), 'w',\n          newline='\\n') as fh:\n    fh.write('\\n'.join(sorted(lines)) + '\\n')\nprint('published', len(lines), 'file(s) + manifest ->', dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 5 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b02-panicface-0822
+==== step publish END rc=0 2026-08-21T20:17:45Z ====
+#### job ep2-b02-panicface-0822-1787343064 finished rc=0 2026-08-21T20:17:45Z
