@@ -4133,3 +4133,5 @@
 21:30:47Z DONE task=ep2-b13-canon-r11b-0821-1787347766 rc=0 artifacts=1
 21:30:54Z STARTED task=ep2-b13-canon-r11c-0821-1787347769 attempt=1 on box-runner
 21:31:21Z DONE task=ep2-b13-canon-r11c-0821-1787347769 rc=0 artifacts=1
+21:31:27Z STARTED task=ep2-guardcast2b-b-0822-1787347839 attempt=1 on box-runner
+21:31:46Z DONE task=ep2-guardcast2b-b-0822-1787347839 rc=0 artifacts=1
