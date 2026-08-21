@@ -136,10 +136,12 @@ NEG_R2 = ("extra head, disembodied head, multiple heads, floating head, "
 
 def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
          extra_keys=None, neg_add=None, ip_scale=None, ip_ref=None,
-         pos_add=None):
+         pos_add=None, pose_override=None, pose_words_override=None):
     if beat not in C.WAVE:
         raise SystemExit("!! beat %r is not in the wave" % beat)
     pose, pose_words, default_emotion, stage = C.WAVE[beat]
+    pose = pose_override or pose
+    pose_words = pose_words_override or pose_words
     emotion = emotion or default_emotion
     stem = C.SKELETONS[pose]
     mask = C.head_box(pose)
@@ -357,6 +359,8 @@ def main(argv=None):
     ap.add_argument("--pos-add", help="appended to the IDENTITY clause")
     ap.add_argument("--ip-scale")
     ap.add_argument("--ip-ref")
+    ap.add_argument("--pose", help="skeleton pose override (a rung lever)")
+    ap.add_argument("--pose-words", help="pose+location clause override")
     ap.add_argument("--commit", help="the asset commit to pin as --repo-commit")
     ap.add_argument("--force", action="store_true")
     a = ap.parse_args(sys.argv[1:] if argv is None else argv)
@@ -381,7 +385,8 @@ def main(argv=None):
     if a.beat:
         emit(a.beat, rnd=a.round, emotion=a.emotion, force=a.force,
              neg_add=a.neg_add, pos_add=a.pos_add, ip_scale=a.ip_scale,
-             ip_ref=a.ip_ref)
+             ip_ref=a.ip_ref, pose_override=a.pose,
+             pose_words_override=a.pose_words)
         return 0
     ap.error("pass --sample, --wave or --beat N")
 
