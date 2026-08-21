@@ -3523,3 +3523,5 @@
 07:06:38Z DONE task=ep2-b03-tilefix-r2-0821-1787295958 rc=0 artifacts=1
 07:06:44Z STARTED task=ep2-b04-tilefix-r2-0821-1787295952 attempt=1 on box-runner
 07:07:12Z DONE task=ep2-b04-tilefix-r2-0821-1787295952 rc=0 artifacts=1
+07:07:18Z STARTED task=ep2-b08-tilefix-r2-0821-1787295955 attempt=1 on box-runner
+07:07:46Z DONE task=ep2-b08-tilefix-r2-0821-1787295955 rc=0 artifacts=1
