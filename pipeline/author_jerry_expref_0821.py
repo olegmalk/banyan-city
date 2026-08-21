@@ -19,6 +19,11 @@ a labelled 1:1 grid rather than by eye:
     BROW   200,336 - 305,366   the angled furrow strokes
     MOUTH  222,416 - 300,440   the lipless line
 
+Both are painted inside a 224x224 crop centred on `HEAD_CROP`, because SDXL's
+inpaint pipeline refuses a frame whose height is not divisible by 8 and the tile
+is 680x1236 (1236/8 = 154.5). That refusal killed the first attempt at this job.
+224 is also, not coincidentally, exactly what CLIP's image processor resizes to.
+
 THE EYES ARE NOT TOUCHED, deliberately. T1 -- blank, no iris, no pupil -- is the
 one identity clause that HELD in all four samples with `blank eyes` struck out
 of the prompt, which means the adapter is the only thing carrying it. Repainting
@@ -65,6 +70,30 @@ TILE_SHA = "1a71fb920807bd15399f8a516d3b26979fd65f7b122a11b49a74f0fa8bc5c2eb"
 BROW_BAND = (200, 336, 305, 366)
 MOUTH_BAND = (222, 416, 300, 440)
 
+# THE INPAINT RUNS ON A 224x224 CROP, NOT ON THE WHOLE TILE, and the reason is a
+# hard refusal rather than an optimisation: SDXL's inpaint pipeline checks
+# `height % 8 == 0` and the tile is 680x1236. 1236/8 = 154.5, so the full frame
+# is rejected before a step is taken -- which is exactly what killed the first
+# attempt at this job.
+#
+# The crop is CENTRED ON `HEAD_CROP` (176,280)-(332,432) with 32 px of padding on
+# every side, which makes it 224x224 -- divisible by 8, and the only region the
+# reference is built from anyway. Both bands sit well inside it. Working small
+# also means `padding_mask_crop` upscales a genuinely small band to pipeline
+# resolution instead of a band that is small relative to a 680x1236 frame.
+HEAD_CROP = (176, 280, 332, 432)
+CROP_SIZE = 224
+_CX = (HEAD_CROP[0] + HEAD_CROP[2]) // 2
+_CY = (HEAD_CROP[1] + HEAD_CROP[3]) // 2
+CROP = (_CX - CROP_SIZE // 2, _CY - CROP_SIZE // 2,
+        _CX + CROP_SIZE // 2, _CY + CROP_SIZE // 2)
+
+
+def _local(band):
+    """A tile-coordinate band expressed in the 224x224 crop's own pixels."""
+    return [band[0] - CROP[0], band[1] - CROP[1],
+            band[2] - CROP[0], band[3] - CROP[1]]
+
 PROMPT = ("masterpiece, best quality, very aesthetic, green skin goblin face, "
           "relaxed smooth brow, no furrow, gentle closed smile, soft grateful "
           "expression, tired content")
@@ -97,15 +126,19 @@ def _mask_step():
         "    print('!! tile sha', got); raise SystemExit(1)\n"
         "tile = os.path.join(root, 'tile.jpg')\n"
         "open(tile, 'wb').write(blob)\n"
-        "im = Image.open(tile)\n"
-        "m = Image.new('L', im.size, 0)\n"
+        "im = Image.open(tile).convert('RGB')\n"
+        "crop = im.crop(%r)\n"
+        "if crop.size[0] %% 8 or crop.size[1] %% 8:\n"
+        "    print('!! crop', crop.size, 'not divisible by 8'); raise SystemExit(1)\n"
+        "crop.save(os.path.join(root, 'head.png'))\n"
+        "m = Image.new('L', crop.size, 0)\n"
         "d = ImageDraw.Draw(m)\n"
         "d.rectangle(%r, fill=255)\n"
         "d.rectangle(%r, fill=255)\n"
         "m.save(os.path.join(root, 'mask.png'))\n"
-        "print('staged tile', got, im.size, 'mask drawn')\n"
-        % (JOB_DIR, RAW + TILE_REL, TILE_SHA,
-           list(BROW_BAND), list(MOUTH_BAND)))
+        "print('staged tile', got, im.size, '-> head crop', crop.size)\n"
+        % (JOB_DIR, RAW + TILE_REL, TILE_SHA, list(CROP),
+           _local(BROW_BAND), _local(MOUTH_BAND)))
 
 
 def _publish_step():
@@ -115,6 +148,7 @@ def _publish_step():
         "dst = 'C:/banyan-farm/courier-box/farm-out/%s'\n"
         "os.makedirs(dst, exist_ok=True)\n"
         "files = sorted(glob.glob(src + '/expref-*.png')\n"
+        "               + glob.glob(src + '/head.png')\n"
         "               + glob.glob(src + '/mask.png')\n"
         "               + glob.glob(src + '/prompt.txt')\n"
         "               + glob.glob(src + '/negative.txt'))\n"
@@ -129,7 +163,7 @@ def _publish_step():
         "    fh.write('\\n'.join(sorted(lines)) + '\\n')\n"
         "print('published', len(files), '->', dst)\n"
         "raise SystemExit(0 if len(files) >= %d else 1)\n"
-        % (JOB_DIR.replace('\\', '/'), JOB_ID, JOB_ID, len(STRENGTHS) + 3))
+        % (JOB_DIR.replace('\\', '/'), JOB_ID, JOB_ID, len(STRENGTHS) + 4))
 
 
 def build():
@@ -144,8 +178,7 @@ def build():
         tag = s.replace(".", "")
         steps.append({"name": "soft" + tag, "argv": [
             py, JOB_DIR + r"\inpaint_fruit.py",
-            "--init", JOB_DIR + r"\tile.jpg",
-            "--init-sha256", TILE_SHA,
+            "--init", JOB_DIR + r"\head.png",
             "--mask-png", JOB_DIR + r"\mask.png",
             "--prompt-file", JOB_DIR + r"\prompt.txt",
             "--negative-file", JOB_DIR + r"\negative.txt",
@@ -278,6 +311,17 @@ def main(argv=None):
           "clipped by HEAD_CROP",
           (BROW_BAND[2] - BROW_BAND[0]) * (BROW_BAND[3] - BROW_BAND[1])
           > (MOUTH_BAND[2] - MOUTH_BAND[0]) * (MOUTH_BAND[3] - MOUTH_BAND[1]))
+    check("the crop is 224x224 and divisible by 8 -- the refusal that killed "
+          "attempt one", (CROP[2] - CROP[0], CROP[3] - CROP[1]) == (224, 224)
+          and (CROP[2] - CROP[0]) % 8 == 0 and (CROP[3] - CROP[1]) % 8 == 0,
+          str((CROP[2] - CROP[0], CROP[3] - CROP[1])))
+    check("both bands sit inside the crop",
+          all(0 <= v for v in _local(BROW_BAND) + _local(MOUTH_BAND))
+          and max(_local(BROW_BAND) + _local(MOUTH_BAND)) <= 224)
+    check("the crop contains all of HEAD_CROP, which is what the reference "
+          "is built from",
+          CROP[0] <= HEAD_CROP[0] and CROP[1] <= HEAD_CROP[1]
+          and CROP[2] >= HEAD_CROP[2] and CROP[3] >= HEAD_CROP[3])
     check("both strengths are inside the coordinator's 0.30-0.5",
           all(0.30 <= float(s) <= 0.50 for s in STRENGTHS))
     check("the driver travels with the job", len(

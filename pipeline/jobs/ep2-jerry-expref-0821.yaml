@@ -636,17 +636,17 @@ steps:
     with urllib.request.urlopen(url, timeout=180) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\n\
     if got != '1a71fb920807bd15399f8a516d3b26979fd65f7b122a11b49a74f0fa8bc5c2eb':\n    print('!! tile\
     \ sha', got); raise SystemExit(1)\ntile = os.path.join(root, 'tile.jpg')\nopen(tile, 'wb').write(blob)\n\
-    im = Image.open(tile)\nm = Image.new('L', im.size, 0)\nd = ImageDraw.Draw(m)\nd.rectangle([200, 336,\
-    \ 305, 366], fill=255)\nd.rectangle([222, 416, 300, 440], fill=255)\nm.save(os.path.join(root, 'mask.png'))\n\
-    print('staged tile', got, im.size, 'mask drawn')\n"
+    im = Image.open(tile).convert('RGB')\ncrop = im.crop([142, 244, 366, 468])\nif crop.size[0] % 8 or\
+    \ crop.size[1] % 8:\n    print('!! crop', crop.size, 'not divisible by 8'); raise SystemExit(1)\n\
+    crop.save(os.path.join(root, 'head.png'))\nm = Image.new('L', crop.size, 0)\nd = ImageDraw.Draw(m)\n\
+    d.rectangle([58, 92, 163, 122], fill=255)\nd.rectangle([80, 172, 158, 196], fill=255)\nm.save(os.path.join(root,\
+    \ 'mask.png'))\nprint('staged tile', got, im.size, '-> head crop', crop.size)\n"
   name: stage
 - argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\jerryexpref-0821\inpaint_fruit.py
   - --init
-  - C:\banyan-farm\jerryexpref-0821\tile.jpg
-  - --init-sha256
-  - 1a71fb920807bd15399f8a516d3b26979fd65f7b122a11b49a74f0fa8bc5c2eb
+  - C:\banyan-farm\jerryexpref-0821\head.png
   - --mask-png
   - C:\banyan-farm\jerryexpref-0821\mask.png
   - --prompt-file
@@ -675,9 +675,7 @@ steps:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\jerryexpref-0821\inpaint_fruit.py
   - --init
-  - C:\banyan-farm\jerryexpref-0821\tile.jpg
-  - --init-sha256
-  - 1a71fb920807bd15399f8a516d3b26979fd65f7b122a11b49a74f0fa8bc5c2eb
+  - C:\banyan-farm\jerryexpref-0821\head.png
   - --mask-png
   - C:\banyan-farm\jerryexpref-0821\mask.png
   - --prompt-file
@@ -707,12 +705,13 @@ steps:
   - -c
   - "import glob, hashlib, os, shutil\nsrc = 'C:/banyan-farm/jerryexpref-0821'\ndst = 'C:/banyan-farm/courier-box/farm-out/ep2-jerry-expref-0821'\n\
     os.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(src + '/expref-*.png')\n               +\
-    \ glob.glob(src + '/mask.png')\n               + glob.glob(src + '/prompt.txt')\n               +\
-    \ glob.glob(src + '/negative.txt'))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c\
-    \ = os.path.join(dst, os.path.basename(f))\n    with open(c, 'rb') as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest()\
-    \ + '  '\n                     + os.path.basename(f))\nwith open(os.path.join(dst, 'ep2-jerry-expref-0821.sha256'),\
-    \ 'w', newline='\\n') as fh:\n    fh.write('\\n'.join(sorted(lines)) + '\\n')\nprint('published',\
-    \ len(files), '->', dst)\nraise SystemExit(0 if len(files) >= 5 else 1)\n"
+    \ glob.glob(src + '/head.png')\n               + glob.glob(src + '/mask.png')\n               + glob.glob(src\
+    \ + '/prompt.txt')\n               + glob.glob(src + '/negative.txt'))\nlines = []\nfor f in files:\n\
+    \    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, 'rb')\
+    \ as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + '  '\n                    \
+    \ + os.path.basename(f))\nwith open(os.path.join(dst, 'ep2-jerry-expref-0821.sha256'), 'w', newline='\\\
+    n') as fh:\n    fh.write('\\n'.join(sorted(lines)) + '\\n')\nprint('published', len(files), '->',\
+    \ dst)\nraise SystemExit(0 if len(files) >= 6 else 1)\n"
   name: publish
 success: 'TWO 680x1236 pngs -- the tile with its brow furrow and mouth line repainted soft at strength
   0.45 and 0.35, everything outside the two bands byte-preserved by the inpaint pipeline''s own blend.
