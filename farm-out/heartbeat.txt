@@ -3679,3 +3679,4 @@
 10:17:14Z FAIL task=ep2-jerry-expref-0821-1787307422-again28af40 rc=2 step=soft045
 10:19:19Z STARTED task=ep2-jerry-expref-r2-0821-1787307550 attempt=1 on box-runner
 10:19:38Z DONE task=ep2-jerry-expref-r2-0821-1787307550 rc=0 artifacts=2
+10:19:42Z box-runner idle ready=0 failed=79
