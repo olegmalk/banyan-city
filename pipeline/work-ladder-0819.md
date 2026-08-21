@@ -7707,12 +7707,28 @@ measured on 08-21 rather than estimated:
 |---|---|
 | `pages.yml`'s plain `actions/checkout` of main, for comparison | **76 s** |
 | main, `filter: blob:none` + non-cone sparse (`/pipeline/` minus `research/` and `t3-trials/`, plus `review/ep2-picks/*.yaml`) | 3 s fetch + 7 s checkout, **48 MB** tree |
-| `farm-results-rtx5090`, `--filter=blob:limit=128k`, **full history** | 23 s, **25 MB** |
-| `site-thumbs` (mandatory seed — see below) | 44 s, 38 MB |
-| `queue_history.py` | 16 s |
-| `queue_thumbs.py` | ~2 s per NEW thumb |
+| `farm-results-rtx5090`, `--refetch --filter=blob:limit=128k`, **full history** | 21 s, **26 MB** |
+| `site-thumbs` (mandatory seed — see below) | 20 s, 38 MB |
+| `queue_history.py` | 17 s, and 4 network round trips |
+| `queue_thumbs.py` | ~0.5 s per NEW thumb, ~60 in an hour |
 
-Three things in there are load-bearing and each was learned the hard way:
+Four things in there are load-bearing and each was learned the hard way:
+
+0. **`--refetch`, and the FIRST RUN of this workflow is what taught it.** With
+   `fetch-depth: 0`, `actions/checkout` does not fetch the branch it is checking
+   out — it runs `fetch --filter=blob:none +refs/heads/*` and brings down EVERY
+   branch, the results branch included. So the fetch step's wider filter arrived
+   at a ref that was already up to date, no-opped in **0.6 s**, and git never
+   backfills blobs an earlier narrower filter skipped. Run `32457873229`
+   "succeeded" at that step and then sat in `queue_history.py` for **15 minutes**
+   pulling ~4,500 sidecars one round trip at a time before it was cancelled.
+   Nothing errored; it just looked slow. `--refetch` re-requests that ref's
+   objects under the wider filter. **And the workflow now PROVES it** — a step
+   samples 300 sidecar oids under `GIT_NO_LAZY_FETCH=1` and fails with a named
+   message if any are missing, which turns a silent 15-minute stall into a
+   3-second failure. Same guard on the thumbnail seed, which is worse if it goes
+   wrong: a short seed does not error either, it just force-pushes the
+   difference off `site-thumbs` and blanks the gallery.
 
 1. **No `--depth=1` anywhere.** A shallow fetch of *any* ref writes
    `.git/shallow`, which is repo-global and risks "shallow update not allowed"

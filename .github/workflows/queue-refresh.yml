@@ -32,13 +32,14 @@
 # WHAT IT COSTS, all measured on 2026-08-21 rather than guessed:
 #   main, sparse + blob:none          ~3 s fetch + ~7 s checkout, 72 MB tree
 #                                     (pages.yml's plain full checkout: 76 s)
-#   farm-results, --filter=blob:limit=128k, FULL history, no --depth
-#                                     ~23 s, 25 MB — every text sidecar the
+#   farm-results, --refetch --filter=blob:limit=128k, FULL history, no --depth
+#                                     ~21 s, 26 MB — every text sidecar the
 #                                     ledger reads, none of the 4.5 GB of PNGs
-#   site-thumbs                       ~44 s, 38 MB — mandatory, see below
-#   queue_history.py                  ~15 s
-#   queue_thumbs.py                   ~2 s/new thumb (lazy blob fetch)
-# Roughly four minutes a run.
+#   site-thumbs seed                  ~20 s, 38 MB — mandatory, see below
+#   queue_history.py                  ~17 s, and 4 network round trips
+#   queue_thumbs.py                   ~0.5 s/new thumb, ~60 new in an hour
+# Two to four minutes a run, all of it rehearsed against a clone built to match
+# the runner's exact state before the schedule was turned on.
 #
 # WHY NO `--depth=1` ANYWHERE. A shallow fetch of ANY ref writes .git/shallow,
 # which is repo-global and puts the push at the end of this job at risk of
@@ -128,11 +129,48 @@ jobs:
       # .sha256 (max 5 KB) or heartbeat.txt, and the smallest render artifact is
       # an order of magnitude above that. The filter is a clean cut between
       # "text the ledger is made of" and "pixels it only points at".
+      #
+      # `--refetch` IS LOAD-BEARING AND THE FIRST RUN OF THIS WORKFLOW PROVED IT.
+      # With fetch-depth 0, actions/checkout does not fetch the one branch it is
+      # checking out — it runs `fetch --filter=blob:none +refs/heads/*` and
+      # brings down EVERY branch, this one included. So by the time this step
+      # runs, refs/remotes/origin/farm-results-rtx5090 already exists and is up
+      # to date, a plain fetch here is a 0.6 s no-op, and git never backfills the
+      # blobs the earlier, narrower filter skipped. Run 32457873229 did exactly
+      # that: the fetch "succeeded" in half a second, every sidecar was still
+      # missing, and queue_history.py sat there pulling them one round trip at a
+      # time until it was cancelled at 15 minutes. `--refetch` re-requests this
+      # ref's objects under the wider filter and costs 21 s / 26 MB, measured.
       - name: fetch the results branch, text only
         run: |
-          git fetch --no-tags --filter=blob:limit=128k origin \
+          git fetch --refetch --no-tags --filter=blob:limit=128k origin \
             "+refs/heads/farm-results-rtx5090:refs/remotes/origin/farm-results-rtx5090"
           git rev-parse origin/farm-results-rtx5090
+
+      # And then PROVE it, because the failure above was silent and expensive.
+      # A missing sidecar does not error — it becomes a per-object network fetch
+      # inside a loop over ~4,500 of them, which looks like a slow job rather
+      # than a broken one. Three seconds of checking here turns that into a
+      # message. Sampled rather than exhaustive: the filter is all-or-nothing,
+      # so 300 is as conclusive as 4,500 and does not need the whole tree.
+      - name: prove the sidecars are actually local
+        run: |
+          git ls-tree -r -z --full-tree \
+            --format='%(objectname) %(objecttype) %(path)' \
+            origin/farm-results-rtx5090 farm-out \
+            | tr '\0' '\n' | awk '$3 ~ /\.(yaml|json|sha256)$/ {print $1}' \
+            | head -300 > sidecars.oids
+          n=$(wc -l < sidecars.oids)
+          missing=$(GIT_NO_LAZY_FETCH=1 git cat-file --batch-check \
+                    < sidecars.oids | grep -c missing || true)
+          echo "$missing of $n sampled sidecars are not in this clone"
+          rm -f sidecars.oids
+          [ "$n" -gt 0 ] || { echo "::error::no sidecars on the branch at all"; exit 1; }
+          [ "$missing" -eq 0 ] || {
+            echo "::error::the blob filter did not take — $missing/$n sidecars"\
+                 "missing. queue_history.py would fetch them one at a time."
+            exit 1
+          }
 
       # Seed the thumbnail directory from what is already published, or the
       # force-push at the end wipes the branch. See the header note.
@@ -141,8 +179,22 @@ jobs:
           git fetch --no-tags origin \
             "+refs/heads/site-thumbs:refs/remotes/origin/site-thumbs"
           mkdir -p "$RUNNER_TEMP/thumbs"
+          # git archive asks the object store for every blob in one go, so on a
+          # blob-filtered clone this is ONE batched promisor fetch rather than
+          # 2,700 — measured at 3 s on the runner. That is also why the check
+          # below matters: if it ever stopped batching, or the fetch failed
+          # halfway, the seed would come out short and the force-push at the end
+          # would delete the difference off the branch.
           git archive origin/site-thumbs | tar -x -C "$RUNNER_TEMP/thumbs"
-          echo "seeded $(find "$RUNNER_TEMP/thumbs" -name '*.jpg' | wc -l) thumbs"
+          on_branch=$(git ls-tree -r --name-only origin/site-thumbs \
+                      | grep -c '\.jpg$' || true)
+          seeded=$(find "$RUNNER_TEMP/thumbs" -name '*.jpg' | wc -l)
+          echo "seeded $seeded of $on_branch thumbs already published"
+          [ "$seeded" -eq "$on_branch" ] || {
+            echo "::error::seed came out short ($seeded/$on_branch) — publishing"\
+                 "from it would DELETE the missing thumbs off site-thumbs"
+            exit 1
+          }
 
       # branch -> ledger. In this partial clone it reads sizes for the blobs it
       # holds, carries the rest forward from the ledger it is replacing, and
