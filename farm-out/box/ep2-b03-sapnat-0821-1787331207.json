@@ -1,0 +1,120 @@
+{
+  "id": "ep2-b03-sapnat-0821-1787331207",
+  "task": "ep2-b03-sapnat-0821",
+  "node": "002b-first-citizen",
+  "beat": 3,
+  "worker": "box-runner",
+  "priority": 18,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b03sapnat-0821\\fetch_init.py"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b03sapnat-0821\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b03sapnat-0821\\b03-sapnat-in-0821.png",
+        "--init-sha256",
+        "ca296eb83201abd38fc0726beebc776b5890d4a40416981801d9d2dfc4827825",
+        "--mask-png",
+        "C:\\banyan-farm\\b03sapnat-0821\\b03-sapnat-in-mask-0821.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b03sapnat-0821\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b03sapnat-0821\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b03sapnat-0821\\b03-sapnat-DRY.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.30",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260820",
+        "--note",
+        "ATTACHED TO BOTH THE DRY STEP AND THE RENDER STEP, and true of each. ON THE DRY STEP it is a MASK GEOMETRY CHECK: it writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. WHAT TO CHECK: (1) one connected blob shaped like a stem with two leaves, not two blobs and not a rectangle; (2) it does not reach the top of the frame; (3) it does not cover the goblin's head or hands -- if it does, the pass will redraw HIM, which is a P4 fail by construction. ON THE RENDER STEP: one pass, one seed. 0.30 runs 12 of 40 steps from a latent that still holds the drawn structure, so the layout steps never run and the pass FINISHES the shape rather than inventing one. This is beat 03, whose motion take failed because the action names a trunk the plate does not contain -- same root cause as beat 02, and the b03 verdict says so.",
+        "--dry-run"
+      ]
+    },
+    {
+      "name": "s20260820",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b03sapnat-0821\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b03sapnat-0821\\b03-sapnat-in-0821.png",
+        "--init-sha256",
+        "ca296eb83201abd38fc0726beebc776b5890d4a40416981801d9d2dfc4827825",
+        "--mask-png",
+        "C:\\banyan-farm\\b03sapnat-0821\\b03-sapnat-in-mask-0821.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b03sapnat-0821\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b03sapnat-0821\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b03sapnat-0821\\b03-sapnat-s20260820.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.30",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260820",
+        "--note",
+        "ATTACHED TO BOTH THE DRY STEP AND THE RENDER STEP, and true of each. ON THE DRY STEP it is a MASK GEOMETRY CHECK: it writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. WHAT TO CHECK: (1) one connected blob shaped like a stem with two leaves, not two blobs and not a rectangle; (2) it does not reach the top of the frame; (3) it does not cover the goblin's head or hands -- if it does, the pass will redraw HIM, which is a P4 fail by construction. ON THE RENDER STEP: one pass, one seed. 0.30 runs 12 of 40 steps from a latent that still holds the drawn structure, so the layout steps never run and the pass FINISHES the shape rather than inventing one. This is beat 03, whose motion take failed because the action names a trunk the plate does not contain -- same root cause as beat 02, and the b03 verdict says so."
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b03sapnat-0821\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b03-sapnat-0821\"\nNAMES = [\n    \"b03-sapnat-s20260820.png\",\n    \"b03-sapnat-s20260820-mask.png\",\n    \"b03-sapnat-s20260820.png.meta.yaml\",\n    \"b03-sapnat-in-0821.png\",\n    \"b03-sapnat-in-mask-0821.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b03-sapnat-0821.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b03sapnat-0821\\b03-sapnat-s20260820.png",
+    "C:\\banyan-farm\\b03sapnat-0821\\b03-sapnat-in-0821.png"
+  ],
+  "spec_sha256": "763db07b58ccdf01aafa903fd4ee42e552ea7852875c1e01b3e98dc36e0ae8e1",
+  "started_at": "2026-08-21T16:53:53Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-21T16:54:06Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b03sapnat-0821\\b03-sapnat-s20260820.png",
+    "C:\\banyan-farm\\b03sapnat-0821\\b03-sapnat-in-0821.png"
+  ]
+}
