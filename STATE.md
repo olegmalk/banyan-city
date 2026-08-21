@@ -9750,3 +9750,11 @@ it.
   ruling (`lean wiry adult goblin man` is canon) and his 08-20 note that the goblin
   looking like an adult is wrong. The tile-correction wave owns it; a stage-direction
   lane picking between two of his rulings would be the wrong lane doing it.
+
+## 2026-08-21 morning — SHIP TODAY (founder): episode 2 finishes TODAY
+"you must aim to finish it today." Supersedes the noon-cutoff-then-patch plan:
+the design patch wave (7 goblin beats) moves INSIDE today's ship — plates by
+midday, motion by afternoon, founder watch-through this evening, publish on his
+word tonight. LoRA training runs today only if it doesn't displace patch-wave
+renders (no-preemption card); it is an ep3 enabler, not a ship blocker.
+/status path section re-times accordingly. 24/7 queue, no churn, both standing.
