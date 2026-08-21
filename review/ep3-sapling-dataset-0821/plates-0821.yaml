@@ -1,0 +1,158 @@
+id: ep3-sapling-dataset-plates-0821
+date: '2026-08-21'
+by: sapling-dataset lane
+cost_usd: 0.0
+purpose: >-
+  Step 1 of 3 for the sapling LoRA dataset. pipeline/lora/README.md blocks the
+  gate on VARIETY, not count -- ">=20 composited saplings spanning distinct
+  scenes, scales and lighting", with scale and leaf count kept as caption
+  variables so one LoRA serves a protagonist who grows 15cm -> 1.6m. The ~23
+  composites that exist share five near-identical tall-grass scenes AND have
+  the scavenger in every frame. A subject LoRA trained on frames that share a
+  backdrop learns the backdrop into the trigger, and a figure in every frame
+  teaches it a figure. These plates are goblin-free ground planes, by text, no
+  plant and no figure. Step 2 composites the canon sapling in at ladder
+  heights; step 3 is one 0.30 inpaint per composite.
+
+usable_plates_so_far: 5
+rounds_run: 2
+plates_rendered: 18
+card_minutes: ~54
+gpu_cost_usd: 0.0
+
+the_finding_and_how_it_moved:
+  round_1: >-
+    1 of 10. Seven scenes x three scales, framing words `close-up` /
+    `medium shot` / `wide shot`. Six cells came back as MACRO TEXTURE with no
+    ground plane, two returned a creature (a hooded masked figure, a giant
+    bird) despite `no humans` plus a nine-term figure ban, one lost the cel
+    dialect, and p09 -- the only wide cell -- passed. Read at the time as:
+    the framing word is the cause, because every close and medium cell failed
+    and the only wide cell passed.
+  round_2: >-
+    4 of 8, and it corrected round 1's reading one rung deeper. r01 (p09's
+    words, new seed) PASSED, so round 1's single pass was not a seed lottery.
+    r02 -- r01 with the four words `wildflowers in the distance` DELETED and
+    nothing else changed -- collapsed straight back to magnified grass at the
+    same `wide shot, low angle`. So the framing word was never the cause in
+    either round.
+  the_rule_as_it_now_stands: >-
+    A SCENE CLAUSE THAT NAMES ONLY GROUND COVER RETURNS A MACRO OF THAT GROUND
+    COVER, AT ANY FRAMING. What buys a drawable ground plane is a LANDFORM or a
+    RECEDING FEATURE in the scene words -- something the picture has to be
+    positioned relative to. Passing cells: meadow + wildflowers in the distance
+    (p09, r01), hillside (r05, which supplied distant hills unprompted), creek
+    with banks (r06), dirt path (r08, which returned a forest avenue). Failing
+    cells: tall grass (p01, p02, r02), dry grass (p03, p04, p10, r07), mist over
+    grass (p07, r04), sunset over grass (r03). Every failure is a ground-cover
+    noun with no landform beside it.
+  what_this_cost_to_learn: >-
+    18 plates and ~54 minutes of otherwise-idle card, at $0. Recorded rather
+    than argued away: round 1 was filed as a ten-cell breadth batch off a
+    ratified recipe on the argument that only the words varied, and a
+    four-cell probe would have found the macro failure for 40% of the card
+    time. The batch-first rule is right; the cell count was mine.
+
+predictions_that_were_wrong_and_are_kept:
+  round_1_spec: >-
+    "FIRST AND MOST LIKELY: `no humans` DOES NOT BUY AN EMPTY FRAME, IT BUYS A
+    LANDSCAPE ... if all six come back as wide painterly country, the fix is
+    not a seventh wording." The landscape is the thing that worked. The wide
+    cell was filed as a sacrificial test of a question the ep2-b16-field batch
+    was thought to have closed, and it is the only plate in the batch worth
+    keeping.
+  round_2_spec: >-
+    Concluded "it is the framing word" and froze `wide shot, low angle`. Right
+    about what to keep, wrong about why -- r02 falsified it inside the same
+    batch. The cost was r03 and r04: two lighting cells that could not be
+    scored because they had no depth cue and lost the ground plane before
+    their light was readable.
+
+negatives_failed_again_and_were_not_touched: >-
+  `no humans` in the positive plus `1boy, 1other, solo, people, silhouette,
+  goblin, animal` in the negative still produced a hooded masked figure (p02)
+  and a bird (p06). That is this tree's negatives failing to hold position for
+  the fourth time. No negative change was attempted in round 2 or 3: the lever
+  that has failed four times is not the lever to pull. The guard that holds is
+  bar clause D3, which DELETES a frame carrying a figure rather than curating
+  it -- so p02 and p06 are deleted, not cropped.
+
+the_clip77_miss: >-
+  The first ten specs carried the parent's negative byte-for-byte plus this
+  job's own bans and ran 135 tokens against CLIP's 77. All ten died rc=9 on
+  box_preflight's clip77 guard with the card idle. Overflow is SILENT at the
+  sampler -- the TAIL is dropped -- so the terms that got cut were exactly the
+  dialect bans the batch existed to test. The fifteen tokens removed to fix it
+  all describe A FACE (pointy ears, elf, human face, old man, hair, beard,
+  chibi...) and there is no figure in these plates. Now enforced in code:
+  derive_sapling_field_0821.assert_under_clip77 counts both payloads on
+  animagine's own vocab before write() and refuses, and also refuses a term the
+  checkpoint's vocab does not carry.
+
+scale_axis_moved_off_the_sampler: >-
+  The gate wants distinct scales. Rounds 2 and 3 ask for none. Round 1 asked the
+  sampler for magnification and got macro grass six times, so scale now comes
+  from CROPPING these wide plates -- beat 09 measured a crop surviving
+  downstream at 2.157x LANCZOS with 105% of frame 1's high-frequency energy at
+  f121. A crop is deterministic and $0; a framing word on a subject-less prompt
+  is a lottery this dataset already lost.
+
+plates:
+  - id: ep3-sapfield-p09-0821
+    scene: in a green meadow, wildflowers in the distance, clear sky, day
+    verdict: PASS
+    note: round 1's only pass. Wildflowers litter the near foreground.
+  - id: ep3-sapfld2-r01-0821
+    scene: in a green meadow, wildflowers in the distance, clear sky, day
+    verdict: PASS
+    note: the control, new seed. Reproduces p09 -- not a seed lottery.
+  - id: ep3-sapfld2-r05-0821
+    scene: on a grassy hillside, blue sky, white clouds, midday
+    verdict: PASS
+    note: >-
+      cleanest short-grass ground plane of the batch, distant hills supplied
+      unprompted. No explicit distance clause -- `hillside` is itself the
+      landform, which is the evidence that sharpened the rule.
+  - id: ep3-sapfld2-r06-0821
+    scene: beside a shallow creek, green banks, clear sky, day
+    verdict: PASS
+    note: banks are the rootable strip; water holds the centre; treeline horizon.
+  - id: ep3-sapfld2-r08-0821
+    scene: on a dirt path, green field, late afternoon, warm light
+    verdict: PASS with a caveat
+    note: >-
+      best ground plane in the batch (path plus grass verges, lower centre) but
+      it returned a FOREST AVENUE, not a field. Kept as woodland-edge scene
+      variety, which the dataset has none of; flagged because the scene words
+      and the picture disagree.
+  - rejected_and_deleted:
+      - ep3-sapfield-p02-0821  # a hooded masked figure, D3
+      - ep3-sapfield-p06-0821  # a giant bird, D3
+  - rejected:
+      - ep3-sapfield-p01-0821  # macro grass, D2
+      - ep3-sapfield-p03-0821  # orange grass texture, D2
+      - ep3-sapfield-p04-0821  # dune of dry grass, D2
+      - ep3-sapfield-p05-0821  # painterly, not cel, D1
+      - ep3-sapfield-p07-0821  # grass silhouettes, D2
+      - ep3-sapfield-p08-0821  # an egg in a nest, D2
+      - ep3-sapfield-p10-0821  # macro dry grass, D2
+      - ep3-sapfld2-r02-0821   # the controlled deletion; macro grass, D2
+      - ep3-sapfld2-r03-0821   # grass silhouette at sunset, D2
+      - ep3-sapfld2-r04-0821   # grass silhouette in mist, D2
+      - ep3-sapfld2-r07-0821   # macro dry grass, D2
+
+round_3_filed: >-
+  ep3-sapfld3-t01..t08-0821, eight cells that all name a distant landform or a
+  receding feature, wildflowers dropped (they supplied depth AND littered the
+  near foreground at once), and the two lighting cells r03/r04 could not answer
+  re-run on plates that can be scored. Pre-registered failure: the treeline
+  arrives in the FOREGROUND, since the negative bans `tree` and this tree's
+  negatives have failed four times -- in which case t02's `distant hills`,
+  which names no bannable object, is the cell to carry forward.
+
+what_this_licenses: >-
+  Five plates into step 2 (composite at ladder heights) once the gate has
+  enough scene breadth. NOTHING here trains anything, nothing enters a cut,
+  nothing is a beat. DECISIONS.md item 18 ("never train on the output") is
+  still on the books and still unresolved -- raised for the founder, not
+  decided here.
