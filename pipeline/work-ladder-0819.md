@@ -7784,3 +7784,116 @@ box the founder learns to ignore by Tuesday.
 ### 20 dataset-gate fillers on the SCENE x SCALE grid (filer lane, 2026-08-21)
 
 `derive_jerry_wave_0821.py sceneset` emits 20 k6a-standard samples (`ep2-jerry-scene-*-0821`, priority 46, all filed `--backlog`) crossing five backdrops from the episode's own vocabulary with `full body` / `full body, wide shot`, skeletons rotated across the committed nine. **These are dataset-gate fillers for `pipeline/lora/curation-tile-0820.yaml` and THIS LANE DOES NOT JUDGE THEM — the chain lane scores them on the k6a bar and owns curation.** The pose set moved one axis and left scene and scale at one value each; a character LoRA whose frames share a backdrop learns the backdrop. No medium or close rung is filed: canon measures that the closer the crop the more the blank-eyed mask resolves into an adult human male, round2 closed that rung without running it, and the dataset's close scale is a post-crop of these plates.
+
+---
+
+## Appended 2026-08-21 by the goblin standard lane — THE WAVE RAN, ALL SEVEN BEATS HAVE A CREATURE, AND THE DATASET GATE IS DISCHARGED
+
+Twenty plates off `pipeline/jerry_standard_0821.py` in one morning on a card that
+had been reading 0/0/0. Judged by eye at 1:1 against `adult-b19-0819.jpg`.
+Contact sheets are the frames themselves under `farm-out/ep2-b*-tilefix-*-0821/`
+and `farm-out/ep2-jerry-set-*-0821/`, each with the prompt, negative, skeleton
+and IP-Adapter reference it was drawn from sitting beside it.
+
+### THE HEADLINE: TWELVE FOR TWELVE ON IDENTITY, WHERE FIVE OF SEVEN BEATS WERE SOMEBODY ELSE
+
+Every frame is green, bald, blank-eyed with no iris or pupil, no human nose, no
+age modelling, a mouth line present, a heavy dark brow with **skin between it and
+the lid**, and short low ear flanges. Not one grew an elf spike, and not one grew
+a horn. Against a cut where the 08-20 audit found an adult man at beats 03, 04,
+07 and 13, a child at 02 and 08, and an outright old man at 20.
+
+### PICKS, ONE LINE EACH
+
+| beat | pick | why |
+|---|---|---|
+| 02 | `p1` | running, leaning forward, face true, no cowl |
+| 03 | `p1` | the seed rung came back **more** lilac at the collar, not less |
+| 04 | `r2` | p1 stood bolt upright under a dark arch; r2 is cleaner on open ground |
+| 07 | `p1` | **BALD.** No white hair, no guard spectacles — the entire complaint, gone |
+| 08 | `r2` | p1 drew a bare protruding pot belly; r2's cloak covers him |
+| 13 | `p1` | the best frame in the wave — it is the tile's own seated stance |
+| 20 | `r2` | the collar did not clear, but it put a **red** fruit in his hands |
+
+### THE ONE FAULT THAT REPEATED, AND ITS CONTROL CAME BACK THE WAY THE SPEC PRE-REGISTERED
+
+Three plates showed a pink-lilac tint at the collar — b03, b20, and the `crouch`
+pose rung. **All three are FOLDED poses. Every standing frame in the wave read
+clean.** The round-two specs filed the disambiguation in advance: *"Both clean =
+it was the draw. Both magenta = it is the mask."* b03-r2 and b20-r2 changed the
+**seed alone** and both kept it.
+
+So the cause is the one named before the render: the mask translates down with
+the head, but **a squatting figure is compressed**, so the same 200×220 box that
+held only a head on a standing figure now overlaps neck and shoulder — and
+k6b/k6c/k6d already established that *this* adapter transfers the tile's purple
+cowl when the mask gives it more to act on. The fix is geometric (a smaller box
+for folded skeletons, i.e. `jerry_standard_0821.mask_for`) and it is **named and
+not run**, because the tint reads as patchwork cloth rather than as the tile's
+cowl and does not cost a beat. `purple cowl, purple scarf` went into the motion
+negative instead.
+
+### BEAT 04's CLOSE-UP RUNG WAS CLOSED WITHOUT BEING RUN, ON CANON'S OWN MEASUREMENT
+
+Round one filed b04 with a `framing_gap` calling the close-up a rung of its own at
+two variables. **It is not a rung, it is a mistake**, and canon already contained
+the argument: *the tile is a wide full body at which scale the model draws the
+face as a blank-eyed mask, and THE CLOSER THE CROP, THE MORE IT RESOLVES THAT
+MASK INTO A DETAILED ADULT HUMAN MALE.* Asking this checkpoint for a close-up is
+asking it for the defect. Render full body where the recipe is measured and
+passes; take the crop in post — which is what the shipped b04 clip already is.
+Four frames saved by reading the entry the wave was authored from.
+
+Its **lean** is likewise handed to motion rather than re-asked of a third plate.
+Two rounds failed to produce it, the 08-20 ruling *"the peek is the beat now"*
+already puts the peek in the action, and LTX is the thing that makes actions.
+
+### THE LoRA GATE IS DISCHARGED — 15 FRAMES IN 9 POSES, AGAINST 7 IN 4
+
+`curation-tile-0820.yaml` had refused to unblock for five straight updates and
+was right every time: twelve tileset poses were bobbleheads, six skeleton poses
+drew a blank egg, six wording rungs drew a round eye or none. Its condition was
+*breadth at a recipe that passes*, and there was no such recipe until k6a.
+
+`pipeline/lora/manifest-jerry-0821.yaml` + `build_jerry_0821.py`: the 7 survivors
+plus 8 new frames, **all fifteen re-captioned**, not just the new ones — keeping
+the old captions on surviving frames would teach the retired man-read vocabulary
+through the back door.
+
+**The caption rule is the part worth copying.** A character LoRA learns its
+trigger as whatever the caption leaves unexplained. So every caption names pose,
+framing, setting and **style**, and names none of `green skin`, `bald`, `blank
+eyes`, `no nose`, `patchwork cloak`, the ear or the proportion — a named
+attribute is one the token is excused from carrying. Style **is** named for the
+inverse reason: leave `anime style, cel shading` unexplained and the token
+absorbs *our look*, which fails bar B3 by construction rather than by
+measurement.
+
+**The repeat count moved 4 → 8 and that is not cosmetic.** The set went 31 → 15;
+at 4 repeats the run would have been ~300 optimizer steps against the ~620 §5
+argued for — a quietly halved run that would have read as *"the LoRA is weak"*.
+
+### QUEUE ORDER IS AN ARGUMENT, NOT A CONVENIENCE
+
+14 motion jobs at priority 24, b14/b17 plates at 26, `train-jerry-0820` at 70 —
+55 minutes on a card with no preemption, deliberately last.
+
+**And the prediction filed with the tranche is why the order matters.** Every
+plate was drawn by an IP-Adapter holding a face the base checkpoint does not
+otherwise produce; thirteen rungs established the wording alone returns a human
+male. LTX has no adapter. It is handed the face as pixels and asked to hold it
+121 frames against its own prior — **and its prior is the man-read.** If drift
+fires across most beats, the finding is not a motion finding: it says the LoRA is
+the only durable fix, because a LoRA moves the prior where an init frame only
+argues with it. That would promote `train-jerry-0820` from ep3 enabler work to
+**ep2's blocker**, and the tranche has to answer first for anyone to know.
+
+### WHAT THE WAVE DOES NOT OWE
+
+Beats **05, 06 and 10 are guards-only** — the audit finds no goblin in frame, so
+a goblin plate for them would be a plate for a character who is not in the shot.
+Beats **15 and 19 are the reference** and come out of any wave. Beat **14** (ears)
+and **17** (blue-teal legs) were taken out by the audit as one-attribute misses
+and are filed anyway, because the standard closes both for free — the ear is
+*unpromptable* and arrives only from absence-plus-suppression, which the standard
+already does, and eleven plates came back green to the soles.

@@ -497,3 +497,57 @@ gate_status_2026_08_21_axis_exhausted: >-
   one coverage number. The horn is closed on mechanism and confirmed by a
   falsification rung. The best face this tree has measured, k5a, passes the eye
   area clause for the first time ever and has no mouth.
+
+# --------------------------------------------------------------------------
+# UPDATE 9, 2026-08-21. THE GATE THIS FILE HAS HELD SINCE 08-20 IS DISCHARGED.
+#
+# THE CONDITION THIS FILE SET, in its own words, was never "a better face" and
+# never "more frames" -- it was BREADTH AT A RECIPE THAT PASSES. It refused five
+# times and it was right five times: twelve tileset poses held the face and were
+# bobbleheads, six skeleton poses held the proportion and drew a blank egg, six
+# wording rungs drew a round eye or no eye at all, and k5a -- the best face this
+# tree had measured -- had no mouth.
+#
+# THE RECIPE NOW EXISTS AND IT IS RULED. ep2-jerry-face-k6a-0821, the STEWARD
+# RULING of 2026-08-21 (coordinator, veto-able, R4), recorded in
+# pipeline/jerry_standard_0821.py with 45 selftest clauses and in canon.yaml.
+# Eye 1.07x the tile -- the first frame in thirteen rungs that is not oversized.
+# Mouth present. No horns, no cowl, containment intact, T8 5.51.
+# The T1b SHAPE clause was recalibrated 0.52-0.54 -> <= 0.65 in the same ruling,
+# on the ground that only DEFECTIVE frames had ever met the old value.
+#
+# EIGHT NEW FRAMES were rendered through it and judged by eye at 1:1. With the
+# seven survivors above that is FIFTEEN FRAMES IN NINE POSES against this file's
+# own "seven frames in four poses trains a pose, not a character".
+# The set is pipeline/lora/manifest-jerry-0821.yaml, built by
+# pipeline/lora/build_jerry_0821.py. NOTHING IN THIS FILE OR IN
+# manifest-jerry.yaml IS EDITED -- both stay as the record of what was rejected.
+#
+# CAPTIONS (gate 2) ARE RE-DERIVED FOR ALL FIFTEEN, not for the eight new ones.
+# Keeping a surviving frame's OLD caption would carry the retired man-read
+# vocabulary into training through the back door. New captions live in
+# pipeline/lora/captions/jerry-0821/; captions/jerry/ is left untouched.
+#
+# THE ONE FAULT CARRIED IN, NAMED RATHER THAN HIDDEN, because this file's whole
+# method is that near-misses are what made the old set untrainable:
+# TWO OF FIFTEEN CARRY A PINK-LILAC COLLAR TINT (set-crouch, and faintly
+# set-seat). It appeared on FOLDED poses only; every standing frame is clean; and
+# a seed control (b03-r2, b20-r2, seed changed alone) FAILED TO CLEAR IT, which
+# points at the mask rather than the draw -- a compressed figure puts neck and
+# shoulder inside a box authored for a standing head, and k6b/k6c/k6d proved this
+# adapter transfers the tile's purple cowl when the mask gives it more to act on.
+# THEY ARE KEPT, AND THAT IS A JUDGEMENT: the tile's own cloak IS patchwork with
+# pink and red patches, so pink CLOTH is tile-true where a purple COWL would not
+# be, and 2 of 15 cannot make the majority read of the trigger token. If bar B1
+# returns collars on frames that did not ask for one, this is the first suspect
+# and the fix is geometric (jerry_standard_0821.mask_for), not another caption.
+gate_status_2026_08_21_DISCHARGED: >-
+  DISCHARGED. train-jerry-0820 IS FILED (backlog, priority 70, behind the 14-job
+  motion tranche at 24 -- 55 minutes on a card with no preemption, and the
+  tranche is answering a question that could change what the LoRA is FOR). The
+  set is 15 frames in 9 poses, all 15 captioned against the corrected canon, and
+  the repeat count moved 4 -> 8 so that shrinking the set 31 -> 15 did not
+  quietly halve the run from ~620 optimizer steps to ~300. This file's refusal
+  stands as the reason the set is worth training on: it said no to ten beat-20
+  man-reads, twelve bobbleheads, six blank eggs and sixteen browless round-eyed
+  frames, and each of those would have been learned.
