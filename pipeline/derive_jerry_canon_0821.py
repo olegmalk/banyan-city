@@ -334,8 +334,20 @@ def emit(beat, rnd="p1", emotion=None, sample=False, priority=6, force=False,
             raise SystemExit("!! %s: struck tag %r is back in the positive "
                              "-- the founder's image has none of it" % (new_id,
                                                                         dead))
-    # ...and the three that MUST be there, for the same reason inverted.
-    for live in ("pointy ears", "slit pupils", "mandarin collar"):
+    # ...and the ones that MUST be there, for the same reason inverted.
+    #
+    # `slit pupils` LEFT THIS LIST ON 2026-08-22 AND IT WAS THE FOUNDER WHO
+    # TOOK IT OUT. It was required here because his image plainly shows a tiny
+    # dark pupil on an off-white field and the tag is booru's nearest name for
+    # that. It is not: on animagine `slit pupils` draws a LARGE iris with a
+    # slit through it, and a large iris is exactly the thing he vetoed the
+    # whole w2 sweep for ("that aint my goblin"). A required tag that produces
+    # the vetoed frame is not a guard, it is the defect with a test around it.
+    # The eye now comes off the adapter (see the sq65 note in jerry_canon_0821)
+    # and round nine's rungs strip the word side to zero so the two stop
+    # competing. `pointy ears` and `mandarin collar` stay required: both are
+    # silhouette, both survived every round, and neither is contested.
+    for live in ("pointy ears", "mandarin collar"):
         if live not in pay:
             raise SystemExit("!! %s: %r is not in the positive" % (new_id, live))
     if pose_words not in pay:
