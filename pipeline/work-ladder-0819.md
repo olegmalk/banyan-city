@@ -7662,3 +7662,121 @@ The 4.34 GiB pack is real and still worth deciding about, but it was a bystander
 here: the same repo pushes in 2.4 s and fetches in 3.9 s. The defect was one
 missing line of git config, and it was invisible for two days because nothing
 measures how far a courier's delta base has drifted from the remote.
+
+---
+
+## INCIDENT 2026-08-21 — the /queue Finished page stopped on the 20th, the founder asked a SECOND time, and the loop is closed in code
+
+**Symptom, in his words.** /queue's Finished feed showed nothing since 20 August
+while ~40 renders ran overnight. This is the same complaint he made on 2026-08-20
+about the 16th. Twice in two days, same page, same cause.
+
+**Cause.** Not the box, either time. `farm-results-rtx5090` had every one of those
+runs published on time (the courier incident above is what briefly stopped even
+that, and it was fixed at 06:57Z). What had not run was the pair of HAND-RUN
+commands that turn the branch into the page:
+
+```
+python3 pipeline/queue_history.py --fetch     # branch -> pipeline/measured/queue-history.json
+python3 pipeline/queue_thumbs.py --push       # ledger -> 512px thumbs on site-thumbs
+```
+
+Nothing scheduled them. Nothing ever had. The 2026-08-20 fix was a *banner* — the
+page learned to say when it was stale — which is honest reporting of a defect,
+not a fix for it, and a banner with a 24-hour fuse did not even report this one:
+the feed was 17 hours behind when he opened it and the page was still quiet.
+
+**A lesson is learned only when a guard, a gate or a default enforces it**
+(Roman, 08-20). Prose said "re-run the refresher". Prose lost twice. So:
+
+### The default — `.github/workflows/queue-refresh.yml`, hourly at :17
+
+Runs both halves and commits only what moved. The reason it is hourly and not
+half-hourly is that the commit at the end **is a production deploy**:
+`pipeline/measured/` is on `SITE_INPUTS` in `pipeline/vercel-ignore-build.sh`
+deliberately, because /queue is baked from the ledger at build time and the data
+cannot reach banyan.city without a build. Cadence here == deploy rate, and the
+old Vercel project burned >$100/month on a 5-minute push loop. Hourly is 24
+builds a day against a 4 h banner: four whole misses of margin. :17 keeps it off
+`pages.yml`'s half-hourly shoulder and out of the top-of-hour cron crush.
+
+It is cheap because none of it is a full clone, and every number below was
+measured on 08-21 rather than estimated:
+
+| step | cost |
+|---|---|
+| `pages.yml`'s plain `actions/checkout` of main, for comparison | **76 s** |
+| main, `filter: blob:none` + non-cone sparse (`/pipeline/` minus `research/` and `t3-trials/`, plus `review/ep2-picks/*.yaml`) | 3 s fetch + 7 s checkout, **48 MB** tree |
+| `farm-results-rtx5090`, `--filter=blob:limit=128k`, **full history** | 23 s, **25 MB** |
+| `site-thumbs` (mandatory seed — see below) | 44 s, 38 MB |
+| `queue_history.py` | 16 s |
+| `queue_thumbs.py` | ~2 s per NEW thumb |
+
+Three things in there are load-bearing and each was learned the hard way:
+
+1. **No `--depth=1` anywhere.** A shallow fetch of *any* ref writes
+   `.git/shallow`, which is repo-global and risks "shallow update not allowed"
+   on the push at the end of the job. It is also unnecessary: the full 3,934-commit
+   history of the results branch is 2.9 MB under `blob:none`. History was never
+   the expensive part — the blobs were — so the filter does all the work the
+   depth would have and costs nothing to skip.
+2. **`fetch-depth: 0` on main is not laziness.**
+   `queue_history.spec_commit_dates()` runs `git log --name-only -- pipeline/jobs`
+   to date every spec, which is how /queue tells a live hold from an old spec
+   nobody deleted. At depth 1 that log is one commit and every spec would be
+   dated today. `blob:none` makes full history cost commits and trees only.
+3. **`site-thumbs` must be seeded before `queue_thumbs --push`.** `publish()`
+   force-pushes a fresh orphan built from the contents of `--out`. An empty
+   `--out` would DELETE every thumbnail on the branch and blank the gallery.
+
+### The gate — `FEED_STALE_HOURS` 24 → 4 in `pipeline/build_queue.py`
+
+A banner that can only fire the next afternoon cannot catch a defect that starts
+overnight. Four hours is four missed runs of an hourly workflow, so it can only
+mean a broken loop — which is what makes it safe to shout that early, and what
+makes shouting that early worth doing. Wording changed with it: the red banner
+now leads with **"THIS FEED IS STALE — N hours BEHIND. Renders continue on the
+box."** and names `queue-refresh.yml` as the thing to look at, because the one
+thing a reader cannot tell from an empty top row is which of the two silences it
+is, and last time he guessed the harmless one.
+
+The quiet line changed too, and that matters more than the banner: it is what he
+reads on the 99 refreshes where nothing is wrong. The **age** is now the bold
+word (`<b class="qage">5 minutes ago</b>`) and the timestamp follows it. Before,
+the date was bold and the age was a faint trailing clause — so reading the page
+meant subtracting a formatted date from your own clock, which is exactly the
+arithmetic that let "Sunday 16 August" read as recent.
+
+### A partial clone lies about file sizes, and the fix is in `queue_history.py`
+
+The obvious `ls-tree -l` does one of two wrong things in a blob-filtered clone,
+both measured: with lazy fetching on it downloads **4.5 GB** to print sizes, and
+with `GIT_NO_LAZY_FETCH=1` it reports every absent blob as **`0`**, which would
+have put "0 KB" on 4,113 cards. So `branch_listing()` now takes paths and oids
+from the tree with no object lookup at all, sizes what is local, carries the rest
+forward from the ledger it is replacing (farm-out artifacts are write-once), and
+`fill_missing_sizes()` measures the remainder **after** the rows exist — over the
+artifacts a card will actually show, not the whole branch. That is the difference
+between 704 network round trips a run and **10**. `_no_lazy_fetch_works()` refuses
+the whole scheme on git < 2.42, where the environment variable is silently
+ignored and the safe path would quietly become the 4.5 GB one.
+
+Verified against a real partial clone rehearsed end to end before the workflow
+was written: same job ids, same artifact list, **zero** sizes lost, zero wrong.
+
+### What is still hand-run, and is now visible
+
+Four job rows differ between a workflow build and a local one, and all four are
+lanes that never committed their `pipeline/jobs/*.yaml` — the workflow builds
+from the repo, so an untracked spec loses its prompt, purpose and init on the
+card. That is the spec's bug, not the workflow's, but it will now flip back and
+forth between hourly and hand runs until the specs are committed.
+
+**Regression.** `test_the_queue_page_says_so_when_its_own_feed_has_died()` in
+`pipeline/test_pipeline.py` now asserts the 4 h threshold, the "N hours BEHIND /
+renders continue on the box" wording at 5 h, silence at 3 h, the age element in
+both states, that the client script and the builder agree on the threshold — and
+that the workflow exists, runs BOTH halves, is hourly, is off :00 and :30, and
+commits only when the feed moved. The threshold and the cron are asserted in the
+same test on purpose: an early-firing banner with no loop clearing it is a red
+box the founder learns to ignore by Tuesday.

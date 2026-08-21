@@ -165,7 +165,12 @@ main { max-width: 1180px; }
    newest row is days old must say so IN THE READER'S WORDS, because the one
    thing a reader cannot tell from an empty top row is which of the two silences
    it is. Quiet when fresh (it is a fact, not an alarm); loud when not. */
-.qfresh { font: 500 .78rem/1.7 var(--mono); color: var(--faint); margin: .35rem 0 0; }
+.qfresh { font: 500 .82rem/1.7 var(--mono); color: var(--muted); margin: .35rem 0 0; }
+/* The AGE is the only word in the quiet line worth a glance — the founder is
+   asking "how far behind am I looking", not "what time is it in +04". Tightened
+   2026-08-21 with the threshold, because the quiet line is what he reads on the
+   99 refreshes where nothing is wrong, and a faint one taught him not to. */
+.qfresh b.qage { color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; }
 .qfresh.stale { display: block; margin: .9rem 0 0; padding: .75rem .9rem;
   border: 1px solid var(--alarm, #e2564d); border-left-width: 4px; border-radius: 10px;
   color: var(--ink); background: color-mix(in srgb, var(--alarm, #e2564d) 9%, transparent);
@@ -517,23 +522,41 @@ def clock(iso: str) -> str:
 
 # How old the newest finished render may be before this page calls its own feed
 # dead. The box's own quiet gaps are minutes (see ledger_freshness.py's measured
-# p50 3.3 min / longest-ever 0.75 h off 2107 commits), so a day is far past any
-# silence the card has ever taken while working — but a day is also the point at
-# which a HUMAN stops reading a top row as "this morning" and starts reading it
-# as history, and this threshold exists for the human, not the card.
-FEED_STALE_HOURS = 24
+# p50 3.3 min / longest-ever 0.75 h off 2107 commits), so anything past a few
+# hours is already far outside any silence the card has ever taken while working.
+#
+# IT WAS 24 UNTIL 2026-08-21, AND 24 WAS TOO SLACK — the same defect fired a
+# SECOND time inside a day: ~40 renders ran overnight, the page still showed
+# 20 August, and the founder had to ask again. A day-long fuse means a founder
+# opening /queue at lunchtime sees a quiet card over a feed that stopped at
+# breakfast and reads it as an idle box. Four hours is the number because the
+# refresh is now hourly (.github/workflows/queue-refresh.yml): four missed runs
+# in a row is a broken loop and nothing else, so the banner can only fire when
+# something is actually wrong, and it fires while the day is still young enough
+# to fix. Change the cron and change this together — they are one mechanism.
+FEED_STALE_HOURS = 4
+
+
+def age_span(seconds: float) -> str:
+    """A gap in seconds → the bare span a person would say. Never `0 days`.
+
+    Split out from `age_words` because the banner has to say how far BEHIND the
+    feed is ("4 hours behind"), not when the last thing happened, and gluing
+    "ago" on and cutting it off again is how the two drift apart.
+    """
+    s = max(0.0, float(seconds))
+    if s < 5400:
+        return f"{int(round(s / 60))} minutes"
+    if s < 36 * 3600:
+        h = s / 3600.0
+        return f"{h:.0f} hours" if h >= 2 else "an hour"
+    d = s / 86400.0
+    return f"{d:.1f} days" if d < 10 else f"{int(round(d))} days"
 
 
 def age_words(seconds: float) -> str:
     """A gap in seconds → the phrase a person would say. Never `0 days`."""
-    s = max(0.0, float(seconds))
-    if s < 5400:
-        return f"{int(round(s / 60))} minutes ago"
-    if s < 36 * 3600:
-        h = s / 3600.0
-        return f"{h:.0f} hours ago" if h >= 2 else "an hour ago"
-    d = s / 86400.0
-    return f"{d:.1f} days ago" if d < 10 else f"{int(round(d))} days ago"
+    return f"{age_span(seconds)} ago"
 
 
 def newest_finish(jobs: list) -> str | None:
@@ -575,21 +598,31 @@ def freshness_html(jobs: list, now: datetime.datetime = None) -> str:
     attrs = f'data-newest="{_e(newest)}" data-stale-h="{FEED_STALE_HOURS}"'
 
     if age_s < FEED_STALE_HOURS * 3600:
+        # The AGE is the bold word, not the date. A founder scanning this line
+        # wants one number — how far behind am I looking — and a formatted
+        # timestamp is not that number; he has to subtract it from his own
+        # clock, which is the arithmetic that let 20 August read as "recent".
         return (f'<p class="qfresh" {attrs}>Newest render on this page finished '
-                f'<b>{_e(when)}</b> {TZ_LABEL} — {_e(age_words(age_s))}.</p>')
+                f'<b class="qage">{_e(age_words(age_s))}</b> — {_e(when)} '
+                f'{TZ_LABEL}.</p>')
 
     return (
         f'<p class="qfresh stale" {attrs}>'
-        f'<b>THIS FEED IS STALE — nothing newer than {_e(when)} {TZ_LABEL} '
-        f'({_e(age_words(age_s))}) is on this page.</b> That is a statement about '
-        f'the page, NOT about the render box: the box publishes every finished '
-        f'job to <code>{_e(RESULTS_BRANCH)}</code> as it goes, and anything it '
-        f'has run since that time exists and is simply not shown here. An empty '
-        f'top row on a stale feed is not an idle card.'
+        f'<b>THIS FEED IS STALE — <span class="qage">{_e(age_span(age_s))}</span> '
+        f'BEHIND. Renders continue on the box.</b> '
+        f'Nothing newer than {_e(when)} {TZ_LABEL} is on this '
+        f'page, and that is a statement about the page, NOT about the render '
+        f'box: the box publishes every finished job to '
+        f'<code>{_e(RESULTS_BRANCH)}</code> as it goes, and anything it has run '
+        f'since that time exists and is simply not shown here. An empty top row '
+        f'on a stale feed is not an idle card.'
         f'<span class="qfresh-fix">The page is baked from the committed '
-        f'<code>pipeline/measured/queue-history.json</code>, which nothing '
-        f'refreshes on a schedule. To move it: '
-        f'<code>python3 pipeline/queue_history.py</code>, commit the file, push. '
+        f'<code>pipeline/measured/queue-history.json</code>, refreshed hourly by '
+        f'<code>.github/workflows/queue-refresh.yml</code> — past '
+        f'{FEED_STALE_HOURS} h that workflow is what has stopped, not the box. '
+        f'Check it, or move the file by hand: '
+        f'<code>python3 pipeline/queue_history.py --fetch</code>, then '
+        f'<code>python3 pipeline/queue_thumbs.py --push</code>, commit, push. '
         f'To check before trusting it: '
         f'<code>python3 pipeline/ledger_freshness.py</code>.</span></p>')
 
@@ -1802,40 +1835,45 @@ LIVE_JS = """
 (function () {
   var els = document.querySelectorAll(".qfresh[data-newest]");
   if (!els.length) return;
-  function words(s) {
+  function span(s) {
     s = Math.max(0, s);
-    if (s < 5400) return Math.round(s / 60) + " minutes ago";
+    if (s < 5400) return Math.round(s / 60) + " minutes";
     if (s < 36 * 3600) {
       var h = s / 3600;
-      return h < 2 ? "an hour ago" : Math.round(h) + " hours ago";
+      return h < 2 ? "an hour" : Math.round(h) + " hours";
     }
     var d = s / 86400;
-    return (d < 10 ? d.toFixed(1) : String(Math.round(d))) + " days ago";
+    return (d < 10 ? d.toFixed(1) : String(Math.round(d))) + " days";
   }
+  function words(s) { return span(s) + " ago"; }
   for (var i = 0; i < els.length; i++) {
     var el = els[i];
     var iso = el.getAttribute("data-newest");
     if (!iso) continue;
     var t = Date.parse(iso);
     if (isNaN(t)) continue;
-    var hrs = parseFloat(el.getAttribute("data-stale-h")) || 24;
+    var hrs = parseFloat(el.getAttribute("data-stale-h")) || 4;
     var age = (Date.now() - t) / 1000;
     var stale = age >= hrs * 3600;
+    /* The age is its own element in both states, so the reader's clock can
+       correct it without the script having to re-parse a sentence. It was a
+       regex over the built text until 2026-08-21, and the regex stopped
+       matching the moment the banner's wording changed — silently, leaving a
+       build-time age on the page, which is the exact failure this block is
+       here to prevent. */
+    var ageEl = el.querySelector(".qage");
+    if (ageEl) ageEl.textContent = stale && el.classList.contains("stale")
+      ? span(age) : words(age);
     if (!stale) continue;                    /* build-time text already fits */
-    if (el.classList.contains("stale")) {
-      /* already loud — only the age needs to stop lying */
-      var b = el.querySelector("b");
-      if (b) b.textContent = b.textContent.replace(
-        /\\(([^()]*ago)\\)/, "(" + words(age) + ", as of when you opened this)");
-      continue;
-    }
+    if (el.classList.contains("stale")) continue;   /* already loud, age fixed */
     /* it was fresh when this page was built and it is not now */
     var when = new Date(t).toLocaleString();
     el.className = "qfresh stale";
     el.textContent = "";
     var b2 = document.createElement("b");
     b2.textContent = "THIS FEED HAS GONE STALE SINCE THIS PAGE WAS BUILT \\u2014 "
-      + "nothing newer than " + when + " (" + words(age) + ") is on it.";
+      + span(age) + " BEHIND. Renders continue on the box. Nothing newer than "
+      + when + " is on it.";
     el.appendChild(b2);
     var fix = document.createElement("span");
     fix.className = "qfresh-fix";

@@ -1,0 +1,241 @@
+# /queue's Finished feed, refreshed on a clock instead of by hand.
+#
+# THE DEFECT THIS CLOSES, which fired TWICE (founder, 2026-08-20 and 08-21).
+# Both times: the render box was working perfectly, published every finished job
+# to farm-results-rtx5090 as it went, and /queue's Finished page showed nothing
+# newer than several days back. The box was never the problem. What had stopped
+# was a HAND-RUN pair of steps that nothing scheduled —
+#
+#     python3 pipeline/queue_history.py --fetch     # branch  -> the ledger
+#     python3 pipeline/queue_thumbs.py --push       # ledger  -> 512px thumbs
+#
+# — so the page went stale exactly as fast as the farm went fast. The second
+# time he had to ask, ~40 renders had run overnight. A defect whose fix is
+# "remember to run two commands" is not fixed; per the standing rule, a lesson
+# is learned only when it is enforced by a guard, a gate or a default. This file
+# is the default. The gate is /queue's own staleness banner, which fires red at
+# FEED_STALE_HOURS = 4 in pipeline/build_queue.py — four missed runs of this
+# workflow — so if this workflow dies, the page says so in the founder's words
+# instead of quietly showing him yesterday.
+#
+# CADENCE: HOURLY, AT :17. Not every 30 minutes, and the reason is that the
+# commit at the end of this job is a PRODUCTION DEPLOY. pipeline/measured/ is on
+# the SITE_INPUTS list in pipeline/vercel-ignore-build.sh, deliberately — the
+# page is baked from the ledger at build time, so the data cannot reach
+# banyan.city without a Vercel build. That is wanted, and it also means cadence
+# here == deploy rate, and the old Vercel project burned >$100 in a month on a
+# 5-minute heartbeat push. Hourly is 24 builds a day against a 4 h banner: four
+# whole misses of margin before the founder could ever see red. :17 rather than
+# :00 or :30 keeps this off pages.yml's half-hourly shoulder and out of the
+# top-of-hour crush where GitHub's own cron queue runs late (fleet-kindness).
+#
+# WHAT IT COSTS, all measured on 2026-08-21 rather than guessed:
+#   main, sparse + blob:none          ~3 s fetch + ~7 s checkout, 72 MB tree
+#                                     (pages.yml's plain full checkout: 76 s)
+#   farm-results, --filter=blob:limit=128k, FULL history, no --depth
+#                                     ~23 s, 25 MB — every text sidecar the
+#                                     ledger reads, none of the 4.5 GB of PNGs
+#   site-thumbs                       ~44 s, 38 MB — mandatory, see below
+#   queue_history.py                  ~15 s
+#   queue_thumbs.py                   ~2 s/new thumb (lazy blob fetch)
+# Roughly four minutes a run.
+#
+# WHY NO `--depth=1` ANYWHERE. A shallow fetch of ANY ref writes .git/shallow,
+# which is repo-global and puts the push at the end of this job at risk of
+# "shallow update not allowed". Measured: full history of farm-results-rtx5090
+# under --filter=blob:none is 3,934 commits in 2.9 MB, and under
+# --filter=blob:limit=128k it is 25 MB. History was never the expensive part —
+# the blobs were — so the filter does all the work the depth would have and
+# costs nothing to skip.
+#
+# WHY site-thumbs IS FETCHED IN FULL AND CANNOT BE SKIPPED. queue_thumbs.py
+# publishes by force-pushing a fresh orphan commit built from the contents of
+# --out. If --out started empty, that push would DELETE every thumbnail already
+# on the branch and /queue's gallery would go blank. Seeding the directory from
+# the branch first is what makes the force-push additive.
+name: queue-refresh
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write        # commits the ledger to main, force-pushes site-thumbs
+
+concurrency:
+  group: queue-refresh   # never two rebuilds racing for the same two branches
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      # Only the directories the two scripts actually read:
+      #   pipeline/            the scripts, pipeline/jobs/*.yaml (the specs the
+      #                        `upcoming` list is built from) and
+      #                        pipeline/measured/ (the ledger being rewritten)
+      #   review/ep2-picks/*.yaml   gate-evidence + done-definitions, read by
+      #                        queue_history.load_verdicts()
+      # minus the two media yards under pipeline/ that carry the weight.
+      # Non-cone mode because the exclusions are the whole point: cone mode
+      # cannot say "this directory but not that one inside it".
+      #
+      # fetch-depth 0 is NOT laziness. queue_history.spec_commit_dates() runs
+      # `git log --name-only -- pipeline/jobs` to date every spec, which is how
+      # /queue separates a live hold from an old spec nobody deleted. At depth 1
+      # that log is one commit and every spec would be dated today. blob:none
+      # makes the full history cost commits and trees only.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
+          sparse-checkout: |
+            /pipeline/
+            !/pipeline/research/
+            !/pipeline/t3-trials/
+            /review/ep2-picks/*.yaml
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml pillow
+
+      # queue_thumbs.publish() pushes from a repository it creates in $TMPDIR,
+      # NOT from this checkout — deliberately, so a 27 MB thumb push cannot drag
+      # main's objects with it. That temp repo inherits none of the credentials
+      # actions/checkout wrote into .git/config here, so the token has to be
+      # reachable globally or that push fails with a 403 nobody sees until the
+      # gallery goes blank.
+      - name: make the token reachable from a repository we have not made yet
+        run: |
+          git config --global \
+            url."https://x-access-token:${GITHUB_TOKEN}@github.com/".insteadOf \
+            "https://github.com/"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Explicit refspecs, both of them, because actions/checkout narrows
+      # remote.origin.fetch to the branch it checked out. Without the right-hand
+      # side these fetches would land in FETCH_HEAD only, and queue_history.py
+      # resolves `origin/farm-results-rtx5090` by name — it would die on a ref
+      # that does not exist.
+      #
+      # blob:limit=128k is measured, not a round number: every sidecar
+      # queue_history reads is a .yaml (max 12.7 KB), a .json (max 22.2 KB), a
+      # .sha256 (max 5 KB) or heartbeat.txt, and the smallest render artifact is
+      # an order of magnitude above that. The filter is a clean cut between
+      # "text the ledger is made of" and "pixels it only points at".
+      - name: fetch the results branch, text only
+        run: |
+          git fetch --no-tags --filter=blob:limit=128k origin \
+            "+refs/heads/farm-results-rtx5090:refs/remotes/origin/farm-results-rtx5090"
+          git rev-parse origin/farm-results-rtx5090
+
+      # Seed the thumbnail directory from what is already published, or the
+      # force-push at the end wipes the branch. See the header note.
+      - name: seed the thumbnails already on site-thumbs
+        run: |
+          git fetch --no-tags origin \
+            "+refs/heads/site-thumbs:refs/remotes/origin/site-thumbs"
+          mkdir -p "$RUNNER_TEMP/thumbs"
+          git archive origin/site-thumbs | tar -x -C "$RUNNER_TEMP/thumbs"
+          echo "seeded $(find "$RUNNER_TEMP/thumbs" -name '*.jpg' | wc -l) thumbs"
+
+      # branch -> ledger. In this partial clone it reads sizes for the blobs it
+      # holds, carries the rest forward from the ledger it is replacing, and
+      # lazily fetches only what is genuinely new (capped in the script, so a
+      # first run against an empty ledger cannot drag the branch down).
+      - name: rebuild the ledger
+        run: python3 pipeline/queue_history.py
+
+      # ledger -> thumbs. The new artifacts' blobs are usually already local by
+      # now: the size pass above pulled them.
+      - name: thumbnail whatever is new
+        id: thumbs
+        run: |
+          before=$(find "$RUNNER_TEMP/thumbs" -name '*.jpg' | wc -l)
+          python3 pipeline/queue_thumbs.py --out "$RUNNER_TEMP/thumbs"
+          after=$(find "$RUNNER_TEMP/thumbs" -name '*.jpg' | wc -l)
+          echo "new=$((after - before))" >> "$GITHUB_OUTPUT"
+
+      # Conditional for the same reason the commit below is: publish() rewrites
+      # the branch with a force-push of all 2,700-odd files, and doing that
+      # hourly to change nothing is 27 MB an hour of pure noise.
+      - name: publish the thumbs
+        if: steps.thumbs.outputs.new != '0'
+        run: python3 pipeline/queue_thumbs.py --out "$RUNNER_TEMP/thumbs" --push
+
+      # ONLY IF CHANGED. An unconditional commit would be an hourly Vercel
+      # production build publishing identical bytes — the exact spend shape
+      # pipeline/vercel-ignore-build.sh exists to stop. `_meta.measured_at`
+      # moves on every run by construction, so the file is never byte-identical;
+      # the question that decides a commit is whether any JOB or UPCOMING row
+      # moved, which is what /queue actually shows.
+      #
+      # (Note for whoever reads the Actions tab and finds it quiet: a push made
+      # with GITHUB_TOKEN does not trigger other workflows, so this does not set
+      # lint/pages going 24 times a day. Vercel is a webhook, not a workflow, and
+      # is unaffected — the deploy still happens, which is the whole point.)
+      - name: commit the ledger only if the feed moved
+        run: |
+          python3 - > "$RUNNER_TEMP/moved" <<'PY'
+          import json, subprocess
+          f = "pipeline/measured/queue-history.json"
+          new = json.load(open(f, encoding="utf-8"))
+          old = json.loads(subprocess.run(["git", "show", f"HEAD:{f}"],
+                                          capture_output=True,
+                                          text=True).stdout or "{}")
+          moved = (new.get("jobs") != old.get("jobs")
+                   or new.get("upcoming") != old.get("upcoming"))
+          import sys
+          print(f"jobs {len(old.get('jobs') or [])} -> {len(new.get('jobs') or [])}"
+                f", upcoming {len(old.get('upcoming') or [])} -> "
+                f"{len(new.get('upcoming') or [])}, moved={moved}",
+                file=sys.stderr)
+          if not moved:
+              subprocess.run(["git", "checkout", "--", f], check=True)
+          print(len(new.get("jobs") or []) if moved else "", end="")
+          PY
+          n=$(cat "$RUNNER_TEMP/moved")
+          [ -n "$n" ] || { echo "nothing new on the branch — no commit"; exit 0; }
+
+          git config user.name  "banyan-queue-refresh"
+          git config user.email "queue-refresh@banyan.city"
+          # Explicit pathspec: this job shares main with the render lanes and
+          # must never sweep up a file it did not write. `git add -A` here would
+          # be a bot committing someone else's half-finished work.
+          git commit -F - -- pipeline/measured/queue-history.json <<MSG
+          queue ledger: ${n} runs, refreshed on the hour
+
+          Automated by .github/workflows/queue-refresh.yml. /queue's Finished
+          feed is baked from this file at build time, so this commit is also the
+          deploy that puts the new rows on banyan.city.
+
+          Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+          MSG
+
+          # Retry, because the render lanes push to main all day and a rejected
+          # push here means the feed silently stops — which is the defect. Rebase
+          # rather than merge: this is one generated file, it can never conflict
+          # with code, and a merge commit an hour would be noise in the log.
+          #
+          # This deliberately does NOT go through pipeline/safe_push.sh. That
+          # script refuses to push onto a red main, which is right for a lane
+          # pushing CODE — the rule exists so lanes stop re-mailing the founder
+          # the same CI failure. This commit is one generated data file that
+          # cannot make lint or the tests any redder, and blocking it on someone
+          # else's breakage would freeze the freshness loop for as long as main
+          # is broken. That is the very failure this workflow was written to end.
+          for i in 1 2 3 4 5; do
+            if git pull --rebase --autostash -q origin main \
+               && git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "push $i rejected — main moved under us, retrying"
+            sleep $((i * 7))
+          done
+          echo "::error::could not push the refreshed ledger after 5 tries"
+          exit 1

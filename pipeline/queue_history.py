@@ -46,6 +46,7 @@ from __future__ import annotations
 import argparse
 import datetime
 import json
+import os
 import re
 import subprocess
 import sys
@@ -268,18 +269,180 @@ def _git(*args, binary=False):
     return r.stdout
 
 
-def branch_listing(commit):
-    """[(path, size_bytes)] for everything under farm-out/ at the commit."""
-    out = _git("ls-tree", "-r", "-l", "--full-tree", commit, "farm-out")
-    files = []
-    for line in out.splitlines():
-        try:
-            meta, path = line.split("\t", 1)
-            size = meta.split()[3]
-            files.append((path, None if size == "-" else int(size)))
-        except (ValueError, IndexError):
+def _no_lazy_fetch_works():
+    """True if GIT_NO_LAZY_FETCH will actually be honoured by this git.
+
+    It landed in git 2.42. On anything older the variable is IGNORED, and an
+    ignored no-lazy-fetch in a partial clone is not a small regression — it
+    turns one `cat-file --batch-check` over 11,784 oids into a 4.5 GB download,
+    one blob at a time. So this is checked rather than assumed, and a partial
+    clone under an old git simply declines to measure sizes.
+    """
+    try:
+        parts = _git("version").split()[2].split(".")
+        return (int(parts[0]), int(parts[1])) >= (2, 42)
+    except (IndexError, ValueError, SystemExit):
+        return False
+
+
+def _is_partial_clone():
+    r = subprocess.run(["git", "config", "--get", "remote.origin.promisor"],
+                       cwd=REPO, capture_output=True, text=True,
+                       encoding="utf-8", errors="replace")
+    return (r.stdout or "").strip() == "true"
+
+
+def _blob_sizes(oids, lazy):
+    """oid -> byte size, for the oids this repo can answer without guessing.
+
+    `lazy=False` sets GIT_NO_LAZY_FETCH, which in a partial clone makes a blob
+    the clone does not hold answer `missing` instead of silently downloading it.
+    `lazy=True` lets git fetch it — one network round trip per object, ~1.9 s
+    measured against GitHub, so the caller decides how many it is willing to pay
+    for. An oid with no answer is absent from the map: never 0.
+    """
+    if not oids:
+        return {}
+    if not lazy and _is_partial_clone() and not _no_lazy_fetch_works():
+        print("!! git < 2.42 in a partial clone: sizes cannot be read without "
+              "risking a full blob download, so none are read")
+        return {}
+    env = dict(os.environ)
+    if lazy:
+        env.pop("GIT_NO_LAZY_FETCH", None)
+    else:
+        env["GIT_NO_LAZY_FETCH"] = "1"
+    r = subprocess.run(["git", "cat-file", "--batch-check"], cwd=REPO, env=env,
+                       input="\n".join(oids).encode() + b"\n", capture_output=True)
+    sizes = {}
+    for line in r.stdout.decode("utf-8", "replace").splitlines():
+        parts = line.split()
+        if len(parts) == 3 and parts[1] == "blob":
+            try:
+                sizes[parts[0]] = int(parts[2])
+            except ValueError:
+                pass
+    return sizes
+
+
+# How many artifact sizes this is willing to pull over the network in one run.
+# Nothing needs the bytes THEMSELVES — only the size — but git has no way to ask
+# for a size alone, so an unknown size costs a whole blob (~1.9 s each, measured
+# against GitHub). One box-hour is ~40 renders, so 400 covers a run that has
+# fallen most of a day behind and still refuses to drag the 4.5 GB branch down.
+SIZE_FETCH_CAP = 400
+
+# path -> oid for the last branch listing, so the size top-up at the end of a run
+# can look an artifact up without walking the tree a second time. Module state
+# because this file is a script with one pass over one commit; branch_listing
+# refills it, and nothing else writes it.
+_OID_BY_PATH: dict[str, str] = {}
+
+
+def branch_listing(commit, known=None):
+    """[(path, size_bytes)] for everything under farm-out/ at the commit.
+
+    Names and oids come from the tree; SIZES are a separate question, because
+    this has to be correct in a PARTIAL clone as well as a full one. The hourly
+    refresh workflow fetches the results branch with `--filter=blob:limit=128k`
+    — every text sidecar, none of the 4.5 GB of PNGs and MP4s — and in that
+    clone the obvious `ls-tree -l` does one of two wrong things: with lazy
+    fetching on it downloads all 4.5 GB to print sizes, and with it off it
+    reports every absent blob as `0`, which would put "0 KB" on 4,113 cards.
+    Measured both, 2026-08-21.
+
+    So: the tree gives paths and oids with no object lookup at all, then sizes
+    come from what is local, then from `known` — the sizes the previous ledger
+    already measured. Carrying those forward is sound because farm-out artifacts
+    are write-once: a publish step stamps its directory with the task id, so a
+    re-run writes a NEW directory rather than replacing a file, and a path that
+    did change would change oid and be caught as absent rather than trusted.
+
+    Anything still unsized after that is left as None here and topped up by
+    `fill_missing_sizes` once the job rows exist — because only then is it known
+    which artifacts a card will actually show. 704 blobs on this branch belong
+    to no job at all (measured 2026-08-21), and paying a network round trip for
+    each of those to publish nothing is how a cheap job becomes a slow one.
+    """
+    known = known or {}
+    out = _git("ls-tree", "-r", "-z", "--full-tree",
+               "--format=%(objectname) %(objecttype) %(path)", commit, "farm-out")
+    entries = []
+    for rec in out.split("\0"):
+        if not rec:
             continue
-    return files
+        try:
+            oid, otype, path = rec.split(" ", 2)
+        except ValueError:
+            continue
+        if otype == "blob":
+            entries.append((path, oid))
+
+    _OID_BY_PATH.clear()
+    _OID_BY_PATH.update(entries)
+    sizes = _blob_sizes([o for _, o in entries], lazy=False)
+    return [(p, sizes.get(o, known.get(p))) for p, o in entries]
+
+
+def fill_missing_sizes(jobs, cap=SIZE_FETCH_CAP):
+    """Measure the artifacts a card will show and whose size nothing knew yet.
+
+    Runs after the rows are built, over the artifacts they actually reference,
+    so the network cost is exactly the run's NEW output and not the whole
+    branch. Returns how many it filled. In a full clone there is nothing to fill.
+    """
+    slots = []
+    for job in jobs:
+        for art in list(job.get("outputs") or []) + [job.get("init"),
+                                                     job.get("reference")]:
+            # `"bytes" in art` and not `.get("bytes") is None`: an init frame
+            # carries a path and a sha256 and no size field at all, and adding
+            # one here would change the shape of the record rather than fill it.
+            if isinstance(art, dict) and art.get("path") \
+                    and "bytes" in art and art["bytes"] is None:
+                slots.append(art)
+    paths = sorted({a["path"] for a in slots})
+    if not paths:
+        return 0
+    if len(paths) > cap:
+        print(f"!! {len(paths)} artifact sizes are not in this clone and "
+              f"measuring them would exceed the {cap}-blob cap — those cards "
+              f"show no KB rather than a wrong one")
+        return 0
+    oids = {p: _OID_BY_PATH[p] for p in paths if p in _OID_BY_PATH}
+    sizes = _blob_sizes(sorted(set(oids.values())), lazy=True)
+    filled = 0
+    for art in slots:
+        got = sizes.get(oids.get(art["path"], ""))
+        if got is not None:
+            art["bytes"] = got
+            filled += 1
+    if filled:
+        print(f"   measured {filled} artifact size(s) this clone did not hold")
+    return filled
+
+
+def known_sizes(path):
+    """path -> bytes, read back off a ledger this run is about to replace.
+
+    Only the sizes. Everything else in that file is re-derived from the branch,
+    and carrying more of it forward is how a rebuild starts preserving its own
+    mistakes.
+    """
+    out = {}
+    try:
+        old = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return out
+    for job in old.get("jobs") or []:
+        if not isinstance(job, dict):
+            continue
+        for art in list(job.get("outputs") or []) + [job.get("init"),
+                                                     job.get("reference")]:
+            if isinstance(art, dict) and art.get("path") \
+                    and isinstance(art.get("bytes"), int):
+                out[str(art["path"])] = art["bytes"]
+    return out
 
 
 def read_blobs(commit, paths):
@@ -657,7 +820,9 @@ def main(argv=None):
         _git("fetch", "origin", BRANCH)
     commit = _git("rev-parse", REMOTE_REF).strip()
 
-    files = branch_listing(commit)
+    # The ledger about to be overwritten is also the cheapest source of artifact
+    # sizes this run already paid for — see branch_listing's docstring.
+    files = branch_listing(commit, known_sizes(a.out))
     all_paths = [p for p, _ in files]
     files_by_dir = {}
     for p, size in files:
@@ -697,6 +862,7 @@ def main(argv=None):
                                   shamap, beat_state, gates, picks))
     jobs.sort(key=lambda j: str(j.get("finished_at") or j.get("started_at") or ""),
               reverse=True)
+    fill_missing_sizes(jobs)
 
     # A spec is 'upcoming' only if NOTHING has run under its id: no box
     # sidecar, no published farm-out dir, no heartbeat STARTED/DONE line

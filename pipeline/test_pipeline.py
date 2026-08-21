@@ -8989,8 +8989,10 @@ def test_the_queue_page_says_so_when_its_own_feed_has_died():
           "THIS FEED IS STALE" in stale_out)
     check("the banner dates the last thing it knows about",
           "16 August 2026" in stale_out)
-    check("and says how long ago that was in days",
-          "days ago" in stale_out)
+    check("and says how far BEHIND it is, in the words he would use",
+          " days</span> BEHIND" in stale_out)
+    check("and says in the same breath that the box did not stop",
+          "Renders continue on the box" in stale_out)
     check("it states the box kept publishing, so the reader cannot read the "
           "gap as an idle card",
           "not an idle card" in stale_out.lower()
@@ -9010,6 +9012,58 @@ def test_the_queue_page_says_so_when_its_own_feed_has_died():
           "THIS FEED IS STALE" not in ok_out)
     check("but the age is still stated, because a quiet fact is not nothing",
           "Newest render on this page finished" in ok_out)
+    # THE AGE IS THE BOLD WORD, not the timestamp. He does not want to subtract
+    # a formatted date from his own clock; that arithmetic is what let a page
+    # four days old read as recent.
+    check("and the quiet line puts the AGE in the element the eye lands on",
+          '<b class="qage">63 minutes ago</b>' in ok_out)
+
+    # ---- 2026-08-21, the SECOND time he had to ask -------------------------
+    # Same defect, same week: ~40 renders overnight, /queue still showing the
+    # 20th, and a 24-hour fuse meant the page had nothing to say about it until
+    # the following afternoon. The refresh is hourly now
+    # (.github/workflows/queue-refresh.yml), so four hours behind is four missed
+    # runs and cannot be anything but a broken loop — which is what makes it
+    # safe to shout that early, and what makes shouting that early worth doing:
+    # a founder checking at lunchtime learns at lunchtime.
+    check("the threshold is FOUR hours, not a day",
+          isinstance(bq.FEED_STALE_HOURS, int) and bq.FEED_STALE_HOURS == 4)
+
+    five_h = bq.render(data, datetime.datetime(2026, 8, 16, 20, 57, tzinfo=utc))
+    check("five hours behind is loud, where a day-long fuse was still silent",
+          "THIS FEED IS STALE" in five_h)
+    check("and it counts the gap in hours rather than rounding it to a day",
+          ">5 hours</span> BEHIND" in five_h)
+    check("it still refuses to blame the box for the page's own staleness",
+          "Renders continue on the box" in five_h
+          and "not an idle card" in five_h.lower())
+    check("and it names the automation, so the reader looks where it broke",
+          "queue-refresh.yml" in five_h)
+
+    three_h = bq.render(data, datetime.datetime(2026, 8, 16, 18, 57, tzinfo=utc))
+    check("three hours behind is still a working card and stays quiet",
+          "THIS FEED IS STALE" not in three_h)
+    check("but three hours is stated out loud in the quiet line",
+          '<b class="qage">3 hours ago</b>' in three_h)
+
+    # The reader's-clock script has to keep working across the reworded banner.
+    # It used to patch the age with a regex over the built sentence, and a regex
+    # over prose is a thing that stops matching silently when the prose moves.
+    check("the age is its own element, so the client can correct it by id "
+          "rather than by pattern-matching a sentence",
+          'class="qage"' in five_h and 'querySelector(".qage")' in bq.LIVE_JS)
+    check("and the client agrees with the builder about the threshold",
+          '"data-stale-h")) || 4' in bq.LIVE_JS
+          and f'data-stale-h="{bq.FEED_STALE_HOURS}"' in five_h)
+    check("the client's own banner names the box too, not just the staleness",
+          "Renders continue on the box" in bq.LIVE_JS)
+
+    # age_span is what makes "N hours BEHIND" and "N hours ago" one number.
+    check("the span and the phrase cannot drift apart",
+          bq.age_words(3 * 3600) == bq.age_span(3 * 3600) + " ago"
+          and bq.age_span(5 * 3600) == "5 hours"
+          and bq.age_span(4 * 86400) == "4.0 days"
+          and bq.age_span(20 * 60) == "20 minutes")
 
     # A page built fresh and read days later is the same lie, slower.
     check("the freshness element carries the stamp for the reader's own clock",
@@ -9025,9 +9079,29 @@ def test_the_queue_page_says_so_when_its_own_feed_has_died():
     check("rows with no finish time make the age UNKNOWN, not fine",
           "AGE OF THIS PAGE IS UNKNOWN" in blind)
 
-    # The threshold is the human's, not the card's, and it is stated once.
-    check("one named threshold, in hours, not a number buried in a branch",
-          isinstance(bq.FEED_STALE_HOURS, int) and bq.FEED_STALE_HOURS == 24)
+    # THE LOOP THAT MAKES THE FOUR-HOUR FUSE HONEST. A banner that fires early
+    # is only useful if something is supposed to be clearing it; without the
+    # workflow, a 4 h threshold is just a red box the founder learns to ignore
+    # by Tuesday. So the schedule is asserted here, next to the threshold, and
+    # the two must agree: the cron is hourly and the fuse is several hours.
+    wf = REPO / ".github" / "workflows" / "queue-refresh.yml"
+    check("the hand-run refresh has a workflow that runs it", wf.is_file())
+    spec = wf.read_text(encoding="utf-8")
+    check("it runs both halves — the ledger and the thumbnails, which is the "
+          "pair that has to move together for a card to have a picture",
+          "queue_history.py" in spec and "queue_thumbs.py" in spec)
+    cron = [ln.split('"')[1] for ln in spec.splitlines()
+            if ln.strip().startswith("- cron:")]
+    check("on a schedule, exactly one", len(cron) == 1)
+    minute, hour = cron[0].split()[0], cron[0].split()[1]
+    check("hourly, so four hours behind is four missed runs", hour == "*")
+    check("and off the top of the hour, where every other repo's cron piles up",
+          minute.isdigit() and 0 < int(minute) < 60 and minute not in ("0", "30"))
+    check("the fuse leaves room for more than one missed run",
+          bq.FEED_STALE_HOURS >= 3)
+    check("it commits only when the feed actually moved, so an idle hour is "
+          "not a production deploy publishing identical bytes",
+          "moved" in spec and "no commit" in spec)
 
 
 # ---------------------------------------------------------------------------
