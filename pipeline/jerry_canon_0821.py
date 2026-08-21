@@ -300,8 +300,9 @@ MASK_MARGIN_PX = 20
 
 def head_box(pose="stand", head_frac=HEAD_FRAC):
     """The head-and-ears box in render pixels, for one pose. 'x0,y0,x1,y1'."""
-    kp, _ = skel.figure(head_frac, pose=pose)
-    stature = skel.STATURE * RENDER_H
+    kp, _ = skel.figure(head_frac, pose=pose,
+                        stature_frac=STATURE_FOR[pose])
+    stature = STATURE_FOR[pose] * RENDER_H
     head_h = head_frac * stature
     skull_w = skel.HEAD_RATIO * head_h
     cx = (kp["Rear"][0] + kp["Lear"][0]) / 2.0
@@ -331,6 +332,38 @@ def skeleton_stem(pose):
     return "jerry-canon-h37%s-0821" % ("" if pose == "stand" else pose)
 
 
+# ── THE FRAME-FILL CORRECTION, AND IT IS THE ROUND-THREE FINDING. ────────────
+# Every round-one and round-two frame drew a SECOND GOBLIN HEAD floating above
+# the figure. Three negative tags aimed at it (`multiple heads`, `disembodied
+# head`, `floating head`) did nothing, which is Ban et al. (ECCV 2024,
+# arXiv:2406.02965) exactly as canon.yaml already cites it -- a negative acts
+# only after the positive has drawn the thing.
+#
+# THE CAUSE IS GEOMETRY AND IT WAS FOUND BY MEASURING, THEN BY A ONE-VARIABLE
+# RUNG. At the canon head_frac of 0.370 the poses leave very different holes
+# above the figure:
+#
+#     sit 55% empty    crouch 46%    hunch 34%    stand/stride 26%
+#
+# and the ghost sat in the hole. Round three swapped ONE thing each:
+#     r3a  pose sit -> stand (55% hole -> 26%)   NO GHOST. Clean single figure.
+#     r3b  reference sq22 -> sq45 (encoder coverage 6.7% -> 28.3%, i.e. a FACE
+#          instead of a head lying in a field, which was the other hypothesis
+#          and looked like a picture of the defect)   GHOST STILL THERE.
+#     r3c  ip_scale 0.7 -> 0.5                        GHOST STILL THERE.
+#
+# So it is not the reference and it is not the adapter strength: a large empty
+# region in a frame whose prompt says `goblin` is a region the model fills with
+# a goblin. STATURE_FOR holds each pose's stature_frac at the value that puts
+# the crown at ~18% of frame height, solved per pose and asserted below. This is
+# the same lesson as k3's horns one level up -- a subject that does not reach
+# the edge of its region is a subject the model completes past it.
+STATURE_FOR = {
+    "sit": 1.58, "crouch": 1.28, "hunch": 1.02, "kneel": 1.22,
+    "stand": 0.90, "stride": 0.90, "reach": 0.90, "point": 0.90,
+}
+MAX_EMPTY_TOP = 0.28      # asserted for every pose in --selftest
+
 # The poses the ep2 wave needs, and the sha each skeleton must have. Built by
 # `--build-skeletons`, asserted by `--selftest`, pinned by every spec.
 SKELETONS = {
@@ -345,21 +378,21 @@ SKELETONS = {
 }
 SKELETON_SHA = {
     "jerry-canon-h37-0821":
-        "ef352f6414ee2836141844d6a67ea71215f01b5c94acb26637412f65253cb3fc",
+        "2b50d9e8076eab57373cafbe506f8f7ce73f6abbec3c65eacffcf877234ec13b",
     "jerry-canon-h37stride-0821":
-        "abfa4db8cb7477717884620d1e8a498eff82f76261fabca76a3058ecd8f7aad1",
+        "677ee4904bc54b823eee45cb592d4ca10618920fbb238d9718dd5394a1e1b24a",
     "jerry-canon-h37crouch-0821":
-        "c45dc4f42ef4ffdd403adbee597c225bdcd33892f1146ebeb8bb7278131698c9",
+        "df84ac615d3cc830dd8634cfee905dba0937a3380910911fe81a0427cacbd5af",
     "jerry-canon-h37hunch-0821":
-        "a36474b475fbf3a0c885cbbee065c2e8e9b00b3afd78718b031d2cc6b8cfce05",
+        "799f7bce4525a0b2c02bfc920b39a2943bb2e8002b4daed2022d4ce9cb781986",
     "jerry-canon-h37kneel-0821":
-        "05842caf9c9168c06d87f33aa656009f0be45db224f0f3d29f8b5b1af8138066",
+        "83583d5c3c9205171ba70a7c1e3d2b006428e1905d897f509f3cd7531395eee9",
     "jerry-canon-h37reach-0821":
-        "c6a72ac79ee177dd405bbc8e97fa4741e3ec2983472db07b5162cd561d6c5779",
+        "a327e3e532d314da88cecb88a962791f0dbfab429bb83a55beba44dd4df34df1",
     "jerry-canon-h37point-0821":
-        "51143109c988e7cac9d4eef65c008851f538ff07bd97e889439dc074ffb3f90a",
+        "8072e9710df19783b397e7afee4bcf8cd566fdb327cacdbf3bbc96d2965cc19d",
     "jerry-canon-h37sit-0821":
-        "5a37c536d4bbd59b535154da56de164c6316a6844a033c823ee6c54860be08bb",
+        "3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e",
 }
 
 
@@ -489,12 +522,24 @@ def ip_adapter_block(pose):
     }
 
 
+def _build_one(pose):
+    """One skeleton at the canon head ratio and THIS pose's frame-fill stature."""
+    from PIL import Image
+    kp, meta = skel.figure(HEAD_FRAC, pose=pose,
+                           stature_frac=STATURE_FOR[pose])
+    img = Image.new("RGB", (RENDER_W, RENDER_H), (0, 0, 0))
+    meta["ratio"] = skel.ratio_for(RENDER_W, RENDER_H)
+    meta["stature_frac"] = STATURE_FOR[pose]
+    skel.draw_bodypose(img, kp, meta["ratio"])
+    return img, meta
+
+
 def build_skeletons():
     import hashlib
     out = os.path.join(REPO, ASSET_DIR)
     os.makedirs(out, exist_ok=True)
     for pose, stem in sorted(SKELETONS.items()):
-        img, meta = skel.build(HEAD_FRAC, pose=pose)
+        img, meta = _build_one(pose)
         p = os.path.join(out, stem + ".png")
         img.save(p)
         sha = hashlib.sha256(open(p, "rb").read()).hexdigest()
@@ -540,6 +585,19 @@ def selftest():
         b = [int(v) for v in head_box(pose).split(",")]
         want(b[2] - b[0] >= 400, "%s mask is only %d px wide -- the ears are "
                                  "outside it" % (pose, b[2] - b[0]))
+    # THE HOLE THAT DREW THE GHOST. Asserted per pose, because the fix is a
+    # number per pose and a number is exactly what silently reverts.
+    for pose in SKELETONS:
+        kp, _ = skel.figure(HEAD_FRAC, pose=pose,
+                            stature_frac=STATURE_FOR[pose])
+        ys = [v[1] for v in kp.values()]
+        empty = min(ys) / float(RENDER_H)
+        want(empty <= MAX_EMPTY_TOP,
+             "pose %r leaves %.0f%% of the frame empty above the figure -- over "
+             "the %.0f%% bar, and that hole is where the ghost head grew"
+             % (pose, empty * 100, MAX_EMPTY_TOP * 100))
+        want(max(ys) <= RENDER_H - 10 and min(v[0] for v in kp.values()) >= 10,
+             "pose %r runs off the frame" % pose)
     # Emotion is one mouth tag and one brow/mood tag, never identity.
     for k, v in EMOTION.items():
         want("goblin" not in v and "ears" not in v,
