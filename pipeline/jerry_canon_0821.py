@@ -84,7 +84,10 @@ holding one variable would be theatre. It gets ONE SAMPLE before any batch
                  All four existed to manufacture the tile's short low flange.
                  canon.yaml: "Danbooru has no tag for a short low swept-back
                  ear ... Absence plus suppression was the lever." The thing
-                 they suppress is the thing the founder drew.
+                 they suppress is the thing the founder PICKED. (Provenance
+                 corrected 2026-08-22: "i didnt draw the goblin.. i just used
+                 an old generation" -- a founder-SELECTED prior generation,
+                 not a founder drawing. Same R4 authority.)
                  `pale skin`, `grey skin`   The measured skin is #7C806D, a
                  desaturated grey-olive. Both tags negate the target. THIS IS
                  THE WEAKEST OF THE STRIKES and the one most likely to bring a

@@ -552,7 +552,9 @@ subjects:
 
 - id: ep2-goblin-design-adult
   # ///////////////////////////////////////////////////////////////////////////
-  # SUPERSEDED 2026-08-21 16:54 BY A PICTURE FROM THE FOUNDER'S OWN HAND.
+  # SUPERSEDED 2026-08-21 16:54 BY A PICTURE THE FOUNDER SELECTED AND SENT.
+  # (Provenance corrected 2026-08-22 — "i didnt draw the goblin.. i just used
+  #  an old generation." A founder PICK, not a founder drawing. Same authority.)
   # `founder_ruling_2026_08_21` IS THE HEADLINE AND IT OUTRANKS EVERYTHING BELOW
   # IT IN THIS BLOCK, INCLUDING `correction_2026_08_20`, WHICH WAS THE HEADLINE
   # UNTIL TODAY. Read the two in that order: the 08-20 correction taught us to
@@ -565,15 +567,25 @@ subjects:
   # they were authored under, not a blank.
   # ///////////////////////////////////////////////////////////////////////////
   founder_ruling_2026_08_21: >-
-    THE FOUNDER DREW THE ANSWER. 2026-08-21 16:54, verbatim, with an image
+    THE FOUNDER SELECTED THE ANSWER. 2026-08-21 16:54, verbatim, with an image
     attached:
 
       "dude, this is how the goblin should look."
+
+    PROVENANCE CORRECTED 2026-08-22, IN HIS OWN WORDS: "i didnt draw the
+    goblin.. i just used an old generation." The image is NOT a founder
+    DRAWING; it is an EARLIER MODEL GENERATION THAT THE FOUNDER PICKED OUT
+    and pointed at. The authority is unchanged and undiminished — R4 is
+    taste, and choosing which of our own frames is the character is exactly
+    the call that belongs to him. Only the sentence describing where the
+    pixels came from was wrong, and it is fixed here rather than left to
+    propagate as a claim about his hand.
 
     THE IMAGE IS THE REFERENCE AND IT IS IN THE REPO:
 
       taste/refs/goblin-canon-founder-0821.png   832x1216 RGB
       sha256 b62f333644c2f316...   committed in b93a70da
+      provenance: founder-SELECTED prior generation, not a founder drawing
 
     THIS SUPERSEDES TILE B AND THE 08-21 AGE-B RECIPE ON EVERY AXIS THE IMAGE
     SHOWS. Where the image is silent (see WHAT THE IMAGE DOES NOT SETTLE, last
@@ -677,7 +689,7 @@ subjects:
       three were put there on 08-20 to manufacture the tile's short flange —
       canon.yaml's own note says "Danbooru has no tag for a short low swept-back
       ear ... Absence plus suppression was the lever." The thing they suppress
-      is now the thing the founder drew. `pointy ears` moves to the POSITIVE.
+      is now the thing the founder PICKED. `pointy ears` moves to the POSITIVE.
 
       POSITIVE, strike `blank eyes`. This is the pupil ban. It is described in
       this very block as "THE WHOLE GAME" and it draws exactly the eye the
