@@ -4058,3 +4058,5 @@
 20:38:19Z DONE task=ep2-b02-panic-0822-1787344019 rc=0 artifacts=1
 20:38:25Z STARTED task=ep2-guardcast-a-0822-1787344436 attempt=1 on box-runner
 20:38:56Z DONE task=ep2-guardcast-a-0822-1787344436 rc=0 artifacts=1
+20:39:02Z STARTED task=ep2-guardcast-b-0822-1787344444 attempt=1 on box-runner
+20:39:26Z DONE task=ep2-guardcast-b-0822-1787344444 rc=0 artifacts=1
