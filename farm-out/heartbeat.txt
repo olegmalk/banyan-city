@@ -4097,3 +4097,5 @@
 20:59:46Z box-runner idle ready=0 failed=80
 21:02:51Z STARTED task=ep2-b17-canon-w2b-0821-1787346164 attempt=1 on box-runner
 21:03:20Z DONE task=ep2-b17-canon-w2b-0821-1787346164 rc=0 artifacts=1
+21:03:26Z STARTED task=ep2-b19-canon-w2b-0821-1787346167 attempt=1 on box-runner
+21:03:54Z DONE task=ep2-b19-canon-w2b-0821-1787346167 rc=0 artifacts=1
