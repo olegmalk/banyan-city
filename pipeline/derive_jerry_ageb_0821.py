@@ -418,11 +418,47 @@ tusk alone -- and the wave waits. If it holds, the wave is seven frames and each
 one is judged on its own face."""
 
 
+def head_fit_mask(pose, head_frac=AGE_B_HEAD_FRAC):
+    """THE HEAD'S OWN BOX, derived from the skeleton instead of inherited.
+
+    FILED 2026-08-21 AFTER THE SAMPLE, and it is a defect report on our own
+    instrument rather than a tuning knob. `age_mask` scales k6a's box about THE
+    BOX'S OWN CENTRE, and that centre was authored 20 px above the head-keypoint
+    centre so it would clear a standing figure's cranial dome. Scaling about it
+    keeps the offset while growing the box, and moving head_frac ALSO moves the
+    head down (nose_y = crown + 0.55 * head_h), so the two errors add.
+
+    MEASURED on beat 13's seatspan skeleton at 0.240: crown is at y=439 and chin
+    at y=673, and `age_mask` returns 364..642 -- SEVENTY-FIVE PIXELS OF SKY above
+    the crown and the CHIN CUT OFF at the bottom. The adapter was conditioning
+    background and the top of a skull while the mouth was left to the
+    checkpoint. That is consistent with what the sample actually drew: tile-true
+    blank eyes (inside the mask) under a mouth the checkpoint chose (outside it).
+
+    WHY THIS IS NOT RETROFITTED ONTO age_mask SILENTLY: Option B's standing frame
+    rendered through the old box and measured C1 at 0.00%, because above a
+    standing head there is only sky and the error was harmless. It is folded
+    poses that pay. The old rule stays where its pixels are, this one is filed as
+    a rung, and whichever wins becomes the rule for the wave.
+    """
+    kp, meta = skel.figure(head_frac, pose=pose)
+    hp = meta["head_px"]
+    hw = skel.HEAD_RATIO * hp
+    xs = [kp[k][0] for k in S.HEAD_KEYPOINTS]
+    cx = sum(xs) / len(xs)
+    crown = kp["nose"][1] - 0.55 * hp
+    r = [int(round(cx - hw / 2)), int(round(crown)),
+         int(round(cx + hw / 2)), int(round(crown + hp))]
+    r[0] = max(0, r[0]); r[1] = max(0, r[1])
+    r[2] = min(S.RENDER_W, r[2]); r[3] = min(S.RENDER_H, r[3])
+    return "%d,%d,%d,%d" % tuple(r)
+
+
 def _emit(new_id, job_dir, hint, pose_words, expression, why, consumer, success,
           variable, beat, priority, extra_keys=None, prompt=None,
-          force=False):
+          mask=None, ip_scale=None, force=False):
     pose = S.SKELETONS[hint][0]
-    mask = age_mask(pose)
+    mask = mask or age_mask(pose)
     ipa = S.ip_adapter_block(hint, pose)
     # The standard's block is authored for head_frac 0.190 and would record this
     # frame's geometry as the adult's. Three keys are corrected and each one says
@@ -492,6 +528,9 @@ def _emit(new_id, job_dir, hint, pose_words, expression, why, consumer, success,
         "key:priority": priority,
         "key:est_minutes": 4,
     }
+    if ip_scale is not None and ip_scale != S.IP_SCALE:
+        overrides["argv:--ip-scale"] = ip_scale
+        ipa["scale"] = ip_scale
     child = derive_spec.derive(
         src=S.PARENT,
         new_id=new_id,
@@ -516,7 +555,7 @@ def _emit(new_id, job_dir, hint, pose_words, expression, why, consumer, success,
                        ("--control-sha256", S.SKELETONS[hint][1]),
                        ("--ip-mask", mask),
                        ("--ip-ref-sha256", S.IP_REF_SHA),
-                       ("--ip-scale", S.IP_SCALE),
+                       ("--ip-scale", ip_scale or S.IP_SCALE),
                        ("--ip-weight", S.IP_WEIGHT),
                        ("--scale", S.CONTROL_SCALE),
                        ("--seed", str(S.SEED)),
@@ -759,6 +798,161 @@ def isolate(force=False):
     return written
 
 
+SAMPLE_VERDICT = """ep2-b13-ageb-s1-0821, JUDGED BY EYE AT 1:1 AGAINST BOTH
+RULERS (the tile for the creature, B-h240-kid.png for the age), 2026-08-21.
+VERDICT: PARTIAL -- the age landed, the identity HELD WHERE IT WAS PREDICTED TO
+BREAK, and the ruling the sample existed to prove DID NOT TAKE.
+
+WHAT PASSED, and the first one is the surprise:
+  T1  BLANK EYES HELD WITH `blank eyes` STRUCK. Narrow, pale, no iris, no pupil
+      -- closer to the tile's slits than Option B's big ovals. This was the
+      predicted failure and it did not happen: the ADAPTER carries no-iris-
+      no-pupil on its own, which is exactly ruling 2's claim and it is now
+      evidence instead of an argument.
+  A1  Reads as Option B. Young, big-headed, slim.
+  A2  Not the killed design. No belly, no squat, no mascot.
+  T7  No patchwork on the skull.
+  C2  The pose is the one asked for -- seated, knees up, hands between them.
+
+WHAT FAILED:
+  E1  THE EMOTION DID NOT LAND, AND THIS IS THE HEADLINE. The beat is "...Thanks
+      for the shade" -- exhausted relief -- and the frame is SCOWLING: brow
+      furrowed into an angry V, mouth a downturned frown. `tired, half-closed
+      eyes, light smile` did not reach the face. THE CONTROL IS ALREADY IN
+      HAND: Option B carries the same scowl with NO expression tags at all, so
+      the tags moved nothing and the scowl is what the adapter supplies.
+  C1  THE MAGENTA COWL IS BACK. Measured, not eyeballed: 1.17% of the mask
+      region against 0.00% for both the k6a anchor and Option B. Round two of
+      the adult wave was already chasing this on FOLDED poses (b03, b20) and
+      guessed the mechanism was the mask overlapping the neck. This corroborates
+      it and adds a cause -- the age mask is 1.26x bigger.
+  K1  TWO TUSKS, BOTH INTACT. Predicted in advance: `tusks` is plural and
+      nothing in Danbooru tags a BREAK. The tusk arrived, the count and the
+      break did not.
+  T3  BROW FURROWS -- part of the scowl, and the clause says no age modelling.
+  T2  A NOSE NUB. No bridge and no nostrils, so it is not the human nose the
+      clause was written against, but it is more of a tip than either ruler
+      has.
+  T4  METAL SPIKES ON THE EAR FLANGES. The flange shape survived; grey studs
+      appeared on it that are on neither ruler.
+
+AND THE MEASUREMENT THAT EXPLAINS MOST OF IT, found while checking C1: THE MASK
+IS MISALIGNED, NOT MERELY LARGE. On this pose the crown is at y=439 and the chin
+at y=673; the mask ran 364..642. Seventy-five pixels of SKY above the head, and
+THE CHIN AND MOUTH CUT OFF below. The adapter was conditioning background and
+the top of a skull while the MOUTH was left to the checkpoint -- which is
+precisely the split the pixels show: tile-true eyes inside the mask, a
+checkpoint-chosen frown outside it. `age_mask` scales k6a's box about the box's
+own centre, and that centre was authored 20 px high to clear a standing dome;
+raising head_frac also moves the head DOWN. The two errors add, and only a
+folded pose pays for them, which is why Option B measured clean.
+
+SO THE NEXT RUNGS ARE NOT THE ONES THIS FILE PRE-WROTE. `isolate` was built for
+an identity break and identity did not break. The live question is why the
+wording cannot reach the face, and it has two candidate mechanisms that are
+separable in two frames."""
+
+
+ROUND2 = [
+    ("m1", "THE MASK, FITTED TO THE HEAD IT IS SUPPOSED TO MASK.",
+     "head_fit", None,
+     "MECHANISM 1: the adapter is acting on the wrong region. The box is "
+     "derived from the skeleton -- crown to chin, head width -- instead of "
+     "inherited from a standing figure at another head_frac, and on this pose "
+     "that is 323,440,509,673 against the sample's 289,364,541,642. It drops "
+     "the sky, and it PICKS UP THE MOUTH.\n\n"
+     "THE PREDICTION IS SPLIT AND BOTH HALVES ARE INFORMATIVE. C1 should "
+     "improve -- less non-head area for the adapter to transfer a cowl "
+     "through. E1 may get WORSE, because a mask that now covers the mouth "
+     "hands the mouth to the adapter too, and the adapter's reference is a "
+     "tile with a flat lipless line. If C1 clears and E1 worsens, the mask is "
+     "the right fix for the COWL and the wrong lever for the EMOTION, and the "
+     "two problems are properly separated instead of being one confused rung."),
+    ("m2", "THE ADAPTER'S GRIP, LOOSENED SO THE WORDING CAN BE HEARD.",
+     None, "0.45",
+     "MECHANISM 2: the adapter pins the EXPRESSION along with the identity. "
+     "ip-scale 0.7 -> 0.45, and nothing else -- same mask as the sample, so "
+     "this is one variable from it.\n\n"
+     "THE REASONING IS THE SAMPLE'S OWN CONTROL. Option B wears the same scowl "
+     "with no expression tags, and this sample wears it with three. The tags "
+     "are not weak, they are OUTVOTED: inside the mask the reference is worth "
+     "0.7 and the reference has a face already. If 0.45 lets `tired, "
+     "half-closed eyes, light smile` through while T1 still holds, then "
+     "ip-scale is the expression dial and ruling 2 is deliverable. If the "
+     "expression arrives and the EYES revert to irises, then identity and "
+     "expression are the same knob on this instrument and ruling 2 needs a "
+     "different reference -- one cropped from a face that is already doing "
+     "something -- rather than a different number."),
+]
+
+ROUND2_PREDICTED = """THESE TWO CAN BOTH FAIL AND STILL SETTLE THE QUESTION,
+which is why they are worth four GPU-minutes each rather than a third wording.
+
+The sample proved the two things a wording rung cannot: the adapter HOLDS the
+identity with `blank eyes` struck (T1 passed), and the adapter also holds the
+EXPRESSION (E1 failed with three tags against a zero-tag control that looks the
+same). Those two facts together say the face is the adapter's, not the prompt's.
+So the only levers that can move the emotion are WHERE the adapter acts (m1) and
+HOW HARD it acts (m2), and one of them has to give or ruling 2 is not
+deliverable at this ip-scale with this reference.
+
+IF BOTH MISS, the honest finding is that the reference crop is the constraint --
+a frozen adult face at 0.7 supplies its own mood -- and the next instrument is a
+reference that is not expressionless, which is a build step and not a rung. That
+would be reported, not attempted the same night."""
+
+
+def round2(force=False):
+    beat, hint, pose_words, expression, direction = WAVE_BY_BEAT["13"]
+    written = []
+    for tag, headline, mask_mode, ipscale, note in ROUND2:
+        pose = S.SKELETONS[hint][0]
+        m = head_fit_mask(pose) if mask_mode == "head_fit" else None
+        written.append(_emit(
+            new_id="ep2-b13-ageb-%s-0821" % tag,
+            job_dir="b13ageb-%s-0821" % tag,
+            hint=hint, pose_words=pose_words, expression=expression,
+            mask=m, ip_scale=ipscale,
+            why=("ROUND TWO FOR THE AGE-B SAMPLE. %s\n\n%s\n\n%s"
+                 % (headline, note, SAMPLE_VERDICT)),
+            consumer=("THE SEVEN-BEAT WAVE, which is held on this. The sample "
+                      "settled the age and the identity and left ONE thing "
+                      "open -- whether the beat's own emotion can reach the "
+                      "face. These two frames name the mechanism; the wave is "
+                      "emitted against whichever wins, and if neither does the "
+                      "wave ships at the sample's recipe with E1 recorded as "
+                      "an engine limit rather than a defect we keep re-asking."),
+            success=("ONE 832x1216 png. Judged against ep2-b13-ageb-s1-0821 at "
+                     "1:1 on exactly three clauses -- E1 (did the exhaustion "
+                     "arrive), T1 (did the blank eyes survive) and C1 (magenta "
+                     "in the mask region, measured against the sample's "
+                     "1.17%)."),
+            variable=("ONE. %s Everything else is the sample's to the byte -- "
+                      "same prompt, same negative, same skeleton, same seed, "
+                      "same adapter and reference."
+                      % ("The MASK, and it is derived from the skeleton rather "
+                         "than chosen." if mask_mode else
+                         "The IP-ADAPTER SCALE, 0.7 -> 0.45.")),
+            beat="13", priority=2,
+            extra_keys={
+                "round": ("TWO of two. episode-loop-v2 caps a question at two "
+                          "rounds. If neither rung lands, the finding is "
+                          "recorded as an instrument limit and the wave ships "
+                          "at the sample's recipe -- there is no round three."),
+                "failure_predicted_in_advance": ROUND2_PREDICTED,
+                "the_mask_defect": (
+                    "Found while measuring C1 and it outlives this rung: "
+                    "`age_mask` puts the box 75 px above the crown on a folded "
+                    "pose at head_frac 0.240 and cuts the chin off. Crown 439, "
+                    "chin 673, mask 364..642. Only folded poses pay, which is "
+                    "why Option B's standing frame measured C1 at 0.00% and "
+                    "nobody caught it. If m1 wins, `head_fit_mask` becomes the "
+                    "rule for the whole wave and `age_mask` keeps only the "
+                    "frames it already rendered.")},
+            force=force))
+    return written
+
+
 def _refuses(fn):
     """True if fn() raises. A guard nobody has watched fail is not a guard."""
     try:
@@ -894,10 +1088,12 @@ def main(argv=None):
             written += sample(force=force)
         elif m == "wave":
             written += wave(force=force)
+        elif m == "round2":
+            written += round2(force=force)
         elif m == "isolate":
             written += isolate(force=force)
         else:
-            print("!! unknown mode %r -- sample | wave | isolate" % m)
+            print("!! unknown mode %r -- sample | wave | round2 | isolate" % m)
             return 2
     print("\n%d spec(s) written." % len(written))
     return 0
