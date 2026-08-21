@@ -308,3 +308,54 @@ THE THREE ROUNDS AS ONE RESULT — A TOKEN BUDGET, NOT A WORDING PROBLEM
   BEAT 07 STANDING STATE: no plate passes on both figures; NO MOTION SPEC HAS
   BEEN FILED off any of the three rounds. R1 is the only round with a correct
   guard, R3 the only round with a correct goblin.
+
+--------------------------------------------------------------------------------
+b07 ROUND 4 — RECIPE change: face words deleted, ip-scale 1.0→1.25, budget to guard
+--------------------------------------------------------------------------------
+  A2 no bobblehead PASS  scored first, as the spec required. IDENTICAL crop box
+                         across R1/R3/R4: R4's head is the same size relative to
+                         his body at ip-scale 1.25 as at 1.0, if anything a
+                         shade smaller than R3's. THE K2 REGRESSION DID NOT
+                         FIRE. The scale dial has room the k-ladder's 0.7→0.9
+                         experience implied it might not.
+  A3 containment   MARG  faint concentric ring ghosting in the field around his
+                         head — but EQUALLY PRESENT IN R3 AT ip-scale 1.0, so
+                         pre-existing and not caused by the raise. Not a stop.
+  A1 face, no words PARTIAL FAIL — AND THE DECOMPOSITION IS THE RESULT.
+                         With zero face words the adapter alone returned the
+                         species, bald skull, large pointed ears, skin AND
+                         NARROW VERTICAL SLIT PUPILS — the hardest, most
+                         canon-specific feature, the one six k-ladder wording
+                         rungs never reached. It did NOT return the off-white
+                         sclera (came back green), the eyebags, or the collar's
+                         frog closures (became plain round buttons).
+                         => THE ADAPTER CARRIES EYE SHAPE. THE WORDS WERE
+                            CARRYING EYE COLOUR AND SMALL SKIN/GARMENT DETAIL.
+                            Separable — no earlier round could have shown this.
+  G2 helmeted human PASS  CLOSED HELMET, no bare green skull. R3's defect fixed;
+                          the freed budget bought exactly what it was spent on.
+  G1/G3/G4          PASS  two figures; five heads, full plate, a head taller;
+                          armoured gauntlet, no green hand.
+  P1 palette/halo/boots PASS — all three held from R3.
+
+  attribute            R1     R2     R3     R4
+  goblin slit pupils   FAIL   PASS   PASS   PASS
+  goblin sclera/eyebags PASS  PASS   PASS   FAIL
+  muted palette        PASS   FAIL   PASS   PASS
+  no mask halo         PASS   FAIL   PASS   PASS
+  guard hand armoured  PASS   FAIL   PASS   PASS
+  boots                PASS   FAIL   PASS   PASS
+  guard helmeted human PASS   PASS   FAIL   PASS
+
+  FIRST ROUND IN FOUR where the guard, the palette, the halo, the boots and a
+  slit pupil are all correct in one frame. The whole remaining gap is sclera
+  colour + eyebags, and the prompt sits at 72/77 with FIVE FREE TOKENS —
+  `white eyes, eyebags` is about four.
+
+  STOP RULE DID NOT TRIGGER (A2 and A3 both clean) AND THE ROUND STOPPED ANYWAY:
+  one sample was authorised for the recipe change and it is spent. Putting the
+  two terms back into the free tokens is the obvious cheap next rung, but it is
+  a call to make with the founder's beat verdicts in hand.
+
+  NO MOTION SPEC FILED off this plate — A1 did not land, and a green sclera
+  would be baked into 105 frames. Beat 07 keeps its slot in the per-beat queue.

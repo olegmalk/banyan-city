@@ -262,3 +262,65 @@ derivation:
     - payload negative.txt (281 -> 281 chars)
     payload:prompt.txt:
     - payload prompt.txt (299 -> 291 chars)
+verdict_b07_twofig_r4_0821: |
+  CLOSEST ROUND YET, 7 OF 9, AND THE TWO MISSES ARE ABOUT FOUR TOKENS WIDE. The
+  k2 regression this round was gated on DID NOT FIRE. Judged by eye at 1:1
+  against rounds 1 and 3 in an IDENTICAL crop box, so head size is comparable
+  and not a framing artefact. rc=0, seed 20260899.
+
+  A2 NO BOBBLEHEAD  PASS, AND IT WAS SCORED FIRST AS THIS SPEC REQUIRED. At an
+                    identical crop box R4's head is the same size relative to
+                    his body as R1's and R3's at ip-scale 1.0 -- if anything
+                    marginally smaller than R3's. k2 predicted that raising
+                    strength against a reference that is 100% head would
+                    inflate the head, and at 1.25 IT DOES NOT on this
+                    reference and this mask. That is a clean negative result
+                    and it is the main thing this job bought: the scale dial
+                    has room that the k-ladder's 0.7->0.9 experience implied it
+                    might not.
+  A3 CONTAINMENT    MARGINAL, AND NOT CAUSED BY THE SCALE. There is faint
+                    concentric ring ghosting in the pale field around his head
+                    -- plausibly the reference's flat flooded background. It is
+                    equally present in ROUND 3 AT ip-scale 1.0, so it is
+                    pre-existing and the raise did not introduce or worsen it.
+                    Not a stop condition.
+  A1 THE FACE WITH  PARTIAL FAIL, AND THE DECOMPOSITION IS THE FINDING. With
+     NO WORDS       ZERO face words in the prompt the adapter alone returned:
+                    the species, the bald skull, the large pointed ears, the
+                    skin, AND NARROW VERTICAL SLIT PUPILS. The slit -- the
+                    hardest, most canon-specific feature, the one six wording
+                    rungs never reached on the k-ladder -- SURVIVED ON THE
+                    ADAPTER ALONE. What did NOT survive: the sclera went GREEN
+                    where canon is off-white (round 3 had it right with `white
+                    eyes` in the prompt), the eyebags are gone, and the collar's
+                    frog closures degraded into a row of plain round buttons.
+                    SO: THE ADAPTER CARRIES EYE SHAPE; THE WORDS WERE CARRYING
+                    EYE COLOUR AND THE SMALL SKIN AND GARMENT DETAIL. Those are
+                    separable, which no previous round could have shown.
+  G1 TWO FIGURES    PASS.
+  G2 HELMETED HUMAN PASS, AND THIS IS THE ROUND-3 DEFECT FIXED. A CLOSED HELMET
+                    on his head. No bare skull, no green, no pointed ears. The
+                    freed budget bought exactly what it was spent on.
+  G3 GROWN MAN      PASS. Five heads, full plate, a full head and more taller.
+  G4 NO LEAK        PASS. Armoured gauntlet, not the green hand of round 2.
+  P1 PALETTE/HALO/  PASS. Muted sage, no mask rectangle, dark boots -- all
+     BOOTS          three held from round 3.
+
+  FOR THE FIRST TIME IN FOUR ROUNDS the guard, the palette, the halo, the boots
+  and a slit pupil are all correct in ONE frame. The remaining gap is the
+  sclera colour and the eyebags, and the prompt is sitting at 72 of 77 with
+  FIVE TOKENS FREE -- `white eyes, eyebags` is about four.
+
+  THE STOP RULE DID NOT TRIGGER, AND THE ROUND STOPS ANYWAY. This spec's stop
+  condition was A2 or A3 -- the scale re-breaking something -- and neither
+  fired. But the authorisation was ONE sample for this recipe change and it is
+  spent, so no round 5 is filed here. Putting `white eyes, eyebags` back into
+  the five free tokens is the obvious next rung and it is cheap, but it is a
+  call to make with the founder's beat verdicts in hand, not one for a lane to
+  take on its own at the end of a shift.
+
+  NO MOTION SPEC IS FILED OFF THIS PLATE. The instruction was to file it if the
+  plate landed; A1 did not land, and a green sclera is exactly the kind of
+  off-canon detail that would be baked into 105 frames. Beat 07 keeps its slot
+  in the founder's per-beat iteration queue with the four-round table as its
+  record.
