@@ -1,0 +1,12 @@
+#### job ep2-jerry-expref-0821-1787307422-again28af40 attempt 1 start 2026-08-21T10:17:13Z
+
+==== step stage START 2026-08-21T10:17:13Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "from PIL import Image, ImageDraw\nimport hashlib, os, urllib.request\nroot = r'C:\\banyan-farm\\jerryexpref-0821'\nos.makedirs(root, exist_ok=True)\nurl = 'https://raw.githubusercontent.com/olegmalk/banyan-city/main/review/ep2-goblin-design-0819/adult-b19-0819.jpg'\nwith urllib.request.urlopen(url, timeout=180) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\nif got != '1a71fb920807bd15399f8a516d3b26979fd65f7b122a11b49a74f0fa8bc5c2eb':\n    print('!! tile sha', got); raise SystemExit(1)\ntile = os.path.join(root, 'tile.jpg')\nopen(tile, 'wb').write(blob)\nim = Image.open(tile).convert('RGB')\ncrop = im.crop([142, 244, 366, 468])\nif crop.size[0] % 8 or crop.size[1] % 8:\n    print('!! crop', crop.size, 'not divisible by 8'); raise SystemExit(1)\ncrop.save(os.path.join(root, 'head.png'))\nm = Image.new('L', crop.size, 0)\nd = ImageDraw.Draw(m)\nd.rectangle([58, 92, 163, 122], fill=255)\nd.rectangle([80, 172, 158, 196], fill=255)\nm.save(os.path.join(root, 'mask.png'))\nprint('staged tile', got, im.size, '-> head crop', crop.size)\n"]
+staged tile 1a71fb920807bd15399f8a516d3b26979fd65f7b122a11b49a74f0fa8bc5c2eb (680, 1236) -> head crop (224, 224)
+==== step stage END rc=0 2026-08-21T10:17:14Z ====
+
+==== step soft045 START 2026-08-21T10:17:14Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\jerryexpref-0821\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\jerryexpref-0821\\head.png", "--mask-png", "C:\\banyan-farm\\jerryexpref-0821\\mask.png", "--prompt-file", "C:\\banyan-farm\\jerryexpref-0821\\prompt.txt", "--negative-file", "C:\\banyan-farm\\jerryexpref-0821\\negative.txt", "--out", "C:\\banyan-farm\\jerryexpref-0821\\expref-s045.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.45", "--seed", "20260823", "--pad-crop", "64", "--blur", "8", "--note", "THE EXPRESSIVE REFERENCE, strength 0.45. Brow and mouth bands only; the EYES ARE NOT IN THE MASK because T1 is the one identity clause the adapter is provably carrying and the mood is not in the eyes."]
+!! missing required argument(s): --init-sha256
+==== step soft045 END rc=2 2026-08-21T10:17:14Z ====
+#### job ep2-jerry-expref-0821-1787307422-again28af40 finished rc=2 2026-08-21T10:17:14Z
