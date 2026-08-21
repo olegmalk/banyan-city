@@ -298,7 +298,13 @@ BEATS = {
         wins=["Two figures in the field from the first frame to the 117th — never one, never three. Four rounds of rewording never got that."],
         note="Guard 1's voice was re-pitched across the whole episode on 08-21 after you said he sounded like a little kid. He now renders at 99.6–122.8 Hz instead of 192 Hz. The picture is unchanged.",
         faults_from="ship-manifest.yaml beat 5 + pipeline/jobs/ep2-b05-standB-0814.yaml",
-        candidates=[],
+        candidates=[
+            dict(file=f"{POSTER_URL}/05-the-patrol-PLATE-guards-f-0822.jpg", still=True,
+                 label="a PLATE, not a clip — tonight's first attempt, and it FAILED", tag="fail",
+                 verdict="Asked for two men side by side in a field, both in white shoulder sashes, the left one guard 1 and the right one a moustached man. What came back is ONE man in a face close-up: guard 1's dark cropped hair and round wire glasses, with the other man's moustache on the same face. The two briefs were merged into one person and the shot is the reference photograph's framing, not the one that was asked for. He is not wearing a sash you can see either. Shown rather than described because this beat has never had a single picture on this page and a failure with pixels is worth more than a fault list.",
+                 diff="First time this beat has been drawn on the stack that made the guard you approved. The failure is useful and it corrects our own reasoning: the spec argued the reference could not impose its layout here because a two-figure medium shot is nothing like a face close-up. It imposed anyway. So a tight-crop reference wins the composition on its own, whatever is asked for — and the next rung is already named, an adapter scoped to one block instead of all of them, which is the standard way to take identity from a reference without taking its framing. THE MOUSTACHED MAN IS ON LOAN AND NOT CAST: guard 2 is still your call at /review/ep2-guardcast2-0822 and nothing here decides it.",
+                 src="pipeline/jobs/ep2-b05-guards-f-0822.yaml + taste/refs/guard1-canon-founder-0822-sq.png"),
+        ],
     ),
     6: dict(
         goblin=False,
@@ -582,7 +588,14 @@ BEATS = {
         wins=["Passes all five of its clauses. Naming the colour held the colour: the cloak is navy and stays navy."],
         note="His face is never visible in this shot — he is turning away, by design — so no design claim can be made about him here either way.",
         faults_from="ship-manifest.yaml beat 17",
-        candidates=[],
+        candidates=[
+            dict(file=f"{CAND_URL}/17-goodbye-LTX-ep2-b17-w4motion-0822.mp4",
+                 poster=f"{POSTER_URL}/17-goodbye-LTX-ep2-b17-w4motion-0822.jpg",
+                 label="tonight's re-render — it has the turn, and it takes 3.3 s to start it", tag="warn",
+                 verdict="This is the only take of this beat where you can SEE HIM before he goes: the canon face is on camera and holding — broad dome, off-white almond eyes with dark pupils, near-horizontal ears, sage collar — and then from frame 80 he turns and by the last frame you are looking at the back of his head. That is the beat's own action and the definition says so in as many words. What it does not have is the first 3.3 seconds: frames 0 to 79 move at 0.07 to 0.37 average, which is a still. No brush either — the definition asks stand, brush, turn, and this is stand, turn.",
+                 diff="New plate on the corrected eye, this beat's own action carried unchanged. The clip in the cut already passes all five of its clauses and NOTHING here is a swap — that one never shows his face at all, which the page has recorded as a reason no design claim could be made about him. This one can be judged on design. If the still opening is the only objection, the head of it is trimmable in one line.",
+                 src="pipeline/jobs/ep2-b17-w4motion-0822.yaml"),
+        ],
     ),
     18: dict(
         goblin=False,
@@ -602,7 +615,14 @@ BEATS = {
         ],
         wins=["Eight of eight on a bar that was written before the tool that made it existed. And on design it is not merely close to your tile — it IS the tile, with the fig moved."],
         faults_from="ship-manifest.yaml beat 19 + farm-out/ep2-b19-dropcomp-0819/",
-        candidates=[],
+        candidates=[
+            dict(file=f"{CAND_URL}/19-the-drop-LTX-ep2-b19-w4motion-0822.mp4",
+                 poster=f"{POSTER_URL}/19-the-drop-LTX-ep2-b19-w4motion-0822.jpg",
+                 label="tonight's re-render — FAILS, shown so the failure is on the record", tag="fail",
+                 verdict="It has your face and nothing else this beat needs. THERE IS NO FRUIT IN IT AT ALL — the beat is a fall, a landing and a noticing, and the object that does all three is absent, so none of the three can happen. Before that it is a still: frames 0 to 69 move at 0.04 to 0.31 average. Then from frame 70 he walks, and by the last frame he has walked out of the right edge of the shot and the frame is mostly empty grass.",
+                 diff="A new plate on the corrected eye. The plate was authored for the FACE and the fig was never put back into it, so the motion prompt is asking for an event whose object does not exist — the same law that pulled beats 02, 03 and 20 off their framing. The clip in the cut is unaffected and still scores eight of eight on its own bar; this is not a swap and not a candidate for the slot. Beat 19 already has a proven composite route for exactly this: the plant and the fig were DRAWN into a plate on 08-19 and passed all eight clauses. That is the fix, and it is a composite, not a re-word.",
+                 src="pipeline/jobs/ep2-b19-w4motion-0822.yaml"),
+        ],
     ),
     20: dict(
         goblin=True,
@@ -786,8 +806,8 @@ CSS = """
   .cand{flex:1 1 320px;min-width:290px;max-width:520px;background:var(--panel);
         border:1px solid var(--line);border-radius:6px;padding:13px 15px}
   .cand.quiet{background:var(--panel2)}
-  .cand video{width:100%;height:auto;border:1px solid var(--line);border-radius:4px;
-              display:block;background:#000;margin:0 0 9px}
+  .cand video,.cand img.stillframe{width:100%;height:auto;border:1px solid var(--line);
+              border-radius:4px;display:block;background:#000;margin:0 0 9px}
   .cand .lbl{font-size:14px;font-weight:650;margin:0 0 6px;display:flex;
              gap:8px;align-items:baseline;flex-wrap:wrap}
   .cand p{font-size:13.5px;margin:0 0 7px;max-width:none}
@@ -856,15 +876,23 @@ def cand_html(c):
     swap = Path(c["file"]).stem
     bits = [f'<div class="cand{quiet}">']
     poster = f' poster="{esc(c["poster"])}"' if c.get("poster") else ""
-    bits.append(f'<video controls preload="none" playsinline muted loop{poster}>'
-                f'<source src="{esc(c["file"])}" type="video/mp4"></video>')
+    if c.get("still"):
+        # A PLATE IS EVIDENCE TOO. Beats 05 and 06 have never had a clip, and a
+        # page that can only show mp4s can only show them as prose -- which is
+        # the exact thing this page exists to stop. `still: True` renders the
+        # frame itself; `swap to` is suppressed because a plate is not a cut.
+        bits.append(f'<img class="stillframe" src="{esc(c["file"])}" alt="{esc(c["label"])}">')
+    else:
+        bits.append(f'<video controls preload="none" playsinline muted loop{poster}>'
+                    f'<source src="{esc(c["file"])}" type="video/mp4"></video>')
     bits.append(f'<p class="lbl"><span class="tag {tag}">{esc(tag.upper())}</span>'
                 f'<span>{esc(c["label"])}</span></p>')
     bits.append(f'<p>{esc(c["verdict"])}</p>')
     if c.get("diff"):
         bits.append(f'<p class="diff"><b>What is different:</b> {esc(c["diff"])}</p>')
-    bits.append(f'<p class="diff">To take this one, say: <span class="swapid">'
-                f'swap to {esc(swap)}</span></p>')
+    if not c.get("still"):
+        bits.append(f'<p class="diff">To take this one, say: <span class="swapid">'
+                    f'swap to {esc(swap)}</span></p>')
     bits.append(f'<p class="src">{esc(c.get("src", ""))}</p>')
     bits.append("</div>")
     return "".join(bits)

@@ -78,8 +78,8 @@
   .cand{flex:1 1 320px;min-width:290px;max-width:520px;background:var(--panel);
         border:1px solid var(--line);border-radius:6px;padding:13px 15px}
   .cand.quiet{background:var(--panel2)}
-  .cand video{width:100%;height:auto;border:1px solid var(--line);border-radius:4px;
-              display:block;background:#000;margin:0 0 9px}
+  .cand video,.cand img.stillframe{width:100%;height:auto;border:1px solid var(--line);
+              border-radius:4px;display:block;background:#000;margin:0 0 9px}
   .cand .lbl{font-size:14px;font-weight:650;margin:0 0 6px;display:flex;
              gap:8px;align-items:baseline;flex-wrap:wrap}
   .cand p{font-size:13.5px;margin:0 0 7px;max-width:none}
@@ -266,7 +266,9 @@
 <p class="voline"><b>GUARD 1 SAYS</b>“He went this way. I saw him. Apple thief.”</p>
 </div></div>
 <h3>Other footage that exists for this beat</h3>
-<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<div class="cands">
+<div class="cand"><img class="stillframe" src="/review/ep2-beats-0821/posters/05-the-patrol-PLATE-guards-f-0822.jpg" alt="a PLATE, not a clip — tonight&#x27;s first attempt, and it FAILED"><p class="lbl"><span class="tag fail">FAIL</span><span>a PLATE, not a clip — tonight&#x27;s first attempt, and it FAILED</span></p><p>Asked for two men side by side in a field, both in white shoulder sashes, the left one guard 1 and the right one a moustached man. What came back is ONE man in a face close-up: guard 1&#x27;s dark cropped hair and round wire glasses, with the other man&#x27;s moustache on the same face. The two briefs were merged into one person and the shot is the reference photograph&#x27;s framing, not the one that was asked for. He is not wearing a sash you can see either. Shown rather than described because this beat has never had a single picture on this page and a failure with pixels is worth more than a fault list.</p><p class="diff"><b>What is different:</b> First time this beat has been drawn on the stack that made the guard you approved. The failure is useful and it corrects our own reasoning: the spec argued the reference could not impose its layout here because a two-figure medium shot is nothing like a face close-up. It imposed anyway. So a tight-crop reference wins the composition on its own, whatever is asked for — and the next rung is already named, an adapter scoped to one block instead of all of them, which is the standard way to take identity from a reference without taking its framing. THE MOUSTACHED MAN IS ON LOAN AND NOT CAST: guard 2 is still your call at /review/ep2-guardcast2-0822 and nothing here decides it.</p><p class="src">pipeline/jobs/ep2-b05-guards-f-0822.yaml + taste/refs/guard1-canon-founder-0822-sq.png</p></div>
+</div>
 <h3>What is wrong with it</h3>
 <ul class="faults"><li>Four of its seven clauses fail.</li><li>Neither guard wears the sash you froze for the cast — the clip contradicts a ruling that is already final.</li></ul>
 <h3>What it gets right</h3>
@@ -275,7 +277,7 @@
 <p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 5 + pipeline/jobs/ep2-b05-standB-0814.yaml</p>
 <div class="answer"><p class="h">Answer in chat</p>
 <code>b05 ok</code>
-<code>b05 swap to &lt;candidate&gt;</code>
+<code>b05 swap to 05-the-patrol-PLATE-guards-f-0822</code>
 <code>b05 redo: &lt;one line of what is wrong&gt;</code>
 </div>
 </section>
@@ -600,7 +602,9 @@
 <p class="voline"><b>SCAVENGER SAYS</b>“If anyone asks — you didn&#x27;t see me. Which is true. You&#x27;re a plant.”</p>
 </div></div>
 <h3>Other footage that exists for this beat</h3>
-<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<div class="cands">
+<div class="cand"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/17-goodbye-LTX-ep2-b17-w4motion-0822.jpg"><source src="/review/ep2-beats-0821/candidates/17-goodbye-LTX-ep2-b17-w4motion-0822.mp4" type="video/mp4"></video><p class="lbl"><span class="tag warn">WARN</span><span>tonight&#x27;s re-render — it has the turn, and it takes 3.3 s to start it</span></p><p>This is the only take of this beat where you can SEE HIM before he goes: the canon face is on camera and holding — broad dome, off-white almond eyes with dark pupils, near-horizontal ears, sage collar — and then from frame 80 he turns and by the last frame you are looking at the back of his head. That is the beat&#x27;s own action and the definition says so in as many words. What it does not have is the first 3.3 seconds: frames 0 to 79 move at 0.07 to 0.37 average, which is a still. No brush either — the definition asks stand, brush, turn, and this is stand, turn.</p><p class="diff"><b>What is different:</b> New plate on the corrected eye, this beat&#x27;s own action carried unchanged. The clip in the cut already passes all five of its clauses and NOTHING here is a swap — that one never shows his face at all, which the page has recorded as a reason no design claim could be made about him. This one can be judged on design. If the still opening is the only objection, the head of it is trimmable in one line.</p><p class="diff">To take this one, say: <span class="swapid">swap to 17-goodbye-LTX-ep2-b17-w4motion-0822</span></p><p class="src">pipeline/jobs/ep2-b17-w4motion-0822.yaml</p></div>
+</div>
 <p class="goblink">The goblin is in this beat. His design — how old he reads, and which face is canon — is one question for the whole episode and it has its own page: <a href="/review/ep2-goblin-age-0821">the goblin age card</a>.</p>
 <h3>What is wrong with it</h3>
 <ul class="faults"><li>Two honest costs that no clause covers: one clause passes on a thin margin where its parent passed comfortably, and overall motion is 30% lower than the take it came from, on a shot that was already still.</li><li>APPROVAL FLAG (§6): this beat&#x27;s restaged script line has never been read by you — &quot;The scavenger pushes himself up, gives his cloak a shake, and turns to go.&quot; It is on the publish checklist for that reason.</li></ul>
@@ -610,7 +614,7 @@
 <p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 17</p>
 <div class="answer"><p class="h">Answer in chat</p>
 <code>b17 ok</code>
-<code>b17 swap to &lt;candidate&gt;</code>
+<code>b17 swap to 17-goodbye-LTX-ep2-b17-w4motion-0822</code>
 <code>b17 redo: &lt;one line of what is wrong&gt;</code>
 </div>
 </section>
@@ -653,7 +657,9 @@
 <p class="voline"><b>NO LINE</b>Silent beat — the picture carries it alone.</p>
 </div></div>
 <h3>Other footage that exists for this beat</h3>
-<p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
+<div class="cands">
+<div class="cand"><video controls preload="none" playsinline muted loop poster="/review/ep2-beats-0821/posters/19-the-drop-LTX-ep2-b19-w4motion-0822.jpg"><source src="/review/ep2-beats-0821/candidates/19-the-drop-LTX-ep2-b19-w4motion-0822.mp4" type="video/mp4"></video><p class="lbl"><span class="tag fail">FAIL</span><span>tonight&#x27;s re-render — FAILS, shown so the failure is on the record</span></p><p>It has your face and nothing else this beat needs. THERE IS NO FRUIT IN IT AT ALL — the beat is a fall, a landing and a noticing, and the object that does all three is absent, so none of the three can happen. Before that it is a still: frames 0 to 69 move at 0.04 to 0.31 average. Then from frame 70 he walks, and by the last frame he has walked out of the right edge of the shot and the frame is mostly empty grass.</p><p class="diff"><b>What is different:</b> A new plate on the corrected eye. The plate was authored for the FACE and the fig was never put back into it, so the motion prompt is asking for an event whose object does not exist — the same law that pulled beats 02, 03 and 20 off their framing. The clip in the cut is unaffected and still scores eight of eight on its own bar; this is not a swap and not a candidate for the slot. Beat 19 already has a proven composite route for exactly this: the plant and the fig were DRAWN into a plate on 08-19 and passed all eight clauses. That is the fix, and it is a composite, not a re-word.</p><p class="diff">To take this one, say: <span class="swapid">swap to 19-the-drop-LTX-ep2-b19-w4motion-0822</span></p><p class="src">pipeline/jobs/ep2-b19-w4motion-0822.yaml</p></div>
+</div>
 <p class="goblink">The goblin is in this beat. His design — how old he reads, and which face is canon — is one question for the whole episode and it has its own page: <a href="/review/ep2-goblin-age-0821">the goblin age card</a>.</p>
 <h3>What is wrong with it</h3>
 <ul class="faults"><li>He does not notice. The brief asks for the fall, the landing AND him noticing, in that order; this delivers the first two exactly and the third not at all.</li><li>The last 2.8 s is a still frame, and the event is small — 48 px of travel on a 33 px figure in a 1280-tall frame.</li></ul>
@@ -662,7 +668,7 @@
 <p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 19 + farm-out/ep2-b19-dropcomp-0819/</p>
 <div class="answer"><p class="h">Answer in chat</p>
 <code>b19 ok</code>
-<code>b19 swap to &lt;candidate&gt;</code>
+<code>b19 swap to 19-the-drop-LTX-ep2-b19-w4motion-0822</code>
 <code>b19 redo: &lt;one line of what is wrong&gt;</code>
 </div>
 </section>
