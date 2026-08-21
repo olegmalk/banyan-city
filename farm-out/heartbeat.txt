@@ -3549,3 +3549,4 @@
 07:46:43Z DONE task=ep2-jerry-age-h265w0-0821-1787298077 rc=0 artifacts=1
 07:46:49Z STARTED task=ep2-jerry-age-h265w1-0821-1787298079 attempt=1 on box-runner
 07:47:16Z DONE task=ep2-jerry-age-h265w1-0821-1787298079 rc=0 artifacts=1
+07:47:34Z box-runner idle ready=0 failed=67
