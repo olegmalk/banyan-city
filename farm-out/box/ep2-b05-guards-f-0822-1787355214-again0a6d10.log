@@ -1,0 +1,140 @@
+#### job ep2-b05-guards-f-0822-1787355214-again0a6d10 attempt 1 start 2026-08-21T23:41:22Z
+
+==== step stage START 2026-08-21T23:41:22Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, os, shutil, urllib.request\ndst = r\"C:\\banyan-farm\\ep2-b05-guards-f-0822\\refs\"\nos.makedirs(dst, exist_ok=True)\nwant = \"f78336496ce9d1c7f67978b58885e5f1ac259b532a2f8e4aed578af4080ef22c\"\nwith urllib.request.urlopen(\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/taste/refs/guard1-canon-founder-0822-sq.png\", timeout=120) as r:\n    blob = r.read()\ngot = hashlib.sha256(blob).hexdigest()\nif got != want:\n    raise SystemExit(\"!! guard-1 reference sha %s, wanted %s -- \"\n                     \"refusing to condition on unknown bytes\"\n                     % (got, want))\nfirst = os.path.join(dst, \"guard1sq-s0.png\")\nwith open(first, \"wb\") as fh:\n    fh.write(blob)\nfor i in (1, 2, 3):\n    shutil.copy2(first, os.path.join(dst, \"guard1sq-s%d.png\" % i))\nprint(\"reference verified\", got[:12], \"-> 4 slots (3 are byte-copies; \"\n      \"dedup_cells drops them and one cell is drawn)\")\n"]
+reference verified f78336496ce9 -> 4 slots (3 are byte-copies; dedup_cells drops them and one cell is drawn)
+==== step stage END rc=0 2026-08-21T23:41:22Z ====
+
+==== step dry START 2026-08-21T23:41:22Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py", "--beat", "5", "--character", "guard", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--refs", "C:\\banyan-farm\\ep2-b05-guards-f-0822\\refs", "--ref-prefix", "guard1sq", "--out", "C:\\banyan-farm\\ep2-b05-guards-f-0822\\out", "--draft-key", "authored_b05_guards_f_0822", "--arm", "window4", "--seeds", "1", "--seed-start", "0", "--expect-drafts-sha256", "0f103d85cc3afbaf8f76896a5f9830a179cb25473a62629dc035513ae22e6805", "--task", "ep2-b05-guards-f-0822", "--dry"]
+== goblin window mechanism on BEAT 05, references held at beat 04. Recipe unchanged; the beat is the variable.
+   drafts checked at RUN time: 0f103d85cc3afbaf8f76896a5f9830a179cb25473a62629dc035513ae22e6805 matches --expect-drafts-sha256
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+
+== beat 05 the-patrol [guard] — patrol
+   AUTHORED: Two grown guard men side by side in tall grass, hedgerow behind, looking out over an empty field. The left man has dark cropped hair and round wire-rim glasses. The right man has a thick grey moustache and a jowly face. Both wear white shoulder sashes, cinematic lighting, masterpiece, best quality, very aesthetic No girl, no child, no goblin, no green skin, no pointed ears, no armor, no helmet, no third man, no crowd, no white background, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: 2boys, two grown guard men side by side in tall grass, hedgerow behind, looking out over an empty field. The left man has dark cropped hair and round wire-rim glasses. The right man has a thick grey moustache and a jowly face. Both wear white shoulder sashes, cinematic lighting, masterpiece, best quality, very aesthetic
+   NEG(sent): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, goblin, green skin, pointed ears, armor, helmet, third man, crowd, white background, dark, night, photorealism, text
+   positive tokens (real CLIP): 74/77   headroom for the goblin definition: 3
+   negative tokens: recipe 69 -> sent 69 (budget 77)
+   count tag: '2boys' (draft declares '2boys')
+   STYLE ANCHOR PRESENT: True
+   'text' negated: True
+   scale negatives: False   'tall tree' removed: 0
+   person singulars in negative: ['girl', 'child']
+
+ONE SAMPLE — beat 05 the-patrol, consistency mechanism, $0
+   mechanism: IP-Adapter Plus, arm=window4, 1 cells x 1 seeds = 1 frames
+
+!! REFERENCE SET IS NOT 4 DISTINCT IMAGES — 1 distinct of 4 slots
+   slots r0, r1, r2, r3 are BYTE-IDENTICAL (sha256 f78336496ce9)
+   SKIPPED cell r1 (scale=0.6, window=0.15): same bytes and same config as r0 — it would have redrawn it exactly
+   SKIPPED cell r2 (scale=0.6, window=0.15): same bytes and same config as r0 — it would have redrawn it exactly
+   SKIPPED cell r3 (scale=0.6, window=0.15): same bytes and same config as r0 — it would have redrawn it exactly
+   3 renders NOT spent (3 skipped cells x 1 seeds). The frames the skipped cells would have written do not exist; the bytes are already on disk under the surviving cell's name.
+   arm window4 asked for 4 cells (4 frames); 1 cells (1 frames) are distinct renders.
+   seed indices s0..s0 (s0..s3 are the wave-1 seeds): [20260724]
+   prompt tokens: 74 (mechanism adds 0)
+   task: ep2-b05-guards-f-0822
+   sampler sha256: 6f7333bd91aaf960701fe623329164f32a4302a506b2dd54e25e23ea5e321f50
+
+DRY OK — 1 frames, nothing drawn
+==== step dry END rc=0 2026-08-21T23:41:25Z ====
+
+==== step sample START 2026-08-21T23:41:25Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\wave-goblin-prep\\goblin_ipa_beat.py", "--beat", "5", "--character", "guard", "--harness", "C:\\banyan-farm\\wave-goblin-prep", "--root", "C:\\banyan-farm\\wave-goblin-prep\\repo", "--refs", "C:\\banyan-farm\\ep2-b05-guards-f-0822\\refs", "--ref-prefix", "guard1sq", "--out", "C:\\banyan-farm\\ep2-b05-guards-f-0822\\out", "--draft-key", "authored_b05_guards_f_0822", "--arm", "window4", "--seeds", "1", "--seed-start", "0", "--expect-drafts-sha256", "0f103d85cc3afbaf8f76896a5f9830a179cb25473a62629dc035513ae22e6805", "--task", "ep2-b05-guards-f-0822"]
+== goblin window mechanism on BEAT 05, references held at beat 04. Recipe unchanged; the beat is the variable.
+   drafts checked at RUN time: 0f103d85cc3afbaf8f76896a5f9830a179cb25473a62629dc035513ae22e6805 matches --expect-drafts-sha256
+C:\banyan-farm\venv\Lib\site-packages\transformers\tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+
+== beat 05 the-patrol [guard] — patrol
+   AUTHORED: Two grown guard men side by side in tall grass, hedgerow behind, looking out over an empty field. The left man has dark cropped hair and round wire-rim glasses. The right man has a thick grey moustache and a jowly face. Both wear white shoulder sashes, cinematic lighting, masterpiece, best quality, very aesthetic No girl, no child, no goblin, no green skin, no pointed ears, no armor, no helmet, no third man, no crowd, no white background, no dark, no night. No photorealism, no 3D render look. 9:16 vertical, no text.
+   POS: 2boys, two grown guard men side by side in tall grass, hedgerow behind, looking out over an empty field. The left man has dark cropped hair and round wire-rim glasses. The right man has a thick grey moustache and a jowly face. Both wear white shoulder sashes, cinematic lighting, masterpiece, best quality, very aesthetic
+   NEG(sent): photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, goblin, green skin, pointed ears, armor, helmet, third man, crowd, white background, dark, night, photorealism, text
+   positive tokens (real CLIP): 74/77   headroom for the goblin definition: 3
+   negative tokens: recipe 69 -> sent 69 (budget 77)
+   count tag: '2boys' (draft declares '2boys')
+   STYLE ANCHOR PRESENT: True
+   'text' negated: True
+   scale negatives: False   'tall tree' removed: 0
+   person singulars in negative: ['girl', 'child']
+
+ONE SAMPLE — beat 05 the-patrol, consistency mechanism, $0
+   mechanism: IP-Adapter Plus, arm=window4, 1 cells x 1 seeds = 1 frames
+
+!! REFERENCE SET IS NOT 4 DISTINCT IMAGES — 1 distinct of 4 slots
+   slots r0, r1, r2, r3 are BYTE-IDENTICAL (sha256 f78336496ce9)
+   SKIPPED cell r1 (scale=0.6, window=0.15): same bytes and same config as r0 — it would have redrawn it exactly
+   SKIPPED cell r2 (scale=0.6, window=0.15): same bytes and same config as r0 — it would have redrawn it exactly
+   SKIPPED cell r3 (scale=0.6, window=0.15): same bytes and same config as r0 — it would have redrawn it exactly
+   3 renders NOT spent (3 skipped cells x 1 seeds). The frames the skipped cells would have written do not exist; the bytes are already on disk under the surviving cell's name.
+   arm window4 asked for 4 cells (4 frames); 1 cells (1 frames) are distinct renders.
+   seed indices s0..s0 (s0..s3 are the wave-1 seeds): [20260724]
+   prompt tokens: 74 (mechanism adds 0)
+   task: ep2-b05-guards-f-0822
+   sampler sha256: 6f7333bd91aaf960701fe623329164f32a4302a506b2dd54e25e23ea5e321f50
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:01<00:06,  1.09s/it]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:04<00:13,  2.64s/it]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:05<00:01,  1.19it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:05<00:00,  1.91it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:05<00:00,  1.32it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cuda/bfloat16 + IP-Adapter Plus in 12s
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:25,  1.52it/s]
+  5%|▌         | 2/40 [00:00<00:14,  2.54it/s]
+  8%|▊         | 3/40 [00:01<00:11,  3.21it/s]
+ 10%|█         | 4/40 [00:01<00:09,  3.72it/s]
+ 12%|█▎        | 5/40 [00:01<00:09,  3.71it/s]
+ 15%|█▌        | 6/40 [00:01<00:08,  3.80it/s]
+ 18%|█▊        | 7/40 [00:02<00:08,  4.10it/s]
+ 20%|██        | 8/40 [00:02<00:07,  4.25it/s]
+ 22%|██▎       | 9/40 [00:02<00:07,  4.26it/s]
+ 25%|██▌       | 10/40 [00:02<00:07,  4.20it/s]
+ 28%|██▊       | 11/40 [00:02<00:06,  4.30it/s]
+ 30%|███       | 12/40 [00:03<00:06,  4.41it/s]
+ 32%|███▎      | 13/40 [00:03<00:06,  4.45it/s]
+ 35%|███▌      | 14/40 [00:03<00:05,  4.36it/s]
+ 38%|███▊      | 15/40 [00:03<00:05,  4.38it/s]
+ 40%|████      | 16/40 [00:04<00:05,  4.42it/s]
+ 42%|████▎     | 17/40 [00:04<00:05,  4.55it/s]
+ 45%|████▌     | 18/40 [00:04<00:04,  4.44it/s]
+ 48%|████▊     | 19/40 [00:04<00:04,  4.37it/s]
+ 50%|█████     | 20/40 [00:04<00:04,  4.38it/s]
+ 52%|█████▎    | 21/40 [00:05<00:04,  4.46it/s]
+ 55%|█████▌    | 22/40 [00:05<00:04,  4.48it/s]
+ 57%|█████▊    | 23/40 [00:05<00:03,  4.40it/s]
+ 60%|██████    | 24/40 [00:05<00:03,  4.37it/s]
+ 62%|██████▎   | 25/40 [00:06<00:03,  4.47it/s]
+ 65%|██████▌   | 26/40 [00:06<00:03,  4.49it/s]
+ 68%|██████▊   | 27/40 [00:06<00:02,  4.40it/s]
+ 70%|███████   | 28/40 [00:06<00:02,  4.44it/s]
+ 72%|███████▎  | 29/40 [00:06<00:02,  4.43it/s]
+ 75%|███████▌  | 30/40 [00:07<00:02,  4.49it/s]
+ 78%|███████▊  | 31/40 [00:07<00:02,  4.40it/s]
+ 80%|████████  | 32/40 [00:07<00:01,  4.43it/s]
+ 82%|████████▎ | 33/40 [00:07<00:01,  4.37it/s]
+ 85%|████████▌ | 34/40 [00:08<00:01,  4.50it/s]
+ 88%|████████▊ | 35/40 [00:08<00:01,  4.41it/s]
+ 90%|█████████ | 36/40 [00:08<00:00,  4.44it/s]
+ 92%|█████████▎| 37/40 [00:08<00:00,  4.46it/s]
+ 95%|█████████▌| 38/40 [00:08<00:00,  4.46it/s]
+ 98%|█████████▊| 39/40 [00:09<00:00,  4.47it/s]
+100%|██████████| 40/40 [00:09<00:00,  4.38it/s]
+100%|██████████| 40/40 [00:09<00:00,  4.23it/s]
+   05-the-patrol-ipa-r0-w015-s0.png seed=20260724 11s  (1/1)
+
+DONE 1 stills — ONE beat. The other fourteen wait on his verdict.
+==== step sample END rc=0 2026-08-21T23:41:51Z ====
+
+==== step publish START 2026-08-21T23:41:51Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import glob, hashlib, os, shutil\nsrcdir = r\"C:\\banyan-farm\\ep2-b05-guards-f-0822\\out\"\ndst = r\"C:\\banyan-farm\\courier-box\\farm-out\\ep2-b05-guards-f-0822\"\nos.makedirs(dst, exist_ok=True)\nwant = \"05-the-patrol-ipa-r0-w015-s0.png\"\npng = os.path.join(srcdir, want)\nif not os.path.isfile(png):\n    have = sorted(os.path.basename(f) for f in glob.glob(srcdir + \"/*.png\"))\n    raise SystemExit(\"!! %s was not written; the dir holds %s\" % (want, have))\nsrc = [png] + sorted(glob.glob(png + \".*\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \"\n                     + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b05-guards-f-0822.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) ->\", dst)\n"]
+published 1 file(s) -> C:\banyan-farm\courier-box\farm-out\ep2-b05-guards-f-0822
+==== step publish END rc=0 2026-08-21T23:41:51Z ====
+#### job ep2-b05-guards-f-0822-1787355214-again0a6d10 finished rc=0 2026-08-21T23:41:51Z

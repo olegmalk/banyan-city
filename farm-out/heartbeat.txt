@@ -4258,3 +4258,5 @@
 23:35:04Z DONE task=ep2-b17-w4motion-0822-1787349939 rc=0 artifacts=1
 23:35:10Z STARTED task=ep2-b19-w4motion-0822-1787349945 attempt=1 on box-runner
 23:41:14Z DONE task=ep2-b19-w4motion-0822-1787349945 rc=0 artifacts=1
+23:41:22Z STARTED task=ep2-b05-guards-f-0822-1787355214-again0a6d10 attempt=1 on box-runner
+23:41:51Z DONE task=ep2-b05-guards-f-0822-1787355214-again0a6d10 rc=0 artifacts=1
