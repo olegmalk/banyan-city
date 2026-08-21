@@ -421,3 +421,37 @@ round_5_licensed: >-
   which is now a --fids flag rather than a habit). Then step 3, all eleven in
   one filing pass. Still nothing trained; DECISIONS.md item 18 remains open and
   is not touched by building the set the question is about.
+
+round_5_step3_result: >-
+  11 OF 11 RETURNED, 0 FAILED, 11 OF 11 PASSED THE D BARS. Judged at
+  contact-sheet level against their twenty-six siblings:
+  CONTACT-dataset-v2-0821.png beside this file. Exactly two leaves on one stem
+  in every frame (D1), plain cotyledons (D2), no figure and no creature
+  anywhere (D3), cel line and shading on the blades rather than the init's flat
+  shapes (D4), background unchanged outside the mask (D5), one plant (D6).
+  Two things worth naming rather than smoothing over. FIRST, the xl rows on the
+  dark plates -- s29 (night) and s32 (storm) -- come back with leaves brighter
+  than the field they stand in. Nothing rejects them and a legible subject is
+  what a training frame wants, but a set that teaches `bnysapling` to arrive
+  pre-lit is a real risk and it is now in the record instead of in a hunch.
+  SECOND, v05's THIRTY-NINE-PIXEL palette is vindicated at the picture: the
+  sage-grey plant it produced reads integrated in the rain rather than pasted,
+  which is the answer to whether the palette floor is a count or a look.
+
+round_5_dataset_after: >-
+  v2 is 37 FRAMES OVER 15 DISTINCT PLATES, tiers s=10 m=11 l=9 xl=7, at $0.
+  Against pipeline/lora/README.md's gate (">=20 composited saplings spanning
+  distinct scenes, scales and lighting"): count is met nearly twice over,
+  scenes are met, and LIGHTING IS NO LONGER ALL DAY -- night, storm shaft,
+  rain and after-rain now sit beside the eleven daylit ones. WHAT IS STILL
+  THIN, stated rather than rounded up: (1) LEAF COUNT IS STILL 1 VALUE, all 37
+  frames two-leaf, because no tool in this repo adds a third and inventing one
+  would break canon `sapling-two-leaves` to satisfy a dataset axis -- the token
+  is explicit in every caption so it cannot fuse into the trigger, but the axis
+  is unswept; (2) NO WATER, four cells over two rounds and only one pass that a
+  same-words re-run could not reproduce; (3) the new lighting is FOUR plates
+  against eleven, so the daylit half still outnumbers it 26 frames to 11; (4)
+  every plate in the set is an OPEN LANDSCAPE or a wood -- no interior, no
+  built environment, no close ground texture, because the recipe that buys a
+  drawable plane is a distant-landform clause and a landform is outdoors by
+  construction. Nothing is trained. DECISIONS.md item 18 is open.
