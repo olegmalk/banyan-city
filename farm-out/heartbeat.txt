@@ -3435,3 +3435,5 @@
 23:56:34Z box-runner idle ready=0 failed=62
 00:00:09Z STARTED task=ep2-b09-r2s2-c1-0821-1787270381 attempt=1 on box-runner
 00:00:09Z FAIL task=ep2-b09-r2s2-c1-0821-1787270381 rc=1 step=crop
+00:01:11Z STARTED task=ep2-b09-r2s2-c2-0821-1787270385 attempt=1 on box-runner
+00:01:11Z FAIL task=ep2-b09-r2s2-c2-0821-1787270385 rc=1 step=crop
