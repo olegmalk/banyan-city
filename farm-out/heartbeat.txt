@@ -4166,3 +4166,5 @@
 21:38:43Z STARTED task=ep2-guardcast2b-j-0822-1787347866 attempt=1 on box-runner
 21:39:02Z DONE task=ep2-guardcast2b-j-0822-1787347866 rc=0 artifacts=1
 21:39:06Z box-runner idle ready=0 failed=83
+21:41:20Z STARTED task=ep2-b13-canon-w4-0821-1787348466 attempt=1 on box-runner
+21:41:49Z DONE task=ep2-b13-canon-w4-0821-1787348466 rc=0 artifacts=1
