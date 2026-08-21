@@ -354,6 +354,12 @@ BEATS = {
         wins=[],
         faults_from="ship-manifest.yaml beat 8 + goblin_design_audit_0820 beats.8",
         candidates=[
+            dict(file=f"{CAND_URL}/08-inside-him-LTX-ep2-b08-w4motion-0822.mp4",
+                 poster=f"{POSTER_URL}/08-inside-him-LTX-ep2-b08-w4motion-0822.jpg",
+                 label="your goblin's face, and the shrink reads — tonight, newest", tag="pass",
+                 verdict="He starts standing with his arms at his sides and ends with his hands clasped low in front of him and his head down — he gets smaller, which is what this beat is. Canon face for all 105 frames: small off-white eyes with dark pupils, broad head, ears low and sideways, and the flush stays on his cheeks. Modest motion, but it is the right motion and it does not stop halfway.",
+                 diff="New plate on the corrected eye, and the sentence describing him no longer says \"slit pupils\". The action is this beat's own, unchanged.",
+                 src="pipeline/jobs/ep2-b08-w4motion-0822.yaml + review/ep2-goblin-eye-0822"),
             dict(file=f"{CAND_URL}/08-evidence-LTX-ep2-b08-canonmotion-0821.mp4",
                  poster=f"{POSTER_URL}/08-evidence-LTX-ep2-b08-canonmotion-0821.jpg",
                  label="canon-motion, round 1 — today", tag="pass",
