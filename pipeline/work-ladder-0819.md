@@ -8266,3 +8266,30 @@ with the eye words still in play. `sq65` stays on disk as the falsification.
 Round ten, running: r10a sq45 @ 0.9 · r10b sq45 @ 1.0 +`eyebags` · r10c sq25
 @ 1.0 · r10d sq25 @ 1.2. **No goblin-beat candidate is staged until a rung
 matches his image at 1:1** — every sweep render inherits this fault.
+
+**ROUND TEN, AND THE TERM THAT FLIPS THE EYE IS `eyebags`.**
+
+| rung | reference | ip | verdict |
+|---|---|---|---|
+| r10a | sq45 | 0.9 | same anime iris with lashes as r9c, ears larger. No movement. |
+| r10b | sq45 | **1.0 + `eyebags`** | **THE BREAK.** The eye stops being an iris and becomes an OFF-WHITE FIELD WITH SMALL DARK PUPILS — his eye's structural family, reached for the first time. It overshoots: the whites are far too large and each carries TWO pupils, and the brow goes from a thin arc to a comic curve. Wrong frame, right mechanism. |
+| r10c | sq25 (6.7%) | 1.0 | narrow pale slits, no pupil, and the skull goes long and pointed with a sharp chin. The broad dome is gone. |
+| r10d | sq25 | 1.2 | **NO FACE AT ALL** — a blank green mask, no eyes, no mouth. |
+
+**THE CROP QUESTION IS NOW ANSWERED IN BOTH DIRECTIONS AND THE ANSWER IS
+"NEITHER END".** The night order's 20-25% was worth re-testing because r4–r7 had
+only ever measured it with the eye words in play; with the words gone it still
+loses the face (r10c) and at strength it erases it (r10d). sq65 loses the eye to
+detail (r9a/r9b). **sq45 stands, and it was never the variable.**
+
+**WHY `eyebags` DOES WHAT FOUR PUPIL TAGS COULD NOT.** It is not a pupil tag — it
+is the tag that pulls the whole *rendering convention* of the eye toward the
+flat, dead, low-detail treatment that the founder's image draws, where
+`slit pupils` and `constricted pupils` pull toward a rendered iris. This is the
+same shape as the guard-1 finding one lane over: the style tail decides the
+feature, not the feature word.
+
+Round eleven, running, and it is the last round on this question: r11a sq65 @
+1.0 +`eyebags` (the reference that got the skull, ears and palette right, plus
+the word that flips the eye) · r11b sq45 @ 0.8 +`eyebags` (the r3 tradeoff
+direction, to temper the overshoot) · r11c sq65 @ 0.9 +`eyebags`.
