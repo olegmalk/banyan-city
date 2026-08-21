@@ -3947,3 +3947,5 @@
 17:01:22Z STARTED task=ep3-sapfld5-v14-0821-1787331399 attempt=1 on box-runner
 17:01:41Z DONE task=ep3-sapfld5-v14-0821-1787331399 rc=0 artifacts=1
 17:04:46Z box-runner idle ready=0 failed=80
+17:08:31Z STARTED task=ep2-b07-twofig-0821-1787332108 attempt=1 on box-runner
+17:09:02Z DONE task=ep2-b07-twofig-0821-1787332108 rc=0 artifacts=1
