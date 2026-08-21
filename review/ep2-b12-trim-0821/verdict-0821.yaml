@@ -1,0 +1,155 @@
+id: ep2-b12-b21-trim-0821
+date: '2026-08-21'
+by: sapling/ship-fault lane
+cost_usd: 0.0
+gpu_seconds: 0
+
+headline: >-
+  BEAT 12'S SHIPPED FAULT IS NOT A COLOUR SHIFT AND IT IS NOT SEED-CLASS. Frames
+  000-012 of the clip in the ship cut are A DIFFERENT SHOT -- a tight warm
+  sunset macro of four or five large POINTED leaves -- which cuts to the wide
+  cool two-leaf seedling the beat actually is. It has been named as "a
+  warm-to-cool first-second colour shift" through five cuts because it was only
+  ever measured and never looked at. BEAT 21 HAS THE SAME DEFECT, from the same
+  shared opening frame. Both are removable by EDIT, $0, no GPU, no re-roll.
+
+no_seed_batch_was_filed_and_that_is_the_finding: >-
+  The unit was briefed as "one seed batch (4-5) from b12's proven recipe,
+  bars = its clauses + luma-collapse-absent". THE SEED AXIS IS ALREADY SPENT AND
+  A SEVENTH TAKE WOULD BE THE FAILURE episode-loop-v2 RULE 3 NAMES BY NAME
+  ("if two batch rounds fail the same way -> the BEAT is wrong for the engine:
+  restage, don't grind the axis"). Six takes exist on the crf-10 stillmotion
+  recipe and every one is judged:
+    ep2-b12-stillmotion-0819          seed 20260819  FAIL  dusk collapse -91.1, plus a bird
+    ep2-b12-stillmotion-s20260871     seed 20260871  PASS-HOLD on luma, drift -0.04
+    ep2-b12-stillmotion-s20260818     seed 20260818  FAIL  luma passes; tilts down 387px
+    ep2-b12-stillmotion-s20260872     seed 20260872  FAIL  luma passes; a crouching form grows in, -180px drift
+    ep2-b12-stillmotion-s20260873     seed 20260873  FAIL  -43.48; the sky is replaced by a wall of dry reeds
+    ep2-b12-shortstill-0819           73 frames      FAIL  a black leaf mass grows over 15% of the frame
+  s20260871 ALREADY PROVED the collapse re-rollable -- "the plate and the prompt
+  are exonerated, the collapse is a (seed x plate) INTERACTION" -- and a clean
+  seed still did not produce a cuttable clip, because every take fails on a
+  DIFFERENT uninvited object. The frame-count lever is spent too, and its own
+  verdict says why: "frame count is an input to the denoiser's temporal grid,
+  not a crop of a longer render... 'stop before the collapse' is not a move that
+  exists." The record's own named next lever is the POSITIVE prompt, untried,
+  and it is not this unit's.
+
+the_premise_that_was_wrong: >-
+  The named seed x plate luma-collapse belongs to b12's crf-10 REPLACEMENT
+  candidates, not to the clip in the ship cut. The shipped take is the crf-33
+  one and its measured motion is a BLOOM (+60.44 luma), the mirror image. A
+  batch filed on "luma-collapse-absent" would have been scoring the wrong clip.
+
+goblin_audit_verified_before_any_work: >-
+  BEAT 12 IS GOBLIN-FREE BY THE SCRIPT ITSELF. node.md, RELATED 0:55-1:00:
+  "Tight on the sapling's two leaves, perfectly still -- the scavenger is still
+  crouched in the grass behind them, OUT OF FRAME." Beat 21 likewise: "The
+  sapling's leaf, in absolutely still air, tilts... and holds." Neither renders
+  the scavenger and nothing here does either -- both artifacts are EDITS of
+  files that already exist, so no sampler ran.
+
+measured:
+  instrument: >-
+    pipeline/luma_drift.py (committed) and pipeline/hue_drift.py (committed with
+    this work -- luma_drift's missing sibling; the 40.24 deg figure that names
+    beat 12's fault was computed on 2026-08-19 by a script nobody committed).
+    hue_drift reproduces it at 40.02 deg first->last on the same file, which is
+    the validation that the new instrument measures the old quantity.
+  beat_12:
+    shipped: review/ep2-ship-0821/sources/12-related-b12-tightB-untrimmed.mp4
+    frames: 121
+    luma_per_frame_over_the_transient: >-
+      f000 125.53, f001 127.30, f002 132.68, f003 155.13, f004 161.06,
+      f005 174.22, f006 174.13, f008 177.50, f012 178.06, f013 182.91,
+      then 183-186 flat all the way to f120.
+    luma_drift_whole_frame: '+60.44'
+    hue_swing_max_pairwise: '40.75 deg (58.19 at f000 -> 98.87 by f006, then 97.5-99.0 for 115 frames)'
+    settles_at: f013
+    trimmed: review/ep2-b12-trim-0821/12-related-b12-tightB-trim13-0821.mp4
+    trimmed_frames: 108
+    trimmed_duration_s: 4.5
+    trimmed_luma_drift: '+3.06'
+    trimmed_hue_swing: '1.20 deg'
+  beat_21:
+    shipped: review/ep2-ship-0821/sources/21-the-answer-b21-daylight-0814.mp4
+    frames: 121
+    luma_per_frame_over_the_transient: >-
+      f000 125.42, f002 133.44, f004 141.67, f006 152.02, f008 154.06,
+      then 154.0-154.9 flat to f120.
+    luma_drift_whole_frame: '+29.46'
+    hue_swing_max_pairwise: '9.16 deg'
+    settles_at: f008
+    trimmed: review/ep2-b12-trim-0821/21-the-answer-b21-daylight-trim8-0821.mp4
+    trimmed_frames: 113
+    trimmed_duration_s: 4.708
+    trimmed_luma_drift: '+0.85'
+    trimmed_hue_swing: '2.14 deg'
+
+the_sweep_that_found_beat_21: >-
+  All 21 clips in review/ep2-ship-0821/sources measured at f000/f002/f004/f006/
+  f008/f012/f024 with luma_drift. EXACTLY TWO carry the opening transient, and
+  they are the two goblin-free sapling beats: b12 (125.53 -> 178 by f012) and
+  b21 (125.42 -> 154 by f008). Both open on the SAME f000 value within 0.11
+  levels, which is the shared plate they were conditioned on. Beat 08 has a
+  one-frame f000 outlier (176.53 -> 141.49 at f002) that settles in a single
+  frame and is a different thing; every other beat is flat from f000. So this
+  is a two-clip defect with a named cause, not a recipe-wide one.
+
+what_the_eye_adds_that_the_numbers_missed: >-
+  CONTACT-b12-trim-0821.png. The first frames are not "warm" -- they are a
+  DIFFERENT PICTURE. b12 f000 is a tight macro of four or five large pointed
+  leaves against a sunset; f006 onward is a wide two-leaf seedling in a cloudy
+  blue sky. The pointed leaves violate canon.yaml sapling-cotyledon-shape,
+  which rules out "any leaf drawn as a feature -- no lance shapes, no
+  exaggerated silhouette". So the clip that has ridden five cuts OPENS ON A
+  CANON VIOLATION, and the trim removes it. That is the strongest argument for
+  the edit and no instrument was going to produce it.
+
+the_fault_the_trim_does_NOT_fix_named_honestly: >-
+  BEAT 12'S SAPLING GROWS ACROSS THE SHOT. Over the 108 trimmed frames the
+  plant's apex rises from y=346 to y=206 -- 140 px, 11% of frame height,
+  monotone -- on a beat whose approved line is "perfectly still" and a canon
+  (sapling-height) that pins 002b at ~40 cm. The trim does not touch this and
+  does not claim to. It is strictly better than the incumbent on two faults
+  (the canon-violating opening shot, the measured colour/luma transient) and no
+  worse on the third, so beat 12 stays `best-available` -- the STATUS does not
+  move, the FILE does. Same pattern as amended_0820's beat_03.
+  BEAT 21 CARRIES A BIGGER ONE AND IT IS NOT SEED-CLASS: its plant is a single
+  tall LANCE-shaped leaf on a curved stem, not two average cotyledons. That
+  fails sapling-two-leaves and sapling-cotyledon-shape both, and it is the same
+  wrong-plant fault done-definitions already names for beats 16 and 20. The
+  sapling wording ladder is CLOSED (work-ladder-0819.md: "three rungs on one
+  question"), so the route is the composite instrument, not a re-roll. NO BATCH
+  IS FILED FOR BEAT 21 -- it is instrument-gated, which is a skip by the rules,
+  not an oversight. The trim is taken anyway because it is free and strictly
+  positive.
+
+house_traps_checked:
+  beat_12: >-
+    Slot 4.68 s, trimmed clip 4.50 s. `fill` moves `once` -> `hold`, i.e. a
+    0.18 s freeze on the last frame. The palindrome branch has been OPT-IN
+    (`wants_pingpong`) since the 0819c audit, so no reversal fires. On a beat
+    directed "perfectly still" a 0.18 s freeze is invisible. VO is 2.68 s, well
+    inside the clip.
+  beat_21: >-
+    Slot 5.0 s, trimmed clip 4.708 s, 0.29 s freeze, no VO on this beat at all
+    (audio: none). The beat's own direction is "tilts... AND HOLDS", so a freeze
+    on the final frame is the stage direction, not a defect.
+  encode: >-
+    Both trims re-encoded libx264 crf 10 from a crf-33 source, so the trim adds
+    no visible loss of its own. Nothing was re-sampled.
+
+status: >-
+  CANDIDATES, NOT SWAPS. Neither file has been put into review/ep2-ship-0821/
+  sources and the cut has not been re-assembled -- that belongs to the next
+  assembly and other lanes are live in this tree. Recorded here and in
+  cut-readiness so a finished rung is not lost, which is the failure
+  amended_0820c was opened to fix.
+  STEWARD PICK under the 2026-08-18 widening, VETO-ABLE IN ONE LINE.
+
+what_this_licenses: >-
+  Two file swaps at the next assembly. No plate change, no prompt change, no
+  re-roll, no negative change, no canon edit, and no change to either beat's
+  status. It does not license trimming anything else: the sweep says exactly
+  two clips have this defect and both are named above.
