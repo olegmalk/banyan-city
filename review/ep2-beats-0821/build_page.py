@@ -259,6 +259,12 @@ BEATS = {
         faults_from="ship-manifest.yaml beat 4 superseded_why_0820 + why_this_is_still_the_better_ship",
         note="You said \"wouldn't be bad if he didnt look so chibi in this\". The first clip below is the answer and it needed no new render — it already existed, unwatched, and it is trimmed to this beat's slot so it drops straight in. Side by side with what is in the cut: the cut is a teal head filling the frame with red eyes and no ears; the candidate is a whole body in your design — bald, big lateral ears, slit pupils, mandarin collar, boots — leaning out and back inside the slot. A second seed was rendered so you would have two of these to choose between, and it is NOT shown: the camera pushes in on it and the peek never happens, so it loses both of the things the first one gets right.",
         candidates=[
+            dict(file=f"{CAND_URL}/04-the-footnote-LTX-ep2-b04-w4motion-0822.mp4",
+                 poster=f"{POSTER_URL}/04-the-footnote-LTX-ep2-b04-w4motion-0822.jpg",
+                 label="your goblin's face, and he stays on his feet — tonight, newest", tag="warn",
+                 verdict="Canon face, standing, feet planted, upright at the start and the end. The lean-out reads as a HEAD lean rather than a body one, and around the middle of the clip his head rolls far enough over that the face smears for about half a second before it comes back clean. The out-and-back shape is there; the middle of it is ugly.",
+                 diff="The first version of this on the new plate FELL OVER — the whole figure rotated ninety degrees and lay down across the frame. The old sentence said he leans out \"from behind the trunk\", and the new plate has no trunk in it, so a phrase about where his body sits relative to an object that is not there got resolved by tipping him. Rewritten with no object in it and an explicit instruction that his feet stay planted. That worked; the head-roll is what is left.",
+                 src="pipeline/jobs/ep2-b04-w4motion-0822.yaml + pipeline/work-ladder-0819.md"),
             dict(file=f"{CAND_URL}/04-the-footnote-LTX-b04-canonmotion-trim97-0822.mp4",
                  poster=f"{POSTER_URL}/04-the-footnote-LTX-b04-canonmotion-trim97-0822.jpg",
                  label="THE CHIBI FIX — canon-motion, trimmed to the slot", tag="pass",
