@@ -117,8 +117,18 @@ VARIANTS = {
 }
 
 ROWS = {
-    2:  ("the-sprint",     "ep2-b02-canonmotion-0821", "ep2-b02-canon-w4-0821"),
-    3:  ("bad-cover",      "ep2-b03-canonmotion-0821", "ep2-b03-canon-w4-0821"),
+    # b02 AND b03 TAKE THEIR 0822 PARENTS, NOT canonmotion-0821, AND THE FIRST
+    # DRAFT GOT THIS WRONG. It reached for "the beat's existing motion spec"
+    # and picked the OLDEST one; for these two that is the round-1 clip the
+    # beats page already tags `fail`. b02's round-1 verdict is the camera
+    # pulling back until he is a speck, and the w4 re-run reproduced it exactly
+    # -- clean canon face for 52 frames, then the camera retreats and by f104
+    # THE SUBJECT HAS LEFT THE FRAME. Carrying a known-bad action onto a good
+    # plate spends the plate. `ep2-b02-panic-0822` (the trim78 candidate) and
+    # `ep2-b03-crouchlife-s2-0822` are the passes, and they are what a new
+    # plate deserves.
+    2:  ("the-sprint",     "ep2-b02-panic-0822",       "ep2-b02-canon-w4-0821"),
+    3:  ("bad-cover",      "ep2-b03-crouchlife-s2-0822", "ep2-b03-canon-w4-0821"),
     4:  ("the-footnote",   "ep2-b04-canonmotion-0821", "ep2-b04-canon-w4-0821"),
     7:  ("confiscate",     "ep2-b07-canonmotion-0821", "ep2-b07-canon-w4-0821"),
     8:  ("inside-him",     "ep2-b08-canonmotion-0821", "ep2-b08-canon-w4-0821"),

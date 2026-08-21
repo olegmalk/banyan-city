@@ -22,10 +22,10 @@ why: 'THE FOUNDER VETOED THE FACE ON 2026-08-22 -- ''that aint my goblin'' -- an
   before this spec was written.
 
 
-  THE ACTION IS CARRIED VERBATIM from ep2-b03-canonmotion-0821 so the plate is the only thing that changed.
-  THE HEAD CLAUSE IS NOT: it said `off-white eyes with narrow vertical slit pupils`, which is the vetoed
-  eye, and a subject clause that disagrees with its own init is how this engine drifts a face back to
-  its prior over a clip.'
+  THE ACTION IS CARRIED VERBATIM from ep2-b03-crouchlife-s2-0822 so the plate is the only thing that changed.
+  THE HEAD CLAUSE IS NOT CARRIED AS WRITTEN: it said `off-white eyes with narrow vertical slit pupils`,
+  which is the vetoed eye, and a subject clause that disagrees with its own init is how this engine drifts
+  a face back to its prior over a clip.'
 est_minutes: 8
 needs:
 - cuda
@@ -61,10 +61,14 @@ payload:
     already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes
     with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage
     shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole
-    clip. He is squatting, hiding behind a thin trunk, in tall grass, full body. THE ACTION: he crouches
-    low behind the thin trunk and holds still, eyes flicking sideways -- the cover is comically inadequate
-    and he believes it is working. HALFWAY THROUGH he is all the way down behind the trunk and still,
-    eyes turned to one side.'
+    clip. He is squatting, hiding behind a thin trunk, in tall grass, full body. A THIN BARE SAPLING STEM
+    WITH TWO LEAVES is also already in frame, rooted in the grass directly in front of him and crossing
+    his body, and it stays where it is for the whole clip. THE ACTION: three separate moves, one after
+    the other, and he is still moving when the clip ends. FIRST he drops his head and shoulders down and
+    sideways behind the thin stem that is already there, hunching until his shoulders are up around his
+    ears. THEN his head comes back up and turns to look off to his left, away from the stem. THEN it snaps
+    back to centre. His body stays where it is and only his head, neck and shoulders travel. HALFWAY THROUGH
+    his head is at its lowest, tucked down and tilted, shoulders hunched up around it.'
   C:\banyan-farm\ep2-b03-w4motion-0822\b03-negative.txt: second face, second goblin, two goblins, extra
     head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing,
     melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing,
@@ -172,10 +176,7 @@ bar: "THE CANON MOTION BAR. Read against taste/refs/goblin-canon-founder-0821.pn
 head_clause_rewrite: '''off-white eyes with narrow vertical slit pupils'' -> ''small off-white almond
   eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression''. The ONLY edit to
   the carried prompt.'
-not_done_on_purpose: 'BEATS 17 AND 19 HAVE CLEAN W4 PLATES AND NO CLIP HERE. Neither has ever had a motion
-  spec, so there is no action sentence to carry, and authoring two from scratch is its own piece of work
-  with its own bar -- doing it inside a filer whose stated one variable is THE PLATE would be a lie about
-  what changed. Also absent: ep2-b13-canon-w4curl-0821, the founder''s b13 story ruling (he curls DOWN
+not_done_on_purpose: 'ABSENT: ep2-b13-canon-w4curl-0821, the founder''s b13 story ruling (he curls DOWN
   small, never rises) rendered as a second plate for that beat. It is a POSE change and gets its own motion
   spec, not a slot in a wave whose variable is the face.'
 plate_provenance: farm-out/ep2-b03-canon-w4-0821/ep2-b03-canon-w4-0821-ipahead.png, 832x1216, sha256 890862b83b6529f66a8f26dd065e24df3598f8fec7853a1642b880cf6f407531,
@@ -247,7 +248,7 @@ derivation:
     key:priority:
     - key priority = 13
     payload:b03-motion-prompt.txt:
-    - payload b03-motion-prompt.txt (695 -> 770 chars)
+    - payload b03-motion-prompt.txt (695 -> 1236 chars)
     seed:
     - payload b03-jobs-render.json (20260904 -> 20260873, re-parsed)
   seed: 20260873
