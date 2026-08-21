@@ -183,8 +183,9 @@ two fans seeds only on the beats that miss."""
 
 def _emit(new_id, job_dir, hint, pose_words, why, consumer, success, variable,
           bar, predicted, beat, priority, extra_keys=None, seed=None,
-          force=False):
+          force=False, prompt=None, negative=None, mask=None):
     pose = S.SKELETONS[hint][0]
+    mask = mask or S.mask_for(pose)
     extra = {
         "bar": bar,
         "the_one_variable": variable,
@@ -197,13 +198,15 @@ def _emit(new_id, job_dir, hint, pose_words, why, consumer, success, variable,
     overrides = {
         "argv:--control": "pipeline/control/%s.png" % hint,
         "argv:--control-sha256": S.SKELETONS[hint][1],
-        "argv:--ip-mask": S.mask_for(pose),
+        "argv:--ip-mask": mask,
         "argv:--repo-commit": S.ASSET_COMMIT,
-        "payload:prompt.txt": S.prompt_for(pose_words),
+        "payload:prompt.txt": prompt or S.prompt_for(pose_words),
         "key:beat": beat,
         "key:priority": priority,
         "key:est_minutes": 4,
     }
+    if negative is not None and negative != S.NEGATIVE:
+        overrides["payload:negative.txt"] = negative
     if seed is not None and seed != S.SEED:
         overrides["seed"] = seed
     child = derive_spec.derive(
@@ -236,7 +239,7 @@ def _emit(new_id, job_dir, hint, pose_words, why, consumer, success, variable,
     argv = [t for s in child["steps"] for t in s.get("argv", [])]
     for flag, want in (("--control", "pipeline/control/%s.png" % hint),
                        ("--control-sha256", S.SKELETONS[hint][1]),
-                       ("--ip-mask", S.mask_for(pose)),
+                       ("--ip-mask", mask),
                        ("--ip-ref-sha256", S.IP_REF_SHA),
                        ("--ip-scale", S.IP_SCALE),
                        ("--ip-weight", S.IP_WEIGHT),
@@ -783,6 +786,218 @@ def wave2(force=False):
     return written
 
 
+
+# ── THE AGE LADDER ───────────────────────────────────────────────────────────
+# FOUNDER RULING, 2026-08-21, VERBATIM: "Younger, not chibi -- a kid/teen goblin,
+# younger read than tile B, but NOT the killed round-chibi design."
+#
+# TILE B IS SUPERSEDED ON THE AGE AXIS AND ON NOTHING ELSE. Every creature
+# attribute stays the tile's: blank white slit eyes, no nose bridge, one lipless
+# line, the SHORT LOW SWEPT-BACK EAR, bald dome, green skin, patchwork cloak.
+# Those are not on the table and nothing below touches them.
+#
+# TWO AXES, THREE POINTS EACH, NINE FRAMES, ONE BATCH, SEEDS PINNED.
+#
+#   GEOMETRY (rows) -- head_frac, the dial n5 already proved this tree controls
+#   by manufacturing a bobblehead on demand from 0.190 -> 0.320 with everything
+#   else held. Age reads primarily off head-to-body in a stylised figure.
+#       h215  4.65 heads -- the teen end
+#       h240  4.17 heads -- the kid end
+#       h265  3.77 heads -- THE NAMED FAR END, expected to be too far
+#
+#   WORDING (columns) -- the AGE CLAUSE only. The identity clause, the tile
+#   attributes and the framing are frozen.
+#       w0  `lean wiry goblin`            the age word simply REMOVED. Control:
+#                                         it isolates how much of the adult read
+#                                         was geometry rather than the word.
+#       w1  `young goblin, slim`          the ruling's direction, minimally.
+#       w2  `teenage goblin boy, slim,    the ruling's direction with a face
+#            soft rounded jaw`            cue, since he asked for a READ and not
+#                                         only a proportion.
+#
+# THE NEGATIVE CHANGES BY EXACTLY ONE TERM AND IT IS THE RULING'S OWN TERM.
+# `child` comes OUT -- he asked for a kid/teen read and negating `child` fights
+# the ruling. `chibi` STAYS, and `super deformed`, `round-bellied` and `squat`
+# are ADDED, because his floor is explicit: "NOT the killed round-chibi design".
+# That is the whole difference between younger and the design killed on 08-20,
+# and it is carried in the negative rather than hoped for.
+#
+# THE TILE'S OWN 5.26-HEAD READ IS NOT IN THE BATCH because it already exists:
+# ep2-jerry-face-k6a-0821 is that frame at w-adult, and it goes on the picker
+# page as the ANCHOR the founder is being asked to move away from.
+AGE_SKELETONS = {
+    "jerry-skel-h215-0821": ("stand",
+        "adf9bc54f4882a4cce926906467489195f08c67bd917a0cc614055bce75a6064"),
+    "jerry-skel-h240-0821": ("stand",
+        "8d42ffbb42434449dabe3e9c06d19e20fe182097bc11d1abe9980a4ad41195e8"),
+    "jerry-skel-h265-0821": ("stand",
+        "16e74cf5bbb4b6fd648020279be8b4742ff8df1b1dfbc4b2cb18147ea4931844"),
+}
+S.SKELETONS.update(AGE_SKELETONS)
+
+AGE_ROWS = [("h215", "jerry-skel-h215-0821", 0.215, 4.65, "the teen end"),
+            ("h240", "jerry-skel-h240-0821", 0.240, 4.17, "the kid end"),
+            ("h265", "jerry-skel-h265-0821", 0.265, 3.77, "THE NAMED FAR END")]
+
+
+def age_mask(head_frac):
+    """k6a's box SCALED about its centre by head_frac / 0.190.
+
+    THE TRANSLATION RULE IS NOT ENOUGH HERE AND THAT IS THE ONE THING THIS
+    LADDER CHANGES ABOUT THE STANDARD'S GEOMETRY. Every pose so far held
+    head_frac at 0.190, so the head was the same SIZE in every frame and a
+    translated box always covered it. This ladder moves head_frac itself: at
+    0.265 the authored head is 1.39x k6a's, and k6a's 200x220 box -- which was
+    already only a little larger than the 148x185 head it was drawn for --
+    becomes SMALLER than the head it is supposed to mask. The adapter would then
+    paint a face onto the middle of a skull and leave its edges to the
+    checkpoint's own prior, which is the man-read.
+    """
+    k = head_frac / S.HEAD_FRAC
+    x0, y0, x1, y1 = S.MASK_STAND
+    cx, cy = (x0 + x1) / 2.0, (y0 + y1) / 2.0
+    hw, hh = (x1 - x0) * k / 2.0, (y1 - y0) * k / 2.0
+    r = [max(0, int(round(cx - hw))), max(0, int(round(cy - hh))),
+         min(S.RENDER_W, int(round(cx + hw))),
+         min(S.RENDER_H, int(round(cy + hh)))]
+    return "%d,%d,%d,%d" % tuple(r)
+
+AGE_COLS = [
+    ("w0", "lean wiry goblin",
+     "the age word simply REMOVED from k6a's clause -- the CONTROL, which "
+     "isolates how much of the adult read was the geometry and how much was "
+     "the word `adult`"),
+    ("w1", "young goblin, slim",
+     "the ruling's direction, minimally worded"),
+    ("w2", "teenage goblin boy, slim, soft rounded jaw",
+     "the ruling's direction with a FACE cue, because he asked for a younger "
+     "READ and not only a younger proportion"),
+]
+
+AGE_TAIL = ("green skin, bald head, patchwork cloak, blank eyes, tsurime, "
+            "jitome, thick eyebrows, half-closed eyes")
+AGE_POSE = "standing, arms at sides, in tall grass, full body"
+
+# k6a's negative, minus `child`, plus the three that hold the founder's floor.
+AGE_NEG = ("lowres, worst quality, low quality, text, watermark, pointy ears, "
+           "long pointy ears, elf, monster boy, pointy nose, dot nose, "
+           "human face, wrinkled skin, old man, hair, beard, chibi, "
+           "super deformed, round-bellied, squat, grey skin, pale skin")
+
+AGE_BAR = """SCORED FOR ONE THING THE FOUNDER ASKED AND FOUR HE DID NOT.
+  A1 AGE READ -- does he read YOUNGER than adult-b19-0819.jpg? This is the
+     question and it is HIS, not the steward's. The batch exists to give him
+     three options with pixels, not to pick one.
+  A2 NOT THE KILLED DESIGN -- his own floor, verbatim: "NOT the killed
+     round-chibi design". A rung that reads round-bellied, squat or mascot
+     FAILS and is shown as the far end rather than offered as an option.
+REGRESSION CLAUSES, and a rung that buys age by breaking these is not an option:
+  T1 blank white eyes, no iris, no pupil.
+  T2 no human nose -- no bridge, no tip, no drawn nostrils.
+  T4 SHORT LOW SWEPT-BACK EAR FLANGES, not spikes. This one is load-bearing:
+     Danbooru has NO tag for this ear, so absence-plus-suppression is the only
+     thing that has ever produced it, and the age pivot must not cost it.
+  C1 containment -- green skin head to foot, patchwork cloak, no purple cowl."""
+
+AGE_PREDICTED = """w0 IS THE RUNG I EXPECT TO SURPRISE, and it is in the batch
+for exactly that reason. Thirteen ladder rungs established that this checkpoint's
+own prior for `goblin man` is a human adult male, and the IP-Adapter reference is
+a crop of an ADULT tile's head. So removing the word `adult` may change nothing
+at all -- in which case the age read is carried by geometry and the reference,
+and the wording column is decoration. That is worth one third of a batch to know
+before anyone writes a fourth wording.
+
+h265 IS EXPECTED TO FAIL A2. n5 drew the killed design at 3.13 heads and 3.77 is
+between it and the tile. If it reads chibi, the ladder has found the floor
+empirically instead of guessing at it, and the picker page shows it AS the floor.
+
+THE RISK THAT WOULD COST THE MOST IS T4. A younger read and a rounder head are
+the same direction, and `round ears` is not a tag we can negate -- the ear
+survives only because nothing asks for an ear and both spike tags are suppressed.
+If the bigger head fractions bring back a spike or a human ear, the age pivot has
+a cost nobody has priced, and it shows up in this batch rather than in a wave."""
+
+
+def ageladder(force=False):
+    written = []
+    for rtag, hint, hfrac, heads, rnote in AGE_ROWS:
+        for ctag, ageclause, cnote in AGE_COLS:
+            new_id = "ep2-jerry-age-%s%s-0821" % (rtag, ctag)
+            prompt = "masterpiece, best quality, very aesthetic, 1boy, solo, %s, %s, %s" % (
+                ageclause, AGE_TAIL, AGE_POSE)
+            written.append(_emit(
+                new_id=new_id,
+                job_dir="jerryage-%s%s-0821" % (rtag, ctag),
+                hint=hint, pose_words=AGE_POSE,
+                prompt=prompt, negative=AGE_NEG,
+                mask=age_mask(hfrac),
+                why=("AGE LADDER %s x %s. FOUNDER RULING 2026-08-21, VERBATIM: "
+                     "\"Younger, not chibi -- a kid/teen goblin, younger read "
+                     "than tile B, but NOT the killed round-chibi design.\"\n\n"
+                     "TILE B IS SUPERSEDED ON THE AGE AXIS AND ON NOTHING ELSE. "
+                     "Every creature attribute here is still the tile's and is "
+                     "not on the table.\n\n"
+                     "THIS RUNG: head_frac %s (%.2f heads, %s) x the age clause "
+                     "`%s` (%s). Two axes, three points each, nine frames, one "
+                     "batch, seeds pinned to k6a's %d so nothing but the two "
+                     "named variables moves."
+                     % (rtag, ctag, rtag, heads, rnote, ageclause, cnote,
+                        S.SEED)),
+                consumer=("/review/ep2-goblin-age-0821 -- a THREE-OPTION PICKER "
+                          "for the founder, built from this batch with the tile "
+                          "and a current adult wave frame as anchors. The age "
+                          "read is R4 and this job does not decide it; it "
+                          "supplies one of the nine pixels he decides from. "
+                          "Nothing is promoted, no beat changes, and every "
+                          "adult-design job in the queue is already held."),
+                success=("ONE 832x1216 png at seed %d, the k6a adapter recipe "
+                         "entire -- same face weight, same square reference at "
+                         "head 20%%, same mask, same ip-scale, same openpose net "
+                         "at 1.0 -- with ONLY the skeleton's head_frac and the "
+                         "age clause of the wording moved. Scored on A1, A2 and "
+                         "the T1/T2/T4/C1 regression clauses." % S.SEED),
+                variable=("TWO, named because this is a GRID and not a rung: "
+                          "the skeleton's head_frac (%s, %.2f heads) and the "
+                          "age clause of the positive (`%s`). They are crossed "
+                          "on purpose -- with three points on each axis the "
+                          "grid separates them, which a sequence of one-variable "
+                          "rungs could not do inside one batch, and the founder "
+                          "is waiting."
+                          % (rtag, heads, ageclause)),
+                bar=AGE_BAR, predicted=AGE_PREDICTED,
+                beat=2, priority=4,
+                extra_keys={
+                    "founder_ruling_verbatim": (
+                        "Younger, not chibi -- a kid/teen goblin, younger read "
+                        "than tile B, but NOT the killed round-chibi design"),
+                    "what_is_superseded": (
+                        "THE AGE AXIS ONLY. adult-b19-0819.jpg stops being the "
+                        "reference for how old he is, which retires `lean wiry "
+                        "adult goblin man`, the 5.2-head T8 target and k6a's "
+                        "claim to the word STANDARD. It stays the reference for "
+                        "every creature attribute, and the SHORT LOW EAR "
+                        "especially -- Danbooru has no tag for it, so "
+                        "absence-plus-suppression is the only thing that has "
+                        "ever drawn it and the pivot must not cost it."),
+                    "the_negative_changed_by_one_term_and_it_is_his": (
+                        "`child` OUT -- he asked for a kid/teen read and "
+                        "negating `child` fights the ruling. `chibi` STAYS, and "
+                        "`super deformed`, `round-bellied`, `squat` are ADDED, "
+                        "because his floor is explicit: NOT the killed "
+                        "round-chibi design. The floor is carried in the "
+                        "negative rather than hoped for."),
+                    "one_sample_rule": (
+                        "THIS IS THE SAMPLE, and it is nine because it is a 3x3 "
+                        "GRID on two crossed axes -- not one recipe rendered "
+                        "nine times. The adapter recipe underneath was sampled "
+                        "thirteen times (k1..k6d) and is frozen here to the "
+                        "byte; what varies is the two things the ruling names. "
+                        "Nothing scales off this batch until the founder picks."),
+                },
+                force=force))
+    return written
+
+
 def _selftest():
     rc = derive_spec.selftest() or derive_fetch_guard.selftest()
     import jerry_standard_0821
@@ -810,6 +1025,8 @@ def main(argv=None):
             written += round2(force=force)
         elif m == "wave2":
             written += wave2(force=force)
+        elif m == "ageladder":
+            written += ageladder(force=force)
         else:
             print("!! unknown mode %r -- poseset | sceneset | patchwave | round2"
                   % m,

@@ -1,0 +1,284 @@
+id: ep2-jerry-age-h240w1-0821
+task: ep2-jerry-age-h240w1-0821
+node: 002b-first-citizen
+beat: 2
+runner: box
+priority: 4
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: goblin standard lane, 2026-08-21
+consumer: /review/ep2-goblin-age-0821 -- a THREE-OPTION PICKER for the founder, built from this batch
+  with the tile and a current adult wave frame as anchors. The age read is R4 and this job does not decide
+  it; it supplies one of the nine pixels he decides from. Nothing is promoted, no beat changes, and every
+  adult-design job in the queue is already held.
+success: ONE 832x1216 png at seed 20260823, the k6a adapter recipe entire -- same face weight, same square
+  reference at head 20%, same mask, same ip-scale, same openpose net at 1.0 -- with ONLY the skeleton's
+  head_frac and the age clause of the wording moved. Scored on A1, A2 and the T1/T2/T4/C1 regression clauses.
+why: 'AGE LADDER h240 x w1. FOUNDER RULING 2026-08-21, VERBATIM: "Younger, not chibi -- a kid/teen goblin,
+  younger read than tile B, but NOT the killed round-chibi design."
+
+
+  TILE B IS SUPERSEDED ON THE AGE AXIS AND ON NOTHING ELSE. Every creature attribute here is still the
+  tile''s and is not on the table.
+
+
+  THIS RUNG: head_frac h240 (4.17 heads, the kid end) x the age clause `young goblin, slim` (the ruling''s
+  direction, minimally worded). Two axes, three points each, nine frames, one batch, seeds pinned to k6a''s
+  20260823 so nothing but the two named variables moves.'
+est_minutes: 4
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\jerryage-h240w1-0821\prompt.txt: masterpiece, best quality, very aesthetic, 1boy, solo,
+    young goblin, slim, green skin, bald head, patchwork cloak, blank eyes, tsurime, jitome, thick eyebrows,
+    half-closed eyes, standing, arms at sides, in tall grass, full body
+  C:\banyan-farm\jerryage-h240w1-0821\negative.txt: lowres, worst quality, low quality, text, watermark,
+    pointy ears, long pointy ears, elf, monster boy, pointy nose, dot nose, human face, wrinkled skin,
+    old man, hair, beard, chibi, super deformed, round-bellied, squat, grey skin, pale skin
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT\
+    \ -- driver, skeleton AND the IP-Adapter\n# reference, because the reference is as much a condition\
+    \ as the\n# skeleton is. Emitted by pipeline/jerry_standard_0821.py.\nimport hashlib, os, urllib.request\n\
+    base = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/\"\
+    \nroot = r\"C:\\banyan-farm\\jerryage-h240w1-0821\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\"),\n\
+    \        (\"jerry-skel-h240-0821.png\", os.path.join(root, \"pipeline\", \"control\"),\n         \"\
+    8d42ffbb42434449dabe3e9c06d19e20fe182097bc11d1abe9980a4ad41195e8\"),\n        (\"jerry-tile-sq20-0821.png\"\
+    , os.path.join(root, \"pipeline\", \"control\"),\n         \"f65c9bb412e541fbe9b6024ddaec5a78b78028afd87e325baa06d6d430dded14\"\
+    )]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
+    \ + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
+    \    if got != sha:\n        print(\"!! %s fetched with sha %s, expected %s\"\n              % (name,\
+    \ got, sha))\n        raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n\
+    \        fh.write(blob)\n    print(\"staged\", name, got, \"->\", dst)\n"
+- name: posehint
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\jerryage-h240w1-0821\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\jerryage-h240w1-0821\src
+  - --repo-commit
+  - 894b6214ce4ce3f88e8d518ae33de73fbc71f909
+  - --task
+  - ep2-jerry-age-h240w1-0821
+  - --arm
+  - ipahead
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - pipeline/control/jerry-skel-h240-0821.png
+  - --control-sha256
+  - 8d42ffbb42434449dabe3e9c06d19e20fe182097bc11d1abe9980a4ad41195e8
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260823'
+  - --ip-ref
+  - pipeline/control/jerry-tile-sq20-0821.png
+  - --ip-mask
+  - 289,101,541,379
+  - --ip-ref-sha256
+  - f65c9bb412e541fbe9b6024ddaec5a78b78028afd87e325baa06d6d430dded14
+  - --ip-scale
+  - '0.7'
+  - --ip-weight
+  - ip-adapter-plus-face_sdxl_vit-h.safetensors
+  - --prompt-file
+  - C:\banyan-farm\jerryage-h240w1-0821\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\jerryage-h240w1-0821\negative.txt
+  - --out
+  - C:\banyan-farm\jerryage-h240w1-0821\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The courier pushes from farm-out and from nowhere else --\n# ep2-cnet-probe-0817 rendered perfectly\
+    \ and was invisible for two\n# days for want of this step. The CONDITIONS travel with the frame.\n\
+    import glob, hashlib, os, shutil\nout_dir = \"C:/banyan-farm/jerryage-h240w1-0821/out\"\npay_dir =\
+    \ \"C:/banyan-farm/jerryage-h240w1-0821\"\nctl_dir = \"C:/banyan-farm/jerryage-h240w1-0821/src/pipeline/control\"\
+    \ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-jerry-age-h240w1-0821\"\nos.makedirs(dst, exist_ok=True)\n\
+    files = sorted(glob.glob(out_dir + \"/ep2-jerry-age-h240w1-0821-ipahead.png*\")\n               +\
+    \ glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"/negative.txt\")\n\
+    \               + glob.glob(ctl_dir + \"/jerry-skel-h240-0821.png\")\n               + glob.glob(ctl_dir\
+    \ + \"/jerry-tile-sq20-0821.png\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c\
+    \ = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n\
+    \    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-jerry-age-h240w1-0821.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)\n"
+artifacts:
+- C:\banyan-farm\jerryage-h240w1-0821\out\ep2-jerry-age-h240w1-0821-ipahead.png
+bar: "SCORED FOR ONE THING THE FOUNDER ASKED AND FOUR HE DID NOT.\n  A1 AGE READ -- does he read YOUNGER\
+  \ than adult-b19-0819.jpg? This is the\n     question and it is HIS, not the steward's. The batch exists\
+  \ to give him\n     three options with pixels, not to pick one.\n  A2 NOT THE KILLED DESIGN -- his own\
+  \ floor, verbatim: \"NOT the killed\n     round-chibi design\". A rung that reads round-bellied, squat\
+  \ or mascot\n     FAILS and is shown as the far end rather than offered as an option.\nREGRESSION CLAUSES,\
+  \ and a rung that buys age by breaking these is not an option:\n  T1 blank white eyes, no iris, no pupil.\n\
+  \  T2 no human nose -- no bridge, no tip, no drawn nostrils.\n  T4 SHORT LOW SWEPT-BACK EAR FLANGES,\
+  \ not spikes. This one is load-bearing:\n     Danbooru has NO tag for this ear, so absence-plus-suppression\
+  \ is the only\n     thing that has ever produced it, and the age pivot must not cost it.\n  C1 containment\
+  \ -- green skin head to foot, patchwork cloak, no purple cowl."
+failure_predicted_in_advance: 'w0 IS THE RUNG I EXPECT TO SURPRISE, and it is in the batch
+
+  for exactly that reason. Thirteen ladder rungs established that this checkpoint''s
+
+  own prior for `goblin man` is a human adult male, and the IP-Adapter reference is
+
+  a crop of an ADULT tile''s head. So removing the word `adult` may change nothing
+
+  at all -- in which case the age read is carried by geometry and the reference,
+
+  and the wording column is decoration. That is worth one third of a batch to know
+
+  before anyone writes a fourth wording.
+
+
+  h265 IS EXPECTED TO FAIL A2. n5 drew the killed design at 3.13 heads and 3.77 is
+
+  between it and the tile. If it reads chibi, the ladder has found the floor
+
+  empirically instead of guessing at it, and the picker page shows it AS the floor.
+
+
+  THE RISK THAT WOULD COST THE MOST IS T4. A younger read and a rounder head are
+
+  the same direction, and `round ears` is not a tag we can negate -- the ear
+
+  survives only because nothing asks for an ear and both spike tags are suppressed.
+
+  If the bigger head fractions bring back a spike or a human ear, the age pivot has
+
+  a cost nobody has priced, and it shows up in this batch rather than in a wave.'
+founder_ruling_verbatim: Younger, not chibi -- a kid/teen goblin, younger read than tile B, but NOT the
+  killed round-chibi design
+ip_adapter:
+  ruling: STEWARD PICK, coordinator 2026-08-21, VETO-ABLE (R4). k6a is THE goblin recipe; the T1b shape
+    bar is recalibrated 0.52-0.54 -> <= 0.65 because only defective frames ever met the old value (k1
+    eye 1.87x, k3 horns and cowl, k5a no mouth) while 0.59-0.63 frames read as the tile. See pipeline/jerry_standard_0821.py
+    and canon.yaml.
+  ref: farm-out/jerry-skel-assets-0820/jerry-tile-sq20-0821.png
+  ref_sha256: f65c9bb412e541fbe9b6024ddaec5a78b78028afd87e325baa06d6d430dded14
+  ref_provenance: 'adult-b19-0819.jpg cropped (176,280)-(332,432), sky flood-filled with the tile''s own
+    field green, pasted CENTRED at 20% of a 448x448 SQUARE canvas. Square is load-bearing: diffusers builds
+    CLIPImageProcessor() with no arguments, which resizes the SHORT edge to 224 and CENTRE CROPS to a
+    square, so only on a square canvas is the authored head-to-frame ratio the ratio the encoder receives.
+    k3''s 416x608 portrait lost the top 30% of the subject -- the whole cranial dome -- to that crop and
+    grew horns out of the cut. Encoder coverage here is 3.9%. Rebuild with `pipeline/author_jerry_squareref_0821.py
+    --head-frac 0.20`; assert with `--check f65c9bb412e541fbe9b6024ddaec5a78b78028afd87e325baa06d6d430dded14`.'
+  mask: 315,130,515,350
+  mask_frame: RENDER pixels, 832x1216
+  mask_rule: k6a's authored mask 315,130,515,350 TRANSLATED by this pose's head-block offset. The five
+    head keypoints move as one rigid block between poses (ear span 136.0 px in every pose at head_frac
+    0.190), so the head box translates rigidly and so does the mask. For `stand` the delta is zero and
+    this IS k6a's mask. Derived by pipeline/jerry_standard_0821.mask_for('stand').
+  scale: '0.7'
+  weights: h94/IP-Adapter sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors, apache-2.0, sha256
+    677ad8860204f7d0bfba12d29e6c31ded9beefdf3e4bbd102518357d31a292c1, 847517512 bytes. THE GENERAL ADAPTER
+    ip-adapter-plus_sdxl_vit-h.safetensors IS THE SAME NUMBER OF BYTES, so only the digest separates them;
+    controlnet_plate.py carries an IP_WEIGHTS allowlist keyed by name and carrying the digest, and the
+    sidecar records which one actually rendered the frame.
+  skeleton: farm-out/jerry-skel-assets-0820/jerry-skel-h240-0821.png
+  skeleton_sha256: 8d42ffbb42434449dabe3e9c06d19e20fe182097bc11d1abe9980a4ad41195e8
+  head_frac: 0.19
+  controlnet: xinsir/controlnet-openpose-sdxl-1.0 at scale 1.0
+one_sample_rule: THIS IS THE SAMPLE, and it is nine because it is a 3x3 GRID on two crossed axes -- not
+  one recipe rendered nine times. The adapter recipe underneath was sampled thirteen times (k1..k6d) and
+  is frozen here to the byte; what varies is the two things the ruling names. Nothing scales off this
+  batch until the founder picks.
+the_negative_changed_by_one_term_and_it_is_his: '`child` OUT -- he asked for a kid/teen read and negating
+  `child` fights the ruling. `chibi` STAYS, and `super deformed`, `round-bellied`, `squat` are ADDED,
+  because his floor is explicit: NOT the killed round-chibi design. The floor is carried in the negative
+  rather than hoped for.'
+the_one_variable: 'TWO, named because this is a GRID and not a rung: the skeleton''s head_frac (h240,
+  4.17 heads) and the age clause of the positive (`young goblin, slim`). They are crossed on purpose --
+  with three points on each axis the grid separates them, which a sequence of one-variable rungs could
+  not do inside one batch, and the founder is waiting.'
+the_rung_this_is_one_variable_from: ep2-jerry-face-k6a-0821
+what_is_superseded: THE AGE AXIS ONLY. adult-b19-0819.jpg stops being the reference for how old he is,
+  which retires `lean wiry adult goblin man`, the 5.2-head T8 target and k6a's claim to the word STANDARD.
+  It stays the reference for every creature attribute, and the SHORT LOW EAR especially -- Danbooru has
+  no tag for it, so absence-plus-suppression is the only thing that has ever drawn it and the pivot must
+  not cost it.
+derivation:
+  parent: pipeline/jobs/ep2-jerry-face-k6a-0821.yaml
+  by: pipeline/derive_jerry_wave_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - founder_ruling_verbatim
+  - ip_adapter
+  - one_sample_rule
+  - owner
+  - success
+  - the_negative_changed_by_one_term_and_it_is_his
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - what_is_superseded
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - ip_adapter
+  - one_sample_rule
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  retokened:
+  - jerryface-k6a-0821 -> jerryage-h240w1-0821
+  - ep2-jerry-face-k6a-0821 -> ep2-jerry-age-h240w1-0821
+  overrides_applied_and_asserted:
+    argv:--control:
+    - step posehint --control (pipeline/control/jerry-skel-h19-0820.png -> pipeline/control/jerry-skel-h240-0821.png)
+    argv:--control-sha256:
+    - step posehint --control-sha256 (244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c
+      -> 8d42ffbb42434449dabe3e9c06d19e20fe182097bc11d1abe9980a4ad41195e8)
+    argv:--ip-mask:
+    - step posehint --ip-mask (315,130,515,350 -> 289,101,541,379)
+    argv:--repo-commit:
+    - step posehint --repo-commit (894b6214ce4ce3f88e8d518ae33de73fbc71f909 -> 894b6214ce4ce3f88e8d518ae33de73fbc71f909)
+    key:beat:
+    - key beat = 2
+    key:est_minutes:
+    - key est_minutes = 4
+    key:priority:
+    - key priority = 4
+    payload:negative.txt:
+    - payload negative.txt (208 -> 239 chars)
+    payload:prompt.txt:
+    - payload prompt.txt (235 -> 227 chars)
