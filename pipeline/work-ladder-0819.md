@@ -8126,3 +8126,38 @@ it at `ep2-bNN-ageb-r2-0821` is a table edit. It is held because 14 motion
 renders would be scaling a character look the founder has not seen yet: he ruled
 the AGE, but the age-B plates with restored blank eyes, per-beat emotions and the
 tusk are a new face. One look at `CONTACT-wave-r2-heads.png` gates it.
+
+### Motion tranche fired at the age-B plates; first clip judged (2026-08-21)
+
+14 specs (7 beats x 2 seeds) repointed from the superseded `tilefix` plates to
+`ep2-bNN-ageb-r2-0821` and queued. Coordinator overrule, on grounds recorded in
+the commit: every attribute of this face traces to a founder ruling, he
+delegated the final design call, and tonight's watch-through is the real veto
+point for the aggregate look.
+
+**Repointing surfaced something the plate lane had missed.** `HEAD` in the motion
+deriver already read `blank white eyes` — the motion stage has been asking for
+the tile's blank slit all along, while round one of the age-B wave was handing
+it plates with irises. Round two restored `blank eyes` for reasons internal to
+the plate bar; it also happens to be what the next stage was already expecting.
+`young` and `one broken tusk` were added to the same clause, because a subject
+clause that disagrees with its own init is how a video model drifts a face back
+to its prior over a clip.
+
+**b02 seed 1, judged: PARTIAL, and the failure is at the END.**
+Pixels: `review/ep2-goblin-age-0821/MOTION-b02-s1-strip.png` (8 frames across
+121, 704x1280, 5.04 s @ 24 fps).
+
+- The first ~70% is good: he runs toward camera, mouth open on the `scared,
+  open mouth` the plate carries, blank white eyes, green, bald. **Identity
+  holds** — which is the thing that mattered most about the repoint.
+- The last ~20% **dissolves the face into a featureless green egg** and the
+  figure lurches off-axis. The skid the beat asks for ("plants a foot, and skids
+  low into the grass") does not read.
+
+So the drift the subject clause was strengthened to prevent still happens, just
+late. That is a per-clip usable-window problem rather than a recipe failure —
+the first three-quarters is shippable footage — and the remaining 13 clips will
+say whether the window is consistent enough to cut on. **Recorded before the
+tranche finished so the pattern is named in advance rather than rationalised
+after.**
