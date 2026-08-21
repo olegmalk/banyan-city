@@ -1,0 +1,137 @@
+id: ep2-guardcast2b-a-0822
+task: ep2-guardcast2b-a-0822
+node: 002b-first-citizen
+beat: 6
+runner: box
+priority: 6
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: guard lane, 2026-08-22 -- round 2B, filed within the hour of the round-2 sample failing on the
+  fault its own spec named
+consumer: 'THE FOUNDER, on /review/ep2-guardcast2-0822. Cell A is THE SAMPLE and its consumer is the decision
+  to fire the other nine: round 2''s cell A came back as guard 1 with his own hand on his cheek, so the
+  recipe gets looked at again before it is scaled again. Guard 1 is not re-asked. Nothing downstream consumes
+  these frames until he picks, and review/ep2-ship-0821 is untouched.'
+success: 'ONE 832x1216 png, scored AT 1:1 and by eye, never by a metric. A pass is a CANDIDATE on the
+  picker page and nothing more -- the cast is R4 and this job does not make it. THE BAR IS ROUND 2''S,
+  TERM FOR TERM, and it is repeated rather than referenced because a bar that lives in another spec is
+  a bar nobody reads: (1) ONE GROWN MAN alone in frame -- child, teenager or female is a DROP, not a note;
+  (2) the face reads DUMB at a glance -- slack, blank or gormless ("they should look like grown men. yes.
+  dumb grown men"); (3) DETAILED CINEMATIC ANIME, the look of taste/refs/guard1-canon-founder-0822.png,
+  a flat or muted tag-sheet look being a fail however good the face is; (4) NO GLASSES and NO HAND in
+  frame; (5) cream shirt collar and white shoulder sash read as the costume family; (6) head and shoulders,
+  face toward the lens, a real grass-and-hedgerow background; (7) HE IS NOT GUARD 1. THE ONE CLAUSE ROUND
+  2B ADDS, because removing the adapter is what it tests: (8) the frame must still be in the SHOW''S KEY
+  -- if the palette or the line quality has drifted away from guard 1''s frame now that nothing conditions
+  on him, that is this round''s finding and it goes on the sheet in words rather than being quietly accepted.
+  PRE-REGISTERED FAIL MODES: the costume reading as a generic white shirt because only words carry it
+  now; the face reading young, which the round-2 cell also did and which no adapter was ever going to
+  fix.'
+why: 'GUARD 2, CELL A OF TEN, ADAPTER REMOVED: thick dark brown hair, heavy square jaw, thick neck, slack
+  open mouth. Round 2 conditioned this same prompt on guard 1''s close-up through the window4 arm and
+  got guard 1 back, pose and all -- because the reference''s composition and the prompt''s request were
+  the same shape, which is exactly when a 6-of-40-step structure hold has something to impose. The style
+  was never the adapter''s doing: round 1 ran this checkpoint with no reference at all and looked flat
+  because its PROMPT was a booru tag list, and this prompt is prose closing on the ratified style tail.
+  So the adapter comes out and nothing else moves -- same prompt bytes, same negative bytes, same seed
+  20260725, same 40 steps at cfg 7.5, same 832x1216. $0, local card. Full reasoning in pipeline/derive_guardcast2b_0822.py.'
+est_minutes: 2
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-guardcast2b-a-0822\prompt.txt: 1boy, a grown guard man, mature male face, thick dark
+    brown hair, heavy square jaw, thick neck, slack open mouth, close on his face, cream shirt collar,
+    white shoulder sash, tall grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very
+    aesthetic
+  C:\banyan-farm\ep2-guardcast2b-a-0822\negative.txt: photorealistic, 3d render, abstract, text, watermark,
+    signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl,
+    child, teenager, glasses, hands, clipboard, armor, helmet, knight, white background, plain background,
+    dark, night, photorealism, text
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
+    \nroot = r\"C:\\banyan-farm\\ep2-guardcast2b-a-0822\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")]\n\
+    for name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
+    \ + \"pipeline/\" + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
+    \    if got != sha:\n        raise SystemExit(\"!! %s sha %s, wanted %s\" % (name, got, sha))\n  \
+    \  with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n    print(\"staged\"\
+    , name, got[:12])\n"
+- name: cast
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-guardcast2b-a-0822\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\ep2-guardcast2b-a-0822\src
+  - --task
+  - ep2-guardcast2b-a-0822
+  - --arm
+  - nocontrol
+  - --seed
+  - '20260725'
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --prompt-file
+  - C:\banyan-farm\ep2-guardcast2b-a-0822\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\ep2-guardcast2b-a-0822\negative.txt
+  - --out
+  - C:\banyan-farm\ep2-guardcast2b-a-0822\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The courier pushes from farm-out and from nowhere else.\n# The CONDITIONS travel with the frame:\
+    \ prompt and negative go too, so\n# the sheet can be re-read months from now without this spec in\
+    \ hand.\nimport glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-guardcast2b-a-0822\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(\"C:/banyan-farm/ep2-guardcast2b-a-0822/out/ep2-guardcast2b-a-0822-nocontrol.png*\"\
+    )\n               + glob.glob(\"C:/banyan-farm/ep2-guardcast2b-a-0822/prompt.txt\")\n            \
+    \   + glob.glob(\"C:/banyan-farm/ep2-guardcast2b-a-0822/negative.txt\"))\nlines = []\nfor f in files:\n\
+    \    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\"\
+    ) as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \"\n                  \
+    \   + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-guardcast2b-a-0822.sha256\"), \"w\"\
+    , newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 3 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-guardcast2b-a-0822\out\ep2-guardcast2b-a-0822-nocontrol.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. A STILL CASTING PLATE on an approved node: no voice, no motion, no episode assembly, no
+  publication.'
+script_line: 'Beat 06 THE CLIPBOARD: guard 2, the one with the bark board. Head and shoulders, no prop
+  -- the question is his FACE.'
+recipe_trace: Round 2 (pipeline/jobs/ep2-guardcast2-a-0822.yaml) minus the IP-Adapter. Prompt and negative
+  are the COMPILED output of render_wave_goblin.check() over pipeline/wave-drafts.yaml beats.6.authored_b06_guard2cast_a_0822
+  -- the same function and the same entry round 2 rendered -- baked into payload rather than read on the
+  box, so no hand-sync between filing and firing can alter a byte. Driver pipeline/controlnet_plate.py
+  sha ece54f687d892d1f, fetched and sha-checked before a GPU second is spent; --control is unset so no
+  ControlNet loads and no --ip-ref is passed so no adapter loads.
+one_sample_rule: 'CELL A IS THE SAMPLE AND THE OTHER NINE ARE HELD, for the second time tonight and for
+  a better reason than the first: the first sample already proved this brief can fail in a way no metric
+  would have caught. What this one asks is narrow -- with nothing conditioning on guard 1, does the frame
+  stay in the show''s key, and does the costume still read? Twenty seconds of card time to find out before
+  nine more fire.'
+seed_note: 'Seeds are carried from round 2 unchanged so the two rounds are comparable cell for cell: 20260719
+  + 6 + index*1000, i.e. 20260725 for cell A and 20261725..20269725 for B..J. Round 2''s cell A and this
+  one differ by the adapter and by nothing else, seed included, which is what makes the pair an A/B rather
+  than two unrelated pictures.'
