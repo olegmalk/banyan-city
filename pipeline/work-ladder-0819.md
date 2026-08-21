@@ -7939,3 +7939,89 @@ literal `--arm` value of the step that writes it** — one string compare per
 spec, no render, no filesystem, no new machinery, and it refuses at enqueue time
 instead of after the GPU has already paid. Cheap enough that "derive it, don't
 type it" stops depending on the deriver being careful.
+
+## THE AGE PIVOT'S FIRST FOUR FRAMES: the age landed, the identity survived losing `blank eyes`, and the EXPRESSION IS INVARIANT (2026-08-21)
+
+Pixels: `review/ep2-goblin-age-0821/EVIDENCE-b13-expression-invariant.png` —
+six panels at 1:1, the two rulers and all four rungs.
+
+**What was asked.** Three rulings landed at once on one sample
+(`ep2-b13-ageb-s1-0821`, beat 13 / THE SHADE): age = Option B (head_frac 0.240),
+the blank-face block struck in favour of each beat's own emotion, and the broken
+tusk restored from the script. Beat 13 because it is the frame the founder ruled
+the adult read on and it was the adult wave's best pass.
+
+**What passed, and the first one reverses a fourteen-sample finding.**
+
+- **T1 held with `blank eyes` STRUCK.** Narrow pale slits, no iris, no pupil —
+  closer to the tile than Option B's big ovals. Canon's *"`blank eyes` IS THE
+  WHOLE GAME"* was measured when wording was the only lever on the face; the
+  IP-Adapter carries no-iris-no-pupil on its own. **It held in all four frames**,
+  across every intervention below, which is stronger evidence than the sample
+  alone could have given.
+- **A1/A2** — reads as Option B, slim, no belly, no squat. The age pivot works.
+- **K1 partial** — the tusk arrived. Predicted in advance: `tusks` is plural and
+  Danbooru has no tag for a BREAK, so two intact tusks is what two intact tusks
+  was always going to be.
+
+**What failed, and it is the ruling the sample existed to prove.** The beat is
+*"…Thanks for the shade"* — exhausted relief — and every frame **scowls**:
+furrowed brow, downturned mouth. `tired, half-closed eyes, light smile` never
+reached the face.
+
+**Three interventions, each one variable, each falsified:**
+
+| rung | moved | E1 | C1 magenta in mask |
+|---|---|---|---|
+| `s1` | the sample | scowl | 1.17% |
+| `m1` | mask fitted to the head from the skeleton | scowl | 7.36% |
+| `m2` | ip-scale 0.7 → 0.45 | scowl | 6.69% |
+| `e1` | `tsurime, thick eyebrows` dropped | scowl | — |
+
+Pixels moved every time (MAE vs `s1`: 28.4, 24.0, 7.9 of 255) and the prompt was
+verified on the card, so these are real interventions and not no-ops. **The mood
+did not move once.**
+
+**The control was free and it is the strongest line here.** Option B carries the
+same scowl with **no expression tags at all**. Three tags against a zero-tag
+control that looks the same means the tags are not weak — they have no purchase.
+
+**What that rules out, measured rather than argued:** it is not WHERE the adapter
+acts (m1), not HOW HARD it acts (m2 — cutting its grip by a third moved nothing;
+an instrument that is not pinning does not stop pinning when you loosen it), and
+not the eye/brow tags I kept and defended as "shape, not mood" (e1).
+
+**What it points at, and it is visible in panel 1 of the evidence sheet: THE TILE
+ITSELF IS SCOWLING.** The reference crop this whole tree anchors identity on is a
+stern face, and the adapter transfers the mood along with the creature. That is
+the constraint, it was named as the fallback before m1 and m2 rendered, and the
+instrument it implies is **a reference crop that is already doing something** —
+a build step, not a rung, and deliberately not attempted the same night.
+
+**A SECOND, SEPARATE REGRESSION, reported not solved: C1 on FOLDED poses.** The
+magenta cowl came back and got **worse in both directions at once** — bigger mask
+and smaller, stronger adapter and weaker. So it is not adapter coverage: on a
+folded pose the neck sits under the jaw and the checkpoint dresses it. Option B's
+STANDING frame measures 0.00%. This is the same defect the adult wave's b03/b20
+seed pair opened and it now has a pose class attached to it.
+
+**A DEFECT IN OUR OWN INSTRUMENT, found while measuring C1 and worth more than
+the rung that found it.** `age_mask` scales k6a's box about **the box's own
+centre**, and that centre was authored 20 px high to clear a standing dome;
+raising `head_frac` *also* moves the head down (`nose_y = crown + 0.55·head_h`).
+The errors add. On beat 13's seatspan skeleton at 0.240 the crown is at y=439 and
+the chin at y=673 while the mask ran **364…642** — seventy-five pixels of sky
+above the head and **the chin and mouth cut off below**. Only folded poses pay,
+which is why Option B's standing frame measured clean and nobody caught it.
+`derive_jerry_ageb_0821.head_fit_mask()` derives the box from the skeleton
+instead; it did not fix C1, so it is filed as the correct geometry rather than
+promoted as the cure.
+
+**THE WAVE IS NOT EMITTED, and that is the one-sample rule doing its job.**
+Scaling seven plates whose faces are all the same wrong expression is scaling an
+unapproved result. What is settled — age, identity, tusk — is settled for all
+seven; what is open is a taste question with pixels, and it is one question:
+*ship the wave at this recipe with the scowl recorded as an engine limit, or hold
+it for an expressive reference crop?* Four beats of the seven (02, 04, 07, 08)
+are upright and would not carry the C1 regression; three (03, 13, 20) are folded
+and would.
