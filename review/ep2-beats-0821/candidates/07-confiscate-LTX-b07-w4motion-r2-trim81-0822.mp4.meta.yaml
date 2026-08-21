@@ -1,0 +1,30 @@
+# Shot provenance (7.2) — written by video_task at render time
+platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
+model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
+model_licence: LTX-2 Community License Agreement
+shot_beat: 7
+size: 704x1280
+seconds: 4.375
+steps: 8@352x640+3@704x1280
+guidance: 2.0
+seed: 20260877
+task: ep2-b07-w4motion-0822 (re-run --again2b0c48, wardrobe rewording) + trim
+cost_usd: 0
+prompt: ''
+negative: ''
+mode: production
+batch: 1
+batch_slot: 0
+offload: sequential
+throughput_s_video_per_s_wall: 0.0175
+compute_s_per_video_s: 57.1
+seconds_after_trim: 3.375
+frames_kept: 81
+why_trimmed: 'THE GOBLIN STARTS SLIDING OUT OF FRAME AT f82. Measured, not eyeballed:
+  green-skin pixel count over a fixed left-of-centre box holds 200-223 from f15 to f80,
+  falls to 136 at f85 and ~118 through f103, and is 6 at f104 -- he is gone in the last
+  frame and only a disembodied green sleeve is left beside the guard. Stepped visually at
+  f74/f77/f80/f82/f86: through f80 the guard''s index finger is on the goblin''s cheek and
+  both faces are whole; by f82 the point has opened into a slack hand and the goblin''s head
+  is crossing the left edge. Cut at 81 frames, where the point is still landing. This is one
+  frame tighter than the r1 trim (83) because r2''s drift starts two frames earlier.'
