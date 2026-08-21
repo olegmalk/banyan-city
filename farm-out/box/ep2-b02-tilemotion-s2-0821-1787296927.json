@@ -1,0 +1,113 @@
+{
+  "id": "ep2-b02-tilemotion-s2-0821-1787296927",
+  "task": "ep2-b02-tilemotion-s2-0821",
+  "node": "002b-first-citizen",
+  "beat": 2,
+  "worker": "box-runner",
+  "priority": 24,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "crop",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b02-tilemotion-s2-0821\\cover_crop.py",
+        "--src",
+        "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b02-tilefix-p1-0821\\ep2-b02-tilefix-p1-0821-ipahead.png",
+        "--sha256",
+        "f1940886a723b063d350b04afb4811c9676a3a19476ba4950964909d06f4465b",
+        "--out",
+        "C:\\banyan-farm\\ep2-b02-tilemotion-s2-0821\\b02-init-704x1280.png",
+        "--size",
+        "704x1280"
+      ]
+    },
+    {
+      "name": "encode",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "encode",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b02-tilemotion-s2-0821\\b02-jobs-encode.json"
+      ]
+    },
+    {
+      "name": "render",
+      "argv": [
+        "C:\\banyan-video\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\banyan-city\\pipeline\\ltx_i2v.py",
+        "--stage",
+        "render",
+        "--jobs",
+        "C:\\banyan-farm\\ep2-b02-tilemotion-s2-0821\\b02-jobs-render.json",
+        "--size",
+        "704x1280",
+        "--frames",
+        "121",
+        "--fps",
+        "24",
+        "--guidance",
+        "2.0",
+        "--distilled-sigmas",
+        "--two-stage",
+        "--image-crf",
+        "10",
+        "--offload",
+        "sequential",
+        "--mode",
+        "production",
+        "--task",
+        "ep2-b02-tilemotion-s2-0821",
+        "--worker",
+        "rtx5090",
+        "--bench-jsonl",
+        "C:\\banyan-farm\\ep2-b02-tilemotion-s2-0821\\bench-ep2-b02-peek-s3-0820.jsonl",
+        "--bench-label",
+        "ep2-b02-tilemotion-s2-0821"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b02-tilemotion-s2-0821\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b02-tilemotion-s2-0821/02-the-sprint-LTX-ep2-b02-tilemotion-s2-0821.mp4*\")\n             + glob.glob(\"C:/banyan-farm/ep2-b02-tilemotion-s2-0821/b02-init-704x1280.png\")\n             + glob.glob(\"C:/banyan-farm/ep2-b02-tilemotion-s2-0821/bench-ep2-b02-peek-s3-0820.jsonl\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b02-tilemotion-s2-0821.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b02-tilemotion-s2-0821\\02-the-sprint-LTX-ep2-b02-tilemotion-s2-0821.mp4"
+  ],
+  "backlog": {
+    "filed_at": 1787296927,
+    "filed_at_iso": "2026-08-21T07:22:07Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-b02-tilemotion-s2-0821.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "spec_sha256": "030b8a1d6bb3a15adac8040a185b792dcbf6044748674980ee984dfc6fc681a1",
+  "started_at": "2026-08-21T07:30:17Z",
+  "attempts": 1,
+  "runner_pid": 8768,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-21T07:36:26Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b02-tilemotion-s2-0821\\02-the-sprint-LTX-ep2-b02-tilemotion-s2-0821.mp4"
+  ]
+}
