@@ -2190,6 +2190,36 @@
     SURVIVE and sharpen - enormous ears and a broken tusk are creature features, both in the
     original script line, both lost on the way to the man-read. train-jerry-0820 is HELD until
     the set is re-curated for tile fidelity, so nothing is waiting on an answer.'
+- what: 'GUARD 2 - 9 candidates, pick one. Guard 1 is CAST and this page does not re-ask him:
+    you answered the last sheet with "none of them are right, the style is wrong" and posted the
+    beat-09 close-up, so that frame is guard 1 now and its recipe drew everything on this page.
+    This is the other man only. Same clothes, same framing, same recipe in all nine - only hair,
+    build and face change. Pick the one who looks like he works next to guard 1 and is not the
+    sharp one.'
+  url: /review/ep2-guardcast2-0822
+  group: taste
+  since: '2026-08-22'
+  kind: decision
+  episode: 2
+  verdict_hint: 'guardcast2 <letter>, or "none, because X" - and X is the next round''s one variable.'
+  note_for_lanes: 'The guard lane, 2026-08-22, round 2 of guard casting after he rejected round 1
+    on STYLE. NOT BLOCKING THE SHIP - review/ep2-ship-0821 is untouched and no beat plate, motion
+    spec or clip is conditioned on any of these frames until he picks. RECIPE: animagine-xl-3.1,
+    prose prompt closing on the ratified style tail, 40 steps at cfg 7.5, 832x1216, NO ControlNet
+    and NO reference conditioning - the stack that drew guard 1 less the one part that is wrong for
+    a casting sheet. Derivers: pipeline/derive_guardcast2{,b,c,d}_0822.py, each with a --selftest.
+    FOUR ROUNDS, ~6 min of card time, $0, and two findings worth keeping: (1) the STYLE comes from
+    the WORDS - round 1 ran this same checkpoint with no conditioning at all and looked flat, so
+    prose + the 14-token tail is the whole difference; (2) conditioning a CASTING sheet on one
+    man''s portrait pins the axis the sheet exists to move - round 2''s sample came back as guard 1
+    with his own hand on his cheek. THREE THINGS REPORTED ON THE PAGE RATHER THAN HIDDEN: there is
+    no cell B (three draws, three hands on the face - it is the one cell with no clean frame); the
+    faces read ANGRY more than DUMB, clearest on D, H and J, which is a one-variable expression
+    round if he says so; and the white sash is faint on D and H where the light is low, a lighting
+    note and not a costume proposal - wardrobe is the ratified one and this pick does not reopen it.
+    The hand-on-cheek is a habit of the checkpoint on close portraits, not our wording: it survived
+    the reference being removed (2B) and survived being negated by name at the same seed (2C), and
+    only a fresh seed moved it (2D, 4 of 5 clean).'
 - what: 'GUARD CASTING - 10 candidates, pick two. You ruled the existing guard references "not the
     best... some have girls, and theyre just improper", and on 08-20 you said what you want: "they
     should look like grown men. yes. dumb grown men". Five 0812 rounds never asked you that question -
