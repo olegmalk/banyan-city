@@ -538,6 +538,12 @@ BEATS = {
         ],
         faults_from="ship-manifest.yaml beat 15 + goblin_design_audit_0820 beats.15",
         candidates=[
+            dict(file=f"{CAND_URL}/15-good-listener-LTX-ep2-b15-w4motion-0822.mp4",
+                 poster=f"{POSTER_URL}/15-good-listener-LTX-ep2-b15-w4motion-0822.jpg",
+                 label="tonight's re-render — FAILS, and it is shown so the failure is on the record", tag="fail",
+                 verdict="Your face arrives on this beat for the first time and then the clip throws it away. For fifty frames he kneels with his hands in the grass and almost nothing moves — 0.08 average frame-to-frame, a still with a runtime — and his mouth opens once around frame 40. Then from frame 50 the whole figure ROTATES until it is UPSIDE DOWN, and it stays upside down, frozen, to the last frame. It also fails the beat's other half: there is no sapling anywhere in it, and the definition says both of them in shot is the whole point.",
+                 diff="Same corrected plate and same one-phrase eye swap as every other clip in tonight's wave. This is the second beat to topple — beat 04 did it earlier and was fixed by taking the positional clause out of the action. Beat 15's action was audited in that same pass and marked clean, so this one is NOT the same cause and needs its own look before it is re-fired. The clip already in the cut is unaffected and stays.",
+                 src="pipeline/jobs/ep2-b15-w4motion-0822.yaml"),
             dict(file=f"{CAND_URL}/15-good-listener-LTX-mid-0820.mp4",
                  poster=f"{POSTER_URL}/15-good-listener-LTX-mid-0820.jpg",
                  label="the other seed of the same recipe", tag="warn",
@@ -558,7 +564,14 @@ BEATS = {
             "Seven of seven on its own bar after a three-frame trim: the camera is locked, the plant holds, exactly two leaves survive to the last frame — the first time canon's two-leaf sapling has survived a whole motion render in this tree — he is visibly talking, and the plant is still the subject.",
         ],
         faults_from="ship-manifest.yaml beat 16",
-        candidates=[],
+        candidates=[
+            dict(file=f"{CAND_URL}/16-why-LTX-ep2-b16-w4motion-0822.mp4",
+                 poster=f"{POSTER_URL}/16-why-LTX-ep2-b16-w4motion-0822.jpg",
+                 label="tonight's re-render — it fixes the design fault and it costs the plant", tag="warn",
+                 verdict="THE CLEANEST MOTION IN THE WHOLE WAVE: not one frame pair in 105 is under 0.5, the median step is 3.04, there is no topple, no dissolve and no frozen tail — he sits with his knees up, his eyes drift from open to half-lidded and back, and the camera moves the whole time. Your face all the way through: broad dome, off-white almond eyes with dark pupils, near-horizontal ears, sage mandarin collar. That answers this beat's first fault, which is that the goblin in the cut is the superseded adult-man design. BUT IT COSTS THE BEAT'S WIN. There is no plant in this clip at all, and what is in the cut is the only render in this tree where canon's two-leaf sapling survived to the last frame. So this is a straight trade and not a replacement: new goblin, no sapling.",
+                 diff="New plate on the corrected eye, this beat's own action carried unchanged. The plant was never in the new plate — the re-plate was authored for the FACE and nobody put the sapling back into it, which is the same prompt-summons law that has bitten beats 02, 03 and 20: an object absent from the init cannot be asked for in the motion. Putting the two-leaf plant into this plate is a composite job, not a re-word, and the route for it is proven.",
+                 src="pipeline/jobs/ep2-b16-w4motion-0822.yaml"),
+        ],
     ),
     17: dict(
         goblin=True,

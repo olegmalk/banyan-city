@@ -2,13 +2,13 @@
 platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
 model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
 model_licence: LTX-2 Community License Agreement
-shot_beat: 7  # corrected 2026-08-22: video_task wrote 20 for every clip in this wave
+shot_beat: 16  # corrected 2026-08-22: video_task wrote 20 for every clip in this wave
 size: 704x1280
 seconds: 4.375
 steps: 8@352x640+3@704x1280
 guidance: 2.0
-seed: 20260877
-task: ep2-b07-w4motion-0822
+seed: 20260886
+task: ep2-b16-w4motion-0822
 cost_usd: 0
 prompt: ''
 negative: ''
@@ -16,5 +16,5 @@ mode: production
 batch: 1
 batch_slot: 0
 offload: sequential
-throughput_s_video_per_s_wall: 0.0175
-compute_s_per_video_s: 57.3
+throughput_s_video_per_s_wall: 0.0177
+compute_s_per_video_s: 56.5

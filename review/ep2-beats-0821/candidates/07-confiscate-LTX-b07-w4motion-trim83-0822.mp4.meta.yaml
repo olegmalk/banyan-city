@@ -9,7 +9,7 @@ source_frames: 105
 source_platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
 source_model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
 source_model_licence: LTX-2 Community License Agreement
-shot_beat: 20
+shot_beat: 7  # corrected 2026-08-22: video_task wrote 20 for every clip in this wave
 size: 704x1280
 fps: 24.0
 frames: 83

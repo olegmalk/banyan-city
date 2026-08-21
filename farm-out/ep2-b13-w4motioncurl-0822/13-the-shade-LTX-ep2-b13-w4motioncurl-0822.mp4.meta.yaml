@@ -2,7 +2,7 @@
 platform: local-gpu (NVIDIA GeForce RTX 5090 Laptop GPU @ rtx5090)
 model: diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)
 model_licence: LTX-2 Community License Agreement
-shot_beat: 20
+shot_beat: 13  # corrected 2026-08-22: video_task wrote 20 for every clip in this wave
 size: 704x1280
 seconds: 4.375
 steps: 8@352x640+3@704x1280
