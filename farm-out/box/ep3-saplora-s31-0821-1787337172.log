@@ -1,0 +1,40 @@
+#### job ep3-saplora-s31-0821-1787337172 attempt 1 start 2026-08-21T18:33:59Z
+
+==== step fetch START 2026-08-21T18:33:59Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\saplora-s31-0821\\fetch_init.py"]
+fetched sap-s31-v03-0821.png 965415 bytes sha 165dcf668895c15ff53c5d58c2149f6a3e492abd8a191e0cdeb05da3450fe87a OK
+fetched sap-s31-v03-mask-0821.png 2666 bytes sha 5ce5c10fbe0a96d225b704b8603a29badbb0e29c8e664dbaad8c326eb0fa5fff OK
+==== step fetch END rc=0 2026-08-21T18:34:00Z ====
+
+==== step dry START 2026-08-21T18:34:00Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\saplora-s31-0821\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\saplora-s31-0821\\sap-s31-v03-0821.png", "--init-sha256", "165dcf668895c15ff53c5d58c2149f6a3e492abd8a191e0cdeb05da3450fe87a", "--mask-png", "C:\\banyan-farm\\saplora-s31-0821\\sap-s31-v03-mask-0821.png", "--prompt-file", "C:\\banyan-farm\\saplora-s31-0821\\prompt.txt", "--negative-file", "C:\\banyan-farm\\saplora-s31-0821\\negative.txt", "--out", "C:\\banyan-farm\\saplora-s31-0821\\sap-s31-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. THERE IS NO FIGURE AND NO ERASED PLANT IN THIS FRAME -- the plate is plant-free and person-free by construction -- so the mask is exactly the drawn sapling plus its contact shadow, dilated 9. WHAT TO CHECK: (1) it is ONE connected blob shaped like a stem with two leaves, not two blobs and not a rectangle; (2) it does not reach the top of the frame, which would mean the plant was drawn taller than the picture; (3) nothing is masked below the root at y=1080 except the contact ellipse. If any of those is wrong the fix is --root/--height in build_sapling_lora_composites_0821.py, not the mask.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 165dcf668895c15ff53c5d58c2149f6a3e492abd8a191e0cdeb05da3450fe87a
+mask png corners=- bbox=[163, 758, 436, 1099]  0.3281 x 0.2804 of 832x1216
+WROTE C:\banyan-farm\saplora-s31-0821\sap-s31-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-21T18:34:00Z ====
+
+==== step s20260820 START 2026-08-21T18:34:00Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\saplora-s31-0821\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\saplora-s31-0821\\sap-s31-v03-0821.png", "--init-sha256", "165dcf668895c15ff53c5d58c2149f6a3e492abd8a191e0cdeb05da3450fe87a", "--mask-png", "C:\\banyan-farm\\saplora-s31-0821\\sap-s31-v03-mask-0821.png", "--prompt-file", "C:\\banyan-farm\\saplora-s31-0821\\prompt.txt", "--negative-file", "C:\\banyan-farm\\saplora-s31-0821\\negative.txt", "--out", "C:\\banyan-farm\\saplora-s31-0821\\sap-s31-s20260820.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "ONE PASS, ONE SEED, TWENTY-SIX SIBLINGS. 0.30 runs int(40*0.30) = 12 of 40 denoising steps from a latent that still carries the drawn structure, so the high-sigma steps where global layout is decided never run -- which is why 'finish this structure' succeeds where 'invent this structure' failed, and the sapling's wording ladders are CLOSED on the second half of that (0 of 16 frames with two leaves from the strongest wording available). This frame is row s31: plate v03, small, at middle distance, stem 260 px, mask small and local. It is a LoRA training frame and is judged against its siblings on a contact sheet, not as a shot."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  3.42it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:01,  3.98it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:02<00:02,  1.33it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.17it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.80it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\saplora-s31-0821\sap-s31-s20260820.png
+WROTE C:\banyan-farm\saplora-s31-0821\sap-s31-s20260820-mask.png
+WROTE C:\banyan-farm\saplora-s31-0821\sap-s31-s20260820.png.meta.yaml
+rc=0 render_s=3.8
+==== step s20260820 END rc=0 2026-08-21T18:34:14Z ====
+
+==== step publish START 2026-08-21T18:34:14Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/saplora-s31-0821\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep3-saplora-s31-0821\"\nNAMES = [\n    \"sap-s31-s20260820.png\",\n    \"sap-s31-s20260820-mask.png\",\n    \"sap-s31-s20260820.png.meta.yaml\",\n    \"sap-s31-v03-0821.png\",\n    \"sap-s31-v03-mask-0821.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep3-saplora-s31-0821.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 7 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep3-saplora-s31-0821
+==== step publish END rc=0 2026-08-21T18:34:14Z ====
+#### job ep3-saplora-s31-0821-1787337172 finished rc=0 2026-08-21T18:34:14Z
