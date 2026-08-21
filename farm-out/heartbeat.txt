@@ -4267,3 +4267,5 @@
 23:42:54Z STARTED task=ep2-b20-w4motion-0822-1787349820 attempt=1 on box-runner
 23:48:55Z DONE task=ep2-b20-w4motion-0822-1787349820 rc=0 artifacts=1
 23:49:00Z box-runner idle ready=0 failed=86
+23:51:05Z STARTED task=ep2-b05-guards-f-content-0822-1787356223 attempt=1 on box-runner
+23:51:33Z DONE task=ep2-b05-guards-f-content-0822-1787356223 rc=0 artifacts=1
