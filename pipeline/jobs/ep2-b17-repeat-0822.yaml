@@ -1,0 +1,232 @@
+id: ep2-b17-repeat-0822
+task: ep2-b17-repeat-0822
+node: 002b-first-citizen
+beat: 17
+runner: box
+priority: 13
+needs_gpu: true
+max_attempts: 1
+owner: night iteration lane, 2026-08-22 -- the repeat-count rung, measured across six clips of tonight's
+  wave
+consumer: BEAT 17's SLOT, and every other beat in the episode that has ever been written up as 'barely
+  moves'. Beat 17 is the test bed because it is the one clip in tonight's wave whose ONLY fault is timing
+  -- canon face held, no topple, no dissolve, and the turn it performs is the beat's own action, it just
+  does not start until frame 80. If the wording moves the timing, beats 03, 13, 15 and 19 each get the
+  same one-line edit and none of them needs a new plate. If it does not, the correlation is retired and
+  nobody spends a seventh wording on it.
+success: 'TWO SCORES, KEPT SEPARATE ON PURPOSE, because a number and a picture can disagree here and the
+  picture wins. (A) THE MEASUREMENT, pre-registered: mean absolute interframe difference at 176x320 over
+  all 104 pairs, reported as the share under 0.5 and as the mean of each ten-frame block. The parent is
+  89/104 with blocks 0.29 0.07 0.14 0.37 0.23 0.20 0.22 0.24 5.44 4.89 6.28. A PASS on this half is a
+  large fall in the share AND no single block carrying the clip. (B) THE PERFORMANCE, by eye and it outranks
+  (A): the turn must READ as one continuous departure, and the brush must read as a brush -- a hand moving
+  down the front of the shirt, twice, not a twitch. A clip that scores well on (A) with a jittering figure
+  is a FAIL and is reported as one, because interframe difference is not motion, it is change. CARRIED
+  UNCHANGED FROM THE PARENT BAR: the face is drawn in EVERY frame of the trimmed clip and it is the CORRECTED
+  face -- small off-white almond eyes with tiny dark pupils, broad dome, near-horizontal ears, sage mandarin
+  collar -- checked at the LAST frame and not only the first. NOTE this beat''s own definition says the
+  turn takes his face away by design, so a back-of-head final frame is NOT a face failure here; the check
+  is that the face is his for as long as it is visible. PRE-REGISTERED FAIL MODES: the null, 89/104 again,
+  which retires the repeat count as a lever across all six beats rather than only this one; a jitter that
+  passes (A) and fails (B); the brush binding to the wrong hand or to the grass; and the turn completing
+  early and holding, which is the parent''s failure arriving at a different frame rather than being fixed.'
+why: 'SIX CLIPS RENDERED TONIGHT ON ONE RECIPE SPLIT CLEANLY BY HOW THEIR ACTION IS WORDED. The two prompts
+  that name a repeat count -- beat 16''s ''twice ... over the whole clip'' and beat 14''s ''twice, and
+  between the two'' -- are the two that move all the way through, at 0 and 56 of 104 frame pairs under
+  0.5. The four that describe a one-shot sequence all park at 74 to 89 of 104, performing their single
+  state change in one burst and holding a frame either side. Beat 13''s is the plainest: its action ENDS
+  on the word ''still'' and the clip moves for 58 frames and is then still for 40. This job changes ONE
+  STRING -- beat 17''s action sentence, from a one-shot sequence to a countable repeat plus an explicit
+  whole-clip span -- and changes nothing else. The repeat chosen is a cloak brush, which is not an invention:
+  this beat''s done_when is ''stand, brush, turn'' and the rendered clip never brushes, so the thing that
+  tests the hypothesis is also the clause the beat is missing. $0, ~4 GPU minutes. Full trace: pipeline/derive_b17_repeat_0822.py.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b17-repeat-0822\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b17-repeat-0822\b17-motion-prompt.txt: '2D anime, hand-drawn cel animation, static
+    locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject
+    already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes
+    with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage
+    shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole
+    clip. He is standing, turning away, in tall grass, full body. THE ACTION: he brushes the front of
+    his shirt down with one hand, twice, and turns away from the camera slowly and steadily over the whole
+    clip. The turn is unbroken from the first frame to the last -- it never pauses and it never finishes
+    early. Nothing else moves. HALFWAY THROUGH he is in profile, mid-brush, still turning.'
+  C:\banyan-farm\ep2-b17-repeat-0822\b17-negative.txt: second face, second goblin, two goblins, extra
+    head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing,
+    melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing,
+    cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark
+  C:\banyan-farm\ep2-b17-repeat-0822\b17-jobs-encode.json: '[{"beat": 20, "embeds": "C:\\banyan-farm\\ep2-b17-repeat-0822\\b17-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b17-repeat-0822\\b17-motion-prompt.txt", "negative_file": "C:\\banyan-farm\\ep2-b17-repeat-0822\\b17-negative.txt"}]'
+  C:\banyan-farm\ep2-b17-repeat-0822\b17-jobs-render.json: '[{"beat": 20, "seed": 20260887, "embeds":
+    "C:\\banyan-farm\\ep2-b17-repeat-0822\\b17-embeds.pt", "init": "C:\\banyan-farm\\ep2-b17-repeat-0822\\b17-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b17-repeat-0822\\17-goodbye-LTX-ep2-b17-repeat-0822.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b17-repeat-0822\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b17-canon-w4-0821\ep2-b17-canon-w4-0821-ipahead.png
+  - --sha256
+  - 938d4494e4aff7640649a690d88ae871d90ec80d72c407a61507f201ad8158e3
+  - --out
+  - C:\banyan-farm\ep2-b17-repeat-0822\b17-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b17-repeat-0822\b17-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b17-repeat-0822\b17-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '105'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b17-repeat-0822
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b17-repeat-0822\bench-ep2-b17-repeat-0822.jsonl
+  - --bench-label
+  - ep2-b17-repeat-0822
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b17-repeat-0822\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b17-repeat-0822/17-goodbye-LTX-ep2-b17-repeat-0822.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b17-repeat-0822/b17-init-704x1280.png\")\n      \
+    \       + glob.glob(\"C:/banyan-farm/ep2-b17-repeat-0822/bench-ep2-b17-repeat-0822.jsonl\"))\nlines\
+    \ = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b17-repeat-0822.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot pass silently.\n\
+    raise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b17-repeat-0822\17-goodbye-LTX-ep2-b17-repeat-0822.mp4
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. The line is untouched by this job. Beat 04''s staging is quoted in `script_line` from jerry_canon_0821.WAVE[4],
+  which is the same node text the canon plate under this clip was drawn against. NOTE ON PROVENANCE: this
+  spec''s parent is a BEAT 20 job and both of these keys cross derive_spec''s allow-list as structure
+  -- carried unedited they would have had beat 04 claiming beat 16''s restaging as its authority, so they
+  are re-stated here rather than inherited.'
+script_line: THE FOOTNOTE -- 'leans out from behind the trunk to look, and pulls straight back the moment
+  he has looked'. THE PEEK, the founder's own restaging pick (A, 2026-08-20). The eyes are the whole beat.
+action_diff:
+  was: 'THE ACTION: he carries the turn through, settles onto the far foot and takes one step away --
+    turn through, plant, step. HALFWAY THROUGH his back is most of the way to camera and his leading foot
+    is lifting.'
+  now: 'THE ACTION: he brushes the front of his shirt down with one hand, twice, and turns away from the
+    camera slowly and steadily over the whole clip. The turn is unbroken from the first frame to the last
+    -- it never pauses and it never finishes early. Nothing else moves. HALFWAY THROUGH he is in profile,
+    mid-brush, still turning.'
+measured_parent: 'ep2-b17-w4motion-0822, judged 2026-08-22: 89 of 104 frame pairs under 0.5; ten-frame
+  block means 0.29 0.07 0.14 0.37 0.23 0.20 0.22 0.24 5.44 4.89 6.28; largest single step 24.2 at f101.
+  Canon face held throughout, no topple, no dissolve. The turn is real and it does not begin until frame
+  80.'
+null_result_is_publishable: If this comes back at 89/104 the repeat count is NOT the lever and the finding
+  is retired for all six beats in one line, not quietly re-tried at a seventh wording. The wording ladder
+  rule in this repo closes at three rungs and this is rung one.
+the_one_variable: THE ACTION SENTENCE, and nothing else. Same plate, same init crop, same head clause
+  with the corrected eye, same negative, same encode and render steps, same frame count, same seed. The
+  parent's stated one variable was the PLATE; this one is the words, and the two together make beat 17's
+  two runs a clean pair.
+derivation:
+  parent: pipeline/jobs/ep2-b17-w4motion-0822.yaml
+  by: pipeline/derive_b17_repeat_0822.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - action_diff
+  - consumer
+  - measured_parent
+  - null_result_is_publishable
+  - owner
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - head_clause_rewrite
+  - not_done_on_purpose
+  - plate_provenance
+  - the_one_variable
+  retokened:
+  - ep2-b17-w4motion-0822 -> ep2-b17-repeat-0822
+  overrides_applied_and_asserted: none
