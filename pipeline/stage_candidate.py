@@ -20,6 +20,10 @@ WHAT IT REFUSES:
     not publishable under 7.2, and the sidecar is the only record of what the
     render WAS.
   * a poster that ffmpeg did not actually write, or wrote empty.
+  * leaving any of the three untracked. It `git add -f`s them past the
+    `review/**/*.mp4|jpg` ignore, which is what every other review page here
+    does, because the alternative fails only in CI and only after you have
+    already told someone the page is ready.
   * a `--poster-frame` past the end of the clip. ffmpeg is happy to select
     nothing and exit 0, which is how you get a zero-byte jpg and a page that
     looks broken only to the person you handed it to.
@@ -88,6 +92,24 @@ def stage(clip_rel, poster_frame=0):
         raise SystemExit("!! poster not written for %s: %s"
                          % (name, (r.stderr or "empty file").strip()[:300]))
 
+    # FORCE-ADD, AND IT IS NOT OPTIONAL. `review/**/*.mp4|jpg` are gitignored,
+    # so a staged clip is invisible to git and PRESENT on this laptop -- which
+    # means qa_local passes locally and the CI build fails, because a fresh
+    # checkout has the page's <img>/<video> links and none of their files. That
+    # is exactly what happened on 2026-08-22: beat 10's two candidates went up,
+    # the local gate said PASS routes=95, and the pages build died on four
+    # broken local links. Every other review page in this tree already
+    # force-adds its media; this makes the staging path do it rather than
+    # leaving it to the next person to remember.
+    added = _run(["git", "-C", REPO, "add", "-f", "--",
+                  os.path.relpath(os.path.join(CAND, name), REPO),
+                  os.path.relpath(os.path.join(CAND, name + ".meta.yaml"),
+                                  REPO),
+                  os.path.relpath(poster, REPO)])
+    if added.returncode:
+        raise SystemExit("!! git add -f failed for %s: %s"
+                         % (name, (added.stderr or "").strip()[:300]))
+
     print("staged %s" % name)
     print("   clip   review/ep2-beats-0821/candidates/%s" % name)
     print("   meta   review/ep2-beats-0821/candidates/%s.meta.yaml" % name)
@@ -110,6 +132,14 @@ def check():
         p = os.path.join(POST, os.path.splitext(name)[0] + ".jpg")
         if not os.path.exists(p) or os.path.getsize(p) == 0:
             miss.append("poster")
+        # UNTRACKED IS A FAILURE, NOT A DETAIL. review/**/*.mp4|jpg are
+        # gitignored, so a file that exists here and not in git makes the page
+        # work on this laptop and 404 in the deploy.
+        for rel in (os.path.relpath(os.path.join(CAND, name), REPO),
+                    os.path.relpath(p, REPO)):
+            r = _run(["git", "-C", REPO, "ls-files", "--error-unmatch", rel])
+            if r.returncode:
+                miss.append("untracked:" + os.path.basename(rel).split(".")[-1])
         if miss:
             bad += 1
             print("MISSING %-8s %s" % (",".join(miss), name))
