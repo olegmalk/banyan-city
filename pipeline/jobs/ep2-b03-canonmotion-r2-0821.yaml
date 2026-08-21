@@ -259,3 +259,57 @@ derivation:
     - key priority = 14
     payload:b03-motion-prompt.txt:
     - payload b03-motion-prompt.txt (713 -> 913 chars)
+verdict_canonmotion_r2_0821: |
+  HALF THE FAULT CLEARED AND HALF DID NOT. 2 of 4: R2 and R4 PASS, R1 MARGINAL,
+  R3 FAIL. Judged by eye at 1:1 off a 6-frame sheet (f000/024/048/072/096/104),
+  with one measurement. rc=0, 105 frames, 704x1280, recipe and seed identical to
+  round 1; the only change is the init.
+
+  R1 NO PULL-BACK   MARGINAL, AND MEASURED. He still recedes, but by half as
+                    much. EYE SEPARATION, the one scale reference in frame that
+                    is not confounded by the figure moving: 339.7 px at f000,
+                    308.5 at f024, 291.1 at f048, 267.3 at f072, 261.9 at f096,
+                    246.9 at f104 -- monotonic, ending at 73% of the opening
+                    frame. Round 1's verdict on this beat was "his height
+                    roughly halves by f104", i.e. ~50%. So compositing the
+                    trunk cut the recede from ~50% to 27%, which is a real
+                    effect in the predicted direction and is NOT a clearance.
+                    NOTE THE CROSS-BEAT CONTRAST: beat 02, whose action gives
+                    him somewhere to go, held its frame completely on the same
+                    fix. This beat's action is "hold still", and a clip with no
+                    body motion still drifts. THE PLATE IS NECESSARY AND NOT
+                    SUFFICIENT.
+  R2 TRUNK HOLDS    PASS. The composited two-leaf sapling is present, unmoved
+                    and un-multiplied in all 105 frames, and NO tree is ever
+                    built. Round 1 on this beat drew no trunk at all, so "the
+                    beat's cover does not exist" is fixed: the cover exists,
+                    it crosses his chest, and it hides about the sixth of him
+                    the script asks for.
+  R3 ACTION         FAIL, AND IT IS THE FAILURE THIS SPEC PRE-REGISTERED BY
+                    NAME. "A STILL WITH A RUNTIME" was filed as the named
+                    degenerate outcome before the pixels, and it fired. The
+                    beat asks him to crouch LOWER behind the stem and hold with
+                    "eyes flicking sideways". He does neither: the pose barely
+                    changes from f000 to f104, there is no crouch and no
+                    sideways eye flick, and the only event in the clip is that
+                    his eyes CLOSE from about f096. An init that now contains
+                    everything the prompt names removed the model's reason to
+                    invent -- and inventing was also what had been making
+                    things move.
+  R4 IDENTITY       PASS, AND BETTER THAN ROUND 1. Features drawn in all 105
+                    frames, no dissolve. THE HORN IS GONE: round 1's verdict
+                    was "a curved horn or topknot grows from the crown of a
+                    bald canon head from about f072 and is still there at
+                    f104". Nothing grows from the crown here. Mandarin collar
+                    and frogging hold, ears hold, skin colour holds.
+
+  WHAT THIS BEAT ADDS TO THE WAVE'S ONE QUESTION: it separates the two things
+  round 1 had fused. The camera pull-back tracks the ABSENT OBJECT (fixing the
+  plate halved it here and eliminated it on beat 02); the residual drift tracks
+  the ABSENT MOTION (this beat asks for stillness and gets drift, beat 02 asks
+  for travel and gets a locked frame). Those are two levers, not one.
+
+  NOT ESCALATED TO A ROUND 3. Two rounds is the plate-fix budget and this is
+  round 2. R3 is an action-wording question and R1's residual is arguably a
+  frames/motion-strength question -- both are new questions, and neither is
+  this lane's to open unilaterally. review/ep2-ship-0821 is untouched.
