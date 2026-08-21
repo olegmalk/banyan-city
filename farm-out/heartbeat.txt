@@ -3906,3 +3906,4 @@
 15:43:33Z DONE task=ep2-b20-canonmotion-0821-1787324453 rc=0 artifacts=1
 15:43:39Z box-runner idle ready=0 failed=80
 15:53:42Z box-runner idle ready=0 failed=80
+16:03:46Z box-runner idle ready=0 failed=80
