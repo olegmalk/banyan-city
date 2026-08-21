@@ -17,4 +17,4 @@ batch: 1
 batch_slot: 0
 offload: sequential
 throughput_s_video_per_s_wall: 0.0175
-compute_s_per_video_s: 57.3
+compute_s_per_video_s: 57.1
