@@ -3504,3 +3504,5 @@
 06:59:33Z DONE task=ep2-b07-tilefix-p1-0821-1787295253 rc=0 artifacts=1
 06:59:39Z STARTED task=ep2-jerry-set-kneel-0821-1787295099 attempt=1 on box-runner
 07:00:08Z DONE task=ep2-jerry-set-kneel-0821-1787295099 rc=0 artifacts=1
+07:00:32Z STARTED task=ep2-b08-tilefix-p1-0821-1787295255 attempt=1 on box-runner
+07:01:05Z DONE task=ep2-b08-tilefix-p1-0821-1787295255 rc=0 artifacts=1
