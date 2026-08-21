@@ -260,3 +260,59 @@ derivation:
     - key priority = 14
     payload:b02-motion-prompt.txt:
     - payload b02-motion-prompt.txt (678 -> 842 chars)
+verdict_canonmotion_r2_0821: |
+  THE PLATE HYPOTHESIS IS CONFIRMED AND THE BEAT STILL FAILS. 3 of 4, R3 FAIL.
+  Judged by eye at 1:1 off a 6-frame sheet (f000/024/048/072/096/104) and a
+  4-frame action strip (f012/036/060/084). rc=0, 105 frames, 704x1280, seed and
+  recipe identical to round 1.
+
+  R1 NO PULL-BACK   PASS, AND THIS IS THE RESULT THE WHOLE WAVE WAS FOR.
+                    Round 1 on the un-composited plate ended with him "a speck
+                    at bottom right of a wide shot dominated by a large bare
+                    tree that is in no plate". NONE OF THAT HAPPENS HERE. He is
+                    the same size at f000 and f012, still large at f096 and
+                    f104, and never becomes a speck. Three independent
+                    constant-scale references hold across every frame: the
+                    small green critter at bottom centre, the sapling's stem
+                    thickness and leaf size, and the grass-blade stroke width.
+                    ONE VARIABLE CHANGED BETWEEN THE ROUNDS -- the init now
+                    contains the trunk the prompt names -- so the camera
+                    pull-back was caused by the absent object, as filed.
+  R2 SAPLING HOLDS  PASS. The composited two-leaf sapling is present and
+                    unmoved in all 105 frames. NO LARGE TREE IS EVER BUILT.
+                    That is the second half of the same law: the model stopped
+                    inventing the object once the object was there.
+  R3 ACTION         FAIL. The script is "sprints into frame, skids, and dives
+                    behind the sapling's thin trunk -- entry, skid, dive, in
+                    that order, as one continuous move". What happens is a
+                    DRIFT: he starts already in frame mid-stride, moves back
+                    and to the left until he is partly behind the stem around
+                    f060, then comes back toward centre and bends over by f096.
+                    There is no entry, no skid, and the dive reads as a duck.
+                    By f096 he is down, so the timing is inside the slot -- it
+                    is the SHAPE of the move that is wrong, not its length.
+  R4 IDENTITY       PASS. Features drawn in every one of the 105 frames, no
+                    dissolve. Mandarin collar and frogging hold, ears hold,
+                    skin colour holds, no new appendage (contrast beat 03's
+                    round-1 horn). One blemish: a small ear-like artifact at
+                    the right edge of his head at f104, outside the 97-frame
+                    trim.
+
+  THE PRE-REGISTERED "STILL WITH A RUNTIME" DID NOT FIRE. The worry was that an
+  init containing everything the prompt names would remove the model's reason
+  to move. It moved plenty -- too freely, in fact. So the two faults round 1
+  had conflated are now separated: THE PLATE FIXED THE CAMERA, and what is left
+  is an ACTION-WORDING problem, which is a different lever and a different
+  round.
+
+  TWO NUMERIC PROXIES WERE TRIED AND BOTH ARE DISCARDED, reported so no lane
+  re-derives them: total mid-green pixel count (13133 at f000 -> 2006 at f072)
+  and background ink density in the top 22% of frame (10827 -> 15658). Both
+  move with THE FIGURE entering and leaving the sample region, not with camera
+  scale, so neither can distinguish a pull-back from a walk. Consistent with
+  this tree's standing rule, and with pipeline/body_motion.py's retired-metrics
+  docstring, no metric decided anything here.
+
+  NOT ESCALATED TO A ROUND 3. The plate-fix budget is two rounds and this is
+  round 2; R3 is an action-wording change, which is a new question and the
+  founder's to green-light. review/ep2-ship-0821 is untouched and no cut moved.
