@@ -1,7 +1,9 @@
-measured_at: 2026-08-18T17:29Z
-source: ssh rtx5090, `dir /b C:\banyan-queue\failed` filtered to *.json — the same thing telemetry.py counts. 39
-  jsons; the directory also holds 41 logs, and the two extra logs are not failures (see orphan_logs below).
-count: 39
+measured_at: 2026-08-21T07:43Z
+source: ssh rtx5090, `dir /b C:\banyan-queue\failed` filtered to *.json — the same thing telemetry.py counts. 67
+  jsons and 69 logs (136 files); the two extra logs are not failures (see orphan_logs below). Re-measured
+  2026-08-21 by the triage lane, which also re-read every one of the 67 jsons for `rc`/`failed_step` and the
+  tail of its log, so every row below now cites a line somebody actually read rather than a class it resembles.
+count: 67
 orphan_logs:
 - ep2-b04-balloon-pair-0813
 - ep2-b19-overhead-0812
@@ -205,7 +207,163 @@ acknowledged:
     the weights level and MistoLine carries a standing visible-attribution obligation, which is exactly the
     class of mistake an unlisted path would launder.'
   doc: pipeline/controlnet_plate.py CONTROLNETS (the path entry and its comment) + commit 7a7e6c4b
+- id: ep2-b04-tileread-v0-0820-1787248084
+  group: clip77-guard
+  why: 'rc=9 at step `hintskel`, 17:48:15Z, GUARD REFUSAL BEFORE ANY GPU — controlnet_plate.py measured the
+    negative at 126 tokens against CLIP''s 77 (49 over) and refused rather than let diffusers truncate the
+    style anchor off the tail silently. Re-fired 8 min later with the text shortened; that run rendered rc=0
+    (see the 17872485xx row for its own, different, failure). Not a defect.'
+  doc: pipeline/jobs/ep2-b04-tileread-v0-0820.yaml
+- id: ep2-b04-tileread-v1-0820-1787248088
+  group: clip77-guard
+  why: rc=9 `hintskel` 17:48:24Z, same CLIP-77 refusal — negative 126 tokens (49 over). Re-fired shortened; the
+    re-fire rendered rc=0.
+  doc: pipeline/jobs/ep2-b04-tileread-v1-0820.yaml
+- id: ep2-b04-tileread-v2-0820-1787248091
+  group: clip77-guard
+  why: rc=9 `hintskel` 17:48:33Z, same CLIP-77 refusal — negative 126 tokens (49 over). Re-fired shortened; the
+    re-fire rendered rc=0.
+  doc: pipeline/jobs/ep2-b04-tileread-v2-0820.yaml
+- id: ep2-b04-tileread-v3-0820-1787248094
+  group: clip77-guard
+  why: rc=9 `hintskel` 17:48:41Z, same CLIP-77 refusal — negative 126 tokens (49 over). Re-fired shortened; the
+    re-fire rendered rc=0.
+  doc: pipeline/jobs/ep2-b04-tileread-v3-0820.yaml
+- id: ep2-b04-tileread-v4-0820-1787248098
+  group: clip77-guard
+  why: rc=9 `hintskel` 17:48:49Z, same CLIP-77 refusal — negative 126 tokens (49 over). Re-fired shortened; the
+    re-fire rendered rc=0.
+  doc: pipeline/jobs/ep2-b04-tileread-v4-0820.yaml
+- id: ep2-b04-tileread-v5-0820-1787248101
+  group: clip77-guard
+  why: rc=9 `hintskel` 17:48:59Z, CLIP-77 refusal on the POSITIVE this time — prompt 83 tokens (6 over). Same
+    guard, other side of the pair. Re-fired shortened; the re-fire rendered rc=0.
+  doc: pipeline/jobs/ep2-b04-tileread-v5-0820.yaml
+- id: ep2-b04-tileread-v6-0820-1787248104
+  group: clip77-guard
+  why: rc=9 `hintskel` 17:49:08Z, CLIP-77 refusal on the positive — prompt 89 tokens (12 over). Re-fired
+    shortened; the re-fire rendered rc=0.
+  doc: pipeline/jobs/ep2-b04-tileread-v6-0820.yaml
+- id: ep2-b04-tileread-v7-0820-1787248107
+  group: clip77-guard
+  why: rc=9 `hintskel` 17:49:16Z, CLIP-77 refusal on the positive — prompt 92 tokens (15 over). Re-fired
+    shortened; the re-fire rendered rc=0.
+  doc: pipeline/jobs/ep2-b04-tileread-v7-0820.yaml
+- id: ep2-b04-tileread-v0-0820-1787248550
+  group: publish-glob-armname
+  why: 'LIVE DEFECT, PIXELS STRANDED — NOT superseded and NOT retried. `hintskel` ran rc=0 at 17:56:19Z and
+    wrote C:\banyan-farm\b04tileread-v0-0820\out\ep2-b04-tileread-v0-0820-nocontrol.png (+ .meta.yaml), which
+    is still sitting there. The job then died rc=1 at step `publish` because that step globs
+    `<out>/ep2-b04-tileread-v0-0820-hintskel.png*` — it names the artifact after the STEP while
+    controlnet_plate.py names it after the `--arm` (`nocontrol`). The glob matched zero PNGs, so the copy
+    carried only prompt.txt and negative.txt, the manifest was written over 2 files, and the spec''s own
+    `raise SystemExit(0 if len(files) >= 4 else 1)` correctly caught it. farm-out/ep2-b04-tileread-v0-0820
+    holds prompt.txt, negative.txt and the .sha256 and no image; the courier therefore pushed no pixels. The
+    wrong name is committed in the spec twice — in the publish body AND in its declared `artifacts:` list —
+    so a re-enqueue unchanged reproduces it. Recoverable without the GPU: copy the eight
+    b04tileread-v*-0820\out\*-nocontrol.png into farm-out and re-write the manifests. Left for the b04
+    tileread lane, which owns those specs; flagged to the founder-facing report 2026-08-21.'
+  doc: pipeline/jobs/ep2-b04-tileread-v0-0820.yaml (publish step glob + artifacts list)
+- id: ep2-b04-tileread-v1-0820-1787248553
+  group: publish-glob-armname
+  why: 'LIVE, PIXELS STRANDED — same step-vs-arm naming bug. hintskel rc=0 17:56:42Z wrote
+    ...-v1-0820-nocontrol.png; publish globbed `-hintskel.png*`, matched 0 images, published 2 text files and
+    exited 1. PNG still in C:\banyan-farm\b04tileread-v1-0820\out. No successful twin.'
+  doc: pipeline/jobs/ep2-b04-tileread-v1-0820.yaml (publish step glob + artifacts list)
+- id: ep2-b04-tileread-v2-0820-1787248557
+  group: publish-glob-armname
+  why: 'LIVE, PIXELS STRANDED — same step-vs-arm naming bug. hintskel rc=0 17:57:06Z; publish matched 0 images
+    and exited 1. PNG still in C:\banyan-farm\b04tileread-v2-0820\out. No successful twin.'
+  doc: pipeline/jobs/ep2-b04-tileread-v2-0820.yaml (publish step glob + artifacts list)
+- id: ep2-b04-tileread-v3-0820-1787248560
+  group: publish-glob-armname
+  why: 'LIVE, PIXELS STRANDED — same step-vs-arm naming bug. hintskel rc=0 17:57:29Z; publish matched 0 images
+    and exited 1. PNG still in C:\banyan-farm\b04tileread-v3-0820\out. No successful twin.'
+  doc: pipeline/jobs/ep2-b04-tileread-v3-0820.yaml (publish step glob + artifacts list)
+- id: ep2-b04-tileread-v4-0820-1787248562
+  group: publish-glob-armname
+  why: 'LIVE, PIXELS STRANDED — same step-vs-arm naming bug. hintskel rc=0 17:57:52Z; publish matched 0 images
+    and exited 1. PNG still in C:\banyan-farm\b04tileread-v4-0820\out. No successful twin.'
+  doc: pipeline/jobs/ep2-b04-tileread-v4-0820.yaml (publish step glob + artifacts list)
+- id: ep2-b04-tileread-v5-0820-1787248568
+  group: publish-glob-armname
+  why: 'LIVE, PIXELS STRANDED — same step-vs-arm naming bug. hintskel rc=0 17:58:16Z; publish matched 0 images
+    and exited 1. PNG still in C:\banyan-farm\b04tileread-v5-0820\out. No successful twin.'
+  doc: pipeline/jobs/ep2-b04-tileread-v5-0820.yaml (publish step glob + artifacts list)
+- id: ep2-b04-tileread-v6-0820-1787248571
+  group: publish-glob-armname
+  why: 'LIVE, PIXELS STRANDED — same step-vs-arm naming bug. hintskel rc=0 17:58:40Z; publish matched 0 images
+    and exited 1. PNG still in C:\banyan-farm\b04tileread-v6-0820\out. No successful twin.'
+  doc: pipeline/jobs/ep2-b04-tileread-v6-0820.yaml (publish step glob + artifacts list)
+- id: ep2-b04-tileread-v7-0820-1787248574
+  group: publish-glob-armname
+  why: 'LIVE, PIXELS STRANDED — same step-vs-arm naming bug. hintskel rc=0 17:59:04Z; publish matched 0 images
+    and exited 1. PNG still in C:\banyan-farm\b04tileread-v7-0820\out. No successful twin. Eight renders of
+    the tile-read sweep are complete on the box and invisible to the repo — exactly the failure mode the
+    publish step''s own header comment says it exists to prevent (ep2-cnet-probe-0817).'
+  doc: pipeline/jobs/ep2-b04-tileread-v7-0820.yaml (publish step glob + artifacts list)
+- id: ep2-b09-cropmotion-0820-1787224216
+  group: src-not-found-single-branch
+  why: 'rc=1 at the FIRST step `crop`, 11:12:05Z: `!! src not found:
+    C:\banyan-farm\courier-box\farm-out\ep2-b09-platecrop-0820\09-the-pause-platecrop-r1s3.png`. The plate was
+    committed to MAIN at 99c86455 (2026-08-20 15:04+04), but C:\banyan-farm\courier-box is a single-branch
+    clone — `remote.origin.fetch = +refs/heads/farm-results-rtx5090:...` and nothing else — so a main-only
+    commit can never appear in its working tree. Retried as
+    ep2-b09-cropmotion-0820-1787224619-againda4f18, rc=0 at 11:23:24Z once the file was on disk; that same
+    courier commit (efc94756) is where r1s3.png was ADDED to the branch. VERIFIED in done/. Superseded.'
+  doc: pipeline/jobs/ep2-b09-cropmotion-0820.yaml; twin ep2-b09-cropmotion-0820-1787224619-againda4f18 in done/
+- id: ep2-b09-r2s2-c1-0821-1787270381
+  group: src-not-found-single-branch
+  why: 'rc=1 at `crop`, 2026-08-21T00:00:09Z, `!! src not found: ...\ep2-b09-platecrop-0820\09-the-pause-platecrop-r2s2.png`
+    — same single-branch checkout, this time the r2s2 plate. Retried as ...-1787270943-again5d73a8, rc=0 at
+    00:18:24Z; r2s2.png was ADDED to farm-results-rtx5090 by that very commit (8586f685). VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-b09-r2s2-c1-0821.yaml; twin ep2-b09-r2s2-c1-0821-1787270943-again5d73a8 in done/
+- id: ep2-b09-r2s2-c2-0821-1787270385
+  group: src-not-found-single-branch
+  why: rc=1 at `crop`, 00:01:11Z, same missing r2s2 plate under the single-branch courier checkout. Retried as
+    ...-1787270948-againd8d4a8, rc=0 at 00:25:51Z. VERIFIED in done/.
+  doc: pipeline/jobs/ep2-b09-r2s2-c2-0821.yaml; twin ep2-b09-r2s2-c2-0821-1787270948-againd8d4a8 in done/
+- id: ep2-b09-r2s2-c3-0821-1787270390
+  group: src-not-found-single-branch
+  why: rc=1 at `crop`, 00:02:13Z, same missing r2s2 plate. Retried as ...-1787270952-again19aea8, rc=0 at
+    00:33:14Z. VERIFIED in done/.
+  doc: pipeline/jobs/ep2-b09-r2s2-c3-0821.yaml; twin ep2-b09-r2s2-c3-0821-1787270952-again19aea8 in done/
+- id: ep2-b09-r2s2-m1-0821-1787270394
+  group: src-not-found-single-branch
+  why: rc=1 at `crop`, 00:03:15Z, same missing r2s2 plate. Retried as ...-1787270957-again14d920, rc=0 at
+    00:40:37Z. VERIFIED in done/.
+  doc: pipeline/jobs/ep2-b09-r2s2-m1-0821.yaml; twin ep2-b09-r2s2-m1-0821-1787270957-again14d920 in done/
+- id: ep2-b09-r2s2-m2-0821-1787270398
+  group: src-not-found-single-branch
+  why: rc=1 at `crop`, 00:04:17Z, same missing r2s2 plate. Retried as ...-1787270961-againb64190, rc=0 at
+    00:47:54Z. VERIFIED in done/. Six jobs across two nights died on one cause; the cure is not a sixth retry
+    but a producer sentinel — a crop must not be enqueued against a farm-out path until the file is on
+    farm-results-rtx5090, because the box's checkout cannot see main.
+  doc: pipeline/jobs/ep2-b09-r2s2-m2-0821.yaml; twin ep2-b09-r2s2-m2-0821-1787270961-againb64190 in done/
+- id: ep2-b08-nogoblin-0820-1787233508
+  group: fetch-404
+  why: 'rc=1 at the FIRST step `fetch`, 13:48:06Z: `urllib.error.HTTPError: HTTP Error 404: Not Found` out of
+    fetch_init.py — the same derive-retoken fetch-URL class as the two ep2-b12-plateship-0819 rows above, and
+    the class pipeline/derive_fetch_guard.py now exists to stop. No GPU ran. Retried as
+    ep2-b08-nogoblin-0820-1787234080-againc209b0, rc=0 at 13:57:25Z. VERIFIED in done/. Superseded.'
+  doc: pipeline/derive_fetch_guard.py; twin ep2-b08-nogoblin-0820-1787234080-againc209b0 in done/
+- id: ep2-b08-cnetfill-0820-1787240606
+  group: code-bug-retried
+  why: 'rc=1 at step `s20260822`, 15:44:10Z, a real traceback out of our own code: inpaint_fruit.py:779 called
+    the SDXL controlnet-inpaint pipeline with `image=` as a LIST, and diffusers'' check_inputs raised
+    `ValueError: The image should be a PIL image when inpainting mask crop, but is of type <class ''list''>`.
+    Caller bug, not a box fault; fixed and retried as ep2-b08-cnetfill-0820-1787240980-againa2e448, rc=0 at
+    15:50:32Z. VERIFIED in done/. Superseded.'
+  doc: pipeline/jobs/ep2-b08-cnetfill-0820.yaml; twin ep2-b08-cnetfill-0820-1787240980-againa2e448 in done/
 count_note_0819: 'The `count: 39` field at the top of this file is STALE and was already stale before this
   entry: `acknowledged` held 41 rows against it. Left as measured rather than silently corrected, because the
   number is written by a measuring pass with its own `measured_at` (2026-08-18T17:29Z) and hand-editing it
   would forge a measurement nobody took. Whoever re-runs that pass will set both.'
+count_note_0821: 'RESOLVED. The 2026-08-21 triage lane re-ran that measuring pass and set both: 67 jsons in
+  failed/, 67 rows here. Nothing was hand-corrected — the count is what `dir /b` returned at 07:43Z. Note the
+  chip in build_queue.py and build_sim.py compares COUNTS, not ids (telemetry publishes no id list), so the
+  invariant this file has to hold is one row per json; the 2026-08-21 pass matched all 67 by name to be sure
+  the counts were not agreeing by accident. Two ids appear twice under different epochs (the tileread v0-v7
+  arms fired at 17:48 and again at 17:56) and each firing gets its own row, because they failed for two
+  different reasons. NOT everything below is superseded: the eight `publish-glob-armname` rows are LIVE — the
+  renders succeeded and their PNGs have never reached the repo.'
