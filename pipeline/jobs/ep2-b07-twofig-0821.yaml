@@ -270,3 +270,42 @@ derivation:
     - payload negative.txt (296 -> 287 chars)
     payload:prompt.txt:
     - payload prompt.txt (269 -> 302 chars)
+verdict_b07_twofig_0821: |
+  FAIL ON G2, PASS ON EVERYTHING ELSE, AND THE FAILURE IS ONE ATTRIBUTE.
+  Judged by eye at 1:1 on 2026-08-21, rc=0, seed 20260899.
+
+  G1 TWO FIGURES        PASS. Exactly two, both whole, both on one ground line,
+                        goblin left and guard right as staged.
+  G2 THE CANON GOBLIN   FAIL. Green skin, bald crown, large pointed ears and
+                        the mandarin collar WITH its frog closure are all
+                        present -- an earlier read at 2/3 scale called the
+                        shirt a plain crew tee and that read was WRONG, the
+                        collar is there at 1:1. What is wrong is THE EYES: he
+                        came back with large ROUND eyes and a green iris where
+                        canon has off-white eyes with narrow vertical slit
+                        pupils. The round eye is also most of why the face
+                        reads younger than the canon adult.
+  G3 A GROWN MAN        PASS, emphatically. Five heads, full plate armour,
+                        helmeted, a head and a half over the goblin. This is
+                        the founder's 2026-08-20 "dumb grown men" in pixels
+                        and it is the strongest result in the job.
+  G4 NO ADAPTER LEAK    PASS. Nothing of the goblin's face reached the guard.
+  G5 ARM MID-RAISE      MARGINAL. Up and aimed, but reads closer to fully
+                        extended than to the authored mid-raise, and the hand
+                        sits above his skull rather than at his face. The
+                        end-state-plate risk pre-registered in this spec
+                        partially fired.
+  G6 STAGING            PASS. Both full body, tall grass, the plate's dialect.
+
+  CAUSE, AFTER ONE HYPOTHESIS WAS TESTED AND KILLED: it is NOT the IP mask.
+  87,485,412,763 drawn on this output contains the whole skull, both ears and
+  the entire face. It is the wording -- round 1 spent the eye clause down to
+  the single term `slit pupils` to buy room for the guard, where this beat's
+  accepted SOLO canon plate carries `slit pupils, constricted pupils` and has
+  no second subject competing for the attribute.
+
+  NEXT RUNG: pipeline/jobs/ep2-b07-twofig-r2-0821.yaml -- the eye clause
+  restored and the observed defect banned by name, everything else held.
+  NO MOTION SPEC WAS FILED OFF THIS PLATE, on purpose: beats 02, 03 and 20
+  went to motion round 2 as soon as their plates passed, and animating an
+  off-canon face would have spent the card on the wrong character.

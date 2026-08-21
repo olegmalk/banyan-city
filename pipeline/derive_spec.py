@@ -334,6 +334,32 @@ def derive(src: str, new_id: str, fresh: dict, overrides: dict = None,
         raise DeriveError("!! the parent id %r survives retokening in %d line(s): "
                           "%s" % (parent_id, len(stuck), stuck[0][:160]))
 
+    # ---- THE BOX WORKING DIRECTORY IS THE TOKEN EVERYONE FORGETS, and the id
+    # ---- check above cannot see it. Specs name a scratch dir on the box that
+    # ---- is the id with the `ep2-`/`ep3-` prefix and some dashes taken out --
+    # ---- `ep2-b07-twofig-0821` becomes `C:\banyan-farm\b07twofig-0821`. That
+    # ---- string does NOT contain the parent id, so a caller who forgets the
+    # ---- pair derives a child that writes into its PARENT's directory and
+    # ---- overwrites the parent's prompt.txt, negative.txt and payload. Fired
+    # ---- twice on 2026-08-21 in one lane, both times found only by re-reading
+    # ---- the emitted yaml by hand.
+    # ----
+    # ---- THIS WARNS, IT DOES NOT REFUSE. derive_spec is shared by every lane
+    # ---- in a live worktree and a new refusal here would stop peers mid-run
+    # ---- for a fault that is usually cosmetic (a distinct --task still gives
+    # ---- the artifact a distinct name). Loud and non-fatal is the right
+    # ---- trade: the caller sees it, nobody's queue breaks.
+    _stem = re.sub(r"^ep\d+-", "", parent_id)
+    for _n_dashes in range(1, _stem.count("-") + 1):
+        _dirtok = _stem.replace("-", "", _n_dashes)
+        if _dirtok != _stem and _dirtok in blob:
+            print("!! WARNING: the child still names %r, which looks like the "
+                  "PARENT's box working directory (from id %r). It will write "
+                  "into the parent's scratch dir and overwrite its payload "
+                  "files. Add (%r, <the child's dir token>) to `retoken`."
+                  % (_dirtok, parent_id, _dirtok))
+            break
+
     # ---- overrides, each asserted to have matched something.
     applied = {}
     for spec_key, value in sorted((overrides or {}).items()):

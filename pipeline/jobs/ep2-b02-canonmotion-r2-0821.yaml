@@ -1,0 +1,262 @@
+id: ep2-b02-canonmotion-r2-0821
+task: ep2-b02-canonmotion-r2-0821
+node: 002b-first-citizen
+beat: 2
+runner: box
+priority: 14
+needs_gpu: true
+max_attempts: 1
+owner: canon-motion plate-fix lane, 2026-08-21
+consumer: 'A ROUND-2 CANDIDATE for beat 02, and the test of the wave''s one generalisation. review/ep2-ship-0821
+  is NOT touched by this job: the clip is a candidate until the founder rules, and no cut changes because
+  it landed. Its other consumer is the law itself -- three beats that failed the same way, re-run with
+  the same recipe on plates that now hold the object, is the cleanest test available of whether the init
+  was the cause.'
+success: 'ONE 704x1280 105-frame 24fps mp4 in which THE FRAME DOES NOT PULL BACK and the action completes
+  inside the trim. R1 the goblin''s height at f104 is within a few percent of his height at f000 -- that
+  is the whole hypothesis and it is measurable, not a matter of taste; R2 the sapling that is in the init
+  is still there at f104 and has not been replaced by a large tree; R3 the action named in THE ACTION
+  completes by f096, the last frame a 97-frame trim keeps; R4 face, ears, skin colour and clothes are
+  the canon plate''s in every frame, with no dissolve and no new appendage. The named degenerate outcome
+  is A STILL WITH A RUNTIME: an init that now contains everything the prompt names gives the model less
+  reason to move at all, which is exactly how beat 20 failed in round 1. R3 is what catches it.'
+why: 'BEAT 02 FAILED ROUND 1 PLATE-SIDE, AND THIS IS THE SAME RECIPE ON A PLATE THAT NOW HOLDS WHAT THE
+  PROMPT NAMES.
+
+
+  ROUND 1, IN ITS OWN VERDICT: the camera pulled back until he was ''a speck at bottom right of a wide
+  shot dominated by a large bare tree that is in no plate'', and no sprint, skid or dive happened at all.
+
+
+  That is one of four identical failures. The other three beats in the wave -- 04, 08 and 13 -- asked
+  only for motion their plates had a body for, and all three held the frame. So the generalisation the
+  wave supports is that a prompt naming an object ABSENT from the init makes the model build it and pull
+  the camera back hunting for it, and the lever is the init.
+
+
+  WHAT CHANGED: the init, and one clause of wording that follows from it. The plate is the naturalised
+  composite from ep2-b02-sapnat-0821, judged before this spec was written -- mean absolute delta inside
+  the drawn region 10-14, outside it 0.02-0.06, centroid moved under 6 px, so the object is genuinely
+  drawn and the goblin is genuinely untouched. The object moves out of THE ACTION and into the ''Subject
+  already in frame'' inventory, because it now is. The identity clause is carried byte-for-byte from round
+  1, which held the face for 105 frames on all seven beats.
+
+
+  WHAT DID NOT CHANGE: size, frame count, fps, seed, guidance, sampler, sigmas, two-stage, crf, offload,
+  the cover-crop sha assert and the trim plan. Round 1 already proved the recipe; it did not prove the
+  plate.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b02-canonmotion-r2-0821\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop\
+    \ an asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib,\
+    \ os, sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b02-canonmotion-r2-0821\b02-motion-prompt.txt: '2D anime, hand-drawn cel animation,
+    static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art.
+    Subject already in frame: ONE small green goblin alone, bald, large pointed ears, off-white eyes with
+    narrow vertical slit pupils, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears,
+    skin colour and clothes DO NOT CHANGE for the whole clip. He is walking, arm outstretched, in tall
+    grass, full body. A THIN BARE SAPLING STEM WITH TWO LEAVES is also already in frame, rooted in the
+    grass in front of him, and it stays where it is for the whole clip. THE ACTION: he runs in from the
+    left, skids, and drops down behind the sapling stem that is already there -- entry, skid, dive, in
+    that order, as one continuous move. HALFWAY THROUGH he is mid-skid, still upright, leaning back, not
+    yet down.'
+  C:\banyan-farm\ep2-b02-canonmotion-r2-0821\b02-negative.txt: second face, second goblin, two goblins,
+    extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face,
+    morphing, melting face, featureless face, blank face, losing facial features, skin colour change,
+    clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark
+  C:\banyan-farm\ep2-b02-canonmotion-r2-0821\b02-jobs-encode.json: '[{"beat": 20, "embeds": "C:\\banyan-farm\\ep2-b02-canonmotion-r2-0821\\b02-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b02-canonmotion-r2-0821\\b02-motion-prompt.txt", "negative_file":
+    "C:\\banyan-farm\\ep2-b02-canonmotion-r2-0821\\b02-negative.txt"}]'
+  C:\banyan-farm\ep2-b02-canonmotion-r2-0821\b02-jobs-render.json: '[{"beat": 20, "seed": 20260902, "embeds":
+    "C:\\banyan-farm\\ep2-b02-canonmotion-r2-0821\\b02-embeds.pt", "init": "C:\\banyan-farm\\ep2-b02-canonmotion-r2-0821\\b02-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b02-canonmotion-r2-0821\\02-evidence-LTX-ep2-b02-canonmotion-r2-0821.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b02-canonmotion-r2-0821\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b02-sapnat-0821\b02-sapnat-s20260820.png
+  - --sha256
+  - 30dce0fabd444fdf5e0727eb4c6a317d65004f71a7df0dbe5cb126224dbf46ea
+  - --out
+  - C:\banyan-farm\ep2-b02-canonmotion-r2-0821\b02-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b02-canonmotion-r2-0821\b02-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b02-canonmotion-r2-0821\b02-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '105'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b02-canonmotion-r2-0821
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b02-canonmotion-r2-0821\bench-ep2-b02-canonmotion-r2-0821.jsonl
+  - --bench-label
+  - ep2-b02-canonmotion-r2-0821
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b02-canonmotion-r2-0821\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b02-canonmotion-r2-0821/02-evidence-LTX-ep2-b02-canonmotion-r2-0821.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b02-canonmotion-r2-0821/b02-init-704x1280.png\")\n\
+    \             + glob.glob(\"C:/banyan-farm/ep2-b02-canonmotion-r2-0821/bench-ep2-b02-canonmotion-r2-0821.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b02-canonmotion-r2-0821.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot\
+    \ pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b02-canonmotion-r2-0821\02-evidence-LTX-ep2-b02-canonmotion-r2-0821.mp4
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. The line is untouched by this job. Beat 02''s staging is quoted in `script_line` from jerry_canon_0821.WAVE[2],
+  which is the same node text the canon plate under this clip was drawn against. NOTE ON PROVENANCE: this
+  spec''s parent is a BEAT 20 job and both of these keys cross derive_spec''s allow-list as structure
+  -- carried unedited they would have had beat 02 claiming beat 16''s restaging as its authority, so they
+  are re-stated here rather than inherited.'
+script_line: THE SPRINT -- 'sprints into frame, skids, and dives behind the sapling's thin trunk'. He
+  is running from the guards and has not seen the sapling yet. This is the most frightened he is in the
+  episode.
+failure_predicted_in_advance: 'A STILL WITH A RUNTIME, and it is the specific cost of this fix. Round
+  1''s beat 20 verdict already named it -- ''between f000 and f104 the pose barely changes, which is close
+  to a still with a runtime''. An init that contains everything the prompt names removes the model''s
+  reason to invent, and inventing is also what was making things move. If the frame now holds but nothing
+  happens, the law is confirmed and the next lever is the action wording, not the plate. R3 is the bar
+  that separates those two outcomes and it is why it is written as a frame number rather than an impression.
+  SECOND, CHEAPER: the model redraws the composited sapling in its own dialect mid-clip, so it drifts
+  or grows leaves. R2 catches it.'
+not_done_on_purpose: 'BEAT 07 IS NOT IN THIS TRANCHE. Its two-figure plate rendered rc=0 in the same pass
+  and was judged: the guard passes -- five heads, armoured, helmeted, a grown man per the founder''s 2026-08-20
+  ruling -- and the IP-Adapter did not leak onto him. But the GOBLIN came back with round green eyes instead
+  of the canon narrow vertical slit pupils, and a plain crew-neck tee instead of the mandarin collar.
+  Animating an off-canon character is a worse use of the card than re-rendering a plate, so b07 goes back
+  for a round-2 plate with a tighter IP mask and the motion spec waits for it. NOTHING HERE TOUCHES THE
+  CUT.'
+plate_provenance: farm-out/ep2-b02-sapnat-0821/b02-sapnat-s20260820.png, 832x1216, sha256 30dce0fabd444fdf5e0727eb4c6a317d65004f71a7df0dbe5cb126224dbf46ea,
+  cover-cropped to 704x1280 by cover_crop.py which asserts that digest before it writes an init frame.
+  Produced by ep2-b02-sapnat-0821 (rc=0) from the SAME canon w2 plate round 1 used, with the scripted
+  object composited in and drawn by a 0.30 masked i2i. The plate is committed on origin/main and published
+  to the box's courier farm-out by that job's own publish step, so both sides hold it and they hash identically.
+the_one_variable: THE INIT PLATE, and the single prompt clause that follows from it. Round 1 held the
+  frame count constant across seven beats to ask one question; this round holds the ENTIRE recipe constant
+  across three beats to ask a different one -- was the init the cause? Same 704x1280, same 105 frames
+  at 24fps, same seed, same guidance, sampler, sigmas, two-stage, crf and offload, same cover_crop.py
+  asserting a sha before a frame is written, same trim-to-97 plan. The only wording change is that the
+  object moves from THE ACTION into the 'Subject already in frame' inventory, which is a statement of
+  fact about the new init and not a rewording ladder -- round 1 proved wording alone cannot fix this.
+derivation:
+  parent: pipeline/jobs/ep2-b02-canonmotion-0821.yaml
+  by: pipeline/file_canonmotion_r2_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - consumer
+  - failure_predicted_in_advance
+  - not_done_on_purpose
+  - owner
+  - plate_provenance
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - identity_and_wardrobe_source
+  - one_sample_rule
+  - plate_provenance
+  - post_ship_patch
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - trim_and_hold_plan
+  - verdict_canonmotion_0821
+  retokened:
+  - ep2-b02-canonmotion-0821 -> ep2-b02-canonmotion-r2-0821
+  overrides_applied_and_asserted:
+    argv:--sha256:
+    - step crop --sha256 (b33a3b2fddee4603c95cd86bedb8df62df51378d44804e9d6b12c567e3637e57 -> 30dce0fabd444fdf5e0727eb4c6a317d65004f71a7df0dbe5cb126224dbf46ea)
+    argv:--src:
+    - step crop --src (C:\banyan-farm\courier-box\farm-out\ep2-b02-canon-w2-0821\ep2-b02-canon-w2-0821-ipahead.png
+      -> C:\banyan-farm\courier-box\farm-out\ep2-b02-sapnat-0821\b02-sapnat-s20260820.png)
+    key:priority:
+    - key priority = 14
+    payload:b02-motion-prompt.txt:
+    - payload b02-motion-prompt.txt (678 -> 842 chars)
