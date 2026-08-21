@@ -3,6 +3,7 @@ r"""SPECS FROM THE GOBLIN STANDARD. One deriver, two consumers, no hand-copying.
 
     python3 pipeline/derive_jerry_wave_0821.py poseset
     python3 pipeline/derive_jerry_wave_0821.py patchwave
+    python3 pipeline/derive_jerry_wave_0821.py round2
     python3 pipeline/derive_jerry_wave_0821.py --selftest
 
 WHY ONE FILE FOR BOTH. `pipeline/jerry_standard_0821.py` holds the recipe the
@@ -443,6 +444,121 @@ def patchwave(force=False):
     return written
 
 
+
+# ── ROUND TWO ────────────────────────────────────────────────────────────────
+# Filed after round one was judged by eye at 1:1 against the tile. Five of seven
+# beats passed and are picked; two failed and are re-asked here, one seed-fan is
+# added on the one fault that appeared twice. THIS IS THE SECOND AND LAST ROUND
+# per question -- episode-loop-v2.
+#
+# ROUND ONE'S VERDICTS, one line each, so this table is readable without the
+# ladder: b02 PASS, b03 PASS (magenta at the neck), b04 FAIL (stands upright;
+# the beat is a lean-out), b07 PASS (bald, no spectacles -- the white hair is
+# gone), b08 FAIL (a bare round pot belly, which is the CHILD read this beat
+# exists to remove), b13 PASS and the best of the wave, b20 PASS (magenta at the
+# neck).
+#
+# suffix, skeleton, pose words, seed, why-this-rung
+ROUND2 = [
+    ("b04", "r2", "jerry-skel-h19hunch-0820",
+     "hunched over, leaning out to one side from behind tall grass, looking "
+     "sideways, in tall grass, full body", None,
+     "ROUND ONE STOOD UPRIGHT. The hunch skeleton differs from `stand` by a "
+     "quarter of a head height and the net softened it exactly as the pose-set "
+     "prediction said it might; `leaning out past tall grass blades` did not "
+     "reach the body. The words now name the LEAN and the DIRECTION, which is "
+     "the one variable.\n\n"
+     "AND THE CLOSE-UP QUESTION IS ANSWERED BY NOT ASKING IT. Round one's "
+     "framing_gap said beat 04's close-up was a rung of its own at two "
+     "variables. It is not, and canon already contains the reason: `the tile "
+     "is a wide full-body at which scale the model draws the face as a "
+     "blank-eyed mask; THE CLOSER THE CROP, THE MORE IT RESOLVES THAT MASK "
+     "INTO A DETAILED ADULT HUMAN MALE.` Asking this checkpoint for a close-up "
+     "is asking it for the defect. The route is therefore to render FULL BODY, "
+     "where the recipe is measured and passes, and obtain the beat's crop in "
+     "post -- which is what the shipped b04 clip already is, a tight crop of a "
+     "plate. The close-up rung is CLOSED WITHOUT BEING RUN, on canon's own "
+     "measurement, and that is cheaper than four more frames."),
+    ("b08", "r2", "jerry-skel-h19-0820",
+     "standing, head bowed, looking down, arms at sides, in tall grass, "
+     "full body", None,
+     "ROUND ONE DREW A BARE ROUND POT BELLY. `looking down at his own belly` "
+     "named the belly and the model drew one -- uncovered, protruding, and "
+     "reading as a chubby CHILD, which is precisely the defect the audit "
+     "logged against this beat ('small body, big head, closed sad eyes'). A "
+     "positive draws what it names; the beat's belly is the GUARD'S line and "
+     "the guard's pointing finger, not something the goblin's plate has to "
+     "show. The words now ask only for the LOOK DOWN. One variable."),
+    ("b03", "r2", "jerry-skel-h19crouch-0820",
+     "squatting, hiding behind a thin trunk, in tall grass, full body", 20260824,
+     "ROUND ONE PASSED THE FACE AND CARRIED MAGENTA AT THE NECK, and so did "
+     "b20 and the crouch pose-set rung -- three frames, all of them FOLDED, "
+     "while every standing frame in the wave read clean. THE MECHANISM IS "
+     "NAMED AND IT IS OURS: the mask translates down with the head, but a "
+     "seated or squatting figure is COMPRESSED, so the same 200x220 box that "
+     "held only a head on a standing figure now overlaps neck and shoulder -- "
+     "and k6b/k6c/k6d already proved this adapter transfers the tile's PURPLE "
+     "COWL through a mask when it is given more to act on. This rung changes "
+     "the SEED alone, which asks whether the magenta is the mechanism or the "
+     "draw. If it survives the seed it is the mask and the fix is a smaller "
+     "box on folded poses, which is a third rung and would be named then."),
+    ("b20", "r2", "jerry-skel-h19crouch-0820",
+     "squatting, holding a small fruit with both hands, looking up, in tall "
+     "grass, full body", 20260824,
+     "THE SAME SEED QUESTION AS b03-r2, on the second frame that showed the "
+     "magenta neck. Two frames at one new seed is what separates a mechanism "
+     "from a draw; one would not. The fig's COLOUR and the branch remain beat "
+     "20's own canon question and are untouched here."),
+]
+
+ROUND2_PREDICTED = """SPLIT PREDICTION, AND IT IS FILED BEFORE THE RENDER.
+b04-r2 and b08-r2 are WORDING rungs on a recipe whose wording route is otherwise
+closed, and the reason they are expected to work where six face rungs did not is
+that they move the POSE clause, not the identity clause -- the pose clause is the
+one slot the standard leaves open, and every pose-set rung that changed it got
+the pose it asked for. If b04 still stands upright, the finding is that the hunch
+skeleton is under the net's resolution and the answer is a deeper-authored hint,
+not more words.
+
+THE SEED PAIR IS THE ONE THAT CAN TEACH SOMETHING EITHER WAY. If b03-r2 and
+b20-r2 both come back clean, the magenta was the draw and round one's picks stand
+with a noted seed. If BOTH keep it, it is the mask overlapping neck on compressed
+poses and the fix is geometric -- shrink the box for folded skeletons -- which is
+a change to jerry_standard_0821.mask_for and therefore to every folded frame
+already rendered. If they SPLIT, one seed is not an instrument and the honest
+answer is that we do not know yet."""
+
+
+def round2(force=False):
+    written = []
+    for beat, tag, hint, pose_words, seed, note in ROUND2:
+        written.append(_emit(
+            new_id="ep2-%s-tilefix-%s-0821" % (beat, tag),
+            job_dir="%stilefix-%s-0821" % (beat, tag),
+            hint=hint, pose_words=pose_words,
+            why=("ROUND TWO for beat %s, and the LAST round for this question.\n\n%s"
+                 % (beat[1:], note)),
+            consumer=("The ep2 patch wave's plate for beat %s. Round one is "
+                      "judged and this rung either replaces its plate or "
+                      "confirms it. POST-SHIP: review/ep2-ship-0821 is not "
+                      "touched by this job." % beat[1:]),
+            success=("ONE 832x1216 png, the k6a standard entire, with only the "
+                     "named variable moved. Scored on the k6a bar by eye at 1:1 "
+                     "against adult-b19-0819.jpg. There is no round three: if "
+                     "this misses, the finding is recorded and the beat keeps "
+                     "round one's plate or none."),
+            variable=note.split(". ")[0] + ".",
+            bar=S.BAR, predicted=ROUND2_PREDICTED,
+            beat=int(beat[1:]), priority=20,
+            extra_keys={"round": "TWO of two. episode-loop-v2 caps a question "
+                                 "at two rounds and this is the cap, not a "
+                                 "milestone on the way to more.",
+                        "post_ship_patch": (
+                            "review/ep2-ship-0821 IS NOT TOUCHED BY THIS JOB.")},
+            seed=seed, force=force))
+    return written
+
+
 def _selftest():
     rc = derive_spec.selftest() or derive_fetch_guard.selftest()
     import jerry_standard_0821
@@ -464,8 +580,10 @@ def main(argv=None):
             written += poseset(force=force)
         elif m == "patchwave":
             written += patchwave(force=force)
+        elif m == "round2":
+            written += round2(force=force)
         else:
-            print("!! unknown mode %r -- poseset | patchwave" % m,
+            print("!! unknown mode %r -- poseset | patchwave | round2" % m,
                   file=sys.stderr)
             return 2
     print("\n%d spec(s). Next: box_enqueue each one --backlog." % len(written))
