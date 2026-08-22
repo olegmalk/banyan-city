@@ -8,7 +8,7 @@ seconds: 5.042
 steps: 8@352x640+3@704x1280
 guidance: 2.0
 seed: 20260813
-task: ep2-b12-stillmotion-r2-0822
+task: ep2-b12-nogrow-r3-0822
 cost_usd: 0
 prompt: ''
 negative: ''
@@ -16,5 +16,5 @@ mode: production
 batch: 1
 batch_slot: 0
 offload: sequential
-throughput_s_video_per_s_wall: 0.0192
-compute_s_per_video_s: 52.0
+throughput_s_video_per_s_wall: 0.0198
+compute_s_per_video_s: 50.5
