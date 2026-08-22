@@ -4550,3 +4550,5 @@
 09:31:54Z DONE task=lora-sapling-v2b-bars-0822-1787390765 rc=0 artifacts=3
 09:32:04Z STARTED task=ep2-guardcast4b-a-0822-1787391020 attempt=1 on box-runner
 09:32:23Z DONE task=ep2-guardcast4b-a-0822-1787391020 rc=0 artifacts=1
+09:32:29Z STARTED task=ep2-guardcast4b-a40-0822-1787391067 attempt=1 on box-runner
+09:32:47Z DONE task=ep2-guardcast4b-a40-0822-1787391067 rc=0 artifacts=1
