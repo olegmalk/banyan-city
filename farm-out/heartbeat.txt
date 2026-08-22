@@ -4336,3 +4336,5 @@
 02:22:12Z STARTED task=ep2-b19-fignat-0822-1787365327 attempt=1 on box-runner
 02:22:31Z DONE task=ep2-b19-fignat-0822-1787365327 rc=0 artifacts=2
 02:22:36Z box-runner idle ready=0 failed=89
+02:23:22Z STARTED task=ep2-b19-fignat-r2-0822-1787365393 attempt=1 on box-runner
+02:23:37Z DONE task=ep2-b19-fignat-r2-0822-1787365393 rc=0 artifacts=2

@@ -1,0 +1,40 @@
+#### job ep2-b19-fignat-r2-0822-1787365393 attempt 1 start 2026-08-22T02:23:22Z
+
+==== step fetch START 2026-08-22T02:23:22Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b19fignat-r2-0822\\fetch_init.py"]
+fetched b19-figcomp-in-0822.png 1324405 bytes sha ab50f73ce8f9cb58a082e96f5c0f61ca7238002cbfa059e742f0003560539aca OK
+fetched b19-figcomp-in-mask-0822.png 3304 bytes sha e38858d39238b69377573c38ca95b4569e352aa0de3df3d5cf4cf08f5620d9bc OK
+==== step fetch END rc=0 2026-08-22T02:23:23Z ====
+
+==== step dry START 2026-08-22T02:23:23Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b19fignat-r2-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b19fignat-r2-0822\\b19-figcomp-in-0822.png", "--init-sha256", "ab50f73ce8f9cb58a082e96f5c0f61ca7238002cbfa059e742f0003560539aca", "--mask-png", "C:\\banyan-farm\\b19fignat-r2-0822\\b19-figcomp-in-mask-0822.png", "--prompt-file", "C:\\banyan-farm\\b19fignat-r2-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b19fignat-r2-0822\\negative.txt", "--out", "C:\\banyan-farm\\b19fignat-r2-0822\\b19-fignat-r2-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.45", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "ATTACHED TO BOTH THE DRY STEP AND THE RENDER STEP. ON THE DRY STEP it is a MASK GEOMETRY CHECK before any model loads: the mask must be ONE blob shaped like a small plant with a bead on its stem, standing in the grass to the LEFT of the goblin, and IT MUST NOT TOUCH HIM. If it reaches his leg, his tunic or his face, the pass has a licence to redraw the character this whole re-plate exists to preserve, and P5 fails by construction. ON THE RENDER STEP: one pass, one seed, 12 of 40 steps from a latent that still holds the drawn fig.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK ab50f73ce8f9cb58a082e96f5c0f61ca7238002cbfa059e742f0003560539aca
+mask png corners=- bbox=[101, 633, 343, 1144]  0.2909 x 0.4202 of 832x1216
+WROTE C:\banyan-farm\b19fignat-r2-0822\b19-fignat-r2-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-22T02:23:23Z ====
+
+==== step s20260820 START 2026-08-22T02:23:23Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b19fignat-r2-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b19fignat-r2-0822\\b19-figcomp-in-0822.png", "--init-sha256", "ab50f73ce8f9cb58a082e96f5c0f61ca7238002cbfa059e742f0003560539aca", "--mask-png", "C:\\banyan-farm\\b19fignat-r2-0822\\b19-figcomp-in-mask-0822.png", "--prompt-file", "C:\\banyan-farm\\b19fignat-r2-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b19fignat-r2-0822\\negative.txt", "--out", "C:\\banyan-farm\\b19fignat-r2-0822\\b19-fignat-r2-s20260820.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.45", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "ATTACHED TO BOTH THE DRY STEP AND THE RENDER STEP. ON THE DRY STEP it is a MASK GEOMETRY CHECK before any model loads: the mask must be ONE blob shaped like a small plant with a bead on its stem, standing in the grass to the LEFT of the goblin, and IT MUST NOT TOUCH HIM. If it reaches his leg, his tunic or his face, the pass has a licence to redraw the character this whole re-plate exists to preserve, and P5 fails by construction. ON THE RENDER STEP: one pass, one seed, 12 of 40 steps from a latent that still holds the drawn fig."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:00,  6.49it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  2.83it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  5.58it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:01,  1.55it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.75it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 5s
+WROTE C:\banyan-farm\b19fignat-r2-0822\b19-fignat-r2-s20260820.png
+WROTE C:\banyan-farm\b19fignat-r2-0822\b19-fignat-r2-s20260820-mask.png
+WROTE C:\banyan-farm\b19fignat-r2-0822\b19-fignat-r2-s20260820.png.meta.yaml
+rc=0 render_s=5.1
+==== step s20260820 END rc=0 2026-08-22T02:23:37Z ====
+
+==== step publish START 2026-08-22T02:23:37Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b19fignat-r2-0822\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b19-fignat-r2-0822\"\nNAMES = [\n    \"b19-fignat-r2-s20260820.png\",\n    \"b19-fignat-r2-s20260820-mask.png\",\n    \"b19-fignat-r2-s20260820.png.meta.yaml\",\n    \"b19-figcomp-in-0822.png\",\n    \"b19-figcomp-in-mask-0822.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b19-fignat-r2-0822.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 7 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b19-fignat-r2-0822
+==== step publish END rc=0 2026-08-22T02:23:37Z ====
+#### job ep2-b19-fignat-r2-0822-1787365393 finished rc=0 2026-08-22T02:23:37Z
