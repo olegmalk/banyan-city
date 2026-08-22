@@ -1,0 +1,152 @@
+# SAPLING LoRA — THE WEIGHT LADDER. Filed 2026-08-22, behind the bar grid.
+#
+# $0 (local card). ~10 GPU-minutes, 8 cells.
+#
+# WHY IT EXISTS: a measured finding, not a hunch. The one sample proved the
+# expensive thing — `bnysapling` DRAWS the canon two-leaf sapling, the object
+# five closed wording ladders never produced. The no-regression pair drawn in the
+# same session then failed bar B3 at the shipping weight 0.8: identical prompt
+# and seed, and the LoRA side came back with the small figure on the bridge
+# DELETED, the palette darker and flatter, and the composition retightened. An
+# object removed is not a tone shift; it is the clearest evidence in the run.
+#
+# 0.8 was never measured — it was copied from train-jerry-0820.yaml before any
+# pixel existed. Research section 6 already records 0.65 as the community working
+# point. This walks 0.65 / 0.5 / 0.35 / 0.2 and draws BOTH sides at each rung, so
+# the two curves that matter can be read against each other: contamination should
+# fade as the scale drops, and the sapling should get worse. Where they cross is
+# the shipping weight.
+#
+# 0.8 and 0.0 are NOT redrawn — both frames are already on disk from
+# lora-sapling-sample-0822, at the same seed, so the ladder has its endpoints for
+# free and spends card time only on the rungs that do not exist.
+#
+# THIS DOES NOT RE-GRADE ANYTHING. B3 was pre-registered and scored at 0.8 and
+# stays scored at 0.8. This is a later, separate measurement whose output is a
+# recommended weight for the NEXT run. Bars tighten forward only.
+
+id: lora-sapling-ladder-0822
+task: lora-sapling-ladder-0822
+node: 003b-one-leaf-for-yes
+runner: box
+needs_gpu: true
+priority: 71
+max_attempts: 1
+owner: the sapling-LoRA lane, 2026-08-22
+script_authority: 'Not a render of a script and not an episode assembly. Eight test stills from a weight
+  file that already exists; nothing enters an episode, a leaf or a shot board, and sample_lora.py writes
+  approved: false / provisional: true itself.'
+consumer: The shipping-weight decision for bnysapling, and through it the ep3 plate step. B3 failed at
+  0.8, which makes the LoRA unusable AS CONFIGURED; whether it is unusable at all is exactly what this
+  measures. If no rung holds both sides, that is the finding and the next rung is dataset work — a variety
+  batch with figures and non-green ground — not more weight tuning.
+success: Eight frames on disk in farm-out, read at 1:1 against the 0.8 and no-LoRA frames already published.
+  A ladder with no crossing point is a full result.
+why: The card is idle and the founder is asleep. Ten GPU-minutes turns "the LoRA contaminates" into "the
+  LoRA contaminates above X", which is the difference between a dead lane and a configured one.
+est_minutes: 12
+needs:
+- cuda
+- vram20
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: ladder
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-sapling-0822\run_ladder.py
+  - --lora
+  - C:\banyan-farm\lora-sapling-0822\out\bnysapling-sdxl-v1.safetensors
+  - --sampler
+  - C:\banyan-farm\lora-sapling-0822\sample_lora.py
+  - --out-dir
+  - C:\banyan-farm\lora-sapling-0822\ladder
+  - --require
+  - SUBJECT-w065.png
+  - CLEAN-w065.png
+  - SUBJECT-w020.png
+  - CLEAN-w020.png
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = r\"C:\\banyan-farm\\courier-box\\farm-out\\lora-sapling-ladder-0822\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(r\"C:\\banyan-farm\\lora-sapling-0822\\\
+    ladder\\*.png\")\n             + glob.glob(r\"C:\\banyan-farm\\lora-sapling-0822\\ladder\\*.meta.yaml\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, os.path.basename(f)),\
+    \ \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"lora-sapling-ladder-0822.sha256\"), \"w\", newline=\"\\n\") as fh:\n\
+    \    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) ->\", dst)\n\
+    raise SystemExit(0 if len(src) >= 16 else 1)\n"
+artifacts:
+- C:\banyan-farm\lora-sapling-0822\ladder\SUBJECT-w065.png
+- C:\banyan-farm\lora-sapling-0822\ladder\CLEAN-w065.png
+- C:\banyan-farm\lora-sapling-0822\ladder\SUBJECT-w020.png
+- C:\banyan-farm\lora-sapling-0822\ladder\CLEAN-w020.png
+payload:
+  C:\banyan-farm\lora-sapling-0822\run_ladder.py: "#!/usr/bin/env python3\nr\"\"\"The LoRA-WEIGHT ladder:\
+    \ find the scale where the subject still draws and the\nno-regression contamination stops.\n\n   \
+    \ <render-venv>/python.exe pipeline/lora/run_ladder.py \\\n        --lora out/bnysapling-sdxl-v1.safetensors\
+    \ \\\n        --sampler pipeline/lora/sample_lora.py --out-dir ladder\n\nWHY THIS EXISTS, AND IT IS\
+    \ A FINDING AND NOT A GUESS. The 2026-08-22 one sample\nanswered the expensive question — `bnysapling`\
+    \ DRAWS the canon two-leaf sapling,\nwhich five closed wording ladders never could. The no-regression\
+    \ pair drawn in\nthe same session answered a cheaper one badly. At the shipping weight 0.8, the\n\
+    identical prompt and seed (\"a stone bridge over a river, forest, afternoon\nlight\") came back:\n\
+    \n  * WITHOUT the small figure that stands on the bridge in the no-LoRA frame --\n    an OBJECT DELETED,\
+    \ not a tone shift, and the sharpest single piece of\n    evidence here. Every one of the 44 training\
+    \ frames is figure-free.\n  * darker and flatter, deeper blues, less sky light\n  * recomposed lower\
+    \ and tighter\n\nNo sapling appeared, which is the failure this bar was most afraid of and it did\n\
+    not happen. But `train-sapling-0822.yaml` bar B3 fails on \"a visible shift in\npalette, line weight\
+    \ or shading style\", and this is visible without effort.\n\nA FAIL AT ONE WEIGHT IS NOT A FAIL AT\
+    \ EVERY WEIGHT, and 0.8 was picked before any\npixel existed by copying the Jerry spec. Research section\
+    \ 6 already records 0.65\nas the community working point when LoRAs are stacked. So the question this\n\
+    answers is a two-sided one that a single number cannot: as the scale comes down,\ncontamination should\
+    \ fade AND the sapling should get worse. Where those two\ncurves cross is the shipping weight, and\
+    \ it is a measurement, not a taste call.\n\nWHAT IT DELIBERATELY DOES NOT DO: change any pre-registered\
+    \ bar. B3 was scored at\n0.8 and stays scored at 0.8. This ladder is a SEPARATE, later measurement\
+    \ whose\nresult is a recommended weight for the NEXT run, not a re-grade of this one.\nBars tighten\
+    \ forward only.\n\n$0, no provider. Both halves of every rung share one seed with the 0.8 pair\nalready\
+    \ on disk, so the whole ladder is comparable frame to frame.\n\"\"\"\n\nfrom __future__ import annotations\n\
+    \nimport argparse\nimport subprocess\nimport sys\nfrom pathlib import Path\n\nTAIL = (\"anime style,\
+    \ cel shading, detailed background, \"\n        \"masterpiece, best quality, very aesthetic\")\n\n\
+    # THE SUBJECT SIDE. P1 verbatim from train-sapling-0822.yaml BARS -- the same\n# prompt the one sample\
+    \ used, so its 0.8 frame is already the top rung of this\n# ladder and does not need redrawing.\n\
+    SUBJECT = (\"bnysapling, a young sapling, two leaves, 25 cm tall, medium shot, \"\n           \"bare\
+    \ tilled earth field, a low stone wall behind, overcast, \" + TAIL)\nSUBJECT_NEG = (\"1boy, 1girl,\
+    \ people, goblin, text, watermark, signature, \"\n               \"photorealism, 3d render, low quality,\
+    \ worst quality, blurry\")\n\n# THE CONTAMINATION SIDE. Verbatim from the no-regression pair, so the\
+    \ 0.8 frame\n# and the no-LoRA frame already on disk are this ladder's two endpoints.\nCLEAN = (\"\
+    a stone bridge over a river, forest, afternoon light, \" + TAIL)\nCLEAN_NEG = (\"text, watermark,\
+    \ signature, photorealism, 3d render, \"\n             \"low quality, worst quality, blurry\")\n\n\
+    SEED = 20260822\n\n# 0.8 is omitted on purpose: both its frames exist already and redrawing them\n\
+    # would spend card time to reproduce bytes we can read. 0.0 is the no-LoRA frame,\n# which also exists\
+    \ already.\nWEIGHTS = (0.65, 0.5, 0.35, 0.2)\n\n\ndef main() -> int:\n    ap = argparse.ArgumentParser()\n\
+    \    ap.add_argument(\"--lora\", required=True)\n    ap.add_argument(\"--sampler\", required=True)\n\
+    \    ap.add_argument(\"--out-dir\", required=True)\n    ap.add_argument(\"--dry-run\", action=\"store_true\"\
+    )\n    # Same reason as run_grid.py: box_enqueue refuses a spec whose artifacts are\n    # named by\
+    \ no step's argv, and these filenames are derived from the weight.\n    ap.add_argument(\"--require\"\
+    , nargs=\"*\", default=[])\n    a = ap.parse_args()\n\n    cells = []\n    for w in WEIGHTS:\n   \
+    \     tag = (\"%0.2f\" % w).replace(\".\", \"\")\n        cells.append((f\"SUBJECT-w{tag}\", SUBJECT,\
+    \ SUBJECT_NEG, w))\n        cells.append((f\"CLEAN-w{tag}\", CLEAN, CLEAN_NEG, w))\n\n    if a.dry_run:\n\
+    \        for name, pos, _n, w in cells:\n            print(f\"{name}  weight={w}  {pos[:64]}...\"\
+    )\n        print(f\"{len(cells)} cells\")\n        return 0\n\n    out = Path(a.out_dir)\n    out.mkdir(parents=True,\
+    \ exist_ok=True)\n    failed = []\n    for i, (name, pos, neg, w) in enumerate(cells, 1):\n      \
+    \  dest = out / f\"{name}.png\"\n        print(f\"[{i}/{len(cells)}] {name}\", flush=True)\n     \
+    \   rc = subprocess.call([sys.executable, a.sampler,\n                              \"--lora\", a.lora,\
+    \ \"--lora-weight\", str(w),\n                              \"--prompt\", pos, \"--negative\", neg,\n\
+    \                              \"--width\", \"832\", \"--height\", \"1216\",\n                   \
+    \           \"--steps\", \"40\", \"--guidance\", \"7.5\",\n                              \"--seed\"\
+    , str(SEED), \"--out\", str(dest)])\n        if rc != 0 or not dest.exists():\n            failed.append(name)\n\
+    \            print(f\"   !! {name} did not render (rc={rc})\", flush=True)\n\n    print(f\"\\n{len(cells)\
+    \ - len(failed)} of {len(cells)} cells drawn -> {out}\")\n    absent = [r for r in a.require if not\
+    \ (out / r).exists()]\n    if failed:\n        print(\"MISSING: \" + \", \".join(failed))\n    if\
+    \ absent:\n        print(\"REQUIRED CELL ABSENT: \" + \", \".join(absent))\n    return 0 if not failed\
+    \ and not absent else 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n"
