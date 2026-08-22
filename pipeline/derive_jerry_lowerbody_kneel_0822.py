@@ -53,6 +53,7 @@ NEW_ID = "ep2-b13-lowerbody-kneel-0822"
 HINT_REL = "farm-out/jerry-lowerbody-src-0822/jerry-kneel-hint-0822.png"
 HINT = "jerry-kneel-hint-0822.png"
 OLD_HINT = "jerry-seat-hint-0822.png"
+OLD_HINT_SHA = "da14ee0b1d44485eabc4c1494ff7fa1980a9b3fce51f290946b203204ccc1cf7"
 
 NOTE = (
     "THE GENERALISATION GATE. Round two proved the masked lower-body route on "
@@ -169,7 +170,15 @@ def main() -> int:
         overrides={
             "key:priority": 2,
             "argv:--control": r"C:\banyan-farm\b13lowerbodykneel-0822\%s" % HINT,
-            "argv:--control-sha256": sha,
+            # NOT an argv override for --control-sha256. The sha travels as a
+            # RETOKEN instead, because it appears TWICE -- in the argv and in
+            # the inherited fetch_init.py payload -- and overriding only the
+            # argv leaves the fetcher asserting the seat hint's bytes against
+            # the kneel hint's file. Attempt one did exactly that and the
+            # fetcher refused: "SHA MISMATCH for jerry-kneel-hint-0822.png,
+            # want da14ee0b, have 7f1655bb". rc=1, $0, no model loaded. The
+            # guard is why this cost nothing, and a retoken is the fix because
+            # it reaches every copy of the string by construction.
             "argv:--note": NOTE,
         },
         extra={
@@ -187,7 +196,8 @@ def main() -> int:
         retoken=[("b13lowerbodyw2-0822", "b13lowerbodykneel-0822"),
                  ("b13-lowerbody-w2-s20260823", "b13-lowerbody-kneel-s20260823"),
                  ("b13-lowerbody-w2-DRY", "b13-lowerbody-kneel-DRY"),
-                 (OLD_HINT, HINT)],
+                 (OLD_HINT, HINT),
+                 (OLD_HINT_SHA, sha)],
         by="pipeline/derive_jerry_lowerbody_kneel_0822.py",
     )
 

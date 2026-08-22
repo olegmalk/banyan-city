@@ -816,7 +816,7 @@ payload:
     ),\n    \"jerry-seat-mask-0822.png\": (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
     \n           \"farm-out/jerry-lowerbody-src-0822/jerry-seat-mask-0822.png\", \"81357e39419054bd594f631e1de6f2c3f77de44b3239a0cb2acc2dc7b873919b\"\
     ),\n    \"jerry-kneel-hint-0822.png\": (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
-    \n           \"farm-out/jerry-lowerbody-src-0822/jerry-kneel-hint-0822.png\", \"da14ee0b1d44485eabc4c1494ff7fa1980a9b3fce51f290946b203204ccc1cf7\"\
+    \n           \"farm-out/jerry-lowerbody-src-0822/jerry-kneel-hint-0822.png\", \"7f1655bb77326d37e029fb3adb1b2673f1bdf6a1b70550f939ec64f7982baea5\"\
     ),\n}\n\nos.makedirs(OUT, exist_ok=True)\nfor name, (url, want) in WANT.items():\n    raw = urllib.request.urlopen(\n\
     \        urllib.request.Request(url, headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n\
     \    if have != want:\n        sys.exit(\"!! SHA MISMATCH for %s -- refusing.\\n   want %s\\n   have\
@@ -1066,15 +1066,12 @@ derivation:
   - b13-lowerbody-w2-s20260823 -> b13-lowerbody-kneel-s20260823
   - b13-lowerbody-w2-DRY -> b13-lowerbody-kneel-DRY
   - jerry-seat-hint-0822.png -> jerry-kneel-hint-0822.png
+  - da14ee0b1d44485eabc4c1494ff7fa1980a9b3fce51f290946b203204ccc1cf7 -> 7f1655bb77326d37e029fb3adb1b2673f1bdf6a1b70550f939ec64f7982baea5
   - ep2-b13-lowerbody-w2-0822 -> ep2-b13-lowerbody-kneel-0822
   overrides_applied_and_asserted:
     argv:--control:
     - step dry --control (C:\banyan-farm\b13lowerbodykneel-0822\jerry-kneel-hint-0822.png -> C:\banyan-farm\b13lowerbodykneel-0822\jerry-kneel-hint-0822.png)
     - step s20260823 --control (C:\banyan-farm\b13lowerbodykneel-0822\jerry-kneel-hint-0822.png -> C:\banyan-farm\b13lowerbodykneel-0822\jerry-kneel-hint-0822.png)
-    argv:--control-sha256:
-    - step dry --control-sha256 (da14ee0b1d44485eabc4c1494ff7fa1980a9b3fce51f290946b203204ccc1cf7 -> 7f1655bb77326d37e029fb3adb1b2673f1bdf6a1b70550f939ec64f7982baea5)
-    - step s20260823 --control-sha256 (da14ee0b1d44485eabc4c1494ff7fa1980a9b3fce51f290946b203204ccc1cf7
-      -> 7f1655bb77326d37e029fb3adb1b2673f1bdf6a1b70550f939ec64f7982baea5)
     argv:--note:
     - 'step dry --note (ROUND TWO OF THE MASKED LOWER-BODY PASS: THE WORDING, AND NOTHING ELSE. Round
       one held the head at strength 0.95 -- the mask design works -- and filled the entire masked band
