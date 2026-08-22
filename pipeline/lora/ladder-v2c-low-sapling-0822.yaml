@@ -28,6 +28,39 @@
 # scored at 0.8. Bars tighten forward only.
 #
 # PRIORITY 141: low, one behind the gate. The goblin/jerry lane owns the card.
+#
+# ══════════════════════════════════════════════════════════════════════════
+# ███ RAN 2026-08-22, rc=0, six cells drawn. THE WEIGHT AXIS IS CLOSED.      ███
+#
+#   weight   CLEAN (B3: figure on the bridge)      SUBJECT
+#   0.00     PRESENT — the reference               (not drawn)
+#   0.20     PRESENT, frame close to no-LoRA       BASE MASCOT, closed eyes
+#   0.35     DELETED                               tiny, distant, one leaf
+#   0.50     present, composition heavily recut    three laminae
+#   0.65     DELETED                               three laminae
+#   0.80     DELETED (pre-registered B3 FAIL)      canon two leaves
+#
+# NO CROSSING POINT, same as v1. 0.20 is the only rung whose clean side could
+# pass B3, and it is the rung whose subject is the base checkpoint's own prior.
+# 0.80 is the only rung that draws the canon plant, and it is where B3 fails
+# hardest. Lowering the weight also costs B5 -- a third lamina at 0.65 and 0.50
+# -- so the lever trades away the bar v2c had just won and buys nothing.
+#
+# THE OPEN QUESTION THIS ANSWERED: v2c carries a third more training than v1,
+# so does its subject survive lower? No. It collapses at the same rungs, into
+# the same mascot. The band's lower bound is a property of the BASE PRIOR, not
+# of training volume.
+#
+# DELETION IS NOT MONOTONIC (0.20 keeps, 0.35 loses, 0.50 keeps, 0.65/0.80
+# lose). One seed cannot tell "deletes people above X" from "perturbs the frame
+# and the person is what falls out". It does not change the ruling -- no rung
+# holds both sides either way -- which is why the finding is "no crossing
+# point" and not a threshold. A seed sweep would settle the mechanism, and
+# nothing downstream is waiting on the mechanism.
+#
+# NEXT LEVER IS THE MERGE, and it is research before it is a job. Ruling filed
+# in registry.yaml under the v2c entry.
+# ══════════════════════════════════════════════════════════════════════════
 
 id: lora-sapling-ladder-v2c-low-0822
 task: lora-sapling-ladder-v2c-low-0822

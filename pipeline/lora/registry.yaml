@@ -342,7 +342,8 @@ loras:
     2 -> 3. 59 x 3 = 177 images/epoch, 88 optimizer steps/epoch, 880 steps and
     1770 image passes — a third more training than v2b's 1180 and a third more
     than v1's 1320.
-  status: MEASURED — BOTH v2 REGRESSIONS ARE NOW EXPLAINED AND BOTH ARE GONE
+  status: MEASURED, NOT SHIPPABLE — best checkpoint the lane has made, and the
+    weight axis is now closed on it too
   base: cagliostrolab/animagine-xl-3.1
   trained_by: pipeline/lora/train-sapling-v2c-0822.yaml
   trained_on: '2026-08-22'
@@ -432,7 +433,58 @@ loras:
     datasets, two caption schemes and now two training volumes, which is the
     fourth independent confirmation of v2b's ruling that B3 is not a dataset bar
     at all. None of the three is answered by another retrain.
-  shipping_weight: null
+
+  # ════════════════════════════════════════════════════════════════════════
+  # THE WEIGHT AXIS IS CLOSED. Measured 2026-08-22, after the bars, on this
+  # checkpoint, at seed 20260822 / 832x1216 / 40 steps / 7.5 guidance — the same
+  # instrument as v2c's own 0.8 pair, which is why 0.8 and 0.0 needed no redraw.
+  # Two jobs: the gate rung (0.65, drawn and LOOKED AT before the rest) and then
+  # the low rungs (0.5 / 0.35 / 0.2). Both sides at every rung.
+  #
+  #   weight   CLEAN side (B3: the figure on the bridge)   SUBJECT side
+  #   0.00     figure PRESENT — the reference                (not drawn)
+  #   0.20     figure PRESENT, frame close to no-LoRA        BASE MASCOT: a round
+  #                                                          green creature with
+  #                                                          closed eyes
+  #   0.35     figure DELETED                                tiny, distant, one
+  #                                                          leaf, illegible
+  #   0.50     figure present, composition heavily recut     three laminae
+  #   0.65     figure DELETED                                three laminae
+  #   0.80     figure DELETED (the pre-registered B3 FAIL)   canon two leaves
+  #
+  # THE TWO CURVES DO NOT CROSS, exactly as they did not for v1. The only rung
+  # where B3 could pass is 0.20, and at 0.20 the subject is the base
+  # checkpoint's own prior — the round mascot the five closed wording ladders
+  # kept drawing. The only rung where the subject is canon is 0.80, where B3
+  # fails hardest. There is no band that holds both.
+  #
+  # AND TURNING IT DOWN COSTS THE BAR v2c JUST WON. At 0.65 and 0.50 the plant
+  # grows a THIRD lamina — the exact defect B5 scores. So the weight lever does
+  # not trade B3 against nothing; it trades B5 away and does not buy B3 until
+  # the subject is gone. Recorded, not scored: B5 is a 15-frame bar and these
+  # are single frames.
+  #
+  # THE EXTRA TRAINING DID NOT EXTEND THE BAND DOWNWARD, which was the open
+  # question. v2c carries a third more training than v1 and is the first run to
+  # pass both subject bars, and its subject collapses at exactly the rungs v1's
+  # did, into exactly the same mascot. The lower bound of the usable band is a
+  # property of the BASE PRIOR, not of how long we train against it.
+  #
+  # DELETION IS NOT MONOTONIC. 0.20 keeps the figure, 0.35 loses it, 0.50 keeps
+  # it, 0.65 and 0.80 lose it. One seed cannot separate "the LoRA deletes people
+  # above X" from "the LoRA perturbs the frame and sometimes the person is what
+  # falls out". That does not change the ruling — no rung holds both sides
+  # either way — but it is the reason the finding is stated as "no crossing
+  # point" and not as a threshold.
+  # ════════════════════════════════════════════════════════════════════════
+  shipping_weight: null   # measured across five rungs, not merely unset
+  weight_ladder:
+  - pipeline/lora/ladder-v2c-sapling-0822.yaml       # gate rung 0.65
+  - pipeline/lora/ladder-v2c-low-sapling-0822.yaml   # 0.5 / 0.35 / 0.2
+  ladder_evidence:
+  - review/ep3-sapling-lora-0822/CONTACT-ladder-v2c-clean-0822.png
+  - review/ep3-sapling-lora-0822/CONTACT-ladder-v2c-subject-0822.png
+  - review/ep3-sapling-lora-0822/CONTACT-ladder-v2c-bridge-1to1-0822.png  # the B3 evidence, 1:1
   verdict: >-
     v2c IS THE BEST CHECKPOINT THIS LANE HAS MADE AND IT SUPERSEDES v1 AS THE
     REFERENCE, but no shipping weight is sanctioned. It is the first run to pass
@@ -448,13 +500,26 @@ loras:
     exonerated. Another retrain on this dataset has no question left to answer,
     and queueing one would be work without a consumer.
 
-    THE NEXT LEVER IS THE WEIGHT, NOT THE DATA. B3 has now failed at 0.8 across
-    four runs, three datasets, two caption schemes and two volumes; v2b already
-    ruled it "not a dataset bar" and this run is the fourth confirmation.
-    ladder-sapling-0822.yaml walks 0.65 / 0.5 / 0.35 / 0.2 with both sides drawn
-    at each rung and it was written against v1's weights. Re-point it at v2c and
-    it becomes the one measurement that could still produce a shippable number.
-    It is NOT filed here: the ladder is a SET, its own header says a rung sweep
-    is only worth the card once the checkpoint under it is the one you would
-    ship, and that decision has a sample gate in front of it like everything
-    else.
+    THE WEIGHT LEVER WAS THE ONE MEASUREMENT LEFT AND IT IS NOW SPENT. It was
+    written up here as "the one measurement that could still produce a shippable
+    number"; it was run the same day, gate rung first, and it produced no number.
+    The two curves do not cross for v2c any more than they did for v1: 0.20 is
+    the only rung where the bridge figure survives and it is also the rung where
+    the subject reverts to the base checkpoint's mascot, while 0.80 is the only
+    rung that draws the canon two-leaf plant and it is where B3 fails hardest.
+    Turning the weight down additionally costs B5, which v2c had just won — the
+    plant grows a third lamina at 0.65 and 0.50. See the ladder block above.
+
+    SO EVERY AXIS THIS LANE OWNS IS CLOSED. Dataset: finished at v2c. Epoch:
+    closed at v1 (e6 fixed nothing). Captions: closed at v2b. Volume: closed at
+    v2c. Weight: closed here. B3 has failed at 0.8 in four runs and now fails
+    across the whole usable band in the best of them.
+
+    WHAT IS LEFT IS THE MERGE LEVER, and it is a different mechanism rather than
+    another dial on this one: fusing at a lower effective rank, block-weighted
+    merging that spares the layers carrying figures, or keeping the LoRA off the
+    frames it is not invoked on entirely. That is a research question before it
+    is a job — nothing should be queued against it until the outside-the-repo
+    reading is done. Until then NOTHING LOADS bnysapling: there is no sanctioned
+    weight, and "0.8 with B3 failing" is a choice to contaminate every frame the
+    plate step draws.

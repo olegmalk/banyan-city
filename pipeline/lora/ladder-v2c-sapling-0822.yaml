@@ -42,6 +42,27 @@
 # priority; its dataset re-rolls jump this. Lower number runs first
 # (box_runner.Queue.ready_jobs sorts (priority, name) ascending), so 140 sits
 # behind the default 100 and behind the v1 ladder's 71.
+#
+# ══════════════════════════════════════════════════════════════════════════
+# ███ RAN 2026-08-22, rc=0, both cells drawn. THE GATE FAILED B3 AND PASSED  ███
+# ███ AS A RECIPE, which is what a gate is for.                              ███
+#
+#   CLEAN  @0.65 -- the figure on the bridge is STILL DELETED, and the frame is
+#   near-indistinguishable from 0.8: same recut composition, same warmer/darker
+#   treatment, same missing person. Contamination does not fade at the top of
+#   the ladder.
+#   SUBJECT @0.65 -- the canon plant still draws, and grows a THIRD lamina.
+#   Recorded, not scored (B5 is a 15-frame bar; this is one frame).
+#
+# The re-point itself is sound: correct sidecars, lora_sha256 28381f3a...,
+# weight 0.65, seed 20260822, frame-comparable to v2c's 0.8 pair. So extending
+# to the remaining rungs stopped being an unapproved batch and became a
+# looked-at result being continued -> ladder-v2c-low-sapling-0822.yaml.
+#
+# THE FULL LADDER CLOSES THE WEIGHT AXIS. Table and ruling live in
+# registry.yaml under the v2c entry; evidence in
+# review/ep3-sapling-lora-0822/CONTACT-ladder-v2c-*.png.
+# ══════════════════════════════════════════════════════════════════════════
 
 id: lora-sapling-ladder-v2c-gate-0822
 task: lora-sapling-ladder-v2c-gate-0822
