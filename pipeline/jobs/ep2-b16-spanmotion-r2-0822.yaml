@@ -1,0 +1,241 @@
+id: ep2-b16-spanmotion-r2-0822
+task: ep2-b16-spanmotion-r2-0822
+node: 002b-first-citizen
+beat: 16
+runner: box
+priority: 19
+needs_gpu: true
+max_attempts: 1
+owner: single-rung lane, 2026-08-22
+consumer: BEAT 16's CANDIDATE MOTION IF IT PASSES, and either way it closes the survival law. review/ep2-ship-0821
+  is NOT touched.
+success: ONE 704x1280 105-frame clip whose lower-left sapling is still in the picture at frame 104, measured
+  as leaf-green pixels in its ROI and not judged by eye alone.
+why: 'ROUND ONE KILLED ITS OWN HYPOTHESIS AND THE RECORD NAMED THE REPLACEMENT. The plant separated from
+  the figure, in its own space against out-of-focus grass, died FASTER than the plant that sat on him:
+  gone by f005 against f050. So ''the model can tell where it ends'' is not the boundary condition.
+
+
+  THE OTHER CANDIDATE IS 4-FOR-4 AND 0-FOR-2. Every composited object that has survived i2v in this tree
+  was NAMED in its motion prompt -- b12''s sapling, b21''s leaf, b19''s fig, b06''s board -- and the only
+  two that vanished, both on beat 16, are the only two whose prompt never mentions the object. That is
+  the prompt-summons law, which this tree already paid for on beats 02, 03, 07 and 20 in its other direction:
+  a subject that is not PLACED in the wording is not drawn.
+
+
+  This clip places it. The init is byte-identical to round one''s and the clause is an ADDITION -- the
+  figure clause and the action sentence are untouched.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b16-spanmotion-r2-0822\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os,\
+    \ sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b16-spanmotion-r2-0822\b16-motion-prompt.txt: '2D anime, hand-drawn cel animation,
+    static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art.
+    Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white
+    almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar
+    sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the
+    whole clip. He is sitting, in tall grass, full body. IN THE FOREGROUND AT THE LOWER LEFT, CLOSE TO
+    CAMERA, THERE IS A TINY SAPLING AND IT IS THERE FOR THE WHOLE CLIP: one slender upright green stem
+    carrying EXACTLY TWO broad rounded cotyledon leaves with soft round tips, standing in the grass clear
+    of him and not touching him. THE SAPLING DOES NOT MOVE, DOES NOT GROW, DOES NOT FADE AND DOES NOT
+    LEAVE THE FRAME -- it is in the picture at the first frame and it is still in the picture at the last
+    frame, the same size, the same shape and in the same place. TWO LEAVES ONLY: no third leaf, no crown,
+    no bush. THE ACTION: he breathes -- his shoulders rise and settle twice -- and his head drifts slowly
+    to one side and back to centre over the whole clip. Nothing else moves. HALFWAY THROUGH his head is
+    over to one side, shoulders down.'
+  C:\banyan-farm\ep2-b16-spanmotion-r2-0822\b16-negative.txt: second face, second goblin, two goblins,
+    extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face,
+    morphing, melting face, featureless face, blank face, losing facial features, skin colour change,
+    clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark
+  C:\banyan-farm\ep2-b16-spanmotion-r2-0822\b16-jobs-encode.json: '[{"beat": 20, "embeds": "C:\\banyan-farm\\ep2-b16-spanmotion-r2-0822\\b16-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b16-spanmotion-r2-0822\\b16-motion-prompt.txt", "negative_file":
+    "C:\\banyan-farm\\ep2-b16-spanmotion-r2-0822\\b16-negative.txt"}]'
+  C:\banyan-farm\ep2-b16-spanmotion-r2-0822\b16-jobs-render.json: '[{"beat": 20, "seed": 20260886, "embeds":
+    "C:\\banyan-farm\\ep2-b16-spanmotion-r2-0822\\b16-embeds.pt", "init": "C:\\banyan-farm\\ep2-b16-spanmotion-r2-0822\\b16-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b16-spanmotion-r2-0822\\16-why-LTX-ep2-b16-spanmotion-r2-0822.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b16-spanmotion-r2-0822\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b16-sapnat4-0821\b16-sapnat4-s20260820.png
+  - --sha256
+  - 8b5a432428c99c79a7349f8001b55c2ed268747d989fbf871a413dda8c2869c0
+  - --out
+  - C:\banyan-farm\ep2-b16-spanmotion-r2-0822\b16-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b16-spanmotion-r2-0822\b16-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b16-spanmotion-r2-0822\b16-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '105'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b16-spanmotion-r2-0822
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b16-spanmotion-r2-0822\bench-ep2-b16-spanmotion-r2-0822.jsonl
+  - --bench-label
+  - ep2-b16-spanmotion-r2-0822
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b16-spanmotion-r2-0822\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b16-spanmotion-r2-0822/16-why-LTX-ep2-b16-spanmotion-r2-0822.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b16-spanmotion-r2-0822/b16-init-704x1280.png\")\n\
+    \             + glob.glob(\"C:/banyan-farm/ep2-b16-spanmotion-r2-0822/bench-ep2-b16-spanmotion-r2-0822.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b16-spanmotion-r2-0822.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot\
+    \ pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b16-spanmotion-r2-0822\16-why-LTX-ep2-b16-spanmotion-r2-0822.mp4
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. The line is untouched by this job. Beat 04''s staging is quoted in `script_line` from jerry_canon_0821.WAVE[4],
+  which is the same node text the canon plate under this clip was drawn against. NOTE ON PROVENANCE: this
+  spec''s parent is a BEAT 20 job and both of these keys cross derive_spec''s allow-list as structure
+  -- carried unedited they would have had beat 04 claiming beat 16''s restaging as its authority, so they
+  are re-stated here rather than inherited.'
+script_line: THE FOOTNOTE -- 'leans out from behind the trunk to look, and pulls straight back the moment
+  he has looked'. THE PEEK, the founder's own restaging pick (A, 2026-08-20). The eyes are the whole beat.
+bar: "SAME BAR AS ROUND ONE, WITH M1 SHARPENED BY WHAT ROUND ONE MEASURED.\n\n  M1  THE PLANT IS STILL\
+  \ THERE AT THE LAST FRAME. Round one's plant was gone\n      by f005 -- 8,311 leaf-green px in its ROI\
+  \ at f000, 5,130 at f004, ZERO\n      from f005 on. Measure the same way; do not judge this one by eye\
+  \ alone.\n  M2..M5 unchanged from ep2-b16-spanmotion-0822."
+failure_predicted_in_advance: 'FIRST: naming the sapling summons a SECOND one somewhere else in the frame,
+  which is the prompt-summons law''s own cost and is what `TWO LEAVES ONLY` in the clause is for.
+
+  SECOND: the clause pulls focus and the model animates the plant -- growing or unfurling it -- against
+  a beat whose action is him breathing. The clause says DOES NOT MOVE and DOES NOT GROW for that reason.
+
+  THIRD: it survives and beat 16 is done on this axis, at which point the open items are the founder''s
+  eye ruling and the camera push-in, neither of which is this spec''s.'
+measured_evidence_for_this_rung: 'SURVIVED, object named in the prompt: ep2-b12-leafmotion-0822 and ep2-b12-stillmotion-r2-0822
+  (sapling, seedling, leaves), ep2-b21-leafmotion-0822 (leaf), ep2-b19-dropmotion-{0822,r2-0822} (fig),
+  ep2-b06-boardmotion-0822 (board, plank). VANISHED, object NOT named: ep2-b16-plantmotion-0822 (f050),
+  ep2-b16-spanmotion-0822 (f005). Read off the specs'' own payloads, not from memory.'
+not_done_on_purpose: NO CUT IS SWAPPED and the plate is not re-rendered. If this fails too, the lane records
+  that beat 16's plant cannot be carried through i2v by either lever it had and stops -- the next move
+  would be a different motion recipe, which is a wave-wide change and not a beat's rung.
+the_one_variable: THE WORDING, and it is an addition of one clause. The init, its digest, the negative,
+  the size, the frames, the fps, the guidance, the sigmas, the staging and the crf are all ep2-b16-spanmotion-0822's,
+  unchanged.
+the_rung_this_is_one_variable_from: ep2-b16-spanmotion-0822 -- same init, no sapling in the wording, plant
+  gone by f005.
+derivation:
+  parent: pipeline/jobs/ep2-b16-plantmotion-0822.yaml
+  by: pipeline/file_b16_spanmotion_0822.py --placed
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - measured_evidence_for_this_rung
+  - not_done_on_purpose
+  - owner
+  - success
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - not_done_on_purpose
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  retokened:
+  - ep2-b16-plantmotion-0822 -> ep2-b16-spanmotion-r2-0822
+  - ep2-b16-plantmotion-0822 -> ep2-b16-spanmotion-r2-0822
+  overrides_applied_and_asserted:
+    argv:--sha256:
+    - step crop --sha256 (3ebad0cd38095aa47b92fee098a5dc4dc80fb8064df67afb748722efbbbdd07b -> 8b5a432428c99c79a7349f8001b55c2ed268747d989fbf871a413dda8c2869c0)
+    argv:--src:
+    - step crop --src (C:\banyan-farm\courier-box\farm-out\ep2-b16-sapnat3-0821\b16-sapnat3-s20260820.png
+      -> C:\banyan-farm\courier-box\farm-out\ep2-b16-sapnat4-0821\b16-sapnat4-s20260820.png)
+    key:beat:
+    - key beat = 16
+    key:priority:
+    - key priority = 19
+    payload:b16-motion-prompt.txt:
+    - payload b16-motion-prompt.txt (717 -> 1275 chars)
