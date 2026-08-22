@@ -1,0 +1,136 @@
+{
+  "id": "ep2-b13-lowerbody-oneknee-0822-1787411184",
+  "task": "ep2-b13-lowerbody-oneknee-0822",
+  "node": "002b-first-citizen",
+  "beat": 13,
+  "worker": "box-runner",
+  "priority": 2,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\fetch_init.py"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\jerry-seat-init-0822.png",
+        "--init-sha256",
+        "67ad5c8ba2082496780cdadbe93883835ae9df6e147b0663d9aafefb5e1323c9",
+        "--mask-png",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\jerry-seat-mask-0822.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\b13-lowerbody-oneknee-DRY.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.95",
+        "--pad-crop",
+        "0",
+        "--blur",
+        "8",
+        "--seed",
+        "20260823",
+        "--note",
+        "THE GENERALISATION GATE. Round two proved the masked lower-body route on ONE skeleton -- a seat. The v3 stance set needs four to six distinct poses, so whether the route makes A POSE or makes THE SEAT is the gate on the whole set, and this cell is that question. The ONE variable is the hint: jerry-seat-hint-0822.png -> jerry-kneel-hint-0822.png, knees DOWN and forward instead of up and out, shins folded back and splayed. THE PROMPT IS NOT TOUCHED and still says `seated`, deliberately: that points the two conditioning channels at each other and reads off which one carries the geometry. Everything else byte-identical to round two -- same init sha 67ad5c8b, same mask sha 81357e39, same net, scale 1.0, --pad-crop 0, 40 steps, cfg 7.5, strength 0.95, seed 20260823, no LoRA. WHAT TO CHECK ON THE DRY PNG: white starts at row 890 and nowhere above it, full width -- byte-identical to rounds one, two and three.",
+        "--dry-run",
+        "--controlnet",
+        "xinsir/controlnet-openpose-sdxl-1.0",
+        "--control",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\jerry-oneknee-hint-0822.png",
+        "--control-sha256",
+        "659f9f46eda2d2411f0c27d87854fe866705fc503fac9e7551cf4891d87973a9",
+        "--scale",
+        "1.0"
+      ]
+    },
+    {
+      "name": "s20260823",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\jerry-seat-init-0822.png",
+        "--init-sha256",
+        "67ad5c8ba2082496780cdadbe93883835ae9df6e147b0663d9aafefb5e1323c9",
+        "--mask-png",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\jerry-seat-mask-0822.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\b13-lowerbody-oneknee-s20260823.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.95",
+        "--pad-crop",
+        "0",
+        "--blur",
+        "8",
+        "--seed",
+        "20260823",
+        "--note",
+        "THE GENERALISATION GATE. Round two proved the masked lower-body route on ONE skeleton -- a seat. The v3 stance set needs four to six distinct poses, so whether the route makes A POSE or makes THE SEAT is the gate on the whole set, and this cell is that question. The ONE variable is the hint: jerry-seat-hint-0822.png -> jerry-kneel-hint-0822.png, knees DOWN and forward instead of up and out, shins folded back and splayed. THE PROMPT IS NOT TOUCHED and still says `seated`, deliberately: that points the two conditioning channels at each other and reads off which one carries the geometry. Everything else byte-identical to round two -- same init sha 67ad5c8b, same mask sha 81357e39, same net, scale 1.0, --pad-crop 0, 40 steps, cfg 7.5, strength 0.95, seed 20260823, no LoRA. WHAT TO CHECK ON THE DRY PNG: white starts at row 890 and nowhere above it, full width -- byte-identical to rounds one, two and three.",
+        "--controlnet",
+        "xinsir/controlnet-openpose-sdxl-1.0",
+        "--control",
+        "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\jerry-oneknee-hint-0822.png",
+        "--control-sha256",
+        "659f9f46eda2d2411f0c27d87854fe866705fc503fac9e7551cf4891d87973a9",
+        "--scale",
+        "1.0"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b13lowerbodyoneknee-0822\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-lowerbody-oneknee-0822\"\nNAMES = [\n    \"b13-lowerbody-oneknee-s20260823.png\",\n    \"b13-lowerbody-oneknee-s20260823-mask.png\",\n    \"b13-lowerbody-oneknee-s20260823.png.meta.yaml\",\n    \"jerry-seat-init-0822.png\",\n    \"jerry-seat-mask-0822.png\",\n    \"jerry-oneknee-hint-0822.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b13-lowerbody-oneknee-0822.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\b13-lowerbody-oneknee-s20260823.png",
+    "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\jerry-seat-init-0822.png"
+  ],
+  "spec_sha256": "4a26c0ea23630ba7e33a79f4b66045c29e312e406319085b1f65cd86d44357ab",
+  "started_at": "2026-08-22T15:06:31Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-22T15:06:57Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\b13-lowerbody-oneknee-s20260823.png",
+    "C:\\banyan-farm\\b13lowerbodyoneknee-0822\\jerry-seat-init-0822.png"
+  ]
+}
