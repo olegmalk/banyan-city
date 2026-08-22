@@ -1,0 +1,112 @@
+{
+ "apex": [
+  303.1,
+  615.9
+ ],
+ "argv": [
+  "--plate",
+  "farm-out/ep2-b12-sapnat-0822/b12-plate-src-0822.png",
+  "--plate-sha256",
+  "554db53257fde35ffa8a2f750c3fa9edef14aa9ffb3e2e30f75d6743cac537e8",
+  "--root",
+  "330,1000",
+  "--height",
+  "385",
+  "--tilt",
+  "-4",
+  "--leaf-frac",
+  "0.60",
+  "--erase-box",
+  "0,320,704,1280",
+  "--body-box",
+  "0,1000,704,1280",
+  "--fill-mode",
+  "row",
+  "--out",
+  "/private/tmp/claude-501/-Users-artovonkugler-banyan-city/64b805a9-baa3-42c0-bbea-d13f8996a4fc/scratchpad/b12-recut-row.png",
+  "--mask-out",
+  "/private/tmp/claude-501/-Users-artovonkugler-banyan-city/64b805a9-baa3-42c0-bbea-d13f8996a4fc/scratchpad/b12-recut-row-mask.png"
+ ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
+ "c5_reference": "erased plant",
+ "c5_reference_luma": 84.1,
+ "erase_box": "0,320,704,1280",
+ "erased_px": 166607,
+ "field_mean_luma": 222.4,
+ "fill_mode": "row",
+ "height_px": 385.0,
+ "leaf_len_px": 231.0,
+ "leaves": [
+  {
+   "len": 231.0,
+   "node": [
+    302.1,
+    620.9
+   ],
+   "side": -1.0,
+   "tip": [
+    91.1,
+    562.7
+   ]
+  },
+  {
+   "len": 244.9,
+   "node": [
+    304.1,
+    615.9
+   ],
+   "side": 1.0,
+   "tip": [
+    511.8,
+    535.5
+   ]
+  }
+ ],
+ "light_dx": -0.105,
+ "light_dy": -0.994,
+ "lit_side": "left",
+ "mask_fraction": 0.2327,
+ "palette": {
+  "dark": [
+   70,
+   94,
+   63
+  ],
+  "ink": [
+   40,
+   46,
+   34
+  ],
+  "light": [
+   74,
+   99,
+   67
+  ],
+  "mid": [
+   72,
+   97,
+   64
+  ],
+  "n_sampled": 114421,
+  "source": "the erased weed"
+ },
+ "plant_extent": [
+  90,
+  512,
+  526,
+  1003
+ ],
+ "plant_fill_luma": 90.1,
+ "plant_fraction": 0.0394,
+ "plate": "farm-out/ep2-b12-sapnat-0822/b12-plate-src-0822.png",
+ "plate_sha256": "554db53257fde35ffa8a2f750c3fa9edef14aa9ffb3e2e30f75d6743cac537e8",
+ "root": [
+  330.0,
+  1000.0
+ ],
+ "size": [
+  704,
+  1280
+ ],
+ "tilt_deg": -4.0
+}

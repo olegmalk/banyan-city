@@ -302,6 +302,87 @@ def fill_from_boundary(a: np.ndarray, hole: np.ndarray,
     return np.clip(out, 0, 255).astype(np.uint8)
 
 
+def fill_harmonic(a: np.ndarray, hole: np.ndarray,
+                  body: np.ndarray = None, iters: int = 3) -> np.ndarray:
+    """Fill `hole` from its OWN boundary in TWO dimensions, not row by row.
+
+    WHY THIS EXISTS, and it is a correction to the function above rather than an
+    alternative to it. `fill_from_boundary`'s docstring states its premise in
+    the open: *"this plate is a horizontally banded field -- so the fill is a
+    per-row linear interpolation between the nearest surviving pixels on that
+    row, which reproduces the banding exactly."* That is true of the b15 grass
+    plate and of b19's, and it is FALSE OF A CUMULUS CLOUD BANK. Beat 12's
+    composite erased two 250 px discs out of the sky and interpolated each of
+    ~670 rows between whatever survived at its two ends, which manufactured a
+    fan of horizontal streaks across the clouds. `ep2-b12-sapnat2-0822` then
+    did what 0.30 does -- it FINISHED the structure it was given -- and the
+    smear came back through the pass intact. The pre-registered note called
+    that outcome "the finding" and named the fix: a smaller erase and a redrawn
+    sky.
+
+    > A FILL DIRECTION IS A CLAIM ABOUT THE PLATE. Per-row is right where the
+    > backdrop is banded along rows and wrong everywhere else, and being wrong
+    > about it does not leave a blur -- it INVENTS STRUCTURE, which is the one
+    > kind of error the naturalize pass is guaranteed to preserve.
+
+    THE METHOD is normalized convolution at a decreasing scale: the value of a
+    hole pixel is the Gaussian-weighted mean of the surviving pixels of its own
+    class, taken first at a scale wide enough to reach across the hole and then
+    at finer scales wherever enough real support is in range. It is the same
+    boundary data the per-row fill uses, read in both axes instead of one, so
+    the two properties the row fill was chosen for both survive: NOTHING IS
+    COPIED FROM ELSEWHERE IN THE FRAME (decal tell #4 stays impossible) and the
+    fill stays WITHIN CLASS -- an out-of-class pixel has weight zero by
+    construction, so a hole in the sky is never averaged with grass or skin.
+
+    What it gives up is detail: a harmonic fill is smooth, and smooth is a wash
+    rather than a cloud. That is the trade taken deliberately. A soft pale wash
+    in the bank's own colours is a plausible piece of cumulus for the 0.30 pass
+    to finish; a set of horizontal bars is not a piece of anything.
+    """
+    from scipy.ndimage import gaussian_filter          # noqa: WPS433
+
+    out = a.astype(np.float32).copy()
+    H, W = a.shape[:2]
+    if body is None:
+        body = np.zeros((H, W), bool)
+    for cls in (~body, body):
+        tgt = hole & cls
+        if not tgt.any():
+            continue
+        known = (~hole) & cls
+        if known.sum() < 64:
+            continue
+        w = known.astype(np.float32)
+        # WIDE ENOUGH TO CROSS THE HOLE, then down. The first sigma is derived
+        # from the hole itself rather than chosen: half its larger side, so the
+        # deepest interior pixel has real support at the coarsest level.
+        ys, xs = np.nonzero(tgt)
+        span = max(int(xs.max() - xs.min()), int(ys.max() - ys.min())) + 1
+        sigma = max(8.0, span / 2.0)
+        sigmas = []
+        while sigma >= 2.0:
+            sigmas.append(sigma)
+            sigma /= 2.0
+        for s in sigmas:
+            den = gaussian_filter(w, s, mode="nearest")
+            # Only take a value where there is real support at THIS scale;
+            # the interior keeps the coarser answer it already has.
+            take = tgt & (den > 1e-3)
+            if not take.any():
+                continue
+            for c in range(3):
+                num = gaussian_filter(out[..., c] * w, s, mode="nearest")
+                out[take, c] = (num / np.maximum(den, 1e-6))[take]
+        # the same seam-removal the row fill ends with, and only inside the hole
+        for _ in range(max(1, iters)):
+            blur = np.asarray(Image.fromarray(
+                np.clip(out, 0, 255).astype(np.uint8)
+            ).filter(ImageFilter.GaussianBlur(2.0))).astype(np.float32)
+            out[tgt] = blur[tgt]
+    return np.clip(out, 0, 255).astype(np.uint8)
+
+
 def sha256_of(path: str) -> str:
     with open(path, "rb") as fh:
         return hashlib.sha256(fh.read()).hexdigest()
@@ -488,6 +569,20 @@ def main() -> int:
                          "so growth cannot eat his edge.")
     ap.add_argument("--fill-iters", type=int, default=3,
                     help="diffusion passes after the per-row interpolation")
+    ap.add_argument("--fill-mode", choices=("row", "harmonic"), default="row",
+                    help="HOW THE ERASED HOLE IS REPAINTED, and it is a claim "
+                         "about the plate rather than a preference. `row` is "
+                         "b19's per-row interpolation and is right where the "
+                         "backdrop is BANDED ALONG ROWS -- the b15 grass plate, "
+                         "b19's field. `harmonic` reads the same boundary in "
+                         "both axes and is what a plate whose backdrop is NOT "
+                         "row-banded needs: beat 12 erased two 250 px discs out "
+                         "of a cumulus bank with `row` and got a fan of "
+                         "horizontal streaks, which ep2-b12-sapnat2-0822 then "
+                         "preserved exactly as 0.30 is supposed to preserve a "
+                         "structure. DEFAULT STAYS `row` so every plate this "
+                         "tool has already cut reproduces byte for byte from "
+                         "its own command line.")
     ap.add_argument("--erase-clearance", type=int, default=24,
                     help="C0: how far out to look for ink of another class "
                          "beside the hole. Reported always; only refuses when "
@@ -631,7 +726,10 @@ def main() -> int:
                   "field with whatever that ink belongs to -- b19's v11 left a "
                   "22 px grey smear doing exactly this. Pass --body-box.")
             return 1
-        arr = fill_from_boundary(raw, weed, body=body, iters=a.fill_iters)
+        _fill = (fill_harmonic if a.fill_mode == "harmonic"
+                 else fill_from_boundary)
+        arr = _fill(raw, weed, body=body, iters=a.fill_iters)
+        print("fill   mode=%s" % a.fill_mode)
 
     # ---- geometry ---------------------------------------------------------
     rx, ry = a.root
@@ -806,6 +904,15 @@ def main() -> int:
                     for k, v in pal.items()},
         "erased_px": int(weed.sum()),
         "erase_box": a.erase_box,
+        "fill_mode": a.fill_mode,
+        # THE COMMAND LINE, WRITTEN DOWN. Beat 12's re-cut on 2026-08-22 needed
+        # its parent's argv to hold one variable against it and the argv was
+        # nowhere: not in the geometry json, not in the naturalize spec, not in
+        # the ladder. Four numbers had to be reverse-engineered off the geometry
+        # and two (erase-lum, body-box) could not be recovered at all, so a rung
+        # that should have been one variable is two. A tool whose output is an
+        # INPUT to a GPU job has to record how it was called.
+        "argv": list(sys.argv[1:]),
         "mask_fraction": round(frac, 4),
         "plant_extent": ([int(xs.min()), int(xs.max()),
                           int(ys.min()), int(ys.max())] if len(xs) else None),
