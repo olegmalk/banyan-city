@@ -4753,3 +4753,4 @@
 12:59:28Z FAIL task=lora-jerry-v2-tp1rest-0822-1787403561 rc=2 step=tp1rest-b02stride
 13:01:53Z STARTED task=lora-jerry-v2-tp1rest-0822-1787403709-againf5c7b0 attempt=1 on box-runner
 13:03:07Z DONE task=lora-jerry-v2-tp1rest-0822-1787403709-againf5c7b0 rc=0 artifacts=1
+13:08:13Z box-runner idle ready=0 failed=127
