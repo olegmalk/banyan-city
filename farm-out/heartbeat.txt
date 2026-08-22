@@ -4290,3 +4290,4 @@
 00:30:33Z DONE task=ep2-b05-pose-0822-1787358529 rc=0 artifacts=1
 00:36:09Z STARTED task=ep2-b06-pose-r3-0822-1787358832 attempt=1 on box-runner
 00:36:42Z DONE task=ep2-b06-pose-r3-0822-1787358832 rc=0 artifacts=1
+00:38:47Z box-runner idle ready=0 failed=86
