@@ -75,18 +75,34 @@ STIR_OLD = ("THE LEAVES STIR GENTLY IN A LIGHT BREEZE \u2014 they lift and "
             "breathing rather than thrashing, while the clouds behind them "
             "drift very slowly. Nothing else moves and the plant stays exactly "
             "where it is in frame.")
-STIR_NEW = ("THE SAPLING IS COMPLETELY STILL. It does not sway, lift, settle, "
-            "turn or breathe; not one leaf moves and the stem does not bend. "
-            "ONLY THE CLOUDS BEHIND IT DRIFT, very slowly. The plant stays "
-            "exactly where it is in frame and holds its shape from the first "
-            "frame to the last.")
+# ROUND 2's TEXT, KEPT SO ITS RESULT STAYS REPRODUCIBLE FROM THIS FILE.
+STIR_R2 = ("THE SAPLING IS COMPLETELY STILL. It does not sway, lift, settle, "
+           "turn or breathe; not one leaf moves and the stem does not bend. "
+           "ONLY THE CLOUDS BEHIND IT DRIFT, very slowly. The plant stays "
+           "exactly where it is in frame and holds its shape from the first "
+           "frame to the last.")
+# ROUND 3, AND IT IS r2's NULL READ FORWARD RATHER THAN r2 TRIED HARDER.
+# r2 banned the movement the prompt named and the model spent the budget on the
+# one it did not: 340 px of GROWTH against r1's zero. So round 3 KEEPS r1's
+# breeze verbatim -- r1 is the take that measured zero climb, and removing its
+# one working clause is what went wrong -- and adds the sentence nobody has
+# ever put in this prompt: the stem does not lengthen and the plant does not
+# get taller. Name the thing that must not move.
+STIR_NEW = ("THE LEAVES STIR GENTLY IN A LIGHT BREEZE \u2014 they lift and "
+            "settle and turn a little on their stalks, the whole plant "
+            "breathing rather than thrashing, while the clouds behind them "
+            "drift very slowly. THE SAPLING DOES NOT GROW: the stem does not "
+            "lengthen, the plant does not get taller, and the tips of the two "
+            "leaves are at the same height in the last frame as in the first. "
+            "Nothing else moves and the plant stays exactly where it is in "
+            "frame.")
 
 ROWS = [
     {
         "beat": 12,
         "parent": "pipeline/jobs/ep2-b12-tightB-0813.yaml",
         "parent_id": "ep2-b12-tightB-0813",
-        "new_id": "ep2-b12-stillmotion-r2-0822",
+        "new_id": "ep2-b12-nogrow-r3-0822",
         "dirtok": "ep2-b12-tightB-0813",
         "pubdir": "ep2-b12-tightB",
         "nat": "ep2-b12-sapnat2-0822",

@@ -9197,3 +9197,14 @@ explicit stillness clause halved the whole-frame movement (mean interframe 1.76 
 > back as the large UNNAMED one. So the fix for "perfectly still" is not to ban
 > movement — it is to name the thing that must not move. `the stem does not
 > lengthen` has never been in this prompt, and that is the next rung.
+
+**ROUND 3, and it is a CONFIRMATION rather than an improvement.** r1's breeze
+clause kept verbatim plus an explicit *"the sapling does not grow: the stem does
+not lengthen, the tips of the two leaves are at the same height in the last frame
+as in the first"*. Result: **apex climb 0 px**, mean interframe 1.76, 75 of 120
+pairs under 0.5 — statistically the same clip as r1 (0 px, 1.76, 72 of 120).
+
+So the named no-grow clause **did no harm and added nothing**, and the useful part
+is what that says about r1: **zero climb reproduces at a second wording**, so r1's
+result is a property of the new PLATE and not a lucky seed. r1 stays the
+candidate; r3 is filed as its control and is not staged.

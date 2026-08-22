@@ -1,0 +1,239 @@
+id: ep2-b12-nogrow-r3-0822
+task: ep2-b12-nogrow-r3-0822
+node: 002b-first-citizen
+beat: 12
+runner: box
+priority: 16
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: morning compositor lane, 2026-08-22
+consumer: 'BEAT 12''S SLOT ON /review/ep2-beats-0821, which has had NO candidate since the page was written
+  and one reason on it: the plant is the wrong shape and the fix is a drawing. The drawing is done and
+  naturalised; this is the render that turns it into a clip a person can watch. The take in the cut is
+  untouched and no cut changes because this landed -- a candidate is a candidate.'
+success: ONE 704x1280 mp4, 121 frames at 24 fps, in which the plant is CANON'S TWO AVERAGE LEAVES in the
+  first frame and in the last, and in which this beat's own motion clause still holds. The beat's shipping
+  fault is not fixed by this job and is not claimed to be.
+why: 'BEAT 12''S PLANT IS THE WRONG SHAPE AND THAT IS NOW FIXED IN THE PLATE, SO THE MOTION IS RE-ASKED
+  OF IT.
+
+
+  What is in the cut today: TWO PERFECT ROUND DISCS on one stem. Canon since the founder''s 2026-08-17
+  ruling is AVERAGE leaves. The wording ladder for leaf shape is CLOSED by measurement -- the strongest
+  wording available returned 0 of 16 frames with two correct leaves -- and the instrument that works is
+  the composite, now five for five, with last night''s beat-19 result adding the piece this rung actually
+  needs: a hand-drawn COMPOSITED object survives i2v motion.
+
+
+  ONE VARIABLE: the init. The crop step''s --src and --sha256 move from the shared 12-related-r4-s2 plate
+  to this beat''s own naturalised composite. The motion prompt is carried BYTE FOR BYTE, because neither
+  beat has a motion fault worth rewording and changing the sentence too would make the result unattributable.
+  $0, ~5 GPU minutes.'
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b12-nogrow-r3-0822\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b12-nogrow-r3-0822\b13-motion-prompt.txt: "2D anime, hand-drawn cel animation, static\
+    \ locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject\
+    \ already in frame: THE FRAME IS TOO TIGHT TO HOLD MORE THAN TWO LEAVES. Only two leaves fit in this\
+    \ shot and there is no room at any edge for a third: ONE leaf on the left and ONE leaf on the right,\
+    \ meeting at a single stem in the middle, and open sky filling everything between and above them.\
+    \ Nothing else is in the frame. THE SAPLING IS TINY AND IT HAS EXACTLY TWO LEAVES. It is a seedling\
+    \ about forty centimetres tall \u2014 NO TALLER THAN THE BLADES OF GRASS AROUND IT, so the grass comes\
+    \ up to its leaves \u2014 one slender upright stem carrying EXACTLY TWO oversized rounded cotyledon\
+    \ leaves and ONE thin bare side-branch with nothing on it. TWO LEAVES ONLY: no third leaf, no crown,\
+    \ no canopy, no bush, no foliage mass, no sprays of leaves. The sapling's leaves are BROAD AND ROUNDED\
+    \ \u2014 wide oval cotyledon leaves with soft round tips, not narrow, not pointed, not lance-shaped\
+    \ and not spiky. a tight close-up of a young sapling's broad leaves seen from below against an open\
+    \ sky with soft clouds behind them. No creature and no person is in this shot. THE LEAVES STIR GENTLY\
+    \ IN A LIGHT BREEZE \u2014 they lift and settle and turn a little on their stalks, the whole plant\
+    \ breathing rather than thrashing, while the clouds behind them drift very slowly. THE SAPLING DOES\
+    \ NOT GROW: the stem does not lengthen, the plant does not get taller, and the tips of the two leaves\
+    \ are at the same height in the last frame as in the first. Nothing else moves and the plant stays\
+    \ exactly where it is in frame. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece,\
+    \ best quality, very aesthetic."
+  C:\banyan-farm\ep2-b12-nogrow-r3-0822\b13-negative.txt: third leaf, many leaves, several leaves, a bunch
+    of leaves, dense foliage, leafy plant, shrub, hedge, undergrowth, grass filling the frame, bush, shrub,
+    crown of leaves, canopy, foliage mass, many leaves, dense leaves, leafy branches, tall tree, sapling
+    taller than the grass, creature, goblin, person, face, hands, animal, dark, dusk, dim lighting, low
+    key, night, pointed leaves, lance-shaped leaves, narrow leaves, spiky leaves, camera pan, camera tilt,
+    panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment,
+    film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing
+    facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways,
+    moving to a different spot, second character, duplicate character, scene change, shot change, new
+    camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b12-nogrow-r3-0822\b13-jobs-encode.json: "[{\"beat\": 12,\n  \"embeds\": \"C:\\\\\
+    banyan-farm\\\\ep2-b12-nogrow-r3-0822\\\\b13-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b12-nogrow-r3-0822\\\\b13-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\\
+    ep2-b12-nogrow-r3-0822\\\\b13-negative.txt\"}]"
+  C:\banyan-farm\ep2-b12-nogrow-r3-0822\b13-jobs-render.json: "[{\"beat\": 12,\n  \"seed\": 20260813,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b12-nogrow-r3-0822\\\\b13-embeds.pt\",\n  \"init\": \"C:\\\
+    \\banyan-farm\\\\ep2-b12-nogrow-r3-0822\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b12-nogrow-r3-0822\\\\12-related-LTX-leaf-0813.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b12-nogrow-r3-0822\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b12-sapnat2-0822\b12-sapnat2-s20260820.png
+  - --sha256
+  - dcc042b8e21f0ded82adb5401186f69a2b8d78aa92eb398eb74631bcfac5ea5a
+  - --out
+  - C:\banyan-farm\ep2-b12-nogrow-r3-0822\b13-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b12-nogrow-r3-0822\b13-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b12-nogrow-r3-0822\b13-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b12-nogrow-r3-0822
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b12-nogrow-r3-0822\bench-b12-leaf.jsonl
+  - --bench-label
+  - ep2-b12-nogrow-r3-0822
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b12-tightB\"\n\
+    os.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b12-nogrow-r3-0822/12-related-LTX-leaf-0813.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b12-nogrow-r3-0822/b13-init-704x1280.png\")\n   \
+    \          + glob.glob(\"C:/banyan-farm/ep2-b12-nogrow-r3-0822/bench-b12-leaf.jsonl\"))\nlines = []\n\
+    for f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with\
+    \ open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h +\
+    \ \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b12-nogrow-r3-0822.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b12-nogrow-r3-0822\12-related-LTX-leaf-0813.mp4
+- C:\banyan-farm\ep2-b12-nogrow-r3-0822\b13-init-704x1280.png
+bar: 'THE BEAT''S OWN done_when, PLUS THE ONE THING THIS RUNG CHANGED. PRE-REGISTERED: (1) EXACTLY TWO
+  AVERAGE LEAVES ON ONE STEM, IN THE FIRST FRAME AND IN THE LAST. This is the whole point. TWO PERFECT
+  ROUND DISCS on one stem is what the take in the cut shows, and either that shape or a third leaf coming
+  back is a FAIL however well the clip moves. Canon: sapling-two-leaves and sapling-cotyledon-shape. (2)
+  PERFECTLY STILL. The approved line for this beat says so and the recorded fault of the take in the cut
+  is that the sapling GROWS -- apex up 140 px, 11% of frame height, monotone. Measure the apex at f000
+  and f120 and say the number. (3) THE PLANT DOES NOT DRIFT, MULTIPLY OR REROOT. (4) THE FRAME HOLDS.
+  No pull-back, no re-framing -- the wave''s first law is that a prompt naming an object its init lacks
+  makes the model build it and re-frame the shot, and this init now CONTAINS every object the sentence
+  names, so a re-frame here would be a new finding rather than that one. PRE-REGISTERED FAIL MODES. THE
+  INIT ABANDONED, which is what both parents did -- b12''s take cuts away from its macro plate by f006
+  and beat 21''s verdict says ''from f007 the init is entirely gone''. If the two leaves survive past
+  f010 that alone is new. THE LEAVES ROUNDING BACK toward discs over the clip, which would say the model''s
+  prior for a seedling beats the init and the fix is not the compositor. And on beat 12 only, THE CLOUD
+  SMEAR: the naturalize left a horizontal boundary-fill band across the cumulus and it is carried in deliberately;
+  if 121 frames of LTX repaint it, that is the cheapest possible answer to whether the erase needs re-cutting.'
+init_provenance: 'farm-out/ep2-b12-sapnat2-0822/b12-sapnat2-s20260820.png, 704x1280, sha256 dcc042b8e21f0ded82adb5401186f69a2b8d78aa92eb398eb74631bcfac5ea5a.
+  Produced this morning by the 0.30 masked naturalize (ep2-b12-sapnat2-0822) over a composite cut by pipeline/beat16_sapling_composite.py,
+  which erased the old plant out of the pixels and drew the canon two-leaf sapling in its place. THE SOURCE
+  FRAME UNDER ALL OF THAT IS f000 OF THIS BEAT''S SHIPPED TAKE, not its render plate: neither beat renders
+  its init (b12''s take abandons the macro plate by f006, and beat 21''s verdict records ''from f007 the
+  init is entirely gone''), so the picture worth correcting is the one the model settled on. The file
+  is on the box already -- its own publish step put it in the courier -- so this job needs no fetch.'
+not_done_on_purpose: THE ACTION SENTENCE IS NOT TOUCHED and neither beat's shipping fault is addressed
+  here. Beat 12's sapling grows against an approved 'perfectly still'; beat 21 has no fault but the plant.
+  Both are worth RE-MEASURING on a new init before anything in the wording moves, and a rung that changed
+  the plate and the words together could not tell which one did it.
+the_one_variable: 'THE INIT, and it is exactly two strings: the crop step''s --src and its --sha256. Driver,
+  size, frame count, fps, guidance, seed, the motion prompt, the negative, the encode and render job json
+  and the publish step are the parent''s, unedited. --selftest asserts the old plate and its sha are ABSENT
+  from the child and the new ones present, and asserts the motion prompt payload is byte-identical to
+  the parent''s, because ''one variable'' is a claim a test should be able to fail.'
+derivation:
+  parent: pipeline/jobs/ep2-b12-tightB-0813.yaml
+  by: pipeline/derive_ep2_leafmotion_0822.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - init_provenance
+  - not_done_on_purpose
+  - owner
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross: none
+  retokened:
+  - ep2-b12-tightB-0813 -> ep2-b12-nogrow-r3-0822
+  overrides_applied_and_asserted:
+    key:priority:
+    - key priority = 16
