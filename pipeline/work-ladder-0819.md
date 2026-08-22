@@ -8844,3 +8844,166 @@ within 25 frames anyway (first block interframe 8.92 against a 0.08–0.83 middl
 > a CURRENT plate — one drawn on the corrected face — and then this same motion
 > asked of it. Which is, again, the compositor.
 
+
+---
+
+## MORNING COMPOSITOR LANE, 2026-08-22
+
+#### THE EYE SIZE IS CARRIED BY THE REFERENCE. TWO SIZE TAGS ARE SPENT AND THEY DID NOTHING.
+
+Three one-variable cells off `derive_jerry_canon_0821`, beat 13, pose `h37fsit`,
+seed 20260823 — the same seed as `r12d`, which is therefore a matched control
+already on disk rather than a fourth GPU minute:
+
+| cell | the one change | at matched ear span |
+|---|---|---|
+| **r13a** | `--ip-ref jerry-canon-sq65-0821` | **the eye is visibly narrower and smaller** |
+| r13b | `+ small eyes` in the positive | indistinguishable from r12d |
+| r13c | `+ beady eyes` in the positive | indistinguishable from r12d |
+
+> **ONLY THE PICTURE MOVED IT.** The reference at head-frac 0.65 hands CLIP a face
+> at 58.9% coverage against sq45's 28.3%, and that is the whole edit. Neither of
+> the two size-ish tags the vocabulary has moved the width at all.
+
+That extends r8's finding — *"the fix was MORE reference detail, not less"* —
+onto the axis the founder is actually asking about, and it explains why `jitome`
+only got part way: **jitome is a tag about the shape of the upper lid, not about
+size.** The size axis was never being addressed by a word.
+
+**AND IT CORRECTS TWO EARLIER ROUNDS RATHER THAN REPEATING THEM.** sq65 was fired
+at r9a and at r11a and was NOT adopted; r12 went back to sq45. Both of those were
+judged on HEIGHT-normalised sheets, which is the exact instrument the 03:29
+ear-span reading retired. Re-firing it was not a fourth guess, it was the first
+time this reference has been looked at on the anchor that can see the difference.
+
+**Against myself, third time on the same measurement:** an automated
+eye-width-over-ear-span returned 18 px and 41 px for the two eyes of one face and
+245 px and 49 px for another. Segmentation artefacts. **No number is published**;
+`review/ep2-goblin-eye-0822/EYE-earspan-r13-0822.jpg` is the evidence and the
+founder's eye is the instrument. The page's one question is changed from *"is the
+eye small enough"* to *"is r13a's eye right"*.
+
+**NO WAVE RE-FIRE.** Twelve beats sit on r12d. Re-plating eleven of them on a face
+the author has not seen is the r11a mistake by name.
+
+#### THE BOARD ROUTE IS FINISHED, AND IT ENDED BY DELETING THE NET
+
+`ep2-b06-pose-r4-0822` is the same pose rung with `--controlnet2` **removed** —
+not retuned, removed, because three rungs closed that ladder — and with the
+positive asking for **empty** hands. It came back as the best frame beat 06 has
+ever had: whole adult figure in a daylit field, dark cropped hair, round wire-rim
+glasses, head bowed over his own laced hands, no glow, no plank, no portrait crop.
+
+> **A rung whose deliverable is an INIT should score the absence of the object as
+> a requirement.** The bar said "an object of any kind in those hands is a FAIL
+> here, because the compositor needs clean pixels to draw into", and that sentence
+> is what made the frame usable.
+
+`pipeline/beat06_board_composite.py` then drew the slab: 240 px wide against a
+220 px shoulder floor, bottom edge at the fingertips, top edge below the chin,
+four geometry refusals firing before a pixel is drawn. **The colour law needed a
+statement rather than a copy** — the sapling tool builds a plant out of the
+frame's own greens, and a bark board on a plate of green grass and a white shirt
+has nothing to be built out of. So: HUE from canon (*"rough brown bark"*), VALUE
+from the plate's own p12 luma inside the board box, INK and LIGHT measured off the
+plate. `C5b` refuses a slab that is not DARKER than the local mean, because r2 and
+r3 both returned a glowing board and a hand-drawn one must not repeat it.
+
+#### TWO GUARDS IN THE SAPLING COMPOSITOR WERE WRONG AT A FRAME EDGE
+
+Both corrections are narrower than the checks they replace, and both were found by
+pointing the tool at a plate nobody had pointed it at before.
+
+* **C0c** refused because the erase matte touched the box edge. Correct when your
+  box is too small; **meaningless when the box edge IS the image edge.** Beat 12's
+  two leaves run off both sides of a 704-wide picture. Exempted only where the box
+  coincides with 0/W/H.
+* **C5** compared the drawn plant's fill to the surrounding FIELD — right for a
+  seedling in grass, wrong for one **silhouetted against sky**. b12's clouds
+  measure luma 220 and the leaves the plate itself drew measure 88, so the check
+  rejected a plant that is the exact colour of the one it replaces. When
+  `--erase-box` supplied a weed the palette is already sampled from that weed, so
+  the reference is now the weed too — **and the tolerance drops 46 → 24. Stricter,
+  not looser.**
+
+#### THE INIT TO CORRECT IS THE ONE THE MODEL SETTLED ON, NOT THE ONE IT WAS HANDED
+
+Beats 12 and 21 are both filed against the plate `12-related-r4-s2`, and **neither
+clip renders it.** b12's take cuts away from that macro by f006 and draws its own
+disc seedling; beat 21's verdict says in its own words *"from f007 the init is
+entirely gone"*. Correcting `r4-s2` would have corrected a picture neither beat
+contains.
+
+> **So the composite was drawn onto f000 of the SHIPPED TAKE.** The new init is the
+> founder-accepted picture with exactly one thing changed. Worth carrying to any
+> beat whose clip departs from its plate.
+
+#### THE MASK-AREA LAW GETS ITS SECOND DATA POINT, AND IT IS A PRE-REGISTERED MISS
+
+`ep2-b12-sapnat2-0822` passed P1, P2, P3 and P5 and **failed its own second
+pre-registered failure mode**: its mask is 20% of the frame (it had to cover the
+hole where two 250 px discs were erased, not just the drawing) and **the
+boundary-fill smear across the cloud bank survived the pass**. b21's 16% mask came
+back clean on every clause.
+
+The b16 leafcomp measurement said 0.30 does measurably nothing on a mask eight
+times the working size. This puts a second point on that curve at a new size and
+says the fix for b12 is **a smaller erase and a redrawn sky, not a higher
+strength**. And 121 frames of LTX did not repaint it either, which was the cheap
+way to find that out.
+
+#### A HAND-DRAWN PLANT SURVIVES A WHOLE MOTION RENDER AT THE RIGHT SHAPE
+
+`ep2-b12-leafmotion-0822` — same action byte for byte, same seed, same everything,
+**one variable and it is two strings** (the crop step's `--src` and `--sha256`).
+Result: **exactly two average leaves on one stem in every frame of 121**, plant
+rooted, camera locked. That is the first time canon's leaf SHAPE has survived a
+full render in this tree, and it is the evidence beats 16, 20 and 21 were waiting
+on, sitting beside last night's b19 result that a composited FRUIT will move.
+
+**It does not fix the beat.** The approved line is *"perfectly still"* and the two
+leaves open, spread, droop and lift across the five seconds. The take in the cut
+has the plant GROWING; this one has the leaves moving. Same fault in a new form,
+and it is filed as the founder's call rather than settled as mine.
+
+#### BEAT 16's PLATE CANNOT TAKE A COMPOSITED PLANT, AND THE REASON IS THE GRASS
+
+The named trade — put the plant into the plate whose motion was cleanest — was
+attempted twice and refused by eye both times. `ep2-b16-canon-w4-0821`'s
+foreground is a **shallow-focus blur with blown highlights**, and its
+green-dominant p88 is **(239,255,230)**. `foliage_palette` takes the highlight
+from that percentile on purpose, so the crescent comes back near-white and the
+plant reads as a ghost over his chest rather than a seedling in front of him.
+
+> **The anti-decal law is doing its job and the answer is a different PLATE, not a
+> different palette.** Inventing a colour here is decal tell #2 by definition. Two
+> routes for whoever takes it: place the plant low where the grass is dark, or
+> re-render this beat's plate without the shallow-focus blur.
+
+#### TWO FILING BUGS OF ONE FAMILY, SIX SECONDS OF CARD TIME BETWEEN THEM
+
+Both caught by the dry gate before a model loaded, and both are the same shape:
+**`derive_spec`'s retoken renames tokens in every step ARGV, and a fetch script is
+a payload STRING it does not reach.**
+
+1. The sapling naturalize wrote its init to `bNNsapnat-0822` while the dry step
+   read `bNNsapnat2-0822`.
+2. The board naturalize's fix for (1) matched nothing, because the 0821 fetch
+   template is a **non-raw** triple-quoted string whose `C:\\banyan-farm\\` doubles
+   have already collapsed to singles by the time it is a value in memory.
+
+> **A retoken that covers argv does not cover a payload that contains code.** If a
+> derived spec ships a script, the paths inside that script are a separate
+> substitution and deserve their own assertion.
+
+#### WHAT IS NAMED AND NOT FIRED, for whoever picks this up
+
+* **BEAT 19, and it is the top rung.** The fig into a plate drawn on the corrected
+  face, then last night's same motion. Not done: `beat19_sapling_composite.py` has
+  b19's old plate typed into it — leaf tips, a ground-plane px/cm model, two whips
+  to erase — so aiming it at the w4 plate is an edit to the source and not a flag.
+  It wants the parametric treatment `beat16_sapling_composite.py` already has.
+* **BEAT 16's placement**, per the section above.
+* **BEAT 06's motion.** Its second fault is 4.5 s of frozen frame in a 6.5 s slot,
+  and that question has never been askable because the object was missing from
+  every plate. It becomes askable the moment the board plate passes.

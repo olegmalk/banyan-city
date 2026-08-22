@@ -325,12 +325,17 @@ BEATS = {
     6: dict(
         goblin=False,
         faults=[
-            "The bark board is the wrong size. Three of four clauses pass and that one fails.",
+            "The bark board is the wrong size. Three of four clauses pass and that one fails. \u2014 ANSWERED IN A PLATE THIS MORNING, not yet in a clip: see the top picture below.",
             "1.9 s of picture in a 6.5 s slot — 4.5 s of this beat is one frozen frame. It is the biggest ratio in the episode.",
         ],
         wins=["The freeze is a clean freeze. An earlier cut had this window turning the board over, back, and over again; that is gone."],
         faults_from="ship-manifest.yaml beat 6 + pipeline/jobs/ep2-b06-scene-0814r.yaml",
         candidates=[
+            dict(file=f"{POSTER_URL}/06-the-clipboard-PLATE-boardnat-0822.jpg", still=True,
+                 label="a PLATE — HE IS HOLDING A BARK BOARD, and it is the right size", tag="warn",
+                 verdict="For the first time in this beat's life there is a man holding a large flat board at chest height, looking down at it, and the board is as wide as his shoulders. It is not a clipboard, it is not glowing, it has not slid out of his hands, and he is unchanged behind it \u2014 same hair, same glasses, same field. That is the beat's standing fault answered. WHAT IS STILL WRONG IS THE SURFACE: it reads as a flat piece of card with ruled lines on it rather than as a rough slab of bark, and the torn edge looks cut rather than broken. The light pass that turns a drawn leaf into a drawn leaf did almost nothing to it \u2014 which was written down as a possible outcome before the job ran, and the reading is that a hard-edged made object needs a stronger pass than a leaf does. One more round, and it is a number rather than a redraw.",
+                 diff="The board is DRAWN into the picture in software and then settled in with the same light pass beats 12, 16, 19 and 21 use, instead of being asked for from a conditioning net. Its width is a number \u2014 240 px against a 220 px shoulder floor \u2014 and the tool refuses to write the frame if the board is too narrow, if it does not sit in his hands, or if it rises above his chin. That is the whole reason to do it this way: 'the wrong size' is the fault, and a size is the one thing a drawing can guarantee and a sentence cannot.",
+                 src="pipeline/jobs/ep2-b06-boardnat-0822.yaml"),
             dict(file=f"{POSTER_URL}/06-the-clipboard-PLATE-pose-r4-0822.jpg", still=True,
                  label="a PLATE — this morning, and it is the best picture this beat has ever had", tag="warn",
                  verdict="A whole grown man, standing in a bright field, head bowed over his own hands with his fingers laced together. Dark cropped hair, round wire-rim glasses, cream shirt — he is the man you picked, from words alone, with no reference photograph anywhere in the job. No night, no glowing ball, no plank standing in front of him, no head-and-shoulders crop. WHAT IS MISSING IS THE BOARD, AND THAT IS ON PURPOSE: his hands are empty because the next step needs clean pixels to draw into. Not a candidate for the cut on its own — it is the picture the board gets painted onto, and that job is on the card as you read this.",
@@ -536,9 +541,15 @@ BEATS = {
             "SAID PLAINLY: erasing two 250-pixel discs left a soft horizontal smear across the "
             "cloud bank behind the plant, and the light pass did not remove it \u2014 that was "
             "written down as a likely outcome before the job ran, and it is the one thing about "
-            "the new plate that is worse than the old one."),
+            "the new plate that is worse than the old one. THE MOTION RENDER HAS LANDED and it is the first candidate this beat has ever had \u2014 see below."),
         faults_from="review/ep2-picks/done-definitions.yaml beats.12 + review/ep2-b12-trim-0821/verdict-0821.yaml",
         candidates=[
+            dict(file=f"{CAND_URL}/12-related-LTX-leaf-0813.mp4",
+                 poster=f"{POSTER_URL}/12-related-LTX-leaf-0813.jpg",
+                 label="THIS BEAT'S FIRST CANDIDATE — canon's two leaves, and they last the whole clip", tag="warn",
+                 verdict="TWO AVERAGE LEAVES ON ONE STEM IN EVERY FRAME, first to last. That is the fault this beat has been sitting on and it is gone: no discs, no third leaf, no second plant, and the plant stays rooted in the same place with the camera locked the whole time. WHAT IS NOT FIXED, AND IT IS THE SAME FAULT IN A NEW FORM: your line says 'perfectly still' and this is not still. The clip in the cut has the plant GROWING upward; this one has the two leaves opening, spreading, drooping and lifting again over the five seconds. It is prettier and it is arguably more alive, but it is still motion where the script asks for none, so this is your call rather than mine. AND THE SMEAR SURVIVED: the soft horizontal band across the cloud bank, left by removing the old discs, is still there in every frame — a hundred and twenty-one frames of LTX did not repaint it.",
+                 diff="Same action sentence, byte for byte. Same seed, same size, same frame count, same everything — the ONLY change is the starting picture, which is now the plate above with canon's leaves drawn into it. That is deliberate: neither this beat's wording nor its timing has ever been the problem, so changing them at the same time would make it impossible to say which edit did what. What this proves beyond the beat is that a hand-drawn plant survives a full motion render at the right shape, which is the thing beats 16, 20 and 21 are all waiting on.",
+                 src="pipeline/jobs/ep2-b12-leafmotion-0822.yaml"),
             dict(file=f"{POSTER_URL}/12-related-PLATE-leafcanon-0822.jpg", still=True,
                  label="a PLATE — canon's two average leaves, drawn in. This morning.", tag="warn",
                  verdict="Two ordinary leaves on one thin stem, in the grass, against the same clouds. Not discs. The plant is where it was and the sky, the grass and the framing are the clip's own \u2014 this is the first frame of the take you are already shipping with exactly one thing changed. THE FAULT IT CARRIES: a soft horizontal band across the cumulus where the two old discs were removed. It was predicted before the job ran and it is inside the region the pass was allowed to touch, so the pass had its chance at it and did not take it.",
@@ -802,9 +813,15 @@ BEATS = {
             "The motion render off it is on the card as you read this. Everything else about this "
             "beat is untouched on purpose: it is the only beat in the episode whose definition is "
             "fully met, its tilt is measured, and a rung that changed the plate AND the wording "
-            "could not tell you which one did it."),
+            "could not tell you which one did it. THE MOTION RENDER HAS LANDED \u2014 see below, and read the last second of it before anything else."),
         faults_from="ship-manifest.yaml beat 21 + pipeline/jobs/ep2-b21-daylight-0814.yaml",
         candidates=[
+            dict(file=f"{CAND_URL}/21-the-answer-LTX-poolD-0812.mp4",
+                 poster=f"{POSTER_URL}/21-the-answer-LTX-poolD-0812.jpg",
+                 label="THIS BEAT'S FIRST CANDIDATE — the lance is gone and the tilt still works", tag="warn",
+                 verdict="The lance leaf is gone and what tilts is a proper seedling: two ordinary leaves on one stem, leaning steadily over to the right across the whole five seconds in the same golden field. The tilt is the thing this beat is FOR and it survived the plate change intact — one direction, no wobble, and it comes to rest. THE FAULT, AND IT IS AT THE END: by the last second a THIRD blade has grown in, and the top leaf has stretched back toward a point. Canon is two, so the last twenty frames break it. For the first two-thirds of the clip this is the plant you asked for; after that the model's own idea of a seedling starts pushing back through.",
+                 diff="Same action sentence byte for byte, same seed, same everything — the only change is the starting picture, which is the plate below. Worth knowing beyond this beat: a hand-drawn plant DOES hold its shape through a real motion render, for a while. Beat 12's ran the same way this morning and held two leaves for all 121 frames. The difference between them is what this beat's action asks for, and that is the next thing to look at rather than the compositor.",
+                 src="pipeline/jobs/ep2-b21-leafmotion-0822.yaml"),
             dict(file=f"{POSTER_URL}/21-the-answer-PLATE-leafcanon-0822.jpg", still=True,
                  label="a PLATE — the lance leaf is gone. This morning.", tag="warn",
                  verdict="Two ordinary leaves on one stem in the golden field. Cel-shaded, with the frame's own ink weight, sitting in the grass where the old plant stood. The hedgerow, the cloud bands and the light are the clip's own and are untouched. This is the cleanest of the two leaf fixes done this morning \u2014 there is no side effect to report on it. One small honesty: a faint line of the old stem still runs beside the new one in the lower third.",
