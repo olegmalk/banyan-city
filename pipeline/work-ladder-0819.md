@@ -9514,3 +9514,35 @@ plates stay on disk and both are on the page.
 and the clean plate's is ~120 over the same; a shorter clip is the only lever
 left that does not re-open a route already closed by measurement. The wording
 route is closed twice with a control on each side.
+
+#### THE CONTROLNET SCALE IS NOT THE FRAMING LEVER EITHER, AND THAT NAMES THE ONE THAT IS
+
+`ep2-b16-canon-w6a-0821`, w4 with `--control-scale 1.0 -> 0.55` and nothing else.
+**G1 FAILS: the figure still fills the frame and still reaches the bottom edge.**
+There is no ground in front of him and if anything he is slightly larger. G2
+passes — he is still seated, still one figure, the pose held below the record's
+0.7 floor, which is worth knowing on its own — but the costume drifted (the
+mandarin frog closures became a plain button placket, dark leggings appeared)
+and the grass mostly left the frame.
+
+| | fg green p88 (chroma-floored) | ground in front of him |
+|---|---|---|
+| w4, cn 1.0 | (147,168,126) | none |
+| w6a, cn 0.55 | (187,214,165) | none |
+
+> **HOW STRONGLY THE SKELETON IS APPLIED IS NOT THE SAME QUESTION AS HOW MUCH OF
+> THE CANVAS IT COVERS.** Beat 16's framing is set by the skeleton's own SPAN,
+> which is drawn full-frame by construction, and turning the conditioning down
+> only lets the checkpoint drift the costume. Three levers are now spent on this
+> beat's framing — the negative (four cells), the positive's distance clause,
+> and the conditioning strength — and the one left is a SKELETON AUTHORED AT A
+> SMALLER SPAN. That is a build against `jerry_canon_0821`, not a plate rung,
+> and it is named rather than fired: the record already says short-span
+> skeletons come back as *"SMALL FIGURES with oversized heads"*, which was a
+> defect for every other beat and is exactly what beat 16 wants.
+
+**AND BEAT 16 GETS ITS FIRST MOTION OFF A PLATE THAT CONTAINS THE PLANT.**
+`ep2-b16-plantmotion-0822` is `w4motion` with one variable, the init. The page
+has carried this beat as a straight TRADE — corrected face, no plant — since
+last night; this is the first render that can have both, and it does not answer
+the staging question either way.
