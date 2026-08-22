@@ -2,10 +2,10 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "f9c181b4ae44a9a9b68fa12016a015fd189d3be6",
-  "measured_at": "2026-08-22T01:54:41Z",
-  "job_count": 1539,
-  "ok": 1449,
+  "source_commit": "6f45231228c30613f16562349bc9d929326f8512",
+  "measured_at": "2026-08-22T03:10:47Z",
+  "job_count": 1546,
+  "ok": 1456,
   "failed": 90,
   "upcoming_count": 108,
   "skipped_sidecars": null,
@@ -13,6 +13,507 @@
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-b12-nogrow-r3-0822-1787367592",
+   "task": "ep2-b12-nogrow-r3-0822",
+   "node": "002b-first-citizen",
+   "beat": 12,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T03:00:02Z",
+   "finished_at": "2026-08-22T03:06:08Z",
+   "duration_s": 366,
+   "sidecar": "farm-out/box/ep2-b12-nogrow-r3-0822-1787367592.json",
+   "spec_file": "pipeline/jobs/ep2-b12-nogrow-r3-0822.yaml",
+   "purpose": {
+    "consumer": "BEAT 12'S SLOT ON /review/ep2-beats-0821, which has had NO candidate since the page was written and one reason on it: the plant is the wrong shape and the fix is a drawing. The drawing is done and naturalised; this is the render that turns it into a clip a person can watch. The take in the cut is untouched and no cut changes because this landed -- a candidate is a candidate.",
+    "why": "BEAT 12'S PLANT IS THE WRONG SHAPE AND THAT IS NOW FIXED IN THE PLATE, SO THE MOTION IS RE-ASKED OF IT. What is in the cut today: TWO PERFECT ROUND DISCS on one stem. Canon since the founder's 2026-08-17 ruling is AVERAGE leaves. The wording ladder for leaf shape is CLOSED by measurement -- the strongest wording available returned 0 of 16 frames with two correct leaves -- and the instrument that works is the composite, now five for five, with last night's beat-19 result adding the piece this ru…",
+    "success": "ONE 704x1280 mp4, 121 frames at 24 fps, in which the plant is CANON'S TWO AVERAGE LEAVES in the first frame and in the last, and in which this beat's own motion clause still holds. The beat's shipping fault is not fixed by this job and is not claimed to be.",
+    "owner": "morning compositor lane, 2026-08-22",
+    "est_minutes": 6,
+    "priority": 16
+   },
+   "artifacts_dir": "farm-out/ep2-b12-tightB",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-leaf-0813.mp4",
+     "name": "12-related-LTX-leaf-0813.mp4",
+     "bytes": 472896,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/b13-init-704x1280.png",
+     "name": "b13-init-704x1280.png",
+     "bytes": 1262946,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE FRAME IS TOO TIGHT TO HOLD MORE THAN TWO LEAVES. Only two leaves fit in this shot and there is no room at any edge for a third: ONE leaf on the left and ONE leaf on the right, meeting at a single stem in the middle, and open sky filling everything between and above them. Nothing else is in the frame. THE SAPLING IS TINY AND IT HAS EXACTLY TWO LEAVES. It is a seedling about forty centimetres tall — NO TALLER THAN THE BLADES OF GRASS AROUND IT, so the grass comes up to its leaves — one slender upright stem carrying EXACTLY TWO oversized rounded cotyledon leaves and ONE thin bare side-branch with nothing on it. TWO LEAVES ONLY: no third leaf, no crown, no canopy, no bush, no foliage mass, no sprays of leaves. The sapling's leaves are BROAD AND ROUNDED — wide oval cotyledon leaves with soft round tips, not narrow, not pointed, not lance-shaped and not spiky. a tight close-up of a young sapling's broad leaves seen from below against an open sky with soft clouds behind them. No creature and no person is in this shot. THE LEAVES STIR GENTLY IN A LIGHT BREEZE — they lift and settle and turn a little on their stalks, the whole plant breathing rather than thrashing, while the clouds behind them drift very slowly. THE SAPLING DOES NOT GROW: the stem does not lengthen, the plant does not get taller, and the tips of the two leaves are at the same height in the last frame as in the first. Nothing else moves and the plant stays exactly where it is in frame. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "third leaf, many leaves, several leaves, a bunch of leaves, dense foliage, leafy plant, shrub, hedge, undergrowth, grass filling the frame, bush, shrub, crown of leaves, canopy, foliage mass, many leaves, dense leaves, leafy branches, tall tree, sapling taller than the grass, creature, goblin, person, face, hands, animal, dark, dusk, dim lighting, low key, night, pointed leaves, lance-shaped leaves, narrow leaves, spiky leaves, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260813,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b12-sapnat2-0822/b12-sapnat2-s20260820.png",
+    "sha256": "dcc042b8e21f0ded82adb5401186f69a2b8d78aa92eb398eb74631bcfac5ea5a"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS BLEMISH NAMED. The geometry lever landed after two rounds of counting in words had failed: exactly two oval cotyledons on one stem against sky at BOTH seeds, with the thin bare side-branch at seedB, no bush, no goblin. STATED PLAINLY BECAUSE IT CHANGES WHAT HE WOULD SEE: the fil…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 12,
+    "episode": null,
+    "label": "Beat 12",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b12-stillmotion-r2-0822-1787366854",
+   "task": "ep2-b12-stillmotion-r2-0822",
+   "node": "002b-first-citizen",
+   "beat": 12,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T02:47:41Z",
+   "finished_at": "2026-08-22T02:53:52Z",
+   "duration_s": 371,
+   "sidecar": "farm-out/box/ep2-b12-stillmotion-r2-0822-1787366854.json",
+   "spec_file": "pipeline/jobs/ep2-b12-stillmotion-r2-0822.yaml",
+   "purpose": {
+    "consumer": "BEAT 12'S SLOT ON /review/ep2-beats-0821, which has had NO candidate since the page was written and one reason on it: the plant is the wrong shape and the fix is a drawing. The drawing is done and naturalised; this is the render that turns it into a clip a person can watch. The take in the cut is untouched and no cut changes because this landed -- a candidate is a candidate.",
+    "why": "BEAT 12'S PLANT IS THE WRONG SHAPE AND THAT IS NOW FIXED IN THE PLATE, SO THE MOTION IS RE-ASKED OF IT. What is in the cut today: TWO PERFECT ROUND DISCS on one stem. Canon since the founder's 2026-08-17 ruling is AVERAGE leaves. The wording ladder for leaf shape is CLOSED by measurement -- the strongest wording available returned 0 of 16 frames with two correct leaves -- and the instrument that works is the composite, now five for five, with last night's beat-19 result adding the piece this ru…",
+    "success": "ONE 704x1280 mp4, 121 frames at 24 fps, in which the plant is CANON'S TWO AVERAGE LEAVES in the first frame and in the last, and in which this beat's own motion clause still holds. The beat's shipping fault is not fixed by this job and is not claimed to be.",
+    "owner": "morning compositor lane, 2026-08-22",
+    "est_minutes": 6,
+    "priority": 16
+   },
+   "artifacts_dir": "farm-out/ep2-b12-tightB",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-leaf-0813.mp4",
+     "name": "12-related-LTX-leaf-0813.mp4",
+     "bytes": 472896,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/b13-init-704x1280.png",
+     "name": "b13-init-704x1280.png",
+     "bytes": 1262946,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE FRAME IS TOO TIGHT TO HOLD MORE THAN TWO LEAVES. Only two leaves fit in this shot and there is no room at any edge for a third: ONE leaf on the left and ONE leaf on the right, meeting at a single stem in the middle, and open sky filling everything between and above them. Nothing else is in the frame. THE SAPLING IS TINY AND IT HAS EXACTLY TWO LEAVES. It is a seedling about forty centimetres tall — NO TALLER THAN THE BLADES OF GRASS AROUND IT, so the grass comes up to its leaves — one slender upright stem carrying EXACTLY TWO oversized rounded cotyledon leaves and ONE thin bare side-branch with nothing on it. TWO LEAVES ONLY: no third leaf, no crown, no canopy, no bush, no foliage mass, no sprays of leaves. The sapling's leaves are BROAD AND ROUNDED — wide oval cotyledon leaves with soft round tips, not narrow, not pointed, not lance-shaped and not spiky. a tight close-up of a young sapling's broad leaves seen from below against an open sky with soft clouds behind them. No creature and no person is in this shot. THE SAPLING IS COMPLETELY STILL. It does not sway, lift, settle, turn or breathe; not one leaf moves and the stem does not bend. ONLY THE CLOUDS BEHIND IT DRIFT, very slowly. The plant stays exactly where it is in frame and holds its shape from the first frame to the last. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "third leaf, many leaves, several leaves, a bunch of leaves, dense foliage, leafy plant, shrub, hedge, undergrowth, grass filling the frame, bush, shrub, crown of leaves, canopy, foliage mass, many leaves, dense leaves, leafy branches, tall tree, sapling taller than the grass, creature, goblin, person, face, hands, animal, dark, dusk, dim lighting, low key, night, pointed leaves, lance-shaped leaves, narrow leaves, spiky leaves, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260813,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b12-sapnat2-0822/b12-sapnat2-s20260820.png",
+    "sha256": "dcc042b8e21f0ded82adb5401186f69a2b8d78aa92eb398eb74631bcfac5ea5a"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS BLEMISH NAMED. The geometry lever landed after two rounds of counting in words had failed: exactly two oval cotyledons on one stem against sky at BOTH seeds, with the thin bare side-branch at seedB, no bush, no goblin. STATED PLAINLY BECAUSE IT CHANGES WHAT HE WOULD SEE: the fil…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 12,
+    "episode": null,
+    "label": "Beat 12",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b19-dropmotion-r2-0822-1787366352",
+   "task": "ep2-b19-dropmotion-r2-0822",
+   "node": "002b-first-citizen",
+   "beat": 19,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T02:39:27Z",
+   "finished_at": "2026-08-22T02:45:21Z",
+   "duration_s": 354,
+   "sidecar": "farm-out/box/ep2-b19-dropmotion-r2-0822-1787366352.json",
+   "spec_file": "pipeline/jobs/ep2-b19-dropmotion-r2-0822.yaml",
+   "purpose": {
+    "consumer": "BEAT 19's SLATE, which has been a slate since 08-15 and which tonight's w4 clip could not close because the object the beat is ABOUT was not in the plate. This is the first time this beat has had motion asked of an init that contains a fruit on a stem. If it lands, beat 19 has a candidate for the first time; if it does not, the failure says whether i2v will animate a composited object at all, which nothing in this tree has ever asked.",
+    "why": "NAMED ON 08-19 AND NEVER FIRED: the ladder's beat-19 entry ends 'still named, not fired: this plate's motion wants --image-crf 10, not 33'. Tonight made it urgent. The w4 motion clip failed for having NO FRUIT IN IT -- the plate was authored for the face and nobody put the fig back, the same prompt-summons law that pulled beats 02, 03 and 20 off their framing. The sapgloss plate is the one that does not have that problem: the plant and the fig were DRAWN into the field in PIL and settled with a…",
+    "success": "THE BEAT'S OWN done_when, IN ORDER, AND IT IS THREE EVENTS: the fruit STARTS ON THE STEM, it FALLS, it LANDS ON THE GROUND, and HE NOTICES it. PRE-REGISTERED: (1) THERE IS A FRUIT IN THE FIRST FRAME AND IT IS ON THE STEM. Tonight's w4 take had no fruit anywhere and that is the whole reason this exists. (2) IT LEAVES THE STEM AND REACHES THE GROUND inside the clip. A fruit that is on the stem at the first frame and on the stem at the last is a FAIL. (3) HE NOTICES -- his head goes down toward it…",
+    "owner": "night iteration lane, 2026-08-22 -- the ladder's named-not-fired beat 19 motion, on the plate that has the fruit in it",
+    "est_minutes": 8,
+    "priority": 13
+   },
+   "artifacts_dir": "farm-out/ep2-b19-dropmotion-r2-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b19-dropmotion-r2-0822/19-the-drop-LTX-ep2-b19-dropmotion-r2-0822.mp4",
+     "name": "19-the-drop-LTX-ep2-b19-dropmotion-r2-0822.mp4",
+     "bytes": 282891,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b19-dropmotion-r2-0822/b19-init-704x1280.png",
+     "name": "b19-init-704x1280.png",
+     "bytes": 1147334,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is standing mid-stride, looking back down at the ground, in tall grass, full body. THE ACTION: the small violet fig hangs on the thin stem beside him, then it comes loose and falls, and it lands in the grass below. He turns his head down toward where it landed and KEEPS LOOKING at it for the rest of the clip. The plant stays rooted where it is and the camera does not move. HALFWAY THROUGH the fig is in the air between the stem and the ground and his head has started down.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260889,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b19-fignat-r2-0822/b19-fignat-r2-s20260820.png",
+    "sha256": "3666c0a0a182c3c2f8e2faa289341a9e74886492a6019f15cbcb2b7f06eeca08"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "SLATE, AND ITS FIVE-DAY BLOCKER IS DEAD. \"Not renderable until the plate exists\" held since 2026-08-15 because every plate we owned showed the fruit already lying in the grass; three draws on 2026-08-19 put the fruit ALOFT 3 of 3, and the plant was then DRAWN rather than prompted after three wordin…",
+    "gate": "rendering now (1 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 19,
+    "episode": null,
+    "label": "Beat 19",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b19-fignat-r2-0822-1787365393",
+   "task": "ep2-b19-fignat-r2-0822",
+   "node": "002b-first-citizen",
+   "beat": 19,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T02:23:22Z",
+   "finished_at": "2026-08-22T02:23:37Z",
+   "duration_s": 15,
+   "sidecar": "farm-out/box/ep2-b19-fignat-r2-0822-1787365393.json",
+   "spec_file": "pipeline/jobs/ep2-b19-fignat-r2-0822.yaml",
+   "purpose": {
+    "consumer": "THE INIT FOR BEAT 19's NEXT DROP RENDER. The clip staged on /review/ep2-beats-0821 for this beat already makes the fruit fall, and its named fault is that its plate predates the goblin correction so the face in it was never the founder's. This is the same object on a plate that has his face. Named consumer: a re-derive of ep2-b19-dropmotion-0822 with this init, filed only after a human opens this png.",
+    "why": "THE RUNG BEAT 19's OWN VERDICT NAMED AND NOBODY FIRED. ep2-b19-dropmotion-0822 made the fruit fall -- two of the beat's three events, in order, off a plate where the plant and the fig had been drawn in by hand. That result is the evidence under the whole composite route. Its verdict also named its own successor in one sentence: the plate is from 08-19, it predates the goblin correction, the face in it was never the founder's, and it is replaced within 25 frames anyway (first block interframe 8.…",
+    "success": "ONE 832x1216 png in which ONE deep violet MATTE fig hangs on the stem of a two-leaf sapling in the grass, drawn rather than pasted, in the position the compositor put it, with the goblin behind it untouched. The named degenerate outcomes are a fig that has RELOCATED (which would make the motion prompt's 'it hangs on the stem' a summons again) and a fig that comes back as a faceted gem, which is what this beat's old plate actually contained.",
+    "owner": "morning compositor lane, 2026-08-22",
+    "est_minutes": 5,
+    "priority": 15
+   },
+   "artifacts_dir": "farm-out/ep2-b19-fignat-r2-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b19-fignat-r2-0822/b19-figcomp-in-0822.png",
+     "name": "b19-figcomp-in-0822.png",
+     "bytes": 1324405,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b19-fignat-r2-0822/b19-figcomp-in-mask-0822.png",
+     "name": "b19-figcomp-in-mask-0822.png",
+     "bytes": 3304,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b19-fignat-r2-0822/b19-fignat-r2-s20260820-mask.png",
+     "name": "b19-fignat-r2-s20260820-mask.png",
+     "bytes": 3304,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b19-fignat-r2-0822/b19-fignat-r2-s20260820.png",
+     "name": "b19-fignat-r2-s20260820.png",
+     "bytes": 1348139,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the grass, with ONE small deep violet fig hanging on the stem, with one small green goblin standing in the tall grass behind it, solo, sunny grassy field, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, large tree, thick branch, forest, second plant, plant girl, alraune, child, text, photorealism, 3d render, low quality, many fruits, glossy fruit, faceted gem, bead on a thread",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b19-fignat-r2-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "SLATE, AND ITS FIVE-DAY BLOCKER IS DEAD. \"Not renderable until the plate exists\" held since 2026-08-15 because every plate we owned showed the fruit already lying in the grass; three draws on 2026-08-19 put the fruit ALOFT 3 of 3, and the plant was then DRAWN rather than prompted after three wordin…",
+    "gate": "rendering now (1 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 19,
+    "episode": null,
+    "label": "Beat 19",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b19-fignat-0822-1787365327",
+   "task": "ep2-b19-fignat-0822",
+   "node": "002b-first-citizen",
+   "beat": 19,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T02:22:12Z",
+   "finished_at": "2026-08-22T02:22:31Z",
+   "duration_s": 19,
+   "sidecar": "farm-out/box/ep2-b19-fignat-0822-1787365327.json",
+   "spec_file": "pipeline/jobs/ep2-b19-fignat-0822.yaml",
+   "purpose": {
+    "consumer": "THE INIT FOR BEAT 19's NEXT DROP RENDER. The clip staged on /review/ep2-beats-0821 for this beat already makes the fruit fall, and its named fault is that its plate predates the goblin correction so the face in it was never the founder's. This is the same object on a plate that has his face. Named consumer: a re-derive of ep2-b19-dropmotion-0822 with this init, filed only after a human opens this png.",
+    "why": "THE RUNG BEAT 19's OWN VERDICT NAMED AND NOBODY FIRED. ep2-b19-dropmotion-0822 made the fruit fall -- two of the beat's three events, in order, off a plate where the plant and the fig had been drawn in by hand. That result is the evidence under the whole composite route. Its verdict also named its own successor in one sentence: the plate is from 08-19, it predates the goblin correction, the face in it was never the founder's, and it is replaced within 25 frames anyway (first block interframe 8.…",
+    "success": "ONE 832x1216 png in which ONE deep violet MATTE fig hangs on the stem of a two-leaf sapling in the grass, drawn rather than pasted, in the position the compositor put it, with the goblin behind it untouched. The named degenerate outcomes are a fig that has RELOCATED (which would make the motion prompt's 'it hangs on the stem' a summons again) and a fig that comes back as a faceted gem, which is what this beat's old plate actually contained.",
+    "owner": "morning compositor lane, 2026-08-22",
+    "est_minutes": 5,
+    "priority": 15
+   },
+   "artifacts_dir": "farm-out/ep2-b19-fignat-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b19-fignat-0822/b19-figcomp-in-0822.png",
+     "name": "b19-figcomp-in-0822.png",
+     "bytes": 1324405,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b19-fignat-0822/b19-figcomp-in-mask-0822.png",
+     "name": "b19-figcomp-in-mask-0822.png",
+     "bytes": 3304,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b19-fignat-0822/b19-fignat-s20260820-mask.png",
+     "name": "b19-fignat-s20260820-mask.png",
+     "bytes": 3304,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b19-fignat-0822/b19-fignat-s20260820.png",
+     "name": "b19-fignat-s20260820.png",
+     "bytes": 1346777,
+     "kind": "image"
+    }
+   ],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the grass, with ONE small deep violet fig hanging on the stem, with one small green goblin standing in the tall grass behind it, solo, sunny grassy field, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, large tree, thick branch, forest, second plant, plant girl, alraune, child, text, photorealism, 3d render, low quality, many fruits, glossy fruit, faceted gem, bead on a thread",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b19-fignat-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "SLATE, AND ITS FIVE-DAY BLOCKER IS DEAD. \"Not renderable until the plate exists\" held since 2026-08-15 because every plate we owned showed the fruit already lying in the grass; three draws on 2026-08-19 put the fruit ALOFT 3 of 3, and the plant was then DRAWN rather than prompted after three wordin…",
+    "gate": "rendering now (1 jobs)"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 19,
+    "episode": null,
+    "label": "Beat 19",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b06-boardmotion-0822-1787364349",
+   "task": "ep2-b06-boardmotion-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T02:05:59Z",
+   "finished_at": "2026-08-22T02:12:02Z",
+   "duration_s": 363,
+   "sidecar": "farm-out/box/ep2-b06-boardmotion-0822-1787364349.json",
+   "spec_file": "pipeline/jobs/ep2-b06-boardmotion-0822.yaml",
+   "purpose": {
+    "consumer": "BEAT 06's SLOT IN /review/ep2-beats-0821 and, if it lands, the cut. This beat has zero clips on any modern plate and its shipped take is 1.92 s of picture in a 6.46 s slot. A pass here is the first candidate; nothing in review/ep2-ship-0821 changes because it landed.",
+    "why": "BEAT 06'S SECOND FAULT BECOMES ASKABLE TODAY. Fault one is the board's size and it was answered this morning: ep2-b06-boardnat-r3-0822 has a hand-sized slab of bark drawn into the plate at 160x115 px and settled in at 0.45, held in both hands at chest height by the man the founder picked, on a plate rendered with NO reference image and NO board net -- the ControlNet route for this object was closed at three rungs this morning after returning, in order, a glowing ball, a plank standing on the gr…",
+    "success": "ONE 704x1280 mp4, 121 frames at 24 fps, in which a grown man in a daylit field TURNS a hand-sized bark board and READS off it at chest height, the board stays hand-sized to the last frame, and the clip is not a frozen frame with a runtime. Scored on the share of frame pairs under 0.5 mean interframe difference at 176x320 against the shipped take's 59 of 107 bit-identical.",
+    "owner": "morning compositor lane, 2026-08-22",
+    "est_minutes": 6,
+    "priority": 14
+   },
+   "artifacts_dir": "farm-out/ep2-b12-tightB",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-leaf-0813.mp4",
+     "name": "12-related-LTX-leaf-0813.mp4",
+     "bytes": 472896,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/b13-init-704x1280.png",
+     "name": "b13-init-704x1280.png",
+     "bytes": 1262946,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE grown man, alone, standing in tall summer grass in bright daylight -- dark cropped hair, round wire-rim glasses, a cream shirt -- holding a SMALL HAND-SIZED SLAB OF ROUGH BROWN BARK in both hands at chest height, his head bowed over it. The board is no bigger than his own forearm and it stays that size: it is a hand-sized bark tablet, not a shield, not a sign and not a plank. The field, the grass and the sky behind him are already drawn and do not change. THE ACTION: he turns the bark board face-up in both hands, brings it to a reading distance at his chest, and reads it -- his fingertip runs down the face of the board TWICE, and his lips move while he reads. HALFWAY THROUGH the board is face-up at his chest and his finger is partway down it for the first time. He stays where he is, the camera stays where it is, and nobody else enters the shot. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "giant board, oversized board, board filling the frame, prop larger than his torso, shield, raising the board to his face, sign, banner, plank, clipboard, metal clip, spring clip, white paper, glowing board, luminous panel, lens flare, second man, second guard, a pair, duplicate character, goblin, green skin, pointed ears, creature, animal, helmet, armour, weapon, dark, dusk, dim lighting, night, white background, blank background, background appearing, scene forming, dissolve, iris, wipe, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, walking out of frame, leaving the frame, drifting sideways, scene change, shot change, new camera angle, face morphing, distorted face, warped face, extra eyes, extra ears, hair changing, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260813,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b06-boardnat-r3-0822/b06-boardnat-r3-s20260820.png",
+    "sha256": "51e0bfe5588cf522530e085e898cce5859bda651b2154ad58dcf4d14af4af89e"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 6,
+    "episode": null,
+    "label": "Beat 06",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b06-boardnat-r3-0822-1787364053",
+   "task": "ep2-b06-boardnat-r3-0822",
+   "node": "002b-first-citizen",
+   "beat": 6,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T02:01:07Z",
+   "finished_at": "2026-08-22T02:01:23Z",
+   "duration_s": 16,
+   "sidecar": "farm-out/box/ep2-b06-boardnat-r3-0822-1787364053.json",
+   "spec_file": "pipeline/jobs/ep2-b06-boardnat-r3-0822.yaml",
+   "purpose": {
+    "consumer": "THE INIT FOR BEAT 06's FIRST MOTION RENDER. This beat has ZERO clips and two named faults, and the second one -- 4.5 s of frozen frame in a 6.5 s slot -- has never been askable, because the object the beat is about was not in any plate. Named consumer: this lane's b06 motion rung, filed only after a human opens this png. No cut changes because this landed.",
+    "why": "BEAT 06'S OBJECT IS NOW DRAWN AND THIS SETTLES IT INTO THE PICTURE. The board is not a ControlNet problem and that is measured, not argued: three rungs on 2026-08-22 bracketed --scale2 twice and the drawn rectangle's position twice, and returned, in order, no object at all with a glowing ball in the cupped hands; a plank grown DOWNWARD out of the hint's top edge, standing in front of him like a post; and a lit white panel over his chest with the figure collapsed into a dark shrouded shape behin…",
+    "success": "ONE 832x1216 png in which the bark slab READS AS BARK, has not moved, has not narrowed, is still held in both hands with the head bowed over it, is NOT glowing, and in which the man is unchanged -- dark cropped hair, round wire-rim glasses, an adult in a cream shirt in a daylit field. The named degenerate outcome is the one three ControlNet rungs already produced: the board comes back as a LIT PANEL and the figure goes dark behind it.",
+    "owner": "morning compositor lane, 2026-08-22",
+    "est_minutes": 5,
+    "priority": 18
+   },
+   "artifacts_dir": "farm-out/ep2-b06-boardnat-r3-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b06-boardnat-r3-0822/b06-boardcomp-r2-in-0822.png",
+     "name": "b06-boardcomp-r2-in-0822.png",
+     "bytes": 1265337,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b06-boardnat-r3-0822/b06-boardcomp-r2-in-mask-0822.png",
+     "name": "b06-boardcomp-r2-in-mask-0822.png",
+     "bytes": 2059,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b06-boardnat-r3-0822/b06-boardnat-r3-s20260820-mask.png",
+     "name": "b06-boardnat-r3-s20260820-mask.png",
+     "bytes": 2059,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b06-boardnat-r3-0822/b06-boardnat-r3-s20260820.png",
+     "name": "b06-boardnat-r3-s20260820.png",
+     "bytes": 1273962,
+     "kind": "image"
+    }
+   ],
+   "prompt": "A grown man with dark cropped hair and round wire-rim glasses holding a large flat slab of rough brown bark in both hands at chest height, looking down at it, standing in tall grass in bright daylight, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "glowing board, luminous panel, light source, lens flare, plank standing on the ground, fence post, clipboard, metal clip, spring clip, white paper, sign, banner, text, watermark, book, tablet, two boards, photorealism, 3d render, low quality, lowres, blurry, deformed hands",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b06-boardnat-r3-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
+    "gate": "GATED - guard cast unapproved (his call) -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0816` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 6,
+    "episode": null,
+    "label": "Beat 06",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
   {
    "id": "ep2-b06-boardnat-r2-0822-1787363591",
    "task": "ep2-b06-boardnat-r2-0822",
@@ -27,9 +528,15 @@
    "finished_at": "2026-08-22T01:53:37Z",
    "duration_s": 15,
    "sidecar": "farm-out/box/ep2-b06-boardnat-r2-0822-1787363591.json",
-   "spec_file": null,
-   "purpose": null,
-   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "spec_file": "pipeline/jobs/ep2-b06-boardnat-r2-0822.yaml",
+   "purpose": {
+    "consumer": "THE INIT FOR BEAT 06's FIRST MOTION RENDER. This beat has ZERO clips and two named faults, and the second one -- 4.5 s of frozen frame in a 6.5 s slot -- has never been askable, because the object the beat is about was not in any plate. Named consumer: this lane's b06 motion rung, filed only after a human opens this png. No cut changes because this landed.",
+    "why": "BEAT 06'S OBJECT IS NOW DRAWN AND THIS SETTLES IT INTO THE PICTURE. The board is not a ControlNet problem and that is measured, not argued: three rungs on 2026-08-22 bracketed --scale2 twice and the drawn rectangle's position twice, and returned, in order, no object at all with a glowing ball in the cupped hands; a plank grown DOWNWARD out of the hint's top edge, standing in front of him like a post; and a lit white panel over his chest with the figure collapsed into a dark shrouded shape behin…",
+    "success": "ONE 832x1216 png in which the bark slab READS AS BARK, has not moved, has not narrowed, is still held in both hands with the head bowed over it, is NOT glowing, and in which the man is unchanged -- dark cropped hair, round wire-rim glasses, an adult in a cream shirt in a daylit field. The named degenerate outcome is the one three ControlNet rungs already produced: the board comes back as a LIT PANEL and the figure goes dark behind it.",
+    "owner": "morning compositor lane, 2026-08-22",
+    "est_minutes": 5,
+    "priority": 18
+   },
    "artifacts_dir": "farm-out/ep2-b06-boardnat-r2-0822",
    "outputs": [
     {
@@ -57,13 +564,13 @@
      "kind": "image"
     }
    ],
-   "prompt": null,
-   "negative": null,
-   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "prompt": "A grown man with dark cropped hair and round wire-rim glasses holding a large flat slab of rough brown bark in both hands at chest height, looking down at it, standing in tall grass in bright daylight, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "glowing board, luminous panel, light source, lens flare, plank standing on the ground, fence post, clipboard, metal clip, spring clip, white paper, sign, banner, text, watermark, book, tablet, two boards, photorealism, 3d render, low quality, lowres, blurry, deformed hands",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b06-boardnat-r2-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
    "recipe": null,
    "init": null,
    "reference": null,
-   "prompt_from": null,
+   "prompt_from": "spec",
    "verdict": {
     "beat_state": "candidate-awaiting-founder",
     "beat_note": "HELD BY THE SAME OPEN TASTE CALL. The in-cut scene-0814r take cleared every other condition — field, hedge, sky and flowers present at FRAME ONE, no white burst at all, the guard reads the hand-sized bark board, same man throughout — and it is DONE AT SEEDA ONLY, seedB delivering beat 10's move ins…",
