@@ -1,0 +1,54 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLControlNetInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.95
+seed: 20260823
+padding_mask_crop: null
+mask_blur_factor: 8
+init_image: C:/banyan-farm/b13lowerbodycrouch-0822/jerry-seat-init-0822.png
+init_sha256: 67ad5c8ba2082496780cdadbe93883835ae9df6e147b0663d9aafefb5e1323c9
+mask_png: b13-lowerbody-crouch-s20260823-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/b13lowerbodycrouch-0822/jerry-seat-mask-0822.png
+mask_png_sha256: 81357e39419054bd594f631e1de6f2c3f77de44b3239a0cb2acc2dc7b873919b
+mask_white_px: 271232
+mask_bbox_px: [0, 890, 831, 1215]
+mask_width_frac: 0.9988
+mask_height_frac: 0.2673
+controlnet: xinsir/controlnet-openpose-sdxl-1.0
+controlnet_licence: apache-2.0 (D15 SAFE, no attribution condition; front matter and body both, and no annotator is used -- the hint is authored in PIL)
+controlnet_conditioning_scale: 1.0
+control_image: jerry-crouch-hint-0822.png
+control_image_sha256: 8d040b274851804d5358678e0e561f54bfe8c051cd32be3f3c40571a8d8df0cf
+controlnet_variant: None (xinsir ships no fp16 variant file)
+control_guidance_start: 0.0
+control_guidance_end: 1.0
+controlnet_composition: one net
+control_hint_alignment: >-
+  BY CONSTRUCTION, NOT BY ARITHMETIC. Every hint is handed to diffusers FULL-FRAME at the init's own 832 x 1216, and StableDiffusionXLControlNetInpaintPipeline computes ONE crops_coords from the mask and passes that same tuple to the init, to the mask and to each control image (prepare_control_image(..., crops_coords=crops_coords, resize_mode=resize_mode) in both the single-net and MultiControlNetModel branches of 0.29.2). This driver crops nothing itself, so it has nothing to disagree with. The box below is that tuple, read back from the live pipe.mask_processor.get_crop_region on the blurred mask and checked against this driver's vendored copy before the render; a mismatch is a hard stop, not a warning.
+pad_crop_region_px: null (padding_mask_crop off)
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-22T15:27:04Z
+render_seconds: 13.4
+wall_seconds: 20.6
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  THE FOURTH POSED FRAME, AND THE BEATS CHOSE IT. Two beats of 002b ask for a squat and the set has none -- beat 12 crouches behind the trunk, and the fig-pick crouches to bring the empty stem level with his face. Stride was the other candidate and serves one beat, and a frontal stride on a fixed frontal torso is the h240hunch shape: a knee at hip height with the shin hanging, which renders as a standing figure with its feet apart. THE ONE VARIABLE is the hint: jerry-seat-hint-0822.png -> jerry-crouch-hint-0822.png. Feet tucked UNDER the body (ankle spread 150 px) instead of planted forward and wide (the seat's 240 px), knees 50 px lower. THE PROMPT IS NOT TOUCHED and still says `seated`: the gate established the hint carries the geometry, and the string the set is built on does not move for a stance. Everything else byte-identical to round two -- same init sha 67ad5c8b, same mask sha 81357e39, same net, scale 1.0, --pad-crop 0, 40 steps, cfg 7.5, strength 0.95, seed 20260823, no LoRA. WHAT TO CHECK ON THE DRY PNG: white starts at row 890 and nowhere above it, full width -- byte-identical to rounds one, two, three and the one-knee.
+prompt: |-
+  1boy, solo, seated, bare legs, dark shorts, dark boots, short grass, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  tall grass, overgrown, foliage, bushes, lowres, worst quality, low quality, text, watermark, photorealism, 3d render, blurry, 2boys, multiple heads
