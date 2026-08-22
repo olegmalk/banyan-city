@@ -1,0 +1,355 @@
+id: ep2-b16-canon-w5a-0821
+task: ep2-b16-canon-w5a-0821
+node: 002b-first-citizen
+beat: 16
+runner: box
+priority: 6
+needs_gpu: true
+max_attempts: 1
+sample: false
+owner: canon lane, 2026-08-21
+consumer: The canon patch wave's plate for beat 16. A pass here becomes a plate CANDIDATE; the pick is
+  a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched
+  by this job.
+success: ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png
+  on the bar in `bar`. Beat 16's own emotion (B3) is scored against the stage direction in this spec,
+  not against a general impression.
+why: 'BEAT 16 OF THE CANON PATCH WAVE, ROUND w5a.
+
+
+  WHY -- ''Close on the sapling''s leaf; the scavenger sits blurred behind it.'' NOTE ON STAGING, and
+  it is why this row exists at all: the shot is a leaf close-up and he is the blurred figure behind it,
+  so this plate is the FIGURE, not the framing. The founder''s verdict on this beat was ''old man goblin.
+  very wrong'', which means he is legible enough in the take to be judged, so the design has to be right
+  even at this depth.
+
+
+  THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png,
+  commit b93a70da -- with "dude, this is how the goblin should look", and it contradicts tile B on the
+  ears, the eyes, the proportion, the skin and the clothes. Every frame rendered before it is the wrong
+  character. They are kept as evidence, not deleted.
+
+
+  WHAT MOVED, all of it measured and all of it in canon.yaml `founder_ruling_2026_08_21`: head_frac 0.190
+  -> 0.370 (2.71 heads); the IP-Adapter reference re-cropped off the founder''s image on a square canvas;
+  `blank eyes` struck and `slit pupils` in its place; `pointy ears` moved from the NEGATIVE to the POSITIVE;
+  the patchwork cloak replaced by the drawn costume; the head mask re-derived from the skeleton because
+  k6a''s box would sit inside this head''s forehead.'
+est_minutes: 4
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\b16canon-w5a-0821\prompt.txt: best quality, 1boy, solo, goblin, green skin, bald, pointy
+    ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth,
+    frown, sitting, in tall grass, full body
+  C:\banyan-farm\b16canon-w5a-0821\negative.txt: lowres, worst quality, low quality, text, watermark,
+    large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man,
+    hair, beard, child, chibi, 2boys, multiple heads, disembodied head, bokeh, blurry, depth of field
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT\
+    \ -- driver, skeleton AND the IP-Adapter\n# reference. Emitted by pipeline/jerry_canon_0821.py.\n\
+    import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-canon-assets-0821/\"\
+    \nroot = r\"C:\\banyan-farm\\b16canon-w5a-0821\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\"),\n\
+    \        (\"jerry-canon-h37fsit-0821.png\", os.path.join(root, \"pipeline\", \"control\"),\n     \
+    \    \"3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e\"),\n        (\"jerry-canon-sq45-0821.png\"\
+    , os.path.join(root, \"pipeline\", \"control\"),\n         \"066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c\"\
+    )]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
+    \ + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
+    \    if got != sha:\n        print(\"!! %s fetched with sha %s, expected %s\"\n              % (name,\
+    \ got, sha))\n        raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n\
+    \        fh.write(blob)\n    print(\"staged\", name, got, \"->\", dst)\n"
+- name: posehint
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\b16canon-w5a-0821\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\b16canon-w5a-0821\src
+  - --repo-commit
+  - c6cf964a6
+  - --task
+  - ep2-b16-canon-w5a-0821
+  - --arm
+  - ipahead
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - pipeline/control/jerry-canon-h37fsit-0821.png
+  - --control-sha256
+  - 3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260823'
+  - --ip-ref
+  - pipeline/control/jerry-canon-sq45-0821.png
+  - --ip-mask
+  - 0,0,832,655
+  - --ip-ref-sha256
+  - 066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c
+  - --ip-scale
+  - '1.0'
+  - --ip-weight
+  - ip-adapter-plus-face_sdxl_vit-h.safetensors
+  - --prompt-file
+  - C:\banyan-farm\b16canon-w5a-0821\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\b16canon-w5a-0821\negative.txt
+  - --out
+  - C:\banyan-farm\b16canon-w5a-0821\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The courier pushes from farm-out and from nowhere else.\n# The CONDITIONS travel with the frame:\
+    \ a reader scoring whether the\n# adapter carried the EAR needs the ear it was shown.\nimport glob,\
+    \ hashlib, os, shutil\nout_dir = \"C:/banyan-farm/b16canon-w5a-0821/out\"\npay_dir = \"C:/banyan-farm/b16canon-w5a-0821\"\
+    \nctl_dir = \"C:/banyan-farm/b16canon-w5a-0821/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b16-canon-w5a-0821\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep2-b16-canon-w5a-0821-ipahead.png*\"\
+    )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
+    /negative.txt\")\n               + glob.glob(ctl_dir + \"/jerry-canon-h37fsit-0821.png\")\n      \
+    \         + glob.glob(ctl_dir + \"/jerry-canon-sq45-0821.png\"))\nlines = []\nfor f in files:\n  \
+    \  shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\")\
+    \ as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep2-b16-canon-w5a-0821.sha256\"), \"w\", newline=\"\\n\") as fh:\n \
+    \   fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) +\
+    \ manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)\n"
+artifacts:
+- C:\banyan-farm\b16canon-w5a-0821\out\ep2-b16-canon-w5a-0821-ipahead.png
+bar: "THE CANON BAR. Read at 1:1 against taste/refs/goblin-canon-founder-0821.png\n-- THE FOUNDER'S OWN\
+  \ IMAGE -- and against nothing else. Tile B\n(adult-b19-0819.jpg) is SUPERSEDED and is no longer the\
+  \ thing to match; a frame\nthat looks like the tile now FAILS.\n\n  IDENTITY -- five clauses, and three\
+  \ of them invert a bar that stood this\n  morning. Every number is measured off the founder's image.\n\
+  \  F1  EARS: LARGE, LATERAL, POINTED, projecting clear of the skull on both\n      sides and dominating\
+  \ the silhouette. Measured target: ear span about 1.5x\n      the skull width. SHORT LOW FLANGES NOW\
+  \ FAIL -- that was the tile's ear and\n      it is struck. So does a bare skull with no ear read at\
+  \ all.\n  F2  EYES: a large open almond with an off-white sclera AND A VISIBLE PUPIL --\n      small,\
+  \ dark, a narrow VERTICAL slit. BLANK PUPIL-LESS EYES NOW FAIL. A\n      round black anime pupil filling\
+  \ the eye also fails; the target is ~10% of\n      the eye's width.\n  F3  BALD, smooth unbroken dome,\
+  \ no hair, no hairline, no horns, no cowl.\n  F4  SKIN: a muted desaturated grey-olive over the whole\
+  \ body, one tone. A\n      saturated kelly green fails. A human complexion fails. Measured #7C806D.\n\
+  \  F5  NO AGE MODELLING: no brow furrows, no nasolabial folds, no jowls, no\n      cheekbone shadow.\
+  \ The face is smooth. He is not an adult man.\n\n  PROPORTION\n  P1  ABOUT 2.7 HEADS TALL, head roughly\
+  \ 37% of the standing figure. This is the\n      founder's own drawing and it is deliberately large-headed.\
+  \ A 5-heads\n      figure fails; so does a head so large the body cannot act.\n  P2  NOT A MASCOT. Round-bellied,\
+  \ squat, or super-deformed still fails -- the\n      killed chibi design is still killed. Large head,\
+  \ ordinary child body.\n\n  COSTUME -- new today, and the cloak is dead.\n  W1  MANDARIN / BAND COLLAR\
+  \ SHIRT in muted sage, dark shorts above the knee,\n      bare shins, dark ankle boots.\n  W2  NO CLOAK,\
+  \ NO HOOD, NO COWL, NO PATCHES, NO STITCH LINES. A patchwork\n      cloak is the single most likely\
+  \ regression: it was in the frozen positive\n      until today and it is still in four script lines.\n\
+  \n  THE BEAT\n  B1  THE POSE IS THE ONE ASKED FOR.\n  B2  THE WORLD IS PRESENT AT FRAME ONE -- this\
+  \ beat's own location, in focus\n      enough to read. An empty studio background fails.\n  B3  THE\
+  \ BEAT'S EMOTION IS LEGIBLE WITH THE CAPTION COVERED, judged against\n      the stage direction recorded\
+  \ in this spec.\n\n  PALETTE\n  L1  MUTED, HIGH-KEY, LOW SATURATION, soft ink linework. The founder's\
+  \ image\n      is watercolour-adjacent and its background is genuinely out of focus.\n\nA frame failing\
+  \ ANY of F1-F5, P1-P2 or W2 is REJECTED and is not a candidate.\nNear-misses are what made the 31-frame\
+  \ LoRA set untrainable."
+clip77_measured_not_estimated: positive 55 of 77, negative 68 of 77, counted with animagine-xl-3.1's OWN
+  vocab by pipeline/clip_token_count.py. The first draft of the identity clause measured 84-90 and the
+  tail it was dropping was THE POSE AND THE LOCATION on all seven beats.
+composite_bar: "\nBEAT 16's OWN TWO CLAUSES, ON TOP OF THE CANON BAR, and they are what the\ncompositor\
+  \ needs rather than what the picture needs:\n\n  D1  THE NEAR FOREGROUND IS IN FOCUS AND DRAWABLE. No\
+  \ bokeh, no blown\n      highlights, no photographic falloff in the bottom third. THE NUMBER THAT\n\
+  \      FAILED w4: its green-dominant p88 is (239,255,230) -- near-white -- so\n      foliage_palette's\
+  \ highlight came back as a ghost. A plate whose\n      green-dominant p88 is still up in the 230s FAILS\
+  \ D1 even if it looks\n      pleasant, because the tool that consumes it will draw a white plant.\n\
+  \  D2  THERE IS A GROUND PLANE, AND IT IS STRAIGHT. Something far away is\n      depicted, the picture\
+  \ is positioned relative to it, and the horizon does\n      not bend. beat16_sapling_composite.py draws\
+  \ a VERTICAL stem at a measured\n      root point; a curved horizon is a FAIL here for the same reason\
+  \ it was a\n      FAIL for the sapling-field lane's step 2.\n\n  AND ONE ABSENCE, scored as a requirement\
+  \ the way the beat-06 pose rung scored\n  its empty hands: THE PLATE SHOULD CARRY NO FINISHED PLANT.\
+  \ A weed the erase\n  box can take is tolerable and is what --erase-box is for; a second sapling in\n\
+  \  frame is not, because the beat's canon is `sapling-two-leaves` and two plants\n  in one frame is\
+  \ the b15 problem arriving from the other side.\n\n  NOTE ON L1. The canon bar's L1 blesses an out-of-focus\
+  \ BACKGROUND, which is\n  the founder's own reference and is not in dispute. D1 is about the\n  FOREGROUND.\
+  \ A plate may pass L1 and fail D1; w4 did exactly that.\n"
+founder_ruling_verbatim: dude, this is how the goblin should look
+ip_adapter:
+  ruling: 'FOUNDER RULING, 2026-08-21 16:54, and it is an IMAGE, not a sentence: taste/refs/goblin-canon-founder-0821.png,
+    committed b93a70da, with "dude, this is how the goblin should look". It supersedes tile B and the
+    08-21 age-B recipe on every axis it shows. See canon.yaml `ep2-goblin-design-adult` -> `founder_ruling_2026_08_21`
+    and pipeline/jerry_canon_0821.py.'
+  ref: farm-out/jerry-canon-assets-0821/jerry-canon-sq45-0821.png
+  ref_sha256: 066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c
+  ref_provenance: 'goblin-canon-founder-0821.png cropped (187,110)-(677,483) -- the measured head box
+    plus 18 px, WIDE because the ears project 27% of a skull width on each side -- background flood-filled
+    with the image''s own field median (187,195,149), pasted CENTRED at 45% head-of-frame on a 448x448
+    SQUARE canvas. Square is load-bearing: diffusers builds CLIPImageProcessor() with no arguments, which
+    resizes the SHORT edge to 224 and CENTRE CROPS to a square, so only on a square canvas is the authored
+    head ratio the ratio the encoder receives. Encoder coverage here is 28.3% and the subject touches
+    no encoder edge (asserted by the builder, which returns 1 if it does). Rebuild with `pipeline/author_jerry_canonref_0821.py
+    --head-frac 0.45`; assert with `--check 066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c`.'
+  mask: 0,0,832,655
+  mask_frame: RENDER pixels, 832x1216
+  mask_rule: DERIVED FROM THE SKELETON, not scaled from k6a's box. k6a's 315,130,515,350 was authored
+    around a head_frac 0.190 skull whose ears 'barely break the silhouette'. At head_frac 0.370 the head
+    alone is 360 px tall and the ears reach 449/300 of a skull width, so that box would sit inside the
+    forehead and the adapter would never touch the loudest thing in the new design. This box is the crown-to-chin
+    span at this pose, widened by the MEASURED ear-span ratio 449/300 and 20 px of margin. Derived by
+    pipeline/jerry_canon_0821.head_box('sit').
+  scale: '1.0'
+  weights: h94/IP-Adapter sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors, apache-2.0, sha256
+    677ad8860204f7d0bfba12d29e6c31ded9beefdf3e4bbd102518357d31a292c1, 847517512 bytes. THE GENERAL ADAPTER
+    ip-adapter-plus_sdxl_vit-h.safetensors IS THE SAME NUMBER OF BYTES, so only the digest separates them;
+    controlnet_plate.py carries an allowlist keyed by name and carrying the digest.
+  skeleton: farm-out/jerry-canon-assets-0821/jerry-canon-h37fsit-0821.png
+  skeleton_sha256: 3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e
+  head_frac: 0.37
+  controlnet: xinsir/controlnet-openpose-sdxl-1.0 at scale 1.0
+  proportion_ruling: 'head_frac 0.370 = 2.71 heads, MEASURED off the founder''s image (head 337 px, figure
+    912 px). The tile measured 5.2 and the frozen standard holds 0.190. Recorded caveat: the image''s
+    camera is ABOVE the subject, which foreshortens the legs more than the head, so 2.71 is the ratio
+    at THAT camera and a level-camera full body will measure taller. Proportion is carried here by GEOMETRY
+    -- the skeleton and ControlNet -- and by no word in the prompt.'
+one_sample_rule: 'ONE FRAME, AND IT IS BEAT 13, for the two reasons the age-B wave spent its sample there:
+  it is the frame the founder pointed at when he said the goblin reads as an adult, and it was the best
+  pass of the adult wave''s round one, so a break here is attributable to the new recipe and not to a
+  marginal beat. NOTHING SCALES OFF IT UNTIL IT IS JUDGED BY EYE AT 1:1.'
+post_ship_patch: review/ep2-ship-0821 IS NOT TOUCHED BY THIS JOB. A plate here is a candidate; a candidate
+  becomes a pick, a pick becomes a motion spec, and only a passing motion take is swapped -- four judgements,
+  none of them this job's.
+predicted_failure_modes: '1. `blurry` IN THE NEGATIVE SHARPENS THE WHOLE PICTURE, including the background
+  the founder''s L1 wants soft. Then the fix is to split the terms -- keep `bokeh, depth of field` and
+  drop `blurry` -- and that is a named round-2 lever, not a new idea.
+
+  2. `distant hills` PUSHES THE CAMERA BACK and the seated figure becomes small. The beat can carry that
+  (he is depth here by design) but the composite needs him readable, so a figure under about a third of
+  frame height is a fail.
+
+  3. THE STRIP LETS SOMETHING BACK IN. `glowing eyes` and `orange eyes` were added after the sample drew
+  orange irises. w5z is the cell that would show it and it is why w5z exists.'
+real_consumer: 'beat16_sapling_composite.py. A pass here is a PLATE, not a candidate and not a pick: the
+  plant is drawn into it next, then naturalized, then moved. review/ep2-ship-0821 is not touched by this
+  job.'
+round_2_lever: "NAMED BEFORE THE RENDER so round two is a decision and not a brainstorm, in the order\
+  \ they will be reached for:\n  1. SKIN GOES HUMAN -> put `pale skin, grey skin` back in the negative.\
+  \ They were struck today and it is the weakest of the strikes.\n  2. PUPIL COMES BACK TOO LARGE -> add\
+  \ `constricted pupils` to the positive. It was drafted in and cut by the CLIP-77 budget; there are 3\
+  \ spare tokens.\n  3. FIGURE COMES BACK TOO TALL -> drop `child, chibi` from the negative. They are\
+  \ kept under protest and are in tension with a 2.71-head brief.\n  4. EARS COME BACK SMALL -> raise\
+  \ IP_SCALE from 0.7, or rebuild the reference at head-frac 0.25 (already on disk, sha in the module).\
+  \ The ear is geometry the adapter carries, not a word.\nOne at a time, in that order, and each is one\
+  \ spec."
+stage_direction: 'WHY -- ''Close on the sapling''s leaf; the scavenger sits blurred behind it.'' NOTE
+  ON STAGING, and it is why this row exists at all: the shot is a leaf close-up and he is the blurred
+  figure behind it, so this plate is the FIGURE, not the framing. The founder''s verdict on this beat
+  was ''old man goblin. very wrong'', which means he is legible enough in the take to be judged, so the
+  design has to be right even at this depth.'
+supersedes: ep2-b16-ageb-{p1,r2}-0821 on the DESIGN axis. Those frames are the wrong character as of 16:54
+  today and are kept as evidence. This job does not delete or re-file them.
+supersedes_nothing: ep2-b16-canon-w4-0821 is NOT retired by this ladder. It is the matched control at
+  seed 20260823 and it is the frame these four are read against.
+the_one_variable: THE DEPTH OF FIELD IS KILLED -- `bokeh, blurry, depth of field` added to the negative
+  and nothing else. This is the rung the compositor lane asked for by name.
+the_rung_this_is_one_variable_from: ep2-b16-canon-w5z-0821
+why_not_the_eye: THE ADAPTER REFERENCE IS HELD AT sq45 ON PURPOSE. r13a (sq65) is this morning's steward-provisional
+  result and the founder has not seen it. Beat 16 is the beat where the goblin is DEPTH behind a leaf
+  close-up -- the eye is the least load-bearing thing in this plate and the most expensive second variable.
+  If sq65 is ratified, this ladder's winner is re-fired on it as one further rung.
+word_side_strips: positive -nothing ; negative -glowing eyes|orange eyes|third eye|eyepatch
+derivation:
+  parent: pipeline/jobs/ep2-jerry-face-k6a-0821.yaml
+  by: pipeline/derive_jerry_canon_0821.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - clip77_measured_not_estimated
+  - composite_bar
+  - consumer
+  - founder_ruling_verbatim
+  - ip_adapter
+  - one_sample_rule
+  - owner
+  - post_ship_patch
+  - predicted_failure_modes
+  - real_consumer
+  - round_2_lever
+  - stage_direction
+  - success
+  - supersedes
+  - supersedes_nothing
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - why
+  - why_not_the_eye
+  - word_side_strips
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - failure_predicted_in_advance
+  - ip_adapter
+  - one_sample_rule
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  retokened:
+  - jerryface-k6a-0821 -> b16canon-w5a-0821
+  - ep2-jerry-face-k6a-0821 -> ep2-b16-canon-w5a-0821
+  overrides_applied_and_asserted:
+    argv:--control:
+    - step posehint --control (pipeline/control/jerry-skel-h19-0820.png -> pipeline/control/jerry-canon-h37fsit-0821.png)
+    argv:--control-sha256:
+    - step posehint --control-sha256 (244094ed608666035d670d8bc5149ff6499c1497e5501724728d2af79b54829c
+      -> 3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e)
+    argv:--ip-mask:
+    - step posehint --ip-mask (315,130,515,350 -> 0,0,832,655)
+    argv:--ip-ref:
+    - step posehint --ip-ref (pipeline/control/jerry-tile-sq20-0821.png -> pipeline/control/jerry-canon-sq45-0821.png)
+    argv:--ip-ref-sha256:
+    - step posehint --ip-ref-sha256 (f65c9bb412e541fbe9b6024ddaec5a78b78028afd87e325baa06d6d430dded14
+      -> 066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c)
+    argv:--ip-scale:
+    - step posehint --ip-scale (0.7 -> 1.0)
+    argv:--repo-commit:
+    - step posehint --repo-commit (894b6214ce4ce3f88e8d518ae33de73fbc71f909 -> c6cf964a6)
+    argv:--scale:
+    - step posehint --scale (1.0 -> 1.0)
+    argv:--seed:
+    - step posehint --seed (20260823 -> 20260823)
+    key:beat:
+    - key beat = 16
+    key:est_minutes:
+    - key est_minutes = 4
+    key:node:
+    - key node = '002b-first-citizen'
+    key:priority:
+    - key priority = 6
+    key:sample:
+    - key sample = False
+    payload:negative.txt:
+    - payload negative.txt (208 -> 248 chars)
+    payload:prompt.txt:
+    - payload prompt.txt (235 -> 200 chars)
