@@ -4462,3 +4462,5 @@
 08:10:25Z box-runner idle ready=0 failed=100
 08:11:20Z STARTED task=ep3-saplora-fignat-g1-0822-1787386273 attempt=1 on box-runner
 08:11:21Z FAIL task=ep3-saplora-fignat-g1-0822-1787386273 rc=3 step=dry
+08:11:26Z STARTED task=ep3-saplora-fignat-g2-0822-1787386278 attempt=1 on box-runner
+08:11:27Z FAIL task=ep3-saplora-fignat-g2-0822-1787386278 rc=3 step=dry
