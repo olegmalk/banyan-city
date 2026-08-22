@@ -1,0 +1,66 @@
+#### job ep2-b13-i2icnet-s35-0822-1787390489 attempt 1 start 2026-08-22T09:25:52Z
+
+==== step fetch START 2026-08-22T09:25:52Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b13i2icnet-s35-0822\\fetch_init.py"]
+fetched goblin-canon-founder-0821.png 1044345 bytes sha b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00 OK
+fetched fullframe-mask-0822.png 3278 bytes sha 5cb2f709bfa7eab1aae0ffebb398fefd5224a6da61e5a730779322a84321894b OK
+fetched jerry-canon-h37fsit-0821.png 12349 bytes sha 3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e OK
+==== step fetch END rc=0 2026-08-22T09:25:52Z ====
+
+==== step dry START 2026-08-22T09:25:52Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b13i2icnet-s35-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b13i2icnet-s35-0822\\goblin-canon-founder-0821.png", "--init-sha256", "b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00", "--mask-png", "C:\\banyan-farm\\b13i2icnet-s35-0822\\fullframe-mask-0822.png", "--prompt-file", "C:\\banyan-farm\\b13i2icnet-s35-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b13i2icnet-s35-0822\\negative.txt", "--out", "C:\\banyan-farm\\b13i2icnet-s35-0822\\b13-i2icnet-s35-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.35", "--pad-crop", "0", "--blur", "8", "--seed", "20260823", "--note", "IMG2IMG FROM THE CANON IMAGE *PLUS* A POSE NET, cell s35, strength 0.35. The mask is FULL FRAME (all white) and --pad-crop is 0, which together turn the SDXL ControlNet-inpaint pipeline on base weights into img2img-with-a-hint: the whole frame is denoised from a latent that still carries the founder's own picture, while xinsir/controlnet-openpose-sdxl-1.0 at 1.0 conditions where the body goes. PAD-CROP MUST STAY 0. b08-arm-route-0819.md section 28 measured that padding_mask_crop rescales the hint along with the init -- alignment stays exact and the conditioning becomes a different instruction. The driver now refuses that combination (rc 15); at 0 the magnification is 1.0 and the defect cannot occur.", "--dry-run", "--controlnet", "xinsir/controlnet-openpose-sdxl-1.0", "--control", "C:\\banyan-farm\\b13i2icnet-s35-0822\\jerry-canon-h37fsit-0821.png", "--control-sha256", "3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e", "--scale", "1.0"]
+HINT MAGNIFICATION 1.000x (ceiling 1.05) -- the hint reaches the net at the scale it was authored
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00
+mask png corners=- bbox=[0, 0, 831, 1215]  0.9988 x 0.9992 of 832x1216
+hint 1 jerry-canon-h37fsit-0821.png scale 1.0 sha 3db75427b2696b3b -- 832x1216, MATCHES the init
+pad_crop region (vendored get_crop_region on the blurred mask) = None -- diffusers applies THIS SAME box to the init, the mask and every hint
+WROTE C:\banyan-farm\b13i2icnet-s35-0822\b13-i2icnet-s35-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-22T09:25:52Z ====
+
+==== step s20260823 START 2026-08-22T09:25:52Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b13i2icnet-s35-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b13i2icnet-s35-0822\\goblin-canon-founder-0821.png", "--init-sha256", "b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00", "--mask-png", "C:\\banyan-farm\\b13i2icnet-s35-0822\\fullframe-mask-0822.png", "--prompt-file", "C:\\banyan-farm\\b13i2icnet-s35-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b13i2icnet-s35-0822\\negative.txt", "--out", "C:\\banyan-farm\\b13i2icnet-s35-0822\\b13-i2icnet-s35-s20260823.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.35", "--pad-crop", "0", "--blur", "8", "--seed", "20260823", "--note", "IMG2IMG FROM THE CANON IMAGE *PLUS* A POSE NET, cell s35, strength 0.35. The mask is FULL FRAME (all white) and --pad-crop is 0, which together turn the SDXL ControlNet-inpaint pipeline on base weights into img2img-with-a-hint: the whole frame is denoised from a latent that still carries the founder's own picture, while xinsir/controlnet-openpose-sdxl-1.0 at 1.0 conditions where the body goes. PAD-CROP MUST STAY 0. b08-arm-route-0819.md section 28 measured that padding_mask_crop rescales the hint along with the init -- alignment stays exact and the conditioning becomes a different instruction. The driver now refuses that combination (rc 15); at 0 the magnification is 1.0 and the defect cannot occur.", "--controlnet", "xinsir/controlnet-openpose-sdxl-1.0", "--control", "C:\\banyan-farm\\b13i2icnet-s35-0822\\jerry-canon-h37fsit-0821.png", "--control-sha256", "3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e", "--scale", "1.0"]
+HINT MAGNIFICATION 1.000x (ceiling 1.05) -- the hint reaches the net at the scale it was authored
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00,  7.81it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:01<00:01,  1.84it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.86it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.79it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:20: FutureWarning: `VQEncoderOutput` is deprecated and will be removed in version 0.31. Importing `VQEncoderOutput` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQEncoderOutput`, instead.
+  deprecate("VQEncoderOutput", "0.31", deprecation_message)
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:25: FutureWarning: `VQModel` is deprecated and will be removed in version 0.31. Importing `VQModel` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQModel`, instead.
+  deprecate("VQModel", "0.31", deprecation_message)
+PIPELINE StableDiffusionXLControlNetInpaintPipeline, 1 net(s), scales 1.0
+
+  0%|          | 0/14 [00:00<?, ?it/s]
+  7%|▋         | 1/14 [00:00<00:04,  3.03it/s]
+ 14%|█▍        | 2/14 [00:00<00:04,  2.96it/s]
+ 21%|██▏       | 3/14 [00:01<00:03,  2.96it/s]
+ 29%|██▊       | 4/14 [00:01<00:03,  3.03it/s]
+ 36%|███▌      | 5/14 [00:01<00:02,  3.07it/s]
+ 43%|████▎     | 6/14 [00:01<00:02,  3.00it/s]
+ 50%|█████     | 7/14 [00:02<00:02,  3.10it/s]
+ 57%|█████▋    | 8/14 [00:02<00:01,  3.07it/s]
+ 64%|██████▍   | 9/14 [00:02<00:01,  3.01it/s]
+ 71%|███████▏  | 10/14 [00:03<00:01,  3.05it/s]
+ 79%|███████▊  | 11/14 [00:03<00:00,  3.06it/s]
+ 86%|████████▌ | 12/14 [00:03<00:00,  3.07it/s]
+ 93%|█████████▎| 13/14 [00:04<00:00,  3.05it/s]
+100%|██████████| 14/14 [00:04<00:00,  3.38it/s]
+100%|██████████| 14/14 [00:04<00:00,  3.12it/s]
+WROTE C:\banyan-farm\b13i2icnet-s35-0822\b13-i2icnet-s35-s20260823.png
+WROTE C:\banyan-farm\b13i2icnet-s35-0822\b13-i2icnet-s35-s20260823-mask.png
+WROTE C:\banyan-farm\b13i2icnet-s35-0822\b13-i2icnet-s35-s20260823.png.meta.yaml
+rc=0 render_s=5.7
+==== step s20260823 END rc=0 2026-08-22T09:26:09Z ====
+
+==== step publish START 2026-08-22T09:26:09Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b13i2icnet-s35-0822\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-i2icnet-s35-0822\"\nNAMES = [\n    \"b13-i2icnet-s35-s20260823.png\",\n    \"b13-i2icnet-s35-s20260823-mask.png\",\n    \"b13-i2icnet-s35-s20260823.png.meta.yaml\",\n    \"goblin-canon-founder-0821.png\",\n    \"fullframe-mask-0822.png\",\n    \"jerry-canon-h37fsit-0821.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b13-i2icnet-s35-0822.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 8 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b13-i2icnet-s35-0822
+==== step publish END rc=0 2026-08-22T09:26:09Z ====
+#### job ep2-b13-i2icnet-s35-0822-1787390489 finished rc=0 2026-08-22T09:26:09Z

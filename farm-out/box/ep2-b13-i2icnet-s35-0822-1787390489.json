@@ -1,0 +1,136 @@
+{
+  "id": "ep2-b13-i2icnet-s35-0822-1787390489",
+  "task": "ep2-b13-i2icnet-s35-0822",
+  "node": "002b-first-citizen",
+  "beat": 13,
+  "worker": "box-runner",
+  "priority": 2,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\fetch_init.py"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\goblin-canon-founder-0821.png",
+        "--init-sha256",
+        "b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00",
+        "--mask-png",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\fullframe-mask-0822.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\b13-i2icnet-s35-DRY.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.35",
+        "--pad-crop",
+        "0",
+        "--blur",
+        "8",
+        "--seed",
+        "20260823",
+        "--note",
+        "IMG2IMG FROM THE CANON IMAGE *PLUS* A POSE NET, cell s35, strength 0.35. The mask is FULL FRAME (all white) and --pad-crop is 0, which together turn the SDXL ControlNet-inpaint pipeline on base weights into img2img-with-a-hint: the whole frame is denoised from a latent that still carries the founder's own picture, while xinsir/controlnet-openpose-sdxl-1.0 at 1.0 conditions where the body goes. PAD-CROP MUST STAY 0. b08-arm-route-0819.md section 28 measured that padding_mask_crop rescales the hint along with the init -- alignment stays exact and the conditioning becomes a different instruction. The driver now refuses that combination (rc 15); at 0 the magnification is 1.0 and the defect cannot occur.",
+        "--dry-run",
+        "--controlnet",
+        "xinsir/controlnet-openpose-sdxl-1.0",
+        "--control",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\jerry-canon-h37fsit-0821.png",
+        "--control-sha256",
+        "3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e",
+        "--scale",
+        "1.0"
+      ]
+    },
+    {
+      "name": "s20260823",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\goblin-canon-founder-0821.png",
+        "--init-sha256",
+        "b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00",
+        "--mask-png",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\fullframe-mask-0822.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\b13-i2icnet-s35-s20260823.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.35",
+        "--pad-crop",
+        "0",
+        "--blur",
+        "8",
+        "--seed",
+        "20260823",
+        "--note",
+        "IMG2IMG FROM THE CANON IMAGE *PLUS* A POSE NET, cell s35, strength 0.35. The mask is FULL FRAME (all white) and --pad-crop is 0, which together turn the SDXL ControlNet-inpaint pipeline on base weights into img2img-with-a-hint: the whole frame is denoised from a latent that still carries the founder's own picture, while xinsir/controlnet-openpose-sdxl-1.0 at 1.0 conditions where the body goes. PAD-CROP MUST STAY 0. b08-arm-route-0819.md section 28 measured that padding_mask_crop rescales the hint along with the init -- alignment stays exact and the conditioning becomes a different instruction. The driver now refuses that combination (rc 15); at 0 the magnification is 1.0 and the defect cannot occur.",
+        "--controlnet",
+        "xinsir/controlnet-openpose-sdxl-1.0",
+        "--control",
+        "C:\\banyan-farm\\b13i2icnet-s35-0822\\jerry-canon-h37fsit-0821.png",
+        "--control-sha256",
+        "3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e",
+        "--scale",
+        "1.0"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b13i2icnet-s35-0822\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-i2icnet-s35-0822\"\nNAMES = [\n    \"b13-i2icnet-s35-s20260823.png\",\n    \"b13-i2icnet-s35-s20260823-mask.png\",\n    \"b13-i2icnet-s35-s20260823.png.meta.yaml\",\n    \"goblin-canon-founder-0821.png\",\n    \"fullframe-mask-0822.png\",\n    \"jerry-canon-h37fsit-0821.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b13-i2icnet-s35-0822.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\b13i2icnet-s35-0822\\b13-i2icnet-s35-s20260823.png",
+    "C:\\banyan-farm\\b13i2icnet-s35-0822\\goblin-canon-founder-0821.png"
+  ],
+  "spec_sha256": "bce7e37e91631cfe7af9ba63554a654bb8937c4990bece9edb028532e10d48b1",
+  "started_at": "2026-08-22T09:25:52Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-22T09:26:09Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\b13i2icnet-s35-0822\\b13-i2icnet-s35-s20260823.png",
+    "C:\\banyan-farm\\b13i2icnet-s35-0822\\goblin-canon-founder-0821.png"
+  ]
+}
