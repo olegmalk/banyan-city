@@ -74,3 +74,25 @@ pipeline/.box-payload-index.jsonl
 # reply being recorded twice. This file is a convenience, so it is local-only and
 # deleting it costs nothing.
 pipeline/.decisions-state.json
+
+# TRAINED WEIGHTS. Measured 2026-08-22: one rank-32 SDXL LoRA checkpoint is
+# 228,453,516 bytes, and `train-sapling-0822.yaml` saves FIVE of them. GitHub
+# hard-rejects any single blob over 100 MiB, and a rejected push is not a retry
+# the courier recovers from — box_runner's Courier commits locally with
+# `git add -A -- farm-out` and then pushes, so one oversized blob leaves a
+# permanent unpushable commit at the head of farm-results-rtx5090 and EVERY
+# other lane's results stop reaching this tree behind it. That is a repo-wide
+# wedge produced by one lane's publish step.
+#
+# `pipeline/research/character-lora-sdxl-0820.md` §5 says a rank-32 LoRA is
+# "still a ~35 MB file". That is the SD1.5 number carried forward and it is
+# wrong by 6.5x for SDXL; the spec that quoted it would have shipped 1.1 GB into
+# farm-out. Believing it is exactly how this would have happened, so the guard
+# is here rather than in anyone's memory.
+#
+# Weights live on the box that trained them and are addressed by the sha256
+# manifest their publish step writes — which DOES travel, so a sample can always
+# be traced to the exact weights that drew it without the blob being in git.
+farm-out/**/*.safetensors
+farm-out/**/*.ckpt
+farm-out/**/*.pt
