@@ -218,6 +218,39 @@ STANCES["oneknee"] = {
     "Rank": (310, 1055), "Lank": (610, 1125),
 }
 
+# CROUCH -- A DEEP SQUAT, AND IT IS PICKED BY WHICH BEAT NEEDS IT, NOT BY WHICH
+# IS EASIEST.
+#
+# TWO BEATS OF 002b ASK FOR THIS SILHOUETTE AND NOTHING IN THE SET SUPPLIES IT:
+# beat 12 -- "crouches low behind the pencil-thin trunk ... failing to hide" --
+# and the fig-pick -- "crouches, picks one small round purple fruit from the
+# grass with both hands ... level with his face", whose own note says STAYING
+# crouched is what puts the empty stem at his face height. `stride` was the other
+# candidate and serves ONE beat (the fruit-drop, whose three prompt lines are
+# variants of one shot). Two beats beats one.
+#
+# AND STRIDE CARRIES A RISK THIS DOES NOT. This script's own CUT_Y note measured
+# it: "a knee at hip height with the shin hanging is a STANDING figure with its
+# feet apart", which `h240hunch` already rendered faithfully and uselessly. A
+# frontal stride on a fixed frontal torso is exactly that shape. Adding a frame
+# that reads as standing to a dataset whose entire disease is a standing prior is
+# the one move with negative expected value here.
+#
+# WHY IT IS NOT THE SEAT AGAIN, which is the objection the kneel note raised
+# against crouch and which is answered by GEOMETRY rather than by assertion. The
+# seat plants the feet FORWARD AND WIDE -- ankles at x 300/540, a 240 px spread,
+# 120 px below the knees. A squat tucks them UNDER the body: ankles at x 345/495,
+# a 150 px spread, and 105 px below knees that sit 50 px lower. Feet inside the
+# knees instead of outside them is the difference between sitting on the ground
+# and squatting on your heels, and it is 90 px of measurable ankle spread.
+#
+# Segment lengths are his: thighs 97 and 97 px against the canon's measured 94;
+# shin+boot 126 and 129 against its 95-130. Every joint below CUT_Y, asserted.
+STANCES["crouch"] = {
+    "Rkne": (275, 990),  "Lkne": (563, 990),
+    "Rank": (345, 1095), "Lank": (495, 1100),
+}
+
 
 def sha256_of(path):
     with open(path, "rb") as fh:
