@@ -399,7 +399,7 @@ def masks_overlap(a, b):
 
 
 def sidecar_lines(a, use_cn, ctrl_sha, rev, prompt, negative, load_s, render_s,
-                  stamp, torch_version, ip=None, ctrl2_sha=None):
+                  stamp, torch_version, ip=None, ctrl2_sha=None, lora_sha=None):
     """The 7.2 provenance block, written AT RENDER TIME, on the box."""
     side = [
         "# Provenance (7.2), written AT RENDER TIME by controlnet_plate.py on",
@@ -417,6 +417,20 @@ def sidecar_lines(a, use_cn, ctrl_sha, rev, prompt, negative, load_s, render_s,
         "seed: %d" % a.seed,
         "cost_usd: 0",
     ]
+    # THE LoRA IS NAMED AND HASHED, OR THE BLOCK IS BYTE-IDENTICAL TO WHAT IT
+    # ALWAYS WAS. A checkpoint directory holds five epochs whose filenames
+    # differ by one character, and a bar grid is only evidence if each frame
+    # says which bytes drew it -- registry.yaml keeps the weights on the box and
+    # the sha256 is the half that travels. When no LoRA is loaded NOTHING is
+    # emitted, so every sidecar this driver has already written stays reproducible.
+    if getattr(a, "lora", None):
+        side += [
+            "lora: %s" % a.lora,
+            "lora_sha256: %s" % (lora_sha or "unmeasured"),
+            "lora_weight: %s" % getattr(a, "lora_weight", 0.8),
+            "lora_fused_before_controlnet_swap: true  # from_pipe reuses the "
+            "module objects, so a fused UNet travels into the swapped pipeline",
+        ]
     if use_cn:
         # getattr with the constant as the default, so a caller that predates
         # --controlnet produces the byte-identical block it always did.
@@ -751,6 +765,65 @@ def render(a):
     pipe.to("cuda")
     pipe.set_progress_bar_config(disable=True)
 
+    # ---- THE CHARACTER LoRA, FUSED BEFORE THE CONTROLNET SWAP -------------
+    #
+    # WHY THIS ARM EXISTS AT ALL, AND IT IS ONE MEASUREMENT.
+    # `pipeline/goblin-i2i-route-0822.md` closed img2img-from-canon as a POSING
+    # route on a mechanism: at strength <= 0.40 only the last s*N steps run,
+    # global structure is decided in the HIGH-noise steps the pass never enters,
+    # and so an OpenPose skeleton at scale 1.0 moved grass, light and background
+    # by mean abs 15.05 and did not bend a single knee. Its section 4 named the
+    # only remaining route -- a LoRA trained on his pixels -- and named exactly
+    # why: "a LoRA and a skeleton can both act at strength 1.0 because there is
+    # no init competing with them."
+    #
+    # THAT SENTENCE IS A CLAIM, AND UNTIL THIS FLAG EXISTED THERE WAS NO WAY TO
+    # TEST IT. `sample_lora.py` loads a LoRA and cannot take a hint; this file
+    # takes a hint and could not load a LoRA. The decisive cell of the jerry v2
+    # bar grid -- trigger plus skeleton, txt2img, strength 1.0, does his identity
+    # reach the steps where the pose is decided -- needs both in one pass. That
+    # cell is the consumer registry.yaml said a LoRA loader must wait for, and
+    # it is a bar rather than a plate: nothing here ships a frame.
+    #
+    # FUSED BEFORE `from_pipe`, DELIBERATELY, AND FOR THE MIRROR OF THE REASON
+    # THE IP-ADAPTER IS REGISTERED AFTER IT. from_pipe rebuilds the pipeline
+    # class around THE SAME MODULE OBJECTS, so a weight change fused into the
+    # UNet here travels into the swapped pipeline, while an ADAPTER registered
+    # on the pre-swap object would be registered on a pipeline nobody calls.
+    # fuse_lora bakes the delta into the UNet tensors; the swap then carries it
+    # by identity. The two orderings are opposite because the two mechanisms are.
+    lora_sha = "none"
+    if getattr(a, "lora", None):
+        lora_path = Path(a.lora)
+        if not lora_path.is_file():
+            print("!! no such LoRA: %s" % a.lora, file=sys.stderr)
+            return 16
+        # THE PEFT GATE, and it is copied from sample_lora.py because it already
+        # cost this tree a run: diffusers 0.29.2 gates ALL LoRA loading behind
+        # USE_PEFT_BACKEND, peft was absent from both venvs on the box, and a
+        # training job spent twenty clean minutes and five checkpoints before
+        # dying in nine seconds on `PEFT backend is required for this method.`
+        # Checked BEFORE the 6.9 GB base load would have been better still; it is
+        # checked here, which is before the ControlNet and the adapter.
+        from diffusers.utils import USE_PEFT_BACKEND
+        if not USE_PEFT_BACKEND:
+            print("!! diffusers has no PEFT backend, so load_lora_weights() "
+                  "cannot run.\n   fix:  <this venv>/python.exe -m pip install "
+                  "--no-deps peft==0.12.0\n   --no-deps is required -- a plain "
+                  "install may resolve torch away from 2.11.0+cu128 and break "
+                  "every render on this card.", file=sys.stderr)
+            return 16
+        lora_sha = hashlib.sha256(lora_path.read_bytes()).hexdigest()
+        if a.lora_sha256 and a.lora_sha256 != lora_sha:
+            print("!! LoRA sha256 mismatch -- refusing.\n   want %s\n   have %s"
+                  % (a.lora_sha256, lora_sha), file=sys.stderr)
+            return 16
+        pipe.load_lora_weights(str(lora_path.parent.resolve()),
+                               weight_name=lora_path.name)
+        pipe.fuse_lora(lora_scale=float(a.lora_weight))
+        print("  LoRA %s fused at weight %.2f, sha %s"
+              % (lora_path.name, float(a.lora_weight), lora_sha[:16]), flush=True)
+
     kw = {}
     if use_cn:
         cn_kw = {} if CONTROLNET_VARIANT is None else {"variant": CONTROLNET_VARIANT}
@@ -839,7 +912,7 @@ def render(a):
     side = sidecar_lines(a, use_cn, ctrl_sha, rev, prompt, negative,
                          (t1 - t0).total_seconds(), (t2 - t1).total_seconds(),
                          t2.strftime("%Y-%m-%dT%H:%M:%SZ"), torch.__version__,
-                         ip=ip, ctrl2_sha=ctrl2_sha)
+                         ip=ip, ctrl2_sha=ctrl2_sha, lora_sha=lora_sha)
     (out_dir / ("%s-%s.png.meta.yaml" % (a.task, a.arm))).write_text(
         "\n".join(side) + "\n", encoding="utf-8")
 
@@ -1076,6 +1149,43 @@ def selftest():
     check("a pose-net sidecar carries the pose net's own licence line",
           "no annotator is used" in sp)
 
+    # ---- THE LoRA ARM. Added 2026-08-22 for the jerry v2 pose-adoption bar.
+    #
+    # THE FIRST CLAUSE IS THE ONE THAT MATTERS AND IT IS A NON-CHANGE CLAUSE.
+    # Six b08/b17 verdicts and the whole casting ladder cite sidecars this
+    # function wrote; if adding a flag moved one byte of a no-LoRA sidecar, every
+    # one of them would stop being reproducible. `ap2` above has no `lora`
+    # attribute at all -- it is the pre-change namespace -- and its block must
+    # come back with no lora line in it.
+    check("a sidecar from a caller that predates --lora carries NO lora line",
+          "lora" not in sp)
+    ap_l = argparse.Namespace(
+        task="t", arm="hint", width=W, height=H, steps=STEPS, cfg=CFG, seed=1,
+        scale=SCALE, control="c.png", control_sha256=None, root=None,
+        repo_commit="abc", out=".", prompt_file="p", negative_file="n",
+        controlnet="xinsir/controlnet-openpose-sdxl-1.0",
+        lora=r"C:\banyan-farm\loras\bnyjerry-sdxl-v2.safetensors",
+        lora_weight=0.8)
+    spl = "\n".join(sidecar_lines(ap_l, True, "dead", "abc", "p", "n", 1.0, 2.0,
+                                   "now", "2.4", lora_sha="f" * 64))
+    check("a LoRA sidecar names the weights file",
+          "bnyjerry-sdxl-v2.safetensors" in spl)
+    check("a LoRA sidecar carries the sha256 of the bytes that drew the frame",
+          "lora_sha256: " + "f" * 64 in spl)
+    check("a LoRA sidecar records the weight it was fused at",
+          "lora_weight: 0.8" in spl)
+    check("a LoRA sidecar records the fuse-before-swap ordering",
+          "lora_fused_before_controlnet_swap: true" in spl)
+    check("the LoRA block does not disturb the controlnet block",
+          "controlnet: xinsir/controlnet-openpose-sdxl-1.0" in spl)
+    # AND THE UNMEASURED CASE IS NAMED RATHER THAN BLANK. A sidecar that says
+    # `lora_sha256:` with nothing after it reads as "no hash exists"; it must say
+    # that a hash was not taken, which is a different and reportable fact.
+    spu = "\n".join(sidecar_lines(ap_l, True, "dead", "abc", "p", "n", 1.0, 2.0,
+                                   "now", "2.4"))
+    check("a LoRA sidecar with no measured sha says so in words",
+          "lora_sha256: unmeasured" in spu)
+
     # ---- THE MASK GRAMMAR -------------------------------------------------
     check("a rect parses to four ints in render pixels",
           parse_rect(" 10, 20 ,30,40 ", W, H) == (10, 20, 30, 40))
@@ -1262,6 +1372,25 @@ def main():
     ap.add_argument("--allow-truncation", action="store_true",
                     help="render even though CLIP will drop the tail; the tail is "
                          "the style anchor, so this is almost never what you want")
+    # ---- THE CHARACTER LoRA ARM ----------------------------------------
+    # Absent by default, so every existing caller of this driver behaves
+    # exactly as it did before -- selftest asserts that on a sha.
+    ap.add_argument("--lora", default=None,
+                    help="a character LoRA .safetensors, fused into the UNet "
+                         "BEFORE the ControlNet swap. Its whole reason is the "
+                         "pose-adoption bar: goblin-i2i-route-0822.md section 4 "
+                         "claims a LoRA and a skeleton can both act at strength "
+                         "1.0 because no init competes with them, and until this "
+                         "flag there was no way to test that claim -- "
+                         "sample_lora.py takes no hint and this file took no "
+                         "LoRA.")
+    ap.add_argument("--lora-weight", type=float, default=0.8,
+                    help="lora_scale at fuse time")
+    ap.add_argument("--lora-sha256", default=None,
+                    help="pin for --lora; refused on mismatch (rc 16). A "
+                         "checkpoint directory holds five epochs with names one "
+                         "character apart and the sidecar has to name the bytes "
+                         "that actually drew the frame.")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
 
