@@ -320,6 +320,17 @@ CELLS = {
     "p18": ("cowboy-flip", "0.20", "standing against distant blue hills", "distant hills",
             "bright midday sun", "bright sunlight"),
 
+    # ── THE THREE SAMPLE CELLS. All three were DROPPED and all three are kept
+    # here, because their paths, seeds and captions have to resolve for the
+    # admissions record to name them -- and because they are the measurements
+    # the whole batch above is built on.
+    "j01": ("full", "0.40", "standing on dry cracked bare earth, a green hedgerow far behind",
+            "dry cracked earth", "low golden sun", "warm low sunlight"),
+    "j14": ("cowboy-flip", "0.40", "standing on dry cracked bare earth", "dry cracked earth",
+            "low golden sun", "warm low sunlight"),
+    "j21": ("headsq", "0.40", "standing against a pale open sky", "a pale sky",
+            "low golden sun", "warm low sunlight"),
+
     # ── THE STRENGTH SWEEP. Same init, same ground clause and same light as the
     # framing's own sample cell, so the ONLY thing that moves inside a row is the
     # strength. A cell that passes the E-bar here is a dataset frame like any

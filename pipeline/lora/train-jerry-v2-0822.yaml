@@ -1,0 +1,150 @@
+# JERRY CHARACTER LoRA v2 -- SDXL / animagine-xl-3.1.
+# GENERATED. Edit pipeline/lora/emit_train_jerry_v2_0822.py, not this file.
+#
+# The BARS at the bottom were committed in that generator before a single
+# training frame was admitted. The numbers come from the manifest.
+
+id: lora-jerry-v2-0822
+task: lora-jerry-v2-0822
+node: 002b-first-citizen
+runner: box
+needs_gpu: true
+needs:
+- cuda
+- vram20
+priority: 60
+max_attempts: 1
+est_minutes: 45
+owner: the goblin-LoRA lane, 2026-08-22
+consumer: EVERY GOBLIN BEAT IN EPISODES TWO AND THREE, or none of them. goblin-i2i-route-0822.md
+  closed the img2img route as a posing route on a mechanism and named this as the only remaining
+  path to a goblin who can be put in a NEW BODY POSITION. Bar B2 is that claim as a measurement.
+  If B2 passes, the beats unlock at once; if B2 fails with B1 passing, the goblin has no route
+  to a new pose at all and that is the finding.
+success: A JUDGED ANSWER, NOT A PASSING ONE. The bars in `## BARS` were committed before a
+  single training frame was admitted. A run that fails B2 and says so, with the epoch and
+  weight ladders measured, is a success; a run that reports a score without the ladders is
+  not.
+why: 'SIXTEEN ROUNDS OF PROMPT-SIDE FACE WORK WERE VETOED FOUR TIMES, and canon.yaml route_closure_2026_08_22
+  closed that route by rule. The replacement put his pixels in as PIXELS and worked -- his
+  eye reached an output for the first time -- but only at strengths that cannot move a pose,
+  because the face surviving and the pose not moving are ONE MECHANISM read twice: at strength
+  <= 0.40 the pass never runs the high-noise steps where structure is decided.
+
+
+  A LoRA acts in those steps. That is the entire argument, and it is the last one available.
+
+
+  THE DATASET IS 21 FRAMES AND EVERY ONE OF THEM IS HIS DRAWING, re-lit and re-grounded by
+  that same img2img route at strength <= 0.40 -- which cannot invent a face precisely because
+  it never runs the steps that would. v1''s 15 frames were animagine''s guess at his face,
+  curated for an age read the founder superseded; they are not used and manifest-jerry-0821.yaml
+  stays on disk as evidence.'
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+dataset: pipeline/lora/manifest-jerry-v2-0822.yaml
+dataset_frames: 21
+recipe: kohya sd-scripts v0.11.1, dim 32 / alpha 16, unet_lr 1e-4, te_lr 5e-5, cosine + 32
+  warmup, AdamW8bit, batch 2, repeat 6, 10 epochs, bf16, seed 20260822. EVERY HYPERPARAMETER
+  IS THE SAPLING RUNS', UNCHANGED -- this run's variable is the subject and the dataset, and
+  a moved knob would give a different score two explanations.
+arithmetic: 21 frames x repeat 6 x 10 epochs = 1260 image passes, 630 optimizer steps at batch
+  2. Research section 5 puts the target at ~1200 passes; the repeat is round(1200 / (10 x
+  frames)) and is derived rather than chosen.
+requires:
+  render_venv_package: peft==0.12.0, installed with --no-deps. diffusers 0.29.2 gates ALL
+    LoRA loading behind USE_PEFT_BACKEND; its absence once cost twenty clean minutes of training
+    and five checkpoints before a nine-second ValueError.
+weights_never_reach_git: Each checkpoint is ~228 MB and GitHub hard-rejects any blob over
+  100 MiB, while box_runner.Courier._publish does `git add -A -- farm-out` and pushes -- one
+  checkpoint in farm-out/ leaves a permanently unpushable commit and stops EVERY lane's results
+  reaching this tree. The weights stay at C:\banyan-farm\lora-jerry-v2-0822\out and the sha256s
+  travel in registry.yaml.
+artifacts:
+- C:\banyan-farm\lora-jerry-v2-0822\out\bnyjerry-sdxl-v2.safetensors
+
+## BARS
+#
+# B1  IDENTITY, 15 CELLS, JUDGED AT 1:1 AGAINST taste/refs/goblin-canon-founder-0821.png
+#     FIVE fresh prompts the dataset does not contain, at THREE seeds each. Fresh
+#     means: a setting, a light and a framing no admitted frame carries. A cell
+#     passes when E1-E4 all hold (E5 where costume is in frame):
+#       E1 narrow almond eye, off-white field, TINY dark pupil, heavy upper lid.
+#          A large round iris of any colour is a FAIL -- this is the axis four
+#          founder vetoes were spent on.
+#       E2 broad low dome; smallish pointed ears NEAR HORIZONTAL. A tall egg skull
+#          with large upswept ears is the vetoed design.
+#       E3 smooth face -- no brow furrows, no nasolabial folds, no jowls.
+#       E4 desaturated sage, washed and high-key. Saturated kelly green is the
+#          vetoed palette.
+#       E5 shirt with a placket, dark shorts, dark boots.
+#     BAR: >= 13 of 15.
+#     JUDGED BY A BLIND COLD READER -- a fresh agent handed one frame, his image
+#     and the E-clauses, no prompt text, no mention of this lane, one frame at a
+#     time at full resolution. Same instrument the sapling runs used.
+#
+# B2  POSE ADOPTION -- THE DECISIVE BAR, AND THE REASON THIS LoRA EXISTS
+#     `bnyjerry` + an OpenPose skeleton at conditioning scale 1.0, TXT2IMG, no
+#     init, LoRA at the shipping weight. THREE authored skeletons (the seated,
+#     the crouch and the stride from jerry_canon_0821, at head_frac 0.370 -- the
+#     proportion measured off the founder's own image) x TWO seeds = 6 cells.
+#     Each cell is read on two clauses:
+#       P1 DID THE BODY ADOPT THE SKELETON? A visible knee bend, hip drop or
+#          seated fold where the hint has one. Round two's img2img cells scored
+#          0/3 here with the identical net at the identical scale, so this clause
+#          has a measured control at zero.
+#       P2 DID THE IDENTITY SURVIVE IT? E1-E4, same reading as B1.
+#     BAR: >= 5 of 6 on P1 AND >= 5 of 6 on P2. A cell that adopts the pose and
+#     loses the face is a FAIL, and so is the reverse -- the whole claim is that
+#     both happen in one pass.
+#
+# B3  NO REGRESSION, AT TWO WEIGHTS
+#     An A/B pair -- identical prompt and seed, LoRA loaded and unloaded -- on a
+#     prompt carrying NO trigger and NO goblin, at weight 0.8 and again at the
+#     shipping weight if that differs. BAR: no goblin intrudes, and the frame is
+#     not visibly recoloured, reframed or restyled against its no-LoRA twin.
+#     REGISTRY NOTE, CARRIED FORWARD DELIBERATELY: the sapling lane failed this
+#     bar in v1, v2 and v2b -- three datasets, two caption schemes, one outcome --
+#     and concluded "B3 should stop being treated as a dataset bar; the next thing
+#     to test against it is the WEIGHT and the merge." It is therefore measured at
+#     two weights here rather than one, and a failure at 0.8 with a pass lower
+#     down is a WEIGHT finding, not a dataset verdict.
+#
+# B4  STYLE, THE CONTROL
+#     The 15 B1 frames read for our look -- detailed cinematic anime, native-tag
+#     dialect. BAR: 15 of 15. A character LoRA that drags the show's style with it
+#     is not shippable at any identity score. This bar passed 15/15 in all three
+#     sapling runs and is here to catch the case where it stops.
+#
+# B5  NO POSE LOCK -- THE CAPTION DESIGN'S OWN BAR
+#     Every training frame in this set is a STANDING figure, because the route
+#     that made them cannot move a pose. The caption scheme's answer is to name
+#     `standing`, `looking at viewer` and a framing word on all of them, so the
+#     trigger is excused from carrying any of the three. THIS BAR TESTS WHETHER
+#     THAT WORKED. Of the 15 B1 cells, several prompt for a pose the dataset never
+#     shows (sitting, crouching, walking). BAR: <= 2 of 15 return a standing
+#     figure when another pose was asked for.
+#     B5 AND B2 ARE THE SAME QUESTION FROM TWO SIDES and are both here on purpose:
+#     B5 asks whether WORDS can move him, B2 asks whether a SKELETON can. B2 is
+#     the one that matters for production -- the beats are staged with skeletons --
+#     but a B5 failure with a B2 pass would say the trigger fused the pose and the
+#     net is overriding it, which is a different and more fragile thing to ship.
+#
+# EPOCHS. Judged on the five saved checkpoints, not just the last. Picking the
+# epoch is part of the job and overfitting past the sweet spot is the standard
+# character-LoRA failure; the sapling v1 lane closed the epoch axis for its own
+# fusion defect by grading epoch 6 on the identical grid, and that is the cheap
+# insurance being bought again here.
+#
+# WEIGHT. No weight is sanctioned in advance. The sapling ladder measured that its
+# subject COLLAPSED below 0.65 while contamination faded smoothly -- two curves
+# that never cross -- and the usable band was read off that ladder rather than
+# assumed. The same ladder runs here (0.8 / 0.65 / 0.5 / 0.35 / 0.2, both sides,
+# one seed) and the shipping weight comes out of it or does not exist.

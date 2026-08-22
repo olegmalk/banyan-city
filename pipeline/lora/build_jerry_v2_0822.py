@@ -72,7 +72,7 @@ def frame_path(cell: str) -> str:
     published directory after the fact would break the sha256 sidecars that
     point into it. The path is written down as observed rather than as assumed.
     """
-    seed = D.SEED0 + int(cell[1:]) + {"j": 0, "k": 100, "m": 200, "n": 300}[cell[0]]
+    seed = D.SEED0 + int(cell[1:]) + {"j": 0, "k": 100, "m": 200, "n": 300, "p": 400}[cell[0]]
     return "farm-out/ep2-b13-jds-%s-r2-0820/b13-jds-%s-s%d.png" % (cell, cell, seed)
 
 
@@ -183,19 +183,42 @@ def main() -> int:
         if not os.path.isfile(p):
             raise SystemExit("!! %s is admitted and %s is not on disk" % (cell, rel))
         sha = hashlib.sha256(open(p, "rb").read()).hexdigest()
-        init_key, strength, _gc, ground, _lc, light = D.CELLS[cell]
+        init_key, strength, _gc, requested_ground, _lc, light = D.CELLS[cell]
+        ground = rows[cell].get("setting", "a hazy meadow")
         frames.append({
             "cell": cell,
             "image": rel,
             "sha256": sha,
             "caption_file": "%s/%s.txt" % (CAPTION_DIR, cell),
-            "caption": D.caption_for(cell),
+            # THE CAPTION'S SETTING SLOT COMES FROM THE JUDGEMENT, NOT THE
+            # REQUEST, AND THIS IS THE ONE PLACE THIS FILE IS ALLOWED TO DIFFER
+            # FROM THE CELL TABLE. The rule at the top of this file is that a
+            # frame is never re-captioned to match what arrived -- that rule
+            # exists to stop a MISSED AXIS being papered over. Here the axis did
+            # not miss on one frame, it is DEAD ON THE ROUTE: every cell asked
+            # for a named background and all but two came back on the init's own
+            # hazy meadow, measured across 19 frames and recorded in the
+            # admissions file. Writing `a stone wall` into a caption for a frame
+            # that shows a meadow would be exactly the lie the rule forbids.
+            #
+            # So the setting is the MEASURED one, it is the same on nearly every
+            # frame, and that uniformity is the point: v1's sapling failure was
+            # not that 44 frames shared a ground, it was that they shared a
+            # ground AND NO CAPTION NAMED IT, so the trigger swallowed the field.
+            # A monoculture you cannot escape is survivable if it is named on
+            # every frame. The framing and the light -- the two axes that DID
+            # move -- still vary from the cell table.
+            "caption": D.CAPTION_TMPL % (
+                D.INITS[init_key][2],
+                rows[cell].get("setting", "a hazy meadow"),
+                light),
             "init": init_key,
             "framing": D.INITS[init_key][2],
             "ground": ground,
             "light": light,
             "strength": strength,
             "why_kept": rows[cell].get("why", ""),
+            "setting_requested": requested_ground,
         })
 
     print("admitted %d of %d   dropped %d" % (N, len(rows), len(dropped)))

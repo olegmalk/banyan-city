@@ -1,0 +1,360 @@
+# THE JERRY v2 DATASET -- GENERATED. Edit pipeline/lora/build_jerry_v2_0822.py, not this file.
+#
+# Every frame is the founder's own drawing, re-lit. See the `route` key.
+subject: jerry
+trigger: bnyjerry
+built_by: pipeline/lora/build_jerry_v2_0822.py
+built_on: '2026-08-22'
+authority: taste/refs/goblin-canon-founder-0821.png -- the founder's own picture, selected
+  with 'dude, this is how the goblin should look'. pipeline/canon.yaml route_closure_2026_08_22.
+supersedes: pipeline/lora/manifest-jerry-0821.yaml -- 15 frames curated for the ADULT read
+  the founder superseded on 2026-08-21, never trained, left on disk as evidence.
+route: Every frame is the canon image itself, cut to a framing and re-lit by img2img at strength
+  <= 0.40. pipeline/goblin-i2i-route-0822.md section 3.
+count: 21
+repeat: 6
+image_passes: 1260
+optimizer_steps_at_batch_2: 630
+framings:
+  cowboy shot: 8
+  full body: 2
+  upper body: 11
+grounds:
+- a hazy meadow
+- tall grass
+lights:
+- bright sunlight
+- cool morning light
+- dappled shade
+- grey wet light
+- hard side light
+- overcast light
+- rim light
+- shadowless light
+- soft daylight
+- warm evening light
+- warm low sunlight
+caption_scheme: Ten clauses, three variable, identical length on every frame. `standing`,
+  `looking at viewer` and the framing word are named on EVERY frame although they never vary,
+  because a named attribute is one the trigger is excused from carrying -- and the one thing
+  this LoRA must not learn is a pose, since a pose net moving him is the entire reason it
+  is being trained. Length is uniform per the v2b dilution finding in registry.yaml.
+dropped:
+  j01: full body 0.40. Pupil yellow; ground did not arrive. Opened the full-body pupil row.
+  j14: cowboy-flip 0.40. Pink pupils, eye opening toward round, ears lifting. Set the cowboy
+    ceiling below 0.25.
+  j21: headsq 0.40. Eyes larger and rounder, red pupils, ears upswept. Retired the magnified
+    square crop.
+  k01: full body 0.35. Pupil yellow.
+  k02: full body 0.30. Pupil yellow.
+  k03: cowboy-flip 0.30. Above the measured ceiling; bracketing only.
+  k04: cowboy-flip 0.25. Eye opening toward round, ears lifting. THE cowboy ceiling.
+  k06: headsq 0.25. Not judged -- the row's floor had already failed. Recorded, not counted.
+  k07: headsq 0.20. Eyes larger and rounder, teal pupils.
+  k08: headsq 0.15. THE FLOOR, and it still drifts. Sent the lane to look at the 1.486x magnification.
+  m01: full body 0.25. Pupil yellow.
+  m02: full body 0.20. Pupil yellow at the lowest strength that does anything. Closed the
+    full-body render row.
+  n02: headnat-flip 0.30. A GREEN BLOB on the nose/philtrum -- D2 artifact -- and the pupils
+    are pale green.
+  n03: headnat 0.25. Everything is his except the pupils, which are distinctly RED. Reseeded
+    as p03.
+  n07: headnat 0.25. Pupils reddish. Face otherwise correct. Reseeded as p07.
+  n08: headnat-flip 0.25. The green nose blob again, plus green pupils. Two defects.
+  n09: headnat 0.30. Green nose blob and red pupils.
+  n10: headnat-flip 0.30. Pupils yellow. Notable as the ONE cell whose background genuinely
+    changed (blurred barn-like structures) -- the setting arrived and the face did not, which
+    is the trade this route makes.
+  n17: cowboy 0.20. Pupils reddish-brown. Reseeded as p17.
+  p17: cowboy 0.20, n17 reseeded. The pupil came back TEAL -- a saturated hue rather than
+    a dark one. The reseed did not land and the standard is applied to it exactly as to the
+    original. Two of three reseeds is what a lottery looks like.
+frames:
+- cell: canon-full
+  image: farm-out/ep2-goblin-i2i-src-0822/init-full-0822.png
+  sha256: 0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7
+  caption_file: pipeline/lora/captions/jerry-v2-0822/canon-full.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, full body, tall grass, soft
+    daylight, anime style, cel shading
+  init: full
+  framing: full body
+  ground: tall grass
+  light: soft daylight
+  strength: '0.00'
+  why_kept: THE CANON ITSELF (or its mirror), at zero strength. Nothing was denoised, so it
+    cannot have drifted. It is in the set for the SILHOUETTE -- the only full-body view the
+    route can supply, because every rendered full-body cell came back with a yellow pupil
+    at five separate strengths.
+- cell: canon-full-flip
+  image: farm-out/ep2-goblin-i2i-src-0822/init-full-flip-0822.png
+  sha256: 83f5cbc751fdf28904878809f57a04fac23c79cf03711af0515b8050be743a52
+  caption_file: pipeline/lora/captions/jerry-v2-0822/canon-full-flip.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, full body, tall grass, soft
+    daylight, anime style, cel shading
+  init: full-flip
+  framing: full body
+  ground: tall grass
+  light: soft daylight
+  strength: '0.00'
+  why_kept: THE CANON ITSELF (or its mirror), at zero strength. Nothing was denoised, so it
+    cannot have drifted. It is in the set for the SILHOUETTE -- the only full-body view the
+    route can supply, because every rendered full-body cell came back with a yellow pupil
+    at five separate strengths.
+- cell: k05
+  image: farm-out/ep2-b13-jds-k05-r2-0820/b13-jds-k05-s20261006.png
+  sha256: 47ed5916671a9fe9c1af12975faf8e6422b906549c86a6fcc7f277765969356a
+  caption_file: pipeline/lora/captions/jerry-v2-0822/k05.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    warm low sunlight, anime style, cel shading
+  init: cowboy-flip
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: warm low sunlight
+  strength: '0.20'
+  why_kept: cowboy-flip 0.20. The frame that set the cowboy row's number -- tiny dark pupil,
+    ears near horizontal, and a real background change to hazy hills.
+  setting_requested: dry cracked earth
+- cell: m03
+  image: farm-out/ep2-b13-jds-m03-r2-0820/b13-jds-m03-s20261104.png
+  sha256: a2a90ae741c0b026faffaf0a9c8d7d72e0778414bf69faa70f43e39d55fabf95
+  caption_file: pipeline/lora/captions/jerry-v2-0822/m03.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, warm
+    low sunlight, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: warm low sunlight
+  strength: '0.30'
+  why_kept: headnat 0.30. Vindicated the native square. Tiny dark pupils, hazy hills and light
+    rays.
+  setting_requested: a pale sky
+- cell: m04
+  image: farm-out/ep2-b13-jds-m04-r2-0820/b13-jds-m04-s20261105.png
+  sha256: 46b9a26f3c2e84e733b9af3cc61abeddd45171adf2135fadbb71ced6c3369fb3
+  caption_file: pipeline/lora/captions/jerry-v2-0822/m04.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, warm
+    low sunlight, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: warm low sunlight
+  strength: '0.25'
+  why_kept: headnat 0.25. Small dark pupils, correct ears, background moved.
+  setting_requested: a pale sky
+- cell: m05
+  image: farm-out/ep2-b13-jds-m05-r2-0820/b13-jds-m05-s20261106.png
+  sha256: e4eefee56452737004ffd8e701a4751a8b8dd35883cb9ae75b91346a655ab384
+  caption_file: pipeline/lora/captions/jerry-v2-0822/m05.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, warm
+    low sunlight, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: warm low sunlight
+  strength: '0.20'
+  why_kept: headnat 0.20. Face holds; the least varied frame in the set and named as such.
+  setting_requested: a pale sky
+- cell: n01
+  image: farm-out/ep2-b13-jds-n01-r2-0820/b13-jds-n01-s20261202.png
+  sha256: 14336a7d01afc5f1f26f0cf1cd98a7887c16a3b2db1abe2604cdac066c8d2c43
+  caption_file: pipeline/lora/captions/jerry-v2-0822/n01.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, warm
+    low sunlight, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: warm low sunlight
+  strength: '0.30'
+  why_kept: headnat 0.30. Narrow almond, tiny dark pupils, ears near horizontal, smooth, sage,
+    collar and placket correct.
+  setting_requested: a pale sky
+- cell: n04
+  image: farm-out/ep2-b13-jds-n04-r2-0820/b13-jds-n04-s20261205.png
+  sha256: 7faa6f7d53bf83aa092d48e4959483b2de8d82d058679f60de8a674d0a755de7
+  caption_file: pipeline/lora/captions/jerry-v2-0822/n04.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, cool
+    morning light, anime style, cel shading
+  init: headnat-flip
+  framing: upper body
+  ground: a hazy meadow
+  light: cool morning light
+  strength: '0.25'
+  why_kept: headnat-flip 0.25. Clean dark pupils, correct ears, smooth face, correct palette.
+  setting_requested: an open field
+- cell: n05
+  image: farm-out/ep2-b13-jds-n05-r2-0820/b13-jds-n05-s20261206.png
+  sha256: 5f0ecf7f52d139893029bcd4cad8ac69b97274de430196da28fb71228a7a5416
+  caption_file: pipeline/lora/captions/jerry-v2-0822/n05.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, rim
+    light, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: rim light
+  strength: '0.30'
+  why_kept: headnat 0.30. One of the two best faces in the batch -- tiny dark pupils, textbook
+    almond, ears exactly his.
+  setting_requested: a sunset sky
+- cell: n06
+  image: farm-out/ep2-b13-jds-n06-r2-0820/b13-jds-n06-s20261207.png
+  sha256: 8d4f7bfa5b6529ca4659b996520f7f4b708febb3c0cff3a0e63cc267e3f7fcb9
+  caption_file: pipeline/lora/captions/jerry-v2-0822/n06.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, grey
+    wet light, anime style, cel shading
+  init: headnat-flip
+  framing: upper body
+  ground: a hazy meadow
+  light: grey wet light
+  strength: '0.30'
+  why_kept: headnat-flip 0.30. Dark pupils, correct ears; AND the only light change in the
+    set that really landed -- rain droplets on the dome under a grey key.
+  setting_requested: a rainy sky
+- cell: n11
+  image: farm-out/ep2-b13-jds-n11-r2-0820/b13-jds-n11-s20261212.png
+  sha256: 628739a51f8c239a97420ad85233ee93f6a2fab77b7945dbe554e40e32714226
+  caption_file: pipeline/lora/captions/jerry-v2-0822/n11.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, warm
+    evening light, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: warm evening light
+  strength: '0.25'
+  why_kept: headnat 0.25. Tiny dark pupils, correct ears and dome, clean.
+  setting_requested: a ploughed field
+- cell: n12
+  image: farm-out/ep2-b13-jds-n12-r2-0820/b13-jds-n12-s20261213.png
+  sha256: 625d36bf52579806b1e2b2b6e4027b457a4d8d5f1ac274abe727c86f7799fbc4
+  caption_file: pipeline/lora/captions/jerry-v2-0822/n12.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, shadowless
+    light, anime style, cel shading
+  init: headnat-flip
+  framing: upper body
+  ground: a hazy meadow
+  light: shadowless light
+  strength: '0.25'
+  why_kept: headnat-flip 0.25. The other best face -- tiny dark pupils, narrow almond, ears
+    near horizontal, nothing to fault.
+  setting_requested: a sand horizon
+- cell: n13
+  image: farm-out/ep2-b13-jds-n13-r2-0820/b13-jds-n13-s20261214.png
+  sha256: 91054cdaf19e4dc01a92a379cc69196f675702902efc3b9855e0feddcd593f54
+  caption_file: pipeline/lora/captions/jerry-v2-0822/n13.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    warm low sunlight, anime style, cel shading
+  init: cowboy
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: warm low sunlight
+  strength: '0.20'
+  why_kept: cowboy 0.20. Small dark pupils, correct ears, full costume in frame including
+    belt and shorts.
+  setting_requested: a pale sky
+- cell: n14
+  image: farm-out/ep2-b13-jds-n14-r2-0820/b13-jds-n14-s20261215.png
+  sha256: db1f4f3188181719c89decd38a7ba2b859e03c5999263641a50530cbadeb5768
+  caption_file: pipeline/lora/captions/jerry-v2-0822/n14.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    dappled shade, anime style, cel shading
+  init: cowboy-flip
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: dappled shade
+  strength: '0.20'
+  why_kept: cowboy-flip 0.20. Small dark-blue pupils, correct ears, clean.
+  setting_requested: a dark forest
+- cell: n15
+  image: farm-out/ep2-b13-jds-n15-r2-0820/b13-jds-n15-s20261216.png
+  sha256: d5c862695b5e1c2ba42ec1c914f070a6276854fe8d8261adbadb75d006a66b87
+  caption_file: pipeline/lora/captions/jerry-v2-0822/n15.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    overcast light, anime style, cel shading
+  init: cowboy
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: overcast light
+  strength: '0.20'
+  why_kept: cowboy 0.20. Tiny dark pupils, correct ears, clean; the strongest of the cowboy
+    row.
+  setting_requested: a stone wall
+- cell: n16
+  image: farm-out/ep2-b13-jds-n16-r2-0820/b13-jds-n16-s20261217.png
+  sha256: 39fe443b7cedaf9fc2dae17e423081e529056e379754efccdc20380153f31b07
+  caption_file: pipeline/lora/captions/jerry-v2-0822/n16.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    cool morning light, anime style, cel shading
+  init: cowboy-flip
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: cool morning light
+  strength: '0.20'
+  why_kept: cowboy-flip 0.20. Small dark pupils, correct ears, clean.
+  setting_requested: an open field
+- cell: n19
+  image: farm-out/ep2-b13-jds-n19-r2-0820/b13-jds-n19-s20261220.png
+  sha256: 45087f7ccb553fc705bec58a53d0ed9bd8f72d75e949e02b4faf45b73a752b24
+  caption_file: pipeline/lora/captions/jerry-v2-0822/n19.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    hard side light, anime style, cel shading
+  init: cowboy
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: hard side light
+  strength: '0.20'
+  why_kept: cowboy 0.20. Tiny dark pupils, correct ears, clean.
+  setting_requested: a hedgerow
+- cell: n20
+  image: farm-out/ep2-b13-jds-n20-r2-0820/b13-jds-n20-s20261221.png
+  sha256: 9a0726840d1058a6fff16e30740a6ac1cf8c4477fbcb5ec425856b71ef8fa744
+  caption_file: pipeline/lora/captions/jerry-v2-0822/n20.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    grey wet light, anime style, cel shading
+  init: cowboy-flip
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: grey wet light
+  strength: '0.20'
+  why_kept: cowboy-flip 0.20. Small dark pupils, correct ears; rain droplets present, so the
+    wet key partly arrived.
+  setting_requested: a rainy sky
+- cell: p03
+  image: farm-out/ep2-b13-jds-p03-r2-0820/b13-jds-p03-s20261304.png
+  sha256: 909b03cc5e79397344f0b166de62c61a32f92eb95ae23b262d110889ea471780
+  caption_file: pipeline/lora/captions/jerry-v2-0822/p03.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, overcast
+    light, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: overcast light
+  strength: '0.25'
+  why_kept: headnat 0.25, n03 reseeded. Pupils now tiny and DARK where n03's were red. Correct
+    ears, smooth, sage.
+  setting_requested: a stone wall
+- cell: p07
+  image: farm-out/ep2-b13-jds-p07-r2-0820/b13-jds-p07-s20261308.png
+  sha256: cdac5c172a2dc8d4798211e59711ad657d42f5751d5e08a874d7fabed8e388ed
+  caption_file: pipeline/lora/captions/jerry-v2-0822/p07.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, hard
+    side light, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: hard side light
+  strength: '0.25'
+  why_kept: headnat 0.25, n07 reseeded. Dark pupils, correct ears, clean.
+  setting_requested: a hedgerow
+- cell: p18
+  image: farm-out/ep2-b13-jds-p18-r2-0820/b13-jds-p18-s20261319.png
+  sha256: 690d8077fc2d6bb0f85309934230626db3e2d76626b0fde5eb11a55f3575ca17
+  caption_file: pipeline/lora/captions/jerry-v2-0822/p18.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    bright sunlight, anime style, cel shading
+  init: cowboy-flip
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: bright sunlight
+  strength: '0.20'
+  why_kept: cowboy-flip 0.20, the cell that never fired in the batch. Small dark-blue pupils,
+    correct ears, full costume.
+  setting_requested: distant hills

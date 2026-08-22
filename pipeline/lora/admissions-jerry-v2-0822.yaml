@@ -1,0 +1,128 @@
+# THE JERRY v2 ADMISSIONS — every rendered cell, judged at 1:1 against
+# taste/refs/goblin-canon-founder-0821.png, one frame at a time, full size.
+#
+# ══════════════════════════════════════════════════════════════════════════
+# THE ADMISSION BAR IS HIS FACE AND NOTHING ELSE, which is the brief's own
+# wording: "face-intact is the only admission bar; drop mercilessly."
+#
+#   E1 narrow almond eye, off-white field, TINY DARK PUPIL, heavy upper lid
+#   E2 broad low dome; smallish pointed ears NEAR HORIZONTAL
+#   E3 smooth face -- no furrows, no folds, no jowls
+#   E4 desaturated sage, washed and high-key
+#   E5 shirt with a placket, dark shorts, dark boots (where in frame)
+#   D2 clean -- no second figure, no melted hand, no artifact
+#
+# THE PUPIL IS SCORED HARD AND HERE IS WHY. Canon's pupil is a tiny DARK dot.
+# Five of the seven drops below are frames where E2-E5 are perfect and the pupil
+# came back yellow, red or green. In a PLATE that would be a minor miss; in a
+# TRAINING SET it is the thing the trigger learns, and it sits on the exact axis
+# `route_closure_2026_08_22` records four founder vetoes against. A tiny coloured
+# pupil is still a colour that is not his.
+#
+# THE SETTING IS *NOT* AN ADMISSION CLAUSE, AND THAT IS A FINDING RATHER THAN A
+# RELAXATION. Every cell asked for a named background and almost none arrived --
+# see `the_setting_axis_is_dead` below. Judging frames out for that would have
+# emptied the set over a defect of the ROUTE, not of the frame. It is recorded as
+# a route finding and the captions name what actually arrived.
+# ══════════════════════════════════════════════════════════════════════════
+
+judged_on: '2026-08-22'
+
+result:
+  rendered: 32          # 3 sample + 8 sweep-1 + 5 sweep-2 + 19 batch (n18 never fired) + 4 backfill
+  admitted: 21          # 19 rendered + the 2 zero-strength canon frames
+  target: '>= 20 across all three framings'
+  by_framing: {upper body: 11, cowboy shot: 8, full body: 2}
+  the_pupil_rule: >-
+    THE ONE CLAUSE THAT DECIDED MOST OF THE DROPS, stated so it is applied the
+    same way twice: the pupil must read as DARK at 1:1 -- near-black, as canon's
+    is. Any saturated hue is a drop, whether it is yellow (j01, k01, k02, m01,
+    m02, n10), red (n03, n07, n09, n17), green (n02, n08) or teal (k07, p17). A
+    very dark navy that reads black at full size is admitted (n14, n16, n20,
+    p18) and that boundary is named here rather than left to the eye.
+judged_by: >-
+  the goblin-LoRA lane steward, at 1:1, one frame at a time at full resolution,
+  each against the founder's own image and nothing else. Not a contact sheet,
+  not a metric, not a diff against another cell.
+
+the_setting_axis_is_dead: >-
+  MEASURED ACROSS ALL 19 BATCH CELLS AND IT IS THE THIRD READING OF THE ROUTE'S
+  ONE MECHANISM. Twelve distinct backgrounds were asked for -- a stone wall, a
+  dark forest, a barn wall, a ploughed field, a sand horizon, a wall of ferns --
+  and the frames came back on the init's own hazy meadow in all but two (n10
+  produced blurred barn-like structures, n06 and n20 produced rain). j01 had
+  already measured the same thing for the GROUND underfoot: it asked for dry
+  cracked earth at 0.40 and got the init's grass.
+
+  WHY: a background is GLOBAL STRUCTURE. It is decided in the high-noise steps,
+  and an img2img pass at 0.20-0.30 never runs them. This is the same sentence as
+  "the pose cannot move" and "the face survives" -- one mechanism, now read three
+  ways. `goblin-i2i-route-0822.md` section 3 called this route a re-lighting AND
+  re-grounding route; the re-grounding half is wrong, and the doc should be
+  corrected. What the route actually delivers is LIGHT, PALETTE and FRAMING.
+
+  CONSEQUENCE FOR THE CAPTIONS, AND IT IS THE v1 SAPLING LESSON APPLIED RATHER
+  THAN IGNORED. The set IS a monoculture of one hazy meadow and cannot be made
+  otherwise on this route. v1's ground failure was not that 44 frames shared a
+  ground -- it was that 44 frames shared a ground AND NO CAPTION NAMED IT, so the
+  trigger swallowed the field. The mitigation for a monoculture you cannot avoid
+  is to NAME it on every frame, which excuses the trigger from carrying it. The
+  captions therefore say `a hazy meadow` where that is what arrived.
+
+cells:
+
+  # ── ADMITTED FROM THE BATCH (12 of 19) ────────────────────────────────
+  n01: {admit: true,  why: "headnat 0.30. Narrow almond, tiny dark pupils, ears near horizontal, smooth, sage, collar and placket correct."}
+  n04: {admit: true,  why: "headnat-flip 0.25. Clean dark pupils, correct ears, smooth face, correct palette."}
+  n05: {admit: true,  why: "headnat 0.30. One of the two best faces in the batch -- tiny dark pupils, textbook almond, ears exactly his."}
+  n06: {admit: true,  why: "headnat-flip 0.30. Dark pupils, correct ears; AND the only light change in the set that really landed -- rain droplets on the dome under a grey key."}
+  n11: {admit: true,  why: "headnat 0.25. Tiny dark pupils, correct ears and dome, clean."}
+  n12: {admit: true,  why: "headnat-flip 0.25. The other best face -- tiny dark pupils, narrow almond, ears near horizontal, nothing to fault."}
+  n13: {admit: true,  why: "cowboy 0.20. Small dark pupils, correct ears, full costume in frame including belt and shorts."}
+  n14: {admit: true,  why: "cowboy-flip 0.20. Small dark-blue pupils, correct ears, clean."}
+  n15: {admit: true,  why: "cowboy 0.20. Tiny dark pupils, correct ears, clean; the strongest of the cowboy row."}
+  n16: {admit: true,  why: "cowboy-flip 0.20. Small dark pupils, correct ears, clean."}
+  n19: {admit: true,  why: "cowboy 0.20. Tiny dark pupils, correct ears, clean."}
+  n20: {admit: true,  why: "cowboy-flip 0.20. Small dark pupils, correct ears; rain droplets present, so the wet key partly arrived."}
+
+  # ── DROPPED FROM THE BATCH (7 of 19) ──────────────────────────────────
+  n02: {admit: false, why: "headnat-flip 0.30. A GREEN BLOB on the nose/philtrum -- D2 artifact -- and the pupils are pale green."}
+  n03: {admit: false, why: "headnat 0.25. Everything is his except the pupils, which are distinctly RED. Reseeded as p03."}
+  n07: {admit: false, why: "headnat 0.25. Pupils reddish. Face otherwise correct. Reseeded as p07."}
+  n08: {admit: false, why: "headnat-flip 0.25. The green nose blob again, plus green pupils. Two defects."}
+  n09: {admit: false, why: "headnat 0.30. Green nose blob and red pupils."}
+  n10: {admit: false, why: "headnat-flip 0.30. Pupils yellow. Notable as the ONE cell whose background genuinely changed (blurred barn-like structures) -- the setting arrived and the face did not, which is the trade this route makes."}
+  n17: {admit: false, why: "cowboy 0.20. Pupils reddish-brown. Reseeded as p17."}
+
+  # ── ADMITTED FROM THE SWEEP (4). A sweep cell that passes the bar is a
+  # dataset frame like any other; the sweep was not a throwaway.
+  k05: {admit: true,  why: "cowboy-flip 0.20. The frame that set the cowboy row's number -- tiny dark pupil, ears near horizontal, and a real background change to hazy hills."}
+  m03: {admit: true,  why: "headnat 0.30. Vindicated the native square. Tiny dark pupils, hazy hills and light rays."}
+  m04: {admit: true,  why: "headnat 0.25. Small dark pupils, correct ears, background moved."}
+  m05: {admit: true,  why: "headnat 0.20. Face holds; the least varied frame in the set and named as such."}
+
+  # ── THE BACKFILL (3 of 4 admitted), AND IT CONFIRMED THE PUPIL LOTTERY.
+  # p03 and p07 are n03 and n07 re-drawn at a NEW SEED with nothing else moved,
+  # and both came back with TINY DARK PUPILS where the originals were red. That
+  # is the hypothesis tested rather than asserted: pupil colour on this route is
+  # a per-seed draw, not a property of the cell, and the cure is to render more
+  # and drop the misses. The originals stay dropped.
+  p03: {admit: true,  why: "headnat 0.25, n03 reseeded. Pupils now tiny and DARK where n03's were red. Correct ears, smooth, sage."}
+  p07: {admit: true,  why: "headnat 0.25, n07 reseeded. Dark pupils, correct ears, clean."}
+  p18: {admit: true,  why: "cowboy-flip 0.20, the cell that never fired in the batch. Small dark-blue pupils, correct ears, full costume."}
+  p17: {admit: false, why: "cowboy 0.20, n17 reseeded. The pupil came back TEAL -- a saturated hue rather than a dark one. The reseed did not land and the standard is applied to it exactly as to the original. Two of three reseeds is what a lottery looks like."}
+
+  # ── DROPPED FROM THE SAMPLE AND SWEEP. Each carries its full reasoning in
+  # its own spec's `verdict_0822` key; the one-liners here are the index.
+  j01: {admit: false, why: "full body 0.40. Pupil yellow; ground did not arrive. Opened the full-body pupil row."}
+  j14: {admit: false, why: "cowboy-flip 0.40. Pink pupils, eye opening toward round, ears lifting. Set the cowboy ceiling below 0.25."}
+  j21: {admit: false, why: "headsq 0.40. Eyes larger and rounder, red pupils, ears upswept. Retired the magnified square crop."}
+  k01: {admit: false, why: "full body 0.35. Pupil yellow."}
+  k02: {admit: false, why: "full body 0.30. Pupil yellow."}
+  k03: {admit: false, why: "cowboy-flip 0.30. Above the measured ceiling; bracketing only."}
+  k04: {admit: false, why: "cowboy-flip 0.25. Eye opening toward round, ears lifting. THE cowboy ceiling."}
+  k06: {admit: false, why: "headsq 0.25. Not judged -- the row's floor had already failed. Recorded, not counted."}
+  k07: {admit: false, why: "headsq 0.20. Eyes larger and rounder, teal pupils."}
+  k08: {admit: false, why: "headsq 0.15. THE FLOOR, and it still drifts. Sent the lane to look at the 1.486x magnification."}
+  m01: {admit: false, why: "full body 0.25. Pupil yellow."}
+  m02: {admit: false, why: "full body 0.20. Pupil yellow at the lowest strength that does anything. Closed the full-body render row."}
