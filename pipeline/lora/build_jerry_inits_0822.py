@@ -91,10 +91,40 @@ CUTS = {
                "the aspect is the trainer's own bucket and nothing is squashed."),
     "headsq": ((155, 80, 715, 640), (832, 832),
                "THE SQUARE HEAD CROP. Both ears (x 215..650) with margin, the "
-               "dome, the eyes and the collar. This is the frame that carries "
-               "E1-E4 -- the almond eye, the near-horizontal ear, the smooth "
-               "face, the sage palette -- at the largest scale the source "
-               "supports, which is what a face has to be seen at to be learned."),
+               "dome, the eyes and the collar. RENDERED AND REJECTED -- see "
+               "`headnat` below. Kept in the table because the frames it "
+               "produced are the evidence for why the next one exists."),
+    # ── ADDED 2026-08-22 AFTER THE SWEEP KILLED `headsq` AT ITS OWN FLOOR.
+    #
+    # WHAT THE SWEEP MEASURED. `headsq` drifted at 0.40, at 0.20 AND at 0.15 --
+    # eyes rounder and larger than his, pupils coloured, ears larger and swept
+    # up, which is the design `route_closure_2026_08_22` records four founder
+    # vetoes against. The cowboy crop at 0.20 held the same face perfectly in the
+    # same batch. So the defect is not the strength floor and not the square
+    # aspect; the two crops differ in ONE OTHER THING and it is the magnification.
+    #
+    # THE MECHANISM, AND IT IS ROUND NINE'S SENTENCE ARRIVING FOR THE THIRD TIME.
+    # `headsq` is a 560x560 cut blown to 832x832 -- 1.486x of LANCZOS, which
+    # softens exactly the two features his identity lives in: a tiny dark pupil
+    # inside a narrow almond, and a thin ear outline. A soft blob is not a weak
+    # instruction to a denoiser, it is an AMBIGUOUS one, and animagine resolves
+    # ambiguity into its own prior -- a round anime iris and a tall pointed ear.
+    # Round nine said "less of his face reaching the encoder produced more of his
+    # face in the output" and the route doc turned that into "his pixels have to
+    # enter as PIXELS". This is the third reading of the same law: THE PIXELS
+    # HAVE TO BE HIS, NOT AN INTERPOLATION OF HIS.
+    #
+    # SO THIS CROP MAGNIFIES NOTHING. 832 wide is the canon's full width and 832
+    # tall is a native slice of it, 1.000x, every pixel his. It is a squarer and
+    # closer frame than `full` -- head, torso and hands, no boots -- so the set
+    # still gets a third distance and a third aspect, which is what the framing
+    # axis was for. The face is ~22% of it against `full`'s 15% and `cowboy`'s
+    # 29%, so it sits inside a bracket both of whose ends are already measured.
+    "headnat": ((0, 40, 832, 872), (832, 832),
+                "THE NATIVE SQUARE. 1.000x -- no interpolation anywhere in it. "
+                "Head, torso and hands at the canon's own resolution, in the "
+                "trainer's 832 bucket. This is `headsq`'s replacement and the "
+                "difference between them is the magnification and nothing else."),
 }
 
 
