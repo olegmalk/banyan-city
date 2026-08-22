@@ -571,6 +571,31 @@ subjects:
   # The ruling below still stands -- his image is still the character. What is
   # closed is the METHOD every rung since has used to chase it.
   # ///////////////////////////////////////////////////////////////////////////
+  goblin_dataset_ratified_2026_08_22: >-
+    THE FOUNDER READ THE 21-FRAME JERRY v2 TRAINING SET AT 1:1 AGAINST HIS OWN
+    IMAGE AND RULED "ALL OK", 2026-08-22. The set is
+    pipeline/lora/manifest-jerry-v2-0822.yaml; every frame in it is a cut of
+    taste/refs/goblin-canon-founder-0821.png re-lit by an img2img pass at
+    strength <= 0.30, and every frame carries its sha256 there.
+
+    WHAT THIS RATIFIES AND WHAT IT DOES NOT. It ratifies THE INPUT. After four
+    vetoes on this character's face -- "these are not my goblin" -- the standing
+    risk was that the steward would build a training set out of his own reading
+    of the founder's picture and then grade the result against that same
+    reading, agreeing with himself all the way to a fifth veto. That loop is now
+    cut: the identity bars read a rendered frame against a set the FOUNDER
+    ratified, so a LoRA that passes on identity is his goblin BY CONSTRUCTION.
+
+    IT RATIFIES NO OUTPUT. The bars in pipeline/lora/emit_train_jerry_v2_0822.py
+    were committed before a single frame was admitted and are unchanged by this
+    ruling; the trained weights are unjudged and still have to pass B1-B5 at
+    1:1. Ratifying the input is not ratifying what is made from it, and a
+    passing bar grid is still a steward's report that goes to him.
+
+    IT ALSO CLOSES RE-CURATION. What was ratified is THOSE TWENTY-ONE FRAMES AND
+    THEIR HASHES. A later round may build a different set; it may not quietly
+    drop or add a frame here and keep the ruling.
+
   route_closure_2026_08_22: >-
     THE FOUNDER VETOED ALL FOUR EYE ROUNDS, INCLUDING r11a: "these are not my
     goblin." That is the fourth veto on this axis and it lands on roughly

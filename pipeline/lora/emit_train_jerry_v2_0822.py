@@ -334,6 +334,22 @@ def main() -> int:
             "permanently unpushable commit and stops EVERY lane's results "
             "reaching this tree. The weights stay at %s\\out and the sha256s "
             "travel in registry.yaml." % WORK),
+        # THE PAYLOAD, AND IT IS HERE BECAUSE ITS ABSENCE COST A STEP.
+        # The 2026-08-22 run trained clean -- 630 steps, rc=0, five checkpoints
+        # on disk -- and then died in one second on `can't open file
+        # sample_lora.py`, because the sample step named a script in the job's
+        # work dir that nothing had ever written there. The training was not
+        # lost, but the job was recorded as FAILED, and a job in failed/ is a job
+        # the next reader believes produced nothing.
+        #
+        # THE RULE THIS ENCODES: a step that names a script under the WORK dir
+        # must have a payload that puts it there. box_enqueue verifies payload
+        # paths against each other but cannot know which argv entries are files.
+        "payload": {
+            r"%s\sample_lora.py" % WORK: open(
+                os.path.join(REPO, "pipeline/lora/sample_lora.py"),
+                encoding="utf-8").read(),
+        },
         "steps": [
             # ── 1. STAGE. kohya wants `<image>.txt` beside `<image>`; ours live
             # in pipeline/lora/captions/ on purpose, because farm-out/ is

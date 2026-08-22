@@ -67,6 +67,91 @@ weights_never_reach_git: Each checkpoint is ~228 MB and GitHub hard-rejects any 
   checkpoint in farm-out/ leaves a permanently unpushable commit and stops EVERY lane's results
   reaching this tree. The weights stay at C:\banyan-farm\lora-jerry-v2-0822\out and the sha256s
   travel in registry.yaml.
+payload:
+  C:\banyan-farm\lora-jerry-v2-0822\sample_lora.py: "#!/usr/bin/env python3\n\"\"\"Draw ONE\
+    \ frame from a trained character LoRA, in the renderer that ships plates.\n\n    <venv>/python.exe\
+    \ pipeline/lora/sample_lora.py \\\n        --lora out/bnyjerry-sdxl-v1.safetensors --lora-weight\
+    \ 0.8 \\\n        --prompt \"bnyjerry, 1boy, solo, standing, ...\" \\\n        --out SAMPLE-bnyjerry-standing-dusk.png\n\
+    \nWHY THIS FILE EXISTS RATHER THAN A FLAG ON still_local.py. still_local.py's CLI\nis\
+    \ `genome node --beat N` -- it resolves a prompt out of a beat's shot board and\nis wired\
+    \ to MPS/float32 for the Mac loop. Nothing in it takes a free prompt, a\nLoRA, or an output\
+    \ path, and bending it into taking all three would put a\ntraining-only concern into the\
+    \ path that renders episodes. This is ~90 lines\nthat does the one thing.\n\nIT RUNS IN\
+    \ THE RENDER VENV, NOT venv-lora, and that is deliberate. The plates we\nship are drawn\
+    \ by `C:\\\\banyan-farm\\\\venv` (torch 2.11.0+cu128, diffusers 0.29.2)\nat bfloat16 on\
+    \ CUDA. Sampling anywhere else measures a LoRA in an environment\nthat will never draw\
+    \ a frame for the show. It also keeps the training venv's\ndependency set out of the answer\
+    \ -- whatever diffusers version sd-scripts pins\nis irrelevant to whether the weights\
+    \ work where we need them to.\n\nbfloat16 and a CPU-seeded generator match render_wave_sample.py\
+    \ exactly\n(pipeline/render_wave_sample.py:236,243). This matters more than it looks:\
+    \ the\nMac and this box were measured on 2026-08-16 to disagree by MAE 61 of 255 on\n\
+    byte-identical inputs at an identical seed, so a sample drawn under different\ndtype or\
+    \ device conventions is not comparable to the plates it is judged\nagainst.\n\nWrites\
+    \ a §7.2 sidecar beside the PNG naming the LoRA file and its sha256, so a\nframe can always\
+    \ be traced to the exact weights that drew it.\n\"\"\"\n\nimport argparse\nimport hashlib\n\
+    import os\nimport sys\n\nBASE = \"cagliostrolab/animagine-xl-3.1\"\n\n\ndef main():\n\
+    \    ap = argparse.ArgumentParser()\n    ap.add_argument(\"--lora\", required=True, help=\"\
+    path to the .safetensors LoRA\")\n    ap.add_argument(\"--lora-weight\", type=float, default=0.8)\n\
+    \    ap.add_argument(\"--prompt\", required=True)\n    ap.add_argument(\"--negative\"\
+    , default=\"\")\n    ap.add_argument(\"--width\", type=int, default=832)\n    ap.add_argument(\"\
+    --height\", type=int, default=1216)\n    ap.add_argument(\"--steps\", type=int, default=40)\n\
+    \    ap.add_argument(\"--guidance\", type=float, default=7.5)\n    ap.add_argument(\"\
+    --seed\", type=int, default=20260820)\n    ap.add_argument(\"--out\", required=True)\n\
+    \    ap.add_argument(\"--no-lora\", action=\"store_true\",\n                    help=\"\
+    draw the SAME prompt+seed with no LoRA loaded -- the B side \"\n                     \
+    \    \"of the no-regression bar. The pair is the evidence; either \"\n               \
+    \          \"frame alone proves nothing.\")\n    args = ap.parse_args()\n\n    import\
+    \ torch\n    from diffusers import StableDiffusionXLPipeline\n\n    if not args.no_lora\
+    \ and not os.path.exists(args.lora):\n        sys.exit(\"no such LoRA: %s\" % args.lora)\n\
+    \n    # THE PEFT GATE, ADDED 2026-08-22 AFTER IT COST A RUN. This file was written\n \
+    \   # on 2026-08-20 and committed without ever being executed; the first time it\n   \
+    \ # ran was the sapling training job, which trained for twenty clean minutes,\n    # wrote\
+    \ five checkpoints, and then died in nine seconds inside diffusers with\n    # `ValueError:\
+    \ PEFT backend is required for this method.` diffusers 0.29.2\n    # gates ALL LoRA loading\
+    \ behind USE_PEFT_BACKEND, which is False unless peft\n    # is installed -- and it was\
+    \ not, in either venv on the box.\n    #\n    # Checking it BEFORE the 6.9 GB checkpoint\
+    \ load turns a nine-second waste at\n    # the end of an hour into a one-second refusal\
+    \ at the start, and the message\n    # carries the exact fix instead of a stack trace.\
+    \ `--no-deps` is not\n    # decoration: the render venv is what draws every plate the\
+    \ show ships, and\n    # SETUP.md's standing warning is that a careless pip resolve on\
+    \ this sm_120\n    # card silently replaces torch with a build that has no Blackwell kernels.\n\
+    \    # peft's own requirements are all already present, so --no-deps installs one\n  \
+    \  # pure-python package and moves nothing else. Verified 2026-08-22: pip freeze\n   \
+    \ # differed by exactly one line and torch stayed 2.11.0+cu128.\n    from diffusers.utils\
+    \ import USE_PEFT_BACKEND\n    if not args.no_lora and not USE_PEFT_BACKEND:\n       \
+    \ sys.exit(\n            \"diffusers has no PEFT backend, so load_lora_weights() cannot\
+    \ run and\\n\"\n            \"every LoRA sample would fail AFTER loading the base checkpoint.\\\
+    n\"\n            \"  fix:  <this venv>/python.exe -m pip install --no-deps peft==0.12.0\\\
+    n\"\n            \"  then: re-run. --no-deps is required -- a plain install may resolve\\\
+    n\"\n            \"        torch away from 2.11.0+cu128 and break every render on the\
+    \ box.\")\n\n    pipe = StableDiffusionXLPipeline.from_pretrained(\n        BASE, torch_dtype=torch.bfloat16,\
+    \ use_safetensors=True)\n    pipe.to(\"cuda\")\n\n    lora_sha = \"none\"\n    if not\
+    \ args.no_lora:\n        with open(args.lora, \"rb\") as fh:\n            lora_sha = hashlib.sha256(fh.read()).hexdigest()\n\
+    \        # kohya-format LoRAs load through the same entry point; diffusers\n        #\
+    \ converts the key naming on the way in.\n        pipe.load_lora_weights(os.path.dirname(os.path.abspath(args.lora)),\n\
+    \                               weight_name=os.path.basename(args.lora))\n        pipe.fuse_lora(lora_scale=args.lora_weight)\n\
+    \n    gen = torch.Generator(device=\"cpu\").manual_seed(args.seed)\n    image = pipe(\n\
+    \        prompt=args.prompt,\n        negative_prompt=args.negative or None,\n       \
+    \ width=args.width, height=args.height,\n        num_inference_steps=args.steps,\n   \
+    \     guidance_scale=args.guidance,\n        generator=gen,\n    ).images[0]\n\n    os.makedirs(os.path.dirname(os.path.abspath(args.out)),\
+    \ exist_ok=True)\n    image.save(args.out)\n\n    with open(args.out, \"rb\") as fh:\n\
+    \        png_sha = hashlib.sha256(fh.read()).hexdigest()\n    with open(args.out + \"\
+    .meta.yaml\", \"w\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\n\
+    \            'platform: \"local-gpu (rtx5090, CUDA, bfloat16)\"\\n'\n            'model:\
+    \ \"%s\"\\n'\n            'model_licence: \"CreativeML Open RAIL++-M (use restrictions\
+    \ travel; D15)\"\\n'\n            'lora: \"%s\"\\n'\n            'lora_sha256: \"%s\"\\\
+    n'\n            'lora_weight: %s\\n'\n            'cost_usd: 0.0\\n'\n            'size:\
+    \ \"%dx%d\"\\n'\n            'steps: %d\\n'\n            'guidance: %s\\n'\n         \
+    \   'seed: %d\\n'\n            'png_sha256: \"%s\"\\n'\n            'prompt: \"%s\"\\\
+    n'\n            'negative_prompt: \"%s\"\\n'\n            'approved: false\\n'\n     \
+    \       'provisional: true\\n'\n            'founder_verdict: null\\n'\n            'scored:\
+    \ false\\n'\n            % (BASE,\n               \"none\" if args.no_lora else os.path.basename(args.lora),\n\
+    \               lora_sha, args.lora_weight,\n               args.width, args.height, args.steps,\
+    \ args.guidance, args.seed,\n               png_sha,\n               args.prompt.replace('\"\
+    ', \"'\"),\n               args.negative.replace('\"', \"'\")))\n\n    print(\"wrote\"\
+    , args.out)\n    print(\"  lora=%s weight=%s seed=%d\" %\n          (\"none\" if args.no_lora\
+    \ else os.path.basename(args.lora),\n           args.lora_weight, args.seed))\n    return\
+    \ 0\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n"
 steps:
 - name: stage
   argv:

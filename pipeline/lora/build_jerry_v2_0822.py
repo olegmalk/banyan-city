@@ -57,6 +57,33 @@ SRC_DIR = "farm-out/ep2-goblin-i2i-src-0822"
 CAPTION_DIR = "pipeline/lora/captions/jerry-v2-0822"
 MANIFEST = "pipeline/lora/manifest-jerry-v2-0822.yaml"
 TARGET_PASSES = 1200
+
+# ── THE FOUNDER READ ALL 21 AT 1:1 AND RULED "ALL OK", 2026-08-22.
+#
+# IT LIVES IN THE GENERATOR BECAUSE THE MANIFEST IS GENERATED. Writing the
+# ruling into the yaml by hand would put it one `--write` away from deletion,
+# and a founder ruling that a rerun can silently erase is not recorded, it is
+# parked. This is the same reason the bars live in the training EMITTER.
+RATIFIED = {
+    "date": "2026-08-22",
+    "ruling": "all ok",
+    "scope": (
+        "THE FULL 21-FRAME TRAINING SET, read by the founder at 1:1 against his "
+        "own image. Every frame in `frames` is ratified; none is provisional."),
+    "what_it_changes": (
+        "IT MOVES THE IDENTITY BARS OFF THE STEWARD'S EYE AND ONTO HIS. B1, and "
+        "B2's P2 clause, read a rendered frame against this set -- and the set "
+        "is now the founder's own ruling rather than the steward's reading of "
+        "his image. A LoRA that scores on identity is therefore HIS GOBLIN BY "
+        "CONSTRUCTION, not by the steward agreeing with himself, which is the "
+        "failure mode four vetoes were spent on. It also closes re-curation "
+        "risk: no later round may quietly drop or add a frame, because what was "
+        "ratified is THESE twenty-one and their sha256s."),
+    "what_it_does_not_change": (
+        "NOT A RULING ON ANY OUTPUT. The bars are unchanged, the weights are "
+        "unjudged, and a trained LoRA still has to pass B1-B5 at 1:1. Ratifying "
+        "the input is not ratifying what is made from it."),
+}
 EPOCHS = 10
 
 
@@ -248,6 +275,7 @@ def main() -> int:
         "trigger": "bnyjerry",
         "built_by": "pipeline/lora/build_jerry_v2_0822.py",
         "built_on": "2026-08-22",
+        "founder_ratified": RATIFIED,
         "authority": (
             "taste/refs/goblin-canon-founder-0821.png -- the founder's own "
             "picture, selected with 'dude, this is how the goblin should "
