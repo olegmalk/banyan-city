@@ -1,0 +1,14 @@
+#### job lora-jerry-v2-b2r2-0822-1787400034-again070ee8 attempt 1 start 2026-08-22T12:00:42Z
+
+==== step fetch START 2026-08-22T12:00:42Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\lora-jerry-v2-b2r2-0822\\fetch_hints.py"]
+fetched jerry-canon-h37fcrouch-0821.png 10906 bytes OK
+fetched jerry-canon-h37fsit-0821.png 12349 bytes OK
+fetched jerry-canon-h37fstride-0821.png 11197 bytes OK
+==== step fetch END rc=0 2026-08-22T12:00:44Z ====
+
+==== step b2r2-crouch-w05 START 2026-08-22T12:00:44Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\lora-jerry-v2-b2r2-0822\\controlnet_plate.py", "--task", "b2r2-crouch-w05", "--arm", "hint", "--controlnet", "xinsir/controlnet-openpose-sdxl-1.0", "--control", "C:\\banyan-farm\\lora-jerry-v2-b2r2-0822\\jerry-canon-h37fcrouch-0821.png", "--scale", "1.0", "--prompt-file", "C:\\banyan-farm\\lora-jerry-v2-b2r2-0822\\b2-prompt.txt", "--negative-file", "C:\\banyan-farm\\lora-jerry-v2-b2r2-0822\\negative.txt", "--width", "832", "--height", "1216", "--seed", "20260822", "--out", "C:\\banyan-farm\\lora-jerry-v2-b2r2-0822\\out", "--lora", "C:\\banyan-farm\\lora-jerry-v2-0822\\out\\bnyjerry-sdxl-v2.safetensors", "--lora-weight", "0.5"]
+control hint missing: C:\banyan-farm\lora-jerry-v2-b2r2-0822\jerry-canon-h37fcrouch-0821.png
+==== step b2r2-crouch-w05 END rc=6 2026-08-22T12:00:45Z ====
+#### job lora-jerry-v2-b2r2-0822-1787400034-again070ee8 finished rc=6 2026-08-22T12:00:45Z

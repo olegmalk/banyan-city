@@ -4723,3 +4723,5 @@
 11:50:00Z STARTED task=lora-jerry-v2-b2r2-0822-1787399393 attempt=1 on box-runner
 11:50:03Z FAIL task=lora-jerry-v2-b2r2-0822-1787399393 rc=6 step=b2r2-crouch-w05
 11:56:07Z box-runner idle ready=0 failed=125
+12:00:42Z STARTED task=lora-jerry-v2-b2r2-0822-1787400034-again070ee8 attempt=1 on box-runner
+12:00:45Z FAIL task=lora-jerry-v2-b2r2-0822-1787400034-again070ee8 rc=6 step=b2r2-crouch-w05
