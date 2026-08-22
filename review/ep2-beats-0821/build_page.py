@@ -331,6 +331,11 @@ BEATS = {
         wins=["The freeze is a clean freeze. An earlier cut had this window turning the board over, back, and over again; that is gone."],
         faults_from="ship-manifest.yaml beat 6 + pipeline/jobs/ep2-b06-scene-0814r.yaml",
         candidates=[
+            dict(file=f"{POSTER_URL}/06-the-clipboard-PLATE-pose-r4-0822.jpg", still=True,
+                 label="a PLATE — this morning, and it is the best picture this beat has ever had", tag="warn",
+                 verdict="A whole grown man, standing in a bright field, head bowed over his own hands with his fingers laced together. Dark cropped hair, round wire-rim glasses, cream shirt — he is the man you picked, from words alone, with no reference photograph anywhere in the job. No night, no glowing ball, no plank standing in front of him, no head-and-shoulders crop. WHAT IS MISSING IS THE BOARD, AND THAT IS ON PURPOSE: his hands are empty because the next step needs clean pixels to draw into. Not a candidate for the cut on its own — it is the picture the board gets painted onto, and that job is on the card as you read this.",
+                 diff="The one edit is that the second ControlNet — the one that was supposed to draw the board — was TAKEN OUT rather than tuned again. Three attempts bracketed its strength twice and the rectangle's position twice, and read together they say the same thing three ways: this kind of net draws a white stroke as LIGHT. So the picture below is where that route stops. The board now comes from the same tool that gave beats 16 and 19 their sapling: it is drawn into the frame in software at a width measured in pixels — which matters, because 'the bark board is the wrong size' is this beat's actual fault and a size is the one thing a drawing can guarantee.",
+                 src="pipeline/jobs/ep2-b06-pose-r4-0822.yaml"),
             dict(file=f"{POSTER_URL}/06-the-clipboard-PLATE-pose-r3-0822.jpg", still=True,
                  label="a PLATE — round three, and it went backwards. Shown, and the route stops here.", tag="fail",
                  verdict="A glowing white square on a plinth, with the man reduced to a dark shrouded shape behind it and no face at all. Round three moved the drawn rectangle up so it sat between his hands instead of hanging below them — and the net drew the rectangle itself, as a LIT PANEL, right where his chest was, and lost the figure to it. Worse than round two on every count.",
@@ -520,9 +525,26 @@ BEATS = {
             "The sapling GROWS across the shot — its tip climbs 140 px, 11% of the frame height, steadily — against an approved line that says \"perfectly still\".",
         ],
         wins=["Fixed on 08-21: the clip used to open on 13 frames of a completely different, warmer shot — four or five big pointed leaves — which breaks the canon leaf shape. Those frames are cut, and nothing after them was touched."],
-        note="STATUS, 2026-08-22: still no candidate, and the reason is now specific rather than open. Look at the clip: the two leaves are drawn as PERFECT ROUND DISCS. Canon since your 08-17 ruling is \u201caverage leaves\u201d \u2014 the shape anyone draws when you say leaf \u2014 and it explicitly supersedes the round/oval inference that was made from your two-leaf ruling in August. So this beat needs the leaves REDRAWN, and the route is proven rather than speculative: the plant is drawn into the frame in software and then finished by a light inpaint pass, which is how beats 16 and 19 got their sapling and which passed four times out of four. That is a drawing job before it is a render job and it was not finished tonight \u2014 the card went to the eight beats whose clips were landing. Named, costed at about ten minutes of GPU, not fired.",
+        note=(
+            "STATUS, 2026-08-22 MORNING \u2014 THE DRAWING IS DONE. The two leaves in the clip "
+            "below are PERFECT ROUND DISCS, and canon since your 08-17 ruling is \u201caverage "
+            "leaves\u201d \u2014 the shape anyone draws when you say leaf. That is now fixed in the "
+            "picture rather than argued about in a prompt: the old plant was erased out of the "
+            "frame in software, two ordinary leaves were drawn in its place, and a light pass "
+            "settled them into the frame's own line and shading. The plate is below. A motion "
+            "render off it is on the card as you read this and will appear here as a candidate. "
+            "SAID PLAINLY: erasing two 250-pixel discs left a soft horizontal smear across the "
+            "cloud bank behind the plant, and the light pass did not remove it \u2014 that was "
+            "written down as a likely outcome before the job ran, and it is the one thing about "
+            "the new plate that is worse than the old one."),
         faults_from="review/ep2-picks/done-definitions.yaml beats.12 + review/ep2-b12-trim-0821/verdict-0821.yaml",
-        candidates=[],
+        candidates=[
+            dict(file=f"{POSTER_URL}/12-related-PLATE-leafcanon-0822.jpg", still=True,
+                 label="a PLATE — canon's two average leaves, drawn in. This morning.", tag="warn",
+                 verdict="Two ordinary leaves on one thin stem, in the grass, against the same clouds. Not discs. The plant is where it was and the sky, the grass and the framing are the clip's own \u2014 this is the first frame of the take you are already shipping with exactly one thing changed. THE FAULT IT CARRIES: a soft horizontal band across the cumulus where the two old discs were removed. It was predicted before the job ran and it is inside the region the pass was allowed to touch, so the pass had its chance at it and did not take it.",
+                 diff="Not a re-render and not a re-wording. The leaf shape was closed as a wording problem by measurement a week ago \u2014 the strongest sentence available returned 0 of 16 frames with two correct leaves \u2014 so the plant is DRAWN into the picture and then finished by a light pass, which is the route that has now worked five times. The motion render off this plate is queued.",
+                 src="pipeline/jobs/ep2-b12-sapnat2-0822.yaml"),
+        ],
     ),
     13: dict(
         goblin=True,
@@ -624,6 +646,21 @@ BEATS = {
             "This is beat 16's first footage of any kind, and it retired the episode's last black card.",
             "Seven of seven on its own bar after a three-frame trim: the camera is locked, the plant holds, exactly two leaves survive to the last frame — the first time canon's two-leaf sapling has survived a whole motion render in this tree — he is visibly talking, and the plant is still the subject.",
         ],
+        note=(
+            "STATUS, 2026-08-22 MORNING \u2014 THE TRADE BELOW WAS ATTEMPTED AND IT DID NOT WORK "
+            "YET, and the reason is specific enough to be worth telling you. The obvious move is "
+            "to draw the two-leaf plant into the new plate, which is exactly what was done for "
+            "beats 12 and 21 this morning and what has worked five times. It fails on THIS plate "
+            "for a reason that has nothing to do with plants: the grass in front of him is a "
+            "blown-out blur \u2014 the bright parts of it are almost pure white \u2014 and the "
+            "tool builds the plant out of the picture's own greens ON PURPOSE, so that a pasted "
+            "shape cannot arrive in a colour the frame does not contain. Given this frame's "
+            "greens it draws a WHITE plant, which reads as a ghost over his chest rather than a "
+            "seedling in front of him. Two placements were tried and both came back the same. "
+            "SO THE HONEST STATE IS: the trade stands \u2014 new face, no plant \u2014 and the "
+            "next move is a placement low in the frame where the grass is dark, or this beat's "
+            "plate re-rendered without the shallow-focus blur. Not a wording problem, and not "
+            "fired on a guess."),
         faults_from="ship-manifest.yaml beat 16",
         candidates=[
             dict(file=f"{CAND_URL}/16-why-LTX-ep2-b16-w4motion-0822.mp4",
@@ -686,6 +723,15 @@ BEATS = {
             "The last 2.8 s is a still frame, and the event is small — 48 px of travel on a 33 px figure in a 1280-tall frame.",
         ],
         wins=["Eight of eight on a bar that was written before the tool that made it existed. And on design it is not merely close to your tile — it IS the tile, with the fig moved."],
+        note=(
+            "STATUS, 2026-08-22 MORNING. The clip below is the good news and it is still the "
+            "state of this beat: the fruit falls, which it never has before. The named next step "
+            "\u2014 put the fig into a plate drawn on the CORRECTED face and ask for the same "
+            "fall \u2014 is NOT done and is not claimed to be. It went behind beats 12, 21 and 06 "
+            "this morning because those three had a shape fault that one drawing session closes, "
+            "and this one needs a fruit drawn on a stem beside a standing figure, which is a "
+            "different tool from the one the leaf beats use. It is the top item on this beat and "
+            "it costs a drawing session before it costs a GPU minute."),
         faults_from="ship-manifest.yaml beat 19 + farm-out/ep2-b19-dropcomp-0819/",
         candidates=[
             dict(file=f"{CAND_URL}/19-the-drop-LTX-ep2-b19-dropmotion-0822.mp4",
@@ -746,9 +792,25 @@ BEATS = {
             "The only beat in the episode whose definition is fully met — all four clauses, and the hard one is measured. The leaf tilts steadily in one direction over about 90 frames, with no oscillation and no reversal, AND IT STOPS.",
             "Fixed on 08-21: the opening colour jump is trimmed off, and nothing after it was touched.",
         ],
-        note="STATUS, 2026-08-22: still no candidate, same reason as beat 12 and the same fix. The plant here is ONE BIG LANCE-SHAPED LEAF standing straight up, where canon is two average leaves and lance shapes are ruled out by name. Everything else about this beat is the best in the episode \u2014 it is the only one whose definition is fully met, and the hard clause is measured: the leaf tilts steadily in one direction over about ninety frames with no oscillation, and it stops. So the motion is not in question and the plant is. Same route as beat 12: draw the two leaves into the frame, finish them with the light inpaint pass that has passed four for four, then re-render the tilt off the corrected plate. Named, not fired \u2014 the card spent the night on the eight beats whose clips were landing.",
+        note=(
+            "STATUS, 2026-08-22 MORNING \u2014 THE DRAWING IS DONE AND IT IS CLEAN. The plant in "
+            "the clip below is ONE BIG LANCE-SHAPED LEAF standing straight up, where canon is two "
+            "average leaves and lance shapes are ruled out by name. The lance is gone: it was "
+            "erased out of the frame and two ordinary leaves were drawn on one stem in its place, "
+            "then settled in with the same light pass beats 16 and 19 used. The plate is below and "
+            "nothing else in the picture moved \u2014 same golden field, same hedgerow, same sky. "
+            "The motion render off it is on the card as you read this. Everything else about this "
+            "beat is untouched on purpose: it is the only beat in the episode whose definition is "
+            "fully met, its tilt is measured, and a rung that changed the plate AND the wording "
+            "could not tell you which one did it."),
         faults_from="ship-manifest.yaml beat 21 + pipeline/jobs/ep2-b21-daylight-0814.yaml",
-        candidates=[],
+        candidates=[
+            dict(file=f"{POSTER_URL}/21-the-answer-PLATE-leafcanon-0822.jpg", still=True,
+                 label="a PLATE — the lance leaf is gone. This morning.", tag="warn",
+                 verdict="Two ordinary leaves on one stem in the golden field. Cel-shaded, with the frame's own ink weight, sitting in the grass where the old plant stood. The hedgerow, the cloud bands and the light are the clip's own and are untouched. This is the cleanest of the two leaf fixes done this morning \u2014 there is no side effect to report on it. One small honesty: a faint line of the old stem still runs beside the new one in the lower third.",
+                 diff="The plant was drawn into the frame in software and finished with a light pass; nothing about the beat's motion, wording or seed is touched. The motion render off this plate is queued and will appear here as a candidate.",
+                 src="pipeline/jobs/ep2-b21-sapnat2-0822.yaml"),
+        ],
     ),
 }
 
