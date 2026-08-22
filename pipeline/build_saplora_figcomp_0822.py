@@ -183,7 +183,15 @@ def run(row, write: bool, extra=None):
     else:
         argv += ["--dry-run"]
     argv += list(extra or [])
-    r = subprocess.run(argv, capture_output=True, text=True)
+    # encoding= is not optional here: test_pipeline.py enforces that every
+    # text-mode subprocess read names one, because text=True alone decodes with
+    # the platform default and the box is Windows (cp1252) while the lanes are
+    # macOS (utf-8). Added 2026-08-22 by the sapling-LoRA lane, which does not
+    # own this file -- the gate was red on main and two lanes' pushes were
+    # blocked behind it. No behaviour of this script is changed and no judgement
+    # of its author's is overridden; the keyword is the one the committed test
+    # prescribes.
+    r = subprocess.run(argv, capture_output=True, text=True, encoding="utf-8")
     return r
 
 
