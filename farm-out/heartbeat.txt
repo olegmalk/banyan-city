@@ -4369,3 +4369,5 @@
 03:58:18Z box-runner idle ready=0 failed=89
 04:03:34Z STARTED task=ep2-b12-nosmear-0822-1787371401 attempt=1 on box-runner
 04:03:34Z FAIL task=ep2-b12-nosmear-0822-1787371401 rc=1 step=crop
+04:04:39Z STARTED task=ep2-b04-canon-r14a-0821-1787371472 attempt=1 on box-runner
+04:05:07Z DONE task=ep2-b04-canon-r14a-0821-1787371472 rc=0 artifacts=1
