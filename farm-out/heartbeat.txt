@@ -4658,3 +4658,5 @@
 10:26:43Z DONE task=ep2-jds-m04-0822-1787393959 rc=0 artifacts=2
 10:26:49Z STARTED task=ep2-jds-m05-0822-1787393963 attempt=1 on box-runner
 10:27:00Z DONE task=ep2-jds-m05-0822-1787393963 rc=0 artifacts=2
+10:27:06Z STARTED task=lora-sapling-v2c-bars-0822-1787394312 attempt=1 on box-runner
+10:32:18Z DONE task=lora-sapling-v2c-bars-0822-1787394312 rc=0 artifacts=3
