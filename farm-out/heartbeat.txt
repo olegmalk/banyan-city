@@ -4420,3 +4420,4 @@
 07:11:22Z DONE task=lora-sapling-bars-0822-1787382340 rc=0 artifacts=3
 07:11:34Z STARTED task=lora-sapling-ladder-0822-1787382429 attempt=1 on box-runner
 07:14:10Z DONE task=lora-sapling-ladder-0822-1787382429 rc=0 artifacts=4
+07:14:16Z box-runner idle ready=0 failed=92
