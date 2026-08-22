@@ -1,0 +1,110 @@
+{
+ "apex": [
+  160.7,
+  640.8
+ ],
+ "argv": [
+  "--plate",
+  "farm-out/ep2-b16-canon-w7a-0821/ep2-b16-canon-w7a-0821-ipahead.png",
+  "--plate-sha256",
+  "5f2c7d7116bdbec78816d45fc6db21fa2f5924eb05374cbadbf0e2aee6bd413f",
+  "--root",
+  "190,1200",
+  "--height",
+  "560",
+  "--tilt",
+  "-3",
+  "--leaf-frac",
+  "0.25",
+  "--green-sat-floor",
+  "0.15",
+  "--out",
+  "farm-out/ep2-b16-sapnat4-0822/b16-sapnat4-in-0822.png",
+  "--mask-out",
+  "farm-out/ep2-b16-sapnat4-0822/b16-sapnat4-in-mask-0822.png",
+  "--overlay-out",
+  "farm-out/ep2-b16-sapnat4-0822/b16-sapnat4-overlay-0822.png"
+ ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
+ "c5_reference": "field",
+ "c5_reference_luma": 136.7,
+ "erase_box": null,
+ "erased_px": 0,
+ "field_mean_luma": 136.7,
+ "fill_mode": "row",
+ "height_px": 560.0,
+ "leaf_len_px": 140.0,
+ "leaves": [
+  {
+   "len": 140.0,
+   "node": [
+    159.7,
+    645.8
+   ],
+   "side": -1.0,
+   "tip": [
+    32.8,
+    609.1
+   ]
+  },
+  {
+   "len": 148.4,
+   "node": [
+    161.7,
+    640.8
+   ],
+   "side": 1.0,
+   "tip": [
+    288.9,
+    593.4
+   ]
+  }
+ ],
+ "light_dx": 0.873,
+ "light_dy": -0.488,
+ "lit_side": "right",
+ "mask_fraction": 0.0388,
+ "palette": {
+  "dark": [
+   51,
+   56,
+   40
+  ],
+  "ink": [
+   25,
+   21,
+   19
+  ],
+  "light": [
+   162,
+   184,
+   102
+  ],
+  "mid": [
+   154,
+   173,
+   97
+  ],
+  "n_sampled": 9106,
+  "source": "the field's own greens"
+ },
+ "plant_extent": [
+  31,
+  289,
+  586,
+  1203
+ ],
+ "plant_fill_luma": 144.8,
+ "plant_fraction": 0.0203,
+ "plate": "farm-out/ep2-b16-canon-w7a-0821/ep2-b16-canon-w7a-0821-ipahead.png",
+ "plate_sha256": "5f2c7d7116bdbec78816d45fc6db21fa2f5924eb05374cbadbf0e2aee6bd413f",
+ "root": [
+  190.0,
+  1200.0
+ ],
+ "size": [
+  832,
+  1216
+ ],
+ "tilt_deg": -3.0
+}
