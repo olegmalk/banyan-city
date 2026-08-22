@@ -1,0 +1,200 @@
+rc=0 render_s=3.8
+==== step b05g1 END rc=0 2026-08-22T16:57:56Z ====
+
+==== step b05g2 START 2026-08-22T16:57:56Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\guard2-canon-founder-0822.png", "--init-sha256", "871b11216482629801fa351f211347d88009481aeed8cd4d7d6c1ed14589c84c", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-832x1216-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b05g2.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260905", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b05g2.png", "--note", "EP2 FINISH PLATE B05G2 (pass two). THE PATROL, guard two. A DIFFERENT MAN, not the same plate translated -- guard pairs in this show are two different men.  INIT: guard2-canon-founder-0822.png -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned fifteen plates that were two images. GROUND is the compositor's. The prompt buys LIGHT ('long soft morning shadows') and nothing else. img2img off the founder's own pixels at strength 0.30, no LoRA, no ControlNet, no face tags."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  3.42it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  6.62it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:00<00:00,  7.73it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.79it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b05g2.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b05g2-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b05g2.png.meta.yaml
+rc=0 render_s=3.7
+==== step b05g2 END rc=0 2026-08-22T16:58:09Z ====
+
+==== step b06 START 2026-08-22T16:58:09Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\guard1-canon-founder-0822.png", "--init-sha256", "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-832x1216-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b06.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260906", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b06.png", "--note", "EP2 FINISH PLATE B06 (pass two). THE CLIPBOARD. The bark board is a separate INPAINT step with its own quad mask; four wording attempts closed the wording lever on that prop's geometry, so it is not asked for here.  INIT: guard1-canon-founder-0822.png -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned fifteen plates that were two images. GROUND is the compositor's. The prompt buys LIGHT ('soft morning light') and nothing else. img2img off the founder's own pixels at strength 0.30, no LoRA, no ControlNet, no face tags."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:01<00:04,  1.14it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:02<00:02,  1.36it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:00,  2.51it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  4.03it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.66it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b06.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b06-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b06.png.meta.yaml
+rc=0 render_s=3.8
+==== step b06 END rc=0 2026-08-22T16:58:22Z ====
+
+==== step b07 START 2026-08-22T16:58:22Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\guard2-canon-founder-0822.png", "--init-sha256", "871b11216482629801fa351f211347d88009481aeed8cd4d7d6c1ed14589c84c", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-832x1216-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b07.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260907", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b07.png", "--note", "EP2 FINISH PLATE B07 (pass two). CONFISCATE. Guard two. The pointing arm is motion; the partner's shoulder at frame edge is a composite.  INIT: guard2-canon-founder-0822.png -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned fifteen plates that were two images. GROUND is the compositor's. The prompt buys LIGHT ('morning light') and nothing else. img2img off the founder's own pixels at strength 0.30, no LoRA, no ControlNet, no face tags."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00,  8.21it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  4.64it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:01,  1.56it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.74it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b07.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b07-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b07.png.meta.yaml
+rc=0 render_s=3.7
+==== step b07 END rc=0 2026-08-22T16:58:35Z ====
+
+==== step b08g START 2026-08-22T16:58:35Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\init-cowboy-0822.png", "--init-sha256", "630265052064cdd3623e9e3b0a409d8c1c9d700a57b7a0c10d8cca456f51f386", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-832x1216-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b08g.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260908", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b08g.png", "--note", "EP2 FINISH PLATE B08G (pass two). INSIDE HIM, GOBLIN HALF. Cowboy crop because the beat points at his BELLY -- the frame has to contain it. Composited with the guard half by integer translation.  INIT: init-cowboy-0822.png -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned fifteen plates that were two images. GROUND is the compositor's. The prompt buys LIGHT ('flat morning light') and nothing else. img2img off the founder's own pixels at strength 0.30, no LoRA, no ControlNet, no face tags."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00, 15.11it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  5.75it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.18it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.56it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.91it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b08g.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b08g-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b08g.png.meta.yaml
+rc=0 render_s=3.7
+==== step b08g END rc=0 2026-08-22T16:58:47Z ====
+
+==== step b09 START 2026-08-22T16:58:47Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\guard1-canon-founder-0822.png", "--init-sha256", "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-832x1216-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b09.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260909", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b09.png", "--note", "EP2 FINISH PLATE B09 (pass two). THE PAUSE. Entirely a face beat, which is the ONE guard beat the portrait inits fit without restaging.  INIT: guard1-canon-founder-0822.png -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned fifteen plates that were two images. GROUND is the compositor's. The prompt buys LIGHT ('flat morning light') and nothing else. img2img off the founder's own pixels at strength 0.30, no LoRA, no ControlNet, no face tags."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:03,  1.86it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  2.97it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:02<00:03,  1.08it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.49it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.77it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b09.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b09-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b09.png.meta.yaml
+rc=0 render_s=3.7
+==== step b09 END rc=0 2026-08-22T16:59:01Z ====
+
+==== step b10 START 2026-08-22T16:59:01Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\guard1-canon-founder-0822.png", "--init-sha256", "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-832x1216-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b10.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260910", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b10.png", "--note", "EP2 FINISH PLATE B10 (pass two). NO FORM. The founder's named fault was TWO DISTINCT OBJECTS -- a plate-side separation, so the board and its blank back are inpainted separately onto this plate.  INIT: guard1-canon-founder-0822.png -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned fifteen plates that were two images. GROUND is the compositor's. The prompt buys LIGHT ('morning light') and nothing else. img2img off the founder's own pixels at strength 0.30, no LoRA, no ControlNet, no face tags."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:01,  5.82it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00, 15.91it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:00<00:00,  6.14it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.82it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b10.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b10-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b10.png.meta.yaml
+rc=0 render_s=3.8
+==== step b10 END rc=0 2026-08-22T16:59:14Z ====
+
+==== step b11g1 START 2026-08-22T16:59:14Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\guard1-canon-founder-0822.png", "--init-sha256", "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-832x1216-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b11g1.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260911", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b11g1.png", "--note", "EP2 FINISH PLATE B11G1 (pass two). THEY LEAVE, guard one. Restaged medium for the same reason as b05; walking away reads as receding between cuts.  INIT: guard1-canon-founder-0822.png -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned fifteen plates that were two images. GROUND is the compositor's. The prompt buys LIGHT ('long morning shadows') and nothing else. img2img off the founder's own pixels at strength 0.30, no LoRA, no ControlNet, no face tags."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  3.84it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00,  4.36it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:01,  1.84it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.01it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.87it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b11g1.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b11g1-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b11g1.png.meta.yaml
+rc=0 render_s=3.7
+==== step b11g1 END rc=0 2026-08-22T16:59:26Z ====
+
+==== step b11g2 START 2026-08-22T16:59:26Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\guard2-canon-founder-0822.png", "--init-sha256", "871b11216482629801fa351f211347d88009481aeed8cd4d7d6c1ed14589c84c", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-832x1216-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b11g2.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260912", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b11g2.png", "--note", "EP2 FINISH PLATE B11G2 (pass two). THEY LEAVE, guard two.  INIT: guard2-canon-founder-0822.png -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned fifteen plates that were two images. GROUND is the compositor's. The prompt buys LIGHT ('long morning shadows') and nothing else. img2img off the founder's own pixels at strength 0.30, no LoRA, no ControlNet, no face tags."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:01<00:10,  1.71s/it]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:02<00:01,  2.06it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.67it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.72it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b11g2.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b11g2-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b11g2.png.meta.yaml
+rc=0 render_s=3.7
+==== step b11g2 END rc=0 2026-08-22T16:59:39Z ====
+
+==== step b14 START 2026-08-22T16:59:39Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\init-headnat-0822.png", "--init-sha256", "d14a0524afdb4e3667b2784ab577f26720344bd2eac21b3cefdbd846daaed0dd", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-832x832-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b14.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260913", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b14.png", "--note", "EP2 FINISH PLATE B14 (pass two). THE DEFENSE. Upper-body crop; the dirt and pebbles are foreground the compositor adds, not a ground the prompt can buy.  INIT: init-headnat-0822.png -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned fifteen plates that were two images. GROUND is the compositor's. The prompt buys LIGHT ('warm midday light') and nothing else. img2img off the founder's own pixels at strength 0.30, no LoRA, no ControlNet, no face tags."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:00,  6.26it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:01<00:04,  1.03it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:02<00:01,  1.81it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.92it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 5s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b14.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b14-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b14.png.meta.yaml
+rc=0 render_s=2.8
+==== step b14 END rc=0 2026-08-22T16:59:50Z ====
+
+==== step b17 START 2026-08-22T16:59:50Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\init-full-0822.png", "--init-sha256", "0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-832x1216-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b17.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260914", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b17.png", "--note", "EP2 FINISH PLATE B17 (pass two). GOODBYE. Full body, and the beat's own action is standing up and turning away -- the canon's posture IS this beat's posture.  INIT: init-full-0822.png -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned fifteen plates that were two images. GROUND is the compositor's. The prompt buys LIGHT ('amber afternoon light') and nothing else. img2img off the founder's own pixels at strength 0.30, no LoRA, no ControlNet, no face tags."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:01<00:10,  1.75s/it]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:01<00:04,  1.20it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:00,  2.68it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  4.06it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.66it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b17.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b17-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b17.png.meta.yaml
+rc=0 render_s=3.7
+==== step b17 END rc=0 2026-08-22T17:00:04Z ====
+
+==== step b19 START 2026-08-22T17:00:04Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\init-full-0822.png", "--init-sha256", "0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-832x1216-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b19.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260915", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b19.png", "--note", "EP2 FINISH PLATE B19 (pass two). THE DROP. Full body in amber. Fruit, bounce and the stop mid-step are composite and motion.  INIT: init-full-0822.png -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned fifteen plates that were two images. GROUND is the compositor's. The prompt buys LIGHT ('warm amber afternoon light') and nothing else. img2img off the founder's own pixels at strength 0.30, no LoRA, no ControlNet, no face tags."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:02,  2.11it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:00<00:00,  7.75it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.55it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.92it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b19.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b19-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b19.png.meta.yaml
+rc=0 render_s=3.8
+==== step b19 END rc=0 2026-08-22T17:00:16Z ====
+
+==== step publish START 2026-08-22T17:00:16Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "\nimport hashlib, glob, os, shutil\nOUT = \"C:/banyan-farm/ep2-finish-plates-0822/out\"\nDST = \"C:/banyan-farm/courier-box/farm-out/ep2-finish-plates-0822\"\nos.makedirs(DST, exist_ok=True)\nn = 0\nfor p in sorted(glob.glob(OUT + \"/*.png\")) + sorted(\n        glob.glob(OUT + \"/*.png.meta.yaml\")):\n    if os.path.isfile(p):\n        shutil.copyfile(p, os.path.join(DST, os.path.basename(p)))\n        n += 1\nwith open(os.path.join(DST, \"ep2-finish-plates-0822.sha256\"), \"w\", encoding=\"utf-8\") as fh:\n    for name in sorted(os.listdir(DST)):\n        q = os.path.join(DST, name)\n        if os.path.isfile(q) and not name.endswith(\".sha256\"):\n            fh.write(\"%s  %s\" % (\n                hashlib.sha256(open(q, \"rb\").read()).hexdigest(), name) + chr(10))\nprint(\"published\", n, \"file(s) ->\", DST, flush=True)\nif n == 0:\n    raise SystemExit(\"NOTHING TO PUBLISH -- the plate pass produced no files\")\n"]
+published 57 file(s) -> C:/banyan-farm/courier-box/farm-out/ep2-finish-plates-0822
+==== step publish END rc=0 2026-08-22T17:00:16Z ====
+#### job ep2-finish-plates-0822-1787417808-again0aad90 finished rc=0 2026-08-22T17:00:16Z

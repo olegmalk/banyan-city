@@ -9,14 +9,14 @@ size: 832x1216
 steps: 40
 guidance: 7.5
 strength: 0.3
-seed: 20260909
+seed: 20260910
 padding_mask_crop: null
 mask_blur_factor: 8
 init_image: C:/banyan-farm/ep2-finish-plates-0822/guard1-canon-founder-0822.png
 init_sha256: 420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a
 mask_png: b10-mask.png
 mask_shape: png
-mask_png_source: C:/banyan-farm/ep2-finish-plates-0822/fullframe-mask-0822.png
+mask_png_source: C:/banyan-farm/ep2-finish-plates-0822/fullframe-mask-832x1216-0822.png
 mask_png_sha256: 5cb2f709bfa7eab1aae0ffebb398fefd5224a6da61e5a730779322a84321894b
 mask_white_px: 1011712
 mask_bbox_px: [0, 0, 831, 1215]
@@ -24,9 +24,9 @@ mask_width_frac: 0.9988
 mask_height_frac: 0.9992
 mask_is_the_stewards: >-
   THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
-rendered_utc: 2026-08-22T16:48:48Z
-render_seconds: 3.7
-wall_seconds: 9.5
+rendered_utc: 2026-08-22T16:59:13Z
+render_seconds: 3.8
+wall_seconds: 9.4
 cost_usd: 0
 python_version: 3.12.10
 torch_version: 2.11.0+cu128
@@ -35,8 +35,8 @@ approved: false
 provisional: >-
   PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
 note: >-
-  EP2 FINISH PLATE B10. NO FORM. The founder's named fault here was TWO DISTINCT OBJECTS, which is a plate-side separation problem -- the board and its blank back are inpainted separately onto this plate.  ROUTE: img2img off the founder's own canon at strength 0.30 -- his face is the init's pixels, not a generation. Light and framing are the prompt's job; POSE IS THE CANON'S and does not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22).
+  EP2 FINISH PLATE B10 (pass two). NO FORM. The founder's named fault was TWO DISTINCT OBJECTS -- a plate-side separation, so the board and its blank back are inpainted separately onto this plate.  INIT: guard1-canon-founder-0822.png -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned fifteen plates that were two images. GROUND is the compositor's. The prompt buys LIGHT ('morning light') and nothing else. img2img off the founder's own pixels at strength 0.30, no LoRA, no ControlNet, no face tags.
 prompt: |-
-  a round guard in mismatched armor medium shot holding something flat up toward the viewer, morning light, detailed cinematic anime, masterpiece, best quality, very aesthetic
+  a round guard, morning light, detailed cinematic anime, masterpiece, best quality, very aesthetic
 negative: |-
   lowres, worst quality, low quality, text, watermark, photorealism, 3d render, blurry, 2boys, multiple heads
