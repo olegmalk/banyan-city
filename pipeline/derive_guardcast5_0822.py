@@ -298,8 +298,15 @@ def sibling(letter, offset=0):
                     "tested and all falsified. Ten seated men needs sixteen "
                     "draws" if offset else ""))),
         },
-        overrides={"seed": seed_of(letter, offset),
-                   "payload:prompt.txt": positive(letter, offset)},
+        # THE PROMPT OVERRIDE IS CONDITIONAL. The sample cell's own spare draw
+        # moves the SEED and nothing else, so handing it the sample's prompt is
+        # handing the parent its own bytes back -- which derive_spec refuses by
+        # design, and is right to: a spec that claims a variable it did not move
+        # is a spec that lies in its own record.
+        overrides=dict(
+            {"seed": seed_of(letter, offset)},
+            **({} if positive(letter, offset) == positive(SAMPLE, 0)
+               else {"payload:prompt.txt": positive(letter, offset)})),
         retoken=[(spec_id(SAMPLE, 0), spec_id(letter, offset))],
         extra={"cell": ("cell %s of round 5. Sheet: "
                         "/review/ep2-guardcast2-0822. Reasoning: "
