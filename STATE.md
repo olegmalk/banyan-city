@@ -9765,3 +9765,144 @@ one. iteration. im talking about the clip for each beat." The process is now:
 founder reviews beat-by-beat on the site, one verdict per beat in chat, lanes
 iterate each beat on his notes. The ship gate stays his; no date pressure
 applied by the steward.
+
+## 2026-08-21 — the caption/title/end-card layer gets its first pass (caption lane, $0, no GPU)
+
+The captions, the title card and the end card had never been audited on their
+own: they shipped whatever `render_t3` defaults produced. Four questions, all
+answered against measurements rather than a look.
+
+**VERBATIM: clean, 21 of 21.** Every spoken line in every VO manifest matches
+`node.md` character-for-character (whitespace-normalised). No drift, so no
+re-synthesis. Beats 02, 19 and 21 correctly carry no VO — the script gives them
+no line.
+
+**TIMING: 3 real defects, all three fixed.** `synth_vo` has two paths and only
+one is exact. Long lines (>22 words on chatterbox) are STITCHED from per-chunk
+takes, so their caption boundaries ARE the audio's joins; every shorter
+multi-chunk line is one generation whose captions are timed by synthesizing each
+chunk SOLO and scaling proportionally — an estimate, not a measurement. Measured
+against the pauses the shipped mp3s actually have: **all 11 stitched boundaries
+landed inside their pause; 3 of the 17 proportional ones missed by 207-291 ms.**
+
+| beat | boundary | was | error | now |
+|---|---|---|---|---|
+| 01 | `…Well.` → `A sapling.` | 4.287 | **+207 ms LATE** | 3.952 |
+| 04 | `…ever seen` → `— and I once watched…` | 1.895 | **−285 ms EARLY** | 2.348 |
+| 14 | `It was one apple.` → `It fell off the cart.` | 1.541 | **+291 ms LATE** | 1.114 |
+
+Two boundaries (beat 04 k1, beat 15 k1) are **unverifiable and were left alone**:
+the engine ran the clause straight through, so there is no pause to align to and
+inventing a number would be worse than the estimate. Reported, not moved.
+
+The fix is a tool, not three hand-typed numbers: **`pipeline/align_captions.py`**
+decodes the rendered take, finds its pauses, and flags any inter-chunk boundary
+sitting more than 200 ms outside one. Its snap target is calibrated on the
+stitched path — across those 11 known-exact boundaries the true join sits at a
+median 0.595 of the way through the pause this detector reports, so the target
+is `start + 0.6 × width`. `--check` exits nonzero on a defect; it is the gate
+this class of bug never had. Re-run after the fix: **26 within 200 ms, 0 out.**
+
+**The rebuild is caption-only, and that is proven, not asserted.** All 39
+ingredient rows hash identically before and after (0 added, 0 removed, 0
+changed); every slot_s, clip_s and the 116.46 s runtime are unchanged;
+`proof_receipts` differs=0. Frame diff at 8 fps across the whole cut: **814 of
+934 sampled frames are bit-identical**, and the 120 that differ are exactly the
+caption-band frames of beats 01, 04 and 14. Outside the caption block the
+residue is x264 rate reallocation, not picture — mean absolute difference
+0.116/255, 0.045 % of pixels off by more than 8/255. New cut sha
+`55a6a643…`; `ship-manifest.yaml` sha and duration were BOTH already stale
+before this lane arrived (recorded `577c66eb…`/115.88 s against a file that
+hashed `ad02d39c…`/116.71 s) and are corrected with the discrepancy written
+down rather than absorbed.
+
+**READABILITY: no contrast or safe-area defect.** Measured on real frames of the
+shipped cut, not computed from constants. Caption ink against the composited
+panel runs **12.2:1 at worst** (beat 11, the brightest footage under a caption at
+luma 173) against WCAG AA's 4.5:1 — the 78 %-opaque panel does the work, and no
+beat is close to a problem. Geometry: max panel width 539 px of the 560 allowed;
+lowest drawn pixel y=996 against a chrome band starting at y=998, so the
+`+2` in `CAPTION_MARGIN` is doing exactly its job. 44 px Menlo Bold on a 720-wide
+frame is ≈24 pt on a 390 pt phone — at or above platform-native caption size.
+
+**Gates:** `qa_episode` 16 checks pass, 1 warning (unchanged); `qa_local` PASS
+routes=89; `align_captions` 0 out.
+
+Four things this pass deliberately did **not** decide — they are typography,
+naming and licence calls, and they are written up as a table for the founder
+rather than actioned: the renderer silently drops a clause-final em dash that
+`captions.py` documents as deliberately visible (3 of 47 caption cards); 12 of
+47 caption cards render 3 lines tall against the module's own stated ≤2-line
+contract; the title card reads `002b — The First Citizen` with no episode
+number and there is no rule anywhere saying how an episode should be numbered
+on screen; and **the LTX licence item-5 disclosure duty is still not discharged
+for this episode** — D16 records it as an open gap, and neither the cut nor the
+ship page carries an AI-generated line.
+
+## 2026-08-22 early-morning lane — three named rungs, and two of them turned into code fixes
+
+**Everything below is $0.** Card time spent: 4 plate cells + 3 naturalize/plate
+jobs + 1 motion + 1 eye sample ≈ 40 GPU minutes. No provider spend, no cut swap.
+
+**BEAT 12 — THE SMEAR IS FIXED AND IT WAS OUR BUG.** `fill_from_boundary`
+interpolates PER ROW because it was written for a horizontally banded grass
+plate; beat 12's backdrop is a cumulus bank, so ~670 rows filled straight across
+manufactured the horizontal bars, and the 0.30 pass and 121 frames of LTX both
+correctly preserved a structure that should never have existed.
+`beat16_sapling_composite.py` gains `--fill-mode harmonic` (default stays `row`,
+so every plate already cut reproduces byte for byte). `ep2-b12-sapnat3-0822`
+came back with the bars gone and the pass having drawn real cloud into the wash.
+`ep2-b12-nosmear-0822` is r1 re-rendered on it, one variable.
+
+**BEAT 16 — NEVER NEEDED A NEW PLATE.** `foliage_palette` selected green on
+`G > R+6 and G > B+6`, a test of which channel is largest and not of whether the
+pixel has any colour: (241,255,232) passes it and is white. On the w4 plate that
+was 44% of the sample and the top 44% by luminance, so it owned the p88
+highlight and the tool drew a white plant. A chroma floor of 0.15 moves the
+highlight from (241,255,232) to (147,168,126) off 54,622 pixels of real grass.
+`ep2-b16-sapnat3-0822` is the first beat-16 plate on the corrected goblin with a
+plant in it. **The beat is still not done:** on this plate the figure fills the
+frame, so the plant can only overlap him, and the "plant is subject, he is
+depth" staging needs a plate whose skeleton does not span the picture. Geometry
+rung, named, not fired.
+
+**AND FOUR CELLS WENT TO THE WRONG CAUSE FIRST.** `ep2-b16-canon-w5{z,a,b,c}`
+killed the depth of field and added the sapling-field lane's distance clause:
+all NULL on the foreground (green p88 240/252/247 against w4's 241, no hills),
+because a full-span skeleton at ControlNet 1.0 owns the composition and no word
+outranks it. **The negative-token strip that paid for them broke the eye on all
+four cells** — the four "inert" containment terms are not inert, and *"adding X
+did nothing"* does not license *"removing X is free."*
+
+**THE COUNT AXIS HAS AN INSTRUMENT.** `pipeline/count_composited_objects.py`,
+off the geometry json the compositor already writes; `--selftest` calibrates on
+all three of this morning's clips at once (b19 fig 1→3 over f098-104 FLAG, b21
+3 blades on 55 frames FLAG, b12 2 on all 121 ok). Two corrections were needed
+before it measured the thing it flags: connected components count figs and not
+leaves (a blade is a lobe, so erode past the stem), erosion alone does not split
+two blades that share an edge (subtract the plate's own ink line), and the first
+version passed its selftest by flagging b21's detector DROPOUTS while never
+seeing the third blade — so above-the-opening and below-the-opening are now
+separate findings and only ABOVE flags.
+
+**THE EYE — TWO SAMPLES THAT DISAGREE, AND NO WAVE.** r13a (sq65, beat 13) is by
+the steward's eye the narrowest and closest to the founder's image at matched ear
+span; **steward-provisional, R4.** A second sample, `ep2-b04-canon-r14a-0821`
+(beat 04, pose `hunch`, "the eyes are the whole beat"), does NOT reproduce it:
+the eye is the same width and the tighter reference brings eyelashes, a teal iris
+and an embroidered collar with it. **The twelve beats on r12d are not re-plated**
+— the compositor lane's refusal stands and now has a second reason. Both sheets
+are on `/review/ep2-goblin-eye-0822` with three answers spelled out for the
+founder.
+
+**Pages:** `/review/ep2-beats-0821` refreshed (beats 12 and 16 rewritten with
+their new plates and the two code findings in plain words);
+`/review/ep2-goblin-eye-0822` carries the beat-04 sheet. `qa_local` PASS
+routes=95.
+
+**Filing bugs caught, all before a model loaded:** a retoken pair written with a
+trailing slash missed the publish destination that has none (b16 published to
+`…-0821`, pixels fine, date lies); and the b12 motion job's first attempt died on
+a SRC SHA MISMATCH because macOS is case-insensitive and a contact sheet written
+to `B12-NAT3.png` had replaced the extracted `b12-nat3.png`. **The producing
+job's own `.sha256` manifest is the authority, not a locally recomputed hash.**
