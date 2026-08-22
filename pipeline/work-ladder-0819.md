@@ -9448,3 +9448,34 @@ PREFIX of nothing this job names. The FILENAME retoken held, so nothing was
 overwritten and the mp4 is uniquely named; only the directory lies. Third
 instance of one family today (a prefix token, a filename that never contained the
 id, and a pair written with a trailing slash that the destination does not have).
+
+#### AND THE NO-GROW CLAUSE IS A NULL ON THE PLATE THAT ACTUALLY GROWS
+
+`ep2-b12-nogrow-clean-0822`: r3's explicit sentence — *"the sapling does not
+grow: the stem does not lengthen, the tips of the two leaves are at the same
+height in the last frame as in the first"* — on the harmonic plate. **122 px of
+apex climb against nosmear's 108 px without it.** Sky clean, count 2 on all 121
+frames, everything else fine.
+
+| take | plate | wording | apex climb |
+|---|---|---|---|
+| the take in the cut | old | — | 140 px |
+| **r1** | smeared | breeze | **5 px** |
+| r3 | smeared | breeze + no-grow | 0 px |
+| stillmotion-r2 | smeared | explicit stillness | 340 px |
+| nosmear | **clean** | breeze | 108 px |
+| nogrow-clean | **clean** | breeze + no-grow | **122 px** |
+
+> **THE STILLNESS WAS A SIDE EFFECT OF THE DEFECT.** Every still take on this
+> beat is a take with the smear in it, and every clean-sky take grows. The
+> wording route is now closed twice with a proper control on each side: banning
+> movement put 340 px in, and naming the thing that must not move does nothing
+> at all once the thing has somewhere to go. `the stem does not lengthen` was
+> filed this morning as the next rung; it is spent.
+
+**AND THE ONE CONTROL THIS BEAT HAS NEVER HAD IS THE SEED.** Every reading above
+is 20260813. `ep2-b12-cleanseed-{s1,s2}-0822` are on the card at 20260901 and
+20260902, r1's wording, clean plate, nothing else moved — pre-registered both
+ways: two cells near 110–120 px means the growth belongs to the plate and the
+next lever is a TRIM rather than a word; one cell near zero means the apex climb
+on this beat is seed scatter and r1's 5 px was a draw rather than a property.
