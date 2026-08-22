@@ -4355,3 +4355,5 @@
 03:25:42Z DONE task=ep2-b16-canon-w5a-0821-1787369096 rc=0 artifacts=1
 03:25:47Z STARTED task=ep2-b16-canon-w5b-0821-1787369099 attempt=1 on box-runner
 03:26:15Z DONE task=ep2-b16-canon-w5b-0821-1787369099 rc=0 artifacts=1
+03:26:21Z STARTED task=ep2-b16-canon-w5c-0821-1787369102 attempt=1 on box-runner
+03:26:49Z DONE task=ep2-b16-canon-w5c-0821-1787369102 rc=0 artifacts=1
