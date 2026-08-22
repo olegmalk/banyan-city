@@ -1,0 +1,167 @@
+id: ep2-b06-pose-0822
+task: ep2-b06-pose-0822
+node: 002b-first-citizen
+beat: 6
+runner: box
+priority: 6
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: night iteration lane, 2026-08-22 -- beat 06 on the pose route, filed after the adapter route closed
+  on four measurements
+consumer: BEAT 06's SLOT IN /review/ep2-beats-0821. The beat has two named faults, zero clips, and as
+  of tonight two failed plates. If this frame passes it is the beat's first usable init and the motion
+  rung that answers the frozen-frame fault can finally be filed. If it fails, it fails with a NUMBER attached
+  -- the board's width is authored in pixels -- so the next move is a scale change and not another wording.
+success: 'ONE 832x1216 png, judged at 1:1 and on a matched-scale sheet beside taste/refs/guard1-canon-founder-0822.png.
+  PRE-REGISTERED: (1) A WHOLE FIGURE IN A FIELD, not a portrait. Two adapter runs returned a head-and-shoulders
+  close-up and this rung exists to fix that, so a close-up here is a FAIL whatever the face looks like.
+  (2) HE IS HOLDING A BOARD, in both hands, at chest height, looking down at it -- and the board is AT
+  LEAST AS WIDE AS HIS SHOULDERS. This is the beat''s standing fault and no previous frame of it has ever
+  been right. (3) IT IS BARK, not a clipboard: no metal clip, no spring clip, no paper. (4) A GROWN MAN,
+  five heads tall. A child or teenager read is a DROP -- the hint asserts the proportion, so if the output
+  is still childlike the hint is not binding and that is the finding. (5) HE IS RECOGNISABLY GUARD 1:
+  dark cropped hair, round wire-rim glasses. This is the half being taken from WORDS instead of from a
+  reference, so it is the half that could newly fail, and a miss here is the interesting result rather
+  than a disappointment. (6) DETAILED CINEMATIC ANIME. Flat or tag-sheet fails. (7) Cream shirt collar
+  and WHITE SHOULDER SASH. (8) NOTHING GOBLIN: no green skin, no pointed ears. Tonight''s b07 re-run put
+  a pointed ear on this same guard. PRE-REGISTERED FAIL MODES, with what each one would mean: A LITERAL
+  WHITE OUTLINED RECTANGLE floating in frame -- the scribble net traced the hint instead of interpreting
+  it, and the answer is to drop --scale2 below 0.5, not to redraw the board. NO BOARD AT ALL -- 0.5 is
+  too weak, raise it. A SKELETON DRAWN INTO THE PICTURE as glowing limbs, which is what the scribble net
+  did to a medial-axis hint on beat 08; if the POSE net does it too, the hint class is wrong and not just
+  the scale. THE FIGURE IGNORING THE HINT entirely, which at ratio 3.0 line thickness would be a real
+  surprise and would point at the net not loading rather than at the drawing.'
+why: 'THE ADAPTER ROUTE IS CLOSED BY MEASUREMENT. window4 and content on beats 05 and 06 -- opposite settings
+  on both axes the sampler has -- all four returned the reference photograph''s crop and pose: a head-and-shoulders
+  close-up with the hands up at the face, no board, no field. So this rung takes the PICTURE from a drawing
+  and the MAN from the words, with no reference image anywhere in the job. Two nets, because a COCO-18
+  hint has no keypoint for a plank and the board is this beat''s entire fault: openpose for the five-head
+  figure and scribble for one rectangle exactly as wide as the skeleton''s shoulders. The scribble net''s
+  known defect -- it traces whatever it can read -- is the feature here, because the thing being traced
+  is a board and boards are rectangles. Both hints come out of one file and one geometry, so the prompt''s
+  `as wide as his shoulders` and the drawing''s width are the same number. $0, ~3 GPU minutes. Full trace:
+  pipeline/derive_b06_pose_0822.py and pipeline/author_b06_guard_pose_0822.py.'
+est_minutes: 3
+needs:
+- cuda
+- vram20
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b06-pose-0822\prompt.txt: A grown guard man with dark cropped hair and round wire-rim
+    glasses, cream shirt collar and white shoulder sash, in tall grass with a hedgerow behind, holding
+    a large flat slab of rough brown bark in both hands at chest height, as wide as his shoulders, looking
+    down at it, cinematic lighting, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-b06-pose-0822\negative.txt: photorealistic, 3d render, abstract, text, watermark,
+    signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl,
+    child, goblin, green skin, pointed ears, armor, helmet, metal clip, spring clip, white paper, small
+    board, white background, dark, night, photorealism
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
+    \nroot = r\"C:\\banyan-farm\\ep2-b06-pose-0822\"\nwant = [\n    (\"pipeline/controlnet_plate.py\"\
+    , os.path.join(root, \"src\", \"pipeline\"),\n     \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\"\
+    ),\n    (\"pipeline/hints/b06-guard-pose-0822.png\", root, \"1f04f73fd754d6aa72f4f3d1ae535412c35a2c1f643a5a45a6536ed10a2aebb2\"\
+    ),\n    (\"pipeline/hints/b06-board-0822.png\", root, \"cfe656564c6a98efefa4c849d1dd6c6881cf92461354ce8544cf04023b7fce99\"\
+    ),\n]\nfor path, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
+    \ + path, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
+    \    if got != sha:\n        raise SystemExit(\"!! %s sha %s, wanted %s\" % (path, got, sha))\n  \
+    \  name = path.rsplit(\"/\", 1)[-1]\n    with open(os.path.join(dst, name), \"wb\") as fh:\n     \
+    \   fh.write(blob)\n    print(\"staged\", name, got[:12])\n"
+- name: plate
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b06-pose-0822\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\ep2-b06-pose-0822\src
+  - --task
+  - ep2-b06-pose-0822
+  - --arm
+  - posebooth
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - C:\banyan-farm\ep2-b06-pose-0822\b06-guard-pose-0822.png
+  - --control-sha256
+  - 1f04f73fd754d6aa72f4f3d1ae535412c35a2c1f643a5a45a6536ed10a2aebb2
+  - --scale
+  - '0.8'
+  - --controlnet2
+  - xinsir/controlnet-scribble-sdxl-1.0
+  - --control2
+  - C:\banyan-farm\ep2-b06-pose-0822\b06-board-0822.png
+  - --control2-sha256
+  - cfe656564c6a98efefa4c849d1dd6c6881cf92461354ce8544cf04023b7fce99
+  - --scale2
+  - '0.5'
+  - --seed
+  - '20260725'
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --prompt-file
+  - C:\banyan-farm\ep2-b06-pose-0822\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\ep2-b06-pose-0822\negative.txt
+  - --out
+  - C:\banyan-farm\ep2-b06-pose-0822\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The courier pushes from farm-out and from nowhere else. The two HINTS\n# travel with the frame\
+    \ as well as the prompt: a conditioned plate whose\n# condition is not beside it cannot be re-read\
+    \ later.\nimport glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b06-pose-0822\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(\"C:/banyan-farm/ep2-b06-pose-0822/out/ep2-b06-pose-0822-posebooth.png*\"\
+    )\n               + glob.glob(\"C:/banyan-farm/ep2-b06-pose-0822/prompt.txt\")\n               + glob.glob(\"\
+    C:/banyan-farm/ep2-b06-pose-0822/negative.txt\")\n               + glob.glob(\"C:/banyan-farm/ep2-b06-pose-0822/b06-guard-pose-0822.png\"\
+    )\n               + glob.glob(\"C:/banyan-farm/ep2-b06-pose-0822/b06-board-0822.png\"))\nlines = []\n\
+    for f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with\
+    \ open(c, \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \"\n  \
+    \                   + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b06-pose-0822.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 5 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b06-pose-0822\out\ep2-b06-pose-0822-posebooth.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. A STILL PLATE on an approved node: no voice, no motion, no episode assembly, no publication,
+  and review/ep2-ship-0821 is not touched.'
+script_line: 'Beat 06 THE CLIPBOARD: the guard turns the bark board over and reads it. Drawn here holding
+  it at chest height in a field, because the board''s size is the fault and a close-up cannot show a size.'
+recipe_trace: 'driver pipeline/controlnet_plate.py sha ece54f687d892d1f, fetched and sha-checked at run
+  time. Nets: xinsir/controlnet-openpose-sdxl-1.0 at 0.8 (the figure) composed with xinsir/controlnet-scribble-sdxl-1.0
+  at 0.5 (the board), as a MultiControlNetModel, both on the driver''s own licence allowlist. Hints pipeline/hints/b06-guard-pose-0822.png
+  sha 1f04f73fd754d6aa and pipeline/hints/b06-board-0822.png sha cfe656564c6a98ef, authored in PIL by
+  pipeline/author_b06_guard_pose_0822.py with no annotator and no controlnet_aux dependency -- which is
+  what keeps this route clear of lllyasviel/Annotators and its inherited CMU OpenPose non-commercial terms.
+  Prompt and negative are baked into this spec''s payload, so no drafts file can drift between filing
+  and firing. NO IP-ADAPTER AND NO REFERENCE IMAGE.'
+one_sample_rule: ONE FRAME, ONE SEED, AND THE b05 SIBLING IS HELD. This is a new route -- a net that has
+  never been used on this beat family, a second net composed with it, and two conditioning scales chosen
+  rather than measured. Beat 05 needs exactly the same treatment with two skeletons and no board, and
+  it is NOT filed until this frame has been looked at. That is the rule this repo wrote after fifteen
+  beats were rendered on an unlooked-at recipe.
+chosen_not_measured: 'THE TWO CONDITIONING SCALES. 0.8 for the pose and 0.5 for the board, against beat
+  08''s 1.0/0.6 composition. The board is deliberately the weaker of the two: a hard-traced rectangle
+  would be a white box in a field, and what is wanted is a slab-shaped object in his hands. Neither number
+  has a measurement behind it ON THIS BEAT and the bar says which way to move each one for each failure,
+  so the sample aims the sweep instead of being the first step of one.'
+seed_note: Seed 20260725, held from the two adapter runs on this beat deliberately. The three frames are
+  then a clean triple and the differences between them are the conditioning route and nothing else.
