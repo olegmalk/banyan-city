@@ -4351,3 +4351,5 @@
 03:08:37Z STARTED task=ep2-b21-twoleaf-r2-0822-1787368102 attempt=1 on box-runner
 03:14:45Z DONE task=ep2-b21-twoleaf-r2-0822-1787368102 rc=0 artifacts=2
 03:16:50Z box-runner idle ready=0 failed=89
+03:25:05Z STARTED task=ep2-b16-canon-w5a-0821-1787369096 attempt=1 on box-runner
+03:25:42Z DONE task=ep2-b16-canon-w5a-0821-1787369096 rc=0 artifacts=1
