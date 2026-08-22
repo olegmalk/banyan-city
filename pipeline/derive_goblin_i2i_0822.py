@@ -83,6 +83,30 @@ SEED = 20260823   # the canon wave's seed, so this is comparable to w4/w7a
 
 BEAT = 13
 
+# THE ROUTE CLOSURE'S VOCABULARY, IN ONE PLACE. `route_closure_2026_08_22`
+# forbids spending any rung on a face tag, and the only way a copy-paste from
+# the canon deriver cannot quietly bring one back is a shared list with a shared
+# assertion. Round two imports both rather than re-typing them, because a ban
+# that each deriver spells for itself is a ban that drifts.
+FACE_TERMS = ("eyes", "eyebrow", "pupil", "jitome", "eyebags", "ears",
+              "bald", "skin", "wrinkled", "old man", "face")
+
+
+def assert_no_face_terms(label: str, positive: str, negative: str) -> None:
+    """Refuse a prompt or negative that argues about his face IN WORDS.
+
+    Sixteen rounds moved a word or an adapter scale and the founder vetoed the
+    result four times. His face arrives as PIXELS on this route; a word
+    defending it would be the seventeenth round of the thing that failed.
+    """
+    for dead in FACE_TERMS:
+        if dead in positive.lower():
+            raise SystemExit("!! %s: face term %r is in the POSITIVE -- the "
+                             "route closure forbids it" % (label, dead))
+        if dead in negative.lower():
+            raise SystemExit("!! %s: face term %r is in the NEGATIVE -- the "
+                             "route closure forbids it" % (label, dead))
+
 # cell -> (strength, is_candidate, why this cell)
 CELLS = {
     "s30": ("0.30", True,
@@ -338,14 +362,7 @@ for name, (path, want) in WANT.items():
         # prompt is the thing sixteen rounds were spent on and the thing
         # route_closure_2026_08_22 forbids. A guard is the only reason a
         # copy-paste from the canon deriver cannot bring one back.
-        for dead in ("eyes", "eyebrow", "pupil", "jitome", "eyebags", "ears",
-                     "bald", "skin", "wrinkled", "old man", "face"):
-            if dead in pay.lower():
-                raise SystemExit("!! %s: face term %r is in the POSITIVE -- the "
-                                 "route closure forbids it" % (new_id, dead))
-            if dead in neg.lower():
-                raise SystemExit("!! %s: face term %r is in the NEGATIVE -- the "
-                                 "route closure forbids it" % (new_id, dead))
+        assert_no_face_terms(new_id, pay, neg)
         argv = [t for s in child["steps"] for t in s.get("argv", [])]
         for flag, wantv in (("--strength", strength), ("--pad-crop", "0"),
                             ("--init-sha256", CANON_SHA), ("--seed", str(SEED))):
