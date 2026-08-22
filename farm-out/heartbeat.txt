@@ -4493,3 +4493,5 @@
 08:16:08Z STARTED task=ep3-saplora-fignat-g8-0822-1787386448 attempt=1 on box-runner
 08:16:21Z DONE task=ep3-saplora-fignat-g8-0822-1787386448 rc=0 artifacts=2
 08:20:29Z box-runner idle ready=0 failed=108
+08:22:39Z STARTED task=lora-sapling-v2-0822-1787386956 attempt=1 on box-runner
+08:42:39Z DONE task=lora-sapling-v2-0822-1787386956 rc=0 artifacts=4
