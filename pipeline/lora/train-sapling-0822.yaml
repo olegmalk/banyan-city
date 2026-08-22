@@ -235,9 +235,41 @@ steps:
 #     MUST stay promptable, and those live in the text encoder.
 #   --sdpa and NOT xformers -- SETUP.md's whole warning. xformers on this card
 #     silently downgrades torch below sm_120 and breaks every render on the box.
-#   --enable_bucket at 1024/2048 -- our frames are 832x1216 9:16. Bucketing
+#   --enable_bucket at 832/2048 -- our frames are 832x1216 9:16. Bucketing
 #     handles that natively; cropping to square would throw away the framing
-#     variety the scale tiers were built to supply.
+#     variety the scale tiers were built to supply. THE MIN WAS 1024 AND THAT
+#     WAS WRONG -- see the block immediately below, which is the one value in
+#     this file that is NOT carried from the Jerry spec.
+#
+# ── ATTEMPT 1 FAILED IN FIFTEEN SECONDS AND THIS IS WHY, recorded rather than
+# quietly patched. lora-sapling-0822-1787379857, filed 06:24Z, claimed 06:27:12Z,
+# rc=1 at 06:27:27Z on step `train`. STAGE PASSED FIRST -- "staged 44
+# image+caption pairs", all 44 sha256 verified, all 44 SDXL-provenance asserted,
+# 132 images/epoch printed -- so the dataset, the transfer, the manifest and both
+# gates are proven good and are not what broke. sd-scripts then raised, before
+# loading a single weight:
+#
+#     library/dataset.py:450 in adjust_min_max_bucket_reso_by_steps
+#     assert min(resolution) >= min_bucket_reso
+#     AssertionError: min_bucket_reso must be equal or less than resolution
+#
+# min(832, 1216) = 832, and min_bucket_reso was 1024. The 1024/2048 pair comes
+# from research §5's memory-settings line, which is the STANDARD SDXL config --
+# written for 1024x1024 training, where min(resolution) IS 1024 and the assert
+# passes by coincidence. It is simply wrong for a 9:16 set, and no amount of
+# reading our own repo would have found it: it is an upstream assert.
+#
+# THE FIX IS ONE NUMBER: min_bucket_reso 1024 -> 832, the short side of every
+# frame in the set and a multiple of 64. max stays 2048, which already clears the
+# 1216 long side. Nothing else moves. With all 44 frames at exactly 832x1216 the
+# bucketer resolves to a single bucket either way, so this changes what the
+# trainer ACCEPTS and not what it trains on.
+#
+# THIS DEFECT IS NOT SAPLING-SPECIFIC. `train-jerry-0820.yaml` carries the
+# identical `--resolution 832,1216 --min_bucket_reso 1024` pair and has never
+# run; it would die on this same assert in its own first fifteen seconds. That
+# file belongs to the Jerry lane and is not edited from here -- the finding is
+# logged to STATE.md and reported instead.
 #   no regularization images -- optional in kohya, and the practitioner report is
 #     they either overfit hard or dampen to nothing.
 #
@@ -287,7 +319,7 @@ steps:
   - 832,1216
   - --enable_bucket
   - --min_bucket_reso
-  - '1024'
+  - '832'
   - --max_bucket_reso
   - '2048'
   - --mixed_precision
@@ -596,4 +628,32 @@ artifacts:
 # NOT BARS, and deliberately so: shippability, framing, composition, and whether
 # this look is the sapling the founder wants. All four are R4 and his alone. They
 # go to him with pixels on the ship page, never settled here.
+#
+# ── WHERE THESE BARS DIFFER FROM RESEARCH §8, SAID OUT LOUD RATHER THAN LEFT TO
+# BE NOTICED. Appended 2026-08-22 06:27Z — the job was filed at 06:24Z as
+# lora-sapling-0822-1787379857.json, was still sitting in backlog/ when this was
+# written, and NO PIXEL OF IT EXISTS. The filed spec_sha256 is
+# 23b4afc11e65b048e2d05e730dd813e656db78405643240a479fe2e19435cf85 and this
+# addendum changes only comment text, no step and no argv.
+#
+# `pipeline/research/character-lora-sdxl-0820.md` §8 pre-registers five bars, and
+# two of them are sapling-specific in a way this run cannot honour as written:
+#
+#   §8.4 BOTH-IN-FRAME (both LoRAs loaded at 0.65) IS NOT RUN, because the Jerry
+#   LoRA does not exist — its spec is re-held on the 2026-08-21 age pivot and no
+#   weight file has ever been produced. B2-FIGURE tests the half that IS
+#   available: a goblin drawn by the base checkpoint beside a LoRA sapling.
+#   The two-LoRA bleed question is DEFERRED, not dropped, and it is the first
+#   thing to run on the day both files exist.
+#
+#   §8.5 GROWTH LADDER asks for the same prompt at `two leaves` AND `six
+#   leaves`, at 40 cm AND 1.6 m, and calls a baked-in value a FAIL. That bar was
+#   written before the dataset existed and it assumes a set that varies both.
+#   THE SIZE HALF IS GRADED — B2-SCALE at 90 cm is exactly it, and a baked size
+#   fails there. THE LEAF-COUNT HALF CANNOT BE GRADED against a set whose
+#   `leaf_count_values` is 1, so it is measured and reported instead. That is a
+#   SOFTENING relative to §8 and it is named as one here rather than quietly
+#   absorbed: the correct fix is not a looser bar, it is a compositor that can
+#   draw three, five and six blades, and the measurement this run produces is the
+#   evidence for whether writing it is urgent.
 # ══════════════════════════════════════════════════════════════════════════
