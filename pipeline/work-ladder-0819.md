@@ -9171,3 +9171,29 @@ byte for byte on purpose so the plate change could be judged alone; now that it
 has been, the sentence is the variable and `ep2-b12-stillmotion-r2-0822` swaps
 it for an explicit stillness clause. The deriver asserts the swap both ways and
 asserts the rest of the prompt is byte-identical either side of it.
+
+#### BEAT 12 MEASURED PROPERLY: r1 FIXES THE RECORDED FAULT AND MY FIRST READING OF IT WAS WRONG
+
+I wrote r1 up as *"not still — same fault in a new form"* off an eyeball. Measured
+on the apex of the leaf mass at the first and last frame:
+
+| take | apex climb |
+|---|---|
+| the take in the cut | **140 px** — the recorded shipping fault, matched exactly |
+| **r1** (plate swap only) | **0 px** |
+| r2 (stillness clause) | **340 px** |
+
+**r1 fixes the beat's recorded fault.** What is left in it is leaf flutter, which
+is a much smaller thing than a growing plant AND which the prompt literally asks
+for. The page now says the number instead of my impression, which is the b03
+lesson from this morning arriving on a different beat: *measure before you write
+the sentence.*
+
+**And r2 is a clean null with a legible reason.** Swapping the stir clause for an
+explicit stillness clause halved the whole-frame movement (mean interframe 1.76 →
+0.96) and put 340 px of growth in. Nothing else changed.
+
+> **THE MOTION GOES SOMEWHERE.** Take away the small NAMED movement and it comes
+> back as the large UNNAMED one. So the fix for "perfectly still" is not to ban
+> movement — it is to name the thing that must not move. `the stem does not
+> lengthen` has never been in this prompt, and that is the next rung.
