@@ -1,0 +1,15 @@
+#### job ep3-saplora-fignat-g5-0822-1787386293 attempt 1 start 2026-08-22T08:11:44Z
+
+==== step fetch START 2026-08-22T08:11:44Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\saplora-fignat-g5-0822\\fetch_init.py"]
+fetched sapfig-g5-0822.png 955047 bytes sha cfdc625da89550de585460fa3695b9bdc69ce785c63c6f218973b10aaf727c0a OK
+fetched sapfig-g5-mask-0822.png 3656 bytes sha 5e11620edb9429a2ccdc1ece9b0494a94045cbdc3e26a02c684f832f350a2ff1 OK
+==== step fetch END rc=0 2026-08-22T08:11:45Z ====
+
+==== step dry START 2026-08-22T08:11:45Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\saplora-fignat-g5-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\saplora-fignat-g5-0822\\sapfig-g5-0822.png", "--init-sha256", "1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d", "--mask-png", "C:\\banyan-farm\\saplora-fignat-g5-0822\\sapfig-g5-mask-0822.png", "--prompt-file", "C:\\banyan-farm\\saplora-fignat-g5-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\saplora-fignat-g5-0822\\negative.txt", "--out", "C:\\banyan-farm\\saplora-fignat-g5-0822\\fignat-g5-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. The mask is the union of the ERASED WEED's footprint (dilated 5) and the DRAWN SAPLING's own footprint plus its contact shadow (dilated 9) -- 99,533 px, 9.84 percent of the frame, extent x 151..783 y 302..1199. WHAT TO CHECK ON THE DRY PNG. (1) Above y=430 the only masked thing is a narrow strip at x 206..241 -- that is the erased weed, and nothing else up there may be covered. (2) It touches just 7.0 percent of his head box (x 310..590 y 194..459) and all of that is at the jaw line, y>=430, where the drawn leaves pass in front of his chin. THAT OVERLAP IS BY DESIGN: the plant stands BETWEEN THE CAMERA AND HIM, which is the whole restage. (3) It must not reach his eyes, brow or the top of his skull. If it does, the plant is drawn too high and the fix is --root/--height, not the mask.", "--dry-run"]
+!! INIT SHA MISMATCH -- refusing.
+   want 1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d
+   have cfdc625da89550de585460fa3695b9bdc69ce785c63c6f218973b10aaf727c0a
+==== step dry END rc=3 2026-08-22T08:11:45Z ====
+#### job ep3-saplora-fignat-g5-0822-1787386293 finished rc=3 2026-08-22T08:11:45Z
