@@ -2,10 +2,10 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "65a601a38beb9f3739a9f0475db5e3c85bb284ad",
-  "measured_at": "2026-08-22T13:05:09Z",
-  "job_count": 1727,
-  "ok": 1599,
+  "source_commit": "fd901f9c2df1d695a5f7d614cbfcf3b943173ac9",
+  "measured_at": "2026-08-22T13:46:55Z",
+  "job_count": 1732,
+  "ok": 1604,
   "failed": 128,
   "upcoming_count": 118,
   "skipped_sidecars": null,
@@ -13,6 +13,332 @@
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "lora-jerry-v2-twopass7-0822-1787406141",
+   "task": "lora-jerry-v2-twopass7-0822",
+   "node": "002b-first-citizen",
+   "beat": null,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T13:42:32Z",
+   "finished_at": "2026-08-22T13:42:57Z",
+   "duration_s": 25,
+   "sidecar": "farm-out/box/lora-jerry-v2-twopass7-0822-1787406141.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/lora-jerry-v2-twopass7-0822",
+   "outputs": [
+    {
+     "path": "farm-out/lora-jerry-v2-twopass7-0822/tp7-p1-hunchdeep-wA-mask.png",
+     "name": "tp7-p1-hunchdeep-wA-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass7-0822/tp7-p1-hunchdeep-wA.png",
+     "name": "tp7-p1-hunchdeep-wA.png",
+     "bytes": 1228701,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Character design work — the goblin",
+    "moment": "Not a story beat. These build the reference pictures of him that the real shots are drawn from, so he looks like the same creature twice."
+   }
+  },
+  {
+   "id": "lora-jerry-v2-twopass6-0822-1787405044",
+   "task": "lora-jerry-v2-twopass6-0822",
+   "node": "002b-first-citizen",
+   "beat": null,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T13:24:13Z",
+   "finished_at": "2026-08-22T13:25:17Z",
+   "duration_s": 64,
+   "sidecar": "farm-out/box/lora-jerry-v2-twopass6-0822-1787405044.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/lora-jerry-v2-twopass6-0822",
+   "outputs": [
+    {
+     "path": "farm-out/lora-jerry-v2-twopass6-0822/tp6-seat-i6-s055-w10-mask.png",
+     "name": "tp6-seat-i6-s055-w10-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass6-0822/tp6-seat-i6-s055-w10.png",
+     "name": "tp6-seat-i6-s055-w10.png",
+     "bytes": 1219301,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass6-0822/tp6-seat-i6-s060-mask.png",
+     "name": "tp6-seat-i6-s060-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass6-0822/tp6-seat-i6-s060-w10-mask.png",
+     "name": "tp6-seat-i6-s060-w10-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass6-0822/tp6-seat-i6-s060-w10.png",
+     "name": "tp6-seat-i6-s060-w10.png",
+     "bytes": 1207307,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass6-0822/tp6-seat-i6-s060.png",
+     "name": "tp6-seat-i6-s060.png",
+     "bytes": 1248502,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Character design work — the goblin",
+    "moment": "Not a story beat. These build the reference pictures of him that the real shots are drawn from, so he looks like the same creature twice."
+   }
+  },
+  {
+   "id": "lora-jerry-v2-twopass5-0822-1787404854",
+   "task": "lora-jerry-v2-twopass5-0822",
+   "node": "002b-first-citizen",
+   "beat": null,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T13:21:18Z",
+   "finished_at": "2026-08-22T13:22:07Z",
+   "duration_s": 49,
+   "sidecar": "farm-out/box/lora-jerry-v2-twopass5-0822-1787404854.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/lora-jerry-v2-twopass5-0822",
+   "outputs": [
+    {
+     "path": "farm-out/lora-jerry-v2-twopass5-0822/tp5-p1-hunch-wA-mask.png",
+     "name": "tp5-p1-hunch-wA-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass5-0822/tp5-p1-hunch-wA.png",
+     "name": "tp5-p1-hunch-wA.png",
+     "bytes": 1183581,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass5-0822/tp5-p1-stride-wA-mask.png",
+     "name": "tp5-p1-stride-wA-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass5-0822/tp5-p1-stride-wA.png",
+     "name": "tp5-p1-stride-wA.png",
+     "bytes": 1260145,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Character design work — the goblin",
+    "moment": "Not a story beat. These build the reference pictures of him that the real shots are drawn from, so he looks like the same creature twice."
+   }
+  },
+  {
+   "id": "lora-jerry-v2-twopass4-0822-1787404788",
+   "task": "lora-jerry-v2-twopass4-0822",
+   "node": "002b-first-citizen",
+   "beat": null,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T13:20:03Z",
+   "finished_at": "2026-08-22T13:21:11Z",
+   "duration_s": 68,
+   "sidecar": "farm-out/box/lora-jerry-v2-twopass4-0822-1787404788.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/lora-jerry-v2-twopass4-0822",
+   "outputs": [
+    {
+     "path": "farm-out/lora-jerry-v2-twopass4-0822/tp4-p1-seat-wAgreen-mask.png",
+     "name": "tp4-p1-seat-wAgreen-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass4-0822/tp4-p1-seat-wAgreen.png",
+     "name": "tp4-p1-seat-wAgreen.png",
+     "bytes": 1026190,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass4-0822/tp4-seat-i6-s055-mask.png",
+     "name": "tp4-seat-i6-s055-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass4-0822/tp4-seat-i6-s055.png",
+     "name": "tp4-seat-i6-s055.png",
+     "bytes": 1230316,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass4-0822/tp4-seat-i6-s065-mask.png",
+     "name": "tp4-seat-i6-s065-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass4-0822/tp4-seat-i6-s065.png",
+     "name": "tp4-seat-i6-s065.png",
+     "bytes": 1232317,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Character design work — the goblin",
+    "moment": "Not a story beat. These build the reference pictures of him that the real shots are drawn from, so he looks like the same creature twice."
+   }
+  },
+  {
+   "id": "lora-jerry-v2-twopass3-0822-1787404542",
+   "task": "lora-jerry-v2-twopass3-0822",
+   "node": "002b-first-citizen",
+   "beat": null,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T13:15:58Z",
+   "finished_at": "2026-08-22T13:17:33Z",
+   "duration_s": 95,
+   "sidecar": "farm-out/box/lora-jerry-v2-twopass3-0822-1787404542.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/lora-jerry-v2-twopass3-0822",
+   "outputs": [
+    {
+     "path": "farm-out/lora-jerry-v2-twopass3-0822/tp3-p1-crouch-wA-mask.png",
+     "name": "tp3-p1-crouch-wA-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass3-0822/tp3-p1-crouch-wA.png",
+     "name": "tp3-p1-crouch-wA.png",
+     "bytes": 1176574,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass3-0822/tp3-p1-crouch-wAlight-mask.png",
+     "name": "tp3-p1-crouch-wAlight-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass3-0822/tp3-p1-crouch-wAlight.png",
+     "name": "tp3-p1-crouch-wAlight.png",
+     "bytes": 1151921,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass3-0822/tp3-seat-i6-s075-green-mask.png",
+     "name": "tp3-seat-i6-s075-green-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass3-0822/tp3-seat-i6-s075-green.png",
+     "name": "tp3-seat-i6-s075-green.png",
+     "bytes": 1188329,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass3-0822/tp3-seat-i6-s075-mask.png",
+     "name": "tp3-seat-i6-s075-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v2-twopass3-0822/tp3-seat-i6-s075.png",
+     "name": "tp3-seat-i6-s075.png",
+     "bytes": 1180575,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Character design work — the goblin",
+    "moment": "Not a story beat. These build the reference pictures of him that the real shots are drawn from, so he looks like the same creature twice."
+   }
+  },
   {
    "id": "lora-jerry-v2-tp1rest-0822-1787403709-againf5c7b0",
    "task": "lora-jerry-v2-tp1rest-0822",
