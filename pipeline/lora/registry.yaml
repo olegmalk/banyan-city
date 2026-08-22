@@ -64,10 +64,16 @@ loras:
   sha256: dbbe16b02b435795f69641f0e6f176f19b17d1308c45d8c29b4a3dfd34b2373d
   bytes: 228453516
 
-  # ALL FIVE EPOCHS ARE KEPT. Picking the epoch is part of the job and
-  # overfitting past the sweet spot is the standard character-LoRA failure, so
-  # the axis stays samplable instead of being asserted. Only the final one has
-  # been drawn from so far.
+  # ALL FIVE EPOCHS ARE KEPT, AND THE EPOCH AXIS IS NOW CLOSED. Picking the epoch
+  # is part of the job and overfitting past the sweet spot is the standard
+  # character-LoRA failure, so epoch 6 (396 steps vs the final's 660) was graded
+  # on the same sixteen cells -- same prompts, same seeds, same weight, nothing
+  # else moved (`bars-e6-sapling-0822.yaml`). IT FIXES NOTHING: figure 0/3 and
+  # ground 1/3, both identical to epoch 10, and its fusion artifacts are if
+  # anything more pronounced (a bipedal silhouette with legs where epoch 10 drew
+  # a featureless lump). So the defect is NOT overfitting and no checkpoint on
+  # disk solves it. Epochs 2/4/8 are still here; there is no longer a reason to
+  # expect anything from them.
   checkpoints_on_box: C:\banyan-farm\lora-sapling-0822\out\
   checkpoint_sha256:
     epoch02: 0258e675db20858a1338fef4f2c025915a158dbf4d3fabade4207b5a21742b69

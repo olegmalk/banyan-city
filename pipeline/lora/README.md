@@ -161,10 +161,10 @@ Reordered 2026-08-22 by what the sapling run measured. Cheapest first; none of
 2. **A NON-GRASS GROUND BATCH, ~20 GPU-minutes.** Tilled earth, stone, sand,
    snow, floorboards. Measured: ground COLOUR generalises (brown dry grass 3/3)
    and ground MATERIAL does not (bare tilled earth 1/3).
-3. **Grade the earlier sapling epochs, ~15 GPU-minutes each.** Epochs 2/4/6/8
-   are on the box unexamined. The fusion defect is what overfitting to "plant
-   alone" looks like, so an earlier checkpoint may hold the sapling with less of
-   it. Their sha256s are in `registry.yaml`.
+3. ~~**Grade the earlier sapling epochs.**~~ **CLOSED 2026-08-22.** Epoch 6 was
+   graded on the identical sixteen cells and fixes nothing — figure 0/3, ground
+   1/3, both the same as epoch 10. The defect is not overfitting, so no
+   checkpoint on disk solves it and rung 1 is the only remaining lever.
 4. **THE LEAF-COUNT COMPOSITOR — now urgent, not merely named.** The probe asked
    the trained LoRA for four leaves and it drew two: the count is fused into the
    trigger and is not promptable. Canon rises 2 → 6 leaves by 006a, so this gates

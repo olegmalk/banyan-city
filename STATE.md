@@ -10132,3 +10132,18 @@ epochs (~15 min each), then the leaf-count compositor. The plate-step loader is
 deliberately NOT written: `render_wave_sample.py`, `still_local.py` and
 `controlnet_plate.py` contain no LoRA code at all, the change is ~8 lines, and the
 consumer for a loader is a LoRA that passed its bars. This one has not.
+
+**SAME DAY, THE EPOCH AXIS IS CLOSED TOO.** The fusion defect is exactly what
+overfitting to "plant alone on grass" would look like, so the suspicion was that
+ten epochs is too many — and `bars-sapling-0822.yaml` had pre-declared the move
+before any pixel existed: *"a SECOND grid on an earlier epoch, filed as its own
+job, and both verdicts kept."* Epoch 6 (396 optimizer steps against the final's
+660) got the identical sixteen cells, same prompts, same seeds, same weight,
+nothing else moved. **It fixes nothing: figure 0/3 and ground 1/3, both identical
+to epoch 10.** Its fusions are if anything more pronounced — a bipedal silhouette
+WITH LEGS under the plant where epoch 10 drew a featureless lump, which is the
+base model's figure prior being less suppressed without ever resolving into a
+separated figure. **So this is not an overfitting problem and no checkpoint on
+disk solves it.** Ladder rung 3 is closed, and the figure batch stops being one
+option among three and becomes the only remaining lever. `+33` frames in
+`farm-out/lora-sapling-bars-e6-0822/`, comparison sheets in the review dir.
