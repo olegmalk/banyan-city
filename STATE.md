@@ -10147,3 +10147,42 @@ separated figure. **So this is not an overfitting problem and no checkpoint on
 disk solves it.** Ladder rung 3 is closed, and the figure batch stops being one
 option among three and becomes the only remaining lever. `+33` frames in
 `farm-out/lora-sapling-bars-e6-0822/`, comparison sheets in the review dir.
+
+## 2026-08-22 — the goblin img2img route: face yes, pose no, closed on a mechanism
+
+**Round two of img2img-from-canon is filed and the route is closed.**
+`ep2-b13-i2icnet-{s30,s35,s40}-0822` — round one's command line plus a seated
+openpose skeleton at scale 1.0. Three cells, strength the only variable, 15
+seconds of card, $0. **The face passes E1-E5 at every cell including 0.40** (the
+ceiling round one measured; the face breaks between 0.40 and 0.45). **The pose
+fails at every cell** — standing, legs straight, no knee bend, not even partial
+adoption.
+
+The net was not inert: s30 differs from its no-net round-one twin (same
+strength, same seed, same words) by mean abs **15.05**, against that twin's own
+departure from the init of **7.13**. It moved grass, light and background, and
+left the body alone.
+
+**THE MECHANISM, and it is why there is no round three here.** img2img at
+strength *s* over *N* steps runs only the last *s·N* steps — at 0.30 that is 12
+of 40, entered at index 28, deep in the low-noise regime. Global structure is
+decided in the HIGH-noise steps a low-strength img2img never runs. So the init's
+structure is preserved (his face survives) and the net's structure cannot be
+imposed (the pose cannot move) — **one knob read in two directions, not two
+curves that fail to overlap.** Raising the conditioning scale cannot help; it
+multiplies residuals in steps that are never executed.
+
+**What survives:** round one's route is a **re-lighting / re-grounding** route,
+not a re-posing one — new pictures of him with his face intact at 5 s a frame,
+which is what a training set needs. The remaining path is a **LoRA on his
+pixels**, the only thing that puts his identity into the high-noise steps where
+a pose net also lives. Two rounds, as promised; no plate staged,
+`review/ep2-ship-0821` untouched, next move is the founder's.
+Full write-up: `pipeline/goblin-i2i-route-0822.md`.
+
+**Tooling left behind:** `inpaint_fruit.assert_hint_survives_crop` turns
+`b08-arm-route-0819.md` §28 into a guard (rc 15) instead of a paragraph —
+selftest 32 → 41, golden byte-identity against `ep2-b08-str70-0820` intact. And
+§29 records that **no new pipeline was needed**: the driver already composed
+ControlNet inside an inpaint pipeline, and an all-white mask already made that
+pipeline img2img, so init+ControlNet was one command line away the whole time.
