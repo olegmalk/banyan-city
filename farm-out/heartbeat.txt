@@ -4382,3 +4382,5 @@
 04:36:56Z STARTED task=ep2-b12-cleanseed-s2-0822-1787373027 attempt=1 on box-runner
 04:43:06Z DONE task=ep2-b12-cleanseed-s2-0822-1787373027 rc=0 artifacts=2
 04:43:11Z box-runner idle ready=0 failed=90
+04:43:26Z STARTED task=ep2-b16-canon-w6a-0821-1787373800 attempt=1 on box-runner
+04:44:02Z DONE task=ep2-b16-canon-w6a-0821-1787373800 rc=0 artifacts=1
