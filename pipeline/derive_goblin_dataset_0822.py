@@ -132,6 +132,35 @@ RAW = "https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
 SEED0 = 20260901          # + the cell's index, so every cell is its own draw
 SAMPLE_CELLS = ("j01", "j14", "j21")
 
+# ── THE STRENGTH SWEEP, ADDED AFTER THE SAMPLE GATE CAUGHT WHAT IT IS FOR.
+#
+# The three sample cells came back and TWO of them failed the E-bar, in one
+# direction, with one cause:
+#
+#     j01  full body   (face ~15% of the frame) at 0.40 -- E2/E3/E4/E5 hold,
+#          the almond eye holds, and THE PUPIL WENT YELLOW.
+#     j14  cowboy shot (face ~29%)              at 0.40 -- pupils PINK, ears
+#          bigger and swept UP. Drifting toward the vetoed design.
+#     j21  square head (face ~49%)              at 0.40 -- eyes LARGER and
+#          ROUNDER with red pupils, ears larger and upswept. The worst of the
+#          three, on the tightest crop.
+#
+# THE FINDING, AND IT IS THE SAME MECHANISM THE WHOLE ROUTE RUNS ON, ARRIVING ON
+# A NEW AXIS: strength is a UNIFORM denoising depth over the frame, but a face
+# that occupies half the frame has three times the latent area of a face that
+# occupies a sixth. At a fixed strength the big face gives animagine's prior
+# three times as much room to re-resolve, and it does -- into exactly the round
+# coloured iris and the tall upswept ear that `route_closure_2026_08_22`
+# describes as the vetoed design and that sixteen prompt-side rounds produced.
+# LESS OF HIS FACE REACHING THE DENOISER PRODUCED MORE OF HIS FACE, which is
+# round nine's sentence about the ENCODER holding for PIXELS too.
+#
+# SO THE STRENGTH IS NOT ONE NUMBER, IT IS ONE NUMBER PER FRAMING, and the batch
+# does not run until each framing's number is measured. This is one variable per
+# cell: the framing is fixed within a row, the ground and light are held to what
+# the sample cell used, and only the strength moves.
+SWEEP_CELLS = ("k01", "k02", "k03", "k04", "k05", "k06", "k07", "k08")
+
 # init key -> (file, size, framing caption word)
 #
 # THE FRAMING WORD IS A CAPTION TOKEN AND IT IS NOT DECORATION. It is the third
@@ -236,6 +265,27 @@ CELLS = {
             "soft daylight", "soft daylight"),
     "j28": ("headsq-flip", "0.30", "standing against a dark forest", "a dark forest",
             "blue hour dusk", "dusk light"),
+
+    # ── THE STRENGTH SWEEP. Same init, same ground clause and same light as the
+    # framing's own sample cell, so the ONLY thing that moves inside a row is the
+    # strength. A cell that passes the E-bar here is a dataset frame like any
+    # other -- the sweep is not a throwaway.
+    "k01": ("full", "0.35", "standing on dry cracked bare earth, a green hedgerow far behind",
+            "dry cracked earth", "low golden sun", "warm low sunlight"),
+    "k02": ("full", "0.30", "standing on dry cracked bare earth, a green hedgerow far behind",
+            "dry cracked earth", "low golden sun", "warm low sunlight"),
+    "k03": ("cowboy-flip", "0.30", "standing on dry cracked bare earth", "dry cracked earth",
+            "low golden sun", "warm low sunlight"),
+    "k04": ("cowboy-flip", "0.25", "standing on dry cracked bare earth", "dry cracked earth",
+            "low golden sun", "warm low sunlight"),
+    "k05": ("cowboy-flip", "0.20", "standing on dry cracked bare earth", "dry cracked earth",
+            "low golden sun", "warm low sunlight"),
+    "k06": ("headsq", "0.25", "standing against a pale open sky", "a pale sky",
+            "low golden sun", "warm low sunlight"),
+    "k07": ("headsq", "0.20", "standing against a pale open sky", "a pale sky",
+            "low golden sun", "warm low sunlight"),
+    "k08": ("headsq", "0.15", "standing against a pale open sky", "a pale sky",
+            "low golden sun", "warm low sunlight"),
 }
 
 # THE POSITIVE. `a small green goblin` and nothing else about him -- the same
@@ -305,7 +355,10 @@ def emit(cell: str, write: bool) -> str:
     mask_file = "fullframe-mask-%dx%d-0822.png" % size
     init_sha = _sha("%s/%s" % (SRC_DIR, init_file))
     mask_sha = _sha("%s/%s" % (SRC_DIR, mask_file))
-    seed = SEED0 + int(cell[1:])
+    # SEEDS DO NOT COLLIDE ACROSS THE TWO LETTER SERIES. `int(cell[1:])` alone
+    # would give j01 and k01 the same draw, and the sweep's whole job is to be
+    # comparable to the sample cell it descends from -- comparable, not identical.
+    seed = SEED0 + int(cell[1:]) + (100 if cell[0] == "k" else 0)
 
     new_id = "ep2-jds-%s-0822" % cell
     dirtok = "jds-%s-0822" % cell
@@ -578,7 +631,7 @@ def sample_gate() -> None:
     """
     import yaml
     missing = []
-    for cell in SAMPLE_CELLS:
+    for cell in SAMPLE_CELLS + SWEEP_CELLS:
         p = os.path.join(REPO, "pipeline/jobs/ep2-jds-%s-0822.yaml" % cell)
         if not os.path.isfile(p):
             missing.append("%s: never emitted" % cell)
@@ -589,9 +642,11 @@ def sample_gate() -> None:
     if missing:
         raise SystemExit(
             "!! --batch REFUSED. ONE SAMPLE BEFORE ANY BATCH (founder, "
-            "2026-08-03), and this batch has THREE recipe changes so it has "
-            "three sample cells -- a non-grass ground (j01), a cropped and "
-            "mirrored init (j14), and an 832x832 frame (j21). Not judged:\n"
+            "2026-08-03). Three sample cells for three recipe changes -- a "
+            "non-grass ground (j01), a cropped and mirrored init (j14), an "
+            "832x832 frame (j21) -- AND the strength sweep they forced, "
+            "because two of the three came back with animagine's iris on his "
+            "face and the cause was the crop. Not judged:\n"
             "   " + "\n   ".join(missing) + "\n"
             "   Render them (--sample --write, enqueue), judge each at 1:1 "
             "against his image, and write a `verdict_0822` key onto each spec.")
@@ -602,8 +657,12 @@ def main() -> int:
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--sample", action="store_true",
                     help="the three recipe-change cells and nothing else")
+    ap.add_argument("--sweep", action="store_true",
+                    help="the strength sweep the sample gate demanded: one "
+                         "number per framing, one variable per cell")
     ap.add_argument("--batch", action="store_true",
-                    help="the other 29; refuses until the samples are judged")
+                    help="the rest; refuses until the samples AND the sweep "
+                         "are judged")
     ap.add_argument("--cell", default="", help="one cell by name")
     a = ap.parse_args()
 
@@ -614,9 +673,12 @@ def main() -> int:
             return 1
     elif a.sample:
         cells = list(SAMPLE_CELLS)
+    elif a.sweep:
+        cells = list(SWEEP_CELLS)
     elif a.batch:
         sample_gate()
-        cells = [c for c in sorted(CELLS) if c not in SAMPLE_CELLS]
+        cells = [c for c in sorted(CELLS)
+                 if c not in SAMPLE_CELLS and c not in SWEEP_CELLS]
     else:
         cells = sorted(CELLS)
 
