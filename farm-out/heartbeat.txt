@@ -4739,3 +4739,4 @@
 12:42:54Z DONE task=lora-jerry-v2-b2r5-0822-1787402516 rc=0 artifacts=1
 12:45:31Z STARTED task=lora-jerry-v2-b2r6-0822-1787402722 attempt=1 on box-runner
 12:46:23Z DONE task=lora-jerry-v2-b2r6-0822-1787402722 rc=0 artifacts=1
+12:47:28Z box-runner idle ready=0 failed=126
