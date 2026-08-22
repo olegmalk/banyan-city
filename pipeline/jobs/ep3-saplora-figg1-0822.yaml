@@ -1,0 +1,381 @@
+id: ep3-saplora-figg1-0822
+task: ep3-saplora-figg1-0822
+node: 003b-one-leaf-for-yes
+runner: box
+priority: 8
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: the sapling-LoRA v2 lane, 2026-08-22
+consumer: 'THE SAPLING LoRA v2 DATASET, and nothing else. This plate is step 1 of three: a figure-bearing,
+  non-grass-ground plate here; `beat16_sapling_composite.py` draws the canon two-leaf sapling onto it
+  at step 2 ($0, local, no GPU); one 0.30 SDXL inpaint finishes it at step 3. The finished frame enters
+  `pipeline/lora/manifest-sapling.yaml` with a caption naming BOTH the ground material (`bare tilled soil`)
+  and the figure''s presence, and v2 retrains on it. IT IS NOT A BEAT CANDIDATE.'
+success: ONE 832x1216 png at seed 20260823 carrying (a) A FIGURE THAT READS AS A FIGURE and (b) A ROOTABLE
+  NON-GRASS GROUND PLANE the plant can stand on. Both are scored in `judge`. The goblin's DESIGN is not
+  scored here and a design miss is not a fail -- see `what_is_not_scored_here`.
+why: 'SAPLING LoRA v2, PLATE CELL g1.
+
+
+  THE SAMPLE, and it is the bar''s own words. v1 was asked for `bare tilled earth field` and returned
+  a green meadow on two of three seeds. This cell asks the plate route for the same material with a figure
+  bound into it, at near-middle distance, centred.
+
+
+  THE GAP THIS BATCH EXISTS TO CLOSE, measured not asserted. v1 trained on 44 frames of which 44 are figure-free
+  and 44 stand on grass. Bars B2_figure (0/3), B2_ground (4/6) and B3 (no-regression at 0.8, which DELETED
+  a figure) all fail on those two facts and on nothing else -- the full score is in pipeline/lora/registry.yaml
+  `bars_result` and the verdict page is review/ep3-sapling-lora-0822/SHIP-0822.md. This is a variety problem,
+  so the fix is frames and not hyperparameters.
+
+
+  THE ONE VARIABLE AGAINST ep3-saplora-figg1-0822 IS THE LOCATION CLAUSE (and, across the batch, the skeleton).
+  The reference, the adapter, the adapter scale, head_frac 0.370, ControlNet 1.0 and seed 20260823 are
+  byte-identical to w7a''s, so a plate that comes back wrong is attributable to the words that name the
+  ground.'
+est_minutes: 4
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\saplora-figg1-0822\prompt.txt: best quality, 1boy, solo, goblin, green skin, bald, pointy
+    ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth,
+    furrowed brow, squatting, in a ploughed field of bare brown earth, green hedgerow behind, full body
+  C:\banyan-farm\saplora-figg1-0822\negative.txt: lowres, worst quality, low quality, text, watermark,
+    large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man,
+    hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third
+    eye, eyepatch
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# EVERY INPUT THIS FRAME IS CONDITIONED ON IS FETCHED AND SHA-CHECKED\n# BEFORE A GPU SECOND IS SPENT\
+    \ -- driver, skeleton AND the IP-Adapter\n# reference. Emitted by pipeline/jerry_canon_0821.py.\n\
+    import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-canon-assets-0821/\"\
+    \nroot = r\"C:\\banyan-farm\\saplora-figg1-0822\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\"),\n\
+    \        (\"jerry-canon-h37fcrouch-0821.png\", os.path.join(root, \"pipeline\", \"control\"),\n  \
+    \       \"df84ac615d3cc830dd8634cfee905dba0937a3380910911fe81a0427cacbd5af\"),\n        (\"jerry-canon-sq45-0821.png\"\
+    , os.path.join(root, \"pipeline\", \"control\"),\n         \"066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c\"\
+    )]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
+    \ + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
+    \    if got != sha:\n        print(\"!! %s fetched with sha %s, expected %s\"\n              % (name,\
+    \ got, sha))\n        raise SystemExit(1)\n    with open(os.path.join(dst, name), \"wb\") as fh:\n\
+    \        fh.write(blob)\n    print(\"staged\", name, got, \"->\", dst)\n"
+- name: posehint
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\saplora-figg1-0822\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\saplora-figg1-0822\src
+  - --repo-commit
+  - None
+  - --task
+  - ep3-saplora-figg1-0822
+  - --arm
+  - ipahead
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - pipeline/control/jerry-canon-h37fcrouch-0821.png
+  - --control-sha256
+  - df84ac615d3cc830dd8634cfee905dba0937a3380910911fe81a0427cacbd5af
+  - --scale
+  - '1.0'
+  - --seed
+  - '20260823'
+  - --ip-ref
+  - pipeline/control/jerry-canon-sq45-0821.png
+  - --ip-mask
+  - 51,0,781,574
+  - --ip-ref-sha256
+  - 066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c
+  - --ip-scale
+  - '1.0'
+  - --ip-weight
+  - ip-adapter-plus-face_sdxl_vit-h.safetensors
+  - --prompt-file
+  - C:\banyan-farm\saplora-figg1-0822\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\saplora-figg1-0822\negative.txt
+  - --out
+  - C:\banyan-farm\saplora-figg1-0822\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The courier pushes from farm-out and from nowhere else.\n# The CONDITIONS travel with the frame:\
+    \ a reader scoring whether the\n# adapter carried the EAR needs the ear it was shown.\nimport glob,\
+    \ hashlib, os, shutil\nout_dir = \"C:/banyan-farm/saplora-figg1-0822/out\"\npay_dir = \"C:/banyan-farm/saplora-figg1-0822\"\
+    \nctl_dir = \"C:/banyan-farm/saplora-figg1-0822/src/pipeline/control\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep3-saplora-figg1-0822\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(out_dir + \"/ep3-saplora-figg1-0822-ipahead.png*\"\
+    )\n               + glob.glob(pay_dir + \"/prompt.txt\")\n               + glob.glob(pay_dir + \"\
+    /negative.txt\")\n               + glob.glob(ctl_dir + \"/jerry-canon-h37fcrouch-0821.png\")\n   \
+    \            + glob.glob(ctl_dir + \"/jerry-canon-sq45-0821.png\"))\nlines = []\nfor f in files:\n\
+    \    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\"\
+    ) as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"ep3-saplora-figg1-0822.sha256\"), \"w\", newline=\"\\n\") as fh:\n \
+    \   fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) +\
+    \ manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 6 else 1)\n"
+artifacts:
+- C:\banyan-farm\saplora-figg1-0822\out\ep3-saplora-figg1-0822-ipahead.png
+clip77_measured_not_estimated: positive 69 of 77, negative 71 of 77, counted with animagine-xl-3.1's OWN
+  vocab by pipeline/clip_token_count.py. The location clause is the TAIL of the positive, so a spec that
+  overran would silently drop the one thing this batch varies -- which is why it is counted here and not
+  estimated.
+dataset_cell:
+  cell: g1
+  pose: crouch
+  ground_material: bare tilled soil
+  caption_clause: rooted in bare tilled soil
+  figure_clause: with a small green goblin in the frame
+  for: pipeline/lora/manifest-sapling.yaml, v2
+failure_predicted_in_advance: "TWO, NAMED BEFORE THE RENDER.\n  1. THE LIGHTING/GROUND WORD LOSES TO THE\
+  \ MODEL'S PRIOR. This is documented on this exact checkpoint: round 5 of the field batch asked for a\
+  \ green meadow under `cold clear winter light` and got a SNOWFIELD (v10), and `alpenglow` got snow and\
+  \ conifers (v14) -- the lighting word carried the ground with it. Here the ground word is the one that\
+  \ must win, against a prior that has drawn tall grass on every plate this route has ever made. If a\
+  \ cell comes back grass, the lever is NOT a negative (four cells of negative are already measured dead\
+  \ against this route's composition) -- it is to make the material the SUBJECT of the clause rather than\
+  \ its location.\n  2. THE ONLY GREEN IS HIM. See J3. The clause carries a green that is not the goblin\
+  \ for this reason, and the composite step measures it rather than trusting it."
+ip_adapter:
+  ruling: 'FOUNDER RULING, 2026-08-21 16:54, and it is an IMAGE, not a sentence: taste/refs/goblin-canon-founder-0821.png,
+    committed b93a70da, with "dude, this is how the goblin should look". It supersedes tile B and the
+    08-21 age-B recipe on every axis it shows. See canon.yaml `ep2-goblin-design-adult` -> `founder_ruling_2026_08_21`
+    and pipeline/jerry_canon_0821.py.'
+  ref: farm-out/jerry-canon-assets-0821/jerry-canon-sq45-0821.png
+  ref_sha256: 066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c
+  ref_provenance: 'goblin-canon-founder-0821.png cropped (187,110)-(677,483) -- the measured head box
+    plus 18 px, WIDE because the ears project 27% of a skull width on each side -- background flood-filled
+    with the image''s own field median (187,195,149), pasted CENTRED at 45% head-of-frame on a 448x448
+    SQUARE canvas. Square is load-bearing: diffusers builds CLIPImageProcessor() with no arguments, which
+    resizes the SHORT edge to 224 and CENTRE CROPS to a square, so only on a square canvas is the authored
+    head ratio the ratio the encoder receives. Encoder coverage here is 28.3% and the subject touches
+    no encoder edge (asserted by the builder, which returns 1 if it does). Rebuild with `pipeline/author_jerry_canonref_0821.py
+    --head-frac 0.45`; assert with `--check 066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c`.'
+  mask: 51,0,781,574
+  mask_frame: RENDER pixels, 832x1216
+  mask_rule: DERIVED FROM THE SKELETON, not scaled from k6a's box. k6a's 315,130,515,350 was authored
+    around a head_frac 0.190 skull whose ears 'barely break the silhouette'. At head_frac 0.370 the head
+    alone is 360 px tall and the ears reach 449/300 of a skull width, so that box would sit inside the
+    forehead and the adapter would never touch the loudest thing in the new design. This box is the crown-to-chin
+    span at this pose, widened by the MEASURED ear-span ratio 449/300 and 20 px of margin. Derived by
+    pipeline/jerry_canon_0821.head_box('crouch').
+  scale: '1.0'
+  weights: h94/IP-Adapter sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors, apache-2.0, sha256
+    677ad8860204f7d0bfba12d29e6c31ded9beefdf3e4bbd102518357d31a292c1, 847517512 bytes. THE GENERAL ADAPTER
+    ip-adapter-plus_sdxl_vit-h.safetensors IS THE SAME NUMBER OF BYTES, so only the digest separates them;
+    controlnet_plate.py carries an allowlist keyed by name and carrying the digest.
+  skeleton: farm-out/jerry-canon-assets-0821/jerry-canon-h37fcrouch-0821.png
+  skeleton_sha256: df84ac615d3cc830dd8634cfee905dba0937a3380910911fe81a0427cacbd5af
+  head_frac: 0.37
+  controlnet: xinsir/controlnet-openpose-sdxl-1.0 at scale 1.0
+  proportion_ruling: 'head_frac 0.370 = 2.71 heads, MEASURED off the founder''s image (head 337 px, figure
+    912 px). The tile measured 5.2 and the frozen standard holds 0.190. Recorded caveat: the image''s
+    camera is ABOVE the subject, which foreshortens the legs more than the head, so 2.71 is the ratio
+    at THAT camera and a level-camera full body will measure taller. Proportion is carried here by GEOMETRY
+    -- the skeleton and ControlNet -- and by no word in the prompt.'
+item_18_scope: ZERO LTX PIXELS. This plate is SDXL text-to-image (animagine-xl-3.1) under ControlNet +
+  IP-Adapter, and every frame downstream of it is that plate -> a numpy composite -> one SDXL inpaint.
+  DECISIONS.md item 18 bans training on LTX frames specifically; the training job's stage step refuses
+  any frame whose manifest does not assert an animagine chain. Item 18 is OPEN and is the founder's to
+  rule on -- this records scope, it does not close it.
+judge: "JUDGED AT 1:1, TWO CLAUSES, AND THE SECOND ONE IS THE RUNG.\n\n  J1 THE FIGURE. Is there ONE creature\
+  \ in the frame that reads as a figure -- a head, a body, limbs, at the pose asked for? Design is not\
+  \ scored (see below). Two figures, no figure, or a shape that does not resolve is a FAIL.\n  J2 THE\
+  \ GROUND, and this is the whole point of the cell. Is the near foreground bare tilled soil -- the MATERIAL,\
+  \ readable as itself at 1:1 -- and is there an unoccupied band of it the plant can be rooted in without\
+  \ touching him? A cell that returns A GREEN MEADOW has reproduced v1's own failure at the plate step\
+  \ and is a FAIL; that is exactly what the LoRA did when asked for bare tilled earth.\n  J3 GREEN IS\
+  \ PRESENT SOMEWHERE THAT IS NOT HIM. Step 2's `foliage_palette` builds the plant out of the plate's\
+  \ own greens. If the only green-dominant pixels in the frame are the goblin's skin, the composited plant\
+  \ will be built out of HIS colour -- the fusion defect v1 already has, arriving through the palette.\
+  \ Each clause names a hedgerow, scrub, verge, moss, weeds, dune grass or ferns for this reason. RECORDED,\
+  \ and the composite step measures it: C5 refuses the cell if the fill luma disagrees with the field."
+one_sample_rule: 'THIS IS THE ONE SAMPLE FOR THE WHOLE BATCH. The location clause is a recipe change on
+  this route -- every plate the pose route has ever drawn says `in tall grass` -- so seven more cells
+  wait on this frame being LOOKED AT at 1:1. --batch refuses to emit until this spec carries a `verdict*`
+  key. g1 is the sample because its material is the bar''s own words: v1 was asked for `bare tilled earth
+  field` and returned a green meadow.'
+post_ship_patch: review/ep2-ship-0821 IS NOT TOUCHED BY THIS JOB, and neither is any beat page. This is
+  dataset material for a LoRA that has not passed its bars.
+the_one_variable: THE LOCATION CLAUSE, `squatting, in a ploughed field of bare brown earth, green hedgerow
+  behind, full body`, in place of w7a's `in tall grass`; and across the batch the SKELETON (crouch here),
+  which sets the figure's distance and side. Everything else in the recipe is w7a's.
+the_rung_this_is_one_variable_from: ep2-b16-canon-w7a-0821 -- the plate that put ground in front of him
+  after four cells of negative, four of distance clause and one of conditioning strength had all failed
+  to. Its foreground band is what makes the pose route usable for a dataset at all.
+what_is_not_scored_here: THE GOBLIN'S DESIGN. This is a dataset plate for a SAPLING LoRA, not a beat candidate,
+  and the canon bar in ep2-b16-canon-w7a-0821 does NOT travel with it. The subject being trained is the
+  plant; the figure has to be PRESENT so the trigger stops meaning `no figure`, and that is the entire
+  requirement. A plate whose ears or eyes miss the founder's image is still a usable dataset frame and
+  is NOT a candidate for any beat. Said here so a pass on this page can never be quoted as a pass on that
+  one.
+derivation:
+  parent: pipeline/jobs/ep2-b16-canon-w7a-0821.yaml
+  by: pipeline/derive_saplora_figplate_0822.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - clip77_measured_not_estimated
+  - consumer
+  - dataset_cell
+  - failure_predicted_in_advance
+  - ip_adapter
+  - item_18_scope
+  - judge
+  - one_sample_rule
+  - owner
+  - post_ship_patch
+  - success
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - what_is_not_scored_here
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - clip77_measured_not_estimated
+  - derivation
+  - failure_predicted_in_advance
+  - founder_ruling_verbatim
+  - ip_adapter
+  - judge
+  - one_sample_rule
+  - post_ship_patch
+  - round_2_lever
+  - rung
+  - span_geometry
+  - stage_direction
+  - supersedes
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - word_side_strips
+  retokened:
+  - b16canon-w7a-0821 -> saplora-figg1-0822
+  - ep2-b16-canon-w7a-0821 -> ep3-saplora-figg1-0822
+  overrides_applied_and_asserted:
+    argv:--control:
+    - step posehint --control (pipeline/control/jerry-canon-h37fsitfar60-0822.png -> pipeline/control/jerry-canon-h37fcrouch-0821.png)
+    argv:--control-sha256:
+    - step posehint --control-sha256 (b8fe0cca3ff939ef55e582bf87dc8d54ae5e8d199234da425bd67529d091aff7
+      -> df84ac615d3cc830dd8634cfee905dba0937a3380910911fe81a0427cacbd5af)
+    argv:--ip-mask:
+    - step posehint --ip-mask (270,105,820,572 -> 51,0,781,574)
+    argv:--ip-ref:
+    - step posehint --ip-ref (pipeline/control/jerry-canon-sq45-0821.png -> pipeline/control/jerry-canon-sq45-0821.png)
+    argv:--ip-ref-sha256:
+    - step posehint --ip-ref-sha256 (066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c
+      -> 066e0457d060960e470c4ebc4f9936284b08e64550be8b89b1881dc7c7899a4c)
+    argv:--ip-scale:
+    - step posehint --ip-scale (1.0 -> 1.0)
+    argv:--repo-commit:
+    - step posehint --repo-commit (fab71507a -> None)
+    argv:--scale:
+    - step posehint --scale (1.0 -> 1.0)
+    argv:--seed:
+    - step posehint --seed (20260823 -> 20260823)
+    argv:--task:
+    - step posehint --task (ep3-saplora-figg1-0822 -> ep3-saplora-figg1-0822)
+    key:est_minutes:
+    - key est_minutes = 4
+    key:node:
+    - key node = '003b-one-leaf-for-yes'
+    key:priority:
+    - key priority = 8
+    key:sample:
+    - key sample = True
+    payload:prompt.txt:
+    - payload prompt.txt (200 -> 259 chars)
+verdict_0822: |-
+  JUDGED AT 1:1 BY THE STEWARD, 2026-08-22, on the published frame
+  ep3-saplora-figg1-0822-ipahead.png (sha256
+  9d1dff2a335c458ace7bdb673341def4b45f004102b2f4fd20388b4d3560f1cc, verified
+  against this job's own .sha256 manifest, which is the authority).
+
+  J1 THE FIGURE -- PASS. One goblin, squatting, head and body and limbs, at the
+  pose asked for. Nothing ambiguous and no second figure. The pose route bound
+  a figure into a plate whose location clause it had never seen, which is the
+  thing this cell had to establish before seven more were spent.
+
+  J3 GREEN THAT IS NOT HIM -- PASS, and generously. The field is full of green
+  crop foliage, so `foliage_palette` will have real plate greens to build the
+  plant out of and cannot fall back on his skin.
+
+  J2 THE GROUND -- FAIL, TWO FAULTS, AND BOTH WERE NAMED IN
+  `failure_predicted_in_advance` BEFORE THE RENDER.
+
+    FAULT 1, THE WORD. `a ploughed field of bare brown earth` returned a
+    PLANTED VEGETABLE BED -- rows of low cabbage-like plants over pale soil.
+    The material half landed (this is emphatically not a grass meadow, and the
+    earth between the rows is readable as earth) but `bare` did not: the frame
+    is full of OTHER PLANTS. That is worse than the grass monoculture it was
+    meant to break, because a two-leaf sapling composited into a bed of
+    similar green plants teaches the trigger that the subject appears in a
+    crowd of its own kind -- and the bar this whole batch exists to fix is a
+    trigger that cannot keep the subject separate from what is around it.
+    This is prediction 1 landing at half strength: the prior did not win
+    outright, it split the clause.
+
+    FAULT 2, THE SKELETON, AND IT IS THE BIGGER ONE. `crouch` is a FULL-SPAN
+    pose. He fills the lower frame from x~150 to x~700 and his boots reach the
+    bottom edge, so THERE IS NO UNOCCUPIED FOREGROUND BAND -- the only rootable
+    strips are the frame edges, x 0..140 and x 700..832, which cannot hold a
+    500 px plant whose leaves reach 150 px sideways. This is beat 16's w4
+    finding arriving one lane over, and the record already contains its answer:
+    "how strongly the skeleton is applied is not the same question as how much
+    of the canvas it covers", and the depth cells sitfar60/50/42 were authored
+    on 2026-08-22 precisely because they leave a MEASURED 396 px band in front
+    of him. `ep2-b16-sapnat4-0822` is the existence proof -- the same plant
+    rooted at x=190 on a sitfar60 plate, standing clear of him, and the 0.30
+    pass moved it 9 px and left the gap.
+
+  WHAT THE BATCH DOES ABOUT IT, both changes recorded before it is emitted:
+    1. EVERY BATCH CELL USES A DEPTH SKELETON (sitfar60/50/42). The full-span
+       poses are dropped from the table. Depth repeats across cells and the
+       MATERIAL is the variable, which is the right way round -- three depths
+       over seven materials, not seven depths over seven materials with
+       nothing held.
+    2. THE GROUND CLAUSE NAMES THE MATERIAL AS THE SUBJECT, and a
+       CROP/FOLIAGE BAN is added to the negative. That is a deliberate change
+       to the negative side and it is the only one: terms are ADDED, never
+       stripped. The w5 round stripped four "inert" terms out of this exact
+       negative and broke the eye on all four cells, so stripping stays
+       forbidden; adding is a different operation and is what the fault calls
+       for.
+
+  THIS FRAME IS KEPT AND IS STILL A DATASET CANDIDATE, at the frame edge. It
+  is the batch's only figure-fills-the-frame cell and that case is wanted:
+  if the LoRA is to stop deleting figures, one frame where the figure is the
+  biggest thing in it is worth having. The plant goes at x~90 with a reduced
+  height, and if C5 or the extent check refuses it the frame is dropped.

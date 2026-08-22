@@ -306,8 +306,20 @@ steps:
   - --resolution
   - 832,1216
   - --enable_bucket
+  # 1024 -> 832, 2026-08-22. sd-scripts library/dataset.py:450
+  # `assert min(resolution) >= min_bucket_reso` fires BEFORE any weight loads,
+  # and min(832,1216) = 832. The 1024/2048 pair is research §5's standard-SDXL
+  # memory line, written for 1024^2 training where the assert passes by
+  # coincidence; it is simply wrong for a 9:16 set. This spec has never run and
+  # would have died in its own first fifteen seconds -- the sapling run of
+  # 2026-08-22 died on exactly this and is where the finding comes from
+  # (train-sapling-0822.yaml, the block above its own `train` step). 832 is the
+  # short side of every frame and a multiple of 64; max stays 2048, which
+  # already clears the 1216 long side. With a single-resolution set the bucketer
+  # resolves to one bucket either way, so this changes what the trainer ACCEPTS,
+  # not what it trains on.
   - --min_bucket_reso
-  - '1024'
+  - '832'
   - --max_bucket_reso
   - '2048'
   - --mixed_precision
