@@ -1,0 +1,139 @@
+{
+  "id": "lora-jerry-v2-b2r4-0822-1787402253",
+  "task": "lora-jerry-v2-b2r4-0822",
+  "node": "002b-first-citizen",
+  "beat": null,
+  "worker": "box-runner",
+  "priority": 60,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\fetch_hints.py"
+      ]
+    },
+    {
+      "name": "b2r4-sit-base",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\jerry-poseproof-init-0822.png",
+        "--init-sha256",
+        "79c80689a43452f8fc11d22c2da86aee1c0a073d2255ddf1cb1d3cdc446f5f7f",
+        "--mask-png",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\jerry-poseproof-maskall-0822.png",
+        "--strength",
+        "1.0",
+        "--pad-crop",
+        "0",
+        "--blur",
+        "0",
+        "--controlnet",
+        "C:\\banyan-farm\\cnet-openpose-twins",
+        "--control",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\jerry-canon-h37fsit-0821.png",
+        "--control-sha256",
+        "3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e",
+        "--scale",
+        "1.0",
+        "--prompt-file",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\negative.txt",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--seed",
+        "20260822",
+        "--out",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\out\\b2r4-sit-base.png",
+        "--note",
+        "B2 ROUND FOUR, THE CONTROL. No LoRA. Does the openpose skeleton drive a composition through inpaint_fruit.py's ControlNet-inside-inpaint pipeline, where controlnet_plate.py's from_pipe txt2img path did not on either xinsir blob? A standing figure here means the fix failed and the goblin wave does not start."
+      ]
+    },
+    {
+      "name": "b2r4-sit-w08",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\jerry-poseproof-init-0822.png",
+        "--init-sha256",
+        "79c80689a43452f8fc11d22c2da86aee1c0a073d2255ddf1cb1d3cdc446f5f7f",
+        "--mask-png",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\jerry-poseproof-maskall-0822.png",
+        "--strength",
+        "1.0",
+        "--pad-crop",
+        "0",
+        "--blur",
+        "0",
+        "--controlnet",
+        "C:\\banyan-farm\\cnet-openpose-twins",
+        "--control",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\jerry-canon-h37fsit-0821.png",
+        "--control-sha256",
+        "3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e",
+        "--scale",
+        "1.0",
+        "--prompt-file",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\negative.txt",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--seed",
+        "20260822",
+        "--out",
+        "C:\\banyan-farm\\lora-jerry-v2-b2r4-0822\\out\\b2r4-sit-w08.png",
+        "--lora",
+        "C:\\banyan-farm\\lora-jerry-v2-0822\\out\\bnyjerry-sdxl-v2.safetensors",
+        "--lora-weight",
+        "0.8",
+        "--lora-sha256",
+        "4340857d02f17dbfa50c66e0a2d8f4dc3ffebb4fad1621bb3f59242e61bfeb8b",
+        "--note",
+        "B2 ROUND FOUR, THE BAR ITSELF. bnyjerry v2 fused at 0.8 -- the weight B1 identity passed at -- with beat 13's sit skeleton at scale 1.0. Both halves must hold: the pose adopts AND his face survives, judged at 1:1 against taste/refs/goblin-canon-founder-0821.png."
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "\nimport hashlib, glob, os, shutil\nOUT = \"C:/banyan-farm/lora-jerry-v2-b2r4-0822/out\"\nDST = \"C:/banyan-farm/courier-box/farm-out/lora-jerry-v2-b2r4-0822\"\nos.makedirs(DST, exist_ok=True)\nn = 0\nfound = []\nfound += sorted(glob.glob(OUT + \"/*.png\"))\nfound += sorted(glob.glob(OUT + \"/*.png.meta.yaml\"))\nfor p in found:\n    if os.path.isfile(p):\n        shutil.copyfile(p, os.path.join(DST, os.path.basename(p)))\n        n += 1\nwith open(os.path.join(DST, \"lora-jerry-v2-b2r4-0822.sha256\"), \"w\", encoding=\"utf-8\") as fh:\n    for name in sorted(os.listdir(DST)):\n        q = os.path.join(DST, name)\n        if os.path.isfile(q) and not name.endswith(\".sha256\"):\n            fh.write(\"%s  %s\" % (\n                hashlib.sha256(open(q, \"rb\").read()).hexdigest(), name) + chr(10))\nprint(\"published\", n, \"file(s) ->\", DST, flush=True)\nif n == 0:\n    raise SystemExit(\"NOTHING TO PUBLISH -- the sample produced no files\")\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\courier-box\\farm-out\\lora-jerry-v2-b2r4-0822\\lora-jerry-v2-b2r4-0822.sha256"
+  ],
+  "spec_sha256": "f557d060baeba182135e0dc676b6652125965208cc90a3666dcedd353f59e4ce",
+  "started_at": "2026-08-22T12:37:44Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-22T12:38:36Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\courier-box\\farm-out\\lora-jerry-v2-b2r4-0822\\lora-jerry-v2-b2r4-0822.sha256"
+  ]
+}
