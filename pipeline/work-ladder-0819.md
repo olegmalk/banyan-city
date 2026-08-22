@@ -8818,3 +8818,29 @@ thing rather than the fourth guess.
 mechanism in this tree that can put a figure of a chosen size in a chosen place
 in a frame, and beats 05, 06 and 07 all need that before anything else can be
 judged about them.
+
+#### BEAT 19: THE FRUIT FALLS. A HAND-DRAWN OBJECT CAN BE ANIMATED.
+
+`ep2-b19-dropmotion-0822` — the rung this file named on 08-19 and nobody fired —
+ran and **the fig comes off the stem and lands in the grass.** Beat 19 has been a
+slate since 08-15 and the standing reason was that the object the beat is ABOUT
+was never in the plate; every motion attempt, including tonight's w4 clip, asked
+for a fall with no fruit in frame.
+
+**The finding is bigger than the beat: i2v will animate a COMPOSITED object.**
+The fig in that plate was drawn in PIL and settled with a 0.22 pass; nothing in
+this tree had ever asked whether such an object moves, and it does — it detaches
+and falls while the plant stays rooted and single. That is the missing evidence
+under the composite route generally, and it applies to beats 12, 16, 20 and 21,
+all of which need a drawn object to survive motion.
+
+Two of the beat's three events land, in order. The third does not: **he does not
+notice** — he walks out of the left edge and the last second is an empty field.
+And the plate betrays its age: `ep2-b19-sapgloss-0819` predates the 08-22 goblin
+correction, so the figure in it was never the ratified one, and it is replaced
+within 25 frames anyway (first block interframe 8.92 against a 0.08–0.83 middle).
+
+> **The next version is not another motion rung.** It is the fig composited into
+> a CURRENT plate — one drawn on the corrected face — and then this same motion
+> asked of it. Which is, again, the compositor.
+

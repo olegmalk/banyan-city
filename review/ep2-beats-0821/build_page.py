@@ -688,6 +688,12 @@ BEATS = {
         wins=["Eight of eight on a bar that was written before the tool that made it existed. And on design it is not merely close to your tile — it IS the tile, with the fig moved."],
         faults_from="ship-manifest.yaml beat 19 + farm-out/ep2-b19-dropcomp-0819/",
         candidates=[
+            dict(file=f"{CAND_URL}/19-the-drop-LTX-ep2-b19-dropmotion-0822.mp4",
+                 poster=f"{POSTER_URL}/19-the-drop-LTX-ep2-b19-dropmotion-0822.jpg",
+                 label="THE FRUIT FALLS. First time in this beat's life. — tonight, newest", tag="warn",
+                 verdict="The fig starts on the stem, comes loose, and is lying in the grass by halfway. This beat has been a slate since 08-15 and the reason has always been that the object it is about was never in the picture; two of its three events are now on screen, and the plant stays rooted and single while they happen. THAT IS WHERE THE GOOD NEWS STOPS. He does not notice — he walks out of the left edge instead and the last second is an empty field. And the figure you see in the first frame is not the figure in the second: the seated cloaked goblin of the starting picture is replaced by a standing short-sleeved one within a second, which is the biggest jump in the clip. A second fig also appears floating in the sky at the end.",
+                 diff="A rung the ladder named on 08-19 and nobody had fired: motion asked of the COMPOSITE plate — the one where the plant and the fig were drawn into the field by hand and settled in, and which scored eight of eight as a still. Every previous motion attempt on this beat used a plate with no fruit in it, so the fall could not happen at any wording. What this settles is that a hand-drawn object CAN be animated by this engine, which nothing in this tree had asked before. What it also shows is that this particular plate is from 08-19 and predates your goblin correction, so the face in it was never yours — the next version wants the fig composited into a CURRENT plate rather than motion asked of an old one.",
+                 src="pipeline/jobs/ep2-b19-dropmotion-0822.yaml"),
             dict(file=f"{CAND_URL}/19-the-drop-LTX-ep2-b19-w4motion-0822.mp4",
                  poster=f"{POSTER_URL}/19-the-drop-LTX-ep2-b19-w4motion-0822.jpg",
                  label="tonight's re-render — FAILS, shown so the failure is on the record", tag="fail",
