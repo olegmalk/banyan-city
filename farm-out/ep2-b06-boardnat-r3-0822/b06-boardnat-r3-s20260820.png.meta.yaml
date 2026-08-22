@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.45
+seed: 20260820
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/b06boardnat-r3-0822/b06-boardcomp-r2-in-0822.png
+init_sha256: 5e0c772cb19b8f71165be14e292f5621d04e5dea9fa6baa3ebe83a013af778ba
+mask_png: b06-boardnat-r3-s20260820-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/b06boardnat-r3-0822/b06-boardcomp-r2-in-mask-0822.png
+mask_png_sha256: 11f145ab75dd03e6704c915d4753a1fe307fa179c2d22f2dabf7a4551171d9df
+mask_white_px: 24389
+mask_bbox_px: [321, 408, 522, 560]
+mask_width_frac: 0.2416
+mask_height_frac: 0.1250
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-22T02:01:22Z
+render_seconds: 5.1
+wall_seconds: 11.0
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  ATTACHED TO BOTH THE DRY STEP AND THE RENDER STEP. ON THE DRY STEP it is a MASK GEOMETRY CHECK, written before any model loads: the mask must be ONE slab-shaped blob over his chest with his HANDS AND FACE OUTSIDE IT. If it touches the glasses or the fingers the pass has a licence to redraw them and P4 fails by construction. ON THE RENDER STEP: one pass, one seed, 12 of 40 steps from a latent that still holds the drawn slab, so the pass finishes the shape instead of inventing one.
+prompt: |-
+  A grown man with dark cropped hair and round wire-rim glasses holding a large flat slab of rough brown bark in both hands at chest height, looking down at it, standing in tall grass in bright daylight, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  glowing board, luminous panel, light source, lens flare, plank standing on the ground, fence post, clipboard, metal clip, spring clip, white paper, sign, banner, text, watermark, book, tablet, two boards, photorealism, 3d render, low quality, lowres, blurry, deformed hands

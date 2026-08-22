@@ -67,16 +67,23 @@ BEAT = 6
 # from an organic one. Everything else, including the drawn composite itself,
 # is byte-identical.
 STRENGTH = "0.45"
-ROUND = "r2"
+# ROUND 3 IS THE HAND-SIZED RECUT AT THE STRENGTH ROUND 2 FOUND. Two edits
+# from r1 and both are already measured rather than guessed: 0.45 (r2 proved a
+# made object needs it) and a 160x115 board instead of 240x128, because r1 and
+# r2 both drew a slab as wide as his shoulders and the beat's definition says
+# HAND-SIZED -- the compositor's size guard was a floor where it should have
+# been a ceiling. The r2 frame is kept as the strength evidence; this is the
+# one that could go in a cut.
+ROUND = "r3"
 SUFFIX = "" if ROUND == "r1" else "-" + ROUND
 NEW_ID = "ep2-b06-boardnat%s-0822" % SUFFIX
 DIRTOK = "b06boardnat%s-0822" % SUFFIX
 OUTTOK = "b06-boardnat%s" % SUFFIX
 PUBDIR = "ep2-b06-boardnat%s-0822" % SUFFIX
 
-SRC_DIR = "farm-out/ep2-b06-boardcomp-0822"
-INIT = "b06-boardcomp-in-0822.png"
-MASK = "b06-boardcomp-in-mask-0822.png"
+SRC_DIR = "farm-out/ep2-b06-boardcomp-r2-0822"
+INIT = "b06-boardcomp-r2-in-0822.png"
+MASK = "b06-boardcomp-r2-in-mask-0822.png"
 
 # The 0821 fetch script, retargeted. Its OUT is the box work dir and its RAW is
 # the repo directory, and the two are NOT the same string -- that mismatch cost
@@ -125,11 +132,14 @@ BAR = """JUDGED BY EYE AT 1:1. THE OBJECT IS THE QUESTION, THE MAN IS THE CONTRO
       and its hard cut edge are gone. It should read as a piece of BARK -- a
       rough, fibrous, slightly warped natural surface -- and not as a plank of
       milled timber and not as a card.
-  P2  IT HAS NOT MOVED AND IT HAS NOT SHRUNK. The board's width is this beat's
-      entire standing fault ("the bark board is the wrong size"), it was
-      authored at 240 px against a 220 px shoulder floor, and if 0.30 has
-      narrowed it or slid it off the hands this plate is a FAIL and the number
-      is the fix.
+  P2  IT HAS NOT MOVED AND IT HAS NOT GROWN. The board's size is this beat's
+      entire standing fault and the fault is INFLATION -- the definition says
+      "hand-sized and readable", the parent job's own success line says "no
+      bigger than his own forearm", and its negative banned "giant board,
+      oversized board" and failed to hold it. It is authored here at 160 x 115
+      px, roughly the width of his own head. If the pass has grown it back
+      toward a shield or slid it off the hands, this plate is a FAIL and the
+      number is the fix.
   P3  HE IS HOLDING IT. His hands stay at its bottom edge and his head stays
       bowed over it. Hands dropped to his sides is what r2 and r3 both did and
       it is a FAIL here.

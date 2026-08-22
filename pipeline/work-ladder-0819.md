@@ -9026,3 +9026,30 @@ Residual on the r2 plate, named: a soft crease down the middle reads for a momen
 as an open book rather than one piece of bark. That is the drawn polygon's
 midline split showing through, and it is a compositor edit rather than a strength
 one.
+
+#### AND THE SIZE GUARD WAS INVERTED, WHICH IS THE MORE USEFUL HALF OF THE BEAT-06 WORK
+
+`beat06_board_composite.py` shipped with `G1` as a **floor** — *"the board must be
+at least as wide as his shoulders"* — and drew a 240 px slab through two rounds.
+**That is beat 06's own fault pointing the other way.** Three sources say so in
+the same words and all three predate the pose route:
+
+* `ep2-b06-scene-0814r` success: *"the bark clipboard stays a HAND-SIZED BOARD —
+  readable but no bigger than his own forearm"*
+* its negative: `giant board, oversized board, prop larger than his torso`
+* `done-definitions` beats.06 `done_when`: *"board hand-sized and readable"*
+
+The verdict on that job is that the prop **INFLATED** and both halves failed to
+hold the size. The pose route's bar, written last night, summarised this as *"the
+board is AT LEAST AS WIDE AS HIS SHOULDERS. This is the beat's standing fault"*,
+and I carried that sentence into a guard without re-reading the definition it was
+summarising.
+
+> **What let it through is the ship-manifest line, which reads only "the bark
+> board is the wrong size" — true in either direction.** When a manifest states a
+> fault as a polarity-free noun, go to the `done_when` before you build a guard
+> out of it.
+
+`G1` is now a **ceiling** at 175 px with `G1b` a readable floor at 110, and its
+comment carries all three quotes so the mistake cannot be re-derived from the same
+ambiguous line. `r3` at 160x115 px is the corrected plate.
