@@ -8785,3 +8785,36 @@ its spec says *"This lane also does NOT refill after these four: the campaign ow
 the card."* The next move belongs to it and is one cell: **w02's words at a THIRD
 seed, or a light clause that survives a seed change.** Until the palette gate can
 be passed twice in a row, no scene clause can be tested through it.
+
+#### THREE POSE PLATES, AND THE LINE BETWEEN WHAT A DRAWING CAN AND CANNOT SAY
+
+| plate | figures | what the DRAWING got | what the WORDS got |
+|---|---|---|---|
+| b06 | 1 | whole man, drawn size, hands where drawn | **the right man** — dark hair, wire glasses, adult, from words alone |
+| b05 | 2 | two men, drawn sizes, one taller, one ground line | moustache on ONE man (right), **glasses on BOTH**, **sides swapped** |
+| b07 | 2 | two figures, drawn sizes, arm reaching across | **the characters swapped bodies** — the tall skeleton came back a green goblin, the short one human with the glasses — plus three extra goblin heads |
+
+> **A DRAWN HINT PLACES BODIES AND CANNOT NAME THEM.** Geometry bound 3 of 3:
+> count, size, position and reach all landed exactly as drawn, on a route that
+> four IP-Adapter runs could not make place a single figure. Identity bound at 1
+> of 1 with ONE figure in frame and 0 of 2 with two — the descriptions attach to
+> the wrong body, to both bodies, or to the bodies in the wrong order.
+
+**That closes attribute crossover as a WORDING problem and it closes it as a
+STAGING problem in the same measurement.** Beat 07's guard has been wearing the
+goblin's collar for three rounds; tonight the wardrobe was rewritten to matching
+density (no change), and then the two bodies were structurally separated (worse —
+they swapped). There is nothing left on either axis.
+
+**The instrument is named, is already built, and is NOT fired:** `--ip-ref` twice
+with `--ip-mask-capsules`, which `controlnet_plate.py` takes and which the beat-08
+lane wired in August. The masks can be cut from these same skeletons —
+`author_b08_openpose_hint.figure_capsules(kps)` returns exactly that. It is left
+unfired deliberately: it is a new conditioning class on a two-figure frame at
+05:20, and the three plates above are the evidence that says it is the right next
+thing rather than the fourth guess.
+
+**Everything else about the pose route should be kept.** It is now the only
+mechanism in this tree that can put a figure of a chosen size in a chosen place
+in a frame, and beats 05, 06 and 07 all need that before anything else can be
+judged about them.

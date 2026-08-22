@@ -367,6 +367,11 @@ BEATS = {
         wins=["The action lands: the guard raises his own arm at frame 45 and holds the point to frame 96."],
         faults_from="ship-manifest.yaml beat 7 + goblin_design_audit_0820 beats.7",
         candidates=[
+            dict(file=f"{POSTER_URL}/07-confiscate-PLATE-pose-0822.jpg", still=True,
+                 label="a PLATE — an attempt at the crossover problem, and it FAILED loudly", tag="fail",
+                 verdict="The two characters swapped bodies. The tall figure — the one drawn as the guard — came back as a big green goblin with pointed ears, and the short one — drawn as the goblin — came back human with the round wire glasses on. Three more goblin heads are floating in the grass at the edges. Not a candidate for anything; shown because the failure closes a question rather than just wasting three minutes.",
+                 diff="No reference photograph, two drawn stick-figure skeletons — a five-head adult on the right and a shorter big-domed one on the left — and the two characters described in words. The DRAWING bound perfectly for the third time tonight: two figures, at the drawn sizes, in the drawn places, with the tall one's arm reaching across to the short one. What the words could not do is say WHICH skeleton is WHICH character. Across three plates tonight that is now measured: one figure alone comes out right, two figures come out as two figures but the descriptions land on the wrong bodies or on both. So the crossover on the clip below is NOT going to be fixed by better wording or by better staging, and the next instrument is the one this repo already built for beat 08 — conditioning each figure separately through a mask cut from these same skeletons. Named, and left for a lane with daylight.",
+                 src="pipeline/jobs/ep2-b07-pose-0822.yaml + pipeline/author_b07_twofig_pose_0822.py"),
             dict(file=f"{CAND_URL}/07-confiscate-LTX-b07-w4motion-r2-trim81-0822.mp4",
                  poster=f"{POSTER_URL}/07-confiscate-LTX-b07-w4motion-r2-trim81-0822.jpg",
                  label="BEST AVAILABLE — the sash arrived, the collar did not — tonight, newest", tag="warn",
