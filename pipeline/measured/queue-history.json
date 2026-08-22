@@ -2,17 +2,543 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "0b583148a1a6a8e877d5bf10d44f9d08a64141b4",
-  "measured_at": "2026-08-22T16:45:07Z",
-  "job_count": 1748,
-  "ok": 1618,
+  "source_commit": "1c5fa32807881378d3a5d46ea48346b97570a816",
+  "measured_at": "2026-08-22T17:41:07Z",
+  "job_count": 1750,
+  "ok": 1620,
   "failed": 130,
-  "upcoming_count": 118,
+  "upcoming_count": 122,
   "skipped_sidecars": null,
   "skipped_specs": null,
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-finish-plates-0822-1787417808-again0aad90",
+   "task": "ep2-finish-plates-0822",
+   "node": "002b-first-citizen",
+   "beat": null,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T16:57:01Z",
+   "finished_at": "2026-08-22T17:00:16Z",
+   "duration_s": 195,
+   "sidecar": "farm-out/box/ep2-finish-plates-0822-1787417808-again0aad90.json",
+   "spec_file": "pipeline/jobs/ep2-finish-plates-0822.yaml",
+   "purpose": {
+    "consumer": "EPISODE TWO'S WATCH-THROUGH TONIGHT. Each cell is a plate a beat is missing; each feeds a motion render and then a swap into review/ep2-ship-0821.",
+    "why": "PASS ONE FAILED AND THIS IS THE CORRECTION. It asked each prompt for a framing word and a ground at strength 0.30, and returned nine identical standing goblins and six identical guard portraits -- a cell specified `close-up` came back as the same full-body shot. At 0.30 the output IS the init with a lighting nudge, which is exactly why the face survives and exactly why nothing else moves. SO FRAMING NOW COMES FROM THE CROP. These are the v2 dataset's own inits -- full, cowboy and the 1.000x nat…",
+    "success": "15 plates in which the character is RECOGNISABLY THE FOUNDER'S at contact level AND the framing is the beat's. Pass one failed the second half of that -- fifteen cells, two distinct images -- so the bar this time is that the plates DIFFER FROM EACH OTHER in the way their beats do.",
+    "owner": "the ep2 finish lane, 2026-08-22",
+    "est_minutes": 13,
+    "priority": 70
+   },
+   "artifacts_dir": "farm-out/ep2-finish-plates-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b02-mask.png",
+     "name": "b02-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b02.png",
+     "name": "b02.png",
+     "bytes": 904686,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b03-mask.png",
+     "name": "b03-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b03.png",
+     "name": "b03.png",
+     "bytes": 910716,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b04-mask.png",
+     "name": "b04-mask.png",
+     "bytes": 2271,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b04.png",
+     "name": "b04.png",
+     "bytes": 598547,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b05-mask.png",
+     "name": "b05-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b05.png",
+     "name": "b05.png",
+     "bytes": 1118865,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b05g1-mask.png",
+     "name": "b05g1-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b05g1.png",
+     "name": "b05g1.png",
+     "bytes": 1114504,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b05g2-mask.png",
+     "name": "b05g2-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b05g2.png",
+     "name": "b05g2.png",
+     "bytes": 1193722,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b06-mask.png",
+     "name": "b06-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b06.png",
+     "name": "b06.png",
+     "bytes": 1132832,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b07-mask.png",
+     "name": "b07-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b07.png",
+     "name": "b07.png",
+     "bytes": 1174460,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b08g-mask.png",
+     "name": "b08g-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b08g.png",
+     "name": "b08g.png",
+     "bytes": 959653,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b09-mask.png",
+     "name": "b09-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b09.png",
+     "name": "b09.png",
+     "bytes": 1122552,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b10-mask.png",
+     "name": "b10-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b10.png",
+     "name": "b10.png",
+     "bytes": 1123901,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b11-mask.png",
+     "name": "b11-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b11.png",
+     "name": "b11.png",
+     "bytes": 1123984,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b11g1-mask.png",
+     "name": "b11g1-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b11g1.png",
+     "name": "b11g1.png",
+     "bytes": 1135185,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b11g2-mask.png",
+     "name": "b11g2-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b11g2.png",
+     "name": "b11g2.png",
+     "bytes": 1174694,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b14-mask.png",
+     "name": "b14-mask.png",
+     "bytes": 2271,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b14.png",
+     "name": "b14.png",
+     "bytes": 634695,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b15-mask.png",
+     "name": "b15-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b15.png",
+     "name": "b15.png",
+     "bytes": 902645,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b17-mask.png",
+     "name": "b17-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b17.png",
+     "name": "b17.png",
+     "bytes": 911898,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b19-mask.png",
+     "name": "b19-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b19.png",
+     "name": "b19.png",
+     "bytes": 900644,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b20-mask.png",
+     "name": "b20-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b20.png",
+     "name": "b20.png",
+     "bytes": 899295,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null
+  },
+  {
+   "id": "ep2-finish-plates-0822-1787417194",
+   "task": "ep2-finish-plates-0822",
+   "node": "002b-first-citizen",
+   "beat": null,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T16:46:51Z",
+   "finished_at": "2026-08-22T16:50:08Z",
+   "duration_s": 197,
+   "sidecar": "farm-out/box/ep2-finish-plates-0822-1787417194.json",
+   "spec_file": "pipeline/jobs/ep2-finish-plates-0822.yaml",
+   "purpose": {
+    "consumer": "EPISODE TWO'S WATCH-THROUGH TONIGHT. Each cell is a plate a beat is missing; each feeds a motion render and then a swap into review/ep2-ship-0821.",
+    "why": "PASS ONE FAILED AND THIS IS THE CORRECTION. It asked each prompt for a framing word and a ground at strength 0.30, and returned nine identical standing goblins and six identical guard portraits -- a cell specified `close-up` came back as the same full-body shot. At 0.30 the output IS the init with a lighting nudge, which is exactly why the face survives and exactly why nothing else moves. SO FRAMING NOW COMES FROM THE CROP. These are the v2 dataset's own inits -- full, cowboy and the 1.000x nat…",
+    "success": "15 plates in which the character is RECOGNISABLY THE FOUNDER'S at contact level AND the framing is the beat's. Pass one failed the second half of that -- fifteen cells, two distinct images -- so the bar this time is that the plates DIFFER FROM EACH OTHER in the way their beats do.",
+    "owner": "the ep2 finish lane, 2026-08-22",
+    "est_minutes": 13,
+    "priority": 70
+   },
+   "artifacts_dir": "farm-out/ep2-finish-plates-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b02-mask.png",
+     "name": "b02-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b02.png",
+     "name": "b02.png",
+     "bytes": 904686,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b03-mask.png",
+     "name": "b03-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b03.png",
+     "name": "b03.png",
+     "bytes": 910716,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b04-mask.png",
+     "name": "b04-mask.png",
+     "bytes": 2271,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b04.png",
+     "name": "b04.png",
+     "bytes": 598547,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b05-mask.png",
+     "name": "b05-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b05.png",
+     "name": "b05.png",
+     "bytes": 1118865,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b05g1-mask.png",
+     "name": "b05g1-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b05g1.png",
+     "name": "b05g1.png",
+     "bytes": 1114504,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b05g2-mask.png",
+     "name": "b05g2-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b05g2.png",
+     "name": "b05g2.png",
+     "bytes": 1193722,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b06-mask.png",
+     "name": "b06-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b06.png",
+     "name": "b06.png",
+     "bytes": 1132832,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b07-mask.png",
+     "name": "b07-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b07.png",
+     "name": "b07.png",
+     "bytes": 1174460,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b08g-mask.png",
+     "name": "b08g-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b08g.png",
+     "name": "b08g.png",
+     "bytes": 959653,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b09-mask.png",
+     "name": "b09-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b09.png",
+     "name": "b09.png",
+     "bytes": 1122552,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b10-mask.png",
+     "name": "b10-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b10.png",
+     "name": "b10.png",
+     "bytes": 1123901,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b11-mask.png",
+     "name": "b11-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b11.png",
+     "name": "b11.png",
+     "bytes": 1123984,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b11g1-mask.png",
+     "name": "b11g1-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b11g1.png",
+     "name": "b11g1.png",
+     "bytes": 1135185,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b11g2-mask.png",
+     "name": "b11g2-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b11g2.png",
+     "name": "b11g2.png",
+     "bytes": 1174694,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b14-mask.png",
+     "name": "b14-mask.png",
+     "bytes": 2271,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b14.png",
+     "name": "b14.png",
+     "bytes": 634695,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b15-mask.png",
+     "name": "b15-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b15.png",
+     "name": "b15.png",
+     "bytes": 902645,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b17-mask.png",
+     "name": "b17-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b17.png",
+     "name": "b17.png",
+     "bytes": 911898,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b19-mask.png",
+     "name": "b19-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b19.png",
+     "name": "b19.png",
+     "bytes": 900644,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b20-mask.png",
+     "name": "b20-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-finish-plates-0822/b20.png",
+     "name": "b20.png",
+     "bytes": 899295,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null
+  },
   {
    "id": "lora-jerry-v3-blockweight-0822-1787416750",
    "task": "lora-jerry-v3-blockweight-0822",
@@ -120833,6 +121359,94 @@
    "hold_reason": null,
    "spec_file": "pipeline/jobs/ep1-b14-v34-motion-r3.yaml",
    "authored_at": 1786333067,
+   "story": {
+    "kind": "beat",
+    "beat": 14,
+    "episode": null,
+    "label": "Beat 14",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b17-gradmotion-0822",
+   "node": "002b-first-citizen",
+   "beat": 17,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 6,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 17 on review/ep2-beats-0821, and the evidence for one open question: does the episode's light arc survive motion. review/ep2-ship-0821 is NOT touched and no cut moves because this landed. A swap happens only when this beat's founder-named fault is measurably gone, and it is vet…",
+   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b17-gradmotion-0822.yaml",
+   "authored_at": 1787419760,
+   "story": {
+    "kind": "beat",
+    "beat": 17,
+    "episode": null,
+    "label": "Beat 17",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b04-gradmotion-0822",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 14,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 04 on review/ep2-beats-0821, and the evidence for one open question: does the episode's light arc survive motion. review/ep2-ship-0821 is NOT touched and no cut moves because this landed. A swap happens only when this beat's founder-named fault is measurably gone, and it is vet…",
+   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b04-gradmotion-0822.yaml",
+   "authored_at": 1787419760,
+   "story": {
+    "kind": "beat",
+    "beat": 4,
+    "episode": null,
+    "label": "Beat 04",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b07-gradmotion-0822",
+   "node": "002b-first-citizen",
+   "beat": 7,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 14,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 07 on review/ep2-beats-0821, and the evidence for one open question: does the episode's light arc survive motion. review/ep2-ship-0821 is NOT touched and no cut moves because this landed. A swap happens only when this beat's founder-named fault is measurably gone, and it is vet…",
+   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b07-gradmotion-0822.yaml",
+   "authored_at": 1787419760,
+   "story": {
+    "kind": "beat",
+    "beat": 7,
+    "episode": null,
+    "label": "Beat 07",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b14-gradmotion-0822",
+   "node": "002b-first-citizen",
+   "beat": 14,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 14,
+   "est_minutes": 8,
+   "consumer": "A CANDIDATE for beat 14 on review/ep2-beats-0821, and the evidence for one open question: does the episode's light arc survive motion. review/ep2-ship-0821 is NOT touched and no cut moves because this landed. A swap happens only when this beat's founder-named fault is measurably gone, and it is vet…",
+   "why_first": "THE FOUNDER VETOED THE FACE ON 2026-08-22 -- 'that aint my goblin' -- and it was the EYE.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b14-gradmotion-0822.yaml",
+   "authored_at": 1787419760,
    "story": {
     "kind": "beat",
     "beat": 14,
