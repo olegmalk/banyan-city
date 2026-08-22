@@ -1,0 +1,89 @@
+{
+  "id": "ep2-b06-pose-r4-0822-1787360954",
+  "task": "ep2-b06-pose-r4-0822",
+  "node": "002b-first-citizen",
+  "beat": 6,
+  "worker": "box-runner",
+  "priority": 6,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "stage",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\nroot = r\"C:\\banyan-farm\\ep2-b06-pose-r4-0822\"\nwant = [\n    (\"pipeline/controlnet_plate.py\", os.path.join(root, \"src\", \"pipeline\"),\n     \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\"),\n    (\"pipeline/hints/b06-guard-pose-0822.png\", root, \"1f04f73fd754d6aa72f4f3d1ae535412c35a2c1f643a5a45a6536ed10a2aebb2\"),\n]\nfor path, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base + path, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n    if got != sha:\n        raise SystemExit(\"!! %s sha %s, wanted %s\" % (path, got, sha))\n    name = path.rsplit(\"/\", 1)[-1]\n    with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n    print(\"staged\", name, got[:12])\n"
+      ]
+    },
+    {
+      "name": "plate",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-b06-pose-r4-0822\\src\\pipeline\\controlnet_plate.py",
+        "--root",
+        "C:\\banyan-farm\\ep2-b06-pose-r4-0822\\src",
+        "--task",
+        "ep2-b06-pose-r4-0822",
+        "--arm",
+        "posebooth",
+        "--controlnet",
+        "xinsir/controlnet-openpose-sdxl-1.0",
+        "--control",
+        "C:\\banyan-farm\\ep2-b06-pose-r4-0822\\b06-guard-pose-0822.png",
+        "--control-sha256",
+        "1f04f73fd754d6aa72f4f3d1ae535412c35a2c1f643a5a45a6536ed10a2aebb2",
+        "--scale",
+        "0.8",
+        "--seed",
+        "20260725",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--width",
+        "832",
+        "--height",
+        "1216",
+        "--prompt-file",
+        "C:\\banyan-farm\\ep2-b06-pose-r4-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\ep2-b06-pose-r4-0822\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\ep2-b06-pose-r4-0822\\out"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# The courier pushes from farm-out and from nowhere else. The two HINTS\n# travel with the frame as well as the prompt: a conditioned plate whose\n# condition is not beside it cannot be re-read later.\nimport glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b06-pose-r4-0822\"\nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(\"C:/banyan-farm/ep2-b06-pose-r4-0822/out/ep2-b06-pose-r4-0822-posebooth.png*\")\n               + glob.glob(\"C:/banyan-farm/ep2-b06-pose-r4-0822/prompt.txt\")\n               + glob.glob(\"C:/banyan-farm/ep2-b06-pose-r4-0822/negative.txt\")\n               + glob.glob(\"C:/banyan-farm/ep2-b06-pose-r4-0822/b06-guard-pose-0822.png\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \"\n                     + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b06-pose-r4-0822.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 4 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-b06-pose-r4-0822\\out\\ep2-b06-pose-r4-0822-posebooth.png"
+  ],
+  "spec_sha256": "281f779470419376d1cc711aef88c39905bec27d264e96964108b5e19c3f5833",
+  "started_at": "2026-08-22T01:09:21Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-22T01:09:47Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-b06-pose-r4-0822\\out\\ep2-b06-pose-r4-0822-posebooth.png"
+  ]
+}

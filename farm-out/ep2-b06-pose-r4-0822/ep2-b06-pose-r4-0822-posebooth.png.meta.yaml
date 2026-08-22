@@ -1,0 +1,38 @@
+# Provenance (7.2), written AT RENDER TIME by controlnet_plate.py on
+# the rtx5090. A SAMPLE, not a pick and not canon.
+platform: local-gpu (rtx5090)
+task: ep2-b06-pose-r4-0822
+arm: posebooth
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLControlNetPipeline (text2img + scribble control)
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260725
+cost_usd: 0
+controlnet: xinsir/controlnet-openpose-sdxl-1.0
+controlnet_licence: apache-2.0 (D15 SAFE, no attribution condition; front matter and body both, and no annotator is used -- the hint is authored in PIL)
+controlnet_variant: None (xinsir ships no fp16 variant file; passing one raises)
+controlnet_conditioning_scale: 0.8
+control_guidance_start: 0.0
+control_guidance_end: 1.0
+control_image: C:\banyan-farm\ep2-b06-pose-r4-0822\b06-guard-pose-0822.png
+control_image_sha256: 1f04f73fd754d6aa72f4f3d1ae535412c35a2c1f643a5a45a6536ed10a2aebb2
+control_polarity: white-on-black
+control_authored_by: pipeline/author_b08_pose_hint.py (PIL, no model, no photo-derived edge map, no annotator)
+repo_commit: unknown
+model_load_seconds: 7.1
+render_seconds: 13.9
+rendered_utc: 2026-08-22T01:09:46Z
+torch_version: 2.11.0+cu128
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon.
+  Never takes a canon filename, is not published to the site, not
+  posted, and not assembled into an episode. Ground truth is the
+  founder (R4).
+prompt: |-
+  A grown guard man with dark cropped hair and round wire-rim glasses, cream shirt collar and white shoulder sash, standing in tall grass in bright morning sunlight under a pale sky, both empty hands held together in front of his chest, palms up, looking down at his own hands, detailed cinematic anime, cinematic lighting, masterpiece, best quality, very aesthetic
+negative: |-
+  photorealistic, 3d render, abstract, text, watermark, signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl, child, goblin, green skin, pointed ears, armor, helmet, board, plank, glowing orb, holding object, white background, dark, night, photorealism
