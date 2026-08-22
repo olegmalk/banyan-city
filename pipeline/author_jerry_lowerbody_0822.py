@@ -67,8 +67,8 @@ The compositor half still works and is used here: the rigid face move and the
 background reconstruction are both from that build.  What it cannot supply is
 LIMB PIXELS AT A NEW ANGLE, and that is exactly what the masked pass generates.
 
-    python3 pipeline/author_jerry_lowerbody_0822.py            # dry
-    python3 pipeline/author_jerry_lowerbody_0822.py --write
+    python3 pipeline/author_jerry_lowerbody_0822.py [--stance seat|kneel]
+    python3 pipeline/author_jerry_lowerbody_0822.py --stance kneel --write
 
 $0.  No model, no network, no GPU.
 """
@@ -155,6 +155,12 @@ CANON_KP = {                      # measured on the standing canon, pre-DROP
     "Rwri": (298, 775), "Lwri": (542, 775),
     "Rhip": (368, 812), "Lhip": (470, 812),
 }
+# THE STANCE SET. Each entry is the FOUR LEG JOINTS and nothing else: the head,
+# neck, shoulders, elbows, wrists and hips are the canon's own in every stance,
+# because those pixels are preserved and a hint that disagrees with preserved
+# pixels is a hint arguing with a latent blend it cannot win.
+STANCES = {}
+
 SEAT_LEGS = {                     # authored, in the moved frame
     # b13's OWN STANCE: "knees up, forearms on the knees, hands clasped".
     #
@@ -175,6 +181,25 @@ SEAT_LEGS = {                     # authored, in the moved frame
     # than he has is how a chibi comes back as a child.
     "Rkne": (275, 940), "Lkne": (565, 945),
     "Rank": (300, 1060), "Lank": (540, 1065),
+}
+STANCES["seat"] = SEAT_LEGS
+
+# KNEELING, AND IT IS THE GENERALISATION TEST RATHER THAN A SECOND PRODUCT.
+#
+# The seat landed on the first wording that named legs, which proves the route
+# on ONE skeleton. Whether the route makes a POSE or makes THE SEAT is the gate
+# on the whole v3 stance set, and one cell answers it. Kneeling is the right
+# second stance because a fixed torso leaves only the legs to carry the
+# difference: crouch and seat both read as knees-up when the hip cannot move, so
+# testing crouch would have tested almost nothing. Kneeling inverts the
+# silhouette instead -- knees DOWN and forward toward the midline, shins folded
+# back and OUT behind them, feet splayed. Nothing else in the frame changes.
+#
+# SEGMENT LENGTHS ARE HIS, AGAIN: thigh 100/107 px against the canon's 94,
+# shin+boot 99/99 against its 95-130.
+STANCES["kneel"] = {
+    "Rkne": (330, 1055), "Lkne": (505, 1060),
+    "Rank": (255, 1120), "Lank": (580, 1125),
 }
 
 
@@ -214,7 +239,10 @@ def bg_fill(img, hole):
         out*(1-w[..., None]) + sm*w[..., None], 0, 255).astype(np.uint8))
 
 
-def build():
+def build(stance="seat"):
+    if stance not in STANCES:
+        raise SystemExit("!! unknown stance %r; have %s"
+                         % (stance, ", ".join(sorted(STANCES))))
     src = Image.open(CANON).convert("RGB")
     if src.size != (W, H):
         raise SystemExit("!! canon is %dx%d, expected %dx%d" % (src.size + (W, H)))
@@ -242,7 +270,7 @@ def build():
 
     # 4. the hint
     kps = {k: (v[0], v[1] + DROP) for k, v in CANON_KP.items()}
-    kps.update(SEAT_LEGS)
+    kps.update(STANCES[stance])
     # THE WRISTS MOVE TOO, and only because the forearm is now inside the mask.
     # b13's line is "forearms on the knees": the elbow keypoint stays where his
     # own sleeve is (preserved pixels, y 765), and the wrist lands beside the
@@ -257,13 +285,18 @@ def build():
 
 def main():
     write = "--write" in sys.argv
+    stance = "seat"
+    for i, a in enumerate(sys.argv):
+        if a == "--stance" and i + 1 < len(sys.argv):
+            stance = sys.argv[i + 1]
     have = sha256_of(CANON)
     if have != CANON_SHA:
         print("!! canon hashes %s, this script was written against %s"
               % (have, CANON_SHA))
         return 1
 
-    src, init, mask, hint, kps = build()
+    src, init, mask, hint, kps = build(stance)
+    print("stance: %s" % stance)
 
     # THE ASSERTION THAT MAKES "his face, untouched" A FACT AND NOT A CLAIM.
     a, b = np.asarray(src), np.asarray(init)
@@ -307,9 +340,11 @@ def main():
              kps["Rkne"][1]-kps["Rhip"][1], kps["Rank"][1], kps["Lank"][1],
              th, sh))
 
+    # THE INIT AND THE MASK DO NOT DEPEND ON THE STANCE and keep their names, so
+    # a second stance is a ONE-FILE diff and every cell shares an init sha.
     files = {"jerry-seat-init-0822.png": init,
              "jerry-seat-mask-0822.png": mask,
-             "jerry-seat-hint-0822.png": hint}
+             "jerry-%s-hint-0822.png" % stance: hint}
     if not write:
         print("\nDRY -- pass --write to author into %s"
               % os.path.relpath(OUT, REPO))
