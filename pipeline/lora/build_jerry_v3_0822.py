@@ -209,6 +209,10 @@ POSED = {
 #                  exactly this as its third outcome and ruled it in advance --
 #                  "a sage thigh bought by the net symmetrising him is not a
 #                  pass, it is the seat with extra steps."
+#   seed 20260825  THE SAME TRADE AGAIN, and it is the draw that turns one
+#                  observation into a measurement. Symmetric, both knees up,
+#                  hands on the knees; thighs pale, boots real and dark. Two of
+#                  three draws on this hint symmetrised him.
 #
 # THAT IS A FINDING AND NOT A MISS. Two draws bracket a real trade on this
 # stance, and it sharpens the route's own sentence: the hint reaches the pose and
@@ -225,15 +229,29 @@ ONEKNEE_EXCLUDED = {
         20260824: "the pink slab is gone and the asymmetry with it -- both legs "
                   "do the same thing. Passes P1 by failing A1, which the spec "
                   "ruled in advance is the seat with extra steps.",
+        20260825: "the same trade a second time: symmetric, both knees up, "
+                  "hands on the knees, thighs pale and boots real. TWO OF "
+                  "THREE DRAWS ON THIS HINT SYMMETRISED HIM, which is what "
+                  "makes this a measured property of the stance rather than "
+                  "one unlucky frame.",
     },
     "ruling": (
-        "NOT ADMITTED. The two-draw budget was declared before the first draw "
-        "and is spent. The asymmetry axis stays unrepresented in v3 and that is "
+        "NOT ADMITTED, ON THREE DRAWS, AND THE FINDING IS WORTH MORE THAN THE "
+        "FRAME WOULD HAVE BEEN. The reseed budget was two draws, declared "
+        "before either ran, and both were spent; with the original cell that is "
+        "three noise draws on one hint. The pattern across them is not noise: "
+        "when the hint forces the two legs apart the material pays (a pink slab "
+        "at mid-limb), and when the material comes back clean the net has "
+        "symmetrised him. An anime checkpoint's prior for a small frontal "
+        "figure is strongly bilateral, and on this route THE HINT REACHES THE "
+        "POSE AND DOES NOT REACH THE PAINT -- so on the one stance that fights "
+        "that prior, the two cannot presently be had together. The asymmetry axis stays unrepresented in v3 and that is "
         "recorded as a known gap, not papered over: if v3 poses but poses "
         "symmetrically, this is the first place to look."),
     "evidence": [
         "farm-out/ep2-goblin-lowerbody-0822/jerry-posed-oneknee-0822.png",
         "farm-out/ep2-goblin-lowerbody-0822/jerry-posed-oneknee-r2-0822.png",
+        "farm-out/ep2-goblin-lowerbody-0822/jerry-posed-oneknee-r3-0822.png",
     ],
 }
 
