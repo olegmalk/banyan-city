@@ -82,8 +82,8 @@ from derive_sapling_field_0821 import assert_under_clip77           # noqa: E402
 
 BEAT = 6
 NODE = "002b-first-citizen"
-SPEC_ID = "ep2-b06-pose-0822"
-WORK = r"C:\banyan-farm\ep2-b06-pose-0822"
+SPEC_ID = "ep2-b06-pose-r2-0822"
+WORK = r"C:\banyan-farm\ep2-b06-pose-r2-0822"
 DRIVER = "controlnet_plate.py"
 AUTHOR = "author_b06_guard_pose_0822.py"
 ARM = "posebooth"
@@ -91,17 +91,53 @@ SEED = 20260725            # held from the two adapter runs, so the frames pair
 POSE_NET = "xinsir/controlnet-openpose-sdxl-1.0"
 BOARD_NET = "xinsir/controlnet-scribble-sdxl-1.0"
 POSE_SCALE = "0.8"
-BOARD_SCALE = "0.5"
+BOARD_SCALE = "0.85"
 POSE_HINT = "pipeline/hints/b06-guard-pose-0822.png"
 BOARD_HINT = "pipeline/hints/b06-board-0822.png"
 RAW_BASE = "https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
 
-POSITIVE = (
+POSITIVE_R1 = (
     "A grown guard man with dark cropped hair and round wire-rim glasses, "
     "cream shirt collar and white shoulder sash, in tall grass with a hedgerow "
     "behind, holding a large flat slab of rough brown bark in both hands at "
     "chest height, as wide as his shoulders, looking down at it, cinematic "
     "lighting, masterpiece, best quality, very aesthetic")
+
+# ROUND 2, AND BOTH EDITS WERE PRE-REGISTERED IN ROUND 1'S OWN BAR.
+#
+# WHAT r1 WON, AND IT IS THE THING FOUR ADAPTER RUNS COULD NOT DO: a WHOLE FIGURE
+# STANDING IN A FIELD, centred, at the drawn size, both hands together at chest
+# height with the head down over them -- the skeleton bound, precisely, pose and
+# all. And the man came from the WORDS with no reference image in the job: dark
+# hair, round wire-rim glasses, an adult. The identity half of this route is
+# proven.
+#
+# EDIT 1 -- THE LIGHT, AND THIS ONE IS MY OWN ERROR AND NOT THE MODEL'S. r1 came
+# back at NIGHT: a dark field with the figure lit by a glow. `dark` and `night`
+# were both in the NEGATIVE and neither did anything, which is the eighth firing
+# of the positive-placement law in this tree -- and the positive had no light
+# clause AT ALL, because the scene-setting was trimmed out of this draft for
+# token room. Banning a condition is not the same as asserting its opposite, and
+# this file argued exactly that about the board three hours before doing it to
+# the lighting. `bright morning sunlight under a pale sky` is in the positive.
+#
+# EDIT 2 -- THE BOARD SCALE, 0.5 -> 0.85, which r1's bar named by name: "NO BOARD
+# AT ALL -- 0.5 is too weak, raise it." r1 drew a GLOWING BALL in his cupped
+# hands instead of a slab. The hands were in the right place; nothing rectangular
+# arrived in them.
+#
+# ONE MORE VARIABLE THAN IS IDEAL, and said out loud rather than hidden: the
+# light and the scale move together. They are separable if this fails -- the
+# light clause is free to test alone -- but a second night-time frame with a
+# glowing orb would answer neither question, and both changes were written down
+# BEFORE the pixels existed, in r1's own pre-registered fail modes.
+POSITIVE = (
+    "A grown guard man with dark cropped hair and round wire-rim glasses, "
+    "cream shirt collar and white shoulder sash, standing in tall grass in "
+    "bright morning sunlight under a pale sky, holding a large flat slab of "
+    "rough brown bark in both hands at chest height, as wide as his shoulders, "
+    "looking down at it, cinematic lighting, masterpiece, best quality, very "
+    "aesthetic")
 
 NEGATIVE = (
     "photorealistic, 3d render, abstract, text, watermark, signature, low "
@@ -380,6 +416,13 @@ def _selftest():
     sho = abs(kps["Lsho"][0] - kps["Rsho"][0])
     assert abs((x1 - x0) - sho) < 1.0, (x1 - x0, sho)
     assert "as wide as his shoulders" in POSITIVE
+    # THE LIGHT IS ASSERTED IN THE POSITIVE, not banned in the negative. r1 came
+    # back at night with `dark, night` in the negative and no light clause at
+    # all; a negative does not place a thing and this file said so about the
+    # board before doing it to the lighting.
+    assert "bright morning sunlight" in POSITIVE and "pale sky" in POSITIVE
+    assert POSITIVE != POSITIVE_R1
+    assert float(BOARD_SCALE) > 0.5, "r1's bar said raise it if no board arrives"
     assert abs(author.STATURE / (author.HEAD_FRAC * author.STATURE) - 5.0) < 0.01
     # The hints on disk must BE the ones the author produces, or the sha in the
     # spec is asserting bytes nobody drew.
