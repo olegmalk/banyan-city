@@ -9906,3 +9906,49 @@ trailing slash missed the publish destination that has none (b16 published to
 a SRC SHA MISMATCH because macOS is case-insensitive and a contact sheet written
 to `B12-NAT3.png` had replaced the extracted `b12-nat3.png`. **The producing
 job's own `.sha256` manifest is the authority, not a locally recomputed hash.**
+
+### 2026-08-22 early-morning lane — the rest of the shift, after the three named rungs
+
+**BEAT 12 IS A CHOICE, NOT A BUG.** The harmonic plate fixes the smear and the
+plant stops standing still. Three draws on the clean plate say it is the plate:
+
+| take | plate | wording | apex climb |
+|---|---|---|---|
+| the cut | old | — | 140 px |
+| **r1 (LEAD)** | smeared | breeze | **5 px** |
+| stillmotion-r2 | smeared | explicit stillness | 340 px |
+| nosmear | clean | breeze | 108 px |
+| nogrow-clean | clean | breeze + no-grow | 122 px |
+| cleanseed s1 | clean, seed 20260901 | breeze | 122 px, **leaves back to DISCS** |
+| cleanseed s2 | clean, seed 20260902 | breeze | −73 px, **blades FOLD SHUT** |
+
+**The stillness was a side effect of the defect** — the bars are a hard static
+structure filling the sky and every take that has them holds the plant. **r1
+stays the lead.** Two ladder sentences from earlier today are retracted on the
+record: r3 was read as proving the zero climb belongs to the plate, but r3 held
+the plate constant, so it tested the WORDING and could say nothing about the
+plate; and r3's no-grow clause was filed "no harm, no help" when it had nothing
+to resist — re-asked on the plate that grows, it changed 108 into 122.
+
+**BEAT 16 — THREE FRAMING LEVERS SPENT, AND THE PLANT DOES NOT SURVIVE MOTION
+HERE.** The negative (four cells), the positive's distance clause, and the
+ControlNet conditioning strength (`w6a` at 0.55 — pose held below the record's
+0.7 floor, framing did not move, costume drifted) all fail to put ground in
+front of him. `ep2-b16-plantmotion-0822`, the first motion off a plate that
+contains the plant, has the plant **gone by f050** — the first composited object
+in this tree that does NOT survive i2v, and the difference is that it sits ON the
+figure in nearly the figure's own colour. **A composited object survives motion
+when the model can tell where it ends.** The lever left is a skeleton authored at
+a smaller SPAN; that is a build against `jerry_canon_0821` and it is named, not
+fired.
+
+**BEAT 19 — ITS NEWEST FAULT IS FIXED FOR NOTHING.** The counter reads the extra
+figs arriving at f098 of 105, so `trim_clip.py --end-frame 97` removes them
+outright: `19-the-drop-…-trim97-0822`, 98 frames, counter re-reads 1 on every
+frame. The beat's two other faults are untouched. **Beat 21's third blade arrives
+at f064 of 121 and is therefore NOT a trim** — same instrument, opposite answer.
+
+**THE CARD IS EMPTY AND THE REASON IS A DEPENDENCY, NOT AN HOUR.** Every
+remaining rung on these beats needs either the founder's eye ruling (R4), a build
+(the smaller-span skeleton), or costs no GPU at all (trims). Nothing runnable was
+left unfired.
