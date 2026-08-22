@@ -1,0 +1,34 @@
+#### job ep3-saplora-fignat-g3-0822-1787385869 attempt 1 start 2026-08-22T08:04:46Z
+
+==== step fetch START 2026-08-22T08:04:46Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "#!/usr/bin/env python3\n\"\"\"Fetch this dataset frame's composited init and its mask, refusing on any sha\nmismatch. Both are on origin/main under farm-out/ep3-saplora-figinit-0822/, so these\nsha256s are verifiable against the repo by anyone who clones it. They were\ndrawn on a Mac by pipeline/beat16_sapling_composite.py, so they are NOT on the\nbox's courier worktree -- the courier only holds what the box produced.\"\"\"\nimport hashlib, os, sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\saplora-fignat-g3-0822\"\nRAW = (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\n       \"farm-out/ep3-saplora-figinit-0822/\")\nUA = {\"User-Agent\": \"banyan-city-saplora/1.0 (albert.numbro@gmail.com)\"}\nWANT = {\n    \"sapfig-g3-0822.png\":\n        \"62f3de887943d8e72d5992398aea1b98e0ebaa26d525c7ea3a008f318978a970\",\n    \"sapfig-g3-mask-0822.png\":\n        \"1a430954b19388e1ce2b8f8129734e962b6a4f96595305810509a684f1c331e8\",\n}\n\nos.makedirs(OUT, exist_ok=True)\nfor name, want in WANT.items():\n    raw = urllib.request.urlopen(\n        urllib.request.Request(RAW + name, headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n    if have != want:\n        sys.exit(\"!! SHA MISMATCH for %s -- refusing.\\n   want %s\\n   have %s\"\n                 % (name, want, have))\n    with open(os.path.join(OUT, name), \"wb\") as fh:\n        fh.write(raw)\n    print(\"fetched %s %d bytes sha %s OK\" % (name, len(raw), have), flush=True)\n"]
+fetched sapfig-g3-0822.png 1176680 bytes sha 62f3de887943d8e72d5992398aea1b98e0ebaa26d525c7ea3a008f318978a970 OK
+fetched sapfig-g3-mask-0822.png 2955 bytes sha 1a430954b19388e1ce2b8f8129734e962b6a4f96595305810509a684f1c331e8 OK
+==== step fetch END rc=0 2026-08-22T08:04:47Z ====
+
+==== step fetch START 2026-08-22T08:04:47Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\saplora-fignat-g3-0822\\fetch_init.py"]
+Traceback (most recent call last):
+  File "C:\banyan-farm\saplora-fignat-g3-0822\fetch_init.py", line 22, in <module>
+    raw = urllib.request.urlopen(
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 404: Not Found
+==== step fetch END rc=1 2026-08-22T08:04:47Z ====
+#### job ep3-saplora-fignat-g3-0822-1787385869 finished rc=1 2026-08-22T08:04:47Z
