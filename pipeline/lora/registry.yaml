@@ -130,3 +130,86 @@ loras:
     # Installed 2026-08-22 with --no-deps; pip freeze differed by exactly one
     # line and torch stayed 2.11.0+cu128.
     render_venv_package: peft==0.12.0   # install with --no-deps, never bare
+
+- trigger: bnysapling
+  subject: >-
+    the sapling — v2, retrained on a dataset that carries a FIGURE and a NAMED
+    GROUND MATERIAL. Same trigger as v1 on purpose: this replaces it if it
+    scores, and two triggers for one object would be the worse outcome.
+  status: TRAINED, GRID PENDING
+  base: cagliostrolab/animagine-xl-3.1
+  trained_by: pipeline/lora/train-sapling-v2-0822.yaml
+  trained_on: '2026-08-22'
+  dataset: pipeline/lora/manifest-sapling-v2.yaml   # 59 frames, all SDXL
+
+
+  # WHY IT EXISTS, IN ONE LINE: v1's three failing bars all trace to two facts
+  # about its 44 frames, and this run changes those two facts and NOTHING ELSE.
+  what_changed_from_v1:
+    dataset: 44 -> 59 frames
+    figure_frames: 0 -> 15   # eight harvested from ep2, seven newly built
+    ground_materials_named: 0 -> 11 distinct, 17 non-grass frames
+    caption_scheme: >-
+      TWO NEW VARIABLES, both named in BOTH directions so the trigger is
+      excused from carrying either: figure presence (`alone in the frame` on
+      44, `with a small green goblin <where>` on 15) and ground material
+      (`rooted in <material>`). This is the mechanism v1 used to keep leaf
+      count and story height out of the trigger, pointed at the axes that
+      actually failed.
+    hyperparameters: >-
+      NONE MOVED. Same rank 32 / alpha 16, same unet_lr 1e-4, te_lr 5e-5,
+      cosine, AdamW8bit, batch 2, bf16, seed 20260822, same base. The ONLY
+      moved number is the repeat, 3 -> 2, which holds the image-pass count
+      near v1's: 59 x 2 x 10 = 1180 against v1's 1320, within 11%. Holding
+      repeat at 3 would have run a third more training on a third more data
+      and a better score would then have had two explanations.
+    lr_warmup_steps: >-
+      NOT retuned, deliberately. Stays 33 -- 5.0% of v1's 660 steps, 5.6% of
+      v2's 590. Correct to change in isolation, wrong to change in a run whose
+      whole claim is that only the dataset moved.
+
+  # AND A CORRECTION TO v1'S OWN VERDICT, FOUND WHILE BUILDING THIS SET.
+  v1_verdict_corrected: >-
+    review/ep3-sapling-lora-0822/SHIP-0822.md says "44 of 44 stand on grass".
+    MEASURED AT THE ROOT POINT ON THE PLATES, TEN DO NOT: s14/s15/s16 (u08) and
+    s19/s20/s21 (r08) root on a bare dirt path, s12/s13 (u07) on forest floor,
+    s36/s37 (v05) on wet rock. The set already carried four non-grass materials
+    and no caption had ever named one, because v1's caption scheme has NO
+    GROUND TOKEN AT ALL. So B2_ground failed partly on a CAPTION gap and not
+    only a pixel gap -- and ten frames were fixed for zero render cost. The
+    diagnosis in the ship page was right about the outcome and wrong about the
+    cause of half of it.
+
+  recipe: >-
+    kohya sd-scripts v0.11.1, dim 32 / alpha 16, unet_lr 1e-4, te_lr 5e-5,
+    cosine + 33 warmup, AdamW8bit, batch 2, repeat 2, 10 epochs, bf16,
+    seed 20260822
+  measured: >-
+    590 optimizer steps in 18m22s at 1.87 s/it, final avr_loss 0.103, rc=0. Stage step printed `staged 59 image+caption pairs`, all 59 sha256
+    verified against the manifest and all 59 SDXL-provenance asserted -- the
+    item-18 gate, in code, with zero mismatches.
+  cost_usd: 0.0
+
+  checkpoints_on_box: C:\banyan-farm\lora-sapling-v2-0822\out\
+  checkpoint_sha256:
+    epoch02: 99a7b5c5f1d84295d4a13dbbb1c437754cf872dfdb28e363db005c8dfa9f521a
+    epoch04: 1c444dd7bb7d5107da64b755cf1613337ba03f0fcc5ce87657533af8a88616a5
+    epoch06: 3c829c80f709b07181feeaef4425ebcbd6187e84d9c3cc58f269ca0c09ecb61c
+    epoch08: 4a0dd4409a003092914787527cd1ea2c867f1a939508ff1bc9f873a63f321de3
+    epoch10_final: 1b1997155bffce2a908fff501347314e1c9d31741ce512b6e62618e237e9e911
+  # 228453524 bytes EACH. Still the courier hazard, and .gitignore:96
+  # (farm-out/**/*.safetensors) is the guard -- re-verified for this run with
+  # `git check-ignore -v`, not assumed.
+  bytes: 228453524
+
+  shipping_weight: null   # nothing is sanctioned until the grid is judged
+  bars: >-
+    pipeline/lora/train-sapling-v2-0822.yaml '## BARS' -- byte-identical
+    thresholds to v1's, so the two runs are comparable on the score
+  bar_grid: pipeline/lora/bars-v2-sapling-0822.yaml
+  bars_result: >-
+    PENDING -- the 15-cell grid is queued behind another lane's work.
+    THE THREE DECISIVE CELLS ARE PRE-REGISTERED in the train spec and named
+    before any pixel: B2_figure (v1 0/3), B2_ground (v1 4/6) and B3
+    (v1 FAIL, deleted a figure). B2_scale and B1 are NOT expected to move and
+    that is written down in advance too.
