@@ -1,0 +1,39 @@
+#### job ep3-saplora-fignat-g7-0822-1787386444 attempt 1 start 2026-08-22T08:15:47Z
+
+==== step fetch START 2026-08-22T08:15:48Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\saplora-fignat-g7-0822\\fetch_init.py"]
+fetched sapfig-g7-0822.png 1288984 bytes sha 91005350128057a782e0f049cfecaf851c48570df2ab1a9dfe70b82158869f49 OK
+fetched sapfig-g7-mask-0822.png 2967 bytes sha f33da5a6a432ab2a96d30f6a7d2b720b84e5fe08045c0dc9e5adf9e356b7e57b OK
+==== step fetch END rc=0 2026-08-22T08:15:48Z ====
+
+==== step dry START 2026-08-22T08:15:48Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\saplora-fignat-g7-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\saplora-fignat-g7-0822\\sapfig-g7-0822.png", "--init-sha256", "91005350128057a782e0f049cfecaf851c48570df2ab1a9dfe70b82158869f49", "--mask-png", "C:\\banyan-farm\\saplora-fignat-g7-0822\\sapfig-g7-mask-0822.png", "--prompt-file", "C:\\banyan-farm\\saplora-fignat-g7-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\saplora-fignat-g7-0822\\negative.txt", "--out", "C:\\banyan-farm\\saplora-fignat-g7-0822\\fignat-g7-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "MASK GEOMETRY CHECK for sapling-LoRA v2 cell g7. Writes the mask and exits BEFORE a model loads. WHAT TO CHECK ON THE DRY PNG: (1) one connected blob shaped like a stem with two leaves, not two blobs and not a rectangle; (2) it does not reach the top of the frame; (3) IT DOES NOT TOUCH THE GOBLIN. Unlike beat 16, where the plant stands between the camera and him on purpose, every cell here was composited with --body-box so the plant is clear of his silhouette. If the mask overlaps him the composite step's box was wrong and the fix is --body-box, not the mask. The plant is rooted right of him on fallen leaves.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 91005350128057a782e0f049cfecaf851c48570df2ab1a9dfe70b82158869f49
+mask png corners=- bbox=[404, 737, 735, 1150]  0.3978 x 0.3396 of 832x1216
+WROTE C:\banyan-farm\saplora-fignat-g7-0822\fignat-g7-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-22T08:15:48Z ====
+
+==== step s20260820 START 2026-08-22T08:15:48Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\saplora-fignat-g7-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\saplora-fignat-g7-0822\\sapfig-g7-0822.png", "--init-sha256", "91005350128057a782e0f049cfecaf851c48570df2ab1a9dfe70b82158869f49", "--mask-png", "C:\\banyan-farm\\saplora-fignat-g7-0822\\sapfig-g7-mask-0822.png", "--prompt-file", "C:\\banyan-farm\\saplora-fignat-g7-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\saplora-fignat-g7-0822\\negative.txt", "--out", "C:\\banyan-farm\\saplora-fignat-g7-0822\\fignat-g7-s20260820.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "MASK GEOMETRY CHECK for sapling-LoRA v2 cell g7. Writes the mask and exits BEFORE a model loads. WHAT TO CHECK ON THE DRY PNG: (1) one connected blob shaped like a stem with two leaves, not two blobs and not a rectangle; (2) it does not reach the top of the frame; (3) IT DOES NOT TOUCH THE GOBLIN. Unlike beat 16, where the plant stands between the camera and him on purpose, every cell here was composited with --body-box so the plant is clear of his silhouette. If the mask overlaps him the composite step's box was wrong and the fix is --body-box, not the mask. The plant is rooted right of him on fallen leaves."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:01,  5.96it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00, 14.46it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:00<00:00,  6.78it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.88it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\saplora-fignat-g7-0822\fignat-g7-s20260820.png
+WROTE C:\banyan-farm\saplora-fignat-g7-0822\fignat-g7-s20260820-mask.png
+WROTE C:\banyan-farm\saplora-fignat-g7-0822\fignat-g7-s20260820.png.meta.yaml
+rc=0 render_s=3.7
+==== step s20260820 END rc=0 2026-08-22T08:16:01Z ====
+
+==== step publish START 2026-08-22T08:16:01Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/saplora-fignat-g7-0822\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-fignat-g7-r2-0820\"\nNAMES = [\n    \"fignat-g7-s20260820.png\",\n    \"fignat-g7-s20260820-mask.png\",\n    \"fignat-g7-s20260820.png.meta.yaml\",\n    \"sapfig-g7-0822.png\",\n    \"sapfig-g7-mask-0822.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-fignat-g7-r2-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 7 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-fignat-g7-r2-0820
+==== step publish END rc=0 2026-08-22T08:16:01Z ====
+#### job ep3-saplora-fignat-g7-0822-1787386444 finished rc=0 2026-08-22T08:16:01Z
