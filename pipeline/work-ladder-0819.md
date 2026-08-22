@@ -9657,3 +9657,50 @@ failed to draw, and `bnysapling` now draws it. Same move, different object.
 
 **No more prompt-side face work, ever. Pixels from his pixels.**
 
+### ROUND ONE OF THE REPLACEMENT ROUTE LANDED: HIS EYE IS IN THE OUTPUT (2026-08-22)
+
+`review/COMPARE/GOBLIN-i2icanon-r1-0822.png` — his image leftmost, then
+0.30 / 0.40 / 0.45 / 0.55. Four cells, one variable, everything else identical
+including the seed. Specs `pipeline/jobs/ep2-b13-i2icanon-s{30,40,45,55}-0822.yaml`,
+each carrying its own `verdict_0822`.
+
+**THE ONE LINE: AT 0.30 HIS EYE SURVIVES TO THE OUTPUT.** Narrow almond,
+off-white field, tiny dark pupil, heavy upper lid. That is E1 — the axis four
+founder vetoes and roughly sixteen rounds were spent on — and it is the first
+frame in this tree's record to hold it. E2 (broad dome, near-horizontal ears),
+E3 (smooth face), E4 (washed sage) and E5 (costume) all hold with it.
+
+| strength | E1 eye | E2 skull/ears | E4 palette | verdict |
+|---|---|---|---|---|
+| **0.30** | **his** | broad dome, ears near-horizontal | washed sage | **PICK** |
+| 0.40 | his, marginally rounder | ears larger, drifting | washed sage | usable, second |
+| 0.45 | **PINK IRIS** | ears larger, upswept | holds | FAIL |
+| 0.55 (probe) | **MAGENTA IRIS**, larger | large upswept ears | greener, darker | FAIL |
+
+**THE CEILING IS MEASURED, NOT GUESSED: the face breaks between 0.40 and 0.45,**
+and it breaks in the *vetoed direction* — a coloured iris, the exact defect the
+closed route produced sixteen times. The 0.55 probe was filed to bound the range
+rather than to be picked and it earned its three minutes: the bracket was set in
+the right place and the answer sits at its BOTTOM, so nobody has to wonder
+whether more strength would have bought scene change for free. It does not; it
+buys the vetoed face.
+
+**THE HONEST LIMIT, AND IT IS THE ONE THIS ROUND PRE-REGISTERED AS THE ROUTE'S
+REAL RISK (R1).** At 0.30 the background, grass, light and near sprouts all
+moved — but **the figure did not**. This is a re-render of his picture, not yet
+a new picture of him. It clears R1 as written and it is **not yet a plate
+route**. The pose is unchanged and standing, which was predicted in advance and
+is explicitly not scored: beat 13 is seated and the skeleton is round two.
+
+**WHY IT WORKED, and it is the mechanism the closure named.** His face was never
+encoded. In the closed route CLIPImageProcessor resized his image to 224 and
+centre-cropped it, and the denoiser resolved a face out of animagine's prior —
+which is why *less* reference detail (sq45, 28.3%) beat *more* (sq65, 58.9%).
+Here his pixels are the latent. Nothing has to be reconstructed.
+
+**ROUND TWO IS THE ONE THING LEFT AND IT IS NAMED:** ControlNet at 0.30–0.40
+with the beat's skeleton, to buy the pose the init will not give up. 0.40
+holding the face is the headroom reading that says there is something to spend.
+If the pose moves and the face survives, this is the plate route for every
+goblin beat and the seed of a goblin LoRA trained on his own pixels.
+
