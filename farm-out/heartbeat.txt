@@ -4499,3 +4499,5 @@
 08:43:02Z DONE task=ep2-b13-i2icanon-s30-0822-1787387255 rc=0 artifacts=2
 08:43:08Z STARTED task=ep2-b13-i2icanon-s40-0822-1787387260 attempt=1 on box-runner
 08:43:23Z DONE task=ep2-b13-i2icanon-s40-0822-1787387260 rc=0 artifacts=2
+08:43:29Z STARTED task=ep2-b13-i2icanon-s45-0822-1787387265 attempt=1 on box-runner
+08:43:43Z DONE task=ep2-b13-i2icanon-s45-0822-1787387265 rc=0 artifacts=2
