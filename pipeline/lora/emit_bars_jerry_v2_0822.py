@@ -47,6 +47,31 @@ PY_RENDER = r"C:\banyan-farm\venv\Scripts\python.exe"
 RAW = "https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
 OUT = "pipeline/lora/bars-jerry-v2-0822.yaml"
 
+JOB2 = "lora-jerry-v2-b2r2-0822"
+WORK2 = r"C:\banyan-farm\%s" % JOB2
+FARMOUT2 = r"C:\banyan-farm\courier-box\farm-out\%s" % JOB2
+OUT2 = "pipeline/lora/bars-jerry-v2-b2r2-0822.yaml"
+PUB2 = '''
+import hashlib, glob, os, shutil
+OUT = "%s"
+DST = "%s"
+os.makedirs(DST, exist_ok=True)
+n = 0
+found = sorted(glob.glob(OUT + "/*.png")) + sorted(glob.glob(OUT + "/*.png.meta.yaml"))
+for p in found:
+    if os.path.isfile(p):
+        shutil.copyfile(p, os.path.join(DST, os.path.basename(p)))
+        n += 1
+with open(os.path.join(DST, "%s.sha256"), "w", encoding="utf-8") as fh:
+    for name in sorted(os.listdir(DST)):
+        q = os.path.join(DST, name)
+        if os.path.isfile(q) and not name.endswith(".sha256"):
+            fh.write("%%s  %%s" %% (hashlib.sha256(open(q, "rb").read()).hexdigest(), name) + chr(10))
+print("published", n, "file(s) ->", DST, flush=True)
+if n == 0:
+    raise SystemExit("NOTHING TO PUBLISH")
+''' % (WORK2.replace("\\", "/") + "/out", FARMOUT2.replace("\\", "/"), JOB2)
+
 SHIP_WEIGHT = "0.8"          # the ladder below is what decides the real one
 SEEDS = ("20260822", "20260823", "20260824")
 
@@ -107,6 +132,54 @@ B3_ARMS = (("base", None), ("w80", "0.8"), ("w50", "0.5"))
 # collapsed below 0.65 -- and the usable band was read off it rather than
 # assumed. Same instrument, same five rungs, one seed, one prompt.
 LADDER = ("0.8", "0.65", "0.5", "0.35", "0.2")
+
+
+# ── B2 ROUND TWO, AND ITS CONTROL. Added after B2 scored 0 of 6 on P1.
+#
+# ALL SIX CELLS CAME BACK STANDING, BUST-FRAMED AND SATURATED, with a full-body
+# skeleton at conditioning scale 1.0 and the LoRA fused at 0.8. Two readings fit
+# that and they demand opposite actions, so neither is asserted:
+#
+#   A. THE LoRA OVERRIDES THE NET. 19 of the 21 training frames are cowboy or
+#      upper-body crops -- the framing monoculture the pupil finding FORCED,
+#      since no full-body frame could be rendered without a coloured iris. A
+#      trigger that learned "bust" would fight a full-body skeleton, and at 0.8
+#      it would win.
+#   B. THE NET IS NOT REACHING THE DENOISER IN THIS STACK. The sidecar says
+#      scale 1.0 and names the net, but a sidecar records what was ASKED.
+#
+# THE CONTROL SEPARATES THEM IN ONE RENDER. `--no-lora` on the identical stack:
+# if the pose adopts with no LoRA loaded, the net works and reading A is right;
+# if it does not, the net was never driving and B2's zero says nothing about the
+# LoRA at all. Running the weight rungs without this control would have been the
+# lane measuring a knob whose instrument it had not checked.
+B2R2_WEIGHTS = ("0.5", "0.35", None)   # None = the no-LoRA control
+
+
+def steps_b2r2():
+    out = [{"name": "fetch",
+            "argv": [PY_RENDER, r"%s\fetch_hints.py" % WORK2]}]
+    for w in B2R2_WEIGHTS:
+        tag = "base" if w is None else "w" + w.replace(".", "")
+        for name in sorted(B2_SKELETONS):
+            hint = B2_SKELETONS[name][0]
+            argv = [PY_RENDER, r"%s\controlnet_plate.py" % WORK2,
+                    "--task", "b2r2-%s-%s" % (name, tag),
+                    "--arm", "hint",
+                    "--controlnet", "xinsir/controlnet-openpose-sdxl-1.0",
+                    "--control", r"%s\%s" % (WORK2, hint),
+                    "--scale", "1.0",
+                    "--prompt-file", r"%s\b2-prompt.txt" % WORK2,
+                    "--negative-file", r"%s\negative.txt" % WORK2,
+                    "--width", "832", "--height", "1216",
+                    "--seed", "20260822",
+                    "--out", r"%s\out" % WORK2]
+            if w is not None:
+                argv[2:2] = []
+                argv += ["--lora", LORA, "--lora-weight", w]
+            out.append({"name": "b2r2-%s-%s" % (name, tag), "argv": argv})
+    out.append({"name": "publish", "argv": [PY_RENDER, "-c", PUB2]})
+    return out
 
 
 def steps():
@@ -374,6 +447,40 @@ def main() -> int:
                  "# before any training frame was admitted.\n\n")
         yaml.safe_dump(spec, fh, sort_keys=False, width=88, allow_unicode=True)
     print("wrote %s  (%d steps)" % (OUT, len(st)))
+
+    # ---- B2 ROUND TWO, ITS OWN JOB so the first grid's verdicts stay filed
+    # against the spec that produced them.
+    st2 = steps_b2r2()
+    pay2 = {k.replace(WORK, WORK2): v for k, v in payloads().items()}
+    spec2 = dict(spec)
+    spec2.update({
+        "id": JOB2, "task": JOB2, "priority": 57, "est_minutes": 12,
+        "depends_on": TRAIN_JOB,
+        "consumer": (
+            "THE B2 VERDICT ITSELF. Round one scored 0 of 6 on pose adoption "
+            "and two readings fit that result -- the LoRA overriding the net, "
+            "or the net not reaching the denoiser. This job's `base` arm is the "
+            "control that separates them, and without it the zero is "
+            "uninterpretable."),
+        "success": (
+            "A SEPARATION, not a pass. If the three `base` cells adopt their "
+            "skeletons, the net works and B2's zero is the LoRA; if they do "
+            "not, B2 measured nothing about the LoRA and the grid's decisive "
+            "bar is void until the stack is fixed."),
+        "why": (
+            "B2 IS THE ONLY BAR WHOSE ANSWER CHANGES WHAT THE SHOW CAN DO, and "
+            "round one's zero is currently unattributable. The control costs "
+            "three renders and is the difference between a finding and a guess."),
+        "payload": pay2,
+        "steps": st2,
+        "artifacts": [r"%s\%s.sha256" % (FARMOUT2, JOB2)],
+        "cell_count": {"B2_at_w050": 3, "B2_at_w035": 3, "B2_no_lora_control": 3},
+    })
+    with open(os.path.join(REPO, OUT2), "w", encoding="utf-8") as fh:
+        fh.write("# B2 ROUND TWO + ITS NO-LoRA CONTROL -- GENERATED. Edit\n"
+                 "# pipeline/lora/emit_bars_jerry_v2_0822.py, not this file.\n\n")
+        yaml.safe_dump(spec2, fh, sort_keys=False, width=88, allow_unicode=True)
+    print("wrote %s  (%d steps)" % (OUT2, len(st2)))
     return 0
 
 
