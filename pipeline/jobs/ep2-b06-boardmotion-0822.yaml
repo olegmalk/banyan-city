@@ -1,0 +1,254 @@
+id: ep2-b06-boardmotion-0822
+task: ep2-b06-boardmotion-0822
+node: 002b-first-citizen
+beat: 6
+runner: box
+priority: 14
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: morning compositor lane, 2026-08-22
+consumer: BEAT 06's SLOT IN /review/ep2-beats-0821 and, if it lands, the cut. This beat has zero clips
+  on any modern plate and its shipped take is 1.92 s of picture in a 6.46 s slot. A pass here is the first
+  candidate; nothing in review/ep2-ship-0821 changes because it landed.
+success: ONE 704x1280 mp4, 121 frames at 24 fps, in which a grown man in a daylit field TURNS a hand-sized
+  bark board and READS off it at chest height, the board stays hand-sized to the last frame, and the clip
+  is not a frozen frame with a runtime. Scored on the share of frame pairs under 0.5 mean interframe difference
+  at 176x320 against the shipped take's 59 of 107 bit-identical.
+why: 'BEAT 06''S SECOND FAULT BECOMES ASKABLE TODAY.
+
+
+  Fault one is the board''s size and it was answered this morning: ep2-b06-boardnat-r3-0822 has a hand-sized
+  slab of bark drawn into the plate at 160x115 px and settled in at 0.45, held in both hands at chest
+  height by the man the founder picked, on a plate rendered with NO reference image and NO board net --
+  the ControlNet route for this object was closed at three rungs this morning after returning, in order,
+  a glowing ball, a plank standing on the ground and a lit panel that ate the figure.
+
+
+  Fault two is that 4.54 s of a 6.46 s slot is ONE FROZEN FRAME, the biggest ratio in the episode, 59
+  of 107 frame pairs bit-identical. It has never been askable, because the beat''s action is ''turns the
+  bark board over and reads off it'' and no plate has ever contained a board. The init contains one now,
+  so the sentence is description and not summons -- and the selftest asserts the init before the wording
+  is allowed, because that assertion is the whole licence.
+
+
+  THE ACTION CARRIES THE COUNT FINDING and this is its first application since the rung that produced
+  it: a countable action fills the runtime, an instruction to go slowly does not, and a counted repeat
+  only works when the action can actually happen twice. A fingertip running down a board can. $0, ~5 GPU
+  minutes.'
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b06-boardmotion-0822\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an\
+    \ asserted source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os,\
+    \ sys\nfrom PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b06-boardmotion-0822\b13-motion-prompt.txt: '2D anime, hand-drawn cel animation,
+    static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art.
+    Subject already in frame: ONE grown man, alone, standing in tall summer grass in bright daylight --
+    dark cropped hair, round wire-rim glasses, a cream shirt -- holding a SMALL HAND-SIZED SLAB OF ROUGH
+    BROWN BARK in both hands at chest height, his head bowed over it. The board is no bigger than his
+    own forearm and it stays that size: it is a hand-sized bark tablet, not a shield, not a sign and not
+    a plank. The field, the grass and the sky behind him are already drawn and do not change. THE ACTION:
+    he turns the bark board face-up in both hands, brings it to a reading distance at his chest, and reads
+    it -- his fingertip runs down the face of the board TWICE, and his lips move while he reads. HALFWAY
+    THROUGH the board is face-up at his chest and his finger is partway down it for the first time. He
+    stays where he is, the camera stays where it is, and nobody else enters the shot. Bright clear daylight,
+    cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.'
+  C:\banyan-farm\ep2-b06-boardmotion-0822\b13-negative.txt: giant board, oversized board, board filling
+    the frame, prop larger than his torso, shield, raising the board to his face, sign, banner, plank,
+    clipboard, metal clip, spring clip, white paper, glowing board, luminous panel, lens flare, second
+    man, second guard, a pair, duplicate character, goblin, green skin, pointed ears, creature, animal,
+    helmet, armour, weapon, dark, dusk, dim lighting, night, white background, blank background, background
+    appearing, scene forming, dissolve, iris, wipe, camera pan, camera tilt, panning, tilting, camera
+    movement, dolly, zoom, push in, pull back, walking out of frame, leaving the frame, drifting sideways,
+    scene change, shot change, new camera angle, face morphing, distorted face, warped face, extra eyes,
+    extra ears, hair changing, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b06-boardmotion-0822\b13-jobs-encode.json: "[{\"beat\": 12,\n  \"embeds\": \"C:\\\
+    \\banyan-farm\\\\ep2-b06-boardmotion-0822\\\\b13-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b06-boardmotion-0822\\\\b13-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\
+    \\ep2-b06-boardmotion-0822\\\\b13-negative.txt\"}]"
+  C:\banyan-farm\ep2-b06-boardmotion-0822\b13-jobs-render.json: "[{\"beat\": 12,\n  \"seed\": 20260813,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b06-boardmotion-0822\\\\b13-embeds.pt\",\n  \"init\": \"\
+    C:\\\\banyan-farm\\\\ep2-b06-boardmotion-0822\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b06-boardmotion-0822\\\\12-related-LTX-leaf-0813.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b06-boardmotion-0822\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b06-boardnat-r3-0822\b06-boardnat-r3-s20260820.png
+  - --sha256
+  - 51e0bfe5588cf522530e085e898cce5859bda651b2154ad58dcf4d14af4af89e
+  - --out
+  - C:\banyan-farm\ep2-b06-boardmotion-0822\b13-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b06-boardmotion-0822\b13-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b06-boardmotion-0822\b13-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b06-boardmotion-0822
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b06-boardmotion-0822\bench-b12-leaf.jsonl
+  - --bench-label
+  - ep2-b06-boardmotion-0822
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b12-tightB\"\n\
+    os.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b06-boardmotion-0822/12-related-LTX-leaf-0813.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b06-boardmotion-0822/b13-init-704x1280.png\")\n \
+    \            + glob.glob(\"C:/banyan-farm/ep2-b06-boardmotion-0822/bench-b12-leaf.jsonl\"))\nlines\
+    \ = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b06-boardmotion-0822.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b06-boardmotion-0822\12-related-LTX-leaf-0813.mp4
+- C:\banyan-farm\ep2-b06-boardmotion-0822\b13-init-704x1280.png
+script_line: 'Beat 06 THE CLIPBOARD: the guard turns the bark board over and reads it. Node 002b-first-citizen,
+  live script 002b-t0-c, approved_by founder 2026-08-03.'
+bar: 'BEAT 06''S OWN done_when, WHICH IS: ''the guard turns the bark board over and reads off it; board
+  hand-sized and readable; field present at frame one; no white burst at the head of the clip.'' PRE-REGISTERED:
+  (1) THE BOARD IS IN THE FIRST FRAME AND IT IS HAND-SIZED. It is in the init, so it should be; the thing
+  being tested is whether it STAYS that size for 121 frames. The beat''s whole history is the prop inflating
+  -- if it grows into a shield or a sign this is a FAIL, and it is the most likely one. (2) HE TURNS IT
+  AND READS OFF IT. A turn, then a read at chest height with the head down. Raising it in front of his
+  face is beat 10''s move and a FAIL here -- the second seed of the shipped take did exactly that. (3)
+  THE CLIP IS NOT A FROZEN FRAME. The take in the cut is 59 of 107 frame pairs bit-identical and 4.54
+  s of held picture; this rung exists to answer that, and the measurement is the share of frame pairs
+  under 0.5 mean interframe difference at 176x320, the same instrument the 08-22 wave used. The counted
+  read is the lever and the number is the score. (4) THE FIELD IS PRESENT AT FRAME ONE and there is no
+  white burst. The init is a finished daylit field, so a white head would be a new fault. (5) ONE MAN,
+  and he is the man in the plate to the last frame -- dark cropped hair, round wire-rim glasses, cream
+  shirt. PRE-REGISTERED FAIL MODES. THE PROP INFLATES, which is this beat''s oldest fault and which no
+  wording has ever held; if it fires on an init that CONTAINS a correctly sized board, that is a much
+  stronger result than another wording failure and it says the composite route does not protect scale
+  through motion. THE COUNT DOES NOTHING, which would narrow the 08-22 count finding again: a fingertip
+  down a board is the same shape as beat 17''s brush, so if it fails here the rule is smaller than ''an
+  action with a natural cycle''. THE BOARD DISSOLVES -- a composited object has been shown to MOVE (beat
+  19''s fig fell) and to KEEP ITS SHAPE (beat 12''s leaves held 121 frames), but neither of those was
+  a made object with a flat readable face. And THE HANDS, which are directly under the board and which
+  every i2v pass in this tree finds difficult.'
+failure_predicted_in_advance: 'See `bar`. The one worth repeating here because it decides what the next
+  rung is: IF THE PROP INFLATES OFF AN INIT THAT CONTAINS A CORRECTLY SIZED BOARD, the composite route
+  does not protect scale through motion, and that is a bigger and more useful finding than another wording
+  failure would be.'
+init_provenance: 'farm-out/ep2-b06-boardnat-r3-0822/b06-boardnat-r3-s20260820.png, 832x1216, cover-cropped
+  to 704x1280 by the parent''s own crop step. Its lineage: ep2-b06-pose-r4-0822 (openpose only, no reference
+  image, no board net, hands deliberately EMPTY) -> pipeline/beat06_board_composite.py (a 160x115 px bark
+  slab drawn in PIL, hue from canon, value/ink/light measured off the plate, four geometry refusals) ->
+  a 0.45 masked naturalize. The file is already in the courier from its own publish step, so this job
+  needs no fetch.'
+not_done_on_purpose: NO SECOND SEED. The shipped take's own record says its seedB raised the board like
+  a shield instead of reading it, and that a one-seed pick is not a confirmation. A second seed is the
+  right next job and it is NOT filed with this one, because firing two seeds before anyone has looked
+  at either is how a recipe gets scaled on an unapproved result.
+the_one_variable: 'THERE IS NO ONE VARIABLE AND SAYING SO IS THE HONEST FILING. Beat 06 has no motion
+  parent -- zero clips off any modern plate -- so the LTX chain is taken WHOLE from ep2-b12-tightB-0813
+  (crop, encode, render, publish; 121 frames, 24 fps, 704x1280; guidance, seed and driver untouched) and
+  three things are authored: the init, the positive and the negative. That is a first sample on a beat
+  with nothing under it, not a rung on a ladder, and it is filed as one.'
+derivation:
+  parent: pipeline/jobs/ep2-b12-tightB-0813.yaml
+  by: pipeline/derive_ep2_b06motion_0822.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - failure_predicted_in_advance
+  - init_provenance
+  - not_done_on_purpose
+  - owner
+  - success
+  - the_one_variable
+  - why
+  keys_the_parent_had_that_did_NOT_cross: none
+  retokened:
+  - ep2-b12-tightB-0813 -> ep2-b06-boardmotion-0822
+  overrides_applied_and_asserted:
+    key:beat:
+    - key beat = 6
+    key:priority:
+    - key priority = 14
+    key:script_line:
+    - 'key script_line = ''Beat 06 THE CLIPBOARD: the guard turns the bark board over and reads it. Node
+      002b-first-citizen, live script 002b-t0-c, approved_by founder 2026-08-03.'''
