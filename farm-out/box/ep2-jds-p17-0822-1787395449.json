@@ -1,0 +1,120 @@
+{
+  "id": "ep2-jds-p17-0822-1787395449",
+  "task": "ep2-jds-p17-0822",
+  "node": "002b-first-citizen",
+  "beat": 13,
+  "worker": "box-runner",
+  "priority": 55,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\jds-p17-0822\\fetch_init.py"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\jds-p17-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\jds-p17-0822\\init-cowboy-0822.png",
+        "--init-sha256",
+        "630265052064cdd3623e9e3b0a409d8c1c9d700a57b7a0c10d8cca456f51f386",
+        "--mask-png",
+        "C:\\banyan-farm\\jds-p17-0822\\fullframe-mask-832x1216-0822.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\jds-p17-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\jds-p17-0822\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\jds-p17-0822\\b13-jds-p17-DRY.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.20",
+        "--pad-crop",
+        "0",
+        "--blur",
+        "8",
+        "--seed",
+        "20261318",
+        "--note",
+        "GOBLIN DATASET CELL p17. img2img from a cut of the canon image: init `cowboy` at 832x1216, strength 0.20, full-frame white mask (which is what makes the SDXL inpaint pipeline on base weights behave as plain img2img). Ground `a sunset sky`, light `rim light`. This is a TRAINING FRAME candidate for the jerry v2 LoRA, not a plate for any beat.",
+        "--dry-run"
+      ]
+    },
+    {
+      "name": "s20261318",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\jds-p17-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\jds-p17-0822\\init-cowboy-0822.png",
+        "--init-sha256",
+        "630265052064cdd3623e9e3b0a409d8c1c9d700a57b7a0c10d8cca456f51f386",
+        "--mask-png",
+        "C:\\banyan-farm\\jds-p17-0822\\fullframe-mask-832x1216-0822.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\jds-p17-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\jds-p17-0822\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\jds-p17-0822\\b13-jds-p17-s20261318.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.20",
+        "--pad-crop",
+        "0",
+        "--blur",
+        "8",
+        "--seed",
+        "20261318",
+        "--note",
+        "GOBLIN DATASET CELL p17. img2img from a cut of the canon image: init `cowboy` at 832x1216, strength 0.20, full-frame white mask (which is what makes the SDXL inpaint pipeline on base weights behave as plain img2img). Ground `a sunset sky`, light `rim light`. This is a TRAINING FRAME candidate for the jerry v2 LoRA, not a plate for any beat."
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/jds-p17-0822\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-jds-p17-r2-0820\"\nNAMES = [\n    \"b13-jds-p17-s20261318.png\",\n    \"b13-jds-p17-s20261318-mask.png\",\n    \"b13-jds-p17-s20261318.png.meta.yaml\",\n    \"init-cowboy-0822.png\",\n    \"fullframe-mask-832x1216-0822.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b13-jds-p17-r2-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\jds-p17-0822\\b13-jds-p17-s20261318.png",
+    "C:\\banyan-farm\\jds-p17-0822\\init-cowboy-0822.png"
+  ],
+  "spec_sha256": "5a3a4808f9c9b8952248b2f0286e43a83e6cb6807caf626d8d9b71ce8d48d14f",
+  "started_at": "2026-08-22T10:44:41Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-22T10:44:54Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\jds-p17-0822\\b13-jds-p17-s20261318.png",
+    "C:\\banyan-farm\\jds-p17-0822\\init-cowboy-0822.png"
+  ]
+}
