@@ -1,0 +1,154 @@
+id: ep2-b07-pose-0822
+task: ep2-b07-pose-0822
+node: 002b-first-citizen
+beat: 7
+runner: box
+priority: 6
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: night iteration lane, 2026-08-22 -- beat 06 on the pose route, filed after the adapter route closed
+  on four measurements
+consumer: 'BEAT 07''s SLOT, and the crossover question that is now open across the whole episode. This
+  beat has its best clip ever staged tonight and NOTHING HERE REPLACES IT -- what this frame buys, if
+  it works, is a plate whose two bodies are structurally separate, which is the only untried lever on
+  the two faults that clip still carries. If it fails it fails informatively: it says a drawn split does
+  not stop attribute crossover, and the next instrument is per-figure conditioning rather than more geometry.'
+success: 'ONE 832x1216 png. THIS BEAT IS ABOUT CROSSOVER AND THE BAR IS SCORED ON CROSSOVER FIRST. (1)
+  THE GUARD IS HUMAN. No pointed ear, no green skin, no bald dome. Tonight''s motion clip put a POINTED
+  EAR on him and that is the measured defect this rung is aimed at. (2) THE GUARD''S KIT IS HIS OWN. A
+  tan tunic and a WHITE SHOULDER SASH -- no mandarin collar and no frog closures, which are the goblin''s
+  and which arrived on the guard in every previous frame of this beat. (3) THE GOBLIN IS THE GOBLIN: broad
+  bald dome, large pointed ears, small off-white almond eyes. He does not acquire the glasses, the hair
+  or the sash. THE GLASSES ARE THE ONE TO WATCH -- beat 05''s pose frame bound a moustache to one man
+  and spread the glasses across both. (4) TWO FIGURES, one of each. One is a DROP and three is a DROP.
+  (5) THE POINT LANDS: the guard''s arm extends left and his hand ends at the goblin''s face, not his
+  belly and not the air. (6) THEY ARE THE RIGHT SIZES -- the guard is a five-head adult and the goblin
+  is short with a large dome, which the hint asserts. (7) DAYLIGHT in a real grass field, and DETAILED
+  CINEMATIC ANIME. PRE-REGISTERED FAIL MODES, most likely first: CROSSOVER SURVIVING THE SEPARATION --
+  the glasses or the collar on both, which would say a drawn structural split is not enough and the lever
+  is per-figure conditioning (--ip-ref twice with --ip-mask-capsules, which the b08 lane already wired
+  and whose capsules can be built from this same skeleton). THE SPECIES MERGING, a green guard or a human
+  goblin, which is worse than crossover and would retire this hint. The POINT missing, which the selftest
+  has already measured to 0.0 px in the drawing, so a miss in the render is the net and not the geometry.
+  And a THIRD figure, which this beat has produced before.'
+why: 'THE ADAPTER ROUTE IS CLOSED BY MEASUREMENT. window4 and content on beats 05 and 06 -- opposite settings
+  on both axes the sampler has -- all four returned the reference photograph''s crop and pose: a head-and-shoulders
+  close-up with the hands up at the face, no board, no field. So this rung takes the PICTURE from a drawing
+  and the MAN from the words, with no reference image anywhere in the job. Two nets, because a COCO-18
+  hint has no keypoint for a plank and the board is this beat''s entire fault: openpose for the five-head
+  figure and scribble for one rectangle exactly as wide as the skeleton''s shoulders. The scribble net''s
+  known defect -- it traces whatever it can read -- is the feature here, because the thing being traced
+  is a board and boards are rectangles. Both hints come out of one file and one geometry, so the prompt''s
+  `as wide as his shoulders` and the drawing''s width are the same number. $0, ~3 GPU minutes. Full trace:
+  pipeline/derive_b06_pose_0822.py and pipeline/author_b07_twofig_pose_0822.py.'
+est_minutes: 3
+needs:
+- cuda
+- vram20
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b07-pose-0822\prompt.txt: A tall grown guard man with dark cropped hair, round wire-rim
+    glasses, a tan tunic and a white shoulder sash stands at frame right in tall grass in bright morning
+    sunlight, pointing at a small green goblin at frame left with a broad bald dome, large pointed ears
+    and small off-white almond eyes, cinematic lighting, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-b07-pose-0822\negative.txt: photorealistic, 3d render, abstract, text, watermark,
+    signature, low quality, blurry, extra limbs, deformed, jpeg artifacts, realistic skin texture, girl,
+    child, helmet, armor, knight, third figure, crowd, white background, dark, night, photorealism
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
+    \nroot = r\"C:\\banyan-farm\\ep2-b07-pose-0822\"\nwant = [\n    (\"pipeline/controlnet_plate.py\"\
+    , os.path.join(root, \"src\", \"pipeline\"),\n     \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\"\
+    ),\n    (\"pipeline/hints/b07-twofig-pose-0822.png\", root, \"85acb644008cbfd00c3b6686318778e3a6ccaf21b2786c0d9df305c752791737\"\
+    ),\n]\nfor path, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
+    \ + path, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
+    \    if got != sha:\n        raise SystemExit(\"!! %s sha %s, wanted %s\" % (path, got, sha))\n  \
+    \  name = path.rsplit(\"/\", 1)[-1]\n    with open(os.path.join(dst, name), \"wb\") as fh:\n     \
+    \   fh.write(blob)\n    print(\"staged\", name, got[:12])\n"
+- name: plate
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b07-pose-0822\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\ep2-b07-pose-0822\src
+  - --task
+  - ep2-b07-pose-0822
+  - --arm
+  - posebooth
+  - --controlnet
+  - xinsir/controlnet-openpose-sdxl-1.0
+  - --control
+  - C:\banyan-farm\ep2-b07-pose-0822\b07-twofig-pose-0822.png
+  - --control-sha256
+  - 85acb644008cbfd00c3b6686318778e3a6ccaf21b2786c0d9df305c752791737
+  - --scale
+  - '0.8'
+  - --seed
+  - '20260726'
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --prompt-file
+  - C:\banyan-farm\ep2-b07-pose-0822\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\ep2-b07-pose-0822\negative.txt
+  - --out
+  - C:\banyan-farm\ep2-b07-pose-0822\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The courier pushes from farm-out and from nowhere else. The two HINTS\n# travel with the frame\
+    \ as well as the prompt: a conditioned plate whose\n# condition is not beside it cannot be re-read\
+    \ later.\nimport glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b07-pose-0822\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(\"C:/banyan-farm/ep2-b07-pose-0822/out/ep2-b07-pose-0822-posebooth.png*\"\
+    )\n               + glob.glob(\"C:/banyan-farm/ep2-b07-pose-0822/prompt.txt\")\n               + glob.glob(\"\
+    C:/banyan-farm/ep2-b07-pose-0822/negative.txt\")\n               + glob.glob(\"C:/banyan-farm/ep2-b07-pose-0822/b07-twofig-pose-0822.png\"\
+    ))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"\
+    \  \"\n                     + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b07-pose-0822.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 4 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b07-pose-0822\out\ep2-b07-pose-0822-posebooth.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. A STILL PLATE on an approved node: no voice, no motion, no episode assembly, no publication,
+  and review/ep2-ship-0821 is not touched.'
+script_line: 'Beat 07 CONFISCATE: the guard points at the scavenger. Drawn here as a still two-figure
+  plate, because the beat''s remaining faults are which body owns which attribute and not the movement.'
+recipe_trace: 'driver pipeline/controlnet_plate.py sha ece54f687d892d1f, fetched and sha-checked at run
+  time. ONE net: xinsir/controlnet-openpose-sdxl-1.0 at 0.8. Hint pipeline/hints/b07-twofig-pose-0822.png
+  sha 85acb644008cbfd0, two COCO-18 skeletons authored in PIL by pipeline/author_b07_twofig_pose_0822.py
+  with no annotator and no controlnet_aux dependency, which keeps this route clear of lllyasviel/Annotators
+  and its inherited CMU OpenPose non-commercial terms. Prompt and negative are baked into this spec''s
+  payload. NO IP-ADAPTER AND NO REFERENCE IMAGE. Sibling: pipeline/jobs/ep2-b06-pose-0822.yaml, the frame
+  that proved the framing half of this route.'
+one_sample_rule: 'ONE FRAME, ONE SEED. The route itself was sampled on beats 06 and 05 before this was
+  written, and what carries here is only the part that WORKED: a drawn skeleton places figures at chosen
+  sizes in a chosen frame, and the light belongs in the positive. What is NOT carried is beat 06''s second
+  net -- that ladder closed at three rungs tonight with the rectangle being drawn as a lit panel -- and
+  there is no prop in this staging anyway.'
+chosen_not_measured: 'ONE CONDITIONING SCALE, 0.8, carried unchanged from the two pose frames where it
+  bound the figures precisely. The two statures and the head fractions are choices: five heads for the
+  guard is the canon adult, four for the goblin is his ratified big-dome build, and both are asserted
+  in the hint''s selftest so a later edit cannot drift them.'
+seed_note: Seed 20260726, held from the two adapter runs on this beat deliberately. The three frames are
+  then a clean triple and the differences between them are the conditioning route and nothing else.
