@@ -1,0 +1,9 @@
+#### job ep2-b12-nosmear-0822-1787371401 attempt 1 start 2026-08-22T04:03:34Z
+
+==== step crop START 2026-08-22T04:03:34Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-b12-nosmear-0822\\cover_crop.py", "--src", "C:\\banyan-farm\\courier-box\\farm-out\\ep2-b12-sapnat3-0822\\b12-sapnat3-s20260820.png", "--sha256", "5ecde65e9bf6b2bd723ce70bcb59a38fb7401a31fc6acb7bbf545dc67e14555e", "--out", "C:\\banyan-farm\\ep2-b12-nosmear-0822\\b13-init-704x1280.png", "--size", "704x1280"]
+!! SRC SHA MISMATCH -- refusing.
+   want 5ecde65e9bf6b2bd723ce70bcb59a38fb7401a31fc6acb7bbf545dc67e14555e
+   have 680b50fbaa5a289f8b393ad246a47c79731f2c1f203976946ebcc38fa402d431
+==== step crop END rc=1 2026-08-22T04:03:34Z ====
+#### job ep2-b12-nosmear-0822-1787371401 finished rc=1 2026-08-22T04:03:34Z
