@@ -425,7 +425,7 @@ def sidecar_text(*, pipeline_class: str, in_ch: int, W: int, H: int, steps: int,
                  cfg, strength, seed: int, pad_crop, blur: int, init: str,
                  init_sha: str, mask_png_name: str, mask_lines, control_lines,
                  stamp: str, render_s: float, wall_s: float, versions: dict,
-                 note: str, prompt: str, negative: str) -> str:
+                 note: str, prompt: str, negative: str, lora_lines=()) -> str:
     """The whole sidecar as one string, so a test can sha it.
 
     Split out of main() on 2026-08-20 with the ControlNet flags. It is a pure
@@ -451,7 +451,7 @@ def sidecar_text(*, pipeline_class: str, in_ch: int, W: int, H: int, steps: int,
         "init_image: %s" % init.replace("\\", "/"),
         "init_sha256: %s" % init_sha,
         "mask_png: %s" % mask_png_name,
-    ] + list(mask_lines) + list(control_lines) + [
+    ] + list(mask_lines) + list(lora_lines) + list(control_lines) + [
         "mask_is_the_stewards: >-",
         yaml_block("THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said "
                    "`inpaint` and named no size, no position, no colour and no "
@@ -480,6 +480,28 @@ def sidecar_text(*, pipeline_class: str, in_ch: int, W: int, H: int, steps: int,
         yaml_block(negative),
         "",
     ])
+
+
+def lora_meta_lines(lora: str, weight, lora_sha: str) -> list:
+    """The LoRA block, or NOTHING AT ALL when no LoRA was fused.
+
+    Same emptiness contract as `control_meta_lines`, and here it is load-bearing
+    for six filed b08 verdicts: a run with no --lora must write the bytes it
+    wrote before this flag existed, or none of them is reproducible any more.
+    """
+    if not lora:
+        return []
+    # os.path.basename on a WINDOWS path under POSIX returns the whole string --
+    # the box's paths are `C:\banyan-farm\...` and the selftest runs on a Mac,
+    # so the separator is normalised first or the sidecar names a drive letter.
+    return [
+        "lora: %s" % lora.replace("\\", "/").rsplit("/", 1)[-1],
+        "lora_path: %s" % lora.replace("\\", "/"),
+        "lora_sha256: %s" % (lora_sha or "unmeasured"),
+        "lora_weight: %s" % weight,
+        "lora_fused_before_controlnet_swap: true  # from_pipe reuses the module "
+        "objects, so a fused UNet travels into the swapped pipeline",
+    ]
 
 
 def control_meta_lines(controls, region) -> list:
@@ -624,6 +646,33 @@ def main() -> int:
     ap.add_argument("--control2-sha256", default="", help="pin for --control2")
     ap.add_argument("--scale2", type=float, default=None,
                     help="conditioning scale for --controlnet2")
+    # ---- THE CHARACTER LoRA ARM ----------------------------------------
+    # Added 2026-08-22, eight lines mirroring the one controlnet_plate.py grew
+    # the same day, and it exists because of where the pose net WORKS.
+    # `registry.yaml`'s bnyjerry v2 entry closed B2 as VOID rather than failed:
+    # controlnet_plate.py's TXT2IMG path did not move a pose with NO LoRA loaded,
+    # on either of xinsir's two openpose blobs, while THIS driver measurably
+    # drives the same net (15.05 mean abs, goblin i2i route round two). So the
+    # pose-adoption bar has to be run here -- and `inpaint_fruit.py` with an
+    # ALL-WHITE MASK at STRENGTH 1.0 *is* txt2img-with-ControlNet, on the one
+    # code path in this repo where the pose net is proven to act.
+    #
+    # Absent by default, so every existing caller behaves exactly as it did:
+    # `--selftest` reproduces the filed `ep2-b08-str70-0820` sidecar byte for
+    # byte through the same function, and that golden call passes no LoRA.
+    ap.add_argument("--lora", default="",
+                    help="a character LoRA .safetensors, fused into the UNet "
+                         "BEFORE the ControlNet swap. from_pipe rebuilds the "
+                         "class around THE SAME module objects, so a delta "
+                         "baked into the UNet here travels into the swapped "
+                         "pipeline by identity")
+    ap.add_argument("--lora-weight", type=float, default=0.8,
+                    help="lora_scale at fuse time")
+    ap.add_argument("--lora-sha256", default="",
+                    help="pin for --lora; refused on mismatch (rc 16). A "
+                         "checkpoint directory holds five epochs with names one "
+                         "character apart and the sidecar has to name the bytes "
+                         "that actually drew the frame.")
     ap.add_argument("--selftest", action="store_true",
                     help="$0, no torch, no CUDA, no network: reproduces a filed "
                          "verdict's sidecar byte-for-byte and proves the control "
@@ -791,6 +840,45 @@ def main() -> int:
         print("!! unexpected unet.in_channels=%d" % in_ch, flush=True)
         return 5
 
+    # ---- THE CHARACTER LoRA, FUSED BEFORE THE CONTROLNET SWAP -------------
+    #
+    # FUSED HERE, DELIBERATELY, AND FOR THE MIRROR OF THE REASON AN IP-ADAPTER
+    # WOULD BE REGISTERED AFTER. `from_pipe` rebuilds the pipeline class around
+    # THE SAME MODULE OBJECTS, so a weight delta fused into the UNet at this
+    # point travels into the swapped ControlNet pipeline by identity, while an
+    # ADAPTER registered on the pre-swap object would be registered on a
+    # pipeline nobody calls. fuse_lora bakes the delta into the UNet tensors.
+    lora_sha = ""
+    if a.lora:
+        if not os.path.isfile(a.lora):
+            print("!! no such LoRA: %s" % a.lora, flush=True)
+            return 16
+        # THE PEFT GATE, checked BEFORE the ControlNet download and before any
+        # further weight load, because it already cost this tree a run:
+        # diffusers 0.29.2 gates ALL LoRA loading behind USE_PEFT_BACKEND, peft
+        # was absent from both venvs on the box, and a training job spent twenty
+        # clean minutes and five checkpoints before dying in nine seconds on
+        # `PEFT backend is required for this method.`
+        from diffusers.utils import USE_PEFT_BACKEND
+        if not USE_PEFT_BACKEND:
+            print("!! diffusers has no PEFT backend, so load_lora_weights() "
+                  "cannot run.\n   fix:  <this venv>/python.exe -m pip install "
+                  "--no-deps peft==0.12.0\n   --no-deps is required -- a plain "
+                  "install may resolve torch away from 2.11.0+cu128 and break "
+                  "every render on this card.", flush=True)
+            return 16
+        lora_sha = sha256_of(a.lora)
+        if a.lora_sha256 and a.lora_sha256 != lora_sha:
+            print("!! LoRA sha256 mismatch -- refusing.\n   want %s\n   have %s"
+                  % (a.lora_sha256, lora_sha), flush=True)
+            return 16
+        pipe.load_lora_weights(os.path.dirname(os.path.abspath(a.lora)),
+                               weight_name=os.path.basename(a.lora))
+        pipe.fuse_lora(lora_scale=float(a.lora_weight))
+        print("LORA %s fused at weight %.2f, sha %s"
+              % (os.path.basename(a.lora), float(a.lora_weight), lora_sha[:16]),
+              flush=True)
+
     # ---- THE CLASS SWAP, AND IT HAPPENS ONLY IF A HINT WAS PASSED.
     # from_pipe rebuilds the class around the SAME loaded modules, so one set of
     # base weights serves both arms and the no-control path never touches this.
@@ -947,6 +1035,7 @@ def main() -> int:
             cfg=a.cfg, strength=a.strength, seed=a.seed, pad_crop=a.pad_crop,
             blur=a.blur, init=a.init, init_sha=have,
             mask_png_name=os.path.basename(mask_png), mask_lines=mask_lines,
+            lora_lines=lora_meta_lines(a.lora, a.lora_weight, lora_sha),
             control_lines=control_meta_lines(controls, region), stamp=stamp,
             render_s=render_s, wall_s=time.time() - t0, versions=versions,
             note=a.note, prompt=prompt, negative=negative))
@@ -1079,6 +1168,55 @@ def selftest() -> int:
     check("no controls leave the pipeline class alone",
           "pipeline: StableDiffusionXLInpaintPipeline (base weights, "
           "unet.in_channels=4)" in gtext)
+
+    # ---- 2b. THE LoRA ARM. Added 2026-08-22 for the goblin pose-adoption bar.
+    #
+    # THE FIRST CLAUSE IS THE ONE THAT MATTERS AND IT IS A NON-CHANGE CLAUSE.
+    # Six filed b08 verdicts cite sidecars this function wrote; the byte-identity
+    # check above already runs through the NEW signature (`lora_lines` defaults
+    # to empty), so the golden reproduction IS the no-regression proof. These
+    # clauses say the same thing at the unit below it.
+    check("no --lora emits NO sidecar lines at all",
+          lora_meta_lines("", 0.8, "") == [])
+    check("a LoRA-less sidecar carries no lora line anywhere",
+          "lora" not in gtext)
+    LORA = r"C:\banyan-farm\lora-jerry-v2-0822\out\bnyjerry-sdxl-v2.safetensors"
+    ll = lora_meta_lines(LORA, 0.8, "4" * 64)
+    check("a LoRA sidecar names the weights file",
+          "lora: bnyjerry-sdxl-v2.safetensors" in ll)
+    check("a LoRA sidecar carries the sha256 of the bytes that drew the frame",
+          "lora_sha256: " + "4" * 64 in ll)
+    check("a LoRA sidecar records the weight it was fused at",
+          "lora_weight: 0.8" in ll)
+    check("a LoRA sidecar records the fuse-before-swap ordering",
+          any(l.startswith("lora_fused_before_controlnet_swap: true") for l in ll))
+    # AND THE UNMEASURED CASE IS NAMED RATHER THAN BLANK. A sidecar that says
+    # `lora_sha256:` with nothing after it reads as "no hash exists"; it must say
+    # that a hash was not taken, which is a different and reportable fact.
+    check("a LoRA sidecar with no measured sha says so in words",
+          "lora_sha256: unmeasured" in lora_meta_lines(LORA, 0.8, ""))
+    # AND THE BLOCK DOES NOT DISTURB THE CONTROLNET BLOCK IT SITS BESIDE.
+    with_both = sidecar_text(
+        pipeline_class="StableDiffusionXLControlNetInpaintPipeline", in_ch=4,
+        W=832, H=1216, steps=40, cfg=7.5, strength=1.0, seed=1, pad_crop=0,
+        blur=8, init="i.png", init_sha="d" * 64, mask_png_name="m.png",
+        mask_lines=["mask_shape: png"], lora_lines=ll,
+        control_lines=["controlnet: %s" % NET_POSE], stamp="now", render_s=1.0,
+        wall_s=2.0, versions={"python": "3", "torch": "2", "diffusers": "0"},
+        note="n", prompt="p", negative="q")
+    check("the LoRA block does not disturb the controlnet block",
+          "controlnet: %s" % NET_POSE in with_both
+          and "lora: bnyjerry-sdxl-v2.safetensors" in with_both)
+    # THE FUSE IS BEFORE THE SWAP IN THE SOURCE, WHICH IS THE WHOLE MECHANISM.
+    # from_pipe carries a fused UNet by identity; a fuse after it would be fused
+    # into a pipeline nobody calls. Asserted on the source order, because there
+    # is no way to assert it without a GPU otherwise.
+    isrc = open(os.path.abspath(__file__), "r", encoding="utf-8").read()
+    check("fuse_lora is called BEFORE AutoPipelineForInpainting.from_pipe",
+          isrc.index("pipe.fuse_lora(")
+          < isrc.index("pipe = AutoPipelineForInpainting.from_pipe("))
+    check("the PEFT backend is gated before any LoRA load is attempted",
+          isrc.index("USE_PEFT_BACKEND") < isrc.index("pipe.load_lora_weights("))
 
     # ---- 3. THE TWO HINTS, RESOLVED ---------------------------------------
     both = _Args(controlnet=NET_POSE, control=os.path.join(repo, HINT_POSE),
