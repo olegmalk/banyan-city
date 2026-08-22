@@ -47,6 +47,19 @@ object survives motion when THE MODEL CAN TELL WHERE IT ENDS. This init is the
 separation hypothesis made renderable; the motion sample off this pass is the
 test of it.
 
+A FILING DEFECT THIS MODULE CARRIES ON ITS FACE. The 09:25 run of this spec
+published to `farm-out/ep2-b16-sapnat4-0821/` -- the parent's DATE, not today's
+-- because the retoken list inherited from sapnat3 rewrote the publish path
+only in its "farm-out/...*/" form, and the publish step writes a WINDOWS path
+with backslashes that no such rule can match. The retoken is fixed below and an
+assertion now refuses the emit if any runner-read key still names a sibling id,
+but `pipeline/jobs/ep2-b16-sapnat4-0822.yaml` ON DISK IS THE ONE THAT RAN and
+still publishes to -0821. It is deliberately NOT re-written: the artifact is
+where the box put it, the box's own .sha256 manifest is the authority, and a
+spec edited to describe a run it did not produce is the worse lie. Re-deriving
+this module will produce a spec that differs from that yaml in the publish path
+and in nothing else.
+
 $0 to derive. ~4 GPU minutes.
 """
 from __future__ import annotations
@@ -147,6 +160,21 @@ def build(force=False, write=False):
         },
         retoken=[
             ("b03sapnat-0821", "b16sapnat4-0822"),
+            # THE NO-SLASH PAIR IS FIRST AND IT IS THE FIX. sapnat3's list has
+            # only the trailing-slash form, which never matches the publish
+            # step's own dir string (it has no trailing slash), so the later
+            # ("b03-sapnat", ...) rule rewrote it and left the PARENT'S DATE
+            # behind: the 09:25 run of this spec published to
+            # farm-out/ep2-b16-sapnat4-0821/. Pixels right, path a day wrong.
+            # The artifact is kept exactly as the box wrote it -- the producing
+            # job's manifest is the authority -- and the fix lives here so the
+            # next derive off this family cannot repeat it.
+            # ...and the pair is on the BARE ID, not on a path prefix, because
+            # the publish step writes a WINDOWS path with backslashes
+            # (C:\...\farm-out\ep2-b03-sapnat-0821) that no "farm-out/" rule
+            # can ever match. That is the second half of why the first fix
+            # attempt still failed its own new assertion.
+            ("ep2-b03-sapnat-0821", os.path.basename(PUBDIR)),
             ("farm-out/ep2-b03-sapnat-0821/", PUBDIR + "/"),
             ("b03-sapnat-in-mask-0821.png", MASK),
             ("b03-sapnat-in-0821.png", INIT),
@@ -212,6 +240,20 @@ def build(force=False, write=False):
                 "ITS bar, not this one's."),
         },
         by="pipeline/derive_ep2_b16_sapnat4_0822.py")
+
+    # AND THE ASSERTION THAT WOULD HAVE CAUGHT IT. A retoken that half-fires is
+    # silent: the spec runs, the frame is right, and only the directory name
+    # says a false thing. So the emitted spec is searched for any sibling of
+    # this id that is not this id.
+    machine = repr({k: child.get(k) for k in ("steps", "payload", "artifacts")})
+    for wrong in ("ep2-b16-sapnat4-0821", "ep2-b03-sapnat-0821",
+                  "b03sapnat-0821"):
+        if wrong in machine:
+            raise SystemExit(
+                "!! a runner-read key still names %r -- a retoken half-fired "
+                "and the publish path would lie" % wrong)
+    if PUBDIR not in machine:
+        raise SystemExit("!! nothing in the spec publishes to %s" % PUBDIR)
 
     out = "pipeline/jobs/%s.yaml" % NEW_ID
     if write:
