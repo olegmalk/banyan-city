@@ -1,0 +1,200 @@
+steps:  89%|████████▉ | 588/660 [17:51<02:11,  1.82s/it, avr_loss=0.103]
+steps:  89%|████████▉ | 589/660 [17:52<02:09,  1.82s/it, avr_loss=0.103]
+steps:  89%|████████▉ | 589/660 [17:52<02:09,  1.82s/it, avr_loss=0.102]
+steps:  89%|████████▉ | 590/660 [17:54<02:07,  1.82s/it, avr_loss=0.102]
+steps:  89%|████████▉ | 590/660 [17:54<02:07,  1.82s/it, avr_loss=0.1]  
+steps:  90%|████████▉ | 591/660 [17:55<02:05,  1.82s/it, avr_loss=0.1]
+steps:  90%|████████▉ | 591/660 [17:55<02:05,  1.82s/it, avr_loss=0.1]
+steps:  90%|████████▉ | 592/660 [17:57<02:03,  1.82s/it, avr_loss=0.1]
+steps:  90%|████████▉ | 592/660 [17:57<02:03,  1.82s/it, avr_loss=0.102]
+steps:  90%|████████▉ | 593/660 [17:58<02:01,  1.82s/it, avr_loss=0.102]
+steps:  90%|████████▉ | 593/660 [17:58<02:01,  1.82s/it, avr_loss=0.102]
+steps:  90%|█████████ | 594/660 [18:01<02:00,  1.82s/it, avr_loss=0.102]
+steps:  90%|█████████ | 594/660 [18:01<02:00,  1.82s/it, avr_loss=0.101]
+epoch 10/10
+
+W0822 10:48:52.134000 22364 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+W0822 10:48:55.068000 13444 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+W0822 10:48:58.003000 16836 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+W0822 10:49:00.942000 20292 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+W0822 10:49:03.873000 9944 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+W0822 10:49:06.808000 16564 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+W0822 10:49:09.742000 17424 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+W0822 10:49:12.674000 25644 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+2026-08-22 10:49:13 INFO     epoch is incremented.               dataset.py:464
+                             current_epoch: 0, epoch: 10                       
+2026-08-22 10:49:13 INFO     epoch is incremented.               dataset.py:464
+                             current_epoch: 0, epoch: 10                       
+2026-08-22 10:49:13 INFO     epoch is incremented.               dataset.py:464
+                             current_epoch: 0, epoch: 10                       
+2026-08-22 10:49:13 INFO     epoch is incremented.               dataset.py:464
+                             current_epoch: 0, epoch: 10                       
+2026-08-22 10:49:13 INFO     epoch is incremented.               dataset.py:464
+                             current_epoch: 0, epoch: 10                       
+2026-08-22 10:49:13 INFO     epoch is incremented.               dataset.py:464
+                             current_epoch: 0, epoch: 10                       
+2026-08-22 10:49:13 INFO     epoch is incremented.               dataset.py:464
+                             current_epoch: 0, epoch: 10                       
+2026-08-22 10:49:13 INFO     epoch is incremented.               dataset.py:464
+                             current_epoch: 0, epoch: 10                       
+
+steps:  90%|█████████ | 595/660 [18:26<02:00,  1.86s/it, avr_loss=0.101]
+steps:  90%|█████████ | 595/660 [18:26<02:00,  1.86s/it, avr_loss=0.103]
+steps:  90%|█████████ | 596/660 [18:28<01:58,  1.86s/it, avr_loss=0.103]
+steps:  90%|█████████ | 596/660 [18:28<01:58,  1.86s/it, avr_loss=0.102]
+steps:  90%|█████████ | 597/660 [18:29<01:57,  1.86s/it, avr_loss=0.102]
+steps:  90%|█████████ | 597/660 [18:29<01:57,  1.86s/it, avr_loss=0.101]
+steps:  91%|█████████ | 598/660 [18:30<01:55,  1.86s/it, avr_loss=0.101]
+steps:  91%|█████████ | 598/660 [18:30<01:55,  1.86s/it, avr_loss=0.103]
+steps:  91%|█████████ | 599/660 [18:32<01:53,  1.86s/it, avr_loss=0.103]
+steps:  91%|█████████ | 599/660 [18:32<01:53,  1.86s/it, avr_loss=0.101]
+steps:  91%|█████████ | 600/660 [18:33<01:51,  1.86s/it, avr_loss=0.101]
+steps:  91%|█████████ | 600/660 [18:33<01:51,  1.86s/it, avr_loss=0.101]
+steps:  91%|█████████ | 601/660 [18:35<01:49,  1.86s/it, avr_loss=0.101]
+steps:  91%|█████████ | 601/660 [18:35<01:49,  1.86s/it, avr_loss=0.103]
+steps:  91%|█████████ | 602/660 [18:36<01:47,  1.85s/it, avr_loss=0.103]
+steps:  91%|█████████ | 602/660 [18:36<01:47,  1.85s/it, avr_loss=0.105]
+steps:  91%|█████████▏| 603/660 [18:38<01:45,  1.85s/it, avr_loss=0.105]
+steps:  91%|█████████▏| 603/660 [18:38<01:45,  1.85s/it, avr_loss=0.107]
+steps:  92%|█████████▏| 604/660 [18:39<01:43,  1.85s/it, avr_loss=0.107]
+steps:  92%|█████████▏| 604/660 [18:39<01:43,  1.85s/it, avr_loss=0.109]
+steps:  92%|█████████▏| 605/660 [18:40<01:41,  1.85s/it, avr_loss=0.109]
+steps:  92%|█████████▏| 605/660 [18:40<01:41,  1.85s/it, avr_loss=0.11] 
+steps:  92%|█████████▏| 606/660 [18:42<01:40,  1.85s/it, avr_loss=0.11]
+steps:  92%|█████████▏| 606/660 [18:42<01:40,  1.85s/it, avr_loss=0.11]
+steps:  92%|█████████▏| 607/660 [18:43<01:38,  1.85s/it, avr_loss=0.11]
+steps:  92%|█████████▏| 607/660 [18:43<01:38,  1.85s/it, avr_loss=0.109]
+steps:  92%|█████████▏| 608/660 [18:45<01:36,  1.85s/it, avr_loss=0.109]
+steps:  92%|█████████▏| 608/660 [18:45<01:36,  1.85s/it, avr_loss=0.107]
+steps:  92%|█████████▏| 609/660 [18:46<01:34,  1.85s/it, avr_loss=0.107]
+steps:  92%|█████████▏| 609/660 [18:46<01:34,  1.85s/it, avr_loss=0.108]
+steps:  92%|█████████▏| 610/660 [18:48<01:32,  1.85s/it, avr_loss=0.108]
+steps:  92%|█████████▏| 610/660 [18:48<01:32,  1.85s/it, avr_loss=0.106]
+steps:  93%|█████████▎| 611/660 [18:49<01:30,  1.85s/it, avr_loss=0.106]
+steps:  93%|█████████▎| 611/660 [18:49<01:30,  1.85s/it, avr_loss=0.106]
+steps:  93%|█████████▎| 612/660 [18:51<01:28,  1.85s/it, avr_loss=0.106]
+steps:  93%|█████████▎| 612/660 [18:51<01:28,  1.85s/it, avr_loss=0.105]
+steps:  93%|█████████▎| 613/660 [18:52<01:26,  1.85s/it, avr_loss=0.105]
+steps:  93%|█████████▎| 613/660 [18:52<01:26,  1.85s/it, avr_loss=0.104]
+steps:  93%|█████████▎| 614/660 [18:53<01:24,  1.85s/it, avr_loss=0.104]
+steps:  93%|█████████▎| 614/660 [18:53<01:24,  1.85s/it, avr_loss=0.102]
+steps:  93%|█████████▎| 615/660 [18:55<01:23,  1.85s/it, avr_loss=0.102]
+steps:  93%|█████████▎| 615/660 [18:55<01:23,  1.85s/it, avr_loss=0.102]
+steps:  93%|█████████▎| 616/660 [18:56<01:21,  1.85s/it, avr_loss=0.102]
+steps:  93%|█████████▎| 616/660 [18:56<01:21,  1.85s/it, avr_loss=0.102]
+steps:  93%|█████████▎| 617/660 [18:58<01:19,  1.84s/it, avr_loss=0.102]
+steps:  93%|█████████▎| 617/660 [18:58<01:19,  1.84s/it, avr_loss=0.105]
+steps:  94%|█████████▎| 618/660 [18:59<01:17,  1.84s/it, avr_loss=0.105]
+steps:  94%|█████████▎| 618/660 [18:59<01:17,  1.84s/it, avr_loss=0.105]
+steps:  94%|█████████▍| 619/660 [19:01<01:15,  1.84s/it, avr_loss=0.105]
+steps:  94%|█████████▍| 619/660 [19:01<01:15,  1.84s/it, avr_loss=0.106]
+steps:  94%|█████████▍| 620/660 [19:02<01:13,  1.84s/it, avr_loss=0.106]
+steps:  94%|█████████▍| 620/660 [19:02<01:13,  1.84s/it, avr_loss=0.106]
+steps:  94%|█████████▍| 621/660 [19:03<01:11,  1.84s/it, avr_loss=0.106]
+steps:  94%|█████████▍| 621/660 [19:03<01:11,  1.84s/it, avr_loss=0.107]
+steps:  94%|█████████▍| 622/660 [19:05<01:09,  1.84s/it, avr_loss=0.107]
+steps:  94%|█████████▍| 622/660 [19:05<01:09,  1.84s/it, avr_loss=0.105]
+steps:  94%|█████████▍| 623/660 [19:06<01:08,  1.84s/it, avr_loss=0.105]
+steps:  94%|█████████▍| 623/660 [19:06<01:08,  1.84s/it, avr_loss=0.106]
+steps:  95%|█████████▍| 624/660 [19:08<01:06,  1.84s/it, avr_loss=0.106]
+steps:  95%|█████████▍| 624/660 [19:08<01:06,  1.84s/it, avr_loss=0.106]
+steps:  95%|█████████▍| 625/660 [19:09<01:04,  1.84s/it, avr_loss=0.106]
+steps:  95%|█████████▍| 625/660 [19:09<01:04,  1.84s/it, avr_loss=0.106]
+steps:  95%|█████████▍| 626/660 [19:11<01:02,  1.84s/it, avr_loss=0.106]
+steps:  95%|█████████▍| 626/660 [19:11<01:02,  1.84s/it, avr_loss=0.105]
+steps:  95%|█████████▌| 627/660 [19:12<01:00,  1.84s/it, avr_loss=0.105]
+steps:  95%|█████████▌| 627/660 [19:12<01:00,  1.84s/it, avr_loss=0.104]
+steps:  95%|█████████▌| 628/660 [19:14<00:58,  1.84s/it, avr_loss=0.104]
+steps:  95%|█████████▌| 628/660 [19:14<00:58,  1.84s/it, avr_loss=0.103]
+steps:  95%|█████████▌| 629/660 [19:15<00:56,  1.84s/it, avr_loss=0.103]
+steps:  95%|█████████▌| 629/660 [19:15<00:56,  1.84s/it, avr_loss=0.102]
+steps:  95%|█████████▌| 630/660 [19:16<00:55,  1.84s/it, avr_loss=0.102]
+steps:  95%|█████████▌| 630/660 [19:16<00:55,  1.84s/it, avr_loss=0.0999]
+steps:  96%|█████████▌| 631/660 [19:18<00:53,  1.84s/it, avr_loss=0.0999]
+steps:  96%|█████████▌| 631/660 [19:18<00:53,  1.84s/it, avr_loss=0.101] 
+steps:  96%|█████████▌| 632/660 [19:19<00:51,  1.84s/it, avr_loss=0.101]
+steps:  96%|█████████▌| 632/660 [19:19<00:51,  1.84s/it, avr_loss=0.0987]
+steps:  96%|█████████▌| 633/660 [19:21<00:49,  1.83s/it, avr_loss=0.0987]
+steps:  96%|█████████▌| 633/660 [19:21<00:49,  1.83s/it, avr_loss=0.0977]
+steps:  96%|█████████▌| 634/660 [19:22<00:47,  1.83s/it, avr_loss=0.0977]
+steps:  96%|█████████▌| 634/660 [19:22<00:47,  1.83s/it, avr_loss=0.0952]
+steps:  96%|█████████▌| 635/660 [19:24<00:45,  1.83s/it, avr_loss=0.0952]
+steps:  96%|█████████▌| 635/660 [19:24<00:45,  1.83s/it, avr_loss=0.0942]
+steps:  96%|█████████▋| 636/660 [19:25<00:43,  1.83s/it, avr_loss=0.0942]
+steps:  96%|█████████▋| 636/660 [19:25<00:43,  1.83s/it, avr_loss=0.0936]
+steps:  97%|█████████▋| 637/660 [19:27<00:42,  1.83s/it, avr_loss=0.0936]
+steps:  97%|█████████▋| 637/660 [19:27<00:42,  1.83s/it, avr_loss=0.0913]
+steps:  97%|█████████▋| 638/660 [19:28<00:40,  1.83s/it, avr_loss=0.0913]
+steps:  97%|█████████▋| 638/660 [19:28<00:40,  1.83s/it, avr_loss=0.0909]
+steps:  97%|█████████▋| 639/660 [19:29<00:38,  1.83s/it, avr_loss=0.0909]
+steps:  97%|█████████▋| 639/660 [19:29<00:38,  1.83s/it, avr_loss=0.0902]
+steps:  97%|█████████▋| 640/660 [19:31<00:36,  1.83s/it, avr_loss=0.0902]
+steps:  97%|█████████▋| 640/660 [19:31<00:36,  1.83s/it, avr_loss=0.089] 
+steps:  97%|█████████▋| 641/660 [19:32<00:34,  1.83s/it, avr_loss=0.089]
+steps:  97%|█████████▋| 641/660 [19:32<00:34,  1.83s/it, avr_loss=0.0903]
+steps:  97%|█████████▋| 642/660 [19:34<00:32,  1.83s/it, avr_loss=0.0903]
+steps:  97%|█████████▋| 642/660 [19:34<00:32,  1.83s/it, avr_loss=0.0909]
+steps:  97%|█████████▋| 643/660 [19:35<00:31,  1.83s/it, avr_loss=0.0909]
+steps:  97%|█████████▋| 643/660 [19:35<00:31,  1.83s/it, avr_loss=0.0917]
+steps:  98%|█████████▊| 644/660 [19:36<00:29,  1.83s/it, avr_loss=0.0917]
+steps:  98%|█████████▊| 644/660 [19:36<00:29,  1.83s/it, avr_loss=0.093] 
+steps:  98%|█████████▊| 645/660 [19:38<00:27,  1.83s/it, avr_loss=0.093]
+steps:  98%|█████████▊| 645/660 [19:38<00:27,  1.83s/it, avr_loss=0.0951]
+steps:  98%|█████████▊| 646/660 [19:40<00:25,  1.83s/it, avr_loss=0.0951]
+steps:  98%|█████████▊| 646/660 [19:40<00:25,  1.83s/it, avr_loss=0.0945]
+steps:  98%|█████████▊| 647/660 [19:41<00:23,  1.83s/it, avr_loss=0.0945]
+steps:  98%|█████████▊| 647/660 [19:41<00:23,  1.83s/it, avr_loss=0.0963]
+steps:  98%|█████████▊| 648/660 [19:42<00:21,  1.83s/it, avr_loss=0.0963]
+steps:  98%|█████████▊| 648/660 [19:42<00:21,  1.83s/it, avr_loss=0.098] 
+steps:  98%|█████████▊| 649/660 [19:44<00:20,  1.82s/it, avr_loss=0.098]
+steps:  98%|█████████▊| 649/660 [19:44<00:20,  1.82s/it, avr_loss=0.0991]
+steps:  98%|█████████▊| 650/660 [19:45<00:18,  1.82s/it, avr_loss=0.0991]
+steps:  98%|█████████▊| 650/660 [19:45<00:18,  1.82s/it, avr_loss=0.0985]
+steps:  99%|█████████▊| 651/660 [19:47<00:16,  1.82s/it, avr_loss=0.0985]
+steps:  99%|█████████▊| 651/660 [19:47<00:16,  1.82s/it, avr_loss=0.0995]
+steps:  99%|█████████▉| 652/660 [19:48<00:14,  1.82s/it, avr_loss=0.0995]
+steps:  99%|█████████▉| 652/660 [19:48<00:14,  1.82s/it, avr_loss=0.101] 
+steps:  99%|█████████▉| 653/660 [19:50<00:12,  1.82s/it, avr_loss=0.101]
+steps:  99%|█████████▉| 653/660 [19:50<00:12,  1.82s/it, avr_loss=0.1]  
+steps:  99%|█████████▉| 654/660 [19:51<00:10,  1.82s/it, avr_loss=0.1]
+steps:  99%|█████████▉| 654/660 [19:51<00:10,  1.82s/it, avr_loss=0.101]
+steps:  99%|█████████▉| 655/660 [19:53<00:09,  1.82s/it, avr_loss=0.101]
+steps:  99%|█████████▉| 655/660 [19:53<00:09,  1.82s/it, avr_loss=0.103]
+steps:  99%|█████████▉| 656/660 [19:54<00:07,  1.82s/it, avr_loss=0.103]
+steps:  99%|█████████▉| 656/660 [19:54<00:07,  1.82s/it, avr_loss=0.104]
+steps: 100%|█████████▉| 657/660 [19:55<00:05,  1.82s/it, avr_loss=0.104]
+steps: 100%|█████████▉| 657/660 [19:55<00:05,  1.82s/it, avr_loss=0.105]
+steps: 100%|█████████▉| 658/660 [19:57<00:03,  1.82s/it, avr_loss=0.105]
+steps: 100%|█████████▉| 658/660 [19:57<00:03,  1.82s/it, avr_loss=0.103]
+steps: 100%|█████████▉| 659/660 [19:58<00:01,  1.82s/it, avr_loss=0.103]
+steps: 100%|█████████▉| 659/660 [19:58<00:01,  1.82s/it, avr_loss=0.105]
+steps: 100%|██████████| 660/660 [20:01<00:00,  1.82s/it, avr_loss=0.105]
+steps: 100%|██████████| 660/660 [20:01<00:00,  1.82s/it, avr_loss=0.105]
+saving checkpoint: C:\banyan-farm\lora-sapling-0822\out\bnysapling-sdxl-v1.safetensors
+2026-08-22 10:50:50 INFO     model saved.                 train_network.py:1863
+
+steps: 100%|██████████| 660/660 [20:02<00:00,  1.82s/it, avr_loss=0.105]
+==== step train END rc=0 2026-08-22T06:50:52Z ====
+
+==== step sample START 2026-08-22T06:50:52Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\lora-sapling-0822\\sample_lora.py", "--lora", "C:\\banyan-farm\\lora-sapling-0822\\out\\bnysapling-sdxl-v1.safetensors", "--lora-weight", "0.8", "--prompt", "bnysapling, a young sapling, two leaves, 25 cm tall, medium shot, bare tilled earth field, a low stone wall behind, overcast, anime style, cel shading, detailed background, masterpiece, best quality, very aesthetic", "--negative", "1boy, 1girl, people, goblin, text, watermark, signature, photorealism, 3d render, low quality, worst quality, blurry", "--width", "832", "--height", "1216", "--steps", "40", "--guidance", "7.5", "--seed", "20260822", "--out", "C:\\banyan-farm\\lora-sapling-0822\\out\\SAMPLE-bnysapling-tilled-overcast.png"]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:01,  5.28it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00,  4.34it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:00<00:00,  6.75it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  1.83it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.81it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+Traceback (most recent call last):
+  File "C:\banyan-farm\lora-sapling-0822\sample_lora.py", line 131, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\banyan-farm\lora-sapling-0822\sample_lora.py", line 76, in main
+    pipe.load_lora_weights(os.path.dirname(os.path.abspath(args.lora)),
+  File "C:\banyan-farm\venv\Lib\site-packages\diffusers\loaders\lora.py", line 1214, in load_lora_weights
+    raise ValueError("PEFT backend is required for this method.")
+ValueError: PEFT backend is required for this method.
+==== step sample END rc=1 2026-08-22T06:51:01Z ====
+#### job lora-sapling-0822-1787380176 finished rc=1 2026-08-22T06:51:01Z

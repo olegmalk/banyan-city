@@ -1,0 +1,26 @@
+# TRAINED WEIGHTS NEVER TRAVEL. Written 2026-08-22 by the sapling-LoRA lane,
+# from the courier's side rather than the repo's, because THIS is the tree the
+# courier commits: box_runner.Courier._publish runs
+# `git add -A -- farm-out` then pushes farm-results-rtx5090, and a rule on main
+# does not reach it.
+#
+# MEASURED, not assumed: one rank-32 SDXL LoRA checkpoint from
+# train-sapling-0822 is 228,453,516 bytes, and that job saves FIVE.
+# GitHub hard-rejects any single blob over 100 MiB. A rejected push is not a
+# retry the courier recovers from -- it has already committed locally, so the
+# oversized blob sits at the head of this branch forever and EVERY OTHER LANE'S
+# results stop reaching the tree behind it. One lane's publish step, every
+# lane's outage.
+#
+# pipeline/research/character-lora-sdxl-0820.md section 5 calls a rank-32 LoRA
+# "still a ~35 MB file". That is the SD1.5 number carried forward; it is wrong
+# by 6.5x for SDXL. A spec author who trusts it ships 1.1 GB in good faith,
+# which is exactly why this is a rule and not a note.
+#
+# Weights stay on the box that trained them. What DOES travel is the sha256
+# manifest each publish step writes, so any sample can still be traced to the
+# exact weights that drew it.
+*.safetensors
+*.ckpt
+*.pt
+*.bin

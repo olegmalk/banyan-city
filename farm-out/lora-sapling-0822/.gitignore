@@ -1,0 +1,12 @@
+# 228 MB per checkpoint x5. GitHub HARD-REJECTS any blob over 100 MiB, and a
+# rejected push is not a retry - the courier commits locally, the push is
+# refused forever, and every OTHER lane's results stop reaching the tree
+# behind that commit. Measured 2026-08-22: bnysapling-sdxl-v1-000002
+# .safetensors = 228,453,516 bytes. research/character-lora-sdxl-0820.md
+# section 5 says a rank-32 SDXL LoRA is ~35 MB; that is the SD1.5 number and it
+# is wrong by 6.5x.
+#
+# The WEIGHTS therefore stay on the box, at
+# C:\banyan-farm\lora-sapling-0822\out\. The SAMPLES and their sidecars publish
+# normally - those are what anyone needs to see.
+*.safetensors
