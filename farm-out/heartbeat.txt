@@ -4536,3 +4536,5 @@
 08:50:18Z STARTED task=lora-sapling-v2-bars-0822-1787388356 attempt=1 on box-runner
 08:55:33Z DONE task=lora-sapling-v2-bars-0822-1787388356 rc=0 artifacts=3
 08:55:41Z box-runner idle ready=0 failed=108
+09:03:06Z STARTED task=ep2-guardcast4-g-0822-1787389268 attempt=1 on box-runner
+09:03:25Z DONE task=ep2-guardcast4-g-0822-1787389268 rc=0 artifacts=1
