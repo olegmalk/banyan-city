@@ -161,6 +161,28 @@ SAMPLE_CELLS = ("j01", "j14", "j21")
 # the sample cell used, and only the strength moves.
 SWEEP_CELLS = ("k01", "k02", "k03", "k04", "k05", "k06", "k07", "k08")
 
+# ── ROUND TWO OF THE SWEEP, AND IT EXISTS BECAUSE ROUND ONE ANSWERED TWO OF ITS
+# THREE ROWS AND KILLED THE THIRD.
+#
+#   COWBOY  ANSWERED. 0.20 holds his face exactly -- narrow almond, TINY DARK
+#           pupil, ears near horizontal, and the background genuinely moved.
+#           0.25 opens the eye toward round and lifts the ears. The number is
+#           0.20 and it is measured, not chosen.
+#   FULL    NOT ANSWERED. The eye SHAPE holds at 0.40 and at 0.30, and the PUPIL
+#           GOES YELLOW at both. A tiny yellow pupil is a smaller miss than the
+#           round iris sixteen rounds produced, and it is still a colour that is
+#           not his, on the one axis that has four founder vetoes on it. In a
+#           TRAINING SET a consistent wrong pupil colour is worse than in a
+#           plate, because the trigger would learn it. So the row continues
+#           downward until the pupil comes back dark.
+#   HEADSQ  DEAD. Drifted at 0.40, 0.20 and 0.15 -- its own floor. Replaced by
+#           `headnat`, which magnifies nothing. 0.25 and 0.30 on that row were
+#           NOT judged and are not claimed to have been: a row whose floor fails
+#           cannot be rescued by its ceiling, and rendering two more frames to
+#           watch a monotonic curve get worse is the spend this lane is supposed
+#           to refuse.
+M_CELLS = ("m01", "m02", "m03", "m04", "m05")
+
 # init key -> (file, size, framing caption word)
 #
 # THE FRAMING WORD IS A CAPTION TOKEN AND IT IS NOT DECORATION. It is the third
@@ -175,6 +197,12 @@ INITS = {
     "cowboy-flip": ("init-cowboy-flip-0822.png", (832, 1216), "cowboy shot"),
     "headsq":      ("init-headsq-0822.png",      (832, 832),  "portrait"),
     "headsq-flip": ("init-headsq-flip-0822.png", (832, 832),  "portrait"),
+    # THE NATIVE SQUARE, headsq's replacement. 1.000x -- see
+    # build_jerry_inits_0822.py, which explains why the magnified one is dead.
+    # `upper body` rather than `portrait`: this frame holds head, torso AND
+    # hands, and a caption has to describe the frame that arrived.
+    "headnat":      ("init-headnat-0822.png",      (832, 832), "upper body"),
+    "headnat-flip": ("init-headnat-flip-0822.png", (832, 832), "upper body"),
 }
 
 # cell -> (init, strength, ground clause for the PROMPT, ground word for the
@@ -286,6 +314,19 @@ CELLS = {
             "low golden sun", "warm low sunlight"),
     "k08": ("headsq", "0.15", "standing against a pale open sky", "a pale sky",
             "low golden sun", "warm low sunlight"),
+
+    # ── SWEEP ROUND TWO. The full-body row continues down after the pupil; the
+    # native square gets the bracket its predecessor's failure defined.
+    "m01": ("full", "0.25", "standing on dry cracked bare earth, a green hedgerow far behind",
+            "dry cracked earth", "low golden sun", "warm low sunlight"),
+    "m02": ("full", "0.20", "standing on dry cracked bare earth, a green hedgerow far behind",
+            "dry cracked earth", "low golden sun", "warm low sunlight"),
+    "m03": ("headnat", "0.30", "standing against a pale open sky", "a pale sky",
+            "low golden sun", "warm low sunlight"),
+    "m04": ("headnat", "0.25", "standing against a pale open sky", "a pale sky",
+            "low golden sun", "warm low sunlight"),
+    "m05": ("headnat", "0.20", "standing against a pale open sky", "a pale sky",
+            "low golden sun", "warm low sunlight"),
 }
 
 # THE POSITIVE. `a small green goblin` and nothing else about him -- the same
@@ -358,7 +399,7 @@ def emit(cell: str, write: bool) -> str:
     # SEEDS DO NOT COLLIDE ACROSS THE TWO LETTER SERIES. `int(cell[1:])` alone
     # would give j01 and k01 the same draw, and the sweep's whole job is to be
     # comparable to the sample cell it descends from -- comparable, not identical.
-    seed = SEED0 + int(cell[1:]) + (100 if cell[0] == "k" else 0)
+    seed = SEED0 + int(cell[1:]) + {"j": 0, "k": 100, "m": 200}[cell[0]]
 
     new_id = "ep2-jds-%s-0822" % cell
     dirtok = "jds-%s-0822" % cell
@@ -631,7 +672,7 @@ def sample_gate() -> None:
     """
     import yaml
     missing = []
-    for cell in SAMPLE_CELLS + SWEEP_CELLS:
+    for cell in SAMPLE_CELLS + SWEEP_CELLS + M_CELLS:
         p = os.path.join(REPO, "pipeline/jobs/ep2-jds-%s-0822.yaml" % cell)
         if not os.path.isfile(p):
             missing.append("%s: never emitted" % cell)
@@ -657,6 +698,9 @@ def main() -> int:
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--sample", action="store_true",
                     help="the three recipe-change cells and nothing else")
+    ap.add_argument("--sweep2", action="store_true",
+                    help="sweep round two: the full-body row below 0.30, and "
+                         "the native square that replaces the magnified one")
     ap.add_argument("--sweep", action="store_true",
                     help="the strength sweep the sample gate demanded: one "
                          "number per framing, one variable per cell")
@@ -675,10 +719,13 @@ def main() -> int:
         cells = list(SAMPLE_CELLS)
     elif a.sweep:
         cells = list(SWEEP_CELLS)
+    elif a.sweep2:
+        cells = list(M_CELLS)
     elif a.batch:
         sample_gate()
         cells = [c for c in sorted(CELLS)
-                 if c not in SAMPLE_CELLS and c not in SWEEP_CELLS]
+                 if c not in SAMPLE_CELLS and c not in SWEEP_CELLS
+                 and c not in M_CELLS]
     else:
         cells = sorted(CELLS)
 
