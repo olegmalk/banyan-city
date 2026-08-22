@@ -506,6 +506,25 @@ def main() -> int:
                          "as if it were him and left it standing in the output. "
                          "His true left edge is x~322 above y 420 and x~254 "
                          "below it, so it takes two.")
+    # AN OPTIONAL FIG, OFF BY DEFAULT, so the five plates this tool has already
+    # produced stay reproducible byte for byte from their own command lines.
+    # Beat 19 is the only beat that needs one: its whole action is a fruit
+    # coming off a stem, and every motion attempt on it before 2026-08-22 asked
+    # for that fall with no fruit in frame. The b19 tool that CAN draw one has
+    # b19's old plate typed into it -- leaf tips, a ground-plane px/cm model,
+    # two whips to erase -- so aiming it at a new plate is an edit to its
+    # source. This is the parametric version of just the fruit.
+    ap.add_argument("--fig", default=None,
+                    help="cx,cy,rx,ry of ONE fig hanging on the stem")
+    ap.add_argument("--fig-hue", default="108,58,160",
+                    help="canon violet. Beat 18's ratified fig measured in the "
+                         "violet/magenta family and beat 19's plate's own "
+                         "fruits measured 266-274 deg; the plate being drawn "
+                         "into may contain no violet at all, so the HUE is "
+                         "canon's and only the VALUE is fitted to the plate -- "
+                         "the same rule beat06_board_composite.py states for "
+                         "bark. MATTE: canon wants no specular, and beat 18's "
+                         "own verdict flags its glossy highlight as a caveat.")
     ap.add_argument("--out", default=None)
     ap.add_argument("--mask-out", default=None)
     ap.add_argument("--overlay-out", default=None,
@@ -673,6 +692,61 @@ def main() -> int:
         leaves.append({"side": side, "node": [round(v, 1) for v in node],
                        "tip": [round(v, 1) for v in tip], "len": round(ln, 1)})
 
+    fig_geom = None
+    if a.fig:
+        fcx, fcy, frx, fry = (float(v) for v in a.fig.split(","))
+        # VALUE FROM THE PLATE, HUE FROM CANON. Same rule as the bark board:
+        # a field of green grass contains no violet to sample, and tinting the
+        # fruit green to match the frame would be drawing the wrong object.
+        fhue = np.array([float(v) for v in a.fig_hue.split(",")])
+        lp0 = np.asarray(Image.fromarray(arr).convert("L")).astype(float)
+        loc = np.zeros((H, W), bool)
+        loc[max(0, int(fcy - 3 * fry)):min(H, int(fcy + 3 * fry)),
+            max(0, int(fcx - 3 * frx)):min(W, int(fcx + 3 * frx))] = True
+        tgt = float(np.percentile(lp0[loc], 22)) if loc.any() else 90.0
+        hl = 0.299 * fhue[0] + 0.587 * fhue[1] + 0.114 * fhue[2]
+        # THE SCALE IS CAPPED AT 1.0 AND THAT IS NOT A FUDGE. Fitting the
+        # value by a naive multiply blows the hue out when the local field is
+        # BRIGHT -- on beat 19's plate the grass beside the plant reads p22 at
+        # a luma above canon violet's own, and the first run returned
+        # (255,143,255), a hot pink, which is neither canon's colour nor
+        # anything in the picture. A ripe fig is a DARK object against a lit
+        # field (beat 06's C5b makes the same argument for bark), so the fit
+        # may darken canon's violet toward the plate and may not brighten it
+        # past itself.
+        fmid = np.clip(fhue * min(1.0, tgt / max(1.0, hl)), 0, 255)
+        fdark = np.clip(fmid * 0.70, 0, 255)
+        # A PEDICEL FIRST, so the fruit hangs off the stem instead of floating
+        # beside it -- "a bead on a thread" is exactly what beat 19's wording
+        # ladder kept producing and what the drawing exists to avoid.
+        # abs(), and the first version did not have it. The apex is ABOVE the
+        # root, so apex[1] - ry is NEGATIVE; `max(1.0, ...)` clamped it to 1.0
+        # and the pedicel was drawn to x = -7000, clipped to the frame edge,
+        # which C3 caught as "the plant touches the frame edge". A guard
+        # catching a sign error is the guard doing its job, and the fix is the
+        # arithmetic rather than the guard.
+        span = max(1.0, abs(apex[1] - ry))
+        t_up = min(1.0, max(0.0, (ry - (fcy - fry)) / span))
+        stem_x = rx + (apex[0] - rx) * t_up
+        d.line([(stem_x, fcy - fry * 1.9), (fcx, fcy - fry * 0.9)],
+               fill=tuple(int(v) for v in stem_col), width=max(2, a.ink_width - 1))
+        ring = [(fcx + frx * np.cos(t * 2 * np.pi / 96.0),
+                 fcy + fry * np.sin(t * 2 * np.pi / 96.0) * (1.0 + 0.16 * np.cos(t * 2 * np.pi / 96.0)))
+                for t in range(96)]
+        d.polygon(ring, fill=tuple(int(v) for v in fmid))
+        # ONE shadow crescent on the UNLIT side and NO specular: canon's fig is
+        # matte, and beat 18's own verdict names its gloss as the caveat.
+        sh = [(fcx - lit_sign * frx * 0.30 + frx * 0.72 * np.cos(t * 2 * np.pi / 64.0),
+               fcy + fry * 0.78 * np.sin(t * 2 * np.pi / 64.0)) for t in range(64)]
+        d.polygon(sh, fill=tuple(int(v) for v in fdark))
+        outline(d, ring, ink, a.ink_width)
+        fig_geom = {"centre": [fcx, fcy], "radii": [frx, fry],
+                    "hue_source": "canon", "value_source": "plate p22 local",
+                    "fill": [int(v) for v in fmid]}
+        print("fig    %.0fx%.0f px at (%.0f,%.0f)  canon hue %s -> plate value %s"
+              % (2 * frx, 2 * fry, fcx, fcy, tuple(int(v) for v in fhue),
+                 tuple(int(v) for v in fmid)))
+
     drawn = (np.abs(np.asarray(layer).astype(np.int16)
                     - arr.astype(np.int16)).max(axis=2) > 0)
 
@@ -808,6 +882,8 @@ def main() -> int:
     geom["c5_reference"] = ref_name
     geom["c5_reference_luma"] = round(lum_ref, 1)
     geom["c5_measures"] = "the drawn plant's FILL, silhouette eroded by ink_width"
+    if fig_geom:
+        geom["fig"] = fig_geom
     if abs(lum_plant - lum_ref) > tol:
         fails.append("C5 the plant's FILL luma %.1f is %.1f away from the "
                      "%s's %.1f (tolerance %d) -- it will read as pasted "
