@@ -1,0 +1,124 @@
+#### job lora-jerry-v2-twopass2-0822-1787403411 attempt 1 start 2026-08-22T12:57:03Z
+
+==== step fetch START 2026-08-22T12:57:03Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\lora-jerry-v2-twopass2-0822\\fetch_hints.py"]
+fetched jerry-skel-h240seat-0821.png 9027 bytes OK
+fetched jerry-poseproof-init-0822.png 5712 bytes OK
+fetched jerry-poseproof-maskall-0822.png 3278 bytes OK
+==== step fetch END rc=0 2026-08-22T12:57:04Z ====
+
+==== step twopass2-b13seat-s065 START 2026-08-22T12:57:04Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\lora-jerry-v2-twopass2-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\courier-box\\farm-out\\lora-jerry-v2-tp1day-0822\\tp1day-b13seat.png", "--init-sha256", "7e6b9964526be3dd7f8b16bee5a325f62a1c2157e63273fe5e94d604e36e2bb8", "--mask-png", "C:\\banyan-farm\\lora-jerry-v2-twopass2-0822\\jerry-poseproof-maskall-0822.png", "--strength", "0.65", "--pad-crop", "0", "--blur", "0", "--controlnet", "C:\\banyan-farm\\cnet-openpose-twins", "--control", "C:\\banyan-farm\\lora-jerry-v2-twopass2-0822\\jerry-skel-h240seat-0821.png", "--control-sha256", "1e95abc723f366f2e8c6b486937cfe8709edcbe2d8af0186fa82461c8e792686", "--scale", "1.0", "--prompt-file", "C:\\banyan-farm\\lora-jerry-v2-twopass2-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\lora-jerry-v2-twopass2-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260822", "--out", "C:\\banyan-farm\\lora-jerry-v2-twopass2-0822\\out\\twopass2-b13seat-s065.png", "--lora", "C:\\banyan-farm\\lora-jerry-v2-0822\\out\\bnyjerry-sdxl-v2.safetensors", "--lora-weight", "0.8", "--lora-sha256", "4340857d02f17dbfa50c66e0a2d8f4dc3ffebb4fad1621bb3f59242e61bfeb8b", "--note", "THE CANDIDATE RECIPE. Pass one's RELIT seated plate as the init, all-white mask, bnyjerry at 0.8, beat 13's skeleton still attached at 1.0, strength 0.65 -- the rung that already produced a seated goblin before the light was fixed. If this is clean, it is the wave's recipe."]
+HINT MAGNIFICATION 1.000x (ceiling 1.05) -- the hint reaches the net at the scale it was authored
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  3.96it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  6.33it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:00<00:00,  8.90it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.94it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+LORA bnyjerry-sdxl-v2.safetensors fused at weight 0.80, sha 4340857d02f17dbf
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:20: FutureWarning: `VQEncoderOutput` is deprecated and will be removed in version 0.31. Importing `VQEncoderOutput` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQEncoderOutput`, instead.
+  deprecate("VQEncoderOutput", "0.31", deprecation_message)
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:25: FutureWarning: `VQModel` is deprecated and will be removed in version 0.31. Importing `VQModel` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQModel`, instead.
+  deprecate("VQModel", "0.31", deprecation_message)
+PIPELINE StableDiffusionXLControlNetInpaintPipeline, 1 net(s), scales 1.0
+
+  0%|          | 0/26 [00:00<?, ?it/s]
+  4%|▍         | 1/26 [00:00<00:08,  3.03it/s]
+  8%|▊         | 2/26 [00:00<00:07,  3.11it/s]
+ 12%|█▏        | 3/26 [00:00<00:07,  2.99it/s]
+ 15%|█▌        | 4/26 [00:01<00:07,  3.12it/s]
+ 19%|█▉        | 5/26 [00:01<00:06,  3.08it/s]
+ 23%|██▎       | 6/26 [00:01<00:06,  3.05it/s]
+ 27%|██▋       | 7/26 [00:02<00:06,  3.09it/s]
+ 31%|███       | 8/26 [00:02<00:05,  3.11it/s]
+ 35%|███▍      | 9/26 [00:02<00:05,  3.03it/s]
+ 38%|███▊      | 10/26 [00:03<00:05,  3.07it/s]
+ 42%|████▏     | 11/26 [00:03<00:04,  3.10it/s]
+ 46%|████▌     | 12/26 [00:03<00:04,  3.07it/s]
+ 50%|█████     | 13/26 [00:04<00:04,  3.09it/s]
+ 54%|█████▍    | 14/26 [00:04<00:03,  3.11it/s]
+ 58%|█████▊    | 15/26 [00:04<00:03,  3.08it/s]
+ 62%|██████▏   | 16/26 [00:05<00:03,  3.10it/s]
+ 65%|██████▌   | 17/26 [00:05<00:02,  3.07it/s]
+ 69%|██████▉   | 18/26 [00:05<00:02,  3.05it/s]
+ 73%|███████▎  | 19/26 [00:06<00:02,  3.07it/s]
+ 77%|███████▋  | 20/26 [00:06<00:01,  3.11it/s]
+ 81%|████████  | 21/26 [00:06<00:01,  3.08it/s]
+ 85%|████████▍ | 22/26 [00:07<00:01,  3.10it/s]
+ 88%|████████▊ | 23/26 [00:07<00:00,  3.07it/s]
+ 92%|█████████▏| 24/26 [00:07<00:00,  3.10it/s]
+ 96%|█████████▌| 25/26 [00:08<00:00,  3.07it/s]
+100%|██████████| 26/26 [00:08<00:00,  3.45it/s]
+100%|██████████| 26/26 [00:08<00:00,  3.12it/s]
+WROTE C:\banyan-farm\lora-jerry-v2-twopass2-0822\out\twopass2-b13seat-s065.png
+WROTE C:\banyan-farm\lora-jerry-v2-twopass2-0822\out\twopass2-b13seat-s065-mask.png
+WROTE C:\banyan-farm\lora-jerry-v2-twopass2-0822\out\twopass2-b13seat-s065.png.meta.yaml
+rc=0 render_s=9.4
+==== step twopass2-b13seat-s065 END rc=0 2026-08-22T12:57:24Z ====
+
+==== step twopass2-b13seat-s075 START 2026-08-22T12:57:24Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\lora-jerry-v2-twopass2-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\courier-box\\farm-out\\lora-jerry-v2-tp1day-0822\\tp1day-b13seat.png", "--init-sha256", "7e6b9964526be3dd7f8b16bee5a325f62a1c2157e63273fe5e94d604e36e2bb8", "--mask-png", "C:\\banyan-farm\\lora-jerry-v2-twopass2-0822\\jerry-poseproof-maskall-0822.png", "--strength", "0.75", "--pad-crop", "0", "--blur", "0", "--controlnet", "C:\\banyan-farm\\cnet-openpose-twins", "--control", "C:\\banyan-farm\\lora-jerry-v2-twopass2-0822\\jerry-skel-h240seat-0821.png", "--control-sha256", "1e95abc723f366f2e8c6b486937cfe8709edcbe2d8af0186fa82461c8e792686", "--scale", "1.0", "--prompt-file", "C:\\banyan-farm\\lora-jerry-v2-twopass2-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\lora-jerry-v2-twopass2-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260822", "--out", "C:\\banyan-farm\\lora-jerry-v2-twopass2-0822\\out\\twopass2-b13seat-s075.png", "--lora", "C:\\banyan-farm\\lora-jerry-v2-0822\\out\\bnyjerry-sdxl-v2.safetensors", "--lora-weight", "0.8", "--lora-sha256", "4340857d02f17dbfa50c66e0a2d8f4dc3ffebb4fad1621bb3f59242e61bfeb8b", "--note", "ONE RUNG UP. 0.65 left a crown cowlick and a skin that took its colour from the init; 0.75 gives the LoRA more of the trajectory to fix both. The risk is the seat: round seven showed the standing prior reasserting itself as soon as the LoRA gets enough of the pass."]
+HINT MAGNIFICATION 1.000x (ceiling 1.05) -- the hint reaches the net at the scale it was authored
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:01<00:02,  1.76it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:01<00:00,  3.51it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.98it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.82it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+LORA bnyjerry-sdxl-v2.safetensors fused at weight 0.80, sha 4340857d02f17dbf
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:20: FutureWarning: `VQEncoderOutput` is deprecated and will be removed in version 0.31. Importing `VQEncoderOutput` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQEncoderOutput`, instead.
+  deprecate("VQEncoderOutput", "0.31", deprecation_message)
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:25: FutureWarning: `VQModel` is deprecated and will be removed in version 0.31. Importing `VQModel` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQModel`, instead.
+  deprecate("VQModel", "0.31", deprecation_message)
+PIPELINE StableDiffusionXLControlNetInpaintPipeline, 1 net(s), scales 1.0
+
+  0%|          | 0/30 [00:00<?, ?it/s]
+  3%|▎         | 1/30 [00:00<00:09,  2.97it/s]
+  7%|▋         | 2/30 [00:00<00:09,  2.99it/s]
+ 10%|█         | 3/30 [00:01<00:09,  3.00it/s]
+ 13%|█▎        | 4/30 [00:01<00:08,  3.06it/s]
+ 17%|█▋        | 5/30 [00:01<00:08,  3.10it/s]
+ 20%|██        | 6/30 [00:01<00:07,  3.02it/s]
+ 23%|██▎       | 7/30 [00:02<00:07,  3.06it/s]
+ 27%|██▋       | 8/30 [00:02<00:07,  3.09it/s]
+ 30%|███       | 9/30 [00:02<00:06,  3.07it/s]
+ 33%|███▎      | 10/30 [00:03<00:06,  3.09it/s]
+ 37%|███▋      | 11/30 [00:03<00:06,  3.06it/s]
+ 40%|████      | 12/30 [00:03<00:05,  3.05it/s]
+ 43%|████▎     | 13/30 [00:04<00:05,  3.08it/s]
+ 47%|████▋     | 14/30 [00:04<00:05,  3.11it/s]
+ 50%|█████     | 15/30 [00:04<00:04,  3.07it/s]
+ 53%|█████▎    | 16/30 [00:05<00:04,  3.06it/s]
+ 57%|█████▋    | 17/30 [00:05<00:04,  3.07it/s]
+ 60%|██████    | 18/30 [00:05<00:03,  3.07it/s]
+ 63%|██████▎   | 19/30 [00:06<00:03,  3.07it/s]
+ 67%|██████▋   | 20/30 [00:06<00:03,  3.08it/s]
+ 70%|███████   | 21/30 [00:06<00:02,  3.11it/s]
+ 73%|███████▎  | 22/30 [00:07<00:02,  3.08it/s]
+ 77%|███████▋  | 23/30 [00:07<00:02,  3.10it/s]
+ 80%|████████  | 24/30 [00:07<00:01,  3.07it/s]
+ 83%|████████▎ | 25/30 [00:08<00:01,  3.09it/s]
+ 87%|████████▋ | 26/30 [00:08<00:01,  3.06it/s]
+ 90%|█████████ | 27/30 [00:08<00:00,  3.09it/s]
+ 93%|█████████▎| 28/30 [00:09<00:00,  3.06it/s]
+ 97%|█████████▋| 29/30 [00:09<00:00,  3.09it/s]
+100%|██████████| 30/30 [00:09<00:00,  3.36it/s]
+100%|██████████| 30/30 [00:09<00:00,  3.10it/s]
+WROTE C:\banyan-farm\lora-jerry-v2-twopass2-0822\out\twopass2-b13seat-s075.png
+WROTE C:\banyan-farm\lora-jerry-v2-twopass2-0822\out\twopass2-b13seat-s075-mask.png
+WROTE C:\banyan-farm\lora-jerry-v2-twopass2-0822\out\twopass2-b13seat-s075.png.meta.yaml
+rc=0 render_s=10.7
+==== step twopass2-b13seat-s075 END rc=0 2026-08-22T12:57:47Z ====
+
+==== step publish START 2026-08-22T12:57:47Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "\nimport hashlib, glob, os, shutil\nOUT = \"C:/banyan-farm/lora-jerry-v2-twopass2-0822/out\"\nDST = \"C:/banyan-farm/courier-box/farm-out/lora-jerry-v2-twopass2-0822\"\nos.makedirs(DST, exist_ok=True)\nn = 0\nfound = []\nfound += sorted(glob.glob(OUT + \"/*.png\"))\nfound += sorted(glob.glob(OUT + \"/*.png.meta.yaml\"))\nfor p in found:\n    if os.path.isfile(p):\n        shutil.copyfile(p, os.path.join(DST, os.path.basename(p)))\n        n += 1\nwith open(os.path.join(DST, \"lora-jerry-v2-twopass2-0822.sha256\"), \"w\", encoding=\"utf-8\") as fh:\n    for name in sorted(os.listdir(DST)):\n        q = os.path.join(DST, name)\n        if os.path.isfile(q) and not name.endswith(\".sha256\"):\n            fh.write(\"%s  %s\" % (\n                hashlib.sha256(open(q, \"rb\").read()).hexdigest(), name) + chr(10))\nprint(\"published\", n, \"file(s) ->\", DST, flush=True)\nif n == 0:\n    raise SystemExit(\"NOTHING TO PUBLISH -- the sample produced no files\")\n"]
+published 6 file(s) -> C:/banyan-farm/courier-box/farm-out/lora-jerry-v2-twopass2-0822
+==== step publish END rc=0 2026-08-22T12:57:47Z ====
+#### job lora-jerry-v2-twopass2-0822-1787403411 finished rc=0 2026-08-22T12:57:47Z
