@@ -2,17 +2,627 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "db9d891f586f719d3edd6cdc497cb88256c768ec",
-  "measured_at": "2026-08-22T04:00:07Z",
-  "job_count": 1553,
-  "ok": 1463,
-  "failed": 90,
-  "upcoming_count": 108,
+  "source_commit": "77623bc8188fc3c45e6b2297fb3990b3abadfa6a",
+  "measured_at": "2026-08-22T04:53:26Z",
+  "job_count": 1560,
+  "ok": 1469,
+  "failed": 91,
+  "upcoming_count": 109,
   "skipped_sidecars": null,
   "skipped_specs": null,
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-b16-canon-w6a-0821-1787373800",
+   "task": "ep2-b16-canon-w6a-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T04:43:26Z",
+   "finished_at": "2026-08-22T04:44:02Z",
+   "duration_s": 36,
+   "sidecar": "farm-out/box/ep2-b16-canon-w6a-0821-1787373800.json",
+   "spec_file": "pipeline/jobs/ep2-b16-canon-w6a-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 16. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 16 OF THE CANON PATCH WAVE, ROUND w6a. WHY -- 'Close on the sapling's leaf; the scavenger sits blurred behind it.' NOTE ON STAGING, and it is why this row exists at all: the shot is a leaf close-up and he is the blurred figure behind it, so this plate is the FIGURE, not the framing. The founder's verdict on this beat was 'old man goblin. very wrong', which means he is legible enough in the take to be judged, so the design has to be right even at this depth. THE RECIPE CHANGED WHOLESALE AT…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 16's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b16-canon-w6a-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b16-canon-w6a-0821/ep2-b16-canon-w6a-0821-ipahead.png",
+     "name": "ep2-b16-canon-w6a-0821-ipahead.png",
+     "bytes": 806659,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b16-canon-w6a-0821/jerry-canon-h37fsit-0821.png",
+     "name": "jerry-canon-h37fsit-0821.png",
+     "bytes": 12349,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b16-canon-w6a-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, sitting, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b16-canon-w6a-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 16,
+    "episode": null,
+    "label": "Beat 16",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b12-cleanseed-s2-0822-1787373027",
+   "task": "ep2-b12-cleanseed-s2-0822",
+   "node": "002b-first-citizen",
+   "beat": 12,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T04:36:56Z",
+   "finished_at": "2026-08-22T04:43:06Z",
+   "duration_s": 370,
+   "sidecar": "farm-out/box/ep2-b12-cleanseed-s2-0822-1787373027.json",
+   "spec_file": "pipeline/jobs/ep2-b12-cleanseed-s2-0822.yaml",
+   "purpose": {
+    "consumer": "THE SEED CONTROL BEAT 12 HAS NEVER HAD. Not a cut change and not a lead change: r1 stays the lead whatever this returns, unless a cell lands near zero WITH the clean sky.",
+    "why": "IS THE CLIMB THE PLATE OR THE SEED? Beat 12 now has four readings on one instrument -- the take in the cut 140 px, r1 5 px, nosmear 108 px, nogrow-clean 122 px -- and the wording route is closed twice over: an explicit stillness clause put 340 px in, and r3's named no-grow clause, re-asked on the plate that actually grows, changed 108 into 122. WHAT HAS NEVER BEEN VARIED ON THIS BEAT IS THE SEED. Every clip above is 20260813. So r1's 5 px and the clean plate's ~115 px are each ONE draw, and the…",
+    "success": "ONE 704x1280 clip, 121 frames, at seed 20260902. The deliverable is its apex climb as a number beside its sibling's.",
+    "owner": "early-morning lane, 2026-08-22",
+    "est_minutes": 6,
+    "priority": 20
+   },
+   "artifacts_dir": "farm-out/ep2-b12-tightB",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s1-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s1-0822.mp4",
+     "bytes": 499312,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s2-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s2-0822.mp4",
+     "bytes": 576035,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-leaf-0813.mp4",
+     "name": "12-related-LTX-leaf-0813.mp4",
+     "bytes": 472896,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nogrowclean-0822.mp4",
+     "name": "12-related-LTX-nogrowclean-0822.mp4",
+     "bytes": 343759,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nosmear-0822.mp4",
+     "name": "12-related-LTX-nosmear-0822.mp4",
+     "bytes": 344089,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/b13-init-704x1280.png",
+     "name": "b13-init-704x1280.png",
+     "bytes": 1262946,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE FRAME IS TOO TIGHT TO HOLD MORE THAN TWO LEAVES. Only two leaves fit in this shot and there is no room at any edge for a third: ONE leaf on the left and ONE leaf on the right, meeting at a single stem in the middle, and open sky filling everything between and above them. Nothing else is in the frame. THE SAPLING IS TINY AND IT HAS EXACTLY TWO LEAVES. It is a seedling about forty centimetres tall — NO TALLER THAN THE BLADES OF GRASS AROUND IT, so the grass comes up to its leaves — one slender upright stem carrying EXACTLY TWO oversized rounded cotyledon leaves and ONE thin bare side-branch with nothing on it. TWO LEAVES ONLY: no third leaf, no crown, no canopy, no bush, no foliage mass, no sprays of leaves. The sapling's leaves are BROAD AND ROUNDED — wide oval cotyledon leaves with soft round tips, not narrow, not pointed, not lance-shaped and not spiky. a tight close-up of a young sapling's broad leaves seen from below against an open sky with soft clouds behind them. No creature and no person is in this shot. THE LEAVES STIR GENTLY IN A LIGHT BREEZE — they lift and settle and turn a little on their stalks, the whole plant breathing rather than thrashing, while the clouds behind them drift very slowly. Nothing else moves and the plant stays exactly where it is in frame. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "third leaf, many leaves, several leaves, a bunch of leaves, dense foliage, leafy plant, shrub, hedge, undergrowth, grass filling the frame, bush, shrub, crown of leaves, canopy, foliage mass, many leaves, dense leaves, leafy branches, tall tree, sapling taller than the grass, creature, goblin, person, face, hands, animal, dark, dusk, dim lighting, low key, night, pointed leaves, lance-shaped leaves, narrow leaves, spiky leaves, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260813,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b12-sapnat3-0822/b12-sapnat3-s20260820.png",
+    "sha256": "680b50fbaa5a289f8b393ad246a47c79731f2c1f203976946ebcc38fa402d431"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS BLEMISH NAMED. The geometry lever landed after two rounds of counting in words had failed: exactly two oval cotyledons on one stem against sky at BOTH seeds, with the thin bare side-branch at seedB, no bush, no goblin. STATED PLAINLY BECAUSE IT CHANGES WHAT HE WOULD SEE: the fil…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 12,
+    "episode": null,
+    "label": "Beat 12",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b12-cleanseed-s1-0822-1787373022",
+   "task": "ep2-b12-cleanseed-s1-0822",
+   "node": "002b-first-citizen",
+   "beat": 12,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T04:30:36Z",
+   "finished_at": "2026-08-22T04:36:51Z",
+   "duration_s": 375,
+   "sidecar": "farm-out/box/ep2-b12-cleanseed-s1-0822-1787373022.json",
+   "spec_file": "pipeline/jobs/ep2-b12-cleanseed-s1-0822.yaml",
+   "purpose": {
+    "consumer": "THE SEED CONTROL BEAT 12 HAS NEVER HAD. Not a cut change and not a lead change: r1 stays the lead whatever this returns, unless a cell lands near zero WITH the clean sky.",
+    "why": "IS THE CLIMB THE PLATE OR THE SEED? Beat 12 now has four readings on one instrument -- the take in the cut 140 px, r1 5 px, nosmear 108 px, nogrow-clean 122 px -- and the wording route is closed twice over: an explicit stillness clause put 340 px in, and r3's named no-grow clause, re-asked on the plate that actually grows, changed 108 into 122. WHAT HAS NEVER BEEN VARIED ON THIS BEAT IS THE SEED. Every clip above is 20260813. So r1's 5 px and the clean plate's ~115 px are each ONE draw, and the…",
+    "success": "ONE 704x1280 clip, 121 frames, at seed 20260901. The deliverable is its apex climb as a number beside its sibling's.",
+    "owner": "early-morning lane, 2026-08-22",
+    "est_minutes": 6,
+    "priority": 20
+   },
+   "artifacts_dir": "farm-out/ep2-b12-tightB",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s1-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s1-0822.mp4",
+     "bytes": 499312,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s2-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s2-0822.mp4",
+     "bytes": 576035,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-leaf-0813.mp4",
+     "name": "12-related-LTX-leaf-0813.mp4",
+     "bytes": 472896,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nogrowclean-0822.mp4",
+     "name": "12-related-LTX-nogrowclean-0822.mp4",
+     "bytes": 343759,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nosmear-0822.mp4",
+     "name": "12-related-LTX-nosmear-0822.mp4",
+     "bytes": 344089,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/b13-init-704x1280.png",
+     "name": "b13-init-704x1280.png",
+     "bytes": 1262946,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE FRAME IS TOO TIGHT TO HOLD MORE THAN TWO LEAVES. Only two leaves fit in this shot and there is no room at any edge for a third: ONE leaf on the left and ONE leaf on the right, meeting at a single stem in the middle, and open sky filling everything between and above them. Nothing else is in the frame. THE SAPLING IS TINY AND IT HAS EXACTLY TWO LEAVES. It is a seedling about forty centimetres tall — NO TALLER THAN THE BLADES OF GRASS AROUND IT, so the grass comes up to its leaves — one slender upright stem carrying EXACTLY TWO oversized rounded cotyledon leaves and ONE thin bare side-branch with nothing on it. TWO LEAVES ONLY: no third leaf, no crown, no canopy, no bush, no foliage mass, no sprays of leaves. The sapling's leaves are BROAD AND ROUNDED — wide oval cotyledon leaves with soft round tips, not narrow, not pointed, not lance-shaped and not spiky. a tight close-up of a young sapling's broad leaves seen from below against an open sky with soft clouds behind them. No creature and no person is in this shot. THE LEAVES STIR GENTLY IN A LIGHT BREEZE — they lift and settle and turn a little on their stalks, the whole plant breathing rather than thrashing, while the clouds behind them drift very slowly. Nothing else moves and the plant stays exactly where it is in frame. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "third leaf, many leaves, several leaves, a bunch of leaves, dense foliage, leafy plant, shrub, hedge, undergrowth, grass filling the frame, bush, shrub, crown of leaves, canopy, foliage mass, many leaves, dense leaves, leafy branches, tall tree, sapling taller than the grass, creature, goblin, person, face, hands, animal, dark, dusk, dim lighting, low key, night, pointed leaves, lance-shaped leaves, narrow leaves, spiky leaves, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260813,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b12-sapnat3-0822/b12-sapnat3-s20260820.png",
+    "sha256": "680b50fbaa5a289f8b393ad246a47c79731f2c1f203976946ebcc38fa402d431"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS BLEMISH NAMED. The geometry lever landed after two rounds of counting in words had failed: exactly two oval cotyledons on one stem against sky at BOTH seeds, with the thin bare side-branch at seedB, no bush, no goblin. STATED PLAINLY BECAUSE IT CHANGES WHAT HE WOULD SEE: the fil…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 12,
+    "episode": null,
+    "label": "Beat 12",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b12-nogrow-clean-0822-1787372530",
+   "task": "ep2-b12-nogrow-clean-0822",
+   "node": "002b-first-citizen",
+   "beat": 12,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T04:22:23Z",
+   "finished_at": "2026-08-22T04:28:41Z",
+   "duration_s": 378,
+   "sidecar": "farm-out/box/ep2-b12-nogrow-clean-0822-1787372530.json",
+   "spec_file": "pipeline/jobs/ep2-b12-nogrow-clean-0822.yaml",
+   "purpose": {
+    "consumer": "BEAT 12's LEAD CANDIDATE if it passes. The clean-sky render (ep2-b12-nosmear-0822) fixed the smear and climbed 108 px; r1 holds at 5 px and carries the smear. This is the only combination not yet tried.",
+    "why": "THE NO-GROW CLAUSE HAS NEVER BEEN ASKED OF A PLATE THAT GROWS. Round 3 added `the sapling does not grow: the stem does not lengthen, the tips of the two leaves are at the same height in the last frame as in the first` and measured 0 px of climb -- the same as r1 without it -- and was written up as 'no harm, no help'. That reading assumed the clause had something to resist. It did not: r3 ran on the SAME smeared plate as r1, which was already at 0 px. ep2-b12-nosmear-0822 changed only the plate…",
+    "success": "ONE 704x1280 clip, 121 frames, with NO horizontal bars in the cloud bank AND an apex climb under about 20 px measured first frame against last. Both, or it is not the lead.",
+    "owner": "early-morning lane, 2026-08-22",
+    "est_minutes": 6,
+    "priority": 16
+   },
+   "artifacts_dir": "farm-out/ep2-b12-tightB",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s1-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s1-0822.mp4",
+     "bytes": 499312,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s2-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s2-0822.mp4",
+     "bytes": 576035,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-leaf-0813.mp4",
+     "name": "12-related-LTX-leaf-0813.mp4",
+     "bytes": 472896,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nogrowclean-0822.mp4",
+     "name": "12-related-LTX-nogrowclean-0822.mp4",
+     "bytes": 343759,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nosmear-0822.mp4",
+     "name": "12-related-LTX-nosmear-0822.mp4",
+     "bytes": 344089,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/b13-init-704x1280.png",
+     "name": "b13-init-704x1280.png",
+     "bytes": 1262946,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE FRAME IS TOO TIGHT TO HOLD MORE THAN TWO LEAVES. Only two leaves fit in this shot and there is no room at any edge for a third: ONE leaf on the left and ONE leaf on the right, meeting at a single stem in the middle, and open sky filling everything between and above them. Nothing else is in the frame. THE SAPLING IS TINY AND IT HAS EXACTLY TWO LEAVES. It is a seedling about forty centimetres tall — NO TALLER THAN THE BLADES OF GRASS AROUND IT, so the grass comes up to its leaves — one slender upright stem carrying EXACTLY TWO oversized rounded cotyledon leaves and ONE thin bare side-branch with nothing on it. TWO LEAVES ONLY: no third leaf, no crown, no canopy, no bush, no foliage mass, no sprays of leaves. The sapling's leaves are BROAD AND ROUNDED — wide oval cotyledon leaves with soft round tips, not narrow, not pointed, not lance-shaped and not spiky. a tight close-up of a young sapling's broad leaves seen from below against an open sky with soft clouds behind them. No creature and no person is in this shot. THE LEAVES STIR GENTLY IN A LIGHT BREEZE — they lift and settle and turn a little on their stalks, the whole plant breathing rather than thrashing, while the clouds behind them drift very slowly. THE SAPLING DOES NOT GROW: the stem does not lengthen, the plant does not get taller, and the tips of the two leaves are at the same height in the last frame as in the first. Nothing else moves and the plant stays exactly where it is in frame. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "third leaf, many leaves, several leaves, a bunch of leaves, dense foliage, leafy plant, shrub, hedge, undergrowth, grass filling the frame, bush, shrub, crown of leaves, canopy, foliage mass, many leaves, dense leaves, leafy branches, tall tree, sapling taller than the grass, creature, goblin, person, face, hands, animal, dark, dusk, dim lighting, low key, night, pointed leaves, lance-shaped leaves, narrow leaves, spiky leaves, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260813,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b12-sapnat3-0822/b12-sapnat3-s20260820.png",
+    "sha256": "680b50fbaa5a289f8b393ad246a47c79731f2c1f203976946ebcc38fa402d431"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS BLEMISH NAMED. The geometry lever landed after two rounds of counting in words had failed: exactly two oval cotyledons on one stem against sky at BOTH seeds, with the thin bare side-branch at seedB, no bush, no goblin. STATED PLAINLY BECAUSE IT CHANGES WHAT HE WOULD SEE: the fil…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 12,
+    "episode": null,
+    "label": "Beat 12",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b12-nosmear-0822-1787371876",
+   "task": "ep2-b12-nosmear-0822",
+   "node": "002b-first-citizen",
+   "beat": 12,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T04:11:28Z",
+   "finished_at": "2026-08-22T04:17:43Z",
+   "duration_s": 375,
+   "sidecar": "farm-out/box/ep2-b12-nosmear-0822-1787371876.json",
+   "spec_file": "pipeline/jobs/ep2-b12-nosmear-0822.yaml",
+   "purpose": {
+    "consumer": "BEAT 12's CANDIDATE ON /review/ep2-beats-0821, replacing r1 if S1 passes and r1 stays if it does not. No cut is touched by this job; review/ep2-ship-0821 is not written.",
+    "why": "r1 FIXES BEAT 12's RECORDED FAULT -- apex climb 0 px against 140 px in the cut, reproduced at a second wording -- and still carries a smear that came from the compositor, not from the model: fill_from_boundary interpolates PER ROW because it was written for a horizontally banded grass plate, and beat 12's backdrop is a cumulus bank. The plate was re-cut with a two-axis fill (ep2-b12-sapnat3-0822) and the bars are gone. This is r1 on that plate and nothing else moves.",
+    "success": "ONE 704x1280 clip, 121 frames, identical to ep2-b12-nosmear-0822 in every respect except that the cloud bank behind the plant has no horizontal bars in it.",
+    "owner": "early-morning lane, 2026-08-22",
+    "est_minutes": 6,
+    "priority": 16
+   },
+   "artifacts_dir": "farm-out/ep2-b12-tightB",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s1-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s1-0822.mp4",
+     "bytes": 499312,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s2-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s2-0822.mp4",
+     "bytes": 576035,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-leaf-0813.mp4",
+     "name": "12-related-LTX-leaf-0813.mp4",
+     "bytes": 472896,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nogrowclean-0822.mp4",
+     "name": "12-related-LTX-nogrowclean-0822.mp4",
+     "bytes": 343759,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nosmear-0822.mp4",
+     "name": "12-related-LTX-nosmear-0822.mp4",
+     "bytes": 344089,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/b13-init-704x1280.png",
+     "name": "b13-init-704x1280.png",
+     "bytes": 1262946,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE FRAME IS TOO TIGHT TO HOLD MORE THAN TWO LEAVES. Only two leaves fit in this shot and there is no room at any edge for a third: ONE leaf on the left and ONE leaf on the right, meeting at a single stem in the middle, and open sky filling everything between and above them. Nothing else is in the frame. THE SAPLING IS TINY AND IT HAS EXACTLY TWO LEAVES. It is a seedling about forty centimetres tall — NO TALLER THAN THE BLADES OF GRASS AROUND IT, so the grass comes up to its leaves — one slender upright stem carrying EXACTLY TWO oversized rounded cotyledon leaves and ONE thin bare side-branch with nothing on it. TWO LEAVES ONLY: no third leaf, no crown, no canopy, no bush, no foliage mass, no sprays of leaves. The sapling's leaves are BROAD AND ROUNDED — wide oval cotyledon leaves with soft round tips, not narrow, not pointed, not lance-shaped and not spiky. a tight close-up of a young sapling's broad leaves seen from below against an open sky with soft clouds behind them. No creature and no person is in this shot. THE LEAVES STIR GENTLY IN A LIGHT BREEZE — they lift and settle and turn a little on their stalks, the whole plant breathing rather than thrashing, while the clouds behind them drift very slowly. Nothing else moves and the plant stays exactly where it is in frame. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "third leaf, many leaves, several leaves, a bunch of leaves, dense foliage, leafy plant, shrub, hedge, undergrowth, grass filling the frame, bush, shrub, crown of leaves, canopy, foliage mass, many leaves, dense leaves, leafy branches, tall tree, sapling taller than the grass, creature, goblin, person, face, hands, animal, dark, dusk, dim lighting, low key, night, pointed leaves, lance-shaped leaves, narrow leaves, spiky leaves, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260813,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b12-sapnat3-0822/b12-sapnat3-s20260820.png",
+    "sha256": "680b50fbaa5a289f8b393ad246a47c79731f2c1f203976946ebcc38fa402d431"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS BLEMISH NAMED. The geometry lever landed after two rounds of counting in words had failed: exactly two oval cotyledons on one stem against sky at BOTH seeds, with the thin bare side-branch at seedB, no bush, no goblin. STATED PLAINLY BECAUSE IT CHANGES WHAT HE WOULD SEE: the fil…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 12,
+    "episode": null,
+    "label": "Beat 12",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b04-canon-r14a-0821-1787371472",
+   "task": "ep2-b04-canon-r14a-0821",
+   "node": "002b-first-citizen",
+   "beat": 4,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T04:04:39Z",
+   "finished_at": "2026-08-22T04:05:07Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b04-canon-r14a-0821-1787371472.json",
+   "spec_file": "pipeline/jobs/ep2-b04-canon-r14a-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 04. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 04 OF THE CANON PATCH WAVE, ROUND r14a. THE FOOTNOTE -- 'leans out from behind the trunk to look, and pulls straight back the moment he has looked'. THE PEEK, the founder's own restaging pick (A, 2026-08-20). The eyes are the whole beat. THE RECIPE CHANGED WHOLESALE AT 16:54 TODAY. The founder supplied a picture -- taste/refs/goblin-canon-founder-0821.png, commit b93a70da -- with \"dude, this is how the goblin should look\", and it contradicts tile B on the ears, the eyes, the proportion, th…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 04's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 6
+   },
+   "artifacts_dir": "farm-out/ep2-b04-canon-r14a-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b04-canon-r14a-0821/ep2-b04-canon-r14a-0821-ipahead.png",
+     "name": "ep2-b04-canon-r14a-0821-ipahead.png",
+     "bytes": 1128422,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b04-canon-r14a-0821/jerry-canon-h37fhunch-0821.png",
+     "name": "jerry-canon-h37fhunch-0821.png",
+     "bytes": 10582,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b04-canon-r14a-0821/jerry-canon-sq65-0821.png",
+     "name": "jerry-canon-sq65-0821.png",
+     "bytes": 86910,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, worried, hunched over, leaning out sideways, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b04-canon-r14a-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: a clean close-up on his face holding his breath. The recorded residual is that it reads young, and the record says that is the s0 reference HE chose rather than a prompt fault — so there is no fix for the card to run. The only new artefact is a recovered 0813 balloo…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 4,
+    "episode": null,
+    "label": "Beat 04",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b12-nosmear-0822-1787371401",
+   "task": "ep2-b12-nosmear-0822",
+   "node": "002b-first-citizen",
+   "beat": 12,
+   "kind": "motion",
+   "rc": 1,
+   "failed_step": "crop",
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T04:03:34Z",
+   "finished_at": "2026-08-22T04:03:34Z",
+   "duration_s": 0,
+   "sidecar": "farm-out/box/ep2-b12-nosmear-0822-1787371401.json",
+   "spec_file": "pipeline/jobs/ep2-b12-nosmear-0822.yaml",
+   "purpose": {
+    "consumer": "BEAT 12's CANDIDATE ON /review/ep2-beats-0821, replacing r1 if S1 passes and r1 stays if it does not. No cut is touched by this job; review/ep2-ship-0821 is not written.",
+    "why": "r1 FIXES BEAT 12's RECORDED FAULT -- apex climb 0 px against 140 px in the cut, reproduced at a second wording -- and still carries a smear that came from the compositor, not from the model: fill_from_boundary interpolates PER ROW because it was written for a horizontally banded grass plate, and beat 12's backdrop is a cumulus bank. The plate was re-cut with a two-axis fill (ep2-b12-sapnat3-0822) and the bars are gone. This is r1 on that plate and nothing else moves.",
+    "success": "ONE 704x1280 clip, 121 frames, identical to ep2-b12-nosmear-0822 in every respect except that the cloud bank behind the plant has no horizontal bars in it.",
+    "owner": "early-morning lane, 2026-08-22",
+    "est_minutes": 6,
+    "priority": 16
+   },
+   "artifacts_dir": "farm-out/ep2-b12-tightB",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s1-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s1-0822.mp4",
+     "bytes": 499312,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s2-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s2-0822.mp4",
+     "bytes": 576035,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-leaf-0813.mp4",
+     "name": "12-related-LTX-leaf-0813.mp4",
+     "bytes": 472896,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nogrowclean-0822.mp4",
+     "name": "12-related-LTX-nogrowclean-0822.mp4",
+     "bytes": 343759,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nosmear-0822.mp4",
+     "name": "12-related-LTX-nosmear-0822.mp4",
+     "bytes": 344089,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/b13-init-704x1280.png",
+     "name": "b13-init-704x1280.png",
+     "bytes": 1262946,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: THE FRAME IS TOO TIGHT TO HOLD MORE THAN TWO LEAVES. Only two leaves fit in this shot and there is no room at any edge for a third: ONE leaf on the left and ONE leaf on the right, meeting at a single stem in the middle, and open sky filling everything between and above them. Nothing else is in the frame. THE SAPLING IS TINY AND IT HAS EXACTLY TWO LEAVES. It is a seedling about forty centimetres tall — NO TALLER THAN THE BLADES OF GRASS AROUND IT, so the grass comes up to its leaves — one slender upright stem carrying EXACTLY TWO oversized rounded cotyledon leaves and ONE thin bare side-branch with nothing on it. TWO LEAVES ONLY: no third leaf, no crown, no canopy, no bush, no foliage mass, no sprays of leaves. The sapling's leaves are BROAD AND ROUNDED — wide oval cotyledon leaves with soft round tips, not narrow, not pointed, not lance-shaped and not spiky. a tight close-up of a young sapling's broad leaves seen from below against an open sky with soft clouds behind them. No creature and no person is in this shot. THE LEAVES STIR GENTLY IN A LIGHT BREEZE — they lift and settle and turn a little on their stalks, the whole plant breathing rather than thrashing, while the clouds behind them drift very slowly. Nothing else moves and the plant stays exactly where it is in frame. Bright clear daylight, cinematic lighting, detailed, newest, masterpiece, best quality, very aesthetic.",
+   "negative": "third leaf, many leaves, several leaves, a bunch of leaves, dense foliage, leafy plant, shrub, hedge, undergrowth, grass filling the frame, bush, shrub, crown of leaves, canopy, foliage mass, many leaves, dense leaves, leafy branches, tall tree, sapling taller than the grass, creature, goblin, person, face, hands, animal, dark, dusk, dim lighting, low key, night, pointed leaves, lance-shaped leaves, narrow leaves, spiky leaves, camera pan, camera tilt, panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment, film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways, moving to a different spot, second character, duplicate character, scene change, shot change, new camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "121",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260813,
+    "seconds": 5.042
+   },
+   "init": {
+    "path": "farm-out/ep2-b12-sapnat3-0822/b12-sapnat3-s20260820.png",
+    "sha256": "680b50fbaa5a289f8b393ad246a47c79731f2c1f203976946ebcc38fa402d431"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS BLEMISH NAMED. The geometry lever landed after two rounds of counting in words had failed: exactly two oval cotyledons on one stem against sky at BOTH seeds, with the thin bare side-branch at seedB, no bush, no goblin. STATED PLAINLY BECAUSE IT CHANGES WHAT HE WOULD SEE: the fil…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 12,
+    "episode": null,
+    "label": "Beat 12",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
   {
    "id": "ep2-b16-sapnat3-0822-1787370288",
    "task": "ep2-b16-sapnat3-0822",
@@ -476,9 +1086,33 @@
    "artifacts_dir": "farm-out/ep2-b12-tightB",
    "outputs": [
     {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s1-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s1-0822.mp4",
+     "bytes": 499312,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s2-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s2-0822.mp4",
+     "bytes": 576035,
+     "kind": "video"
+    },
+    {
      "path": "farm-out/ep2-b12-tightB/12-related-LTX-leaf-0813.mp4",
      "name": "12-related-LTX-leaf-0813.mp4",
      "bytes": 472896,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nogrowclean-0822.mp4",
+     "name": "12-related-LTX-nogrowclean-0822.mp4",
+     "bytes": 343759,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nosmear-0822.mp4",
+     "name": "12-related-LTX-nosmear-0822.mp4",
+     "bytes": 344089,
      "kind": "video"
     },
     {
@@ -548,9 +1182,33 @@
    "artifacts_dir": "farm-out/ep2-b12-tightB",
    "outputs": [
     {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s1-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s1-0822.mp4",
+     "bytes": 499312,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s2-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s2-0822.mp4",
+     "bytes": 576035,
+     "kind": "video"
+    },
+    {
      "path": "farm-out/ep2-b12-tightB/12-related-LTX-leaf-0813.mp4",
      "name": "12-related-LTX-leaf-0813.mp4",
      "bytes": 472896,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nogrowclean-0822.mp4",
+     "name": "12-related-LTX-nogrowclean-0822.mp4",
+     "bytes": 343759,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nosmear-0822.mp4",
+     "name": "12-related-LTX-nosmear-0822.mp4",
+     "bytes": 344089,
      "kind": "video"
     },
     {
@@ -834,9 +1492,33 @@
    "artifacts_dir": "farm-out/ep2-b12-tightB",
    "outputs": [
     {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s1-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s1-0822.mp4",
+     "bytes": 499312,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s2-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s2-0822.mp4",
+     "bytes": 576035,
+     "kind": "video"
+    },
+    {
      "path": "farm-out/ep2-b12-tightB/12-related-LTX-leaf-0813.mp4",
      "name": "12-related-LTX-leaf-0813.mp4",
      "bytes": 472896,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nogrowclean-0822.mp4",
+     "name": "12-related-LTX-nogrowclean-0822.mp4",
+     "bytes": 343759,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nosmear-0822.mp4",
+     "name": "12-related-LTX-nosmear-0822.mp4",
+     "bytes": 344089,
      "kind": "video"
     },
     {
@@ -1191,9 +1873,33 @@
    "artifacts_dir": "farm-out/ep2-b12-tightB",
    "outputs": [
     {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s1-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s1-0822.mp4",
+     "bytes": 499312,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s2-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s2-0822.mp4",
+     "bytes": 576035,
+     "kind": "video"
+    },
+    {
      "path": "farm-out/ep2-b12-tightB/12-related-LTX-leaf-0813.mp4",
      "name": "12-related-LTX-leaf-0813.mp4",
      "bytes": 472896,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nogrowclean-0822.mp4",
+     "name": "12-related-LTX-nogrowclean-0822.mp4",
+     "bytes": 343759,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nosmear-0822.mp4",
+     "name": "12-related-LTX-nosmear-0822.mp4",
+     "bytes": 344089,
      "kind": "video"
     },
     {
@@ -77867,9 +78573,33 @@
    "artifacts_dir": "farm-out/ep2-b12-tightB",
    "outputs": [
     {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s1-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s1-0822.mp4",
+     "bytes": 499312,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-cleanseed-s2-0822.mp4",
+     "name": "12-related-LTX-cleanseed-s2-0822.mp4",
+     "bytes": 576035,
+     "kind": "video"
+    },
+    {
      "path": "farm-out/ep2-b12-tightB/12-related-LTX-leaf-0813.mp4",
      "name": "12-related-LTX-leaf-0813.mp4",
      "bytes": 472896,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nogrowclean-0822.mp4",
+     "name": "12-related-LTX-nogrowclean-0822.mp4",
+     "bytes": 343759,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b12-tightB/12-related-LTX-nosmear-0822.mp4",
+     "name": "12-related-LTX-nosmear-0822.mp4",
+     "bytes": 344089,
      "kind": "video"
     },
     {
@@ -110038,6 +110768,28 @@
     "beat": 14,
     "episode": null,
     "label": "Beat 14",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b16-plantmotion-0822",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "motion",
+   "state": "authored",
+   "priority": 18,
+   "est_minutes": 8,
+   "consumer": "BEAT 16's CANDIDATE SLOT. The clip in the cut has the superseded adult goblin; tonight's w4motion take fixed the face and lost the plant, and this page has carried that as a straight TRADE since. This is the first render that could have both.",
+   "why_first": "BEAT 16's PLATE FINALLY CONTAINS THE PLANT, so the question that has never been askable is askable.",
+   "hold_reason": null,
+   "spec_file": "pipeline/jobs/ep2-b16-plantmotion-0822.yaml",
+   "authored_at": 1787374088,
+   "story": {
+    "kind": "beat",
+    "beat": 16,
+    "episode": null,
+    "label": "Beat 16",
     "moment": null,
     "why": "the script on main has no beat by this number"
    }
