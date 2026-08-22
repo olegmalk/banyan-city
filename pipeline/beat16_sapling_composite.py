@@ -435,21 +435,65 @@ def palette_from_erased(a: np.ndarray, weed: np.ndarray) -> dict:
             "n_sampled": int(leaf.sum()), "source": "the erased weed"}
 
 
-def foliage_palette(a: np.ndarray, region: np.ndarray) -> dict:
+def foliage_palette(a: np.ndarray, region: np.ndarray,
+                    sat_floor: float = 0.15) -> dict:
     """The plant is made of the FIELD'S OWN GREENS, sampled from the plate.
 
     A palette invented in code is decal tell #2 (a pattern ignoring the frame's
     light) arriving through colour instead of through shading. `region` is where
     the plant will go; the sample is taken from the green-dominant pixels there,
     so a plate with warm sunlit grass yields a warm plant.
+
+    GREEN-DOMINANT IS NOT GREEN, AND ON A HIGH-KEY PLATE THAT IS THE WHOLE
+    DIFFERENCE. `G > R + 6 and G > B + 6` is a test of WHICH channel is largest,
+    not of whether the pixel has any colour in it. A blown highlight at
+    (241,255,232) passes it and is WHITE. The morning compositor lane refused
+    beat 16's plate twice because the drawn plant came back near-white and read
+    as a ghost, and recorded the cause as the plate:
+
+        "ep2-b16-canon-w4-0821's foreground is a shallow-focus blur with blown
+         highlights, and its green-dominant p88 is (239,255,230). foliage_palette
+         takes the highlight from that percentile on purpose, so the crescent
+         comes back near-white."
+
+    The percentile was right and the SET it was taken over was wrong. Measured
+    on that exact plate's lower third:
+
+        | selection                    |      n | p88 highlight   |
+        |------------------------------|--------|-----------------|
+        | G > R+6, G > B+6 (as shipped)| 92,974 | (241,255,232)   white
+        | + saturation >= 0.15         | 54,622 | (147,168,126)   a green
+
+    44% of what the tool called green was blown white with one LSB of channel
+    order deciding it, and it was the top 44% by luminance, so it owned the
+    highlight percentile outright. With a chroma floor the SAME PLATE yields a
+    real light green and 54,622 pixels to take it from -- so beat 16 needed a
+    fix here and not a re-rendered plate, and a four-cell plate ladder fired
+    this morning to kill the blur came back a null on the foreground while this
+    was the reason all along.
+
+    > A DOMINANCE TEST IS NOT A COLOUR TEST. Anywhere a percentile is taken over
+    > "pixels whose channel X is largest", the achromatic end of the plate is in
+    > the set and it is at one extreme of the luminance order, which is exactly
+    > where the percentiles that matter are read.
+
+    The floor is HSV-style saturation `(max-min)/max`, which is a ratio and so
+    does not move with exposure. 0.15 is measured, not chosen: the b16 plate's
+    real grass sits at 0.20+ and its blown highlights at under 0.06, and the
+    number is placed between them at the low end so a genuinely pale-but-tinted
+    plate is not starved. Pass 0.0 to restore the old behaviour exactly.
     """
     R, G, B = a[..., 0].astype(np.int16), a[..., 1].astype(np.int16), a[..., 2].astype(np.int16)
-    green = region & (G > R + 6) & (G > B + 6)
+    mx = a.max(axis=2).astype(np.float32)
+    mn = a.min(axis=2).astype(np.float32)
+    chroma = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1.0), 0.0)
+    has_colour = chroma >= float(sat_floor)
+    green = region & (G > R + 6) & (G > B + 6) & has_colour
     if int(green.sum()) < 400:          # fall back to the whole lower half
         h = a.shape[0]
         low = np.zeros(a.shape[:2], bool)
         low[h // 2:, :] = True
-        green = low & (G > R + 4) & (G > B + 4)
+        green = low & (G > R + 4) & (G > B + 4) & has_colour
     if int(green.sum()) < 1:
         # A PLATE WITH NO GREEN PIXEL AT ALL. Caught 2026-08-21 on the sapling
         # LoRA plate set: `ep3-sapfld4-u05` is a DRY TAN grass plain, so both
@@ -569,6 +613,16 @@ def main() -> int:
                          "so growth cannot eat his edge.")
     ap.add_argument("--fill-iters", type=int, default=3,
                     help="diffusion passes after the per-row interpolation")
+    ap.add_argument("--green-sat-floor", type=float, default=0.15,
+                    help="CHROMA FLOOR FOR THE PALETTE SAMPLE, HSV-style "
+                         "(max-min)/max. `green-dominant` is a test of which "
+                         "channel is largest and a blown highlight at "
+                         "(241,255,232) passes it while being WHITE -- on beat "
+                         "16's w4 plate that was 44%% of the sample and the top "
+                         "44%% by luminance, so it owned the p88 highlight and "
+                         "the tool drew a white plant. At 0.15 the same plate "
+                         "yields (147,168,126) off 54,622 pixels. Pass 0.0 to "
+                         "restore the pre-2026-08-22 behaviour exactly.")
     ap.add_argument("--fill-mode", choices=("row", "harmonic"), default="row",
                     help="HOW THE ERASED HOLE IS REPAINTED, and it is a claim "
                          "about the plate rather than a preference. `row` is "
@@ -756,7 +810,7 @@ def main() -> int:
     # because those pixels do not survive). The field's greens are the fallback.
     pal = palette_from_erased(raw, weed) if weed.any() else {}
     if not pal:
-        pal = foliage_palette(arr, region)
+        pal = foliage_palette(arr, region, sat_floor=a.green_sat_floor)
         pal["source"] = "the field's own greens"
     ldx, ldy = light_direction(arr, region)
     print("palette (%s, %d px)  dark %s  mid %s  light %s  ink %s"
