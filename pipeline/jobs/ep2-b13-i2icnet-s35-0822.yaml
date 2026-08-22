@@ -1077,3 +1077,12 @@ derivation:
   carried_verbatim_by_the_callers_own_hand: 'clip77_measured_not_estimated, is_candidate -- authored as
     `extra` but byte-identical to the parent''s value under the same name. Recorded rather than implied:
     a pre-registered bar carried unchanged is legitimate, and it should say so.'
+verdict_0822: |-
+  POSE FAIL, FACE PASS. Standing, same as 0.30 and 0.40.
+
+  P1/P2/P3 FAIL, E1-E5 PASS, J1 FAIL. Mean abs difference from the no-net
+  round-one twin at 0.30 is 19.00 -- more scene change than 0.30 bought, in the
+  same places: grass, light, background. The body is in the init's pose.
+  This cell was the one with no round-one twin, rendered to find any gap between
+  a face that holds and a pose that moves. There is no gap here: the face holds
+  and the pose does not move, which is what 0.30 and 0.40 also say.

@@ -1078,3 +1078,25 @@ derivation:
   carried_verbatim_by_the_callers_own_hand: 'clip77_measured_not_estimated, is_candidate -- authored as
     `extra` but byte-identical to the parent''s value under the same name. Recorded rather than implied:
     a pre-registered bar carried unchanged is legitimate, and it should say so.'
+verdict_0822: |-
+  POSE FAIL, FACE PASS -- AND THIS CELL IS THE CLEAN A/B THAT MAKES THE FINDING.
+
+  Identical to the filed ep2-b13-i2icanon-s30-0822 in strength, seed, prompt,
+  negative and every sampler number. The ONLY difference is
+  xinsir/controlnet-openpose-sdxl-1.0 at 1.0 on jerry-canon-h37fsit-0821.png.
+
+  P1/P2/P3 FAIL. He is standing, legs straight and together, feet on the
+  ground -- the init's stance, not the skeleton's. Not partial adoption: there
+  is no knee bend, no hip drop, no seated fold anywhere in the frame.
+  E1-E5 PASS. Narrow almond eye, off-white field, tiny dark pupil, heavy lid,
+  broad low dome, near-horizontal ears, smooth face, sage palette, costume
+  intact. His face is untouched by the net.
+  J1 FAIL -- the two halves did not happen in the same frame.
+
+  THE NET WAS NOT INERT, WHICH IS WHAT MAKES THIS A FINDING RATHER THAN A BUG.
+  Mean abs difference from its no-net twin is 15.05, against that twin's own
+  departure from the init of 7.13 -- the net moved more than twice as many
+  pixels as the strength did. It moved grass, light and background. It did not
+  move the body. The log confirms the stack: PIPELINE
+  StableDiffusionXLControlNetInpaintPipeline, 1 net(s), scales 1.0, HINT
+  MAGNIFICATION 1.000x, hint 832x1216 MATCHES the init.

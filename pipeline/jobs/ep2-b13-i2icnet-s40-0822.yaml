@@ -1077,3 +1077,21 @@ derivation:
   carried_verbatim_by_the_callers_own_hand: 'clip77_measured_not_estimated, is_candidate -- authored as
     `extra` but byte-identical to the parent''s value under the same name. Recorded rather than implied:
     a pre-registered bar carried unchanged is legitimate, and it should say so.'
+verdict_0822: |-
+  POSE FAIL, FACE PASS -- AT THE CEILING, WHICH IS WHAT CLOSES THE ROUTE.
+
+  0.40 is the most denoising this route may buy: round one measured the face
+  breaking between 0.40 and 0.45. So this cell is the last chance the pose had.
+
+  P1/P2/P3 FAIL. Still standing. Mean abs difference from the no-net twin is
+  25.13 -- by far the most pixels any cell moved, and none of them moved the
+  body.
+  E1-E5 PASS with one drift worth naming: E4 the palette warms noticeably,
+  olive-yellow against the init's cool washed sage, and E2's ears are a little
+  larger than at 0.30. The eye -- the clause four vetoes were spent on -- is
+  intact.
+  J1 FAIL.
+
+  THE ROUTE IS CLOSED, AND ON A MECHANISM RATHER THAN A TALLY. See
+  pipeline/goblin-i2i-route-0822.md section 2: the face survives and the pose
+  cannot move FOR THE SAME REASON, so there is no strength at which both hold.
