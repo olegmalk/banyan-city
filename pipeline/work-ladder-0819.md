@@ -9232,3 +9232,177 @@ correct count named in the positive.
 > 0 of 16 frames, and this is that same wall arriving through motion.
 
 b21's r1 stays the candidate and r2 is filed as its null, not staged.
+
+## EARLY-MORNING LANE, 2026-08-22
+
+#### BEAT 16 NEVER NEEDED A NEW PLATE. A DOMINANCE TEST IS NOT A COLOUR TEST.
+
+The morning compositor lane refused beat 16's plate twice and named the plate:
+*"its foreground is a shallow-focus blur with blown highlights, and its
+green-dominant p88 is (239,255,230) … so the crescent comes back near-white and
+the plant reads as a ghost. The answer is a different PLATE, not a different
+palette."* **The percentile was right and the SET it was taken over was wrong.**
+`foliage_palette` selected on `G > R+6 and G > B+6`, which asks which channel is
+LARGEST and never asks whether the pixel has any colour in it. (241,255,232)
+passes it and is white.
+
+| the w4 plate's lower third | n | p88 highlight |
+|---|---|---|
+| `G > R+6, G > B+6` as shipped | 92,974 | **(241,255,232)** — white |
+| + chroma ≥ 0.15 | 54,622 | **(147,168,126)** — a green |
+
+**44% of what the tool called green was blown white with one channel LSB
+deciding it, and it was the top 44% by luminance, so it owned the highlight
+percentile outright.** With `--green-sat-floor 0.15` the same plate cuts a green
+plant; both arms are committed one flag apart in
+`farm-out/ep2-b16-sapnat3-0822/`, and `ep2-b16-sapnat3-0822` is the first
+beat-16 plate on the corrected goblin that has a plant in it.
+
+> **WHEREVER A PERCENTILE IS READ OVER "PIXELS WHOSE CHANNEL X IS LARGEST", THE
+> ACHROMATIC END OF THE PLATE IS IN THE SET** — and it sits at one extreme of
+> the luminance order, which is exactly where the percentiles that matter live.
+
+**IT DOES NOT FINISH THE BEAT AND THAT IS SAID OUT LOUD.** On the w4 plate the
+figure fills the frame top to bottom, so the plant can only OVERLAP him; the
+relation beat 16 wants — plant as subject, him as depth — was staged correctly
+once, by `ep2-b16-sapcomp-r2-0820`, whose only defect is that it predates the
+08-21 goblin. Getting both is a GEOMETRY rung (skeleton span and head_frac
+decide how much frame the figure takes) and it is named, not fired.
+
+#### AND FOUR GPU MINUTES WENT TO THE WRONG CAUSE FIRST, WHICH IS THE OTHER HALF
+
+`ep2-b16-canon-w5{z,a,b,c}-0821`, fired before the palette was measured: kill
+the depth of field in the negative (`bokeh, blurry, depth of field`, the
+sapling-field lane's own terms), then add its distance clause (`distant hills`),
+then its dialect terms. **All three levers are NULLS on the foreground** — green
+p88 240 / 252 / 247 against w4's 241, and no hills appeared. The reason is
+geometry, not vocabulary: **a full-span skeleton at ControlNet 1.0 owns the
+composition, so there is no near foreground for a word to put anything in.** The
+field lane's laws were measured on plates with no figure and no ControlNet.
+
+#### THE STRIP THAT PAID FOR THEM BROKE THE EYE, AND IT FALSIFIES A RECORDED CLAIM
+
+The negative was at 71 of 77 and `bokeh, blurry, depth of field` alone takes it
+to 80, so `glowing eyes, orange eyes, third eye, eyepatch` came out — four terms
+this file twice calls inert (*"these do not by themselves remove anything — r2
+proved that on the ghost head and r5 proved it again on the eyepatch"*). **w5z is
+the strip ALONE and all four cells came back with a malformed eye**: three black
+diamonds in a blank almond (w5z), a stray disc and a lost pupil (w5a), four
+diamonds in a row (w5b), a zigzag of teeth (w5c) — on the beat and seed where w4
+with those four terms present draws two clean matched almonds.
+
+> **"ADDING X DID NOTHING" DOES NOT LICENSE "REMOVING X IS FREE."** r2 and r5
+> measured that adding those terms failed to remove a defect that was already
+> there. That is a different proposition from removing them being costless, and
+> the asymmetry is the whole finding: a negative term that never visibly helped
+> can still be holding a line. **The w5z cell existed only because a two-variable
+> first rung is not attributable, and it is the cell that found this.**
+
+#### THE BOUNDARY FILL IS A CLAIM ABOUT THE PLATE, AND ON A CLOUD BANK IT MANUFACTURED THE SMEAR
+
+`fill_from_boundary` states its premise in its own docstring — *"this plate is a
+horizontally banded field, so the fill is a per-row linear interpolation …
+which reproduces the banding exactly."* True of b15's grass and b19's field,
+**false of a cumulus bank.** Beat 12 erased two 250 px discs out of the sky, so
+~670 rows were each interpolated between whatever survived at their two ends,
+and the output is a fan of horizontal bars.
+
+> **BEING WRONG ABOUT THE FILL DIRECTION DOES NOT LEAVE A SOFT PATCH, IT INVENTS
+> STRUCTURE** — and structure is exactly what a 0.30 pass is built to preserve.
+> That is why the smear came through a naturalize AND 121 frames of LTX
+> untouched: at every stage each tool was doing its job correctly on a thing
+> that should never have been in the picture.
+
+`--fill-mode harmonic` reads the same boundary in two axes (normalized
+convolution at a decreasing scale, within class, nothing copied from elsewhere),
+so both properties the row fill was chosen for survive — decal tell #4 stays
+impossible and a hole in the sky is never averaged with grass. **Default stays
+`row`** so every plate already cut reproduces byte for byte.
+
+**BOTH ARMS WERE CUT LOCALLY, WHICH IS WHY THE A/B IS EXACT.** The parent's own
+command line was never recorded anywhere — not in its geometry json, not in its
+spec, not here — so four numbers had to be reverse-engineered off the geometry
+and two (`--erase-lum`, `--body-box`) could not be recovered at all. Rather than
+call a rung against an unrecoverable parent "one variable", both arms were re-cut
+from one command line differing in one flag; `b12-fill-row-control-0822.png`
+reproduces the shipped smear exactly, which is the control that says the
+recovered parameters are right. **The tool now writes its own argv into the
+geometry json.**
+
+`ep2-b12-sapnat3-0822` came back with **the bars gone and the 0.30 pass having
+finished the harmonic wash into actual cloud** — better than the pre-registered
+risk allowed for, which said it might read as an out-of-focus patch. `ep2-b12-
+nosmear-0822` is r1 re-rendered on it, one variable, two strings.
+
+**AND ONE SIDE EFFECT NOBODY PREDICTED:** `light_direction` is measured on the
+FILLED array, so the fill moved the measured light from dx −0.105 to dx +0.549
+and the drawn leaves are lit from the other side. The row arm was reading its
+light off manufactured horizontal bars.
+
+#### THE COUNT AXIS HAS AN INSTRUMENT, AND IT TOOK TWO CORRECTIONS TO MEASURE THE THING IT FLAGS
+
+`pipeline/count_composited_objects.py`, off the geometry json the compositor
+already writes. Calibrated on all three of this morning's clips at once with one
+parameter set — two must flag, one must not.
+
+| clip | opening | reading | verdict |
+|---|---|---|---|
+| b19 dropmotion r2 (fig) | 1 | `f000-097:1 f098-103:2 f104:3` | **FLAG** |
+| b21 twoleaf r2 (leaf) | 2 | 3 blades on 55 consecutive frames | **FLAG** |
+| b12 leafmotion r1 (leaf) | 2 | 2 on all 121 | **ok** |
+
+**THE OBVIOUS METHOD FAILS AND IT FAILS SILENTLY.** "Count connected components
+in the object's palette band" counts figs right and leaves wrong: two blades on
+one stem are ONE component. Beat 21 frame 1 came back as a single 43,179 px blob.
+A blade is a LOBE — erode past the stem's half-width and the blades separate.
+
+**AND EROSION ALONE IS NOT ENOUGH EITHER.** b21's third blade grows in alongside
+the second and shares a long edge, so no radius from 6 to 45 splits them. What
+does is the thing this dialect draws between any two shapes: **the ink line is
+subtracted from the fill mask before the erosion**, and the blades come apart
+along the outline the artist already drew.
+
+> **THE INK IS NOT NOISE TO BE CLEANED OFF A CEL FRAME.** It is the frame's own
+> statement about where one object stops and the next begins, and a counter that
+> throws it away is counting silhouettes instead of objects.
+
+**AND THE FIRST VERSION PASSED ITS SELFTEST FOR THE WRONG REASON**, which is the
+correction worth more than the tool. It flagged beat 21 and looked right; it was
+flagging six frames where the count fell to **1** — a detector dropout while the
+plant swung through a dark band — while never once seeing the third blade the
+verdict is about. So the two directions are now separate findings: **ABOVE the
+opening is the model ADDING an object and is the only thing that flags; BELOW is
+the object leaving the mask and is a statement about the instrument.** A
+two-frame persistence floor drops the last false positive (b12 reads 3 on frame
+109 and only frame 109; the real faults run 7 and 55 frames).
+
+#### THE EYE: r13a IS RIGHT BY MY EYE, AND THE WAVE STILL DOES NOT FIRE
+
+At matched ear span on `review/ep2-goblin-eye-0822/EYE-earspan-r13-0822.jpg`,
+r13a's eye is visibly the narrowest of the four and the closest to
+`taste/refs/goblin-canon-founder-0821.png`; r13b and r13c are indistinguishable
+from r12d, exactly as the compositor lane read them. **STEWARD-PROVISIONAL — the
+eye is R4 and the founder has not seen it.**
+
+**AND THE TWELVE BEATS ON r12d ARE NOT RE-PLATED.** The refusal already written
+stands — *"re-plating eleven of them on a face the author has not seen is the
+r11a mistake by name"*, and r11a was itself an sq65 firing that was not adopted
+— and this morning's w5 result is a second reason: the eye on this stack is the
+most fragile thing in the recipe. What is fired instead is **one more sample**,
+`ep2-b04-canon-r14a-0821`: sq65 on beat 04, whose own stage direction is *"the
+eyes are the whole beat"* and whose pose is `hunch` rather than r13a's `sit`. If
+the founder says yes the wave is de-risked on a second pose; if he says no, four
+card-minutes were spent instead of forty-four.
+
+#### AND A PUBLISH TOKEN GOT AWAY AGAIN, IN THE FAMILY NAMED SIX HOURS EARLIER
+
+`ep2-b16-sapnat3-0822` published into `farm-out/ep2-b16-sapnat3-0821`. The
+retoken pair was `("farm-out/ep2-b03-sapnat-0821/", …)` **with a trailing
+slash**, and the publish step's destination has none, so the pair missed and the
+later bare `b03-sapnat -> b16-sapnat3` produced the 0821 date. Pixels are fine
+and the directory is beat-correct; only the date lies.
+
+> **A RETOKEN PAIR THAT CARRIES A SEPARATOR IS A DIFFERENT PAIR.** Same family as
+> this morning's prefix and filename escapes: the token that reaches the courier
+> is not the token that reaches the URL, and a pair written for one will not
+> cover the other.
