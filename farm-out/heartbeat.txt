@@ -4803,3 +4803,4 @@
 15:54:25Z box-runner idle ready=0 failed=129
 15:55:29Z STARTED task=lora-jerry-v3-ladder-0822-1787414115 attempt=1 on box-runner
 16:04:13Z DONE task=lora-jerry-v3-ladder-0822-1787414115 rc=0 artifacts=1
+16:05:24Z box-runner idle ready=0 failed=129
