@@ -4531,3 +4531,5 @@
 08:49:24Z DONE task=ep2-guardcast3-i-0822-1787387843 rc=0 artifacts=1
 08:49:30Z STARTED task=ep2-guardcast3-j-0822-1787387846 attempt=1 on box-runner
 08:49:48Z DONE task=ep2-guardcast3-j-0822-1787387846 rc=0 artifacts=1
+08:49:54Z STARTED task=ep2-guardcast3-j30-0822-1787387863 attempt=1 on box-runner
+08:50:13Z DONE task=ep2-guardcast3-j30-0822-1787387863 rc=0 artifacts=1
