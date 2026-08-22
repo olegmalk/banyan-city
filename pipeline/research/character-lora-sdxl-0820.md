@@ -215,6 +215,44 @@ inference is written in tags trains a mapping we never use.
 - **Keep every tag that is a variable** — pose, expression, camera framing,
   lighting, background, time of day, and anything we need to keep steering. A
   tag kept in the caption stays promptable; a tag deleted becomes mandatory.
+- **AND THE WORD "VARIABLE" MEANS VARIABLE IN THE PIXELS, NOT IN THE VOCABULARY**
+  — added 2026-08-22, and it is the most consequential correction this file has
+  taken. The rule above, read as written, says *name it and it stays
+  steerable*. That is false, and `bnyjerry v2` is the controlled experiment that
+  shows it, inside a single training run:
+
+  | axis | variance in the 21 frames | named on all 21? | steerable after training? |
+  |---|---|---|---|
+  | setting | zero — one hazy meadow | yes | **YES** — a snowy night and a sunset beach both arrive |
+  | pose | zero — and only 2 frames show a leg at all | yes | **NO** — `B5_pose_via_words` FAILS |
+
+  Same 21 files, same caption scheme, same run, opposite outcomes. So:
+
+  > **A caption tag keeps an attribute steerable only where the attribute VARIES
+  > IN THE DATASET. Naming an attribute the dataset holds constant is a tag with
+  > nowhere to attach. It is free to write, which is why it reads as insurance
+  > and is not.**
+
+  The setting is not a counterexample, it is the boundary case that proves the
+  clause: the base checkpoint varies backgrounds freely for *any* subject, so
+  `hazy meadow` had somewhere to attach **outside** the LoRA. Nothing outside the
+  LoRA knows what this creature's legs look like — the trigger is the only
+  source, and it had one picture. Community captioning guidance says the same
+  thing and we found it after measuring it: *things you put in every caption
+  become the constants the model learns, while things you vary become variables*
+  ([Scenario](https://help.scenario.com/articles/5782148871-advanced-captioning)),
+  and bluntly on our exact case, *if all training images show only one pose, the
+  model will bind that pose to your character and the trigger word will absorb
+  it regardless of how you tag it*
+  ([offlinecreator](https://offlinecreator.com/guide/how-to-caption-lora-dataset)).
+
+  **THE OPERATIONAL CONSEQUENCE, WHICH IS WHERE THIS COST US A WEEK.** "Caption
+  the prior away" is not a fix and cannot be made into one by better wording. If
+  an axis must be steerable, the dataset has to CONTAIN the variation, and the
+  cheapest way to find out whether it does is to count the frames that carry the
+  attribute at all — not the frames that carry the tag. On `bnyjerry v2` those
+  numbers are 21 tagged `standing` and **2** that show a leg, and nobody
+  measured the second one until three separate weight ladders had failed.
 - Do not over-prune clothing unless the costume is genuinely invariant.
 
 Applied to our two subjects:
@@ -226,6 +264,17 @@ Applied to our two subjects:
 
 Keeping leaf count and height in the sapling's captions is the mechanism that
 makes one LoRA serve all seven episodes of the growth ladder.
+
+**READ THAT TABLE'S "KEEP" COLUMN AS AN ASPIRATION, NOT A PREDICTION.** It lists
+what we want steerable; the clause above decides what actually will be. `pose`
+sits in the goblin's KEEP column and pose is the one thing v2 cannot do, because
+the column was filled in from the vocabulary and not from the pixels. The column
+is honest only for attributes the dataset varies — which for the goblin's v2 set
+is `shot size` and `lighting`, and for `background` only by borrowing the base
+checkpoint's own variance. `bnyjerry v3` (`manifest-jerry-v3-0822.yaml`) is the
+first set built to make `pose` earn its place in that column: three posed frames
+against the two that show a standing leg, so the attribute varies in pixels
+before the tag is asked to steer it.
 
 **Trigger tokens must be rare strings.** `bnyjerry` / `bnysapling` are chosen to
 tokenize as nonsense rather than collide with a real booru tag — `sapling` and
