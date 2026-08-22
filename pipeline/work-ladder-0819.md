@@ -8669,3 +8669,43 @@ than in front of the torso, and give it the proportions of a slab held up to be
 read. That is a change in `author_b06_guard_pose_0822.py`'s `board_box()`, costs
 no GPU to author, and its selftest already asserts the width against the
 skeleton's shoulders so the prompt clause cannot drift out of agreement with it.
+
+#### THE POSE ROUTE, JUDGED ON BOTH BEATS: THE COUNT AND THE FRAME ARE SOLVED. WHICH MAN IS WHICH IS NOT.
+
+`ep2-b05-pose-0822` is the clearest single result of the night. **Two grown men,
+whole, side by side, standing in a bright grass field under a blue sky** — the
+composition this beat won over four wording rounds and then lost twice tonight to
+the adapter. It is here because it was DRAWN. And they are two DIFFERENT men: one
+has the thick moustache and the other does not, which was the most likely
+pre-registered failure and it did not fire.
+
+> **A FIGURE COUNT IS A DRAWING PROBLEM AND IT IS NOW SOLVED.** Two skeletons on
+> one ground line produced two figures. No wording round ever made that reliable,
+> and no adapter setting preserved it.
+
+**And the light clause carried on both beats.** b05 and b06-r2 both came back in
+daylight after b06-r1 came back at night, on the single edit of moving the
+lighting from the negative into the positive. Ninth firing of the
+positive-placement law, and the first one where the fix was verified twice in one
+hour.
+
+**WHAT IS STILL OPEN, and it is a new question rather than an old one:
+PER-FIGURE ATTRIBUTES.** The prompt said *"The left man has dark cropped hair and
+round wire-rim glasses. The right man has a thick grey moustache."* What came
+back: the moustache on ONE man (correct behaviour), the GLASSES ON BOTH, and the
+two men **swapped sides**. So positional assignment in prose binds features
+inconsistently and does not bind position at all.
+
+That is not the b07 finding again and it should not be filed as it. On b07 the
+rule was *a term with a competitor in the sentence duplicates, a term without one
+binds* — but here `moustache` and `glasses` BOTH lack competitors, and one bound
+while the other spread. The distinguishing variable is unknown and the next rung
+should be an instrument rather than a seventh adjective: `controlnet_plate.py`
+already takes `--ip-ref` twice with `--ip-mask-capsules`, which the b08 lane wired
+for exactly this, and the capsules can be built from the same skeleton these
+hints are drawn from (`author_b08_openpose_hint.figure_capsules`). **Named, not
+fired.**
+
+**Sashes still absent on both men, in dark hooded robes.** Beat 05's contradicted
+ruling is still contradicted, and that is now the beat's oldest surviving fault
+across every route tried.
