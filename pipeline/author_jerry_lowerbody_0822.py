@@ -202,6 +202,22 @@ STANCES["kneel"] = {
     "Rank": (255, 1120), "Lank": (580, 1125),
 }
 
+# ONE KNEE UP, ONE LEG FOLDED DOWN -- and it is chosen for ASYMMETRY.
+#
+# `seat` and `kneel` are both mirror-symmetric, and so are all 21 frames of the
+# v2 dataset: the trigger has never seen this creature's left leg do something
+# its right leg is not doing. A third symmetric stance would add a pose and no
+# new axis. This one raises his right knee beside the body (the seat's right
+# leg, unchanged) and folds the left down and out (the kneel's left, unchanged),
+# so it is not a new invention -- it is the two proven stances, one per side.
+#
+# Segment lengths are his: thighs 94 and 98 px against the canon's 94,
+# shin+boot 129 and 117 against its 95-130.
+STANCES["oneknee"] = {
+    "Rkne": (280, 930),  "Lkne": (530, 1040),
+    "Rank": (310, 1055), "Lank": (610, 1125),
+}
+
 
 def sha256_of(path):
     with open(path, "rb") as fh:
