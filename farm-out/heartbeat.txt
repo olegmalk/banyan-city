@@ -4459,3 +4459,4 @@
 08:05:14Z FAIL task=ep3-saplora-fignat-g7-0822-1787385890 rc=1 step=fetch
 08:05:19Z STARTED task=ep3-saplora-fignat-g8-0822-1787385896 attempt=1 on box-runner
 08:05:21Z FAIL task=ep3-saplora-fignat-g8-0822-1787385896 rc=1 step=fetch
+08:10:25Z box-runner idle ready=0 failed=100
