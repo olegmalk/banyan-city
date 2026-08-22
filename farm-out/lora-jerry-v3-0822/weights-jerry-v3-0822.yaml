@@ -1,0 +1,28 @@
+job: lora-jerry-v3-0822
+trigger: bnyjerry
+weights_stay_on_the_box: Each checkpoint is ~228 MB. GitHub rejects blobs over 100 MiB and
+  the courier does `git add -A -- farm-out`, so a checkpoint here would leave a permanently
+  unpushable commit and block every lane. The sha256s below are the durable half.
+checkpoints:
+  bnyjerry-sdxl-v3-000002.safetensors:
+    sha256: 40732af6655b659bab4a15b936edb5ef576c979713e5173d34b63e05cd9db642
+    bytes: 228453628
+    box_path: C:\banyan-farm\lora-jerry-v3-0822\out\bnyjerry-sdxl-v3-000002.safetensors
+  bnyjerry-sdxl-v3-000004.safetensors:
+    sha256: be15f5d3ac96e5d3da3107f007f258abca9cc49b2ccfdf0bd47a4872c407cc8f
+    bytes: 228453628
+    box_path: C:\banyan-farm\lora-jerry-v3-0822\out\bnyjerry-sdxl-v3-000004.safetensors
+  bnyjerry-sdxl-v3-000006.safetensors:
+    sha256: d85f268d3a2104e928fb3485e35e4fbb83c1dde6eb4df719d815e621d416f160
+    bytes: 228453628
+    box_path: C:\banyan-farm\lora-jerry-v3-0822\out\bnyjerry-sdxl-v3-000006.safetensors
+  bnyjerry-sdxl-v3-000008.safetensors:
+    sha256: 728645238d3a14310bb426e137073588c72b1355cb83b7e4697e125433f130b2
+    bytes: 228453628
+    box_path: C:\banyan-farm\lora-jerry-v3-0822\out\bnyjerry-sdxl-v3-000008.safetensors
+  bnyjerry-sdxl-v3.safetensors:
+    sha256: d2062ac060a4ac44e217815464de143897550f078294eb59b3f303cc5f8a0cdd
+    bytes: 228453636
+    box_path: C:\banyan-farm\lora-jerry-v3-0822\out\bnyjerry-sdxl-v3.safetensors
+samples:
+- SAMPLE-bnyjerry-v3-sitting-wall.png
