@@ -9569,3 +9569,19 @@ silhouetted against something that is not its colour — b12's sky, b21's sky an
 golden field — and does not work where it stands in matching grass. That is a
 statement about which beats it can be a judge step for, and it is better said
 here than discovered by a lane that trusted a "16".
+
+#### AND THE INSTRUMENT CLOSES ITS OWN LOOP, AT $0
+
+Beat 19's count fault is the last seven frames and nothing else — `f000-097:1,
+f098-103:2, f104:3`. `trim_clip.py --end-frame 97` removes it outright:
+`19-the-drop-LTX-b19-dropmotion-r2-trim97-0822.mp4`, 98 frames, and the counter
+re-reads **1 on every frame**. No GPU, no re-word, no re-plate, 0.29 s off the
+tail, and the beat's two other faults are untouched and not claimed fixed.
+
+> **A COUNT FAULT THAT ARRIVES AT THE END IS A TRIM, AND THE INSTRUMENT IS WHAT
+> TELLS YOU IT ARRIVES AT THE END.** The ladder's own order is trim > composite >
+> wording > seed batch, and until this morning nobody could see which frame the
+> extra object entered on, so the cheapest lever was invisible. Beat 21's third
+> blade arrives at f064 of 121 and is therefore NOT a trim — the tilt it would
+> cut is the one measured clause the beat passes. Same instrument, opposite
+> answer, and that difference is the whole value of a per-frame reading.

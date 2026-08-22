@@ -851,6 +851,12 @@ BEATS = {
             "second picture."),
         faults_from="ship-manifest.yaml beat 19 + farm-out/ep2-b19-dropcomp-0819/",
         candidates=[
+            dict(file=f"{CAND_URL}/19-the-drop-LTX-b19-dropmotion-r2-trim97-0822.mp4",
+                 poster=f"{POSTER_URL}/19-the-drop-LTX-b19-dropmotion-r2-trim97-0822.jpg",
+                 label="the same clip with the last seven frames cut \u2014 the extra figs are gone. 08-22, $0", tag="warn",
+                 verdict="ONE FIG FOR THE WHOLE CLIP. The two extra fruit that appeared floating in the sky at the end of the take below arrive in the final seven frames and nowhere else, so cutting those seven frames removes that fault outright. Nothing else changed: the fall, the face and the plate are the clip below, byte for byte, minus 0.29 s off the tail. THE OTHER TWO FAULTS ARE UNTOUCHED and are not claimed fixed \u2014 he still does not notice the fig land, which is this beat's third event and has never landed on any take, and the fall still reads more as the fig sliding down the stem than letting go of it.",
+                 diff="No render, no GPU, no cost. The seven frames were found by a counter written this morning that reads the fig's own colour and geometry out of the file the compositor wrote when it drew it, and counts the fruit in every frame: one fig from frame 0 to 97, two at 98, three at 104. It was built because two different beats grew an extra object on the same morning and a wording ladder for object counts had already been closed by measurement. This is the first thing it has fixed.",
+                 src="pipeline/trim_clip.py + pipeline/count_composited_objects.py"),
             dict(file=f"{CAND_URL}/19-the-drop-LTX-ep2-b19-dropmotion-r2-0822.mp4",
                  poster=f"{POSTER_URL}/19-the-drop-LTX-ep2-b19-dropmotion-r2-0822.jpg",
                  label="THE FALL, ON YOUR FACE THIS TIME — newest", tag="warn",
