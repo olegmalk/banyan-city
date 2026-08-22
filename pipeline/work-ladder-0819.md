@@ -8599,3 +8599,29 @@ went around it. Undone with `git reset --soft` back to the parent and re-committ
 through `safe_commit.sh` with pathspecs; the peer's 35 files were still staged and
 untouched afterwards, verified. **The rule is not "use pathspecs on commit", it is
 "never run a bare git commit verb in this worktree, `--amend` included."**
+
+**CORRECTION to finding 3, made by the b03 rung an hour after it was filed, and
+the correction is the more useful half.** The b03 spec argued that its action
+*"already says three separate moves … and it parked anyway"*. **Beat 03's parent
+never parked.** Measured after filing — which is the error — it scores **0 of 104
+frame pairs under 0.5**, the best number in the wave except beat 16's. What is
+actually wrong with beat 03 is that HIS BODY barely moves while **the stalk grows
+in and the camera drifts**, and whole-frame interframe difference cannot tell
+those apart.
+
+So the six-clip table above is sound for the six clips in it, and the list of
+beats the finding was said to *reframe* — 03, 06, 13, 15, 17, 18, 19 — was a list
+of **prose complaints**, not of measurements, and I mapped one onto the other. Two
+lessons, both cheap:
+
+> **Measure the parent BEFORE filing the child, even when the prose fault sounds
+> like the one you just fixed.** The measurement took four seconds and would have
+> retired the rung.
+>
+> **"Barely moves" and "low interframe difference" are different faults.** A
+> growing plant and a drifting camera produce change without motion. Every future
+> motion bar in this tree should measure the FIGURE, not the frame — the b03
+> result is the cheapest possible demonstration and it cost four GPU minutes.
+
+The b13 sibling is unaffected: its parent's tail blocks are 0.07 0.15 0.11 0.03,
+which is a real freeze of the whole frame and not a segmentation artefact.

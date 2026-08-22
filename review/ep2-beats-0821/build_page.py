@@ -212,6 +212,12 @@ BEATS = {
             "model to hold still, and it did. The first clip below is that same picture with an action "
             "that has a start, a bottom and a return — it is the one to watch."),
         candidates=[
+            dict(file=f"{CAND_URL}/03-bad-cover-LTX-ep2-b03-repeat-0822.mp4",
+                 poster=f"{POSTER_URL}/03-bad-cover-LTX-ep2-b03-repeat-0822.jpg",
+                 label="tonight, newest — a rewritten action, and a correction to why it was filed", tag="warn",
+                 verdict="Your face all the way through, and the beat is still what it was: he crouches, his head dips and comes back, a stalk grows in beside him and the camera drifts. The two counted ducks the new wording asked for do not read as two ducks. IT IS NOT WORSE THAN THE ONE BELOW AND IT IS NOT MUCH BETTER, and the honest reason is that this beat was filed on a premise that turned out to be wrong.",
+                 diff="A rewrite of the action into a counted repeat, which had just worked on beat 17. It was filed on the belief that this beat's 'barely moves' fault was the same parked-clip problem — and measuring the clip below AFTER filing showed it never was: it already scored 0 of 104 frame pairs under 0.5, the best score of any clip in the wave except beat 16. What is actually still on this beat is that HIS BODY barely moves while the STALK grows and the CAMERA drifts, and a frame-difference number cannot tell those apart. So the number was never the fault here, and the next move on beat 03 is a figure-motion question and not a timing one.",
+                 src="pipeline/jobs/ep2-b03-repeat-0822.yaml"),
             dict(file=f"{CAND_URL}/03-bad-cover-LTX-ep2-b03-w4motion-0822.mp4",
                  poster=f"{POSTER_URL}/03-bad-cover-LTX-ep2-b03-w4motion-0822.jpg",
                  label="YOUR GOBLIN'S FACE, on this beat's best action — tonight, newest", tag="warn",
