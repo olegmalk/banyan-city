@@ -445,6 +445,7 @@
 <p class="nocand">None. Nothing else has been rendered and judged for this beat, so the only two answers that mean anything here are <b>ok</b> and <b>redo</b>.</p>
 <h3>What is wrong with it</h3>
 <ul class="faults"><li>Guard B turns his face to camera in a beat whose whole point is backs turned.</li><li>It has no standing verdict. An earlier pass was withdrawn over &quot;total identity collapse away from the plate&quot; across frames 16 to 21, and nothing has passed it since.</li></ul>
+<p class="nocand"><b>Also:</b> STATUS, 2026-08-22: nothing new was rendered for this beat tonight and nothing is queued for it. It is the only beat in the episode with no goblin and no open plate question, so it did not compete for the card against beats that have never had a candidate. Its named next step is unchanged and is cheap: an earlier pass on it was withdrawn over “total identity collapse away from the plate” across frames 16 to 21, and that window was later explained by a compression flag on the conditioning image rather than by the plate — so the first move is a re-run at the corrected setting, not a new plate. It has not been fired because the card has been full of beats with nothing at all under them.</p>
 <p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 11</p>
 <div class="answer"><p class="h">Answer in chat</p>
 <code>b11 ok</code>
@@ -470,6 +471,7 @@
 <ul class="faults"><li>The sapling GROWS across the shot — its tip climbs 140 px, 11% of the frame height, steadily — against an approved line that says &quot;perfectly still&quot;.</li></ul>
 <h3>What it gets right</h3>
 <ul class="wins"><li>Fixed on 08-21: the clip used to open on 13 frames of a completely different, warmer shot — four or five big pointed leaves — which breaks the canon leaf shape. Those frames are cut, and nothing after them was touched.</li></ul>
+<p class="nocand"><b>Also:</b> STATUS, 2026-08-22: still no candidate, and the reason is now specific rather than open. Look at the clip: the two leaves are drawn as PERFECT ROUND DISCS. Canon since your 08-17 ruling is “average leaves” — the shape anyone draws when you say leaf — and it explicitly supersedes the round/oval inference that was made from your two-leaf ruling in August. So this beat needs the leaves REDRAWN, and the route is proven rather than speculative: the plant is drawn into the frame in software and then finished by a light inpaint pass, which is how beats 16 and 19 got their sapling and which passed four times out of four. That is a drawing job before it is a render job and it was not finished tonight — the card went to the eight beats whose clips were landing. Named, costed at about ten minutes of GPU, not fired.</p>
 <p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">review/ep2-picks/done-definitions.yaml beats.12 + review/ep2-b12-trim-0821/verdict-0821.yaml</p>
 <div class="answer"><p class="h">Answer in chat</p>
 <code>b12 ok</code>
@@ -727,6 +729,7 @@
 <ul class="faults"><li>The plant is a single LANCE-shaped leaf, not two cotyledons. Wrong plant — it fails both sapling canon rules at once, the same wrong-plant fault as beats 16 and 20.</li></ul>
 <h3>What it gets right</h3>
 <ul class="wins"><li>The only beat in the episode whose definition is fully met — all four clauses, and the hard one is measured. The leaf tilts steadily in one direction over about 90 frames, with no oscillation and no reversal, AND IT STOPS.</li><li>Fixed on 08-21: the opening colour jump is trimmed off, and nothing after it was touched.</li></ul>
+<p class="nocand"><b>Also:</b> STATUS, 2026-08-22: still no candidate, same reason as beat 12 and the same fix. The plant here is ONE BIG LANCE-SHAPED LEAF standing straight up, where canon is two average leaves and lance shapes are ruled out by name. Everything else about this beat is the best in the episode — it is the only one whose definition is fully met, and the hard clause is measured: the leaf tilts steadily in one direction over about ninety frames with no oscillation, and it stops. So the motion is not in question and the plant is. Same route as beat 12: draw the two leaves into the frame, finish them with the light inpaint pass that has passed four for four, then re-render the tilt off the corrected plate. Named, not fired — the card spent the night on the eight beats whose clips were landing.</p>
 <p class="src" style="font:11px ui-monospace,Menlo,monospace;color:#6f757c">ship-manifest.yaml beat 21 + pipeline/jobs/ep2-b21-daylight-0814.yaml</p>
 <div class="answer"><p class="h">Answer in chat</p>
 <code>b21 ok</code>
