@@ -4408,3 +4408,5 @@
 06:06:00Z box-runner idle ready=0 failed=90
 06:16:04Z box-runner idle ready=0 failed=90
 06:26:08Z box-runner idle ready=0 failed=90
+06:27:12Z STARTED task=lora-sapling-0822-1787379857 attempt=1 on box-runner
+06:27:27Z FAIL task=lora-sapling-0822-1787379857 rc=1 step=train

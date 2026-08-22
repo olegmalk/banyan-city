@@ -1,0 +1,30 @@
+#### job lora-sapling-0822-1787379857 attempt 1 start 2026-08-22T06:27:12Z
+
+==== step stage START 2026-08-22T06:27:12Z ====
+argv: ["C:\\banyan-farm\\venv-lora\\Scripts\\python.exe", "-c", "import hashlib, os, shutil, yaml\nCANDIDATES = [r\"C:\\banyan-farm\\lora-sapling-0822\\src\",\n              r\"C:\\banyan-farm\\banyan-city\"]\nREL = \"pipeline/lora/manifest-sapling.yaml\"\nrepo = next((c for c in CANDIDATES if os.path.exists(os.path.join(c, REL))), None)\nif repo is None:\n    raise SystemExit(\"NO DATASET ROOT. Tried:\\n  \" + \"\\n  \".join(CANDIDATES))\nprint(\"dataset root:\", repo)\nman  = yaml.safe_load(open(os.path.join(repo, REL), encoding=\"utf-8\"))\nif man.get(\"trigger\") != \"bnysapling\":\n    raise SystemExit(\"manifest trigger is %r, not bnysapling\" % man.get(\"trigger\"))\ndst  = r\"C:\\banyan-farm\\lora-sapling-0822\\img\\3_bnysapling\"\nos.makedirs(dst, exist_ok=True)\nos.makedirs(r\"C:\\banyan-farm\\lora-sapling-0822\\out\", exist_ok=True)\nn = 0\nfor f in man[\"frames\"]:\n    src = os.path.join(repo, f[\"image\"])\n    got = hashlib.sha256(open(src, \"rb\").read()).hexdigest()\n    if got != f[\"sha256\"]:\n        raise SystemExit(\"SHA MISMATCH %s\\n  manifest %s\\n  on disk  %s\"\n                         % (f[\"image\"], f[\"sha256\"], got))\n    # The item-18 scope check, per frame and in code rather than in prose:\n    # the manifest must assert an SDXL chain for this exact frame. An LTX\n    # still cannot claim it, and a frame with no provenance line stops here.\n    if \"animagine-xl-3.1\" not in (f.get(\"render\") or \"\"):\n        raise SystemExit(\"NO SDXL PROVENANCE on %s: render=%r\"\n                         % (f[\"image\"], f.get(\"render\")))\n    stem = os.path.basename(f[\"caption_file\"])[:-4]\n    shutil.copy2(src, os.path.join(dst, stem + \".png\"))\n    shutil.copy2(os.path.join(repo, f[\"caption_file\"]), os.path.join(dst, stem + \".txt\"))\n    n += 1\n# The sampler travels with the dataset, from the SAME root, so step 3 cannot\n# end up running a different revision of it than this step verified.\nshutil.copy2(os.path.join(repo, \"pipeline/lora/sample_lora.py\"),\n             r\"C:\\banyan-farm\\lora-sapling-0822\\sample_lora.py\")\nprint(\"staged\", n, \"image+caption pairs ->\", dst)\nprint(\"repeat 3 x %d frames = %d images/epoch\" % (n, 3 * n))\nraise SystemExit(0 if n == man[\"count\"] else 1)\n"]
+dataset root: C:\banyan-farm\lora-sapling-0822\src
+staged 44 image+caption pairs -> C:\banyan-farm\lora-sapling-0822\img\3_bnysapling
+repeat 3 x 44 frames = 132 images/epoch
+==== step stage END rc=0 2026-08-22T06:27:12Z ====
+
+==== step train START 2026-08-22T06:27:12Z ====
+argv: ["C:\\banyan-farm\\venv-lora\\Scripts\\python.exe", "C:\\banyan-farm\\sd-scripts\\sdxl_train_network.py", "--pretrained_model_name_or_path", "C:\\Users\\artvn\\.cache\\huggingface\\hub\\models--cagliostrolab--animagine-xl-3.1\\snapshots\\483f0c322568ed13697ed01dd0be07204746d12b", "--train_data_dir", "C:\\banyan-farm\\lora-sapling-0822\\img", "--output_dir", "C:\\banyan-farm\\lora-sapling-0822\\out", "--output_name", "bnysapling-sdxl-v1", "--network_module", "networks.lora", "--network_dim", "32", "--network_alpha", "16", "--learning_rate", "1e-4", "--unet_lr", "1e-4", "--text_encoder_lr", "5e-5", "--lr_scheduler", "cosine", "--lr_warmup_steps", "33", "--optimizer_type", "AdamW8bit", "--max_train_epochs", "10", "--save_every_n_epochs", "2", "--train_batch_size", "2", "--resolution", "832,1216", "--enable_bucket", "--min_bucket_reso", "1024", "--max_bucket_reso", "2048", "--mixed_precision", "bf16", "--save_precision", "bf16", "--gradient_checkpointing", "--cache_latents", "--cache_latents_to_disk", "--sdpa", "--seed", "20260822", "--save_model_as", "safetensors", "--logging_dir", "C:\\banyan-farm\\lora-sapling-0822\\log"]
+W0822 10:27:20.146000 4372 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+2026-08-22 10:27:25 INFO     Using DreamBooth method.      train_network.py:937
+Traceback (most recent call last):
+  File "C:\banyan-farm\sd-scripts\sdxl_train_network.py", line 183, in <module>
+    trainer.train(args)
+  File "C:\banyan-farm\sd-scripts\train_network.py", line 963, in train
+    train_dataset_group, val_dataset_group = config_util.generate_dataset_group_by_blueprint(blueprint.dataset_group)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\sd-scripts\library\config_util.py", line 498, in generate_dataset_group_by_blueprint
+    dataset = dataset_klass(subsets=subsets, **asdict(dataset_blueprint.params), **extra_dataset_params)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\sd-scripts\library\dreambooth_dataset.py", line 77, in __init__
+    min_bucket_reso, max_bucket_reso = self.adjust_min_max_bucket_reso_by_steps(
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\banyan-farm\sd-scripts\library\dataset.py", line 450, in adjust_min_max_bucket_reso_by_steps
+    min(resolution) >= min_bucket_reso
+AssertionError: min_bucket_reso must be equal or less than resolution / min_bucket_resoは最小解像度より大きくできません。解像度を大きくするかmin_bucket_resoを小さくしてください
+==== step train END rc=1 2026-08-22T06:27:27Z ====
+#### job lora-sapling-0822-1787379857 finished rc=1 2026-08-22T06:27:27Z
