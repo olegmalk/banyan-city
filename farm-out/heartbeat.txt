@@ -4720,3 +4720,5 @@
 11:34:20Z STARTED task=lora-jerry-v2-bars-0822-1787398453 attempt=1 on box-runner
 11:45:51Z DONE task=lora-jerry-v2-bars-0822-1787398453 rc=0 artifacts=24
 11:46:02Z box-runner idle ready=0 failed=124
+11:50:00Z STARTED task=lora-jerry-v2-b2r2-0822-1787399393 attempt=1 on box-runner
+11:50:03Z FAIL task=lora-jerry-v2-b2r2-0822-1787399393 rc=6 step=b2r2-crouch-w05
