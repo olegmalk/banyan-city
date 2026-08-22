@@ -1,0 +1,150 @@
+#### job lora-jerry-v3-cnetscale-0822-1787415120 attempt 1 start 2026-08-22T16:12:13Z
+
+==== step fetch START 2026-08-22T16:12:13Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\fetch_hints.py"]
+fetched jerry-skel-h240seat-0821.png 9027 bytes OK
+fetched jerry-skel-h240kneel-0822.png 8627 bytes OK
+fetched jerry-skel-h240stride-0821.png 10793 bytes OK
+fetched jerry-poseproof-init-0822.png 5712 bytes OK
+fetched jerry-poseproof-maskall-0822.png 3278 bytes OK
+==== step fetch END rc=0 2026-08-22T16:12:13Z ====
+
+==== step cnetscale-seat-s07 START 2026-08-22T16:12:13Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\jerry-poseproof-init-0822.png", "--init-sha256", "79c80689a43452f8fc11d22c2da86aee1c0a073d2255ddf1cb1d3cdc446f5f7f", "--mask-png", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\jerry-poseproof-maskall-0822.png", "--strength", "1.0", "--pad-crop", "0", "--blur", "0", "--controlnet", "C:\\banyan-farm\\cnet-openpose-twins", "--control", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\jerry-skel-h240seat-0821.png", "--control-sha256", "1e95abc723f366f2e8c6b486937cfe8709edcbe2d8af0186fa82461c8e792686", "--scale", "0.7", "--prompt-file", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260822", "--out", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\out\\cnetscale-seat-s07.png", "--lora", "C:\\banyan-farm\\lora-jerry-v3-0822\\out\\bnyjerry-sdxl-v3.safetensors", "--lora-weight", "0.8", "--lora-sha256", "d2062ac060a4ac44e217815464de143897550f078294eb59b3f303cc5f8a0cdd", "--note", "THE HINT'S VOLUME KNOB at scale 0.7, and it is the ONE variable against the ladder's b2-seat-s1. That cell held the seat and lost his skin, and lora-jerry-v3-capshape-0822 has already ruled out prompt dialect -- a caption-shaped prompt came back tan with the seat still held. So the two conditioning channels are in tension over one region and this turns one of them down. Round seven turned this knob UP to 1.4 on v2, because until v3 the LoRA was winning and the hint needed help; v3 inverts that and nobody has turned it down. Same checkpoint and sha, same seat skeleton, same weight 0.8, same seed 20260822, same prompt.txt and negative.txt, 40 steps, cfg 7.5, strength 1.0, --pad-crop 0, --blur 0. WHAT A PASS LOOKS LIKE: desaturated sage skin AND the knees still up. Either one alone is not a pass -- a sage standing goblin is what v2 already gives."]
+HINT MAGNIFICATION 1.000x (ceiling 1.05) -- the hint reaches the net at the scale it was authored
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:03,  1.92it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:00,  2.27it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.10it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.82it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+LORA bnyjerry-sdxl-v3.safetensors fused at weight 0.80, sha d2062ac060a4ac44
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:20: FutureWarning: `VQEncoderOutput` is deprecated and will be removed in version 0.31. Importing `VQEncoderOutput` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQEncoderOutput`, instead.
+  deprecate("VQEncoderOutput", "0.31", deprecation_message)
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:25: FutureWarning: `VQModel` is deprecated and will be removed in version 0.31. Importing `VQModel` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQModel`, instead.
+  deprecate("VQModel", "0.31", deprecation_message)
+PIPELINE StableDiffusionXLControlNetInpaintPipeline, 1 net(s), scales 0.7
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:13,  2.87it/s]
+  5%|▌         | 2/40 [00:00<00:12,  2.95it/s]
+  8%|▊         | 3/40 [00:01<00:12,  2.96it/s]
+ 10%|█         | 4/40 [00:01<00:11,  3.07it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  3.10it/s]
+ 15%|█▌        | 6/40 [00:01<00:11,  3.02it/s]
+ 18%|█▊        | 7/40 [00:02<00:10,  3.08it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.08it/s]
+ 22%|██▎       | 9/40 [00:02<00:10,  3.07it/s]
+ 25%|██▌       | 10/40 [00:03<00:09,  3.10it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.12it/s]
+ 30%|███       | 12/40 [00:03<00:09,  3.08it/s]
+ 32%|███▎      | 13/40 [00:04<00:08,  3.10it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.07it/s]
+ 38%|███▊      | 15/40 [00:04<00:08,  3.05it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.08it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.08it/s]
+ 45%|████▌     | 18/40 [00:05<00:07,  3.09it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.11it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.08it/s]
+ 52%|█████▎    | 21/40 [00:06<00:06,  3.06it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.09it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.11it/s]
+ 60%|██████    | 24/40 [00:07<00:05,  3.08it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.06it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.09it/s]
+ 68%|██████▊   | 27/40 [00:08<00:04,  3.07it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.10it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.06it/s]
+ 75%|███████▌  | 30/40 [00:09<00:03,  3.05it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.08it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.06it/s]
+ 82%|████████▎ | 33/40 [00:10<00:02,  3.09it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.07it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.10it/s]
+ 90%|█████████ | 36/40 [00:11<00:01,  3.05it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.10it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.07it/s]
+ 98%|█████████▊| 39/40 [00:12<00:00,  3.05it/s]
+100%|██████████| 40/40 [00:12<00:00,  3.44it/s]
+100%|██████████| 40/40 [00:12<00:00,  3.10it/s]
+WROTE C:\banyan-farm\lora-jerry-v3-cnetscale-0822\out\cnetscale-seat-s07.png
+WROTE C:\banyan-farm\lora-jerry-v3-cnetscale-0822\out\cnetscale-seat-s07-mask.png
+WROTE C:\banyan-farm\lora-jerry-v3-cnetscale-0822\out\cnetscale-seat-s07.png.meta.yaml
+rc=0 render_s=14.0
+==== step cnetscale-seat-s07 END rc=0 2026-08-22T16:12:39Z ====
+
+==== step cnetscale-seat-s05 START 2026-08-22T16:12:39Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\jerry-poseproof-init-0822.png", "--init-sha256", "79c80689a43452f8fc11d22c2da86aee1c0a073d2255ddf1cb1d3cdc446f5f7f", "--mask-png", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\jerry-poseproof-maskall-0822.png", "--strength", "1.0", "--pad-crop", "0", "--blur", "0", "--controlnet", "C:\\banyan-farm\\cnet-openpose-twins", "--control", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\jerry-skel-h240seat-0821.png", "--control-sha256", "1e95abc723f366f2e8c6b486937cfe8709edcbe2d8af0186fa82461c8e792686", "--scale", "0.5", "--prompt-file", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260822", "--out", "C:\\banyan-farm\\lora-jerry-v3-cnetscale-0822\\out\\cnetscale-seat-s05.png", "--lora", "C:\\banyan-farm\\lora-jerry-v3-0822\\out\\bnyjerry-sdxl-v3.safetensors", "--lora-weight", "0.8", "--lora-sha256", "d2062ac060a4ac44e217815464de143897550f078294eb59b3f303cc5f8a0cdd", "--note", "THE HINT'S VOLUME KNOB at scale 0.5, and it is the ONE variable against the ladder's b2-seat-s1. That cell held the seat and lost his skin, and lora-jerry-v3-capshape-0822 has already ruled out prompt dialect -- a caption-shaped prompt came back tan with the seat still held. So the two conditioning channels are in tension over one region and this turns one of them down. Round seven turned this knob UP to 1.4 on v2, because until v3 the LoRA was winning and the hint needed help; v3 inverts that and nobody has turned it down. Same checkpoint and sha, same seat skeleton, same weight 0.8, same seed 20260822, same prompt.txt and negative.txt, 40 steps, cfg 7.5, strength 1.0, --pad-crop 0, --blur 0. WHAT A PASS LOOKS LIKE: desaturated sage skin AND the knees still up. Either one alone is not a pass -- a sage standing goblin is what v2 already gives."]
+HINT MAGNIFICATION 1.000x (ceiling 1.05) -- the hint reaches the net at the scale it was authored
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:01<00:02,  1.78it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:01<00:00,  2.94it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.27it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.90it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 5s
+LORA bnyjerry-sdxl-v3.safetensors fused at weight 0.80, sha d2062ac060a4ac44
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:20: FutureWarning: `VQEncoderOutput` is deprecated and will be removed in version 0.31. Importing `VQEncoderOutput` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQEncoderOutput`, instead.
+  deprecate("VQEncoderOutput", "0.31", deprecation_message)
+C:\banyan-farm\venv\Lib\site-packages\diffusers\models\vq_model.py:25: FutureWarning: `VQModel` is deprecated and will be removed in version 0.31. Importing `VQModel` from `diffusers.models.vq_model` is deprecated and this will be removed in a future version. Please use `from diffusers.models.autoencoders.vq_model import VQModel`, instead.
+  deprecate("VQModel", "0.31", deprecation_message)
+PIPELINE StableDiffusionXLControlNetInpaintPipeline, 1 net(s), scales 0.5
+
+  0%|          | 0/40 [00:00<?, ?it/s]
+  2%|▎         | 1/40 [00:00<00:14,  2.73it/s]
+  5%|▌         | 2/40 [00:00<00:13,  2.92it/s]
+  8%|▊         | 3/40 [00:01<00:12,  2.96it/s]
+ 10%|█         | 4/40 [00:01<00:11,  3.04it/s]
+ 12%|█▎        | 5/40 [00:01<00:11,  3.03it/s]
+ 15%|█▌        | 6/40 [00:02<00:11,  3.00it/s]
+ 18%|█▊        | 7/40 [00:02<00:10,  3.07it/s]
+ 20%|██        | 8/40 [00:02<00:10,  3.06it/s]
+ 22%|██▎       | 9/40 [00:02<00:10,  3.08it/s]
+ 25%|██▌       | 10/40 [00:03<00:09,  3.06it/s]
+ 28%|██▊       | 11/40 [00:03<00:09,  3.08it/s]
+ 30%|███       | 12/40 [00:03<00:09,  3.06it/s]
+ 32%|███▎      | 13/40 [00:04<00:08,  3.09it/s]
+ 35%|███▌      | 14/40 [00:04<00:08,  3.06it/s]
+ 38%|███▊      | 15/40 [00:04<00:08,  3.04it/s]
+ 40%|████      | 16/40 [00:05<00:07,  3.08it/s]
+ 42%|████▎     | 17/40 [00:05<00:07,  3.10it/s]
+ 45%|████▌     | 18/40 [00:05<00:07,  3.08it/s]
+ 48%|████▊     | 19/40 [00:06<00:06,  3.06it/s]
+ 50%|█████     | 20/40 [00:06<00:06,  3.08it/s]
+ 52%|█████▎    | 21/40 [00:06<00:06,  3.06it/s]
+ 55%|█████▌    | 22/40 [00:07<00:05,  3.05it/s]
+ 57%|█████▊    | 23/40 [00:07<00:05,  3.08it/s]
+ 60%|██████    | 24/40 [00:07<00:05,  3.06it/s]
+ 62%|██████▎   | 25/40 [00:08<00:04,  3.09it/s]
+ 65%|██████▌   | 26/40 [00:08<00:04,  3.06it/s]
+ 68%|██████▊   | 27/40 [00:08<00:04,  3.05it/s]
+ 70%|███████   | 28/40 [00:09<00:03,  3.08it/s]
+ 72%|███████▎  | 29/40 [00:09<00:03,  3.06it/s]
+ 75%|███████▌  | 30/40 [00:09<00:03,  3.08it/s]
+ 78%|███████▊  | 31/40 [00:10<00:02,  3.06it/s]
+ 80%|████████  | 32/40 [00:10<00:02,  3.08it/s]
+ 82%|████████▎ | 33/40 [00:10<00:02,  3.04it/s]
+ 85%|████████▌ | 34/40 [00:11<00:01,  3.05it/s]
+ 88%|████████▊ | 35/40 [00:11<00:01,  3.08it/s]
+ 90%|█████████ | 36/40 [00:11<00:01,  3.06it/s]
+ 92%|█████████▎| 37/40 [00:12<00:00,  3.09it/s]
+ 95%|█████████▌| 38/40 [00:12<00:00,  3.06it/s]
+ 98%|█████████▊| 39/40 [00:12<00:00,  3.05it/s]
+100%|██████████| 40/40 [00:12<00:00,  3.37it/s]
+100%|██████████| 40/40 [00:12<00:00,  3.08it/s]
+WROTE C:\banyan-farm\lora-jerry-v3-cnetscale-0822\out\cnetscale-seat-s05.png
+WROTE C:\banyan-farm\lora-jerry-v3-cnetscale-0822\out\cnetscale-seat-s05-mask.png
+WROTE C:\banyan-farm\lora-jerry-v3-cnetscale-0822\out\cnetscale-seat-s05.png.meta.yaml
+rc=0 render_s=14.0
+==== step cnetscale-seat-s05 END rc=0 2026-08-22T16:13:04Z ====
+
+==== step publish START 2026-08-22T16:13:04Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "\nimport hashlib, glob, os, shutil\nOUT = \"C:/banyan-farm/lora-jerry-v3-cnetscale-0822/out\"\nDST = \"C:/banyan-farm/courier-box/farm-out/lora-jerry-v3-cnetscale-0822\"\nos.makedirs(DST, exist_ok=True)\nn = 0\nfound = sorted(glob.glob(OUT + \"/*.png\")) + sorted(\n    glob.glob(OUT + \"/*.png.meta.yaml\"))\nfor p in found:\n    if os.path.isfile(p):\n        shutil.copyfile(p, os.path.join(DST, os.path.basename(p)))\n        n += 1\nwith open(os.path.join(DST, \"lora-jerry-v3-cnetscale-0822.sha256\"), \"w\", encoding=\"utf-8\") as fh:\n    for name in sorted(os.listdir(DST)):\n        q = os.path.join(DST, name)\n        if os.path.isfile(q) and not name.endswith(\".sha256\"):\n            fh.write(\"%s  %s\" % (\n                hashlib.sha256(open(q, \"rb\").read()).hexdigest(), name) + chr(10))\nprint(\"published\", n, \"file(s) ->\", DST, flush=True)\nif n == 0:\n    raise SystemExit(\"NOTHING TO PUBLISH -- the ladder produced no files\")\n"]
+published 6 file(s) -> C:/banyan-farm/courier-box/farm-out/lora-jerry-v3-cnetscale-0822
+==== step publish END rc=0 2026-08-22T16:13:05Z ====
+#### job lora-jerry-v3-cnetscale-0822-1787415120 finished rc=0 2026-08-22T16:13:05Z
