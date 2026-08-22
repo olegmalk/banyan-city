@@ -1,0 +1,520 @@
+# THE JERRY v3 DATASET -- GENERATED. Edit pipeline/lora/build_jerry_v3_0822.py, not this file.
+#
+# v2's twenty-one, byte-identical and re-asserted, plus posed frames whose
+# heads are the founder's own pixels and whose legs were generated against a
+# skeleton. See `one_variable_against_v2`.
+subject: jerry
+trigger: bnyjerry
+built_by: pipeline/lora/build_jerry_v3_0822.py
+built_on: '2026-08-22'
+supersedes: pipeline/lora/manifest-jerry-v2-0822.yaml
+one_variable_against_v2: THE ADDED FRAMES, AND NOTHING ELSE. All 21 v2 frames are carried
+  with their own image paths and their own sha256s, each re-verified against the bytes the
+  founder ratified on 2026-08-22, and each caption asserted byte-identical to the string v2
+  shipped. The recipe, the repeat formula, the epoch count and the caption scheme are untouched.
+  A v3 score is therefore attributable.
+founder_ratified:
+  the_21: CARRIED. The founder read all 21 at 1:1 against his own image on 2026-08-22 and
+    ruled `all ok`. Their bytes are unchanged and re-asserted at build time.
+  the_posed_frames: NOT RATIFIED, AND NOT PRESENTED AS RATIFIED. They are steward-made training
+    frames whose HEAD is byte-identical to the ratified canon by arithmetic (rows 0..883 pasted
+    back and asserted) and whose LEGS are generated. Ratifying the input was never ratifying
+    what is made from it, and a trained v3 still has to pass the bars at 1:1.
+the_diagnosis: The standing prior is ONE FRAME DEEP, not 21. Of the 21 ratified frames, 11
+  are upper-body crops and 8 are cowboy shots; the only two that show a lower body are the
+  canon and its mirror, verified byte-identical to taste/refs/goblin-canon-founder-0821.png
+  and to its mirror. Every knob that failed -- round seven's weight ladder, the two-pass's
+  six cells -- was hunting for a competing lower-body configuration to fade toward. There
+  is one picture to fade from.
+the_caption_law: A caption tag keeps an attribute steerable ONLY WHERE THE ATTRIBUTE VARIES
+  IN THE DATASET. v2 named `standing` on all 21 and pose stayed unpromptable (B5 fails), while
+  the SETTING generalised cleanly out of one meadow -- because the base checkpoint varies
+  backgrounds for any subject and `hazy meadow` had somewhere to attach outside the LoRA,
+  and nothing outside the LoRA knows what this creature's legs look like. v3 is the first
+  set in which the pose token varies in PIXELS.
+count: 24
+repeat: 5
+image_passes: 1200
+optimizer_steps_at_batch_2: 600
+poses:
+  kneeling: 1
+  sitting: 1
+  squatting: 1
+  standing: 21
+framings:
+  cowboy shot: 10
+  full body: 3
+  upper body: 11
+lower_body_vote:
+  posed: 3
+  standing: 2
+  no_lower_body_at_all: 19
+caption_scheme: v2's scheme with the pose promoted from a literal to a slot. Ten clauses,
+  identical length on every frame. The 21 carried frames keep `standing` and their strings
+  are asserted byte-identical to v2's; the posed frames name their stance. Everything else
+  is v2's, unchanged, per the v2b dilution finding in registry.yaml.
+not_admitted:
+  cell: posed-oneknee
+  draws:
+    20260823: asymmetry 81.4 (highest in the set); right thigh 80 RGB units off the canon's
+      sage as a pink slab at mid-limb, which no crop reaches.
+    20260824: the pink slab is gone and the asymmetry with it -- both legs do the same thing.
+      Passes P1 by failing A1, which the spec ruled in advance is the seat with extra steps.
+  ruling: 'NOT ADMITTED. The two-draw budget was declared before the first draw and is spent.
+    The asymmetry axis stays unrepresented in v3 and that is recorded as a known gap, not
+    papered over: if v3 poses but poses symmetrically, this is the first place to look.'
+  evidence:
+  - farm-out/ep2-goblin-lowerbody-0822/jerry-posed-oneknee-0822.png
+  - farm-out/ep2-goblin-lowerbody-0822/jerry-posed-oneknee-r2-0822.png
+known_gap: NO ASYMMETRIC FRAME. All three posed frames are mirror-symmetric, as are all 21
+  carried ones, so the trigger still has never seen this creature's left leg do something
+  its right leg is not doing. The one-knee cell was built for exactly that axis and both budgeted
+  draws traded pose against paint (see not_admitted). If v3 poses but poses symmetrically,
+  this is the first place to look and the fix is a third draw or a re-authored asymmetric
+  hint, neither of which is a research question.
+known_defect_carried_into_training: PALE THIGHS ON THE LIT SIDE, ON ALL THREE POSED FRAMES.
+  This is the route's standing P3 clause and it is being trained on deliberately rather than
+  overlooked. It sits at MID-LIMB, so unlike the paw feet no crop reaches it; the stopping
+  rule against a fourth wording rung was filed before ep2-b13-lowerbody-w3-0822 rendered and
+  two cells that moved this clause both traded something else away. The licensed $0 fix is
+  a palette-transfer compositor off the canon's own bare shin (RGB 120.4 / 130.0 / 110.4,
+  sampled at 355..385 x 925..945), which has no sampler in it and is the house tradition --
+  beat20_fig_recolor.py. It is NOT applied here because that would be a second variable against
+  v2 and the whole point of this set is that there is one. If v3 poses correctly but paints
+  his legs pale, that compositor is the next step and it costs no card time.
+shared_torso_risk: 'ALL THREE POSED FRAMES SHARE ONE UPPER BODY, BYTE FOR BYTE -- the canon''s,
+  moved by the same integer DROP of 150. That is three copies of one torso, one pair of arms
+  and one light. If v3''s identity bar FALLS relative to v2, this is the first suspect, and
+  the answer is cheap: re-crop, or re-run the masked pass at more than one DROP so the torso
+  sits at a different height in each.'
+frames:
+- cell: canon-full
+  image: farm-out/ep2-goblin-i2i-src-0822/init-full-0822.png
+  sha256: 0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7
+  caption_file: pipeline/lora/captions/jerry-v3-0822/canon-full.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, full body, tall grass, soft
+    daylight, anime style, cel shading
+  init: full
+  framing: full body
+  ground: tall grass
+  light: soft daylight
+  strength: '0.00'
+  why_kept: THE CANON ITSELF (or its mirror), at zero strength. Nothing was denoised, so it
+    cannot have drifted. It is in the set for the SILHOUETTE -- the only full-body view the
+    route can supply, because every rendered full-body cell came back with a yellow pupil
+    at five separate strengths.
+  pose: standing
+  carried_from_v2: true
+- cell: canon-full-flip
+  image: farm-out/ep2-goblin-i2i-src-0822/init-full-flip-0822.png
+  sha256: 83f5cbc751fdf28904878809f57a04fac23c79cf03711af0515b8050be743a52
+  caption_file: pipeline/lora/captions/jerry-v3-0822/canon-full-flip.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, full body, tall grass, soft
+    daylight, anime style, cel shading
+  init: full-flip
+  framing: full body
+  ground: tall grass
+  light: soft daylight
+  strength: '0.00'
+  why_kept: THE CANON ITSELF (or its mirror), at zero strength. Nothing was denoised, so it
+    cannot have drifted. It is in the set for the SILHOUETTE -- the only full-body view the
+    route can supply, because every rendered full-body cell came back with a yellow pupil
+    at five separate strengths.
+  pose: standing
+  carried_from_v2: true
+- cell: k05
+  image: farm-out/ep2-b13-jds-k05-r2-0820/b13-jds-k05-s20261006.png
+  sha256: 47ed5916671a9fe9c1af12975faf8e6422b906549c86a6fcc7f277765969356a
+  caption_file: pipeline/lora/captions/jerry-v3-0822/k05.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    warm low sunlight, anime style, cel shading
+  init: cowboy-flip
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: warm low sunlight
+  strength: '0.20'
+  why_kept: cowboy-flip 0.20. The frame that set the cowboy row's number -- tiny dark pupil,
+    ears near horizontal, and a real background change to hazy hills.
+  setting_requested: dry cracked earth
+  pose: standing
+  carried_from_v2: true
+- cell: m03
+  image: farm-out/ep2-b13-jds-m03-r2-0820/b13-jds-m03-s20261104.png
+  sha256: a2a90ae741c0b026faffaf0a9c8d7d72e0778414bf69faa70f43e39d55fabf95
+  caption_file: pipeline/lora/captions/jerry-v3-0822/m03.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, warm
+    low sunlight, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: warm low sunlight
+  strength: '0.30'
+  why_kept: headnat 0.30. Vindicated the native square. Tiny dark pupils, hazy hills and light
+    rays.
+  setting_requested: a pale sky
+  pose: standing
+  carried_from_v2: true
+- cell: m04
+  image: farm-out/ep2-b13-jds-m04-r2-0820/b13-jds-m04-s20261105.png
+  sha256: 46b9a26f3c2e84e733b9af3cc61abeddd45171adf2135fadbb71ced6c3369fb3
+  caption_file: pipeline/lora/captions/jerry-v3-0822/m04.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, warm
+    low sunlight, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: warm low sunlight
+  strength: '0.25'
+  why_kept: headnat 0.25. Small dark pupils, correct ears, background moved.
+  setting_requested: a pale sky
+  pose: standing
+  carried_from_v2: true
+- cell: m05
+  image: farm-out/ep2-b13-jds-m05-r2-0820/b13-jds-m05-s20261106.png
+  sha256: e4eefee56452737004ffd8e701a4751a8b8dd35883cb9ae75b91346a655ab384
+  caption_file: pipeline/lora/captions/jerry-v3-0822/m05.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, warm
+    low sunlight, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: warm low sunlight
+  strength: '0.20'
+  why_kept: headnat 0.20. Face holds; the least varied frame in the set and named as such.
+  setting_requested: a pale sky
+  pose: standing
+  carried_from_v2: true
+- cell: n01
+  image: farm-out/ep2-b13-jds-n01-r2-0820/b13-jds-n01-s20261202.png
+  sha256: 14336a7d01afc5f1f26f0cf1cd98a7887c16a3b2db1abe2604cdac066c8d2c43
+  caption_file: pipeline/lora/captions/jerry-v3-0822/n01.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, warm
+    low sunlight, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: warm low sunlight
+  strength: '0.30'
+  why_kept: headnat 0.30. Narrow almond, tiny dark pupils, ears near horizontal, smooth, sage,
+    collar and placket correct.
+  setting_requested: a pale sky
+  pose: standing
+  carried_from_v2: true
+- cell: n04
+  image: farm-out/ep2-b13-jds-n04-r2-0820/b13-jds-n04-s20261205.png
+  sha256: 7faa6f7d53bf83aa092d48e4959483b2de8d82d058679f60de8a674d0a755de7
+  caption_file: pipeline/lora/captions/jerry-v3-0822/n04.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, cool
+    morning light, anime style, cel shading
+  init: headnat-flip
+  framing: upper body
+  ground: a hazy meadow
+  light: cool morning light
+  strength: '0.25'
+  why_kept: headnat-flip 0.25. Clean dark pupils, correct ears, smooth face, correct palette.
+  setting_requested: an open field
+  pose: standing
+  carried_from_v2: true
+- cell: n05
+  image: farm-out/ep2-b13-jds-n05-r2-0820/b13-jds-n05-s20261206.png
+  sha256: 5f0ecf7f52d139893029bcd4cad8ac69b97274de430196da28fb71228a7a5416
+  caption_file: pipeline/lora/captions/jerry-v3-0822/n05.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, rim
+    light, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: rim light
+  strength: '0.30'
+  why_kept: headnat 0.30. One of the two best faces in the batch -- tiny dark pupils, textbook
+    almond, ears exactly his.
+  setting_requested: a sunset sky
+  pose: standing
+  carried_from_v2: true
+- cell: n06
+  image: farm-out/ep2-b13-jds-n06-r2-0820/b13-jds-n06-s20261207.png
+  sha256: 8d4f7bfa5b6529ca4659b996520f7f4b708febb3c0cff3a0e63cc267e3f7fcb9
+  caption_file: pipeline/lora/captions/jerry-v3-0822/n06.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, grey
+    wet light, anime style, cel shading
+  init: headnat-flip
+  framing: upper body
+  ground: a hazy meadow
+  light: grey wet light
+  strength: '0.30'
+  why_kept: headnat-flip 0.30. Dark pupils, correct ears; AND the only light change in the
+    set that really landed -- rain droplets on the dome under a grey key.
+  setting_requested: a rainy sky
+  pose: standing
+  carried_from_v2: true
+- cell: n11
+  image: farm-out/ep2-b13-jds-n11-r2-0820/b13-jds-n11-s20261212.png
+  sha256: 628739a51f8c239a97420ad85233ee93f6a2fab77b7945dbe554e40e32714226
+  caption_file: pipeline/lora/captions/jerry-v3-0822/n11.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, warm
+    evening light, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: warm evening light
+  strength: '0.25'
+  why_kept: headnat 0.25. Tiny dark pupils, correct ears and dome, clean.
+  setting_requested: a ploughed field
+  pose: standing
+  carried_from_v2: true
+- cell: n12
+  image: farm-out/ep2-b13-jds-n12-r2-0820/b13-jds-n12-s20261213.png
+  sha256: 625d36bf52579806b1e2b2b6e4027b457a4d8d5f1ac274abe727c86f7799fbc4
+  caption_file: pipeline/lora/captions/jerry-v3-0822/n12.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, shadowless
+    light, anime style, cel shading
+  init: headnat-flip
+  framing: upper body
+  ground: a hazy meadow
+  light: shadowless light
+  strength: '0.25'
+  why_kept: headnat-flip 0.25. The other best face -- tiny dark pupils, narrow almond, ears
+    near horizontal, nothing to fault.
+  setting_requested: a sand horizon
+  pose: standing
+  carried_from_v2: true
+- cell: n13
+  image: farm-out/ep2-b13-jds-n13-r2-0820/b13-jds-n13-s20261214.png
+  sha256: 91054cdaf19e4dc01a92a379cc69196f675702902efc3b9855e0feddcd593f54
+  caption_file: pipeline/lora/captions/jerry-v3-0822/n13.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    warm low sunlight, anime style, cel shading
+  init: cowboy
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: warm low sunlight
+  strength: '0.20'
+  why_kept: cowboy 0.20. Small dark pupils, correct ears, full costume in frame including
+    belt and shorts.
+  setting_requested: a pale sky
+  pose: standing
+  carried_from_v2: true
+- cell: n14
+  image: farm-out/ep2-b13-jds-n14-r2-0820/b13-jds-n14-s20261215.png
+  sha256: db1f4f3188181719c89decd38a7ba2b859e03c5999263641a50530cbadeb5768
+  caption_file: pipeline/lora/captions/jerry-v3-0822/n14.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    dappled shade, anime style, cel shading
+  init: cowboy-flip
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: dappled shade
+  strength: '0.20'
+  why_kept: cowboy-flip 0.20. Small dark-blue pupils, correct ears, clean.
+  setting_requested: a dark forest
+  pose: standing
+  carried_from_v2: true
+- cell: n15
+  image: farm-out/ep2-b13-jds-n15-r2-0820/b13-jds-n15-s20261216.png
+  sha256: d5c862695b5e1c2ba42ec1c914f070a6276854fe8d8261adbadb75d006a66b87
+  caption_file: pipeline/lora/captions/jerry-v3-0822/n15.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    overcast light, anime style, cel shading
+  init: cowboy
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: overcast light
+  strength: '0.20'
+  why_kept: cowboy 0.20. Tiny dark pupils, correct ears, clean; the strongest of the cowboy
+    row.
+  setting_requested: a stone wall
+  pose: standing
+  carried_from_v2: true
+- cell: n16
+  image: farm-out/ep2-b13-jds-n16-r2-0820/b13-jds-n16-s20261217.png
+  sha256: 39fe443b7cedaf9fc2dae17e423081e529056e379754efccdc20380153f31b07
+  caption_file: pipeline/lora/captions/jerry-v3-0822/n16.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    cool morning light, anime style, cel shading
+  init: cowboy-flip
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: cool morning light
+  strength: '0.20'
+  why_kept: cowboy-flip 0.20. Small dark pupils, correct ears, clean.
+  setting_requested: an open field
+  pose: standing
+  carried_from_v2: true
+- cell: n19
+  image: farm-out/ep2-b13-jds-n19-r2-0820/b13-jds-n19-s20261220.png
+  sha256: 45087f7ccb553fc705bec58a53d0ed9bd8f72d75e949e02b4faf45b73a752b24
+  caption_file: pipeline/lora/captions/jerry-v3-0822/n19.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    hard side light, anime style, cel shading
+  init: cowboy
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: hard side light
+  strength: '0.20'
+  why_kept: cowboy 0.20. Tiny dark pupils, correct ears, clean.
+  setting_requested: a hedgerow
+  pose: standing
+  carried_from_v2: true
+- cell: n20
+  image: farm-out/ep2-b13-jds-n20-r2-0820/b13-jds-n20-s20261221.png
+  sha256: 9a0726840d1058a6fff16e30740a6ac1cf8c4477fbcb5ec425856b71ef8fa744
+  caption_file: pipeline/lora/captions/jerry-v3-0822/n20.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    grey wet light, anime style, cel shading
+  init: cowboy-flip
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: grey wet light
+  strength: '0.20'
+  why_kept: cowboy-flip 0.20. Small dark pupils, correct ears; rain droplets present, so the
+    wet key partly arrived.
+  setting_requested: a rainy sky
+  pose: standing
+  carried_from_v2: true
+- cell: p03
+  image: farm-out/ep2-b13-jds-p03-r2-0820/b13-jds-p03-s20261304.png
+  sha256: 909b03cc5e79397344f0b166de62c61a32f92eb95ae23b262d110889ea471780
+  caption_file: pipeline/lora/captions/jerry-v3-0822/p03.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, overcast
+    light, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: overcast light
+  strength: '0.25'
+  why_kept: headnat 0.25, n03 reseeded. Pupils now tiny and DARK where n03's were red. Correct
+    ears, smooth, sage.
+  setting_requested: a stone wall
+  pose: standing
+  carried_from_v2: true
+- cell: p07
+  image: farm-out/ep2-b13-jds-p07-r2-0820/b13-jds-p07-s20261308.png
+  sha256: cdac5c172a2dc8d4798211e59711ad657d42f5751d5e08a874d7fabed8e388ed
+  caption_file: pipeline/lora/captions/jerry-v3-0822/p07.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a hazy meadow, hard
+    side light, anime style, cel shading
+  init: headnat
+  framing: upper body
+  ground: a hazy meadow
+  light: hard side light
+  strength: '0.25'
+  why_kept: headnat 0.25, n07 reseeded. Dark pupils, correct ears, clean.
+  setting_requested: a hedgerow
+  pose: standing
+  carried_from_v2: true
+- cell: p18
+  image: farm-out/ep2-b13-jds-p18-r2-0820/b13-jds-p18-s20261319.png
+  sha256: 690d8077fc2d6bb0f85309934230626db3e2d76626b0fde5eb11a55f3575ca17
+  caption_file: pipeline/lora/captions/jerry-v3-0822/p18.txt
+  caption: bnyjerry, 1boy, solo, standing, looking at viewer, cowboy shot, a hazy meadow,
+    bright sunlight, anime style, cel shading
+  init: cowboy-flip
+  framing: cowboy shot
+  ground: a hazy meadow
+  light: bright sunlight
+  strength: '0.20'
+  why_kept: cowboy-flip 0.20, the cell that never fired in the batch. Small dark-blue pupils,
+    correct ears, full costume.
+  setting_requested: distant hills
+  pose: standing
+  carried_from_v2: true
+- cell: posed-seat
+  image: farm-out/jerry-lowerbody-src-0822/posed-seat-crop1088-0822.png
+  sha256: 26c778aecfaa3bc601eebe4f4711d39770751deaa1dc4a53ac27df978c2bba3a
+  size: 832x1088
+  caption_file: pipeline/lora/captions/jerry-v3-0822/posed-seat.txt
+  caption: bnyjerry, 1boy, solo, sitting, looking at viewer, cowboy shot, tall grass, soft
+    daylight, anime style, cel shading
+  pose: sitting
+  framing: cowboy shot
+  ground: tall grass
+  light: soft daylight
+  crop: 1088
+  source_frame: farm-out/ep2-goblin-lowerbody-0822/jerry-posed-seat-w2-0822.png
+  job: ep2-b13-lowerbody-w2-0822
+  hint: jerry-seat-hint-0822.png
+  route: pipeline/goblin-lowerbody-route-0822.md -- his head held OUTSIDE an SDXL inpaint
+    mask (base weights, in_channels 4, so the unmasked latent is restored every timestep),
+    legs generated inside at strength 0.95 against an openpose skeleton at his measured segment
+    lengths, NO LoRA in the pass; then jerry_lowerbody_restore_0822.py pastes rows 0..883
+    back byte for byte and asserts it.
+  why_kept: 'ROUND TWO OF THE ROUTE, AND THE FRAME THAT OPENED IT. Knees up and out past the
+    authored hint, shins descending, feet planted, seam invisible, one figure. CROPPED, because
+    the extremities are the route''s known open clause -- pale thighs on the lit side and
+    paw feet at y 1080-1120 -- and on a seated chibi the fold is the KNEES, which sit at y
+    930-1000 and survive the crop whole.
+
+
+    THE LINE IS 1088 AND NOT THE 1070 SEC 6 NAMED, FOR TWO REASONS THAT PULL OPPOSITE WAYS
+    AND SETTLE HERE. It must be a multiple of 64 or kohya buckets it into the nearest one
+    and RESAMPLES a frame this route exists to keep unresampled; that allows 1024 or 1088.
+    1024 was tried first and looked at, and it cuts THROUGH the knees -- the seated fold is
+    nearly gone and the frame reads as an upper-body shot with a hint of leg, which teaches
+    the opposite of what it is here for. 1088 keeps the knees and the dark shins whole and
+    lands just above the paws. It was chosen by opening both files, not by arithmetic.'
+  carried_from_v2: false
+- cell: posed-kneel
+  image: farm-out/ep2-goblin-lowerbody-0822/jerry-posed-kneel-0822.png
+  sha256: 1d522092f35a27bfdba65fdec208975d35569c2293ff8c98e7c9d2e59142b7ba
+  size: 832x1216
+  caption_file: pipeline/lora/captions/jerry-v3-0822/posed-kneel.txt
+  caption: bnyjerry, 1boy, solo, kneeling, looking at viewer, cowboy shot, tall grass, soft
+    daylight, anime style, cel shading
+  pose: kneeling
+  framing: cowboy shot
+  ground: tall grass
+  light: soft daylight
+  crop: none
+  source_frame: farm-out/ep2-goblin-lowerbody-0822/jerry-posed-kneel-0822.png
+  job: ep2-b13-lowerbody-kneel-0822
+  hint: jerry-kneel-hint-0822.png
+  route: pipeline/goblin-lowerbody-route-0822.md -- his head held OUTSIDE an SDXL inpaint
+    mask (base weights, in_channels 4, so the unmasked latent is restored every timestep),
+    legs generated inside at strength 0.95 against an openpose skeleton at his measured segment
+    lengths, NO LoRA in the pass; then jerry_lowerbody_restore_0822.py pastes rows 0..883
+    back byte for byte and asserts it.
+  why_kept: 'THE GATE CELL, AND IT IS THE ONE THAT PROVED THE ROUTE MAKES A POSE RATHER THAN
+    MAKING THE SEAT. Its positive still said `seated` and only the skeleton changed; the legs
+    knelt anyway -- limb mass at y 1180 is 245 px against round two''s 0. NOT CROPPED, and
+    the reason is the opposite of round two''s: this stance puts the knees at y 1055 and runs
+    the shins off the bottom edge, so a crop at 1024 would delete the fold the frame exists
+    to teach and there are no paw feet inside the frame to delete.'
+  carried_from_v2: false
+- cell: posed-crouch
+  image: farm-out/ep2-goblin-lowerbody-0822/jerry-posed-crouch-0822.png
+  sha256: 2e109403bc82a637abc0e0e4af373f51fd770ccf31d83bb7884ad1b6a59e3907
+  size: 832x1216
+  caption_file: pipeline/lora/captions/jerry-v3-0822/posed-crouch.txt
+  caption: bnyjerry, 1boy, solo, squatting, looking at viewer, full body, tall grass, soft
+    daylight, anime style, cel shading
+  pose: squatting
+  framing: full body
+  ground: tall grass
+  light: soft daylight
+  crop: none
+  source_frame: farm-out/ep2-goblin-lowerbody-0822/jerry-posed-crouch-0822.png
+  job: ep2-b13-lowerbody-crouch-0822
+  hint: jerry-crouch-hint-0822.png
+  route: pipeline/goblin-lowerbody-route-0822.md -- his head held OUTSIDE an SDXL inpaint
+    mask (base weights, in_channels 4, so the unmasked latent is restored every timestep),
+    legs generated inside at strength 0.95 against an openpose skeleton at his measured segment
+    lengths, NO LoRA in the pass; then jerry_lowerbody_restore_0822.py pastes rows 0..883
+    back byte for byte and asserts it.
+  why_kept: 'THE STANCE TWO BEATS ASK FOR. Beat 12 "crouches low behind the pencil-thin trunk"
+    and the fig-pick "crouches, picks one small round purple fruit from the grass with both
+    hands" -- and nothing in the 21 ratified frames supplies a squat. Chosen over `stride`
+    on that count and on one more: a frontal stride on a fixed frontal torso is a knee at
+    hip height with the shin hanging, which the h240hunch cell already rendered as a standing
+    figure with its feet apart. Adding a frame that reads as STANDING to a dataset whose disease
+    is a standing prior has negative expected value.
+
+
+    IT LANDED AS AUTHORED AND IT IS THE BEST-PAINTED CELL ON THE ROUTE. The feet come down
+    INSIDE the knees, which is the one clause that separates a squat from the seat this set
+    already has, and he sits low. NOT CROPPED, and that decision reverses the one made for
+    round two on the evidence rather than by symmetry: Sec 6 says crop the frames whose extremities
+    are wrong and "keep full-body only where the boots came back right", and here they did
+    -- real dark boots with shape, where round two gave paws. The planned 1024 crop would
+    also have cut through the knees at y 975-1045 and deleted the fold. It is the only posed
+    frame in the set that shows a foot, which is why it carries `full body`.'
+  carried_from_v2: false
