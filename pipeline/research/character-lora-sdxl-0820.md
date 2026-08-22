@@ -270,9 +270,32 @@ our pick and why.
 **Why 32/16 and not 16/8.** 16/8 is the Civitai default *for a photoreal person
 on a photoreal base*. Our subjects carry non-human structure — a broken tusk, a
 specific cotyledon shape, a two-leaf silhouette — which is closer to the
-"complex" case. 32 is the conservative step up; it is still a ~35 MB file and
-still trains inside our VRAM. Rank 64+ is where style bleed starts being
-reported.
+"complex" case. 32 is the conservative step up; it is ~~still a ~35 MB file~~
+**228 MB** (see the correction below) and still trains inside our VRAM. Rank 64+
+is where style bleed starts being reported.
+
+> **CORRECTED 2026-08-22, MEASURED ON THE CARD.** The "~35 MB" above was wrong by
+> 6.5×. The first real rank-32 SDXL run —
+> `pipeline/lora/train-sapling-0822.yaml`, animagine-xl-3.1, dim 32 / alpha 16,
+> bf16 — wrote `bnysapling-sdxl-v1-000002.safetensors` at **228,453,516 bytes**,
+> and `--save_every_n_epochs 2` over 10 epochs makes that **five files, ~1.1 GB**.
+> 35 MB is the SD1.5-era figure carried forward, the same class of error as the
+> 5e-4 learning rate this table already flags one row up.
+>
+> **The size is not a curiosity, it is a repo hazard.** GitHub hard-rejects any
+> single blob over 100 MiB, and `box_runner.Courier._publish` does
+> `git add -A -- farm-out` then pushes — so one oversized checkpoint copied into
+> `farm-out/` leaves a permanently unpushable commit at the head of
+> `farm-results-rtx5090` and **every other lane's results stop reaching the tree
+> behind it.** A publish step written in good faith against "~35 MB" does exactly
+> that. It is now blocked in three places rather than remembered: `.gitignore`
+> (`farm-out/**/*.safetensors`), a `farm-out/.gitignore` on the box's courier
+> worktree, and a per-job one beside the weights. Weights stay on the box that
+> trained them; the sha256 manifest travels, so a sample is still traceable to
+> the exact bytes that drew it.
+>
+> The rank choice itself is unaffected — 32 still trains inside VRAM, which is
+> what the paragraph was arguing.
 
 **Why alpha = dim/2 and not alpha = dim.** Alpha below rank scales the update
 down and is the current preference for *style-preserving* transfer — precisely
