@@ -9053,3 +9053,57 @@ summarising.
 `G1` is now a **ceiling** at 175 px with `G1b` a readable floor at 110, and its
 comment carries all three quotes so the mistake cannot be re-derived from the same
 ambiguous line. `r3` at 160x115 px is the corrected plate.
+
+#### BEAT 06 HAS A CLIP, AND THE BIGGEST PRE-REGISTERED RISK DID NOT FIRE
+
+`ep2-b06-boardmotion-0822`, the first motion this beat has ever been asked for off
+a plate that CONTAINS the object it is about. He brings the bark board up, reads
+off it, his lips move, a hand comes to its face, and by halfway there are marks
+on it — it reads as a thing with writing on it.
+
+> **THE BOARD NEVER INFLATES.** That was the pre-registered fail mode with the
+> most riding on it: *"if the prop inflates off an init that CONTAINS a correctly
+> sized board, the composite route does not protect scale through motion."* It
+> did not. Same hand-sized tablet in frame 121 as in frame 1. **The composite
+> route protects scale through i2v**, which now joins beat 19's "it moves" and
+> beat 12's "it keeps its shape".
+
+Measured on the wave's own instrument, share of frame pairs under 0.5 mean
+interframe difference at 176x320:
+
+| | pairs under 0.5 | block means |
+|---|---|---|
+| new | 55/120 | 14.55 11.12 8.63 10.42 5.42 1.73 1.08 **0.45 0.13 0.15 0.10** |
+| shipped take | 19/45 | 2.57 5.57 8.11 3.54 3.18 5.88 2.79 2.83 4.54 0.52 0.56 |
+
+**Comparable share, opposite shape.** The new clip spends everything in the first
+half and dies; the shipped take spreads it. And the runtime fault is genuinely
+better — 5.0 s of picture in the 6.46 s slot against 1.92 s, so the held tail
+drops from 4.54 s to about 1.4 s.
+
+**Two faults, and the first is a law being broken.** The camera PUSHES IN over the
+first second and the palette warms with it, against `static locked framing, the
+frame never moves` in the positive and eight camera-motion terms in the negative.
+The init is visibly abandoned by f030. Most of that front-loaded interframe
+difference IS the push-in rather than performance, which is a caution about the
+whole instrument: **a whole-frame interframe score cannot tell a performance from
+a camera move** — the same lesson beat 03 taught this morning from the other side.
+
+#### AND A PUBLISH COLLISION THAT PUT A BEAT 06 CLIP UNDER A BEAT 12 NAME
+
+`derive_spec`'s retoken maps the parent ID into the child. `ep2-b12-tightB-0813`'s
+publish step writes to **`ep2-b12-tightB`** — a shorter token the parent id does
+not contain — and its render json names the output `12-related-LTX-leaf-0813.mp4`.
+So the beat 06 job published into a beat 12 directory, under a beat 12 filename,
+**on top of the beat 12 clip rendered forty minutes earlier**.
+
+Nothing was lost: `stage_candidate.py` had already copied the b12 clip into
+`review/` and it was committed, which is the second time this week that force-add
+has been the thing that saved a result. But a courier directory whose name lies
+about whose pixels are in it is exactly what §7.2 exists to prevent.
+
+> **A retoken keyed on the parent ID does not cover a publish token that is a
+> PREFIX of it, nor an output filename that never contained it.** Both are
+> retargeted in `derive_ep2_b06motion_0822.py` now and both are asserted in its
+> selftest — a derived spec that still names the parent's mp4 refuses to be
+> written. Any future derive off an LTX parent wants the same two lines.

@@ -57,6 +57,7 @@ import derive_spec                                            # noqa: E402
 
 PARENT = "pipeline/jobs/ep2-b12-tightB-0813.yaml"
 SPEC_ID = "ep2-b06-boardmotion-0822"
+OUT_MP4 = "06-the-clipboard-LTX-boardmotion-0822.mp4"
 
 OLD_SRC = r"C:\banyan-farm\plates-local\12-related-r4-s2.png"
 OLD_SHA = "cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074"
@@ -239,6 +240,35 @@ def build():
         raise SystemExit("!! expected exactly one crop step, hit %d" % hit)
     child["steps"] = steps
 
+    # THE PUBLISH DIRECTORY AND THE OUTPUT FILENAME ARE THE PARENT'S AND THE
+    # RETOKEN DOES NOT REACH THEM, and this cost a real collision. derive_spec's
+    # retoken maps the parent ID (ep2-b12-tightB-0813) to the child, but the
+    # parent's publish step writes to `ep2-b12-tightB` -- a SHORTER token that
+    # the parent id does not contain -- and its render json names the output
+    # `12-related-LTX-leaf-0813.mp4`. So this job published a BEAT 06 clip into
+    # a beat 12 directory under a beat 12 filename, on top of a beat 12 clip
+    # rendered forty minutes earlier. Nothing was lost (the b12 clip was already
+    # staged and committed under review/), but a courier directory whose name
+    # lies about whose pixels are in it is exactly what 7.2 exists to prevent.
+    # Both tokens are retargeted here and both are asserted in --selftest.
+    steps2 = []
+    for st in child["steps"]:
+        argv = [str(a) for a in (st.get("argv") or [])]
+        argv = [a.replace("courier-box/farm-out/ep2-b12-tightB",
+                          "courier-box/farm-out/" + SPEC_ID)
+                 .replace("12-related-LTX-leaf-0813.mp4", OUT_MP4)
+                for a in argv]
+        steps2.append(dict(st, argv=argv))
+    child["steps"] = steps2
+
+    pay = dict(child.get("payload") or {})
+    for k in list(pay):
+        if isinstance(pay[k], str):
+            pay[k] = pay[k].replace("12-related-LTX-leaf-0813.mp4", OUT_MP4)
+    child["payload"] = pay
+    child["artifacts"] = [str(a).replace("12-related-LTX-leaf-0813.mp4", OUT_MP4)
+                          for a in (child.get("artifacts") or [])]
+
     pay = dict(child.get("payload") or {})
     pk = [k for k in pay if k.endswith("motion-prompt.txt")]
     nk = [k for k in pay if k.endswith("negative.txt")]
@@ -279,6 +309,14 @@ def _selftest():
     # count on an action that cannot repeat makes the clip worse.
     assert "turns the bark board face-up in both hands" in text
     assert "turns the bark board over twice" not in text.lower()
+    blob = str(spec)
+    assert "12-related-LTX-leaf-0813.mp4" not in blob, (
+        "the parent's output filename survived -- a beat 06 clip would publish "
+        "under a beat 12 name")
+    assert "farm-out/ep2-b12-tightB" not in blob, (
+        "the parent's publish directory survived -- a beat 06 clip would land "
+        "in a beat 12 directory")
+    assert OUT_MP4 in blob
     print("SELFTEST OK  %s  init=%s  pos=%d chars neg=%d chars"
           % (SPEC_ID, NEW_SHA[:12], len(text), len(spec["payload"][nk])))
     return 0

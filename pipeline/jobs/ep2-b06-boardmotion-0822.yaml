@@ -94,7 +94,7 @@ payload:
   C:\banyan-farm\ep2-b06-boardmotion-0822\b13-jobs-render.json: "[{\"beat\": 12,\n  \"seed\": 20260813,\n\
     \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b06-boardmotion-0822\\\\b13-embeds.pt\",\n  \"init\": \"\
     C:\\\\banyan-farm\\\\ep2-b06-boardmotion-0822\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
-    \\ep2-b06-boardmotion-0822\\\\12-related-LTX-leaf-0813.mp4\"}]"
+    \\ep2-b06-boardmotion-0822\\\\06-the-clipboard-LTX-boardmotion-0822.mp4\"}]"
 steps:
 - name: crop
   argv:
@@ -153,8 +153,8 @@ steps:
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - -c
-  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b12-tightB\"\n\
-    os.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b06-boardmotion-0822/12-related-LTX-leaf-0813.mp4*\"\
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b06-boardmotion-0822\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b06-boardmotion-0822/06-the-clipboard-LTX-boardmotion-0822.mp4*\"\
     )\n             + glob.glob(\"C:/banyan-farm/ep2-b06-boardmotion-0822/b13-init-704x1280.png\")\n \
     \            + glob.glob(\"C:/banyan-farm/ep2-b06-boardmotion-0822/bench-b12-leaf.jsonl\"))\nlines\
     \ = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
@@ -163,7 +163,7 @@ steps:
     ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
     , len(src), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
 artifacts:
-- C:\banyan-farm\ep2-b06-boardmotion-0822\12-related-LTX-leaf-0813.mp4
+- C:\banyan-farm\ep2-b06-boardmotion-0822\06-the-clipboard-LTX-boardmotion-0822.mp4
 - C:\banyan-farm\ep2-b06-boardmotion-0822\b13-init-704x1280.png
 script_line: 'Beat 06 THE CLIPBOARD: the guard turns the bark board over and reads it. Node 002b-first-citizen,
   live script 002b-t0-c, approved_by founder 2026-08-03.'
