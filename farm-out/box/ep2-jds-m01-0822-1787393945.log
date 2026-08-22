@@ -1,0 +1,40 @@
+#### job ep2-jds-m01-0822-1787393945 attempt 1 start 2026-08-22T10:19:10Z
+
+==== step fetch START 2026-08-22T10:19:10Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\jds-m01-0822\\fetch_init.py"]
+fetched init-full-0822.png 884631 bytes sha 0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7 OK
+fetched fullframe-mask-832x1216-0822.png 3278 bytes sha 5cb2f709bfa7eab1aae0ffebb398fefd5224a6da61e5a730779322a84321894b OK
+==== step fetch END rc=0 2026-08-22T10:19:11Z ====
+
+==== step dry START 2026-08-22T10:19:11Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\jds-m01-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\jds-m01-0822\\init-full-0822.png", "--init-sha256", "0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7", "--mask-png", "C:\\banyan-farm\\jds-m01-0822\\fullframe-mask-832x1216-0822.png", "--prompt-file", "C:\\banyan-farm\\jds-m01-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\jds-m01-0822\\negative.txt", "--out", "C:\\banyan-farm\\jds-m01-0822\\b13-jds-m01-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.25", "--pad-crop", "0", "--blur", "8", "--seed", "20261102", "--note", "GOBLIN DATASET CELL m01. img2img from a cut of the canon image: init `full` at 832x1216, strength 0.25, full-frame white mask (which is what makes the SDXL inpaint pipeline on base weights behave as plain img2img). Ground `dry cracked earth`, light `warm low sunlight`. This is a TRAINING FRAME candidate for the jerry v2 LoRA, not a plate for any beat.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7
+mask png corners=- bbox=[0, 0, 831, 1215]  0.9988 x 0.9992 of 832x1216
+WROTE C:\banyan-farm\jds-m01-0822\b13-jds-m01-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-22T10:19:11Z ====
+
+==== step s20261102 START 2026-08-22T10:19:11Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\jds-m01-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\jds-m01-0822\\init-full-0822.png", "--init-sha256", "0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7", "--mask-png", "C:\\banyan-farm\\jds-m01-0822\\fullframe-mask-832x1216-0822.png", "--prompt-file", "C:\\banyan-farm\\jds-m01-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\jds-m01-0822\\negative.txt", "--out", "C:\\banyan-farm\\jds-m01-0822\\b13-jds-m01-s20261102.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.25", "--pad-crop", "0", "--blur", "8", "--seed", "20261102", "--note", "GOBLIN DATASET CELL m01. img2img from a cut of the canon image: init `full` at 832x1216, strength 0.25, full-frame white mask (which is what makes the SDXL inpaint pipeline on base weights behave as plain img2img). Ground `dry cracked earth`, light `warm low sunlight`. This is a TRAINING FRAME candidate for the jerry v2 LoRA, not a plate for any beat."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:01<00:04,  1.09it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:02<00:01,  2.33it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.81it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.41it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.64it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\jds-m01-0822\b13-jds-m01-s20261102.png
+WROTE C:\banyan-farm\jds-m01-0822\b13-jds-m01-s20261102-mask.png
+WROTE C:\banyan-farm\jds-m01-0822\b13-jds-m01-s20261102.png.meta.yaml
+rc=0 render_s=3.3
+==== step s20261102 END rc=0 2026-08-22T10:19:24Z ====
+
+==== step publish START 2026-08-22T10:19:24Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/jds-m01-0822\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-jds-m01-r2-0820\"\nNAMES = [\n    \"b13-jds-m01-s20261102.png\",\n    \"b13-jds-m01-s20261102-mask.png\",\n    \"b13-jds-m01-s20261102.png.meta.yaml\",\n    \"init-full-0822.png\",\n    \"fullframe-mask-832x1216-0822.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b13-jds-m01-r2-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 7 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b13-jds-m01-r2-0820
+==== step publish END rc=0 2026-08-22T10:19:24Z ====
+#### job ep2-jds-m01-0822-1787393945 finished rc=0 2026-08-22T10:19:24Z
