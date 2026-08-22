@@ -67,8 +67,118 @@ weights_never_reach_git: Each checkpoint is ~228 MB and GitHub hard-rejects any 
   checkpoint in farm-out/ leaves a permanently unpushable commit and stops EVERY lane's results
   reaching this tree. The weights stay at C:\banyan-farm\lora-jerry-v2-0822\out and the sha256s
   travel in registry.yaml.
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - -c
+  - "\nimport hashlib, os, shutil, yaml\nCANDIDATES = [r\"C:\\banyan-farm\\lora-jerry-v2-0822\\\
+    src\", r\"C:\\banyan-farm\\banyan-city\"]\nREL = \"pipeline/lora/manifest-jerry-v2-0822.yaml\"\
+    \nrepo = next((c for c in CANDIDATES if os.path.exists(os.path.join(c, REL))), None)\n\
+    if repo is None:\n    raise SystemExit(\"NO DATASET ROOT. Tried:\\n  \" + \"\\n  \".join(CANDIDATES))\n\
+    print(\"dataset root:\", repo, flush=True)\nman = yaml.safe_load(open(os.path.join(repo,\
+    \ REL), encoding=\"utf-8\"))\nif man.get(\"trigger\") != \"bnyjerry\":\n    raise SystemExit(\"\
+    manifest trigger is %r, not bnyjerry\" % man.get(\"trigger\"))\ndst = r\"C:\\banyan-farm\\\
+    lora-jerry-v2-0822\\img\\6_bnyjerry\"\nos.makedirs(dst, exist_ok=True)\nos.makedirs(r\"\
+    C:\\banyan-farm\\lora-jerry-v2-0822\\out\", exist_ok=True)\nos.makedirs(r\"C:\\banyan-farm\\\
+    lora-jerry-v2-0822\\log\", exist_ok=True)\nn = 0\nfor fr in man[\"frames\"]:\n    src\
+    \ = os.path.join(repo, fr[\"image\"])\n    if not os.path.isfile(src):\n        raise\
+    \ SystemExit(\"MISSING FRAME: \" + fr[\"image\"])\n    have = hashlib.sha256(open(src,\
+    \ \"rb\").read()).hexdigest()\n    if have != fr[\"sha256\"]:\n        raise SystemExit(\"\
+    SHA MISMATCH for %s\\n  want %s\\n  have %s\"\n                         % (fr[\"image\"\
+    ], fr[\"sha256\"], have))\n    cap = os.path.join(repo, fr[\"caption_file\"])\n    if\
+    \ not os.path.isfile(cap):\n        raise SystemExit(\"MISSING CAPTION: \" + fr[\"caption_file\"\
+    ])\n    base = fr[\"cell\"]\n    shutil.copyfile(src, os.path.join(dst, base + \".png\"\
+    ))\n    shutil.copyfile(cap, os.path.join(dst, base + \".txt\"))\n    n += 1\nprint(\"\
+    staged %d image+caption pairs, all sha256 verified\" % n, flush=True)\nif n != man[\"\
+    count\"]:\n    raise SystemExit(\"staged %d but the manifest says %d\" % (n, man[\"count\"\
+    ]))\n"
+- name: train
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - C:\banyan-farm\sd-scripts\sdxl_train_network.py
+  - --pretrained_model_name_or_path
+  - C:\Users\artvn\.cache\huggingface\hub\models--cagliostrolab--animagine-xl-3.1\snapshots\483f0c322568ed13697ed01dd0be07204746d12b
+  - --train_data_dir
+  - C:\banyan-farm\lora-jerry-v2-0822\img
+  - --output_dir
+  - C:\banyan-farm\lora-jerry-v2-0822\out
+  - --output_name
+  - bnyjerry-sdxl-v2
+  - --network_module
+  - networks.lora
+  - --network_dim
+  - '32'
+  - --network_alpha
+  - '16'
+  - --learning_rate
+  - 1e-4
+  - --unet_lr
+  - 1e-4
+  - --text_encoder_lr
+  - 5e-5
+  - --lr_scheduler
+  - cosine
+  - --lr_warmup_steps
+  - '32'
+  - --optimizer_type
+  - AdamW8bit
+  - --max_train_epochs
+  - '10'
+  - --save_every_n_epochs
+  - '2'
+  - --train_batch_size
+  - '2'
+  - --resolution
+  - 832,1216
+  - --enable_bucket
+  - --min_bucket_reso
+  - '832'
+  - --max_bucket_reso
+  - '2048'
+  - --mixed_precision
+  - bf16
+  - --save_precision
+  - bf16
+  - --gradient_checkpointing
+  - --cache_latents
+  - --cache_latents_to_disk
+  - --sdpa
+  - --seed
+  - '20260822'
+  - --save_model_as
+  - safetensors
+  - --logging_dir
+  - C:\banyan-farm\lora-jerry-v2-0822\log
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-jerry-v2-0822\sample_lora.py
+  - --lora
+  - C:\banyan-farm\lora-jerry-v2-0822\out\bnyjerry-sdxl-v2.safetensors
+  - --lora-weight
+  - '0.8'
+  - --prompt
+  - bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a grey stone wall behind,
+    flat overcast light, anime style, cel shading, masterpiece, best quality, very aesthetic
+  - --negative
+  - lowres, worst quality, low quality, text, watermark, photorealism, 3d render, blurry,
+    2boys, multiple heads
+  - --width
+  - '832'
+  - --height
+  - '832'
+  - --steps
+  - '40'
+  - --guidance
+  - '7.5'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-jerry-v2-0822\out\SAMPLE-bnyjerry-wall-overcast.png
 artifacts:
 - C:\banyan-farm\lora-jerry-v2-0822\out\bnyjerry-sdxl-v2.safetensors
+- C:\banyan-farm\lora-jerry-v2-0822\out\SAMPLE-bnyjerry-wall-overcast.png
 
 ## BARS
 #

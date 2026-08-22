@@ -26,6 +26,55 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
 
 MANIFEST = "pipeline/lora/manifest-jerry-v2-0822.yaml"
+BASE_SNAPSHOT = (r"C:\Users\artvn\.cache\huggingface\hub"
+                 r"\models--cagliostrolab--animagine-xl-3.1\snapshots"
+                 r"\483f0c322568ed13697ed01dd0be07204746d12b")
+
+# THE STAGE STEP, AS A STRING SO THE SPEC CARRIES IT VERBATIM.
+#
+# TWO ROOTS AND THE TRANSFERRED TREE IS TRIED FIRST. The box's repo checkout is
+# hundreds of commits behind and does not contain this dataset at all; the
+# frames, captions and manifest are moved directly (tar, scp, sha verified end
+# to end). Pinning to the verified tree also means a `git pull` landing
+# mid-flight cannot change the dataset under a running job. The checkout stays
+# as a second candidate so this keeps working once the box is current, and
+# NOTHING IS TRUSTED BECAUSE OF HOW IT ARRIVED -- every frame is verified
+# byte-for-byte below either way. The step prints which root it used.
+STAGE_PY = r"""
+import hashlib, os, shutil, yaml
+CANDIDATES = [r"%(work)s\src", r"C:\banyan-farm\banyan-city"]
+REL = "%(manifest)s"
+repo = next((c for c in CANDIDATES if os.path.exists(os.path.join(c, REL))), None)
+if repo is None:
+    raise SystemExit("NO DATASET ROOT. Tried:\n  " + "\n  ".join(CANDIDATES))
+print("dataset root:", repo, flush=True)
+man = yaml.safe_load(open(os.path.join(repo, REL), encoding="utf-8"))
+if man.get("trigger") != "%(trigger)s":
+    raise SystemExit("manifest trigger is %%r, not %(trigger)s" %% man.get("trigger"))
+dst = r"%(work)s\img\%(repeat)d_%(trigger)s"
+os.makedirs(dst, exist_ok=True)
+os.makedirs(r"%(work)s\out", exist_ok=True)
+os.makedirs(r"%(work)s\log", exist_ok=True)
+n = 0
+for fr in man["frames"]:
+    src = os.path.join(repo, fr["image"])
+    if not os.path.isfile(src):
+        raise SystemExit("MISSING FRAME: " + fr["image"])
+    have = hashlib.sha256(open(src, "rb").read()).hexdigest()
+    if have != fr["sha256"]:
+        raise SystemExit("SHA MISMATCH for %%s\n  want %%s\n  have %%s"
+                         %% (fr["image"], fr["sha256"], have))
+    cap = os.path.join(repo, fr["caption_file"])
+    if not os.path.isfile(cap):
+        raise SystemExit("MISSING CAPTION: " + fr["caption_file"])
+    base = fr["cell"]
+    shutil.copyfile(src, os.path.join(dst, base + ".png"))
+    shutil.copyfile(cap, os.path.join(dst, base + ".txt"))
+    n += 1
+print("staged %%d image+caption pairs, all sha256 verified" %% n, flush=True)
+if n != man["count"]:
+    raise SystemExit("staged %%d but the manifest says %%d" %% (n, man["count"]))
+"""
 OUT = "pipeline/lora/train-jerry-v2-0822.yaml"
 JOB = "lora-jerry-v2-0822"
 WORK = r"C:\banyan-farm\%s" % JOB
@@ -237,8 +286,90 @@ def main() -> int:
             "permanently unpushable commit and stops EVERY lane's results "
             "reaching this tree. The weights stay at %s\\out and the sha256s "
             "travel in registry.yaml." % WORK),
+        "steps": [
+            # ── 1. STAGE. kohya wants `<image>.txt` beside `<image>`; ours live
+            # in pipeline/lora/captions/ on purpose, because farm-out/ is
+            # EVIDENCE and the trainer must never write into it. This builds a
+            # throwaway flat dir from the manifest and verifies every sha256 on
+            # the way -- the item-18 gate in code, so a frame edited or
+            # re-rendered since the manifest stops the run instead of silently
+            # changing what the LoRA trained on.
+            #
+            # THE DIR NAME ENCODES THE REPEAT. sd-scripts reads `<N>_<name>` and
+            # repeats each image N times per epoch. %d frames x %d x 10 epochs =
+            # %d image passes, %d optimizer steps at batch 2, against research
+            # section 5's ~1200 target.
+            {"name": "stage",
+             "argv": [r"C:\banyan-farm\venv-lora\Scripts\python.exe", "-c",
+                      STAGE_PY % {"work": WORK, "repeat": repeat,
+                                  "manifest": MANIFEST, "trigger": TRIGGER}]},
+            {"name": "train",
+             "argv": [r"C:\banyan-farm\venv-lora\Scripts\python.exe",
+                      r"C:\banyan-farm\sd-scripts\sdxl_train_network.py",
+                      "--pretrained_model_name_or_path", BASE_SNAPSHOT,
+                      "--train_data_dir", r"%s\img" % WORK,
+                      "--output_dir", r"%s\out" % WORK,
+                      "--output_name", "%s-sdxl-v2" % TRIGGER,
+                      "--network_module", "networks.lora",
+                      "--network_dim", "32", "--network_alpha", "16",
+                      "--learning_rate", "1e-4", "--unet_lr", "1e-4",
+                      "--text_encoder_lr", "5e-5",
+                      "--lr_scheduler", "cosine",
+                      "--lr_warmup_steps", str(warmup),
+                      "--optimizer_type", "AdamW8bit",
+                      "--max_train_epochs", "10", "--save_every_n_epochs", "2",
+                      "--train_batch_size", "2",
+                      "--resolution", "832,1216",
+                      "--enable_bucket",
+                      # 832 IS THE SHORT-SIDE FLOOR OF THIS TREE'S TRAINER, and
+                      # it is not aesthetic: sd-scripts asserts
+                      # min(resolution) >= min_bucket_reso before it loads a
+                      # weight, and the 1024 default cost the sapling lane a run.
+                      # This set holds 832x1216 AND 832x832 frames, so bucketing
+                      # is doing real work here rather than resolving to one.
+                      "--min_bucket_reso", "832", "--max_bucket_reso", "2048",
+                      "--mixed_precision", "bf16", "--save_precision", "bf16",
+                      "--gradient_checkpointing",
+                      "--cache_latents", "--cache_latents_to_disk", "--sdpa",
+                      "--seed", "20260822",
+                      "--save_model_as", "safetensors",
+                      "--logging_dir", r"%s\log" % WORK]},
+            # ── 3. ONE SAMPLE, NOT A GRID. CLAUDE.md, founder 2026-08-03. This
+            # draws ONE frame from the final checkpoint and the bar grid is a
+            # SEPARATE job that is filed only if this frame is worth grading.
+            #
+            # THE PROMPT ASKS FOR SOMETHING THE SET DOES NOT CONTAIN, on purpose,
+            # and it is the axis this dataset is weakest on: A SETTING THAT IS
+            # NOT A MEADOW. All 21 frames stand in the same hazy field because
+            # the route cannot change a background, and every caption names it
+            # so the trigger is excused from carrying it. If `bnyjerry` only
+            # works over that meadow, the excusing did not take and the ship
+            # page says so.
+            #
+            # NOTE THE VENV: the RENDER venv, not venv-lora. The plates we ship
+            # are drawn by C:\banyan-farm\venv at bf16 on CUDA, so that is
+            # where a LoRA has to be measured.
+            {"name": "sample",
+             "argv": [r"C:\banyan-farm\venv\Scripts\python.exe",
+                      r"%s\sample_lora.py" % WORK,
+                      "--lora", r"%s\out\%s-sdxl-v2.safetensors" % (WORK, TRIGGER),
+                      "--lora-weight", "0.8",
+                      "--prompt",
+                      "bnyjerry, 1boy, solo, standing, looking at viewer, upper "
+                      "body, a grey stone wall behind, flat overcast light, "
+                      "anime style, cel shading, masterpiece, best quality, "
+                      "very aesthetic",
+                      "--negative",
+                      "lowres, worst quality, low quality, text, watermark, "
+                      "photorealism, 3d render, blurry, 2boys, multiple heads",
+                      "--width", "832", "--height", "832",
+                      "--steps", "40", "--guidance", "7.5",
+                      "--seed", "20260822",
+                      "--out", r"%s\out\SAMPLE-bnyjerry-wall-overcast.png" % WORK]},
+        ],
         "artifacts": [
             r"%s\out\%s-sdxl-v2.safetensors" % (WORK, TRIGGER),
+            r"%s\out\SAMPLE-bnyjerry-wall-overcast.png" % WORK,
         ],
     }
 
