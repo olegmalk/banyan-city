@@ -1,0 +1,13 @@
+#### job ep2-b06-boardnat-0822-1787362361 attempt 1 start 2026-08-22T01:32:46Z
+
+==== step fetch START 2026-08-22T01:32:46Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b06boardnat-0822\\fetch_init.py"]
+fetched b06-boardcomp-in-0822.png 1250481 bytes sha 055a3870a4ce0874107352bf1ded76c21c68cd04baadc77532916e964a18f325 OK
+fetched b06-boardcomp-in-mask-0822.png 2131 bytes sha d531f94436d1d8864181f9d168160bb7b4f81fa6df6cba7c07dac15b7a275884 OK
+==== step fetch END rc=0 2026-08-22T01:32:47Z ====
+
+==== step dry START 2026-08-22T01:32:47Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b06boardnat-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b06boardnat-0822\\b06-boardcomp-in-0822.png", "--init-sha256", "055a3870a4ce0874107352bf1ded76c21c68cd04baadc77532916e964a18f325", "--mask-png", "C:\\banyan-farm\\b06boardnat-0822\\b06-boardcomp-in-mask-0822.png", "--prompt-file", "C:\\banyan-farm\\b06boardnat-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b06boardnat-0822\\negative.txt", "--out", "C:\\banyan-farm\\b06boardnat-0822\\b06-boardnat-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "ATTACHED TO BOTH THE DRY STEP AND THE RENDER STEP. ON THE DRY STEP it is a MASK GEOMETRY CHECK, written before any model loads: the mask must be ONE slab-shaped blob over his chest with his HANDS AND FACE OUTSIDE IT. If it touches the glasses or the fingers the pass has a licence to redraw them and P4 fails by construction. ON THE RENDER STEP: one pass, one seed, 12 of 40 steps from a latent that still holds the drawn slab, so the pass finishes the shape instead of inventing one.", "--dry-run"]
+!! init not found: C:\banyan-farm\b06boardnat-0822\b06-boardcomp-in-0822.png
+==== step dry END rc=2 2026-08-22T01:32:47Z ====
+#### job ep2-b06-boardnat-0822-1787362361 finished rc=2 2026-08-22T01:32:47Z
