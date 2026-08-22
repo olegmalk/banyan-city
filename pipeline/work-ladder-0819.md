@@ -9134,3 +9134,40 @@ for the pass to imitate, and both needed 0.45.
 a fruit canon says is MATTE, which is the direction the old b19 plate's faceted
 crystals came from. At the size it plays it is probably invisible; it is recorded
 because it is a drift direction and not a one-off.
+
+#### THE FALL, RE-ASKED OF A CURRENT PLATE: THE FACE FAULT IS ANSWERED AND A COUNT FAULT OPENS
+
+`ep2-b19-dropmotion-r2-0822`, one variable (the init) against last night's rung,
+action byte for byte. The fig comes down the stem and reaches the ground, and
+**the goblin is the corrected one for all 105 frames** — which is precisely what
+the parent's verdict said its plate could never give (*"sapgloss predates the
+goblin correction, so the face in it was never his"*). So the composite route
+survived being moved onto a different plate, and the plate swap did exactly what
+it was filed to do.
+
+Three faults, and one of them is new:
+
+* **He still does not notice.** Same as the parent. This is the beat's third
+  event and it has never landed on any take.
+* **TWO EXTRA FIGS APPEAR FLOATING IN THE SKY at the end**, so the last second
+  has three fruit where the beat wants one. New, and it is a COUNT fault on the
+  beat whose wording ladder closed on counts of 4, ~8 and 3 — the model's prior
+  for this object is plural and the drawn single did not hold it down for the
+  whole clip.
+* The fall reads more as the fig **sliding down the stem** than detaching.
+
+> **A composited object holds its identity through motion (b12's leaves), its
+> size (b06's board) and its position at the start — but it does not stop the
+> model ADDING MORE OF IT.** That is a fourth axis and it is the one still open.
+
+#### AND BEAT 12's "PERFECTLY STILL" TURNS OUT TO BE IN THE PROMPT, IN WORDS
+
+b12's r1 held canon's two leaves for 121 frames and still broke the approved
+line. The reason is not the plate and not the model: the action sentence it
+inherited says, verbatim, *"THE LEAVES STIR GENTLY IN A LIGHT BREEZE — they lift
+and settle and turn a little on their stalks, the whole plant breathing rather
+than thrashing."* **The clip did exactly what it was asked.** r1 carried that
+byte for byte on purpose so the plate change could be judged alone; now that it
+has been, the sentence is the variable and `ep2-b12-stillmotion-r2-0822` swaps
+it for an explicit stillness clause. The deriver asserts the swap both ways and
+asserts the rest of the prompt is byte-identical either side of it.

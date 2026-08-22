@@ -757,10 +757,17 @@ BEATS = {
             "fall \u2014 is NOT done and is not claimed to be. It went behind beats 12, 21 and 06 "
             "this morning because those three had a shape fault that one drawing session closes, "
             "and this one needs a fruit drawn on a stem beside a standing figure, which is a "
-            "different tool from the one the leaf beats use. IT IS DONE NOW \u2014 the plate is the "
-            "first picture below, and the motion render off it is the only step left."),
+            "different tool from the one the leaf beats use. IT IS DONE NOW, plate AND motion \u2014 "
+            "the top clip below is the fall on your corrected face, and the plate under it is the "
+            "second picture."),
         faults_from="ship-manifest.yaml beat 19 + farm-out/ep2-b19-dropcomp-0819/",
         candidates=[
+            dict(file=f"{CAND_URL}/19-the-drop-LTX-ep2-b19-dropmotion-r2-0822.mp4",
+                 poster=f"{POSTER_URL}/19-the-drop-LTX-ep2-b19-dropmotion-r2-0822.jpg",
+                 label="THE FALL, ON YOUR FACE THIS TIME — newest", tag="warn",
+                 verdict="The fig comes down the stem and reaches the ground, and the goblin watching it is YOUR goblin all the way through — which is the one thing the clip below it could never be, because its picture was drawn before your correction. Two of the beat's three events, in order, on the corrected face. THREE FAULTS AND THEY ARE ALL REAL. He still does not notice; he faces forward the whole clip and drifts across to the right. TWO EXTRA FIGS APPEAR FLOATING IN THE SKY at the end, so the count breaks — the beat wants one fruit and the last second has three. And the fall reads more as the fig SLIDING down the stem than coming off it.",
+                 diff="Same action, byte for byte, same seed, same everything as the clip below. One change: the starting picture. The fig and the two-leaf plant are drawn into the CURRENT plate instead of the 08-19 one — which needed a new tool this morning, because the compositor that could draw a fruit had the old plate typed into it. What this settles: the face fault named under the clip below is answered, and the fall survives the plate change. What it opens: the extra fruit in the sky is new and it is a count problem, which on this beat has a long history — its wording ladder closed on counts of four, eight and three, never one.",
+                 src="pipeline/jobs/ep2-b19-dropmotion-r2-0822.yaml"),
             dict(file=f"{POSTER_URL}/19-the-drop-PLATE-fignat-r2-0822.jpg", still=True,
                  label="a PLATE — the fig, on the CURRENT face. The thing the clip below asked for.", tag="warn",
                  verdict="One small violet fig hanging on the stem of a two-leaf sapling in the grass beside him — and this time the goblin behind it is YOUR goblin, drawn on the corrected face, not the old one the clip below is stuck with. One fruit, not four; a fig and not the faceted violet crystal the old plate actually contained; matte at a glance. He is untouched: the plant sits clear of his leg and the pass never reached him. WHAT IS SMALL AND WRONG: a pinpoint of shine has appeared on the fruit's shoulder, and canon says this fig is matte. At the size it plays it is probably invisible; it is named because the old plate's fruit was a gem with hard specular and that is the direction this must not drift.",

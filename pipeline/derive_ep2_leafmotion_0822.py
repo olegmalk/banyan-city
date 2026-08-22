@@ -61,18 +61,39 @@ import derive_spec                                            # noqa: E402
 OLD_SRC = r"C:\banyan-farm\plates-local\12-related-r4-s2.png"
 OLD_SHA = "cc6bd5f0c0cc116d3cb6530a9bae81ac5b5593a683e4e80e20d6319e0cc0c074"
 
+# ROUND 2 FOR BEAT 12 ONLY, AND IT IS A WORDING EDIT THE CLIP ASKED FOR.
+# r1 held canon's two leaves for all 121 frames and still broke the approved
+# line: "perfectly still". Reading the prompt it inherited explains it exactly
+# -- the parent's action sentence says "THE LEAVES STIR GENTLY IN A LIGHT
+# BREEZE -- they lift and settle and turn a little on their stalks, the whole
+# plant breathing rather than thrashing, while the clouds behind them drift
+# very slowly." The clip did precisely that. r1 carried it byte for byte ON
+# PURPOSE, so that the plate change could be judged alone; now that it has
+# been, the sentence is the variable.
+STIR_OLD = ("THE LEAVES STIR GENTLY IN A LIGHT BREEZE \u2014 they lift and "
+            "settle and turn a little on their stalks, the whole plant "
+            "breathing rather than thrashing, while the clouds behind them "
+            "drift very slowly. Nothing else moves and the plant stays exactly "
+            "where it is in frame.")
+STIR_NEW = ("THE SAPLING IS COMPLETELY STILL. It does not sway, lift, settle, "
+            "turn or breathe; not one leaf moves and the stem does not bend. "
+            "ONLY THE CLOUDS BEHIND IT DRIFT, very slowly. The plant stays "
+            "exactly where it is in frame and holds its shape from the first "
+            "frame to the last.")
+
 ROWS = [
     {
         "beat": 12,
         "parent": "pipeline/jobs/ep2-b12-tightB-0813.yaml",
         "parent_id": "ep2-b12-tightB-0813",
-        "new_id": "ep2-b12-leafmotion-0822",
+        "new_id": "ep2-b12-stillmotion-r2-0822",
         "dirtok": "ep2-b12-tightB-0813",
         "pubdir": "ep2-b12-tightB",
         "nat": "ep2-b12-sapnat2-0822",
         "png": "b12-sapnat2-s20260820.png",
         "sha": "dcc042b8e21f0ded82adb5401186f69a2b8d78aa92eb398eb74631bcfac5ea5a",
         "was": "TWO PERFECT ROUND DISCS on one stem",
+        "stir": True,
         "hard_clause": (
             "PERFECTLY STILL. The approved line for this beat says so and the "
             "recorded fault of the take in the cut is that the sapling GROWS "
@@ -232,6 +253,18 @@ def build(row):
         raise SystemExit("!! beat %d: expected exactly one crop step, hit %d"
                          % (row["beat"], hit))
     child["steps"] = steps
+
+    if row.get("stir"):
+        pay = dict(child.get("payload") or {})
+        pk = [k for k in pay if k.endswith("motion-prompt.txt")]
+        if len(pk) != 1:
+            raise SystemExit("!! beat %d: expected one motion prompt" % row["beat"])
+        if STIR_OLD not in pay[pk[0]]:
+            raise SystemExit("!! beat %d: the stir clause is not in the parent "
+                             "payload verbatim -- refusing to guess"
+                             % row["beat"])
+        pay[pk[0]] = pay[pk[0]].replace(STIR_OLD, STIR_NEW)
+        child["payload"] = pay
     return child
 
 
@@ -250,9 +283,20 @@ def _selftest():
         pk = [k for k in parent["payload"] if k.endswith("motion-prompt.txt")]
         ck = [k for k in spec["payload"] if k.endswith("motion-prompt.txt")]
         assert len(pk) == len(ck) == 1, (pk, ck)
-        assert parent["payload"][pk[0]] == spec["payload"][ck[0]], (
-            "beat %d: the motion prompt is not byte-identical to the parent's"
-            % row["beat"])
+        if row.get("stir"):
+            # ROUND 2's ONE VARIABLE IS THIS CLAUSE AND NOTHING ELSE. Asserted
+            # both ways: the new sentence is in and the old one is out, and the
+            # rest of the prompt is byte-identical either side of the swap.
+            a_, b_ = parent["payload"][pk[0]], spec["payload"][ck[0]]
+            assert STIR_OLD in a_ and STIR_OLD not in b_
+            assert STIR_NEW in b_
+            assert a_.replace(STIR_OLD, STIR_NEW) == b_, (
+                "beat %d: something other than the stir clause moved"
+                % row["beat"])
+        else:
+            assert parent["payload"][pk[0]] == spec["payload"][ck[0]], (
+                "beat %d: the motion prompt is not byte-identical to the "
+                "parent's" % row["beat"])
         nk = [k for k in parent["payload"] if k.endswith("negative.txt")]
         cn = [k for k in spec["payload"] if k.endswith("negative.txt")]
         assert parent["payload"][nk[0]] == spec["payload"][cn[0]]
