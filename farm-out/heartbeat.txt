@@ -4817,3 +4817,4 @@
 16:40:44Z DONE task=lora-jerry-v3-blockweight-0822-1787416750 rc=0 artifacts=1
 16:46:51Z STARTED task=ep2-finish-plates-0822-1787417194 attempt=1 on box-runner
 16:50:08Z DONE task=ep2-finish-plates-0822-1787417194 rc=0 artifacts=1
+16:50:16Z box-runner idle ready=0 failed=129
