@@ -1,0 +1,125 @@
+{
+  "id": "ep3-saplora-fignat-g4-0822-1787385874",
+  "task": "ep3-saplora-fignat-g4-0822",
+  "node": "003b-one-leaf-for-yes",
+  "beat": 16,
+  "worker": "box-runner",
+  "priority": 9,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "#!/usr/bin/env python3\n\"\"\"Fetch this dataset frame's composited init and its mask, refusing on any sha\nmismatch. Both are on origin/main under farm-out/ep3-saplora-figinit-0822/, so these\nsha256s are verifiable against the repo by anyone who clones it. They were\ndrawn on a Mac by pipeline/beat16_sapling_composite.py, so they are NOT on the\nbox's courier worktree -- the courier only holds what the box produced.\"\"\"\nimport hashlib, os, sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\saplora-fignat-g4-0822\"\nRAW = (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\n       \"farm-out/ep3-saplora-figinit-0822/\")\nUA = {\"User-Agent\": \"banyan-city-saplora/1.0 (albert.numbro@gmail.com)\"}\nWANT = {\n    \"sapfig-g4-0822.png\":\n        \"83b1d9183cf50bba9a6377ff53cd051d42f9ada5e78a44824c0047cc77599678\",\n    \"sapfig-g4-mask-0822.png\":\n        \"42f8ea64512f108a76fc2985860ee8f613259426616755d077a70940dd8cde2a\",\n}\n\nos.makedirs(OUT, exist_ok=True)\nfor name, want in WANT.items():\n    raw = urllib.request.urlopen(\n        urllib.request.Request(RAW + name, headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n    if have != want:\n        sys.exit(\"!! SHA MISMATCH for %s -- refusing.\\n   want %s\\n   have %s\"\n                 % (name, want, have))\n    with open(os.path.join(OUT, name), \"wb\") as fh:\n        fh.write(raw)\n    print(\"fetched %s %d bytes sha %s OK\" % (name, len(raw), have), flush=True)\n"
+      ]
+    },
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\saplora-fignat-g4-0822\\fetch_init.py"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\saplora-fignat-g4-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\saplora-fignat-g4-0822\\16-why-sapcomp-0820.png",
+        "--init-sha256",
+        "1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d",
+        "--mask-png",
+        "C:\\banyan-farm\\saplora-fignat-g4-0822\\16-why-sapcomp-mask-0820.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\saplora-fignat-g4-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\saplora-fignat-g4-0822\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\saplora-fignat-g4-0822\\fignat-g4-DRY.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.30",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260820",
+        "--note",
+        "MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. The mask is the union of the ERASED WEED's footprint (dilated 5) and the DRAWN SAPLING's own footprint plus its contact shadow (dilated 9) -- 99,533 px, 9.84 percent of the frame, extent x 151..783 y 302..1199. WHAT TO CHECK ON THE DRY PNG. (1) Above y=430 the only masked thing is a narrow strip at x 206..241 -- that is the erased weed, and nothing else up there may be covered. (2) It touches just 7.0 percent of his head box (x 310..590 y 194..459) and all of that is at the jaw line, y>=430, where the drawn leaves pass in front of his chin. THAT OVERLAP IS BY DESIGN: the plant stands BETWEEN THE CAMERA AND HIM, which is the whole restage. (3) It must not reach his eyes, brow or the top of his skull. If it does, the plant is drawn too high and the fix is --root/--height, not the mask.",
+        "--dry-run"
+      ]
+    },
+    {
+      "name": "s20260820",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\saplora-fignat-g4-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\saplora-fignat-g4-0822\\16-why-sapcomp-0820.png",
+        "--init-sha256",
+        "1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d",
+        "--mask-png",
+        "C:\\banyan-farm\\saplora-fignat-g4-0822\\16-why-sapcomp-mask-0820.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\saplora-fignat-g4-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\saplora-fignat-g4-0822\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\saplora-fignat-g4-0822\\fignat-g4-s20260820.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.30",
+        "--pad-crop",
+        "64",
+        "--blur",
+        "8",
+        "--seed",
+        "20260820",
+        "--note",
+        "ONE SAMPLE, ONE SEED. Every sampler number is the parent job's: 40 steps, cfg 7.5, strength 0.30, pad-crop 64, blur 8, animagine-xl-3.1 base weights in the SDXL inpaint pipeline. THE ONE VARIABLE IS THE INIT. 0.30 runs int(40*0.30) = 12 of 40 denoising steps from a latent that still carries the drawn structure, so the high-sigma steps where global layout is decided never run -- which is why 'finish this structure' succeeds where 'invent this structure' failed, and beat 16 spent three wordings proving the second half of that. BEAT 16 IS THE FIRST IN THIS FAMILY WHERE THE COMPOSITED PLANT IS THE SUBJECT rather than set dressing: b13's was 4.1 percent of frame, this one spans 62 percent of the width. The bet is that the pass cares about mask AREA (9.84 percent here) and not about the object's SPAN, and the big-leaf composite that measurably did nothing is the reason that is a bet and not an assumption."
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/saplora-fignat-g4-0822\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-fignat-g4-r2-0820\"\nNAMES = [\n    \"fignat-g4-s20260820.png\",\n    \"fignat-g4-s20260820-mask.png\",\n    \"fignat-g4-s20260820.png.meta.yaml\",\n    \"16-why-sapcomp-0820.png\",\n    \"16-why-sapcomp-mask-0820.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-fignat-g4-r2-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\saplora-fignat-g4-0822\\fignat-g4-s20260820.png",
+    "C:\\banyan-farm\\saplora-fignat-g4-0822\\16-why-sapcomp-0820.png"
+  ],
+  "spec_sha256": "acc2ecd62f7e0b45b7da8a0db338d6436378662d82be172772509259e0af703e",
+  "started_at": "2026-08-22T08:04:52Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-22T08:04:54Z",
+  "rc": 1,
+  "failed_step": "fetch",
+  "artifacts_present": []
+}
