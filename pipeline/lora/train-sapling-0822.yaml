@@ -1,0 +1,599 @@
+# SAPLING SUBJECT LoRA — SDXL / animagine-xl-3.1 — the training run
+#
+# 2026-08-22. $0 (local card, no provider). ~60 GPU-minutes.
+#
+# ══════════════════════════════════════════════════════════════════════════
+# WHAT THIS IS, AND WHY IT IS THE INVERSE OF THE JERRY JOB
+#
+# Jerry's dataset exists because the checkpoint CAN already draw him; harvesting
+# verdicted frames was enough. The sapling is the opposite case and it is the
+# reason this LoRA matters more. Per `pipeline/work-ladder-0819.md` the wording
+# ladders for the canon two-leaf sapling are CLOSED — five rungs, all failing the
+# same way: bead-strung vines, faceted crystals on bare twigs, leaf counts of 4
+# and 8 and 3 but never 2. THERE IS NO POOL OF CORRECT MODEL-DRAWN SAPLINGS TO
+# CURATE, BECAUSE THE MODEL HAS NEVER DRAWN ONE.
+#
+# So this trains on COMPOSITES, to teach the checkpoint the thing it cannot draw.
+# That is standard bootstrapping practice, and here it also retires a per-beat
+# manual cost: `beat16_sapling_composite.py` is run by hand on every sapling shot
+# in the show. THAT retirement is the consumer, named below.
+# ══════════════════════════════════════════════════════════════════════════
+#
+# ── THE DATASET, AND ITS GATE. `pipeline/lora/manifest-sapling.yaml`, v3,
+# 2026-08-21: 44 frames over 17 distinct plates, scale tiers l=11 m=13 s=11
+# xl=9, and — the axis v2 bought — eighteen non-daylit frames against v1's zero.
+# README.md's gate is ">=20 composited saplings spanning distinct scenes, scales
+# and lighting". All three clauses are met and the lighting clause is met by
+# measurement rather than by assertion: `review/ep3-sapling-dataset-0821/
+# plates-0821.yaml` carries the verdict on all fourteen round-5 cells including
+# the one that failed, and round 6's four-cell word probe is the rule that bought
+# the last two plates.
+#
+# ── THE ONE AXIS THE SET DOES NOT COVER, RECORDED RATHER THAN PAPERED OVER:
+# `leaf_count_values: 1`. Every frame is TWO-leaf, because
+# `beat16_sapling_composite.py` draws the canon two, `leaf_count_composite.py`
+# can only REMOVE leaves, and inventing a third would break canon
+# `sapling-two-leaves` to satisfy a dataset axis. The leaf-count TOKEN is
+# explicit in all 44 captions — that is the mechanism that keeps it out of the
+# trigger — but its VALUE is constant. Bar B5 below is written so that this cap
+# cannot be mistaken for a pass: the count bar is scored, and the PROMPTABILITY
+# of a different count is RECORDED AND NOT GRADED, because the set cannot teach
+# it and grading it would be scoring an axis we did not train.
+#
+# ── DECISIONS.md ITEM 18, AND WHY THIS IS NOT IT. Item 18 reads "Never train on
+# the output... No LoRA, no finetune, no distillation FROM LTX FRAMES. Named
+# because training on our own footage is a plausible thing to want later, and
+# this forecloses it FOR LTX MATERIAL SPECIFICALLY" (DECISIONS.md:685-687). The
+# ban is LTX-scoped by its own text, and it is scoped that way because its source
+# is the LTX-2 licence, not a house rule about self-training.
+#
+# ZERO LTX PIXELS ENTER THIS RUN, and the gate is code rather than a promise.
+# Every one of the 44 frames is: an SDXL text plate (animagine-xl-3.1) -> a numpy
+# composite drawn by `beat16_sapling_composite.py` -> ONE 0.30 SDXL inpaint
+# (animagine-xl-3.1, 40 steps, cfg 7.5, seed 20260820). The manifest asserts that
+# chain per frame in its `render:` field, and the STAGE step below refuses to
+# proceed unless every frame's sha256 matches the manifest — so a frame swapped
+# for an LTX still stops the job rather than entering the weights.
+#
+# THE GOVERNANCE NOTE IS NOT DISCHARGED BY THAT AND IS NOT THE STEWARD'S TO
+# DISCHARGE. Item 18 is open in DECISIONS.md; what is argued here is that this
+# run falls outside its scope, not that the item is closed. The note travels with
+# the sample sheet to the founder on the ship page, with the licence text quoted,
+# so the ruling is his to make against pixels.
+#
+# ── THE TRAINER IS INSTALLED AND VERIFIED. Unlike the Jerry spec, which was
+# written against an installer that had never run, `pipeline/lora/SETUP.md` ran
+# end to end on the box 2026-08-20: sd-scripts v0.11.1 (6721028c),
+# `C:\banyan-farm\venv-lora` on torch 2.11.0+cu128 at sm_120, bitsandbytes 0.50.1
+# with AdamW8bit smoke-tested on the card. Re-verified present 2026-08-22 before
+# this file was written: `venv-lora\Scripts\python.exe` and
+# `sd-scripts\sdxl_train_network.py` both on disk, 250 GB free.
+#
+# ── WHAT IT COSTS IF IT IS WRONG. One card-hour and nothing else. No spend, no
+# publish, no canon change, no leaf touched, no node edited. The card was
+# measured IDLE with an EMPTY backlog at 06:18Z on 2026-08-22, which is the
+# condition under which this job is the right one to fire (CLAUDE.md, Oleg
+# 2026-08-05: the GPU is never idle while a runnable job exists). Every beat rung
+# in flight is founder-gated and he is asleep; this one needs no human present.
+
+id: lora-sapling-0822
+task: lora-sapling-0822
+node: 003b-one-leaf-for-yes
+runner: box
+needs_gpu: true
+
+# Behind the beat work, ahead of nothing — the queue is empty. Kept at the same
+# rung the Jerry spec sits on so the two enabler jobs do not fight each other if
+# both are ever live.
+priority: 70
+max_attempts: 1
+owner: the sapling-LoRA lane, 2026-08-22
+
+script_authority: 'Not a render of a script and not an episode assembly — this
+  trains a weight file from frames that already exist. STEWARDSHIP.md §6 governs
+  "no voice synthesis, no footage render, no episode assembly from a script the
+  founder has not read"; no new footage is produced here and no script is read.
+  The 44 input frames are not derived from any script at all: the plates were
+  drawn from scene text with no character and no dialogue in them, and the plant
+  was composited on by a deterministic numpy tool. The node named above,
+  003b-one-leaf-for-yes, is the CONSUMER of the output and carries approved_by:
+  founder in its T0 leaf; it is named so the box approval gate has something true
+  to check, not to claim its script was read.'
+
+consumer: 'The ep3 plate step, and specifically the compositing step it retires.
+  Today every sapling shot in the show is drawn by running
+  beat16_sapling_composite.py by hand onto a plate and then inpainting over it —
+  a per-beat manual cost paid on beats 01, 03, 13, 16, 19 and 21 already. ep3
+  (003b-one-leaf-for-yes) has exactly two characters on screen, Jerry and the
+  sapling, so a working sapling LoRA is half of what unblocks a one-day episode.
+  If the bars below fail, the consumer is the failure record and the next rung —
+  which is named in advance: a leaf-count tool that can draw three, five and six
+  blades, without which no v2 can serve 004 and later.'
+
+success: 'A judged answer, not a passing one. The bars in `## BARS` are
+  pre-registered and written before any pixel exists. A FAIL on any of them is a
+  full result: it would mean 44 composited frames over 17 plates is still too
+  monocultural to carry a subject, which is a fact worth one card-hour to learn
+  before ep3 is scheduled around it.'
+
+why: 'STATE.md, founder, 2026-08-20: one day per episode from ep3 on, and the
+  enablers are character LoRAs on the recurring cast so identity stops being
+  re-fought per frame. The sapling is the show''s recurring protagonist and the
+  only cast member the checkpoint has never once drawn correctly from words.'
+
+est_minutes: 60
+
+needs:
+- cuda
+- vram20
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+
+# ── 1. STAGE. kohya wants `<image>.txt` beside `<image>`, and our captions live
+# in pipeline/lora/captions/sapling-0821/ instead, on purpose: farm-out/ is
+# evidence and the trainer must not write into it. This builds a flat throwaway
+# dir from the manifest and copies both halves in.
+#
+# THE DIR NAME ENCODES THE REPEAT COUNT, AND THE ARITHMETIC IS THE ONE THING
+# THAT MOVED FROM THE JERRY SPEC. sd-scripts reads `<N>_<name>` and repeats each
+# image N times per epoch. Research §5 argues for ~1200 image passes; Jerry hit
+# that at 15 frames x 8 repeats x 10 epochs = 1200 (600 optimizer steps at batch
+# 2). THIS SET IS 44, so the repeat is 3: 44 x 3 = 132 images/epoch, /2 at batch
+# 2 = 66 optimizer steps/epoch, x10 epochs = 660 optimizer steps / 1320 image
+# passes. Carrying Jerry's 8 across would have run 3520 image passes — nearly
+# triple, straight into the overfit half of the 250-1000 vs 1500-2400 split the
+# sources disagree on, on a set whose whole risk is learning the backdrop.
+#
+# IT VERIFIES EVERY SHA256 AGAINST THE MANIFEST BEFORE COPYING. This is also the
+# item-18 gate in code: a frame edited, re-rendered or substituted since
+# 23515112 stops the run here rather than silently changing what the LoRA
+# trained on.
+#
+# TWO ROOTS, AND THE ORDER IS DELIBERATE AND INVERTED FROM THE JERRY SPEC. The
+# transferred tree is tried FIRST. The box's repo checkout is at 9e7206e2, six
+# hundred-odd commits behind, and does not contain this dataset at all; the 44
+# frames + 44 captions + the manifest + the sampler were moved directly on
+# 2026-08-22 (tar, scp, sha256 of the archive verified end to end at
+# 5d553179d3ce1ec5c6c232de5c8d417e32bec1c9fb583ec91e34c5077de75ce8, then 44 PNGs
+# confirmed on the far side). Pinning to the verified tree also means a `git
+# pull` landing mid-flight cannot change the dataset under a running job. The
+# checkout stays as the second candidate so this file keeps working once the box
+# is current. NOTHING IS TRUSTED BECAUSE OF HOW IT ARRIVED: every frame is still
+# verified byte-for-byte below, which is the same guard either root passes
+# through. The step prints which root it used.
+- name: stage
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - -c
+  - |
+    import hashlib, os, shutil, yaml
+    CANDIDATES = [r"C:\banyan-farm\lora-sapling-0822\src",
+                  r"C:\banyan-farm\banyan-city"]
+    REL = "pipeline/lora/manifest-sapling.yaml"
+    repo = next((c for c in CANDIDATES if os.path.exists(os.path.join(c, REL))), None)
+    if repo is None:
+        raise SystemExit("NO DATASET ROOT. Tried:\n  " + "\n  ".join(CANDIDATES))
+    print("dataset root:", repo)
+    man  = yaml.safe_load(open(os.path.join(repo, REL), encoding="utf-8"))
+    if man.get("trigger") != "bnysapling":
+        raise SystemExit("manifest trigger is %r, not bnysapling" % man.get("trigger"))
+    dst  = r"C:\banyan-farm\lora-sapling-0822\img\3_bnysapling"
+    os.makedirs(dst, exist_ok=True)
+    os.makedirs(r"C:\banyan-farm\lora-sapling-0822\out", exist_ok=True)
+    n = 0
+    for f in man["frames"]:
+        src = os.path.join(repo, f["image"])
+        got = hashlib.sha256(open(src, "rb").read()).hexdigest()
+        if got != f["sha256"]:
+            raise SystemExit("SHA MISMATCH %s\n  manifest %s\n  on disk  %s"
+                             % (f["image"], f["sha256"], got))
+        # The item-18 scope check, per frame and in code rather than in prose:
+        # the manifest must assert an SDXL chain for this exact frame. An LTX
+        # still cannot claim it, and a frame with no provenance line stops here.
+        if "animagine-xl-3.1" not in (f.get("render") or ""):
+            raise SystemExit("NO SDXL PROVENANCE on %s: render=%r"
+                             % (f["image"], f.get("render")))
+        stem = os.path.basename(f["caption_file"])[:-4]
+        shutil.copy2(src, os.path.join(dst, stem + ".png"))
+        shutil.copy2(os.path.join(repo, f["caption_file"]), os.path.join(dst, stem + ".txt"))
+        n += 1
+    # The sampler travels with the dataset, from the SAME root, so step 3 cannot
+    # end up running a different revision of it than this step verified.
+    shutil.copy2(os.path.join(repo, "pipeline/lora/sample_lora.py"),
+                 r"C:\banyan-farm\lora-sapling-0822\sample_lora.py")
+    print("staged", n, "image+caption pairs ->", dst)
+    print("repeat 3 x %d frames = %d images/epoch" % (n, 3 * n))
+    raise SystemExit(0 if n == man["count"] else 1)
+
+# ── 2. TRAIN.
+#
+# Every hyperparameter is carried UNCHANGED from train-jerry-0820.yaml, which
+# carried them from pipeline/research/character-lora-sdxl-0820.md §5. Carrying
+# them is the point: the two runs then differ on the dataset and nothing else,
+# so a difference in outcome is attributable. The short version of §5:
+#
+#   network_dim 32 / alpha 16 -- 16/8 is the Civitai default for a photoreal
+#     person on a photoreal base. A two-leaf sapling with a specific cotyledon
+#     silhouette is nearer the "complex" case. 32 is the conservative step up,
+#     still ~35MB, still inside VRAM. Alpha below rank scales the update down
+#     and is the current preference for STYLE-PRESERVING transfer, which is B4.
+#   unet_lr 1e-4 -- the documented SDXL baseline. 5e-4 is the SD1.5-era number
+#     carried forward. We take the slower rate and buy the difference back with
+#     checkpoints.
+#   text_encoder_lr 5e-5 -- half the unet rate. It matters more here than it did
+#     for Jerry: the captions carry two variables (leaf count, story height) that
+#     MUST stay promptable, and those live in the text encoder.
+#   --sdpa and NOT xformers -- SETUP.md's whole warning. xformers on this card
+#     silently downgrades torch below sm_120 and breaks every render on the box.
+#   --enable_bucket at 1024/2048 -- our frames are 832x1216 9:16. Bucketing
+#     handles that natively; cropping to square would throw away the framing
+#     variety the scale tiers were built to supply.
+#   no regularization images -- optional in kohya, and the practitioner report is
+#     they either overfit hard or dampen to nothing.
+#
+# THE SEED IS THE ONLY OTHER MOVED VALUE: 20260822, this run's date, so a
+# checkpoint can never be confused with a Jerry one by its seed.
+#
+# SAVE EVERY 2 EPOCHS AND JUDGE THE CHECKPOINTS. Nobody knows the right step
+# count for OUR 44 frames. Sampling the axis is honest; asserting a point on it
+# is not. Five checkpoints land and BARS picks among them.
+- name: train
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - C:\banyan-farm\sd-scripts\sdxl_train_network.py
+  - --pretrained_model_name_or_path
+  - C:\Users\artvn\.cache\huggingface\hub\models--cagliostrolab--animagine-xl-3.1\snapshots\483f0c322568ed13697ed01dd0be07204746d12b
+  - --train_data_dir
+  - C:\banyan-farm\lora-sapling-0822\img
+  - --output_dir
+  - C:\banyan-farm\lora-sapling-0822\out
+  - --output_name
+  - bnysapling-sdxl-v1
+  - --network_module
+  - networks.lora
+  - --network_dim
+  - '32'
+  - --network_alpha
+  - '16'
+  - --learning_rate
+  - '1e-4'
+  - --unet_lr
+  - '1e-4'
+  - --text_encoder_lr
+  - '5e-5'
+  - --lr_scheduler
+  - cosine
+  - --lr_warmup_steps
+  - '33'
+  - --optimizer_type
+  - AdamW8bit
+  - --max_train_epochs
+  - '10'
+  - --save_every_n_epochs
+  - '2'
+  - --train_batch_size
+  - '2'
+  - --resolution
+  - 832,1216
+  - --enable_bucket
+  - --min_bucket_reso
+  - '1024'
+  - --max_bucket_reso
+  - '2048'
+  - --mixed_precision
+  - bf16
+  - --save_precision
+  - bf16
+  - --gradient_checkpointing
+  - --cache_latents
+  - --cache_latents_to_disk
+  - --sdpa
+  - --seed
+  - '20260822'
+  - --save_model_as
+  - safetensors
+  - --logging_dir
+  - C:\banyan-farm\lora-sapling-0822\log
+
+# ── 3. ONE SAMPLE. Not fifteen.
+#
+# CLAUDE.md, founder 2026-08-03: before rendering a SET of anything, produce ONE
+# and have the founder look at it. So this step draws exactly ONE frame from the
+# FINAL checkpoint, and the 15-frame grid the bars call for is a SEPARATE job
+# that gets filed only if this one frame is worth grading.
+#
+# THE PROMPT IS BAR PROMPT P1 AT SEED A, and it deliberately asks for something
+# the set does not contain: BARE TILLED EARTH. All 44 frames stand on green
+# ground — that is the set's sharpest monoculture and the likeliest thing for the
+# trigger to have swallowed. If `bnysapling` only works over grass, the LoRA
+# learned the field.
+#
+# THE NEGATIVE DELIBERATELY OMITS EVERY LEAF-COUNT AND LEAF-SHAPE WORD, and this
+# is a correction to the Jerry spec rather than an oversight. That spec put
+# `glasses` in its sample negative AND made "zero of the 15 wear glasses" a bar —
+# a bar the negative is doing the work for, so a pass there proves less than it
+# reads. Here the whole question is whether the LoRA itself carries two ordinary
+# blades. The dataset's own negative (`three leaves, four leaves, many leaves,
+# extra stalk, branching stem, pointed lance leaves, lobed leaves, ...`) would
+# answer B5 on the negative's behalf, so none of it is used. What is left is
+# figures, text and the two style escapes.
+#
+# NOTE THE VENV: the RENDER venv, not venv-lora. The plates we ship are drawn by
+# C:\banyan-farm\venv at bfloat16 on CUDA, so that is where a LoRA has to be
+# measured -- and it is the backend discipline pipeline/leaf-count-bar-0817.md
+# already binds this subject to. bf16/CUDA renders red where MPS renders purple
+# (MAE 60-61 on byte-identical inputs, measured 2026-08-16), so a sample drawn
+# anywhere else is not comparable to the frames it is judged against.
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-sapling-0822\sample_lora.py
+  - --lora
+  - C:\banyan-farm\lora-sapling-0822\out\bnysapling-sdxl-v1.safetensors
+  - --lora-weight
+  - '0.8'
+  - --prompt
+  - bnysapling, a young sapling, two leaves, 25 cm tall, medium shot, bare tilled earth
+    field, a low stone wall behind, overcast, anime style, cel shading, detailed background,
+    masterpiece, best quality, very aesthetic
+  - --negative
+  - 1boy, 1girl, people, goblin, text, watermark, signature, photorealism, 3d render,
+    low quality, worst quality, blurry
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --steps
+  - '40'
+  - --guidance
+  - '7.5'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-sapling-0822\out\SAMPLE-bnysapling-tilled-overcast.png
+
+# ── 4. THE B SIDE OF THE NO-REGRESSION BAR, DRAWN IN THE SAME JOB.
+#
+# B3 needs a pair: the identical prompt and seed with the LoRA loaded and with it
+# unloaded. Drawing the two sides in different jobs, hours apart, on a checkpoint
+# that may have been re-pulled, would make the pair uncomparable — and the pair
+# IS the evidence, either frame alone proves nothing (sample_lora.py:55-57 says
+# so in its own help text). Two frames is ~90 seconds on this card, so both sides
+# land here.
+#
+# THE PROMPT CARRIES NO TRIGGER AND NO PLANT. If a stone bridge over a river
+# comes back with a sapling in it, or comes back visibly greener, flatter or
+# differently drawn than the no-LoRA side, the LoRA learned "our green field"
+# instead of "this plant" — which is the likeliest failure given all 44 frames
+# share one compositor, one inpaint recipe and one seed.
+- name: noregress-lora
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-sapling-0822\sample_lora.py
+  - --lora
+  - C:\banyan-farm\lora-sapling-0822\out\bnysapling-sdxl-v1.safetensors
+  - --lora-weight
+  - '0.8'
+  - --prompt
+  - a stone bridge over a river, forest, afternoon light, anime style, cel shading,
+    detailed background, masterpiece, best quality, very aesthetic
+  - --negative
+  - text, watermark, signature, photorealism, 3d render, low quality, worst quality,
+    blurry
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --steps
+  - '40'
+  - --guidance
+  - '7.5'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-sapling-0822\out\SAMPLE-noregress-A-lora.png
+
+- name: noregress-base
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-sapling-0822\sample_lora.py
+  - --no-lora
+  - --lora
+  - C:\banyan-farm\lora-sapling-0822\out\bnysapling-sdxl-v1.safetensors
+  - --lora-weight
+  - '0.8'
+  - --prompt
+  - a stone bridge over a river, forest, afternoon light, anime style, cel shading,
+    detailed background, masterpiece, best quality, very aesthetic
+  - --negative
+  - text, watermark, signature, photorealism, 3d render, low quality, worst quality,
+    blurry
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --steps
+  - '40'
+  - --guidance
+  - '7.5'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-sapling-0822\out\SAMPLE-noregress-B-base.png
+
+# ── 5. PUBLISH. farm-out is not gitignored and the courier commits + pushes it
+# on job_done, so publishing is a copy. allow_fail so a failed copy never marks a
+# good training run failed.
+#
+# The .safetensors go too, not just the samples: a LoRA that passes and was not
+# kept is a card-hour thrown away, and five checkpoints at ~35MB is ~175MB.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = r"C:\banyan-farm\courier-box\farm-out\lora-sapling-0822"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob(r"C:\banyan-farm\lora-sapling-0822\out\*.safetensors")
+                 + glob.glob(r"C:\banyan-farm\lora-sapling-0822\out\SAMPLE-*.png")
+                 + glob.glob(r"C:\banyan-farm\lora-sapling-0822\out\SAMPLE-*.meta.yaml"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        with open(os.path.join(dst, os.path.basename(f)), "rb") as fh:
+            lines.append(hashlib.sha256(fh.read()).hexdigest() + "  " + os.path.basename(f))
+    with open(os.path.join(dst, "lora-sapling-0822.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) ->", dst)
+    raise SystemExit(0 if len(src) >= 4 else 1)
+
+artifacts:
+- C:\banyan-farm\lora-sapling-0822\out\bnysapling-sdxl-v1.safetensors
+- C:\banyan-farm\lora-sapling-0822\out\SAMPLE-bnysapling-tilled-overcast.png
+- C:\banyan-farm\lora-sapling-0822\out\SAMPLE-noregress-A-lora.png
+- C:\banyan-farm\lora-sapling-0822\out\SAMPLE-noregress-B-base.png
+
+# ══════════════════════════════════════════════════════════════════════════
+# BARS — pre-registered, written before any pixel exists.
+#
+# Judged on the FIVE saved checkpoints, not just the last. Picking the epoch is
+# part of the job; overfitting past the sweet spot is the standard failure and
+# the cheap insurance is having epochs 2/4/6/8/10 on disk.
+#
+# THE RULERS ARE COMMITTED AND ARE NOT NEW. `pipeline/leaf-count-bar-0817.md` §3
+# is the counting instrument, verbatim, including its own tie-breaks (an apical
+# blade counts, a drooping lower blade counts, an ILLEGIBLE plant is a FAILURE
+# and not an excluded frame). `genomes/sapling/THE-SAPLING.md` and
+# `pipeline/canon.yaml` are the canon. Nothing here is a bar invented to be
+# passed by this lane.
+#
+# ALL 15 GRID FRAMES ARE JUDGED AT 1:1, FULL RESOLUTION, AND REPORTED AS `X of
+# N`. Never impressions, never a contact sheet as the evidence — the contact
+# sheet is how the founder LOOKS, the 1:1 read is how it is SCORED.
+#
+# ── STEP 0 — THE ONE SAMPLE, AND IT GATES EVERYTHING ELSE.
+# Step 3 above draws exactly one frame. If it is not a recognisable canon
+# two-leaf sapling on bare tilled earth, no grid gets rendered and the next rung
+# is dataset work, not more training. A metric agreeing with the steward is not
+# a sample; the frame is looked at.
+#
+# ── THE FIVE PROMPTS, FIXED NOW. 5 prompts x 3 seeds = 15 frames. Seeds
+# 20260822 / 20260823 / 20260824. None of the five appears in any caption in the
+# dataset, and each is chosen to leave the set on a named axis:
+#
+#   P1  SCENE (ground).  bare tilled earth field, a low stone wall behind,
+#       overcast. 25 cm, medium shot. All 44 frames stand on GREEN ground.
+#   P2  LIGHTING + SETTING.  in a clay pot on a windowsill, warm lamplight,
+#       indoor. 15 cm, close-up. The set has 26 daylit and 18 non-daylit frames
+#       and every one of them is OUTDOORS under natural light.
+#   P3  SCALE.  90 cm tall, wide shot, green meadow, distant hills, flat
+#       daylight. The set's story heights are 15/25/40 cm only; 90 cm is the 004
+#       rung of the growth ladder (genomes/sapling/style.md:150-158). Scene and
+#       light are held at the set's most common values ON PURPOSE so this prompt
+#       moves one axis.
+#   P4  A FIGURE IN FRAME.  a goblin crouching beside it, 40 cm, medium shot,
+#       green meadow, flat daylight. NO frame in the set contains a figure, and
+#       ep3's entire on-screen cast is this plant and that goblin. This is also
+#       the two-subject case research §6 flagged as the known cost of separate
+#       LoRAs; here only the sapling LoRA is loaded, so it tests one half of it.
+#   P5  PALETTE.  dry autumn grassland, brown grass, low sun, 25 cm, medium
+#       shot. Every frame in the set was passed by a palette sampler that
+#       requires green-dominant pixels. If the trigger cannot survive brown
+#       ground, it absorbed the palette.
+#
+# Each prompt terminates in the shipping style tail (`anime style, cel shading,
+# detailed background, masterpiece, best quality, very aesthetic`) because
+# leaf-count-bar-0817.md §Backend discipline binds this subject to NOT cutting
+# the style tail — cutting it confounds the comparison.
+#
+# THE GRID'S NEGATIVE IS THE SAMPLE STEP'S NEGATIVE, UNCHANGED, and carries no
+# leaf-count and no leaf-shape word. See step 3 for why.
+#
+# ── B1  TRIGGER DRAWS THE CANON SAPLING.
+#   A BLIND COLD READER -- a fresh agent given one frame and the canon clause
+#   from THE-SAPLING.md, no context, no prompt text, no mention of this lane --
+#   must call it the same plant as the canon description in >= 13/15. This is
+#   the instrument beat 20 already used for the fig colour
+#   (pipeline/jobs/ep2-b20-canonword-0816.yaml); it is the standing house
+#   method, not a new one invented to be passed. 13/15 is the Jerry threshold,
+#   carried so the two enabler LoRAs are comparable on the identity axis.
+#
+# ── B2  SCENE, SCALE AND LIGHTING GENERALISE.
+#   Scored per axis, not pooled, because pooling would let three easy prompts
+#   carry two hard ones:
+#     - GROUND (P1, P5): the plant is present and legible on non-green ground in
+#       >= 5/6. A frame where the ground silently reverts to green meadow is a
+#       FAIL on this axis even if the plant is perfect -- that is the backdrop
+#       leaking out of the trigger, and it is the failure this set is most at
+#       risk of.
+#     - LIGHT/SETTING (P2): present and legible indoors under lamplight in
+#       >= 2/3.
+#     - SCALE (P3): the plant reads as substantially taller relative to its
+#       surroundings than the 15-25 cm frames, in >= 2/3. Judged relative to the
+#       grass line per leaf-count-bar-0817.md AXIS B, which is the committed
+#       height instrument. NOT judged as "is it exactly 90 cm" -- the founder's
+#       own ruling is "height might be a bit hard for the ai to make exact, so
+#       dont go crazy on it, just dont make it double in size suddenly."
+#     - FIGURE (P4): the goblin and the plant both present, the plant not fused
+#       into him, in >= 2/3. Jerry's IDENTITY is explicitly NOT scored here --
+#       his LoRA is a separate file and is not loaded.
+#   A FAIL on GROUND is the one that stops the ladder; a FAIL on any other axis
+#   is recorded and the LoRA can still be useful for the beats that axis does
+#   not touch. Saying which failures are fatal BEFORE the pixels is the point.
+#
+# ── B3  NO-REGRESSION ON A NON-SAPLING PROMPT.
+#   Steps 4 and 5 above are the pair: identical prompt, identical seed, LoRA at
+#   the shipping weight vs LoRA unloaded. Judged at 1:1 side by side. FAIL on
+#   any of: a plant appearing where none was asked for; a visible shift in
+#   palette, line weight or shading style; the composition collapsing. This is
+#   the test that catches a LoRA that learned "our look" instead of "this
+#   subject", and the pair is the evidence -- either frame alone proves nothing.
+#
+# ── B4  STYLE PRESERVATION.
+#   The 15 grid frames must be indistinguishable in look from the shipped ep2
+#   plates. Any drift toward photoreal, 3D, or a different line weight is a FAIL
+#   EVEN IF IDENTITY IS PERFECT. The founder killed v2 for unreadability on
+#   2026-07-27; a LoRA that quietly moves the look is the same defect arriving by
+#   a new route. B3 and B4 are not the same bar: B3 asks whether the LoRA touches
+#   frames it was not invoked on, B4 asks whether the frames it WAS invoked on
+#   still look like the show.
+#
+# ── B5  LEAF COUNT = 2, ON THE COMMITTED RULER.
+#   Scored with pipeline/leaf-count-bar-0817.md §3 AXIS A verbatim: count
+#   distinct expanded green laminae ON THE PLANT; cotyledons count; grass and
+#   background foliage do not; an illegible plant is FAIL-COUNT-ILLEGIBLE and
+#   stays in the denominator.
+#   RATE: >= 14/15. That is not the 13/15 used for B1, and the difference is
+#   deliberate: the committed AXIS A RATE floor is 87.5% (>= 7 of 8), 13/15 is
+#   86.7% and would sit below a floor this project already ratified, so the bar
+#   rounds UP to the committed floor rather than down to the neighbouring bar.
+#   Bars tighten forward only.
+#   AXIS B (height) and AXIS C (shape -- ordinary average blades, not round
+#   cotyledon buttons, not fig-lobed) are REPORTED as X of N alongside, per that
+#   file, and a shape miss alone does not fail a run whose question is count.
+#
+#   THE HALF THAT IS RECORDED AND NOT GRADED, declared here so it cannot be
+#   reached for later: leaf-count PROMPTABILITY. `leaf_count_values: 1` -- every
+#   training frame is two-leaf -- so a sixth prompt asking for four leaves is
+#   rendered at one seed and its result is written into the ship page as a
+#   MEASUREMENT of where v1 stands, with no pass or fail attached. Grading it
+#   would be scoring an axis the set could not teach. It is also the exact
+#   evidence the v2 rung needs: a tool that can draw three, five and six blades
+#   is only worth writing if the trigger has in fact fused on two.
+#
+# NOT BARS, and deliberately so: shippability, framing, composition, and whether
+# this look is the sapling the founder wants. All four are R4 and his alone. They
+# go to him with pixels on the ship page, never settled here.
+# ══════════════════════════════════════════════════════════════════════════
