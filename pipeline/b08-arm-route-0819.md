@@ -1990,3 +1990,48 @@ future caller of it needs to read: **it is usable at `--pad-crop 0`, on a region
 large enough not to need the crop, and it is not usable on a small region.**
 `pipeline/b08_band_signature.py` keeps its five registered references and its
 written warning that it has no negative control.
+
+## 29. §28's last paragraph is a program now, and its first caller is the goblin (2026-08-22)
+
+§28 ended by telling every future caller of this driver the one thing it must
+know: **"it is usable at `--pad-crop 0`, on a region large enough not to need
+the crop, and it is not usable on a small region."** That sentence sat in prose
+for two days while the flags that violate it stayed one command line away. The
+standing rule is that a lesson is learned only when a guard enforces it, so:
+
+`inpaint_fruit.assert_hint_survives_crop(controls, region, W, H)` refuses with
+**rc 15** when diffusers' crop box would magnify the hint past 1.05x, and it
+runs at $0 before the dry run returns — no model load, no GPU second. It
+**measures the magnification rather than banning the flag**, which matters:
+`padding_mask_crop` is not the defect, rescaling a scale-dependent instruction
+is. A mask that already covers the frame yields a box the size of the frame,
+magnifies nothing, and is admitted with the crop still on. §28's own box
+(468, 384, 739, 780) is 3.07x and is refused, with the refusal naming this
+section so the next caller reads the mechanism instead of re-deriving it at a
+render's cost. The no-control path returns 1.0 and never raises; the selftest
+went 32 → 41 assertions and its byte-identity clause against
+`ep2-b08-str70-0820` still passes, so the six filed b08 verdicts are untouched.
+
+**AND THE DRIVER TURNED OUT TO ALREADY DO SOMETHING NOBODY HAD NOTICED.** The
+goblin lane was briefed that no repo tool does img2img-from-an-init AND
+ControlNet in one pass, and was told to compose
+`StableDiffusionXLControlNetImg2ImgPipeline`. That would have been the fourth
+model-loading script in this tree. It was not needed, and the reason is two
+facts that were each already filed and had never been put next to each other:
+
+1. **This driver takes ControlNet hints inside an inpaint pipeline** (§28).
+2. **An all-white mask on base weights makes an inpaint pipeline plain img2img**
+   — `derive_goblin_i2i_0822`'s round one established exactly this, and rendered
+   four cells on it.
+
+So `StableDiffusionXLControlNetInpaintPipeline`, full-frame mask, `--pad-crop 0`
+**is** img2img-with-a-hint, and at `--pad-crop 0` the §28 defect is not merely
+avoided but structurally impossible — `region` is `None`, there is no crop, and
+`resolve_controls` has already refused any hint that is not the init's exact
+pixel size. `ep2-b13-i2icnet-{s30,s35,s40}-0822` is the first caller to run in
+that configuration: round one's command line plus four flags.
+
+**The lesson worth carrying past this beat:** the closed route left a working
+instrument behind, and the cost of not noticing would have been a new script
+with no sha guard, no provenance sidecar and no selftest, written to do what a
+guarded one already did.
