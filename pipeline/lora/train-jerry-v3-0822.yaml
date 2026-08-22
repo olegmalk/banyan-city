@@ -1,0 +1,420 @@
+# JERRY CHARACTER LoRA v3 -- SDXL / animagine-xl-3.1.
+# GENERATED. Edit pipeline/lora/emit_train_jerry_v3_0822.py, not this file.
+#
+# The BARS at the bottom were committed in that generator before a single
+# training frame was admitted. The numbers come from the manifest.
+
+id: lora-jerry-v3-0822
+task: lora-jerry-v3-0822
+node: 002b-first-citizen
+runner: box
+needs_gpu: true
+needs:
+- cuda
+- vram20
+priority: 60
+max_attempts: 1
+est_minutes: 45
+owner: the goblin v3 lane, 2026-08-22
+consumer: EVERY GOBLIN BEAT IN EPISODES TWO AND THREE, and the founder's own open question
+  page at /review/ep2-goblin-twopass-0822, which asks whether this character can be posed
+  at all. v2 answers no on every instrument. B2 is that question as a measurement with a control
+  at zero. If B2 and B1 both pass, the beats unlock at once and the page gets its answer;
+  if B2 fails with B1 passing, then the pose is not a dataset property either and that closes
+  the last candidate on the board.
+success: A JUDGED ANSWER, NOT A PASSING ONE. The bars in `## BARS` were committed before a
+  single training frame was admitted. A run that fails B2 and says so, with the epoch and
+  weight ladders measured, is a success; a run that reports a score without the ladders is
+  not.
+why: 'THE DIAGNOSIS EVERYONE WAS CARRYING WAS UNDERSTATED, AND THE CORRECTION MAKES THE FIX
+  SMALLER THAN A REBUILD. Every document in this tree said the pose is locked because `21
+  of 21 training frames are standing`. Measured on the v2 manifest: 11 are upper-body crops,
+  8 are cowboy shots, and only TWO show a lower body -- the canon and its mirror, verified
+  byte-identical to taste/refs/goblin-canon-founder-0821.png. THE STANDING PRIOR IS ONE FRAME
+  DEEP. Round seven''s weight ladder and the two-pass''s six cells were both hunting for a
+  competing lower-body configuration to fade toward, and there is no second configuration
+  in the weights to fade to.
+
+
+  SO v3 ADDS THREE POSED FRAMES AND CHANGES NOTHING ELSE. That makes posed the MAJORITY of
+  every leg the trigger has ever seen -- 3 against 2 -- in a dataset whose other 21 frames
+  are carried with their own sha256s and their own caption strings, both asserted at build
+  time. The 19 crops carry no lower-body signal at all, so they cannot fight a new one.
+
+
+  AND IT IS THE FIRST SET IN WHICH THE POSE TAG HAS ANYWHERE TO ATTACH. v2 named `standing`
+  on all 21 and pose stayed unpromptable, while the SETTING generalised cleanly out of one
+  meadow -- a controlled experiment inside one training run, whose clause is that a caption
+  tag keeps an attribute steerable only where the attribute VARIES in the dataset. `hazy meadow`
+  had somewhere to attach outside the LoRA; nothing outside the LoRA knows what this creature''s
+  legs look like.
+
+
+  THE HISTORY THIS REPLACES. Sixteen rounds of prompt-side face work were vetoed four times,
+  and canon.yaml route_closure_2026_08_22 closed that route by rule. The replacement put his
+  pixels in as PIXELS and worked -- his eye reached an output for the first time -- but only
+  at strengths that cannot move a pose, because the face surviving and the pose not moving
+  are ONE MECHANISM read twice: at strength <= 0.40 the pass never runs the high-noise steps
+  where structure is decided.
+
+
+  A LoRA acts in those steps. That is the entire argument, and it is the last one available.
+
+
+  THE DATASET IS 24 FRAMES AND EVERY ONE OF THEM CARRIES HIS FACE AS PIXELS, by one of two
+  mechanisms and NOT by resemblance. The 21 carried from v2 are his drawing re-lit by an img2img
+  pass at strength <= 0.40, which cannot invent a face because it never runs the steps that
+  would. The 3 posed frames are his head held OUTSIDE an SDXL inpaint mask -- base weights,
+  unet.in_channels 4, so the unmasked latent is restored at EVERY timestep and cannot drift
+  at any strength -- with the legs generated inside at 0.95 against an openpose skeleton and
+  NO LoRA in the pass, then rows 0..883 pasted back byte for byte and asserted. Their legs
+  are generated and the manifest says so. v1''s 15 frames were animagine''s guess at his face,
+  curated for an age read the founder superseded; they are not used and manifest-jerry-0821.yaml
+  stays on disk as evidence.'
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+dataset: pipeline/lora/manifest-jerry-v3-0822.yaml
+dataset_frames: 24
+recipe: IDENTICAL TO v2's, DELIBERATELY AND WITHOUT EXCEPTION -- this run's single variable
+  is the three added frames, and a moved knob would give a different score two explanations.
+  kohya sd-scripts v0.11.1, dim 32 / alpha 16, unet_lr 1e-4, te_lr 5e-5, cosine + 30 warmup,
+  AdamW8bit, batch 2, repeat 5, 10 epochs, bf16, seed 20260822. EVERY HYPERPARAMETER IS THE
+  SAPLING RUNS', AND v2's, UNCHANGED. The repeat is re-derived from the frame count by the
+  same formula and lands at 5, which happens to give exactly 1200 image passes.
+arithmetic: 24 frames x repeat 5 x 10 epochs = 1200 image passes, 600 optimizer steps at batch
+  2. Research section 5 puts the target at ~1200 passes; the repeat is round(1200 / (10 x
+  frames)) and is derived rather than chosen.
+requires:
+  render_venv_package: peft==0.12.0, installed with --no-deps. diffusers 0.29.2 gates ALL
+    LoRA loading behind USE_PEFT_BACKEND; its absence once cost twenty clean minutes of training
+    and five checkpoints before a nine-second ValueError.
+weights_never_reach_git: Each checkpoint is ~228 MB and GitHub hard-rejects any blob over
+  100 MiB, while box_runner.Courier._publish does `git add -A -- farm-out` and pushes -- one
+  checkpoint in farm-out/ leaves a permanently unpushable commit and stops EVERY lane's results
+  reaching this tree. The weights stay at C:\banyan-farm\lora-jerry-v3-0822\out and the sha256s
+  travel in registry.yaml.
+payload:
+  C:\banyan-farm\lora-jerry-v3-0822\sample_lora.py: "#!/usr/bin/env python3\n\"\"\"Draw ONE\
+    \ frame from a trained character LoRA, in the renderer that ships plates.\n\n    <venv>/python.exe\
+    \ pipeline/lora/sample_lora.py \\\n        --lora out/bnyjerry-sdxl-v1.safetensors --lora-weight\
+    \ 0.8 \\\n        --prompt \"bnyjerry, 1boy, solo, standing, ...\" \\\n        --out SAMPLE-bnyjerry-standing-dusk.png\n\
+    \nWHY THIS FILE EXISTS RATHER THAN A FLAG ON still_local.py. still_local.py's CLI\nis\
+    \ `genome node --beat N` -- it resolves a prompt out of a beat's shot board and\nis wired\
+    \ to MPS/float32 for the Mac loop. Nothing in it takes a free prompt, a\nLoRA, or an output\
+    \ path, and bending it into taking all three would put a\ntraining-only concern into the\
+    \ path that renders episodes. This is ~90 lines\nthat does the one thing.\n\nIT RUNS IN\
+    \ THE RENDER VENV, NOT venv-lora, and that is deliberate. The plates we\nship are drawn\
+    \ by `C:\\\\banyan-farm\\\\venv` (torch 2.11.0+cu128, diffusers 0.29.2)\nat bfloat16 on\
+    \ CUDA. Sampling anywhere else measures a LoRA in an environment\nthat will never draw\
+    \ a frame for the show. It also keeps the training venv's\ndependency set out of the answer\
+    \ -- whatever diffusers version sd-scripts pins\nis irrelevant to whether the weights\
+    \ work where we need them to.\n\nbfloat16 and a CPU-seeded generator match render_wave_sample.py\
+    \ exactly\n(pipeline/render_wave_sample.py:236,243). This matters more than it looks:\
+    \ the\nMac and this box were measured on 2026-08-16 to disagree by MAE 61 of 255 on\n\
+    byte-identical inputs at an identical seed, so a sample drawn under different\ndtype or\
+    \ device conventions is not comparable to the plates it is judged\nagainst.\n\nWrites\
+    \ a §7.2 sidecar beside the PNG naming the LoRA file and its sha256, so a\nframe can always\
+    \ be traced to the exact weights that drew it.\n\"\"\"\n\nimport argparse\nimport hashlib\n\
+    import os\nimport sys\n\nBASE = \"cagliostrolab/animagine-xl-3.1\"\n\n\ndef main():\n\
+    \    ap = argparse.ArgumentParser()\n    ap.add_argument(\"--lora\", required=True, help=\"\
+    path to the .safetensors LoRA\")\n    ap.add_argument(\"--lora-weight\", type=float, default=0.8)\n\
+    \    ap.add_argument(\"--prompt\", required=True)\n    ap.add_argument(\"--negative\"\
+    , default=\"\")\n    ap.add_argument(\"--width\", type=int, default=832)\n    ap.add_argument(\"\
+    --height\", type=int, default=1216)\n    ap.add_argument(\"--steps\", type=int, default=40)\n\
+    \    ap.add_argument(\"--guidance\", type=float, default=7.5)\n    ap.add_argument(\"\
+    --seed\", type=int, default=20260820)\n    ap.add_argument(\"--out\", required=True)\n\
+    \    ap.add_argument(\"--no-lora\", action=\"store_true\",\n                    help=\"\
+    draw the SAME prompt+seed with no LoRA loaded -- the B side \"\n                     \
+    \    \"of the no-regression bar. The pair is the evidence; either \"\n               \
+    \          \"frame alone proves nothing.\")\n    args = ap.parse_args()\n\n    import\
+    \ torch\n    from diffusers import StableDiffusionXLPipeline\n\n    if not args.no_lora\
+    \ and not os.path.exists(args.lora):\n        sys.exit(\"no such LoRA: %s\" % args.lora)\n\
+    \n    # THE PEFT GATE, ADDED 2026-08-22 AFTER IT COST A RUN. This file was written\n \
+    \   # on 2026-08-20 and committed without ever being executed; the first time it\n   \
+    \ # ran was the sapling training job, which trained for twenty clean minutes,\n    # wrote\
+    \ five checkpoints, and then died in nine seconds inside diffusers with\n    # `ValueError:\
+    \ PEFT backend is required for this method.` diffusers 0.29.2\n    # gates ALL LoRA loading\
+    \ behind USE_PEFT_BACKEND, which is False unless peft\n    # is installed -- and it was\
+    \ not, in either venv on the box.\n    #\n    # Checking it BEFORE the 6.9 GB checkpoint\
+    \ load turns a nine-second waste at\n    # the end of an hour into a one-second refusal\
+    \ at the start, and the message\n    # carries the exact fix instead of a stack trace.\
+    \ `--no-deps` is not\n    # decoration: the render venv is what draws every plate the\
+    \ show ships, and\n    # SETUP.md's standing warning is that a careless pip resolve on\
+    \ this sm_120\n    # card silently replaces torch with a build that has no Blackwell kernels.\n\
+    \    # peft's own requirements are all already present, so --no-deps installs one\n  \
+    \  # pure-python package and moves nothing else. Verified 2026-08-22: pip freeze\n   \
+    \ # differed by exactly one line and torch stayed 2.11.0+cu128.\n    from diffusers.utils\
+    \ import USE_PEFT_BACKEND\n    if not args.no_lora and not USE_PEFT_BACKEND:\n       \
+    \ sys.exit(\n            \"diffusers has no PEFT backend, so load_lora_weights() cannot\
+    \ run and\\n\"\n            \"every LoRA sample would fail AFTER loading the base checkpoint.\\\
+    n\"\n            \"  fix:  <this venv>/python.exe -m pip install --no-deps peft==0.12.0\\\
+    n\"\n            \"  then: re-run. --no-deps is required -- a plain install may resolve\\\
+    n\"\n            \"        torch away from 2.11.0+cu128 and break every render on the\
+    \ box.\")\n\n    pipe = StableDiffusionXLPipeline.from_pretrained(\n        BASE, torch_dtype=torch.bfloat16,\
+    \ use_safetensors=True)\n    pipe.to(\"cuda\")\n\n    lora_sha = \"none\"\n    if not\
+    \ args.no_lora:\n        with open(args.lora, \"rb\") as fh:\n            lora_sha = hashlib.sha256(fh.read()).hexdigest()\n\
+    \        # kohya-format LoRAs load through the same entry point; diffusers\n        #\
+    \ converts the key naming on the way in.\n        pipe.load_lora_weights(os.path.dirname(os.path.abspath(args.lora)),\n\
+    \                               weight_name=os.path.basename(args.lora))\n        pipe.fuse_lora(lora_scale=args.lora_weight)\n\
+    \n    gen = torch.Generator(device=\"cpu\").manual_seed(args.seed)\n    image = pipe(\n\
+    \        prompt=args.prompt,\n        negative_prompt=args.negative or None,\n       \
+    \ width=args.width, height=args.height,\n        num_inference_steps=args.steps,\n   \
+    \     guidance_scale=args.guidance,\n        generator=gen,\n    ).images[0]\n\n    os.makedirs(os.path.dirname(os.path.abspath(args.out)),\
+    \ exist_ok=True)\n    image.save(args.out)\n\n    with open(args.out, \"rb\") as fh:\n\
+    \        png_sha = hashlib.sha256(fh.read()).hexdigest()\n    with open(args.out + \"\
+    .meta.yaml\", \"w\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\n\
+    \            'platform: \"local-gpu (rtx5090, CUDA, bfloat16)\"\\n'\n            'model:\
+    \ \"%s\"\\n'\n            'model_licence: \"CreativeML Open RAIL++-M (use restrictions\
+    \ travel; D15)\"\\n'\n            'lora: \"%s\"\\n'\n            'lora_sha256: \"%s\"\\\
+    n'\n            'lora_weight: %s\\n'\n            'cost_usd: 0.0\\n'\n            'size:\
+    \ \"%dx%d\"\\n'\n            'steps: %d\\n'\n            'guidance: %s\\n'\n         \
+    \   'seed: %d\\n'\n            'png_sha256: \"%s\"\\n'\n            'prompt: \"%s\"\\\
+    n'\n            'negative_prompt: \"%s\"\\n'\n            'approved: false\\n'\n     \
+    \       'provisional: true\\n'\n            'founder_verdict: null\\n'\n            'scored:\
+    \ false\\n'\n            % (BASE,\n               \"none\" if args.no_lora else os.path.basename(args.lora),\n\
+    \               lora_sha, args.lora_weight,\n               args.width, args.height, args.steps,\
+    \ args.guidance, args.seed,\n               png_sha,\n               args.prompt.replace('\"\
+    ', \"'\"),\n               args.negative.replace('\"', \"'\")))\n\n    print(\"wrote\"\
+    , args.out)\n    print(\"  lora=%s weight=%s seed=%d\" %\n          (\"none\" if args.no_lora\
+    \ else os.path.basename(args.lora),\n           args.lora_weight, args.seed))\n    return\
+    \ 0\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n"
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - -c
+  - "\nimport hashlib, os, shutil, yaml\nCANDIDATES = [r\"C:\\banyan-farm\\lora-jerry-v3-0822\\\
+    src\", r\"C:\\banyan-farm\\banyan-city\"]\nREL = \"pipeline/lora/manifest-jerry-v3-0822.yaml\"\
+    \nrepo = next((c for c in CANDIDATES if os.path.exists(os.path.join(c, REL))), None)\n\
+    if repo is None:\n    raise SystemExit(\"NO DATASET ROOT. Tried:\\n  \" + \"\\n  \".join(CANDIDATES))\n\
+    print(\"dataset root:\", repo, flush=True)\nman = yaml.safe_load(open(os.path.join(repo,\
+    \ REL), encoding=\"utf-8\"))\nif man.get(\"trigger\") != \"bnyjerry\":\n    raise SystemExit(\"\
+    manifest trigger is %r, not bnyjerry\" % man.get(\"trigger\"))\ndst = r\"C:\\banyan-farm\\\
+    lora-jerry-v3-0822\\img\\5_bnyjerry\"\nos.makedirs(dst, exist_ok=True)\nos.makedirs(r\"\
+    C:\\banyan-farm\\lora-jerry-v3-0822\\out\", exist_ok=True)\nos.makedirs(r\"C:\\banyan-farm\\\
+    lora-jerry-v3-0822\\log\", exist_ok=True)\nn = 0\nfor fr in man[\"frames\"]:\n    src\
+    \ = os.path.join(repo, fr[\"image\"])\n    if not os.path.isfile(src):\n        raise\
+    \ SystemExit(\"MISSING FRAME: \" + fr[\"image\"])\n    have = hashlib.sha256(open(src,\
+    \ \"rb\").read()).hexdigest()\n    if have != fr[\"sha256\"]:\n        raise SystemExit(\"\
+    SHA MISMATCH for %s\\n  want %s\\n  have %s\"\n                         % (fr[\"image\"\
+    ], fr[\"sha256\"], have))\n    cap = os.path.join(repo, fr[\"caption_file\"])\n    if\
+    \ not os.path.isfile(cap):\n        raise SystemExit(\"MISSING CAPTION: \" + fr[\"caption_file\"\
+    ])\n    base = fr[\"cell\"]\n    shutil.copyfile(src, os.path.join(dst, base + \".png\"\
+    ))\n    shutil.copyfile(cap, os.path.join(dst, base + \".txt\"))\n    n += 1\nprint(\"\
+    staged %d image+caption pairs, all sha256 verified\" % n, flush=True)\nif n != man[\"\
+    count\"]:\n    raise SystemExit(\"staged %d but the manifest says %d\" % (n, man[\"count\"\
+    ]))\n"
+- name: train
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - C:\banyan-farm\sd-scripts\sdxl_train_network.py
+  - --pretrained_model_name_or_path
+  - C:\Users\artvn\.cache\huggingface\hub\models--cagliostrolab--animagine-xl-3.1\snapshots\483f0c322568ed13697ed01dd0be07204746d12b
+  - --train_data_dir
+  - C:\banyan-farm\lora-jerry-v3-0822\img
+  - --output_dir
+  - C:\banyan-farm\lora-jerry-v3-0822\out
+  - --output_name
+  - bnyjerry-sdxl-v3
+  - --network_module
+  - networks.lora
+  - --network_dim
+  - '32'
+  - --network_alpha
+  - '16'
+  - --learning_rate
+  - 1e-4
+  - --unet_lr
+  - 1e-4
+  - --text_encoder_lr
+  - 5e-5
+  - --lr_scheduler
+  - cosine
+  - --lr_warmup_steps
+  - '30'
+  - --optimizer_type
+  - AdamW8bit
+  - --max_train_epochs
+  - '10'
+  - --save_every_n_epochs
+  - '2'
+  - --train_batch_size
+  - '2'
+  - --resolution
+  - 832,1216
+  - --enable_bucket
+  - --min_bucket_reso
+  - '832'
+  - --max_bucket_reso
+  - '2048'
+  - --mixed_precision
+  - bf16
+  - --save_precision
+  - bf16
+  - --gradient_checkpointing
+  - --cache_latents
+  - --cache_latents_to_disk
+  - --sdpa
+  - --seed
+  - '20260822'
+  - --save_model_as
+  - safetensors
+  - --logging_dir
+  - C:\banyan-farm\lora-jerry-v3-0822\log
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-jerry-v3-0822\sample_lora.py
+  - --lora
+  - C:\banyan-farm\lora-jerry-v3-0822\out\bnyjerry-sdxl-v3.safetensors
+  - --lora-weight
+  - '0.8'
+  - --prompt
+  - bnyjerry, 1boy, solo, sitting, looking at viewer, upper body, a grey stone wall behind,
+    flat overcast light, anime style, cel shading, masterpiece, best quality, very aesthetic
+  - --negative
+  - lowres, worst quality, low quality, text, watermark, photorealism, 3d render, blurry,
+    2boys, multiple heads
+  - --width
+  - '832'
+  - --height
+  - '832'
+  - --steps
+  - '40'
+  - --guidance
+  - '7.5'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-jerry-v3-0822\out\SAMPLE-bnyjerry-v3-sitting-wall.png
+- name: publish
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - -c
+  - "\nimport hashlib, glob, os, shutil, yaml\nOUT = r\"C:\\banyan-farm\\lora-jerry-v3-0822\\\
+    out\"\nDST = r\"C:\\banyan-farm\\courier-box\\farm-out\\lora-jerry-v3-0822\"\nos.makedirs(DST,\
+    \ exist_ok=True)\n\ndef sha(p):\n    return hashlib.sha256(open(p, \"rb\").read()).hexdigest()\n\
+    \n# 1. THE SAMPLE TRAVELS.\npublished = []\nfor png in sorted(glob.glob(os.path.join(OUT,\
+    \ \"SAMPLE-*.png\"))):\n    shutil.copyfile(png, os.path.join(DST, os.path.basename(png)))\n\
+    \    published.append(os.path.basename(png))\n    print(\"published\", os.path.basename(png),\
+    \ flush=True)\n\n# 2. THE WEIGHTS DO NOT. Their hashes and box paths do, which is the\
+    \ half that\n#    makes provenance survive the blob staying on one machine.\nck = {}\n\
+    for w in sorted(glob.glob(os.path.join(OUT, \"*.safetensors\"))):\n    b = os.path.basename(w)\n\
+    \    ck[b] = {\"sha256\": sha(w), \"bytes\": os.path.getsize(w), \"box_path\": w}\n  \
+    \  print(\"hashed\", b, ck[b][\"sha256\"][:16], flush=True)\nif not ck:\n    raise SystemExit(\"\
+    NO CHECKPOINTS in %s -- training produced nothing\" % OUT)\n\ndoc = {\"job\": \"lora-jerry-v3-0822\"\
+    , \"trigger\": \"bnyjerry\",\n       \"weights_stay_on_the_box\": (\n           \"Each\
+    \ checkpoint is ~228 MB. GitHub rejects blobs over 100 MiB and \"\n           \"the courier\
+    \ does `git add -A -- farm-out`, so a checkpoint here \"\n           \"would leave a permanently\
+    \ unpushable commit and block every lane. \"\n           \"The sha256s below are the durable\
+    \ half.\"),\n       \"checkpoints\": ck, \"samples\": published}\nwith open(os.path.join(DST,\
+    \ \"weights-jerry-v3-0822.yaml\"), \"w\",\n          encoding=\"utf-8\") as fh:\n    yaml.safe_dump(doc,\
+    \ fh, sort_keys=False, width=88)\n\n# 3. A .sha256 BESIDE EVERYTHING THAT TRAVELLED.\n\
+    with open(os.path.join(DST, \"lora-jerry-v3-0822.sha256\"), \"w\", encoding=\"utf-8\"\
+    ) as fh:\n    for n in sorted(os.listdir(DST)):\n        q = os.path.join(DST, n)\n  \
+    \      if os.path.isfile(q) and not n.endswith(\".sha256\"):\n            fh.write(\"\
+    %s  %s\\n\" % (sha(q), n))\nprint(\"publish complete ->\", DST, flush=True)\n"
+artifacts:
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v3-0822\SAMPLE-bnyjerry-v3-sitting-wall.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v3-0822\weights-jerry-v3-0822.yaml
+
+## BARS
+#
+# THE THREE BARS BELOW WERE COMMITTED BEFORE THE FIRST v3 FRAME WAS TRAINED ON,
+# and two of them are v2's own, re-run unchanged so a v3 score is comparable to a
+# v2 score rather than to a new yardstick.
+#
+# B2  POSE ADOPTION -- THE DECISIVE BAR, AND THE ONLY REASON v3 EXISTS
+#     v2 fails this. Every instrument this tree owns has failed it: words (B5), an
+#     openpose weight ladder that loses his face between 0.65 and 0.50 without
+#     bending a knee at 0.35, a two-pass whose only seat-keeping cell is the cell
+#     where he is somebody else, and an i2i whose face breaks between 0.40 and
+#     0.45 with the pose unmoved at 0.40. So this bar has a MEASURED CONTROL AT
+#     ZERO and that is what makes it decisive rather than hopeful.
+#
+#     `bnyjerry` + an OpenPose skeleton at conditioning scale 1.0, TXT2IMG, no
+#     init, LoRA at the identity weight. THREE authored skeletons x TWO seeds =
+#     6 cells, and the three are chosen to separate memorisation from a real axis:
+#
+#       SEAT   -- in the dataset (posed-seat). If this fails, nothing worked.
+#       KNEEL  -- in the dataset (posed-kneel). Same.
+#       STRIDE -- **NOT IN THE DATASET, AND DELIBERATELY SO.** It is the only cell
+#                 that distinguishes "the trigger learned three stances" from "the
+#                 pose axis is unlocked". A v3 that adopts seat and kneel and
+#                 refuses stride has memorised its training frames, which is worth
+#                 knowing and is NOT the result the beats need -- shots.md asks
+#                 for a walking goblin in three of its prompt lines.
+#
+#     Each cell reads on two clauses:
+#       P1 DID THE BODY ADOPT THE SKELETON? A visible knee bend, hip drop or
+#          seated fold where the hint has one.
+#       P2 DID THE IDENTITY SURVIVE IT? E1-E4 of B1, same reading.
+#     BAR: >= 5 of 6 on P1 AND >= 5 of 6 on P2. A cell that adopts the pose and
+#     loses the face is a FAIL and so is the reverse -- the claim is that both
+#     happen in ONE pass, and the whole history of this character is that they
+#     trade.
+#
+# B1  IDENTITY, FRESH SETTINGS, 15 CELLS, AT 1:1 AGAINST
+#     taste/refs/goblin-canon-founder-0821.png
+#     v2'S BAR, RE-RUN BYTE-FOR-BYTE, and it is here as a NO-REGRESSION bar on the
+#     thing v2 already does well. Five fresh prompts the dataset does not contain
+#     at three seeds each; fresh means a setting, a light and a framing no
+#     admitted frame carries. A cell passes when E1-E4 hold (E5 where costume is
+#     in frame):
+#       E1 narrow almond eye, off-white field, TINY dark pupil, heavy upper lid.
+#          A large round iris of any colour is a FAIL -- four founder vetoes.
+#       E2 broad low dome; smallish pointed ears NEAR HORIZONTAL.
+#       E3 smooth face -- no brow furrows, no nasolabial folds, no jowls.
+#       E4 desaturated sage, washed and high-key.
+#       E5 shirt with a placket, dark shorts, dark boots.
+#     BAR: >= 13 of 15, WHICH IS v2'S BAR AND NOT A RELAXED ONE. v3 added three
+#     frames that share ONE torso byte-for-byte (the canon's, moved by an integer
+#     DROP of 150) and if identity falls that is the first suspect -- so this bar
+#     is the instrument that catches the cost of the fix, and a v3 that poses at
+#     the price of B1 is not shippable.
+#     JUDGED BY A BLIND COLD READER -- a fresh agent handed one frame, his image
+#     and the E-clauses, no prompt text, no mention of this lane.
+#
+# B3  NO REGRESSION, AT TWO WEIGHTS
+#     An A/B pair -- identical prompt and seed, LoRA loaded and unloaded -- on a
+#     prompt carrying NO trigger and NO goblin, at weight 0.8 and again at the
+#     shipping weight if that differs. BAR: no goblin intrudes, and the frame is
+#     not visibly recoloured, reframed or restyled against its no-LoRA twin.
+#     CARRIED FORWARD DELIBERATELY: the sapling lane failed this in v1, v2 and v2b
+#     -- three datasets, two caption schemes, one outcome -- and concluded that B3
+#     should stop being read as a dataset bar and start being read against the
+#     WEIGHT and the merge. A failure at 0.8 with a pass lower down is a WEIGHT
+#     finding here too, not a v3 verdict.
+#
+# WHAT IS NOT SCORED, SO THE LADDER STAYS SHORT ENOUGH TO ACTUALLY RUN.
+# B4 (style) and B5 (pose via words) are not in this ladder. B4 passed 15/15 in
+# every run this tree has done and B5 is answered in advance -- the corrected
+# caption law says a tag steers only where the attribute varies, and v3 is the
+# first set where pose varies at all, so B5's outcome is interesting but it is not
+# what unblocks a beat. B2 is. If B2 and B1 both pass, the beats unlock and B4/B5
+# are measured on the way through.
+#
+# THE KNOWN GAP, DECLARED HERE BECAUSE IT WILL SHAPE THE READING. All three posed
+# frames are MIRROR-SYMMETRIC. The one-knee cell was built for the asymmetric axis
+# and both budgeted draws traded pose against paint -- draw one gave asymmetry
+# 81.4 with a pink thigh no crop reaches, draw two gave the paint back and
+# symmetrised him. So if v3 poses but poses SYMMETRICALLY, that is the predicted
+# shape of a partial pass and the fix is a third draw or a re-authored hint,
+# neither of which is a research question.
+#
+# EPOCHS. Judged on the five saved checkpoints, not just the last. Overfitting
+# past the sweet spot is the standard character-LoRA failure and the epoch axis is
+# part of the job.
+#
+# WEIGHT. No weight is sanctioned in advance. The sapling ladder measured a
+# subject that COLLAPSED below 0.65 while contamination faded smoothly -- two
+# curves that never cross -- and the usable band was read off the ladder rather
+# than assumed. The same ladder runs here and the shipping weight comes out of it
+# or does not exist.
