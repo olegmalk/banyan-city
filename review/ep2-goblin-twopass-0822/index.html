@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Sapling — the goblin, two-pass, 22 Aug</title>
+<style>
+:root{
+  --bg:#faf9f6; --panel:#fff; --ink:#191713; --dim:#6a655c; --line:#e2ded4;
+  --accent:#3f6b3a; --warn:#8a5a1b; --bad:#8c3535; --good:#2f6b46;
+  --chipbg:#f0eee6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14150f; --panel:#1c1e17; --ink:#eceadf; --dim:#9a968a; --line:#2f322a;
+    --accent:#9dc98f; --warn:#d6a45c; --bad:#e28b8b; --good:#8fd0a6;
+    --chipbg:#25281f;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14150f; --panel:#1c1e17; --ink:#eceadf; --dim:#9a968a; --line:#2f322a;
+  --accent:#9dc98f; --warn:#d6a45c; --bad:#e28b8b; --good:#8fd0a6;
+  --chipbg:#25281f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.55 ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-text-size-adjust:100%}
+.wrap{max-width:940px;margin:0 auto;padding:22px 16px 70px}
+header{border-bottom:2px solid var(--line);padding-bottom:14px;margin-bottom:22px}
+h1{font-size:1.45rem;margin:0 0 4px;letter-spacing:-.01em}
+h2{font-size:1.12rem;margin:34px 0 8px;letter-spacing:-.01em}
+h3{font-size:.95rem;margin:20px 0 6px}
+.sub{color:var(--dim);font-size:.85rem;margin:0}
+p{margin:.6em 0}
+.lede{font-size:1.02rem}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.85em}
+.ask{background:var(--panel);border:2px solid var(--accent);border-radius:12px;
+  padding:16px 18px;margin:24px 0}
+.ask h2{margin:0 0 8px;font-size:1.05rem;color:var(--accent)}
+.ask .q{font-size:1.12rem;font-weight:650;margin:10px 0 4px}
+.ask .how{color:var(--dim);font-size:.86rem}
+figure{margin:0}
+figcaption{color:var(--dim);font-size:.78rem;margin-top:5px;line-height:1.4}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;
+  border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:8px}
+.scroll img{display:block;image-rendering:auto}
+.pair{display:flex;gap:8px;min-width:min-content}
+.pair figure{flex:0 0 auto}
+.pair img{width:832px;max-width:none;height:auto;border-radius:6px}
+.fit .pair{min-width:0}
+.fit .pair figure{flex:1 1 0;min-width:0}
+.fit .pair img{width:100%}
+.hint{color:var(--dim);font-size:.78rem;margin:6px 2px 0}
+button.tog{font:inherit;font-size:.82rem;padding:5px 12px;border-radius:999px;
+  border:1px solid var(--line);background:var(--chipbg);color:var(--ink);cursor:pointer}
+.strip{display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:660px){.strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .strip.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .strip.four{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.strip img{width:100%;height:auto;display:block;border-radius:8px;border:1px solid var(--line)}
+.strip figcaption b{color:var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:.86rem;margin:10px 0}
+.tw{overflow-x:auto}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:650;color:var(--dim);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+.yes{color:var(--good);font-weight:650}
+.no{color:var(--bad);font-weight:650}
+.note{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--warn);
+  border-radius:8px;padding:12px 14px;margin:16px 0;font-size:.92rem}
+.note b{color:var(--warn)}
+ul{padding-left:1.1em}
+li{margin:.35em 0}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);
+  color:var(--dim);font-size:.78rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Sapling — the goblin, and the posture the machine can actually give him</h1>
+  <p class="sub">Beat 13, episode 2 · rendered 2026-08-22 on the rtx5090 · $0 ·
+  eighteen sample cells, none of them approved, none of them published</p>
+</header>
+
+<p class="lede">One taste question at the top, then the evidence for it. Everything
+below is a <b>sample</b>: no episode has been assembled, no clip animated, nothing
+swapped into the live tree.</p>
+
+<div class="ask">
+  <h2>The question</h2>
+  <p>On the left is your goblin — the reference you ratified on 21 Aug. On the
+  right is the best frame the machine can produce of him right now, at the same
+  scale, cropped to the head so it fits your screen at true 1:1.</p>
+  <div class="scroll">
+    <img src="img/faces-1to1.png" alt="the founder's canon goblin beside the rendered goblin, faces at 1:1" style="width:808px;max-width:none">
+  </div>
+  <p class="hint">Scroll sideways if it is cut off — this is 1:1, not fitted.</p>
+  <p class="q">Is this goblin in this posture the show?</p>
+  <p class="how">Answer <b>yes</b> — and twenty beats start rendering on this
+  recipe tonight. Or <b>no: &lt;one line&gt;</b> — and the line tells me which of
+  the two things below to spend the card on.</p>
+</div>
+
+<h2>The whole frame, both of them, at 1:1</h2>
+<p>The head crop is for his face. This is for his <em>posture</em>, which is the
+half of the question the crop cannot show.</p>
+<div class="scroll" id="pairbox">
+  <div class="pair">
+    <figure>
+      <img src="img/canon.png" alt="canon reference: the goblin standing in grass">
+      <figcaption><b>Your reference.</b> <span class="mono">goblin-canon-founder-0821</span> —
+      standing, arms down, sage-grey skin, flat overcast light.</figcaption>
+    </figure>
+    <figure>
+      <img src="img/hero.png" alt="rendered goblin, forward lean, hands clasped">
+      <figcaption><b>The machine's best.</b> <span class="mono">tp6-seat-i6-s060-w10</span> —
+      forward lean, hands clasped low, dusk light, mauve skin.</figcaption>
+    </figure>
+  </div>
+</div>
+<p class="hint"><button class="tog" id="tog">Fit both to the screen</button>
+&nbsp;<span id="togmsg">— currently 1:1, scroll sideways.</span></p>
+
+<div class="note">
+<p><b>What I would say if you asked me first.</b> At 1:1 the identity holds:
+the broad low dome, the near-horizontal pointed ears with the dark inner shell,
+the narrow almond eye with the tiny dark pupil, the brow furrow. Three things do
+not match your reference — <b>his skin is a dusky mauve where yours is sage</b>,
+there is a faint hair tuft at the crown and above each ear where yours is bald,
+and the ears sit angled forward rather than out. The skin has a known cause and
+no cheap fix; see the last section.</p>
+</div>
+
+<h2>The posture beat 13 asked for does not exist yet</h2>
+<p>Beat 13 is written as a <b>sit</b> — knees up, forearms on the knees, hands
+clasped. The machine can draw that sit, and it can draw your goblin, and today it
+could not do both in one frame. Here is exactly what that looks like.</p>
+
+<div class="strip two">
+  <figure>
+    <img src="img/seatplate.jpg" alt="a seated boy, correct pose, wrong person">
+    <figcaption><b>The sit, correctly drawn</b> — knees up, forearms on the knees,
+    hips down in the grass. It is a stranger. No character model was loaded.</figcaption>
+  </figure>
+  <figure>
+    <img src="img/hero.jpg" alt="the goblin, forward lean">
+    <figcaption><b>The goblin, correctly drawn</b> — and standing in a forward
+    lean. The character model brought his face and his standing habit together.</figcaption>
+  </figure>
+</div>
+
+<h3>Six attempts to put them in one frame</h3>
+<p>Every cell below starts from that same seated picture and asks the character
+model to repaint it. Two knobs, six settings, one seat.</p>
+<div class="strip">
+  <figure><img src="img/s075.jpg" alt=""><figcaption><b>0.75 / 0.8</b><br>lean · <span class="yes">is him</span></figcaption></figure>
+  <figure><img src="img/s065.jpg" alt=""><figcaption><b>0.65 / 0.8</b><br>lean · <span class="yes">is him</span></figcaption></figure>
+  <figure><img src="img/s060.jpg" alt=""><figcaption><b>0.60 / 0.8</b><br>lean · <span class="no">a human boy</span></figcaption></figure>
+  <figure><img src="img/s060w10.jpg" alt=""><figcaption><b>0.60 / 1.0</b><br>lean · <span class="yes">is him</span></figcaption></figure>
+  <figure><img src="img/s055.jpg" alt=""><figcaption><b>0.55 / 0.8</b><br><span class="yes">SITS</span> · <span class="no">a human boy</span></figcaption></figure>
+  <figure><img src="img/s055w10.jpg" alt=""><figcaption><b>0.55 / 1.0</b><br>lean · <span class="yes">is him</span></figcaption></figure>
+</div>
+<p>The seat appears in exactly one cell, and it is the one cell where he is
+somebody else. That is not bad luck at six settings — it has a named cause:
+<b>all 21 frames his character model was trained on are of him standing.</b>
+Whenever the model is turned up loud enough to be recognisably him, it also
+insists he is on his feet.</p>
+
+<h2>What did go right today, and it unlocks the other beats</h2>
+<p>The pose machinery itself works, and it works on three of the four postures
+episode 2 needs — as long as the prompt is left exactly alone.</p>
+
+<div class="strip four">
+  <figure><img src="img/seatplate.jpg" alt=""><figcaption><b>sit</b> — beat 13<br><span class="yes">drives</span></figcaption></figure>
+  <figure><img src="img/crouch-wA.jpg" alt=""><figcaption><b>crouch</b> — beats 03, 20<br><span class="yes">drives</span></figcaption></figure>
+  <figure><img src="img/stride-wA.jpg" alt=""><figcaption><b>stride</b> — beat 02<br><span class="yes">drives</span></figcaption></figure>
+  <figure><img src="img/hunch-wA.jpg" alt=""><figcaption><b>hunch</b> — beat 04<br><span class="no">does not</span></figcaption></figure>
+</div>
+<p>Yesterday's note said three of these four had failed. Three of them had been
+asked in the wrong words. The hunch is the real failure and it is mine, not the
+machine's: the skeleton I drew for it is a standing figure with its head tipped
+down, so a standing figure with its head tipped down is what came back. That one
+gets redrawn.</p>
+
+<h3>The wording rule, because it cost the whole week</h3>
+<p>Same skeleton, same seed, same everything, one phrase apart:</p>
+<div class="strip two">
+  <figure><img src="img/crouch-wA.jpg" alt=""><figcaption><b>He crouches.</b>
+  <span class="mono">…1boy, solo, in tall grass, detailed cinematic anime…</span></figcaption></figure>
+  <figure><img src="img/crouch-wAlight.jpg" alt=""><figcaption><b>He stands.</b>
+  The same line plus <span class="mono">soft overcast daylight, flat even light</span>.
+  Nothing else changed.</figcaption></figure>
+</div>
+<p>Adding five words about the <em>light</em> deleted the <em>pose</em>. That
+also explains the frame I was about to show you as a passing sit yesterday: it
+had that light phrase in it, so it was never a sit at all. I checked the pixels
+before writing this page rather than after.</p>
+
+<h2>The skin</h2>
+<p>Your reference is sage. Everything the machine makes is a dusky
+mauve-brown, and it is not for want of asking:</p>
+<div class="strip two">
+  <figure><img src="img/green.jpg" alt="a bright green goblin, standing">
+  <figcaption><b>Asking early.</b> <span class="mono">green skin</span> in the first
+  pass. He goes green — too green, with green hair — <em>and the sit is gone</em>,
+  same as the light phrase.</figcaption></figure>
+  <figure><img src="img/s075.jpg" alt="">
+  <figcaption><b>Asking late.</b> The same tag in the second pass changed
+  nothing about him. It coloured a leaf.</figcaption></figure>
+</div>
+<p>So sage is reachable but not yet at a price worth paying. If the skin is what
+bothers you more than the posture, say so and it goes first.</p>
+
+<h2>The two roads out, and your line picks one</h2>
+<div class="tw"><table>
+<tr><th>if you say</th><th>what happens next</th><th>cost</th></tr>
+<tr>
+  <td><b>yes</b> — the lean is the show</td>
+  <td>Beats 02, 03, 04, 13, 20 and the rest stage tonight on this recipe, each
+  with its own emotion and framing. The sit in beat 13's script becomes a lean
+  and the line stays as written.</td>
+  <td>free, tonight</td>
+</tr>
+<tr>
+  <td><b>no</b> — he has to sit</td>
+  <td>His character model gets retrained on posed frames instead of 21 standing
+  ones. The machine can now generate correctly posed bodies, which is the
+  material that training needs.</td>
+  <td>free, about a card-night</td>
+</tr>
+</table></div>
+<p>Either way nothing is animated, nothing is swapped and nothing is posted until
+you have said which.</p>
+
+<footer>
+<p>Provenance, in full: animagine-xl-3.1 (CreativeML Open RAIL++-M) with
+xinsir controlnet-openpose-sdxl-1.0 <span class="mono">twins</span> (Apache-2.0),
+character model <span class="mono">bnyjerry-sdxl-v2</span>, all cells 832×1216,
+40 steps, cfg 7.5, seed 20260822, rendered locally on the rtx5090 at $0. Skeletons
+are drawn in PIL by <span class="mono">pipeline/author_jerry_skel_0820.py</span> —
+no pose annotator and no photograph of a person is involved anywhere in this
+route. Every frame here carries a machine-written sidecar recording its exact
+prompt, hashes and settings; jobs
+<span class="mono">lora-jerry-v2-twopass3/4/5/6-0822</span>. Not approved, not
+canon, not published.</p>
+</footer>
+
+</div>
+<script>
+(function(){
+  var b=document.getElementById('pairbox'), t=document.getElementById('tog'),
+      m=document.getElementById('togmsg');
+  if(!b||!t)return;
+  t.addEventListener('click',function(){
+    var fit=b.classList.toggle('fit');
+    t.textContent=fit?'Show both at 1:1':'Fit both to the screen';
+    if(m)m.textContent=fit?'— currently fitted to the screen.'
+                          :'— currently 1:1, scroll sideways.';
+  });
+})();
+</script>
+</body>
+</html>
