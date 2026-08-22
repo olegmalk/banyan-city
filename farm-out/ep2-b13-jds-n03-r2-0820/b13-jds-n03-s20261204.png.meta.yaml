@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x832
+steps: 40
+guidance: 7.5
+strength: 0.25
+seed: 20261204
+padding_mask_crop: null
+mask_blur_factor: 8
+init_image: C:/banyan-farm/jds-n03-0822/init-headnat-0822.png
+init_sha256: d14a0524afdb4e3667b2784ab577f26720344bd2eac21b3cefdbd846daaed0dd
+mask_png: b13-jds-n03-s20261204-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/jds-n03-0822/fullframe-mask-832x832-0822.png
+mask_png_sha256: 1498c9256710b7b5f8fe486bea2a0b7c9fd1221249938d69a90bcc51e10bfcc4
+mask_white_px: 692224
+mask_bbox_px: [0, 0, 831, 831]
+mask_width_frac: 0.9988
+mask_height_frac: 0.9988
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-22T10:33:19Z
+render_seconds: 2.5
+wall_seconds: 8.0
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  GOBLIN DATASET CELL n03. img2img from a cut of the canon image: init `headnat` at 832x832, strength 0.25, full-frame white mask (which is what makes the SDXL inpaint pipeline on base weights behave as plain img2img). Ground `a stone wall`, light `overcast light`. This is a TRAINING FRAME candidate for the jerry v2 LoRA, not a plate for any beat.
+prompt: |-
+  a small green goblin standing against a grey stone wall, flat overcast light, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  lowres, worst quality, low quality, text, watermark, photorealism, 3d render, blurry, 2boys, multiple heads
