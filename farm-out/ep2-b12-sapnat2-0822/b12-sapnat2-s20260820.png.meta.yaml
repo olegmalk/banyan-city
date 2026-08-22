@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 704x1280
+steps: 40
+guidance: 7.5
+strength: 0.3
+seed: 20260820
+padding_mask_crop: 64
+mask_blur_factor: 8
+init_image: C:/banyan-farm/b12sapnat2-0822/b12-sapnat-in-0822.png
+init_sha256: e1d79db63bf779c0f0998ef86861cdd344473d29441b698b606c4bda06dd5187
+mask_png: b12-sapnat2-s20260820-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/b12sapnat2-0822/b12-sapnat-in-mask-0822.png
+mask_png_sha256: cdaf0a4077f69d8c5dac999ca4c0f1b29dab2dc703d2832e201154cb130cac92
+mask_white_px: 178314
+mask_bbox_px: [0, 324, 703, 1022]
+mask_width_frac: 0.9986
+mask_height_frac: 0.5453
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-22T01:26:07Z
+render_seconds: 3.5
+wall_seconds: 9.6
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  ATTACHED TO BOTH THE DRY STEP AND THE RENDER STEP, and true of each. ON THE DRY STEP it is a MASK GEOMETRY CHECK: it writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. WHAT TO CHECK on beat 12: (1) one connected blob shaped like a stem with two leaves plus the region the OLD plant was erased out of -- this mask is deliberately larger than the b16 rung's because it has to cover the hole as well as the drawing; (2) it does not reach the top of the frame; (3) THERE IS NO PERSON IN THIS PLATE and the negative bans one, so a figure appearing inside the mask is a hard fail and not a curiosity. ON THE RENDER STEP: one pass, one seed. 0.30 runs 12 of 40 steps from a latent that still holds the drawn structure, so the layout steps never run and the pass FINISHES the shape rather than inventing one.
+prompt: |-
+  a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the grass, close on the whole seedling against a bright bank of cumulus cloud, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  three leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, forest, second plant, plant girl, alraune, child, 1boy, 2boys, goblin, man, person, text, photorealism, 3d render, low quality
