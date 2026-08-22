@@ -4275,3 +4275,4 @@
 00:03:09Z DONE task=ep2-b17-repeat-0822-1787356532 rc=0 artifacts=1
 00:03:15Z STARTED task=ep2-b18-celfig-r2-0822-1787356938 attempt=1 on box-runner
 00:03:40Z DONE task=ep2-b18-celfig-r2-0822-1787356938 rc=0 artifacts=1
+00:03:44Z box-runner idle ready=0 failed=86
