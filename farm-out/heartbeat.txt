@@ -4497,3 +4497,5 @@
 08:42:39Z DONE task=lora-sapling-v2-0822-1787386956 rc=0 artifacts=4
 08:42:47Z STARTED task=ep2-b13-i2icanon-s30-0822-1787387255 attempt=1 on box-runner
 08:43:02Z DONE task=ep2-b13-i2icanon-s30-0822-1787387255 rc=0 artifacts=2
+08:43:08Z STARTED task=ep2-b13-i2icanon-s40-0822-1787387260 attempt=1 on box-runner
+08:43:23Z DONE task=ep2-b13-i2icanon-s40-0822-1787387260 rc=0 artifacts=2
