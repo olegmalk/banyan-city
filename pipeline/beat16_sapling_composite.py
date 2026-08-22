@@ -531,6 +531,10 @@ def main() -> int:
 
     # ---- 0. erase the plant the plate already has -------------------------
     weed = np.zeros((H, W), bool)
+    # The matte BEFORE --erase-grow. C5 measures the erased plant's own
+    # colour off this one, so the dilated fringe -- which is field pixels
+    # by construction -- cannot pull the reference toward the backdrop.
+    weed_core = weed
     arr = raw
     if a.erase_box:
         box = tuple(int(v) for v in a.erase_box.split(","))
@@ -554,6 +558,7 @@ def main() -> int:
         weed = weed_matte(raw, box, a.erase_lum,
                           seed_thresh=a.erase_seed_lum, forbid=body)
         core = int(weed.sum())
+        weed_core = weed.copy()
         if a.erase_grow:
             weed = dilate(weed, a.erase_grow) & ~body
         n = int(weed.sum())
@@ -577,10 +582,21 @@ def main() -> int:
         # C0c THE MATTE IS NOT CLIPPED BY ITS OWN BOX. If it runs to an edge the
         # box is cutting the weed in half and half a weed survives into the
         # frame, which is the exact canon failure this erase exists to prevent.
+        # ...UNLESS THE BOX EDGE IS THE IMAGE EDGE, in which case there is no
+        # wider box to draw and the thing cutting the weed is the FRAME. Beat
+        # 12's plate is the case: its two leaves run off both sides of a
+        # 704-wide picture, so `xs.min()==box[0]==0` and `xs.max()==box[2]-1==
+        # 703` are both true of a matte that is complete. Refusing there would
+        # ask for a box outside the image. The guard's job is "your box is too
+        # small"; at the frame boundary that sentence has no meaning, and the
+        # exemption is written as a coincidence with 0/W/H rather than as a
+        # flag, so it cannot be used to wave through a genuinely cut matte.
+        at_img = {"left": box[0] == 0, "top": box[1] == 0,
+                  "right": box[2] >= W, "bottom": box[3] >= H}
         clipped = [nm for nm, v, lim in
                    (("left", xs.min(), box[0]), ("top", ys.min(), box[1]),
                     ("right", xs.max(), box[2] - 1), ("bottom", ys.max(), box[3] - 1))
-                   if v == lim]
+                   if v == lim and not at_img[nm]]
         if clipped:
             print("!! C0c the matte touches the %s edge of --erase-box, so the "
                   "box is cutting the weed rather than containing it. Widen it."
@@ -770,15 +786,34 @@ def main() -> int:
     if int(interior.sum()) < 500:
         interior = drawn
     lum_plant = float(np.asarray(Image.fromarray(comp).convert("L"))[interior].mean())
+    # AND C5's REFERENCE IS THE ERASED PLANT WHEN THERE WAS ONE. The check asks
+    # "does this plant's colour belong in this picture", and it answers that by
+    # comparing to the surrounding field -- which is right for a seedling in
+    # grass and WRONG for one silhouetted against sky. Beat 12's plate is the
+    # second case: its two leaves sit against bright cloud at field luma 220
+    # while the leaves the plate itself drew measure 88, so the field test
+    # rejects a plant that is the exact colour of the one being replaced. When
+    # --erase-box supplied a weed, the palette is already sampled from that
+    # weed (palette_from_erased), so the honest reference is the weed too, and
+    # the check becomes STRICTER rather than looser: the new plant must match
+    # the plant the plate drew, not merely be within 46 of its backdrop.
     lum_field = float(np.asarray(Image.fromarray(arr).convert("L"))[region].mean())
+    ref_name, lum_ref, tol = "field", lum_field, 46
+    if weed.any():
+        lum_ref = float(np.asarray(
+            Image.fromarray(raw).convert("L"))[weed_core].mean())
+        ref_name, tol = "erased plant", 24
     geom["plant_fill_luma"] = round(lum_plant, 1)
     geom["field_mean_luma"] = round(lum_field, 1)
+    geom["c5_reference"] = ref_name
+    geom["c5_reference_luma"] = round(lum_ref, 1)
     geom["c5_measures"] = "the drawn plant's FILL, silhouette eroded by ink_width"
-    if abs(lum_plant - lum_field) > 46:
+    if abs(lum_plant - lum_ref) > tol:
         fails.append("C5 the plant's FILL luma %.1f is %.1f away from the "
-                     "field's %.1f -- it will read as pasted before the pass "
-                     "ever runs" % (lum_plant, abs(lum_plant - lum_field),
-                                    lum_field))
+                     "%s's %.1f (tolerance %d) -- it will read as pasted "
+                     "before the pass ever runs"
+                     % (lum_plant, abs(lum_plant - lum_ref), ref_name,
+                        lum_ref, tol))
     for f in fails:
         print("FAIL  %s" % f)
     if not fails:

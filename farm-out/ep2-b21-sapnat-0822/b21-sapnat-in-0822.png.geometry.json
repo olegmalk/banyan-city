@@ -1,0 +1,87 @@
+{
+ "apex": [
+  371.9,
+  412.0
+ ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
+ "c5_reference": "erased plant",
+ "c5_reference_luma": 66.9,
+ "erase_box": "270,40,460,1280",
+ "erased_px": 65548,
+ "field_mean_luma": 165.7,
+ "height_px": 830.0,
+ "leaf_len_px": 273.9,
+ "leaves": [
+  {
+   "len": 273.9,
+   "node": [
+    370.9,
+    417.0
+   ],
+   "side": -1.0,
+   "tip": [
+    138.6,
+    327.0
+   ]
+  },
+  {
+   "len": 290.3,
+   "node": [
+    372.9,
+    412.0
+   ],
+   "side": 1.0,
+   "tip": [
+    638.1,
+    338.8
+   ]
+  }
+ ],
+ "light_dx": 0.053,
+ "light_dy": -0.999,
+ "lit_side": "right",
+ "mask_fraction": 0.1623,
+ "palette": {
+  "dark": [
+   53,
+   86,
+   55
+  ],
+  "ink": [
+   28,
+   44,
+   24
+  ],
+  "light": [
+   81,
+   94,
+   64
+  ],
+  "mid": [
+   56,
+   91,
+   58
+  ],
+  "n_sampled": 50708,
+  "source": "the erased weed"
+ },
+ "plant_extent": [
+  137,
+  639,
+  317,
+  1242
+ ],
+ "plant_fill_luma": 82.5,
+ "plant_fraction": 0.0673,
+ "plate": "farm-out/ep2-b21-sapnat-0822/b21-plate-src-0822.png",
+ "plate_sha256": "e42cbeb32c0a537d2082f0cda276c601b912e68f74f7d1b45e4cb55932820c24",
+ "root": [
+  314.0,
+  1240.0
+ ],
+ "size": [
+  704,
+  1280
+ ],
+ "tilt_deg": 4.0
+}
