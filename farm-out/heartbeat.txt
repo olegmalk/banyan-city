@@ -4608,3 +4608,5 @@
 10:12:34Z DONE task=ep2-jds-k02-0822-1787393517 rc=0 artifacts=2
 10:12:40Z STARTED task=ep2-jds-k03-0822-1787393521 attempt=1 on box-runner
 10:12:53Z DONE task=ep2-jds-k03-0822-1787393521 rc=0 artifacts=2
+10:12:59Z STARTED task=ep2-jds-k04-0822-1787393525 attempt=1 on box-runner
+10:13:12Z DONE task=ep2-jds-k04-0822-1787393525 rc=0 artifacts=2
