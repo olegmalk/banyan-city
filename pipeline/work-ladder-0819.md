@@ -8625,3 +8625,47 @@ lessons, both cheap:
 
 The b13 sibling is unaffected: its parent's tail blocks are 0.07 0.15 0.11 0.03,
 which is a real freeze of the whole frame and not a segmentation artefact.
+
+**SECOND CORRECTION to finding 3, and this one narrows the rule to something
+true.** `ep2-b13-repeat-0822` is the NULL, and it is the pre-registered
+publishable one: **81 of 104 frame pairs under 0.5 against its parent's 76** —
+worse — with blocks 4.57 5.66 5.38 4.24 **0.40 0.06 0.06 0.04 0.09** 0.72 4.54.
+It settles once, faster and harder than before, and then freezes earlier and for
+longer.
+
+**The reason is legible and it is the finding.** A settle is not a repeatable
+action: you cannot settle down twice from one pose without coming back up in
+between, and the prompt forbids exactly that — the founder's `HE NEVER RISES` is
+in the sentence and was deliberately kept. The two instructions contradict each
+other and the model resolved it by doing one settle and stopping.
+
+> **A counted repeat fills the runtime only when the action can actually happen
+> twice.** A brush can. A settle-and-never-rise cannot. The lever is not "add a
+> number" — it is "choose an action with a natural cycle, then count it."
+
+Scoreboard for the rung, stated plainly: **b17 worked** (89→52, and the brush
+reads), **b13 is a null and slightly worse**, **b03 was mis-targeted** because its
+parent was never parked. One clean win out of one clean application, and two
+misses that were both my aim rather than the mechanism.
+
+**What that leaves for the still beats.** 15 and 19 still have larger defects
+first. Beat 03's real fault is figure motion against a growing plant and a
+drifting camera, which needs a figure-segmented measurement before any rung.
+Beat 13's dead tail is now attributable to its action having a natural END, which
+is a STAGING question for the author and not a wording one: the beat's `done_when`
+is an end state (`folded small, knees up`) and an end state reached at frame 58 of
+105 is the honest shape of the beat, not a defect. **The trim stays; no third
+rung is filed.**
+
+**AND THE POSE ROUTE'S ROUND TWO, for the lane that picks this up.**
+`ep2-b06-pose-r2-0822` moved three of round one's four faults on two edits that
+round one's own bar named in advance: the sky is daylight (the light went into
+the POSITIVE), and **a slab of wood is in the picture** at `--scale2 0.85`, which
+no attempt on this beat had ever produced. It arrived TOO LITERALLY — the net
+anchored on the drawn rectangle's top edge and grew a plank downward, standing in
+front of him like a post while his hands dropped to his sides. **The next rung is
+on the DRAWING and not the words**: put the rectangle between the wrists rather
+than in front of the torso, and give it the proportions of a slab held up to be
+read. That is a change in `author_b06_guard_pose_0822.py`'s `board_box()`, costs
+no GPU to author, and its selftest already asserts the width against the
+skeleton's shoulders so the prompt clause cannot drift out of agreement with it.
