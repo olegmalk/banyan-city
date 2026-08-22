@@ -1,0 +1,104 @@
+{
+ "apex": [
+  366.0,
+  522.4
+ ],
+ "argv": [
+  "--plate",
+  "farm-out/ep2-finish-plates-0822/b03.png",
+  "--root",
+  "420,1140",
+  "--height",
+  "620",
+  "--tilt",
+  "-5",
+  "--out",
+  "farm-out/ep2-finish-comp-0822/b03-comp.png",
+  "--mask-out",
+  "farm-out/ep2-finish-comp-0822/b03-comp-mask.png",
+  "--overlay-out",
+  "farm-out/ep2-finish-comp-0822/b03-comp-overlay.png"
+ ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
+ "c5_reference": "field",
+ "c5_reference_luma": 146.5,
+ "erase_box": null,
+ "erased_px": 0,
+ "field_mean_luma": 146.5,
+ "fill_mode": "row",
+ "height_px": 620.0,
+ "leaf_len_px": 285.2,
+ "leaves": [
+  {
+   "len": 285.2,
+   "node": [
+    365.0,
+    527.4
+   ],
+   "side": -1.0,
+   "tip": [
+    102.4,
+    458.3
+   ]
+  },
+  {
+   "len": 302.3,
+   "node": [
+    367.0,
+    522.4
+   ],
+   "side": 1.0,
+   "tip": [
+    620.5,
+    420.3
+   ]
+  }
+ ],
+ "light_dx": 0.938,
+ "light_dy": -0.346,
+ "lit_side": "right",
+ "mask_fraction": 0.0826,
+ "palette": {
+  "dark": [
+   79,
+   106,
+   88
+  ],
+  "ink": [
+   34,
+   40,
+   47
+  ],
+  "light": [
+   219,
+   229,
+   175
+  ],
+  "mid": [
+   116,
+   123,
+   103
+  ],
+  "n_sampled": 104771,
+  "source": "the field's own greens"
+ },
+ "plant_extent": [
+  101,
+  621,
+  410,
+  1143
+ ],
+ "plant_fill_luma": 140.2,
+ "plant_fraction": 0.0562,
+ "plate": "farm-out/ep2-finish-plates-0822/b03.png",
+ "plate_sha256": "f585d58f2654468fb9318fbbe1ee7a970b0b6b7da5d977f2a1ff037f6cd53de2",
+ "root": [
+  420.0,
+  1140.0
+ ],
+ "size": [
+  832,
+  1216
+ ],
+ "tilt_deg": -5.0
+}
