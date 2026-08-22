@@ -1,0 +1,11 @@
+#### job ep2-b13-lowerbody-kneel-0822-1787409763 attempt 1 start 2026-08-22T14:42:55Z
+
+==== step fetch START 2026-08-22T14:42:55Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b13lowerbodykneel-0822\\fetch_init.py"]
+fetched jerry-seat-init-0822.png 808705 bytes sha 67ad5c8ba2082496780cdadbe93883835ae9df6e147b0663d9aafefb5e1323c9 OK
+fetched jerry-seat-mask-0822.png 1724 bytes sha 81357e39419054bd594f631e1de6f2c3f77de44b3239a0cb2acc2dc7b873919b OK
+!! SHA MISMATCH for jerry-kneel-hint-0822.png -- refusing.
+   want da14ee0b1d44485eabc4c1494ff7fa1980a9b3fce51f290946b203204ccc1cf7
+   have 7f1655bb77326d37e029fb3adb1b2673f1bdf6a1b70550f939ec64f7982baea5
+==== step fetch END rc=1 2026-08-22T14:42:57Z ====
+#### job ep2-b13-lowerbody-kneel-0822-1787409763 finished rc=1 2026-08-22T14:42:57Z

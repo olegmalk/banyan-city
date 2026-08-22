@@ -4779,3 +4779,5 @@
 14:34:01Z STARTED task=ep2-b13-lowerbody-w3-0822-1787409233 attempt=1 on box-runner
 14:34:26Z DONE task=ep2-b13-lowerbody-w3-0822-1787409233 rc=0 artifacts=2
 14:41:31Z box-runner idle ready=0 failed=127
+14:42:55Z STARTED task=ep2-b13-lowerbody-kneel-0822-1787409763 attempt=1 on box-runner
+14:42:57Z FAIL task=ep2-b13-lowerbody-kneel-0822-1787409763 rc=1 step=fetch
