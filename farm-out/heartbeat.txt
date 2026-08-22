@@ -4707,3 +4707,4 @@
 10:44:54Z DONE task=ep2-jds-p17-0822-1787395449 rc=0 artifacts=2
 10:45:00Z STARTED task=ep2-jds-p18-0822-1787395453 attempt=1 on box-runner
 10:45:13Z DONE task=ep2-jds-p18-0822-1787395453 rc=0 artifacts=2
+10:49:18Z box-runner idle ready=0 failed=123
