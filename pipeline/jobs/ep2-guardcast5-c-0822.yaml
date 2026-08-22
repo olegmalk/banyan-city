@@ -71,7 +71,7 @@ steps:
   - -c
   - "import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
     \nroot = r\"C:\\banyan-farm\\ep2-guardcast5-c-0822\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
-    \ \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")]\n\
+    \ \"pipeline\"),\n         \"70bacd45515b16c016bb423dfcc805782b5fef6687129e899ff48fda7394311e\")]\n\
     for name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
     \ + \"pipeline/\" + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
     \    if got != sha:\n        raise SystemExit(\"!! %s sha %s, wanted %s\" % (name, got, sha))\n  \
@@ -139,7 +139,7 @@ one_sample_rule: THIS IS THE SAMPLE AND IT IS FILED ALONE. Round 4's gate worked
 recipe_trace: 'pipeline/jobs/ep2-guardcast4b-c-0822.yaml with ONE clause of the positive replaced -- ''a
   young guard man, early twenties, adult male build, broad shoulders'' -> ''a guard man in his twenties,
   adult male face, thick neck''. Negative and expression INHERITED unchanged. Driver pipeline/controlnet_plate.py
-  sha ece54f687d892d1f, fetched and sha-checked before a GPU second is spent; --control unset so no ControlNet
+  sha 70bacd45515b16c0, fetched and sha-checked before a GPU second is spent; --control unset so no ControlNet
   loads, no --ip-ref passed so no adapter loads. Both strings MEASURED on animagine''s own vocab with
   pipeline/clip_token_count.py: positive 73 of 77, negative 73 of 77, nothing dropped.'
 derivation:
