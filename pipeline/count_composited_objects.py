@@ -139,7 +139,8 @@ def read_frames(clip, stride=1, limit=None):
         ["ffprobe", "-v", "error", "-select_streams", "v:0",
          "-show_entries", "stream=width,height,nb_frames",
          "-of", "csv=p=0", clip],
-        capture_output=True, text=True, check=True).stdout.strip()
+        capture_output=True, text=True, encoding="utf-8",
+        check=True).stdout.strip()
     w, h, n = (int(v) for v in probe.split(",")[:3])
     proc = subprocess.run(
         ["ffmpeg", "-v", "error", "-i", clip,
