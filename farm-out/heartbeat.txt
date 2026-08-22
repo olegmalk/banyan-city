@@ -4602,3 +4602,5 @@
 10:08:36Z STARTED task=ep2-jds-j21-0822-1787392523 attempt=1 on box-runner
 10:08:50Z DONE task=ep2-jds-j21-0822-1787392523 rc=0 artifacts=2
 10:08:55Z box-runner idle ready=0 failed=123
+10:12:00Z STARTED task=ep2-jds-k01-0822-1787393512 attempt=1 on box-runner
+10:12:14Z DONE task=ep2-jds-k01-0822-1787393512 rc=0 artifacts=2
