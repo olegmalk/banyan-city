@@ -1,0 +1,33 @@
+{
+ "plate": "farm-out/ep2-b06-pose-r4-0822/ep2-b06-pose-r4-0822-posebooth.png",
+ "plate_sha256": "2799a4fa384788db960da9121eea21db4b82d28bce2eaa97f7e783704c4fe749",
+ "board_box": [
+  342,
+  425,
+  502,
+  540
+ ],
+ "hands_box": [
+  370,
+  527,
+  470,
+  612
+ ],
+ "chin_y": 400,
+ "board_w": 160,
+ "board_h": 115,
+ "width_ceiling": 175,
+ "width_floor": 110,
+ "bottom_edge_above_hand_top": -13,
+ "top_edge_below_chin": 25,
+ "mask_fraction": 0.0241,
+ "slab_luma": 127.9,
+ "plate_region_luma": 153.6,
+ "ink": [
+  4,
+  38,
+  47
+ ],
+ "light_dx": -0.985,
+ "light_dy": -0.173
+}

@@ -3,7 +3,7 @@ r"""BEAT 06: draw the BARK BOARD into the hands of a plate that already has the 
 
     python3 pipeline/beat06_board_composite.py \
         --plate farm-out/ep2-b06-pose-r4-0822/ep2-b06-pose-r4-0822-posebooth.png \
-        --board 312,410,552,535 --hands 370,527,470,612 --chin 397 \
+        --board 342,425,502,540 --hands 370,527,470,612 --chin 400 \
         --out  farm-out/ep2-b06-boardcomp-0822/b06-boardcomp-in-0822.png \
         --mask-out farm-out/ep2-b06-boardcomp-0822/b06-boardcomp-in-mask-0822.png \
         --overlay-out /tmp/b06-overlay.png
@@ -71,8 +71,11 @@ in the other direction, so the colour rule is stated instead of smuggled:
 
 GEOMETRY IS PASSED IN AND ASSERTED, NOT GUESSED. --board, --hands and --chin are
 read off the plate at 1:1 and the tool refuses four ways: the board must be at
-least as wide as --shoulder-width (the beat's whole fault is that it is too
-small), its bottom edge must sit within --grip px of the top of the hands (so
+most --max-width wide and at least --min-width (the beat's whole fault is that
+the prop INFLATES -- "hand-sized and readable", "no bigger than his own
+forearm" -- and the first version of this file had that floor and ceiling the
+wrong way round), its bottom edge must sit within --grip px of the top of the
+hands (so
 the hands read as HOLDING it rather than pointing at it), its top edge must stay
 below the chin (r3 put a panel over the face and lost the figure), and the mask
 must stay under --max-mask-frac of the frame (the b16 leafcomp measurement: 0.30
@@ -142,10 +145,13 @@ def main() -> int:
     ap.add_argument("--board", required=True, help="x0,y0,x1,y1 of the slab")
     ap.add_argument("--hands", required=True, help="x0,y0,x1,y1 of the hands")
     ap.add_argument("--chin", type=int, required=True, help="plate y of the chin")
-    ap.add_argument("--shoulder-width", type=int, default=220,
-                    help="the board must be AT LEAST this wide -- the beat's "
-                         "fault is that it is too small, so this is a floor "
-                         "and not a target")
+    ap.add_argument("--max-width", type=int, default=175,
+                    help="THE BOARD MUST BE NO WIDER THAN THIS. It is a "
+                         "CEILING and not a floor, and the first version of "
+                         "this tool had it backwards -- see G1.")
+    ap.add_argument("--min-width", type=int, default=110,
+                    help="...and no narrower than this, because the "
+                         "definition also says READABLE")
     ap.add_argument("--grip", type=int, default=40,
                     help="how far the board's bottom edge may sit above the "
                          "top of the hands and still read as held")
@@ -175,11 +181,26 @@ def main() -> int:
 
     # --- the four geometry refusals, before a pixel is drawn -----------------
     fails = []
-    if bx1 - bx0 < a.shoulder_width:
-        fails.append("G1 the board is %d px wide against a %d px floor -- "
-                     "'the bark board is the wrong size' IS this beat's fault "
-                     "and a narrow slab reproduces it"
-                     % (bx1 - bx0, a.shoulder_width))
+    # G1 IS A CEILING, AND THE FIRST VERSION OF THIS FILE HAD IT AS A FLOOR.
+    # The beat's fault is that the prop INFLATES: ep2-b06-scene-0814r's own
+    # success line reads "the bark clipboard stays a HAND-SIZED BOARD -- readable
+    # but no bigger than his own forearm", its negative banned "giant board,
+    # oversized board, prop larger than his torso", and its verdict says both
+    # halves failed to hold the size. done-definitions beats.06 says "board
+    # hand-sized and readable" in the same words. The pose route's bar inverted
+    # this -- "the board is AT LEAST AS WIDE AS HIS SHOULDERS" -- and this tool
+    # inherited the inversion and drew a 240 px slab, which is the SAME FAULT
+    # pointing the other way. A drawing is only worth doing here because a size
+    # can be guaranteed, so the guarantee has to be the right one.
+    if bx1 - bx0 > a.max_width:
+        fails.append("G1 the board is %d px wide against a %d px CEILING -- "
+                     "the beat's fault is the prop INFLATING and the "
+                     "definition says hand-sized, no bigger than his forearm"
+                     % (bx1 - bx0, a.max_width))
+    if bx1 - bx0 < a.min_width:
+        fails.append("G1b the board is %d px wide, under the %d px readable "
+                     "floor -- the definition says hand-sized AND readable"
+                     % (bx1 - bx0, a.min_width))
     if not (hy0 - a.grip <= by1 <= hy0 + (hy1 - hy0) * 0.5):
         fails.append("G2 the board's bottom edge y=%d is not at the hands "
                      "(their top is y=%d): it must land between y=%d and y=%d "
@@ -298,7 +319,7 @@ def main() -> int:
         "plate": a.plate, "plate_sha256": got,
         "board_box": [bx0, by0, bx1, by1], "hands_box": [hx0, hy0, hx1, hy1],
         "chin_y": a.chin, "board_w": bx1 - bx0, "board_h": by1 - by0,
-        "shoulder_floor": a.shoulder_width,
+        "width_ceiling": a.max_width, "width_floor": a.min_width,
         "bottom_edge_above_hand_top": hy0 - by1,
         "top_edge_below_chin": by0 - a.chin,
         "mask_fraction": round(frac, 4),
@@ -308,7 +329,8 @@ def main() -> int:
     for f in fails:
         print("FAIL  %s" % f)
     if not fails:
-        print("all checks pass (G1 width floor, G2 grip, G3 below the chin, "
+        print("all checks pass (G1 hand-size ceiling, G1b readable floor, "
+              "G2 grip, G3 below the chin, "
               "C1 containment, C2 mask ceiling, C5 in the plate's range, "
               "C5b darker than the shirt)")
     print("slab   %dx%d px  mask %.2f%% of frame  luma %.1f vs region %.1f"
