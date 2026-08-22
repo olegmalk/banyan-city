@@ -436,8 +436,9 @@ MASK_MARGIN_PX = 20
 
 def head_box(pose="stand", head_frac=HEAD_FRAC):
     """The head-and-ears box in render pixels, for one pose. 'x0,y0,x1,y1'."""
-    kp, _ = skel.figure(head_frac, pose=pose,
-                        stature_frac=STATURE_FOR[pose])
+    base, cx_frac, ground = placement(pose)
+    kp, _ = skel.figure(head_frac, pose=base, cx_frac=cx_frac,
+                        stature_frac=STATURE_FOR[pose], ground=ground)
     stature = STATURE_FOR[pose] * RENDER_H
     head_h = head_frac * stature
     skull_w = skel.HEAD_RATIO * head_h
@@ -497,8 +498,71 @@ def skeleton_stem(pose):
 STATURE_FOR = {
     "sit": 1.58, "crouch": 1.28, "hunch": 1.02, "kneel": 1.22,
     "stand": 0.90, "stride": 0.90, "reach": 0.90, "point": 0.90,
+    # ── THE DEPTH POSES, 2026-08-22. See PLACEMENT below. ──
+    "sitfar60": 0.9479, "sitfar50": 0.7899, "sitfar42": 0.6635,
 }
 MAX_EMPTY_TOP = 0.28      # asserted for every pose in --selftest
+
+# ── PLACEMENT: WHERE IN THE FRAME, as distinct from HOW STRONGLY. ────────────
+# Added 2026-08-22 for beat 16 and for nothing else yet. Every pose above is
+# drawn CENTRED on a foot line at 0.945 of frame height, which is
+# `author_jerry_skel_0820`'s default and was never an authored choice -- it is
+# what `figure()` does when you pass it nothing. That default plus STATURE_FOR
+# is why every canon plate is a figure filling the frame from the bottom edge.
+#
+# WHY THIS AXIS EXISTS, and it is four independent findings and not a hunch:
+#   1. `ep2-b16-canon-w5{z,a,b,c}` -- the negative and the positive's distance
+#      clause, four cells, ALL NULL on the foreground.
+#   2. `ep2-b16-canon-w6a-0821` -- ControlNet 1.0 -> 0.55. The framing did not
+#      move, the pose held, and THE COSTUME DRIFTED. How strongly the skeleton
+#      is applied is not the same question as how much of the canvas it covers.
+#   3. `ep2-b16-sapnat3-0822` -- the first beat-16 plate with a plant in it, and
+#      on a frame-filling figure the plant can only be composited ON him.
+#   4. `ep2-b16-plantmotion-0822` -- the first composited object in this tree
+#      that does NOT survive i2v, and the difference is that it sits on the
+#      figure in nearly the figure's own colour. A composited object survives
+#      motion when the model can tell where it ends.
+#
+# THE LAW THIS IS BUILT ON is the 08-21 seated-gate finding, verbatim: "the
+# skeleton's span sets the drawn SIZE, so author the span you want and let the
+# fold come from the WORDING." Beat 16's brief is that the plant is the subject
+# and he is depth, so the span to author is a SMALL one, placed right, with the
+# foreground band under him left empty for the composite.
+#
+# EACH ENTRY IS (skel pose, cx_frac, ground). The stature is STATURE_FOR above,
+# solved so the drawn keypoint span is the stated fraction of the full-span
+# sit's 866 px; the ground is then solved so the CROWN LANDS AT y=300 on all
+# three. Crown is held constant on purpose -- it keeps the hole above the figure
+# at 24.7%, inside MAX_EMPTY_TOP, so the span is the only thing that moves and
+# the ghost-head fix is not quietly spent to buy the framing.
+#
+# cx_frac IS 0.655 ON ALL THREE AND IT IS THE TIGHTEST CELL'S NUMBER, not a
+# taste call: the DRAWN ear span is skull_w * 449/300, which at the 60% cell is
+# 550 px, and at cx 0.73 that put his right ear 30 px OFF THE FRAME. The
+# keypoint check never saw it -- keypoint `Lear` sits at 0.46 of a head width
+# from centre and the drawn flange reaches 0.75. One cx for all three keeps the
+# SPAN the only variable, so it is the tightest cell that sets it.
+PLACEMENT = {
+    "sitfar60": ("sit", 0.655, 0.7072),
+    "sitfar50": ("sit", 0.655, 0.6304),
+    "sitfar42": ("sit", 0.655, 0.5690),
+}
+DEPTH_SPAN_FRAC = {"sitfar60": 0.60, "sitfar50": 0.50, "sitfar42": 0.42}
+FULL_SIT_SPAN_PX = 866    # the drawn keypoint span of `sit`, measured
+DEPTH_CROWN_Y = 300       # px, held across all three depth cells
+MIN_DEPTH_FOREGROUND = 0.30   # of frame height, empty BELOW the figure
+
+
+def placement(pose):
+    """(skel pose, cx_frac, ground) for one pose. Centred at 0.945 by default."""
+    return PLACEMENT.get(pose, (pose, 0.5, skel.GROUND_Y))
+
+
+def keypoints(pose):
+    """The COCO-18 keypoints this module draws for `pose`, placement applied."""
+    base, cx_frac, ground = placement(pose)
+    return skel.figure(HEAD_FRAC, pose=base, cx_frac=cx_frac,
+                       stature_frac=STATURE_FOR[pose], ground=ground)
 
 # The poses the ep2 wave needs, and the sha each skeleton must have. Built by
 # `--build-skeletons`, asserted by `--selftest`, pinned by every spec.
@@ -524,6 +588,11 @@ SKELETONS = {
     "reach":  "jerry-canon-h37freach-0821",
     "point":  "jerry-canon-h37fpoint-0821",
     "sit":    "jerry-canon-h37fsit-0821",
+    # THE DEPTH CELLS. New names because they are new pictures -- the h37f set
+    # is not touched and every plate already rendered through it reproduces.
+    "sitfar60": "jerry-canon-h37fsitfar60-0822",
+    "sitfar50": "jerry-canon-h37fsitfar50-0822",
+    "sitfar42": "jerry-canon-h37fsitfar42-0822",
 }
 SKELETON_SHA = {
     "jerry-canon-h37f-0821":
@@ -542,6 +611,12 @@ SKELETON_SHA = {
         "8072e9710df19783b397e7afee4bcf8cd566fdb327cacdbf3bbc96d2965cc19d",
     "jerry-canon-h37fsit-0821":
         "3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e",
+    "jerry-canon-h37fsitfar60-0822":
+        "b8fe0cca3ff939ef55e582bf87dc8d54ae5e8d199234da425bd67529d091aff7",
+    "jerry-canon-h37fsitfar50-0822":
+        "c129b0177aceb77e836524b4dbb06ce702e3fa2113dbd57734e0f22175abffe7",
+    "jerry-canon-h37fsitfar42-0822":
+        "e2a2fe8cd7f9fcf5f65285c901a093cda9681421396a4c2b0e48d8169b37cebd",
 }
 
 
@@ -674,20 +749,34 @@ def ip_adapter_block(pose):
 def _build_one(pose):
     """One skeleton at the canon head ratio and THIS pose's frame-fill stature."""
     from PIL import Image
-    kp, meta = skel.figure(HEAD_FRAC, pose=pose,
-                           stature_frac=STATURE_FOR[pose])
+    kp, meta = keypoints(pose)
+    base, cx_frac, ground = placement(pose)
     img = Image.new("RGB", (RENDER_W, RENDER_H), (0, 0, 0))
     meta["ratio"] = skel.ratio_for(RENDER_W, RENDER_H)
     meta["stature_frac"] = STATURE_FOR[pose]
+    meta["cx_frac"] = cx_frac
+    meta["ground"] = ground
     skel.draw_bodypose(img, kp, meta["ratio"])
     return img, meta
 
 
-def build_skeletons():
+def build_skeletons(only=None):
+    """Draw every skeleton, or only the named poses.
+
+    `only` exists because a rebuild of an ALREADY-PINNED stem is the exact
+    failure the h37 -> h37f rename was written about: same filename, different
+    pixels, every spec that pinned it now lying. New poses are built alone.
+    """
     import hashlib
     out = os.path.join(REPO, ASSET_DIR)
     os.makedirs(out, exist_ok=True)
     for pose, stem in sorted(SKELETONS.items()):
+        if only and pose not in only:
+            continue
+        if only and SKELETON_SHA.get(stem) not in (None, "PENDING"):
+            raise SystemExit("!! %s is already pinned at %s -- an asset whose "
+                             "content changes gets a NEW NAME"
+                             % (stem, SKELETON_SHA[stem][:16]))
         img, meta = _build_one(pose)
         p = os.path.join(out, stem + ".png")
         img.save(p)
@@ -746,16 +835,53 @@ def selftest():
     # THE HOLE THAT DREW THE GHOST. Asserted per pose, because the fix is a
     # number per pose and a number is exactly what silently reverts.
     for pose in SKELETONS:
-        kp, _ = skel.figure(HEAD_FRAC, pose=pose,
-                            stature_frac=STATURE_FOR[pose])
+        kp, _ = keypoints(pose)
         ys = [v[1] for v in kp.values()]
+        xs = [v[0] for v in kp.values()]
         empty = min(ys) / float(RENDER_H)
         want(empty <= MAX_EMPTY_TOP,
              "pose %r leaves %.0f%% of the frame empty above the figure -- over "
              "the %.0f%% bar, and that hole is where the ghost head grew"
              % (pose, empty * 100, MAX_EMPTY_TOP * 100))
-        want(max(ys) <= RENDER_H - 10 and min(v[0] for v in kp.values()) >= 10,
+        want(max(ys) <= RENDER_H - 10 and min(xs) >= 10,
              "pose %r runs off the frame" % pose)
+        want(max(xs) <= RENDER_W - 10,
+             "pose %r runs off the RIGHT edge (%d of %d) -- placement moved it "
+             "and the old check only looked left" % (pose, max(xs), RENDER_W))
+    # ── THE DEPTH CELLS ARE WHAT THEY SAY THEY ARE. ─────────────────────────
+    # Three numbers, because all three are the rung: the span (the lever), the
+    # crown (held, so span is the only variable), and the empty band BELOW him
+    # (the whole point -- it is where the plant goes without touching him).
+    for pose, frac in DEPTH_SPAN_FRAC.items():
+        kp, _ = keypoints(pose)
+        ys = [v[1] for v in kp.values()]
+        span = max(ys) - min(ys)
+        got = span / float(FULL_SIT_SPAN_PX)
+        want(abs(got - frac) < 0.01,
+             "depth pose %r draws %.0f%% of the full-span sit, authored %.0f%%"
+             % (pose, got * 100, frac * 100))
+        want(abs(min(ys) - DEPTH_CROWN_Y) <= 2,
+             "depth pose %r puts the crown at y=%.0f, not the held %d -- the "
+             "span is supposed to be the only thing that moves"
+             % (pose, min(ys), DEPTH_CROWN_Y))
+        fg = (RENDER_H - max(ys)) / float(RENDER_H)
+        # THE DRAWN EAR, not the keypoint. This check is here because it caught
+        # the first draft: cx 0.73 hung the 60% cell's right flange 30 px past
+        # the edge while every keypoint was comfortably inside. The full-span
+        # poses predate it and clip SYMMETRICALLY by construction (they are
+        # centred), which is why the bar is only on the placed ones.
+        base, cx_frac, _ = placement(pose)
+        stature = STATURE_FOR[pose] * RENDER_H
+        half = (skel.HEAD_RATIO * HEAD_FRAC * stature
+                * MASK_EAR_SPAN_RATIO / 2.0 + MASK_MARGIN_PX)
+        cx = cx_frac * RENDER_W
+        want(cx - half >= 0 and cx + half <= RENDER_W,
+             "depth pose %r draws its ear span %.0f..%.0f, outside 0..%d"
+             % (pose, cx - half, cx + half, RENDER_W))
+        want(fg >= MIN_DEPTH_FOREGROUND,
+             "depth pose %r leaves only %.0f%% of the frame in front of him; "
+             "the composite needs %.0f%% or the plant lands on him again"
+             % (pose, fg * 100, MIN_DEPTH_FOREGROUND * 100))
     # Emotion is one mouth tag and one brow/mood tag, never identity.
     for k, v in EMOTION.items():
         want("goblin" not in v and "ears" not in v,
@@ -797,9 +923,10 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--build-skeletons", action="store_true")
+    ap.add_argument("--only", help="comma-separated poses; refuses a pinned one")
     a = ap.parse_args(sys.argv[1:] if argv is None else argv)
     if a.build_skeletons:
-        return build_skeletons()
+        return build_skeletons(only=(a.only.split(",") if a.only else None))
     if a.selftest:
         return selftest()
     print("CANON   %s @ %s" % (CANON_IMAGE, CANON_COMMIT))
