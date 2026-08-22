@@ -1027,7 +1027,7 @@ payload:
     \ hints at head_frac 0.370 -- the proportion measured\noff the founder's own image --\
     \ and are the SAME hints round two drove at scale\n1.0 when it scored zero on pose adoption.\
     \ Using the identical bytes is what\nmakes B2 comparable to that control.\"\"\"\nimport\
-    \ hashlib, os, sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\lora-jerry-v2-bars-0822\"\
+    \ hashlib, os, sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\lora-jerry-v2-b2r2-0822\"\
     \nUA = {\"User-Agent\": \"banyan-city-jerrybars/1.0 (albert.numbro@gmail.com)\"}\nWANT\
     \ = {\n    \"jerry-canon-h37fcrouch-0821.png\": (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-canon-assets-0821/jerry-canon-h37fcrouch-0821.png\"\
     , \"df84ac615d3cc830dd8634cfee905dba0937a3380910911fe81a0427cacbd5af\"),\n    \"jerry-canon-h37fsit-0821.png\"\

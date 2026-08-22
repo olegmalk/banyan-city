@@ -334,7 +334,7 @@ for name, (url, want) in WANT.items():
 '''
 
 
-def payloads():
+def payloads(work=None):
     """Scripts and prompts written to the box at enqueue time.
 
     THE DRIVERS TRAVEL AS SOURCE, which is this tree's standing pattern: a job
@@ -342,10 +342,20 @@ def payloads():
     reproducible even after the repo moves on. `controlnet_plate.py` is the copy
     that grew the `--lora` arm on 2026-08-22; `sample_lora.py` is unchanged.
     """
+    # THE WORK DIR IS A PARAMETER, AND IT IS BECAUSE COPYING THE PAYLOAD DICT
+    # AND REWRITING ITS KEYS IS NOT ENOUGH. The B2 round-two job was first built
+    # by rewriting WORK->WORK2 in the payload KEYS, which put every file in the
+    # right place and left the fetch script's own OUT constant -- baked into its
+    # BODY -- still pointing at round one's directory. The hints downloaded
+    # successfully into the wrong job, controlnet_plate refused with rc 6 on a
+    # missing hint, and the log read "fetched ... OK" one line above the refusal.
+    # A path that appears in a payload's CONTENT has to be built from the same
+    # variable as the path in its key.
+    work = work or WORK
     pay = {}
-    pay[r"%s\controlnet_plate.py" % WORK] = open(
+    pay[r"%s\controlnet_plate.py" % work] = open(
         os.path.join(REPO, "pipeline/controlnet_plate.py"), encoding="utf-8").read()
-    pay[r"%s\sample_lora.py" % WORK] = open(
+    pay[r"%s\sample_lora.py" % work] = open(
         os.path.join(REPO, "pipeline/lora/sample_lora.py"), encoding="utf-8").read()
 
     # THE B2 POSITIVE CARRIES THE TRIGGER AND NO POSE WORD. The pose is the
@@ -353,10 +363,10 @@ def payloads():
     # the prompt would make a passing cell unattributable between the net and
     # the wording. It carries no face term either: route_closure_2026_08_22
     # forbids one, and his face is the LoRA's job now.
-    pay[r"%s\b2-prompt.txt" % WORK] = (
+    pay[r"%s\b2-prompt.txt" % work] = (
         "bnyjerry, 1boy, solo, in tall grass, detailed cinematic anime, "
         "masterpiece, best quality, very aesthetic")
-    pay[r"%s\negative.txt" % WORK] = NEG
+    pay[r"%s\negative.txt" % work] = NEG
 
     # THE SKELETONS ARE FETCHED, NOT PAYLOADED -- they are PNGs, and every asset
     # this tree sends to the card is pinned by sha256 and refused on mismatch.
@@ -366,7 +376,7 @@ def payloads():
         sha = hashlib.sha256(
             open(os.path.join(REPO, rel), "rb").read()).hexdigest()
         lines.append('    "%s": ("%s%s", "%s"),' % (hint, RAW, rel, sha))
-    pay[r"%s\fetch_hints.py" % WORK] = FETCH_PY % (WORK, chr(10).join(lines))
+    pay[r"%s\fetch_hints.py" % work] = FETCH_PY % (work, chr(10).join(lines))
     return pay
 
 
@@ -451,7 +461,7 @@ def main() -> int:
     # ---- B2 ROUND TWO, ITS OWN JOB so the first grid's verdicts stay filed
     # against the spec that produced them.
     st2 = steps_b2r2()
-    pay2 = {k.replace(WORK, WORK2): v for k, v in payloads().items()}
+    pay2 = payloads(WORK2)
     spec2 = dict(spec)
     spec2.update({
         "id": JOB2, "task": JOB2, "priority": 57, "est_minutes": 12,

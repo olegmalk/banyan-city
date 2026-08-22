@@ -523,3 +523,107 @@ loras:
     reading is done. Until then NOTHING LOADS bnysapling: there is no sanctioned
     weight, and "0.8 with B3 failing" is a choice to contaminate every frame the
     plate step draws.
+
+- trigger: bnyjerry
+  subject: >-
+    the goblin (Jerry) — v2, THE FIRST GOBLIN LoRA TRAINED ON THE FOUNDER'S OWN
+    PIXELS. v1 (manifest-jerry-0821.yaml, 15 frames) was never trained and must
+    not be: every frame in it is animagine's guess at his face, curated for an
+    ADULT read the founder superseded on 2026-08-21, and the four eye rounds
+    that followed were all vetoed.
+  status: MEASURED — IDENTITY PASSES, THE DECISIVE BAR IS VOID ON AN INSTRUMENT FAULT
+  base: cagliostrolab/animagine-xl-3.1
+  trained_by: pipeline/lora/train-jerry-v2-0822.yaml
+  trained_on: '2026-08-22'
+  dataset: pipeline/lora/manifest-jerry-v2-0822.yaml   # 21 frames, FOUNDER-RATIFIED
+  cost_usd: 0.0
+
+  dataset_is_founder_ratified: >-
+    2026-08-22, "all ok", read at 1:1 against his own image, all 21 frames. See
+    pipeline/canon.yaml `goblin_dataset_ratified_2026_08_22`. This is what makes
+    an identity pass here mean something: after four vetoes on this face, the
+    standing risk was the steward building a set from his own reading of the
+    founder's picture and then grading the output against that same reading. The
+    loop is cut — a frame that matches this set matches HIS ruling.
+
+  recipe: >-
+    kohya sd-scripts v0.11.1, dim 32 / alpha 16, unet_lr 1e-4, te_lr 5e-5,
+    cosine + 32 warmup, AdamW8bit, batch 2, repeat 6, 10 epochs, bf16, seed
+    20260822. EVERY HYPERPARAMETER IS THE SAPLING RUNS', UNCHANGED.
+  measured: >-
+    630 optimizer steps, 1260 image passes, final avr_loss ~0.089, rc=0 on the
+    train step. The job is filed as FAILED because its `sample` step died in one
+    second on a missing payload (sample_lora.py was never written to the work
+    dir); the training itself completed and all five checkpoints are on disk.
+    The fix is in the emitter.
+
+  box_path: C:\banyan-farm\lora-jerry-v2-0822\out\bnyjerry-sdxl-v2.safetensors
+  sha256: 4340857d02f17dbfa50c66e0a2d8f4dc3ffebb4fad1621bb3f59242e61bfeb8b
+  bytes: 228453564
+  checkpoints_on_box: C:\banyan-farm\lora-jerry-v2-0822\out\
+  checkpoint_sha256:
+    epoch02: 0cf8968b17673bd0dbcc33d5a9b2da848415b647bed06454ea6d460da7cb47b8
+    epoch04: 048462f1fa7da6af4c58f4aabe937f82a7e3351b9fdf0e6be32b61478ffa25ab
+    epoch06: 993d42379d1ce0603dd83669544c74fe47eaf167703e65fcfe8ae2bb065cbc71
+    epoch08: 1ed0c1fd20fb65bc891a7b81c04057ab1eaf276e1295bf7e69a8f3d189896e13
+    epoch10_final: 4340857d02f17dbfa50c66e0a2d8f4dc3ffebb4fad1621bb3f59242e61bfeb8b
+
+  bars: pipeline/lora/emit_train_jerry_v2_0822.py `BARS` — committed to git
+    BEFORE a single training frame was admitted.
+  bar_grid: pipeline/lora/bars-jerry-v2-0822.yaml        # 31 steps, rc=0
+  bar_grid_round2: pipeline/lora/bars-jerry-v2-b2r2-0822.yaml  # B2 + its control
+
+  bars_result:
+    B1_identity: >-
+      PASSES ON THE FRAMES READ. Judged at 1:1 against his image: narrow almond
+      eye, tiny dark pupil, broad low dome, near-horizontal ears, smooth face,
+      desaturated sage, shirt-with-placket and dark shorts all hold. B1-p5
+      (beach at sunset) draws him FULL BODY with correct legs and boots, which
+      the two zero-strength canon frames are the only possible source of.
+    setting_generalisation: >-
+      PASSES, AND IT IS THE RESULT THE CAPTION DESIGN WAS BUILT FOR. All 21
+      training frames stand in one hazy meadow -- the route cannot change a
+      background, so the monoculture was forced -- and every caption NAMES it.
+      B1-p2 returns a snowy blue night and B1-p5 a sunset beach, both clean. The
+      v1-sapling failure (44 frames on grass, NO caption naming it, trigger
+      swallowed the field) did not repeat. Naming an unavoidable monoculture on
+      every frame is now a measured mitigation, not a theory.
+    B5_pose_via_words: >-
+      FAILS. `crouching` (B1-p2) and the other pose prompts return a STANDING
+      figure. Every training frame is standing, and naming `standing` in all 21
+      captions did NOT excuse the trigger from carrying it. The caption trick
+      that worked for the SETTING did not work for the POSE.
+    B2_pose_via_skeleton: >-
+      VOID — NOT A FAILURE, AND THE DIFFERENCE IS THE WHOLE POINT. Round one
+      scored 0 of 6: all six cells standing, bust-framed, palette blown to
+      saturated yellow-green, with a full-body OpenPose skeleton at conditioning
+      scale 1.0 and the LoRA fused at 0.8.
+
+      THE CONTROL SAYS THAT NUMBER MEASURES NOTHING ABOUT THE LoRA.
+      `bars-jerry-v2-b2r2-0822` re-ran the same three skeletons with `--no-lora`
+      on the identical stack, and the control drew AN UNRELATED HUMAN GIRL, in
+      an upper-body crop, not crouching. With no LoRA loaded at all, the pose
+      net still did not drive the composition. The sidecar confirms the stack
+      was real (StableDiffusionXLControlNetPipeline, openpose net named, scale
+      1.0) and the hint is a valid COCO-18 skeleton on black.
+
+      SO THE INSTRUMENT IS BROKEN IN THIS PATH, and B2 cannot be scored until it
+      is fixed. Reporting 0/6 as a LoRA verdict would have been the lane
+      measuring a knob whose instrument it had not checked -- the control cost
+      three renders and is the difference between a finding and a guess.
+    B3_no_regression: not scored — pending, the grid rendered its three arms
+    B4_style: not scored
+  shipping_weight: null
+  verdict: >-
+    NOTHING SHIPS YET, AND THE BLOCKER IS NOT THE LoRA. Identity trained well
+    against a founder-ratified set and settings generalise cleanly. The two
+    open questions are POSE: words do not move him (B5 fails, and the cause is
+    named -- 21 of 21 standing frames), and the skeleton route is unmeasured
+    because its own control fails with no LoRA in the pipeline.
+
+    THE NEXT CUT IS NOT ANOTHER TRAINING RUN. It is `controlnet_plate.py`'s
+    txt2img+openpose path, which must be made to move a pose with NO LoRA
+    loaded before any goblin-wave plate depends on it. Until that control
+    passes, per-beat pose skeletons are an unproven mechanism and a wave built
+    on them would be fifteen beats of the standing figure this LoRA already
+    draws.
