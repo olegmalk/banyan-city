@@ -1,0 +1,39 @@
+#### job ep2-b06-boardnat-r3-0822-1787364053 attempt 1 start 2026-08-22T02:01:07Z
+
+==== step fetch START 2026-08-22T02:01:07Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b06boardnat-r3-0822\\fetch_init.py"]
+fetched b06-boardcomp-r2-in-0822.png 1265337 bytes sha 5e0c772cb19b8f71165be14e292f5621d04e5dea9fa6baa3ebe83a013af778ba OK
+fetched b06-boardcomp-r2-in-mask-0822.png 2059 bytes sha 11f145ab75dd03e6704c915d4753a1fe307fa179c2d22f2dabf7a4551171d9df OK
+==== step fetch END rc=0 2026-08-22T02:01:08Z ====
+
+==== step dry START 2026-08-22T02:01:08Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b06boardnat-r3-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b06boardnat-r3-0822\\b06-boardcomp-r2-in-0822.png", "--init-sha256", "5e0c772cb19b8f71165be14e292f5621d04e5dea9fa6baa3ebe83a013af778ba", "--mask-png", "C:\\banyan-farm\\b06boardnat-r3-0822\\b06-boardcomp-r2-in-mask-0822.png", "--prompt-file", "C:\\banyan-farm\\b06boardnat-r3-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b06boardnat-r3-0822\\negative.txt", "--out", "C:\\banyan-farm\\b06boardnat-r3-0822\\b06-boardnat-r3-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.45", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "ATTACHED TO BOTH THE DRY STEP AND THE RENDER STEP. ON THE DRY STEP it is a MASK GEOMETRY CHECK, written before any model loads: the mask must be ONE slab-shaped blob over his chest with his HANDS AND FACE OUTSIDE IT. If it touches the glasses or the fingers the pass has a licence to redraw them and P4 fails by construction. ON THE RENDER STEP: one pass, one seed, 12 of 40 steps from a latent that still holds the drawn slab, so the pass finishes the shape instead of inventing one.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 5e0c772cb19b8f71165be14e292f5621d04e5dea9fa6baa3ebe83a013af778ba
+mask png corners=- bbox=[321, 408, 522, 560]  0.2416 x 0.1250 of 832x1216
+WROTE C:\banyan-farm\b06boardnat-r3-0822\b06-boardnat-r3-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-22T02:01:08Z ====
+
+==== step s20260820 START 2026-08-22T02:01:08Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b06boardnat-r3-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b06boardnat-r3-0822\\b06-boardcomp-r2-in-0822.png", "--init-sha256", "5e0c772cb19b8f71165be14e292f5621d04e5dea9fa6baa3ebe83a013af778ba", "--mask-png", "C:\\banyan-farm\\b06boardnat-r3-0822\\b06-boardcomp-r2-in-mask-0822.png", "--prompt-file", "C:\\banyan-farm\\b06boardnat-r3-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b06boardnat-r3-0822\\negative.txt", "--out", "C:\\banyan-farm\\b06boardnat-r3-0822\\b06-boardnat-r3-s20260820.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.45", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "ATTACHED TO BOTH THE DRY STEP AND THE RENDER STEP. ON THE DRY STEP it is a MASK GEOMETRY CHECK, written before any model loads: the mask must be ONE slab-shaped blob over his chest with his HANDS AND FACE OUTSIDE IT. If it touches the glasses or the fingers the pass has a licence to redraw them and P4 fails by construction. ON THE RENDER STEP: one pass, one seed, 12 of 40 steps from a latent that still holds the drawn slab, so the pass finishes the shape instead of inventing one."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  3.96it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00,  4.50it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.24it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.80it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\b06boardnat-r3-0822\b06-boardnat-r3-s20260820.png
+WROTE C:\banyan-farm\b06boardnat-r3-0822\b06-boardnat-r3-s20260820-mask.png
+WROTE C:\banyan-farm\b06boardnat-r3-0822\b06-boardnat-r3-s20260820.png.meta.yaml
+rc=0 render_s=5.1
+==== step s20260820 END rc=0 2026-08-22T02:01:23Z ====
+
+==== step publish START 2026-08-22T02:01:23Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b06boardnat-r3-0822\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b06-boardnat-r3-0822\"\nNAMES = [\n    \"b06-boardnat-r3-s20260820.png\",\n    \"b06-boardnat-r3-s20260820-mask.png\",\n    \"b06-boardnat-r3-s20260820.png.meta.yaml\",\n    \"b06-boardcomp-r2-in-0822.png\",\n    \"b06-boardcomp-r2-in-mask-0822.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b06-boardnat-r3-0822.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 7 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b06-boardnat-r3-0822
+==== step publish END rc=0 2026-08-22T02:01:23Z ====
+#### job ep2-b06-boardnat-r3-0822-1787364053 finished rc=0 2026-08-22T02:01:23Z
