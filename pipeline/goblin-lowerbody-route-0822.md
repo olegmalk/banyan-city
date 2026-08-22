@@ -199,6 +199,26 @@ reframes three things at once:
 * **One variable against v2**, so a score is attributable: the added frames. Not
   the recipe, not the captions of the 21, not the repeat count.
 
+### And P3 does not have to be solved before the set is built
+
+The one open defect — pale thighs, paw feet, a left-right boot mismatch of ~82
+RGB units — sits at the BOTTOM of the frame. In `r2` the knees are at y 930–1000
+and the paws at y 1080–1120. **A crop at y 1070 removes every defective pixel
+and keeps the entire pose signal**, because on a seated chibi the fold is the
+knees and not the feet.
+
+That is free, it needs no sampler, and it is *already the dataset's own idiom*:
+8 of the 21 ratified frames are cowboy shots and 11 are upper-body crops, so a
+posed frame cropped above the boot is more consistent with the set than a
+full-body one would be. It also removes the risk that four frames of paw feet
+outvote the two canon frames that have real boots.
+
+What it costs is the silhouette — a cropped frame teaches the fold, not the
+whole standing-to-seated outline. So the honest assembly rule is: crop the
+frames whose extremities are wrong, keep full-body only where the boots came
+back right, and record which is which per frame. The palette transfer above
+stays available for the thighs either way.
+
 ### The risk this carries, named before the run
 
 Every posed frame shares ONE upper body, byte for byte — the canon's, moved by
