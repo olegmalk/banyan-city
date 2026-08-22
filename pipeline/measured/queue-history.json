@@ -2,10 +2,10 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "844ef6b6605e72fcf3cd6a384c2b8f9384004ff0",
-  "measured_at": "2026-08-22T15:40:19Z",
-  "job_count": 1742,
-  "ok": 1612,
+  "source_commit": "0b583148a1a6a8e877d5bf10d44f9d08a64141b4",
+  "measured_at": "2026-08-22T16:45:07Z",
+  "job_count": 1748,
+  "ok": 1618,
   "failed": 130,
   "upcoming_count": 118,
   "skipped_sidecars": null,
@@ -13,6 +13,600 @@
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "lora-jerry-v3-blockweight-0822-1787416750",
+   "task": "lora-jerry-v3-blockweight-0822",
+   "node": "002b-first-citizen",
+   "beat": null,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T16:39:17Z",
+   "finished_at": "2026-08-22T16:40:44Z",
+   "duration_s": 87,
+   "sidecar": "farm-out/box/lora-jerry-v3-blockweight-0822-1787416750.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/lora-jerry-v3-blockweight-0822",
+   "outputs": [
+    {
+     "path": "farm-out/lora-jerry-v3-blockweight-0822/blockweight-seat-flat-mask.png",
+     "name": "blockweight-seat-flat-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-blockweight-0822/blockweight-seat-flat.png",
+     "name": "blockweight-seat-flat.png",
+     "bytes": 926489,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-blockweight-0822/blockweight-seat-palette-mask.png",
+     "name": "blockweight-seat-palette-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-blockweight-0822/blockweight-seat-palette-starve-mask.png",
+     "name": "blockweight-seat-palette-starve-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-blockweight-0822/blockweight-seat-palette-starve.png",
+     "name": "blockweight-seat-palette-starve.png",
+     "bytes": 823049,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-blockweight-0822/blockweight-seat-palette.png",
+     "name": "blockweight-seat-palette.png",
+     "bytes": 821413,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Character design work — the goblin",
+    "moment": "Not a story beat. These build the reference pictures of him that the real shots are drawn from, so he looks like the same creature twice."
+   }
+  },
+  {
+   "id": "lora-jerry-v3-loraweight-0822-1787415406",
+   "task": "lora-jerry-v3-loraweight-0822",
+   "node": "002b-first-citizen",
+   "beat": null,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T16:16:54Z",
+   "finished_at": "2026-08-22T16:18:03Z",
+   "duration_s": 69,
+   "sidecar": "farm-out/box/lora-jerry-v3-loraweight-0822-1787415406.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/lora-jerry-v3-loraweight-0822",
+   "outputs": [
+    {
+     "path": "farm-out/lora-jerry-v3-loraweight-0822/loraweight-seat-w10-mask.png",
+     "name": "loraweight-seat-w10-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-loraweight-0822/loraweight-seat-w10.png",
+     "name": "loraweight-seat-w10.png",
+     "bytes": 957410,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-loraweight-0822/loraweight-seat-w12-mask.png",
+     "name": "loraweight-seat-w12-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-loraweight-0822/loraweight-seat-w12.png",
+     "name": "loraweight-seat-w12.png",
+     "bytes": 864606,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Character design work — the goblin",
+    "moment": "Not a story beat. These build the reference pictures of him that the real shots are drawn from, so he looks like the same creature twice."
+   }
+  },
+  {
+   "id": "lora-jerry-v3-cnetscale-0822-1787415120",
+   "task": "lora-jerry-v3-cnetscale-0822",
+   "node": "002b-first-citizen",
+   "beat": null,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T16:12:13Z",
+   "finished_at": "2026-08-22T16:13:05Z",
+   "duration_s": 52,
+   "sidecar": "farm-out/box/lora-jerry-v3-cnetscale-0822-1787415120.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/lora-jerry-v3-cnetscale-0822",
+   "outputs": [
+    {
+     "path": "farm-out/lora-jerry-v3-cnetscale-0822/cnetscale-seat-s05-mask.png",
+     "name": "cnetscale-seat-s05-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-cnetscale-0822/cnetscale-seat-s05.png",
+     "name": "cnetscale-seat-s05.png",
+     "bytes": 957244,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-cnetscale-0822/cnetscale-seat-s07-mask.png",
+     "name": "cnetscale-seat-s07-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-cnetscale-0822/cnetscale-seat-s07.png",
+     "name": "cnetscale-seat-s07.png",
+     "bytes": 1004818,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Character design work — the goblin",
+    "moment": "Not a story beat. These build the reference pictures of him that the real shots are drawn from, so he looks like the same creature twice."
+   }
+  },
+  {
+   "id": "lora-jerry-v3-capshape-0822-1787414945",
+   "task": "lora-jerry-v3-capshape-0822",
+   "node": "002b-first-citizen",
+   "beat": null,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T16:09:19Z",
+   "finished_at": "2026-08-22T16:09:47Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/lora-jerry-v3-capshape-0822-1787414945.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/lora-jerry-v3-capshape-0822",
+   "outputs": [
+    {
+     "path": "farm-out/lora-jerry-v3-capshape-0822/capshape-seat-s1-mask.png",
+     "name": "capshape-seat-s1-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-capshape-0822/capshape-seat-s1.png",
+     "name": "capshape-seat-s1.png",
+     "bytes": 1200689,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Character design work — the goblin",
+    "moment": "Not a story beat. These build the reference pictures of him that the real shots are drawn from, so he looks like the same creature twice."
+   }
+  },
+  {
+   "id": "lora-jerry-v3-ladder-0822-1787414115",
+   "task": "lora-jerry-v3-ladder-0822",
+   "node": "002b-first-citizen",
+   "beat": null,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T15:55:29Z",
+   "finished_at": "2026-08-22T16:04:13Z",
+   "duration_s": 524,
+   "sidecar": "farm-out/box/lora-jerry-v3-ladder-0822-1787414115.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/lora-jerry-v3-ladder-0822",
+   "outputs": [
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-beach-s1-mask.png",
+     "name": "b1-beach-s1-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-beach-s1.png",
+     "name": "b1-beach-s1.png",
+     "bytes": 967031,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-beach-s2-mask.png",
+     "name": "b1-beach-s2-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-beach-s2.png",
+     "name": "b1-beach-s2.png",
+     "bytes": 1101541,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-beach-s3-mask.png",
+     "name": "b1-beach-s3-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-beach-s3.png",
+     "name": "b1-beach-s3.png",
+     "bytes": 1003444,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-desert-s1-mask.png",
+     "name": "b1-desert-s1-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-desert-s1.png",
+     "name": "b1-desert-s1.png",
+     "bytes": 941973,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-desert-s2-mask.png",
+     "name": "b1-desert-s2-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-desert-s2.png",
+     "name": "b1-desert-s2.png",
+     "bytes": 1017466,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-desert-s3-mask.png",
+     "name": "b1-desert-s3-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-desert-s3.png",
+     "name": "b1-desert-s3.png",
+     "bytes": 1015470,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-indoor-s1-mask.png",
+     "name": "b1-indoor-s1-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-indoor-s1.png",
+     "name": "b1-indoor-s1.png",
+     "bytes": 936265,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-indoor-s2-mask.png",
+     "name": "b1-indoor-s2-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-indoor-s2.png",
+     "name": "b1-indoor-s2.png",
+     "bytes": 1015972,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-indoor-s3-mask.png",
+     "name": "b1-indoor-s3-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-indoor-s3.png",
+     "name": "b1-indoor-s3.png",
+     "bytes": 1005184,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-night-s1-mask.png",
+     "name": "b1-night-s1-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-night-s1.png",
+     "name": "b1-night-s1.png",
+     "bytes": 1010195,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-night-s2-mask.png",
+     "name": "b1-night-s2-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-night-s2.png",
+     "name": "b1-night-s2.png",
+     "bytes": 1059567,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-night-s3-mask.png",
+     "name": "b1-night-s3-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-night-s3.png",
+     "name": "b1-night-s3.png",
+     "bytes": 1040657,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-wall-s1-mask.png",
+     "name": "b1-wall-s1-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-wall-s1.png",
+     "name": "b1-wall-s1.png",
+     "bytes": 803234,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-wall-s2-mask.png",
+     "name": "b1-wall-s2-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-wall-s2.png",
+     "name": "b1-wall-s2.png",
+     "bytes": 1083088,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-wall-s3-mask.png",
+     "name": "b1-wall-s3-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b1-wall-s3.png",
+     "name": "b1-wall-s3.png",
+     "bytes": 1000159,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b2-kneel-s1-mask.png",
+     "name": "b2-kneel-s1-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b2-kneel-s1.png",
+     "name": "b2-kneel-s1.png",
+     "bytes": 1067316,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b2-kneel-s2-mask.png",
+     "name": "b2-kneel-s2-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b2-kneel-s2.png",
+     "name": "b2-kneel-s2.png",
+     "bytes": 1049519,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b2-seat-s1-mask.png",
+     "name": "b2-seat-s1-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b2-seat-s1.png",
+     "name": "b2-seat-s1.png",
+     "bytes": 1061522,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b2-seat-s2-mask.png",
+     "name": "b2-seat-s2-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b2-seat-s2.png",
+     "name": "b2-seat-s2.png",
+     "bytes": 1125161,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b2-stride-s1-mask.png",
+     "name": "b2-stride-s1-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b2-stride-s1.png",
+     "name": "b2-stride-s1.png",
+     "bytes": 1158768,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b2-stride-s2-mask.png",
+     "name": "b2-stride-s2-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b2-stride-s2.png",
+     "name": "b2-stride-s2.png",
+     "bytes": 1236742,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b3-noLoRA-mask.png",
+     "name": "b3-noLoRA-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b3-noLoRA.png",
+     "name": "b3-noLoRA.png",
+     "bytes": 1136668,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b3-w065-mask.png",
+     "name": "b3-w065-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b3-w065.png",
+     "name": "b3-w065.png",
+     "bytes": 1030810,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b3-w08-mask.png",
+     "name": "b3-w08-mask.png",
+     "bytes": 3278,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-jerry-v3-ladder-0822/b3-w08.png",
+     "name": "b3-w08.png",
+     "bytes": 1012553,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Character design work — the goblin",
+    "moment": "Not a story beat. These build the reference pictures of him that the real shots are drawn from, so he looks like the same creature twice."
+   }
+  },
+  {
+   "id": "lora-jerry-v3-0822-1787412909",
+   "task": "lora-jerry-v3-0822",
+   "node": "002b-first-citizen",
+   "beat": null,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T15:35:15Z",
+   "finished_at": "2026-08-22T15:54:20Z",
+   "duration_s": 1145,
+   "sidecar": "farm-out/box/lora-jerry-v3-0822-1787412909.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/lora-jerry-v3-0822",
+   "outputs": [
+    {
+     "path": "farm-out/lora-jerry-v3-0822/SAMPLE-bnyjerry-v3-sitting-wall.png",
+     "name": "SAMPLE-bnyjerry-v3-sitting-wall.png",
+     "bytes": 732954,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Character design work — the goblin",
+    "moment": "Not a story beat. These build the reference pictures of him that the real shots are drawn from, so he looks like the same creature twice."
+   }
+  },
   {
    "id": "ep2-b13-lowerbody-oneknee-r3-0822-1787412473",
    "task": "ep2-b13-lowerbody-oneknee-r3-0822",
