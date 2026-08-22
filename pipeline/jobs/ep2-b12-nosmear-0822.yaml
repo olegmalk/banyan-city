@@ -1,0 +1,234 @@
+id: ep2-b12-nosmear-0822
+task: ep2-b12-nosmear-0822
+node: 002b-first-citizen
+beat: 12
+runner: box
+priority: 16
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: early-morning lane, 2026-08-22
+consumer: BEAT 12's CANDIDATE ON /review/ep2-beats-0821, replacing r1 if S1 passes and r1 stays if it
+  does not. No cut is touched by this job; review/ep2-ship-0821 is not written.
+success: ONE 704x1280 clip, 121 frames, identical to ep2-b12-nosmear-0822 in every respect except that
+  the cloud bank behind the plant has no horizontal bars in it.
+why: 'r1 FIXES BEAT 12''s RECORDED FAULT -- apex climb 0 px against 140 px in the cut, reproduced at a
+  second wording -- and still carries a smear that came from the compositor, not from the model: fill_from_boundary
+  interpolates PER ROW because it was written for a horizontally banded grass plate, and beat 12''s backdrop
+  is a cumulus bank. The plate was re-cut with a two-axis fill (ep2-b12-sapnat3-0822) and the bars are
+  gone. This is r1 on that plate and nothing else moves.'
+est_minutes: 6
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b12-nosmear-0822\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b12-nosmear-0822\b13-motion-prompt.txt: "2D anime, hand-drawn cel animation, static\
+    \ locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject\
+    \ already in frame: THE FRAME IS TOO TIGHT TO HOLD MORE THAN TWO LEAVES. Only two leaves fit in this\
+    \ shot and there is no room at any edge for a third: ONE leaf on the left and ONE leaf on the right,\
+    \ meeting at a single stem in the middle, and open sky filling everything between and above them.\
+    \ Nothing else is in the frame. THE SAPLING IS TINY AND IT HAS EXACTLY TWO LEAVES. It is a seedling\
+    \ about forty centimetres tall \u2014 NO TALLER THAN THE BLADES OF GRASS AROUND IT, so the grass comes\
+    \ up to its leaves \u2014 one slender upright stem carrying EXACTLY TWO oversized rounded cotyledon\
+    \ leaves and ONE thin bare side-branch with nothing on it. TWO LEAVES ONLY: no third leaf, no crown,\
+    \ no canopy, no bush, no foliage mass, no sprays of leaves. The sapling's leaves are BROAD AND ROUNDED\
+    \ \u2014 wide oval cotyledon leaves with soft round tips, not narrow, not pointed, not lance-shaped\
+    \ and not spiky. a tight close-up of a young sapling's broad leaves seen from below against an open\
+    \ sky with soft clouds behind them. No creature and no person is in this shot. THE LEAVES STIR GENTLY\
+    \ IN A LIGHT BREEZE \u2014 they lift and settle and turn a little on their stalks, the whole plant\
+    \ breathing rather than thrashing, while the clouds behind them drift very slowly. Nothing else moves\
+    \ and the plant stays exactly where it is in frame. Bright clear daylight, cinematic lighting, detailed,\
+    \ newest, masterpiece, best quality, very aesthetic."
+  C:\banyan-farm\ep2-b12-nosmear-0822\b13-negative.txt: third leaf, many leaves, several leaves, a bunch
+    of leaves, dense foliage, leafy plant, shrub, hedge, undergrowth, grass filling the frame, bush, shrub,
+    crown of leaves, canopy, foliage mass, many leaves, dense leaves, leafy branches, tall tree, sapling
+    taller than the grass, creature, goblin, person, face, hands, animal, dark, dusk, dim lighting, low
+    key, night, pointed leaves, lance-shaped leaves, narrow leaves, spiky leaves, camera pan, camera tilt,
+    panning, tilting, camera movement, dolly, zoom, push in, pull back, tripod, camera, camera equipment,
+    film equipment, stool, stake, plant support, face morphing, distorted face, warped face, changing
+    facial features, extra eyes, extra ears, hair, walking out of frame, leaving the frame, drifting sideways,
+    moving to a different spot, second character, duplicate character, scene change, shot change, new
+    camera angle, different location, photorealistic, 3D render, CGI, live action, motion blur, text
+  C:\banyan-farm\ep2-b12-nosmear-0822\b13-jobs-encode.json: "[{\"beat\": 12,\n  \"embeds\": \"C:\\\\banyan-farm\\\
+    \\ep2-b12-nosmear-0822\\\\b13-embeds.pt\",\n  \"prompt_file\": \"C:\\\\banyan-farm\\\\ep2-b12-nosmear-0822\\\
+    \\b13-motion-prompt.txt\",\n  \"negative_file\": \"C:\\\\banyan-farm\\\\ep2-b12-nosmear-0822\\\\b13-negative.txt\"\
+    }]"
+  C:\banyan-farm\ep2-b12-nosmear-0822\b13-jobs-render.json: "[{\"beat\": 12,\n  \"seed\": 20260813,\n\
+    \  \"embeds\": \"C:\\\\banyan-farm\\\\ep2-b12-nosmear-0822\\\\b13-embeds.pt\",\n  \"init\": \"C:\\\
+    \\banyan-farm\\\\ep2-b12-nosmear-0822\\\\b13-init-704x1280.png\",\n  \"out\": \"C:\\\\banyan-farm\\\
+    \\ep2-b12-nosmear-0822\\\\12-related-LTX-nosmear-0822.mp4\"}]"
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b12-nosmear-0822\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b12-sapnat3-0822\b12-sapnat3-s20260820.png
+  - --sha256
+  - 5ecde65e9bf6b2bd723ce70bcb59a38fb7401a31fc6acb7bbf545dc67e14555e
+  - --out
+  - C:\banyan-farm\ep2-b12-nosmear-0822\b13-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b12-nosmear-0822\b13-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b12-nosmear-0822\b13-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '121'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '33'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b12-nosmear-0822
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b12-nosmear-0822\bench-b12-leaf.jsonl
+  - --bench-label
+  - ep2-b12-nosmear-0822
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b12-tightB\"\n\
+    os.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(\"C:/banyan-farm/ep2-b12-nosmear-0822/12-related-LTX-nosmear-0822.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b12-nosmear-0822/b13-init-704x1280.png\")\n     \
+    \        + glob.glob(\"C:/banyan-farm/ep2-b12-nosmear-0822/bench-b12-leaf.jsonl\"))\nlines = []\n\
+    for f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with\
+    \ open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h +\
+    \ \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b12-nosmear-0822.sha256\"), \"\
+    w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src),\
+    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b12-nosmear-0822\12-related-LTX-nosmear-0822.mp4
+- C:\banyan-farm\ep2-b12-nosmear-0822\b13-init-704x1280.png
+bar: "THE PARENT'S BAR, UNCHANGED, PLUS ONE CLAUSE AND ONE INSTRUMENT.\n\n  S1  THE SKY HAS NO HORIZONTAL\
+  \ BARS IN IT, on any frame. The parent take\n      (12-related-LTX-leaf-0813.mp4 in review/ep2-beats-0821/candidates/)\
+  \ is\n      the matched control at one variable, so play them side by side and look\n      at the band\
+  \ between the grass line and the leaves.\n  S2  APEX CLIMB IS STILL ABOUT ZERO. Measure the top of the\
+  \ leaf mass at f000\n      and f120 and say the number. r1 measured 0 px; the take in the cut\n    \
+  \  measured 140. A climb reappearing means the plate change moved something\n      the plate change\
+  \ had no business moving.\n  S3  THE PLANT IS STILL THE CANON TWO-LEAF SHAPE for the whole clip, and\
+  \ this\n      is now a number rather than an impression:\n        python3 pipeline/count_composited_objects.py\
+  \ \\\n          --clip <this clip> --class leaf \\\n          --geometry farm-out/ep2-b12-sapnat-0822/b12-sapnat-in-0822.png.geometry.json\n\
+  \      r1 reads 2 on all 121 frames. A run of frames above 2 is the count fault\n      that beats 19\
+  \ and 21 both measured this morning arriving on a third beat.\n  S4  EVERYTHING THE PARENT ALREADY PASSED\
+  \ still passes: camera locked, the\n      plant rooted, no third leaf, no relocation.\n\n  PRE-REGISTERED\
+  \ FAIL MODE: the harmonic wash gave the model a low-detail\n  region and 121 frames is long enough for\
+  \ it to invent something in there --\n  a bird, a second cloud bank with a hard edge, a sun. The naturalize\
+  \ already\n  drew cloud into it, which is the reason to expect this to hold, but a still\n  frame is\
+  \ 40 steps and a clip is a different question."
+init_provenance: farm-out/ep2-b12-sapnat3-0822/b12-sapnat3-s20260820.png, sha256 5ecde65e9bf6b2bd723ce70bcb59a38fb7401a31fc6acb7bbf545dc67e14555e
+  -- the 0.30 naturalize of a composite whose erased region was filled with --fill-mode harmonic instead
+  of the per-row default. Read off the box's own courier worktree, which is where the box put it, so there
+  is no fetch step and nothing to sha against a raw URL.
+not_done_on_purpose: THE CLAUSE SET IS NOT TOUCHED. Beat 12's still-versus-grow question closed this morning
+  at three rounds -- r1 0 px, r2 (explicit stillness clause) 340 px, r3 (breeze clause plus a named no-grow
+  clause) 0 px -- and the useful finding was that taking away the small NAMED movement brings back the
+  large UNNAMED one. Changing a word here would put that back in play for no reason.
+the_one_variable: 'THE INIT, and it is exactly two strings: the crop step''s --src and its --sha256. The
+  action sentence with its breeze clause, the negative, the driver, the size, the frame count, the fps,
+  the seed and the crf family are the parent''s byte for byte.'
+the_rung_this_is_one_variable_from: ep2-b12-leafmotion-0822
+derivation:
+  parent: pipeline/jobs/ep2-b12-leafmotion-0822.yaml
+  by: pipeline/derive_ep2_b12_nosmear_0822.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - bar
+  - consumer
+  - init_provenance
+  - not_done_on_purpose
+  - owner
+  - success
+  - the_one_variable
+  - the_rung_this_is_one_variable_from
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - init_provenance
+  - not_done_on_purpose
+  - the_one_variable
+  retokened:
+  - 12-related-LTX-leaf-0813 -> 12-related-LTX-nosmear-0822
+  - ep2-b12-sapnat2-0822 -> ep2-b12-sapnat3-0822
+  - b12-sapnat2-s20260820.png -> b12-sapnat3-s20260820.png
+  - ep2-b12-leafmotion-0822 -> ep2-b12-nosmear-0822
+  overrides_applied_and_asserted:
+    argv:--sha256:
+    - step crop --sha256 (dcc042b8e21f0ded82adb5401186f69a2b8d78aa92eb398eb74631bcfac5ea5a -> 5ecde65e9bf6b2bd723ce70bcb59a38fb7401a31fc6acb7bbf545dc67e14555e)
+    argv:--src:
+    - step crop --src (C:\banyan-farm\courier-box\farm-out\ep2-b12-sapnat3-0822\b12-sapnat3-s20260820.png
+      -> C:\banyan-farm\courier-box\farm-out\ep2-b12-sapnat3-0822\b12-sapnat3-s20260820.png)
+    key:priority:
+    - key priority = 16
