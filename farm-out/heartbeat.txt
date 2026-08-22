@@ -4715,3 +4715,4 @@
 11:00:34Z box-runner idle ready=0 failed=123
 11:03:49Z STARTED task=lora-jerry-v2-0822-1787396626 attempt=1 on box-runner
 11:23:07Z FAIL task=lora-jerry-v2-0822-1787396626 rc=2 step=sample
+11:23:12Z box-runner idle ready=0 failed=124
