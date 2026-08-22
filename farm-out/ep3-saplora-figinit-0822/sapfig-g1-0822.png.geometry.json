@@ -1,0 +1,114 @@
+{
+ "apex": [
+  731.9,
+  1020.6
+ ],
+ "argv": [
+  "--plate",
+  "farm-out/ep3-saplora-figg1-0822/ep3-saplora-figg1-0822-ipahead.png",
+  "--root",
+  "745,1170",
+  "--height",
+  "150",
+  "--tilt",
+  "-5.0",
+  "--leaf-frac",
+  "0.55",
+  "--leaf-spread",
+  "65.0",
+  "--body-box",
+  "140,0,710,1216",
+  "--green-sat-floor",
+  "0.15",
+  "--plate-sha256",
+  "9d1dff2a335c458ace7bdb673341def4b45f004102b2f4fd20388b4d3560f1cc",
+  "--out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figinit-0822/sapfig-g1-0822.png",
+  "--mask-out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figinit-0822/sapfig-g1-mask-0822.png",
+  "--overlay-out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figovl-0822/ovl-g1-0822.png"
+ ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
+ "c5_reference": "field",
+ "c5_reference_luma": 132.9,
+ "erase_box": null,
+ "erased_px": 0,
+ "field_mean_luma": 132.9,
+ "fill_mode": "row",
+ "height_px": 150.0,
+ "leaf_len_px": 82.5,
+ "leaves": [
+  {
+   "len": 82.5,
+   "node": [
+    730.9,
+    1025.6
+   ],
+   "side": -1.0,
+   "tip": [
+    653.4,
+    1008.1
+   ]
+  },
+  {
+   "len": 87.5,
+   "node": [
+    732.9,
+    1020.6
+   ],
+   "side": 1.0,
+   "tip": [
+    808.7,
+    993.5
+   ]
+  }
+ ],
+ "light_dx": 0.954,
+ "light_dy": 0.301,
+ "lit_side": "right",
+ "mask_fraction": 0.012,
+ "palette": {
+  "dark": [
+   83,
+   92,
+   54
+  ],
+  "ink": [
+   6,
+   7,
+   8
+  ],
+  "light": [
+   127,
+   143,
+   89
+  ],
+  "mid": [
+   116,
+   126,
+   81
+  ],
+  "n_sampled": 5406,
+  "source": "the field's own greens"
+ },
+ "plant_extent": [
+  652,
+  809,
+  988,
+  1172
+ ],
+ "plant_fill_luma": 108.1,
+ "plant_fraction": 0.0054,
+ "plate": "farm-out/ep3-saplora-figg1-0822/ep3-saplora-figg1-0822-ipahead.png",
+ "plate_sha256": "9d1dff2a335c458ace7bdb673341def4b45f004102b2f4fd20388b4d3560f1cc",
+ "root": [
+  745.0,
+  1170.0
+ ],
+ "size": [
+  832,
+  1216
+ ],
+ "tilt_deg": -5.0
+}

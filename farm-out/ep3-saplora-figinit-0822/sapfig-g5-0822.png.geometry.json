@@ -1,0 +1,114 @@
+{
+ "apex": [
+  605.1,
+  641.2
+ ],
+ "argv": [
+  "--plate",
+  "farm-out/ep3-saplora-figg5-0822/ep3-saplora-figg5-0822-ipahead.png",
+  "--root",
+  "640,1140",
+  "--height",
+  "500",
+  "--tilt",
+  "-4.0",
+  "--leaf-frac",
+  "0.5",
+  "--leaf-spread",
+  "61.0",
+  "--body-box",
+  "290,130,560,1020",
+  "--green-sat-floor",
+  "0.15",
+  "--plate-sha256",
+  "6ba7f77f9ef153f01ff2d4935e142fd5587733f54ef922a5e545a1995faa2e1c",
+  "--out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figinit-0822/sapfig-g5-0822.png",
+  "--mask-out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figinit-0822/sapfig-g5-mask-0822.png",
+  "--overlay-out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figovl-0822/ovl-g5-0822.png"
+ ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
+ "c5_reference": "field",
+ "c5_reference_luma": 139.1,
+ "erase_box": null,
+ "erased_px": 0,
+ "field_mean_luma": 139.1,
+ "fill_mode": "row",
+ "height_px": 500.0,
+ "leaf_len_px": 250.0,
+ "leaves": [
+  {
+   "len": 250.0,
+   "node": [
+    604.1,
+    646.2
+   ],
+   "side": -1.0,
+   "tip": [
+    377.5,
+    580.7
+   ]
+  },
+  {
+   "len": 265.0,
+   "node": [
+    606.1,
+    641.2
+   ],
+   "side": 1.0,
+   "tip": [
+    828.4,
+    551.7
+   ]
+  }
+ ],
+ "light_dx": 0.996,
+ "light_dy": 0.086,
+ "lit_side": "right",
+ "mask_fraction": 0.0638,
+ "palette": {
+  "dark": [
+   83,
+   100,
+   90
+  ],
+  "ink": [
+   10,
+   9,
+   14
+  ],
+  "light": [
+   182,
+   205,
+   140
+  ],
+  "mid": [
+   148,
+   172,
+   128
+  ],
+  "n_sampled": 10009,
+  "source": "the field's own greens"
+ },
+ "plant_extent": [
+  376,
+  829,
+  543,
+  1143
+ ],
+ "plant_fill_luma": 140.2,
+ "plant_fraction": 0.0424,
+ "plate": "farm-out/ep3-saplora-figg5-0822/ep3-saplora-figg5-0822-ipahead.png",
+ "plate_sha256": "6ba7f77f9ef153f01ff2d4935e142fd5587733f54ef922a5e545a1995faa2e1c",
+ "root": [
+  640.0,
+  1140.0
+ ],
+ "size": [
+  832,
+  1216
+ ],
+ "tilt_deg": -4.0
+}

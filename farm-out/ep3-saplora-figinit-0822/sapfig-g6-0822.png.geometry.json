@@ -1,0 +1,114 @@
+{
+ "apex": [
+  198.8,
+  921.0
+ ],
+ "argv": [
+  "--plate",
+  "farm-out/ep3-saplora-figg6-0822/ep3-saplora-figg6-0822-ipahead.png",
+  "--root",
+  "180,1100",
+  "--height",
+  "180",
+  "--tilt",
+  "6.0",
+  "--leaf-frac",
+  "0.56",
+  "--leaf-spread",
+  "69.0",
+  "--body-box",
+  "320,150,540,1000",
+  "--green-sat-floor",
+  "0.15",
+  "--plate-sha256",
+  "af323b9ff1fba2b6239784e982e0b8e820df8cdf3afb768cb291a9458a3fdf85",
+  "--out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figinit-0822/sapfig-g6-0822.png",
+  "--mask-out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figinit-0822/sapfig-g6-mask-0822.png",
+  "--overlay-out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figovl-0822/ovl-g6-0822.png"
+ ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
+ "c5_reference": "field",
+ "c5_reference_luma": 158.0,
+ "erase_box": null,
+ "erased_px": 0,
+ "field_mean_luma": 158.0,
+ "fill_mode": "row",
+ "height_px": 180.0,
+ "leaf_len_px": 100.8,
+ "leaves": [
+  {
+   "len": 100.8,
+   "node": [
+    197.8,
+    926.0
+   ],
+   "side": -1.0,
+   "tip": [
+    108.0,
+    897.6
+   ]
+  },
+  {
+   "len": 106.8,
+   "node": [
+    199.8,
+    921.0
+   ],
+   "side": 1.0,
+   "tip": [
+    303.0,
+    903.8
+   ]
+  }
+ ],
+ "light_dx": 0.614,
+ "light_dy": -0.789,
+ "lit_side": "right",
+ "mask_fraction": 0.0158,
+ "palette": {
+  "dark": [
+   81,
+   111,
+   75
+  ],
+  "ink": [
+   6,
+   5,
+   6
+  ],
+  "light": [
+   154,
+   160,
+   136
+  ],
+  "mid": [
+   132,
+   142,
+   120
+  ],
+  "n_sampled": 10329,
+  "source": "the field's own greens"
+ },
+ "plant_extent": [
+  107,
+  304,
+  890,
+  1102
+ ],
+ "plant_fill_luma": 146.1,
+ "plant_fraction": 0.0078,
+ "plate": "farm-out/ep3-saplora-figg6-0822/ep3-saplora-figg6-0822-ipahead.png",
+ "plate_sha256": "af323b9ff1fba2b6239784e982e0b8e820df8cdf3afb768cb291a9458a3fdf85",
+ "root": [
+  180.0,
+  1100.0
+ ],
+ "size": [
+  832,
+  1216
+ ],
+ "tilt_deg": 6.0
+}

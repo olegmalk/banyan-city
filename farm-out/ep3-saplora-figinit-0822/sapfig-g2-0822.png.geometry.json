@@ -1,0 +1,114 @@
+{
+ "apex": [
+  254.4,
+  632.8
+ ],
+ "argv": [
+  "--plate",
+  "farm-out/ep3-saplora-figg2-0822/ep3-saplora-figg2-0822-ipahead.png",
+  "--root",
+  "200,1150",
+  "--height",
+  "520",
+  "--tilt",
+  "6.0",
+  "--leaf-frac",
+  "0.5",
+  "--leaf-spread",
+  "62.0",
+  "--body-box",
+  "250,120,580,1010",
+  "--green-sat-floor",
+  "0.15",
+  "--plate-sha256",
+  "d68c23a668fae559ede3336d82f83255d6a0777793cd4e3aece84499528d4697",
+  "--out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figinit-0822/sapfig-g2-0822.png",
+  "--mask-out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figinit-0822/sapfig-g2-mask-0822.png",
+  "--overlay-out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figovl-0822/ovl-g2-0822.png"
+ ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
+ "c5_reference": "field",
+ "c5_reference_luma": 172.5,
+ "erase_box": null,
+ "erased_px": 0,
+ "field_mean_luma": 172.5,
+ "fill_mode": "row",
+ "height_px": 520.0,
+ "leaf_len_px": 260.0,
+ "leaves": [
+  {
+   "len": 260.0,
+   "node": [
+    253.4,
+    637.8
+   ],
+   "side": -1.0,
+   "tip": [
+    37.8,
+    547.7
+   ]
+  },
+  {
+   "len": 275.6,
+   "node": [
+    255.4,
+    632.8
+   ],
+   "side": 1.0,
+   "tip": [
+    510.9,
+    568.8
+   ]
+  }
+ ],
+ "light_dx": -0.012,
+ "light_dy": -1.0,
+ "lit_side": "left",
+ "mask_fraction": 0.0684,
+ "palette": {
+  "dark": [
+   126,
+   149,
+   134
+  ],
+  "ink": [
+   6,
+   5,
+   12
+  ],
+  "light": [
+   237,
+   253,
+   215
+  ],
+  "mid": [
+   203,
+   217,
+   184
+  ],
+  "n_sampled": 987,
+  "source": "the field's own greens"
+ },
+ "plant_extent": [
+  36,
+  511,
+  540,
+  1152
+ ],
+ "plant_fill_luma": 214.0,
+ "plant_fraction": 0.0458,
+ "plate": "farm-out/ep3-saplora-figg2-0822/ep3-saplora-figg2-0822-ipahead.png",
+ "plate_sha256": "d68c23a668fae559ede3336d82f83255d6a0777793cd4e3aece84499528d4697",
+ "root": [
+  200.0,
+  1150.0
+ ],
+ "size": [
+  832,
+  1216
+ ],
+ "tilt_deg": 6.0
+}

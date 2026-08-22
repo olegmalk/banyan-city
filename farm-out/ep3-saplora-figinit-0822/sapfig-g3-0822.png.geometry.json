@@ -1,0 +1,114 @@
+{
+ "apex": [
+  528.6,
+  881.6
+ ],
+ "argv": [
+  "--plate",
+  "farm-out/ep3-saplora-figg3-0822/ep3-saplora-figg3-0822-ipahead.png",
+  "--root",
+  "560,1180",
+  "--height",
+  "300",
+  "--tilt",
+  "-6.0",
+  "--leaf-frac",
+  "0.52",
+  "--leaf-spread",
+  "64.0",
+  "--body-box",
+  "300,150,545,1030",
+  "--green-sat-floor",
+  "0.15",
+  "--plate-sha256",
+  "b014bc98d6b7851f637640f2308df8950b2d1825a7308141b0eb77c3879de8ba",
+  "--out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figinit-0822/sapfig-g3-0822.png",
+  "--mask-out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figinit-0822/sapfig-g3-mask-0822.png",
+  "--overlay-out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figovl-0822/ovl-g3-0822.png"
+ ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
+ "c5_reference": "field",
+ "c5_reference_luma": 145.9,
+ "erase_box": null,
+ "erased_px": 0,
+ "field_mean_luma": 145.9,
+ "fill_mode": "row",
+ "height_px": 300.0,
+ "leaf_len_px": 156.0,
+ "leaves": [
+  {
+   "len": 156.0,
+   "node": [
+    527.6,
+    886.6
+   ],
+   "side": -1.0,
+   "tip": [
+    381.0,
+    853.6
+   ]
+  },
+  {
+   "len": 165.4,
+   "node": [
+    529.6,
+    881.6
+   ],
+   "side": 1.0,
+   "tip": [
+    669.9,
+    827.3
+   ]
+  }
+ ],
+ "light_dx": -0.197,
+ "light_dy": 0.98,
+ "lit_side": "left",
+ "mask_fraction": 0.0302,
+ "palette": {
+  "dark": [
+   81,
+   90,
+   69
+  ],
+  "ink": [
+   6,
+   6,
+   6
+  ],
+  "light": [
+   125,
+   139,
+   104
+  ],
+  "mid": [
+   114,
+   121,
+   97
+  ],
+  "n_sampled": 11343,
+  "source": "the field's own greens"
+ },
+ "plant_extent": [
+  380,
+  670,
+  820,
+  1182
+ ],
+ "plant_fill_luma": 100.5,
+ "plant_fraction": 0.0174,
+ "plate": "farm-out/ep3-saplora-figg3-0822/ep3-saplora-figg3-0822-ipahead.png",
+ "plate_sha256": "b014bc98d6b7851f637640f2308df8950b2d1825a7308141b0eb77c3879de8ba",
+ "root": [
+  560.0,
+  1180.0
+ ],
+ "size": [
+  832,
+  1216
+ ],
+ "tilt_deg": -6.0
+}

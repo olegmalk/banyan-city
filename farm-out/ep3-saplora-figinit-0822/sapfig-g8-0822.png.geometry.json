@@ -1,0 +1,114 @@
+{
+ "apex": [
+  304.0,
+  552.4
+ ],
+ "argv": [
+  "--plate",
+  "farm-out/ep3-saplora-figg8-0822/ep3-saplora-figg8-0822-ipahead.png",
+  "--root",
+  "250,1170",
+  "--height",
+  "620",
+  "--tilt",
+  "5.0",
+  "--leaf-frac",
+  "0.48",
+  "--leaf-spread",
+  "57.0",
+  "--body-box",
+  "300,120,560,1010",
+  "--green-sat-floor",
+  "0.15",
+  "--plate-sha256",
+  "c1aa49eb3b92bf86c2fe35eaf36089557b322f0d7d8a0897f61a5420791b58a8",
+  "--out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figinit-0822/sapfig-g8-0822.png",
+  "--mask-out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figinit-0822/sapfig-g8-mask-0822.png",
+  "--overlay-out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figovl-0822/ovl-g8-0822.png"
+ ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
+ "c5_reference": "field",
+ "c5_reference_luma": 165.7,
+ "erase_box": null,
+ "erased_px": 0,
+ "field_mean_luma": 165.7,
+ "fill_mode": "row",
+ "height_px": 620.0,
+ "leaf_len_px": 297.6,
+ "leaves": [
+  {
+   "len": 297.6,
+   "node": [
+    303.0,
+    557.4
+   ],
+   "side": -1.0,
+   "tip": [
+    68.5,
+    443.8
+   ]
+  },
+  {
+   "len": 315.5,
+   "node": [
+    305.0,
+    552.4
+   ],
+   "side": 1.0,
+   "tip": [
+    583.6,
+    460.5
+   ]
+  }
+ ],
+ "light_dx": 0.282,
+ "light_dy": -0.96,
+ "lit_side": "right",
+ "mask_fraction": 0.0853,
+ "palette": {
+  "dark": [
+   113,
+   139,
+   117
+  ],
+  "ink": [
+   3,
+   2,
+   18
+  ],
+  "light": [
+   174,
+   185,
+   146
+  ],
+  "mid": [
+   123,
+   151,
+   121
+  ],
+  "n_sampled": 52056,
+  "source": "the field's own greens"
+ },
+ "plant_extent": [
+  67,
+  584,
+  438,
+  1172
+ ],
+ "plant_fill_luma": 146.8,
+ "plant_fraction": 0.0586,
+ "plate": "farm-out/ep3-saplora-figg8-0822/ep3-saplora-figg8-0822-ipahead.png",
+ "plate_sha256": "c1aa49eb3b92bf86c2fe35eaf36089557b322f0d7d8a0897f61a5420791b58a8",
+ "root": [
+  250.0,
+  1170.0
+ ],
+ "size": [
+  832,
+  1216
+ ],
+ "tilt_deg": 5.0
+}

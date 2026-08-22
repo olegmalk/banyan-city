@@ -1,0 +1,114 @@
+{
+ "apex": [
+  135.7,
+  910.7
+ ],
+ "argv": [
+  "--plate",
+  "farm-out/ep3-saplora-figg4-0822/ep3-saplora-figg4-0822-ipahead.png",
+  "--root",
+  "120,1090",
+  "--height",
+  "180",
+  "--tilt",
+  "5.0",
+  "--leaf-frac",
+  "0.56",
+  "--leaf-spread",
+  "70.0",
+  "--body-box",
+  "330,180,520,940",
+  "--green-sat-floor",
+  "0.15",
+  "--plate-sha256",
+  "9f5b37876dd128faf7979bd1b70b82be6dac2e11839f81ae79e6a004296cb627",
+  "--out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figinit-0822/sapfig-g4-0822.png",
+  "--mask-out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figinit-0822/sapfig-g4-mask-0822.png",
+  "--overlay-out",
+  "/Users/artovonkugler/banyan-city/farm-out/ep3-saplora-figovl-0822/ovl-g4-0822.png"
+ ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
+ "c5_reference": "field",
+ "c5_reference_luma": 109.7,
+ "erase_box": null,
+ "erased_px": 0,
+ "field_mean_luma": 109.7,
+ "fill_mode": "row",
+ "height_px": 180.0,
+ "leaf_len_px": 100.8,
+ "leaves": [
+  {
+   "len": 100.8,
+   "node": [
+    134.7,
+    915.7
+   ],
+   "side": -1.0,
+   "tip": [
+    43.3,
+    889.3
+   ]
+  },
+  {
+   "len": 106.8,
+   "node": [
+    136.7,
+    910.7
+   ],
+   "side": 1.0,
+   "tip": [
+    239.9,
+    893.5
+   ]
+  }
+ ],
+ "light_dx": -0.002,
+ "light_dy": -1.0,
+ "lit_side": "left",
+ "mask_fraction": 0.0158,
+ "palette": {
+  "dark": [
+   73,
+   78,
+   63
+  ],
+  "ink": [
+   24,
+   23,
+   24
+  ],
+  "light": [
+   84,
+   89,
+   75
+  ],
+  "mid": [
+   79,
+   84,
+   69
+  ],
+  "n_sampled": 2399,
+  "source": "the field's own greens"
+ },
+ "plant_extent": [
+  42,
+  240,
+  880,
+  1092
+ ],
+ "plant_fill_luma": 63.9,
+ "plant_fraction": 0.0078,
+ "plate": "farm-out/ep3-saplora-figg4-0822/ep3-saplora-figg4-0822-ipahead.png",
+ "plate_sha256": "9f5b37876dd128faf7979bd1b70b82be6dac2e11839f81ae79e6a004296cb627",
+ "root": [
+  120.0,
+  1090.0
+ ],
+ "size": [
+  832,
+  1216
+ ],
+ "tilt_deg": 5.0
+}
