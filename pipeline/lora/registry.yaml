@@ -76,12 +76,42 @@ loras:
     epoch08: 3acbcdce463dd6b586a47af26a592a636a6437af79ab66e3290fe18e4f8d52ff
     epoch10_final: dbbe16b02b435795f69641f0e6f176f19b17d1308c45d8c29b4a3dfd34b2373d
 
-  # NOT 0.8, AND NOT ANYTHING ELSE YET. 0.8 was copied from the Jerry spec
-  # before any pixel existed and it FAILS bar B3 — see verdict. The ladder job
-  # measures 0.65 / 0.5 / 0.35 / 0.2 on both sides. Until it reports, no weight
-  # is sanctioned and nothing should load this file.
+  # NO WEIGHT IS SANCTIONED, AND THE LADDER IS WHY RATHER THAN AN ABSENCE OF ONE.
+  # `ladder-sapling-0822` measured 0.8 / 0.65 / 0.5 / 0.35 / 0.2 on both sides at
+  # one seed and the two curves NEVER CROSS:
+  #   * clean side (no trigger) -- contamination fades smoothly as the weight
+  #     drops; 0.20 is close to the no-LoRA frame in light, framing and layout.
+  #   * subject side -- the sapling COLLAPSES below 0.65. At 0.50 it sprouts from
+  #     a green bulb with a face, at 0.35 it grows extra leaves, at 0.20 it is a
+  #     round green mascot creature with closed eyes. That is the base
+  #     checkpoint's own prior returning -- the exact creature the five closed
+  #     wording ladders kept drawing -- so the LoRA at HIGH weight is the thing
+  #     suppressing it.
+  # Usable band is 0.65-0.8 and B3 fails across all of it. Turning it down is
+  # therefore not the fix; the dataset is. Nothing should load this file.
   shipping_weight: null
   weight_ladder: pipeline/lora/ladder-sapling-0822.yaml
+
+  # THE SCORE, at 1:1, against bars committed before any pixel existed.
+  bars_result:
+    B1_identity_blind_cold_read: 11/15   # FAIL, bar was >=13/15
+    B2_ground: 4/6                       # FAIL by one frame; colour generalises,
+                                         # MATERIAL does not (brown grass 3/3,
+                                         # bare tilled earth 1/3)
+    B2_light_setting: 3/3                # PASS -- moved indoors to a windowsill
+    B2_scale: 0/3                        # FAIL -- 90 cm draws at 15 cm height
+    B2_figure: 0/3                       # FAIL -- no goblin, or one fused to the plant
+    B3_no_regression_at_0.8: FAIL        # no plant intruded, but a figure was
+                                         # DELETED and the palette shifted
+    B4_style: 15/15                      # PASS
+    B5_leaf_count_two: 14/15             # PASS, exactly on the committed floor,
+                                         # with no leaf-count word in the negative
+    probe_four_leaves: drew two          # RECORDED, NOT GRADED -- count is fused
+  root_cause: >-
+    All three failing bars trace to two monocultures named in README.md before
+    training and measured here: 44 of 44 frames are FIGURE-FREE, and 44 of 44
+    stand on GRASS. The fix is a variety batch, not a hyperparameter and not a
+    weight.
 
   bars: pipeline/lora/train-sapling-0822.yaml '## BARS'
   bar_grid: pipeline/lora/bars-sapling-0822.yaml

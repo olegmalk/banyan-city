@@ -4,7 +4,18 @@ Enabler #1 for the founder's **one day per episode from ep3 on** bar
 (`STATE.md`, 2026-08-20): move character identity out of the prompt and into the
 weights, so it stops being re-fought per frame.
 
-**Nothing here has been trained. Nothing here is filed on the queue.** $0 spent.
+**THE SAPLING LoRA IS TRAINED AND MEASURED (2026-08-22).** $0 spent, still — one
+card-hour on an idle box, no provider. Jerry is not trained; his spec is re-held
+on the age pivot.
+
+**Verdict in one line: the trigger DRAWS the canon two-leaf sapling — the object
+five closed wording ladders never produced — at 14/15 on the committed count
+ruler, and three of five bars still fail.** All three failures trace to the two
+monocultures this file named before training: every frame is figure-free, and
+every frame stands on grass. Full scoring with pixels:
+**`review/ep3-sapling-lora-0822/SHIP-0822.md`**. Where the weights live and what
+weight is sanctioned (none, and the ladder says why):
+**`registry.yaml`**.
 
 | file | what it is |
 |---|---|
@@ -13,9 +24,32 @@ weights, so it stops being re-fought per frame.
 | `build_dataset.py` | UNIT 2 — turns the curation into captions + a sha-addressed manifest. `--check` re-verifies |
 | `captions/jerry/*.txt` | UNIT 2 — 31 generated captions |
 | `manifest-jerry.yaml` | UNIT 2 — generated. Paths, shas, captions, tiers |
-| `SETUP.md` | UNIT 3 — the one-time trainer install on the box. **The current blocker** |
-| `train-jerry-0820.yaml` | UNIT 3 — the training job + pre-registered bars. Not filed |
-| `sample_lora.py` | UNIT 3 — draws one frame from a trained LoRA in the render venv |
+| `SETUP.md` | UNIT 3 — the one-time trainer install on the box. **Ran end to end 2026-08-20; no longer a blocker** |
+| `train-jerry-0820.yaml` | UNIT 3 — Jerry's training job + bars. **Re-held on the age pivot, never run.** Also carries the `min_bucket_reso 1024` defect below and would die on it |
+| `manifest-sapling.yaml` | UNIT 2 — the sapling dataset. 44 frames, 17 plates, all SDXL-provenanced |
+| `captions/sapling-0821/*.txt` | UNIT 2 — 44 captions. Leaf count and story height stay EXPLICIT, so they cannot fuse into the trigger |
+| `train-sapling-0822.yaml` | UNIT 3 — **the run that happened.** Recipe, the item-18 scope gate in code, and the pre-registered bars |
+| `sample-sapling-0822.yaml` | UNIT 3 — the samples, re-filed after the peft failure. Does not re-train |
+| `bars-sapling-0822.yaml` + `run_grid.py` | UNIT 4 — the 15-cell bar grid and the recorded-not-graded leaf-count probe |
+| `ladder-sapling-0822.yaml` + `run_ladder.py` | UNIT 4 — the LoRA-weight ladder. **It runs backwards; see the verdict** |
+| `registry.yaml` | UNIT 5 — where trained weights live, their sha256s, and what weight is sanctioned |
+| `sample_lora.py` | UNIT 3 — draws one frame from a trained LoRA in the render venv. **Refuses up front without a PEFT backend** |
+
+## Three things that cost time, so they cannot cost it twice
+
+1. **`--min_bucket_reso 1024` against an 832 short side is an instant abort.**
+   sd-scripts asserts `min(resolution) >= min_bucket_reso`. Research §5's memory
+   line is the standard 1024² SDXL config, where it passes by coincidence; for
+   our 9:16 plates the min must be 832. **`train-jerry-0820.yaml` still has the
+   1024 and would die the same way.**
+2. **A LoRA sample needs `peft` and neither venv had it.** diffusers 0.29.2 gates
+   all LoRA loading behind `USE_PEFT_BACKEND`. Install it
+   **`--no-deps`** — a bare install can resolve torch away from 2.11.0+cu128 and
+   break every render on the box.
+3. **A rank-32 SDXL checkpoint is 228 MB, not the ~35 MB research §5 says.**
+   Never publish weights to `farm-out/`: GitHub hard-rejects blobs over 100 MiB
+   and the courier commits before it pushes, so one of them stops **every** lane's
+   results reaching the tree. Three `.gitignore` guards now block it.
 
 ## Scope: who gets one
 
@@ -76,9 +110,12 @@ and 2 leaves in 001 rising to ~1.6 m and 6 leaves by 006a) means scale and leaf
 count must stay *variables in the captions*, never baked in, or one LoRA cannot
 serve seven episodes. Research doc §3 and §4 spell that out.
 
-**BUILT 2026-08-21 — `manifest-sapling.yaml`, 26 frames, gate cleared on scale
-and scenes, NOT on leaf count.** Purpose-built rather than harvested, in three
-steps, all $0:
+**BUILT 2026-08-21 — `manifest-sapling.yaml`. v1 was 26 frames over 11 plates;
+v3 is 44 FRAMES OVER 17 PLATES, with the lighting ratio moved from 26 daylit : 0
+non-daylit to 26 : 18.** Gate cleared on scale and scenes, NOT on leaf count. The
+three build steps below describe v1 and their counts are v1's; v2 added the
+lighting axis and v3 added the rule for asking for it (see the header of
+`manifest-sapling.yaml`). Purpose-built rather than harvested, all $0:
 
 1. **Plates.** Four rounds of goblin-free, plant-free ground planes by text
    (`review/ep3-sapling-dataset-0821/plates-0821.yaml`). The rule that bought
@@ -110,18 +147,41 @@ kept as separate tokens so the set cannot teach that camera distance is growth.
 
 ## Next rungs, named and not fired
 
-1. **Run SETUP.md on the box** (~3–4 GB of download, no GPU needed, can run
-   while the card is busy), then file `train-jerry-0820.yaml --backlog`.
-2. **A variety batch for Jerry**, ~30 GPU-minutes. All 31 frames are crouched or
-   seated in a sunny field; there is one true close-up and no standing figure,
-   no back view, no night. Bar B5 in the training spec is designed to expose
-   exactly this, and if it fails, this is the fix.
-3. ~~**The sapling composite dataset**~~ — DONE 2026-08-21, see State. What is
-   left of this rung is the **training spec**, which is not written: there is no
-   `train-sapling-0821.yaml`, and writing one before SETUP.md exists on the box
-   would be filing against an installer that has never run. It waits behind
-   rung 1, not behind the dataset.
-4. **Two open R4 questions for the founder, with pixels** — both surfaced by
+Reordered 2026-08-22 by what the sapling run measured. Cheapest first; none of
+1–4 needs the founder awake.
+
+1. **A FIGURE BATCH FOR THE SAPLING, ~40 GPU-minutes. The one that matters.**
+   Composite the canon sapling onto plates that CONTAIN A GOBLIN. All 44 frames
+   are figure-free and the LoRA learned it: asked for a goblin beside the plant
+   it drew none twice and a creature with the plant FUSED INTO ITS BODY once,
+   and in the no-regression pair it DELETED a figure from a prompt it was not
+   invited to. Three of five bars fail on this single gap, and ep3's entire
+   on-screen cast is these two characters — a sapling LoRA that erases the other
+   half of the cast cannot serve the episode it was built for.
+2. **A NON-GRASS GROUND BATCH, ~20 GPU-minutes.** Tilled earth, stone, sand,
+   snow, floorboards. Measured: ground COLOUR generalises (brown dry grass 3/3)
+   and ground MATERIAL does not (bare tilled earth 1/3).
+3. **Grade the earlier sapling epochs, ~15 GPU-minutes each.** Epochs 2/4/6/8
+   are on the box unexamined. The fusion defect is what overfitting to "plant
+   alone" looks like, so an earlier checkpoint may hold the sapling with less of
+   it. Their sha256s are in `registry.yaml`.
+4. **THE LEAF-COUNT COMPOSITOR — now urgent, not merely named.** The probe asked
+   the trained LoRA for four leaves and it drew two: the count is fused into the
+   trigger and is not promptable. Canon rises 2 → 6 leaves by 006a, so this gates
+   every episode after 003b. A tool that can draw three, five and six blades
+   still does not exist.
+5. **The plate-step loader, deliberately NOT written.** `render_wave_sample.py`,
+   `still_local.py` and `controlnet_plate.py` contain no LoRA code; the change is
+   ~8 lines at `render_wave_sample.py:236` plus the sidecar fields. No work
+   without a consumer, and the consumer for a loader is a LoRA that passed.
+6. **Jerry.** His spec is re-held on the 2026-08-21 age pivot and its dataset is
+   the wrong age; the gate is a founder ruling on `/review/ep2-goblin-age-0821`.
+   When it is refiled, **fix `min_bucket_reso` first** — it is 1024 against an
+   832 short side and aborts before the first weight loads.
+7. **A variety batch for Jerry**, ~30 GPU-minutes, behind rung 6. All frames are
+   crouched or seated in a sunny field; no standing figure, no back view, no
+   night.
+8. **Two open R4 questions for the founder, with pixels** — both surfaced by
    curating, neither settled here because taste is his: (a) Jerry's **ear
    shape** is unstable across the source frames, long pointed vs small rounded,
    and the ratified wording says nothing about ears; (b) `node.md` describes

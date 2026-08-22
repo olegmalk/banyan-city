@@ -10027,3 +10027,108 @@ twelve hours, so the fix is a bare-id pair plus an assertion that refuses the
 emit when any runner-read key names a sibling id. The artifact is kept exactly
 where the box put it: the producing job's manifest is the authority, and a spec
 edited to describe a run it did not produce is the worse lie.
+
+## 2026-08-22 — THE SAPLING LoRA IS TRAINED. THE TRIGGER DRAWS THE PLANT THE CHECKPOINT HAS NEVER ONCE DRAWN, AND THREE OF FIVE BARS FAIL ON ONE DATASET GAP
+
+**$0. One card-hour on a box that was measured IDLE with an EMPTY backlog at
+06:18Z** — the founder asleep, every beat rung founder-gated, and two
+zero-dependency jobs' worth of work sitting in a spec nobody had filed.
+
+**`bnysapling` DRAWS THE CANON TWO-LEAF SAPLING.** That is the headline and it is
+a first. `pipeline/work-ladder-0819.md` records five closed wording ladders for
+this object, all failing the same way — bead-strung vines, faceted crystals on
+bare twigs, leaf counts of 4 and 8 and 3 but never 2. **There has never been a
+pool of correct model-drawn saplings to curate, because the model has never drawn
+one.** Training on 44 numpy composites taught it: a three-token trigger now
+returns the plant at **14 of 15 on the committed count ruler**
+(`pipeline/leaf-count-bar-0817.md` §3, verbatim, tie-breaks and all), in the
+show's line and palette, **with no leaf-count word anywhere in the negative** —
+so the weights carry the count, not the prompt.
+
+**Scored against bars committed at `9a4042299` before any pixel existed**, all 15
+frames read at 1:1, blind cold reader for identity (the beat-20 instrument, a
+fresh agent given one frame and the canon clause and nothing else):
+
+| bar | | |
+|---|---|---|
+| B1 identity | **11/15** | FAIL (bar ≥13) |
+| B2 ground | **4/6** | FAIL by one frame |
+| B2 light + setting | **3/3** | PASS |
+| B2 scale | **0/3** | FAIL |
+| B2 figure in frame | **0/3** | FAIL |
+| B3 no-regression @0.8 | figure deleted, palette shifted | FAIL |
+| B4 style | **15/15** | PASS |
+| B5 leaf count = 2 | **14/15** | PASS, exactly on the committed floor |
+
+**ALL THREE FAILURES ARE ONE ROOT CAUSE, and it was named in `pipeline/lora/README.md`
+before training: 44 of 44 frames are FIGURE-FREE and 44 of 44 stand on GRASS.**
+Asked for a goblin beside the plant it drew none twice and, once, a creature with
+the sapling **fused into its body** — the blind reader, with no idea what it was
+looking at, wrote *"Creature body with face, limbs"*. Two of B1's four misses are
+that same fusion. And in the no-regression pair the small figure standing on the
+bridge is present without the LoRA and **gone with it**; an object deleted is not
+a tone shift. On ground: brown dry grass generalised **3/3** and bare tilled earth
+**1/3** — the trigger has learned ground COLOUR and not ground MATERIAL.
+
+**THE WEIGHT LADDER RUNS BACKWARDS, and this is the useful surprise.** When B3
+failed at 0.8 the obvious move was to turn the LoRA down. Measured 0.65/0.5/0.35/0.2
+on both sides: contamination fades smoothly as the weight drops, and **the sapling
+collapses below 0.65** — at 0.50 it sprouts from a green bulb with a face, at 0.20
+it is a round green mascot creature with closed eyes. That is the base
+checkpoint's own prior returning, the exact creature the five wording ladders kept
+drawing, which means **the LoRA at HIGH weight is the thing suppressing it.** The
+two curves never cross; usable band is 0.65–0.8 and B3 fails across all of it.
+**No shipping weight is sanctioned** (`pipeline/lora/registry.yaml`,
+`shipping_weight: null`). Turning it down is not the fix; the dataset is.
+
+**RECORDED, NOT GRADED, as declared in advance because the set could not teach it:
+asked for FOUR leaves, the trigger drew TWO.** Leaf count is fused. Fine for ep3,
+a wall after it — canon rises 2→6 by 006a, so **the leaf-count compositor stops
+being "named and not written" and becomes the thing that gates every episode after
+003b.**
+
+**THREE DEFECTS FOUND AND MADE CODE, none of them about the model:**
+1. **`min_bucket_reso 1024` aborts against an 832 short side** — sd-scripts
+   asserts `min(resolution) >= min_bucket_reso` before loading a weight. The
+   1024/2048 pair is research §5's standard-SDXL config, correct only for 1024²
+   where it passes by coincidence. **`train-jerry-0820.yaml` carries the identical
+   pair and would die the same way in its own first fifteen seconds** — flagged to
+   that lane, not edited from here.
+2. **`sample_lora.py` had never been executed.** diffusers 0.29.2 gates all LoRA
+   loading behind `USE_PEFT_BACKEND` and `peft` was absent from BOTH venvs, so the
+   job trained cleanly for twenty minutes and died in nine seconds. Fixed with
+   `--no-deps peft==0.12.0` (freeze diff exactly one line, torch unchanged at
+   2.11.0+cu128, bf16 matmul on the card re-verified). The sampler now refuses up
+   front with that command in the message.
+3. **A rank-32 SDXL checkpoint is 228 MB, not the ~35 MB research §5 claims** —
+   the SD1.5 number carried forward, wrong by 6.5×, and the publish step was about
+   to copy FIVE of them into `farm-out/`. GitHub hard-rejects blobs over 100 MiB
+   and the courier commits `farm-out` locally before pushing, so **one of these
+   would have left a permanently unpushable commit and stopped every other lane's
+   results reaching this tree.** Caught before publish ran. Blocked now in three
+   places — repo `.gitignore`, a `farm-out/.gitignore` on the box's courier
+   worktree, and a per-job one — each verified with `git check-ignore`. Weights
+   stay on the box; their sha256s travel in `registry.yaml`.
+
+**GOVERNANCE, ON THE PAGE AND NOT SETTLED HERE.** DECISIONS.md item 18 is open.
+Its text bans training "from LTX frames… for LTX material specifically"
+(`DECISIONS.md:685-687`) — LTX-scoped by its own words, because its source is the
+LTX-2 licence and not a house rule about self-training. Zero LTX pixels entered
+this run and that is enforced in code: the stage step refuses unless every frame's
+sha256 matches the manifest AND the manifest asserts an animagine chain for that
+exact frame (it printed `staged 44 image+caption pairs`, zero mismatches). **The
+steward is not closing item 18** — what is argued is that this run is outside its
+scope, and the ruling is the founder's, now with pixels attached.
+
+**HIS MORNING LOOK: `review/ep3-sapling-lora-0822/SHIP-0822.md`** — seven contact
+sheets, the full scoring, the ladder, and the two things on the page that are his
+and nobody else's (the item-18 reading, and whether this is the sapling he wants
+once the fusion is fixed).
+
+**NEXT, AND NONE OF IT NEEDS HIM AWAKE:** a figure batch (~40 GPU-min, the one
+that matters — three bars fail on it and ep3's whole cast is these two
+characters), a non-grass ground batch (~20 min), grading the four unexamined
+epochs (~15 min each), then the leaf-count compositor. The plate-step loader is
+deliberately NOT written: `render_wave_sample.py`, `still_local.py` and
+`controlnet_plate.py` contain no LoRA code at all, the change is ~8 lines, and the
+consumer for a loader is a LoRA that passed its bars. This one has not.
