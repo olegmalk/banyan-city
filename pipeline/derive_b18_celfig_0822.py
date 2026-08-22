@@ -21,19 +21,39 @@ casting sheet: same checkpoint, same absence of any reference, and round 2's
 prose-plus-style-tail was unmistakable cinematic anime where round 1's booru tag
 list was flat. That finding has never been pointed at the fig.
 
-SO THE ONE VARIABLE IS THE DIALECT, and it is spelled out rather than implied:
-`cel shaded anime illustration, clean black ink outlines, flat colour, one hard
-shadow edge`. The fig's own canon is carried verbatim from
-`authored_b18_canon_0816` -- deep purple-violet, green at its neck, matte -- and
-the count clause is carried too, because `the only fruit in frame` is the clause
-that made this beat's third round the one that worked.
+ROUND 1 CAME BACK AS A FLAT PURPLE RECTANGLE. Three black brush marks in an
+otherwise empty violet field: no fig, no stem, no sky, no picture. The cause is
+legible in the prompt rather than mysterious -- it asked for a PURPLE FRUIT and
+for `flat colour` in the same sentence, and the model resolved that by making
+the whole frame one flat purple plane. `flat colour` was the strongest term in
+a novel phrase, and the subject was the only thing in the sentence with a colour
+attached.
+
+THE ROUND-2 CORRECTION IS TO STOP INVENTING THE DIALECT. This repo already has
+a phrase that produces the approved look, and it is at the FRONT of every motion
+prompt in tonight's wave: `2D anime, hand-drawn cel animation, flat cel shading,
+clean ink linework, anime key art`. Ten clips rendered on it tonight and not one
+of them collapsed. Round 1 wrote its own five words instead. Round 2 uses the
+working phrase, verbatim, and puts it at position 0 where those prompts put it
+-- CLIP is order-sensitive and a style head that works at the front is not the
+same string at position 40, which is the same lesson the goblin lane learned
+when it moved four flags into a module and re-sampled before releasing a wave.
+
+`flat colour` and `one hard shadow edge` are both gone. The fig's own canon is
+carried verbatim from `authored_b18_canon_0816` -- deep purple-violet, green at
+its neck, matte -- and so is `the only fruit in frame`, the clause that made
+this beat's third round the one that worked.
+
+ONE VARIABLE against round 1: the wording. Same driver, same arm, same steps,
+cfg, size and SEED -- 20260818 is held deliberately so the two frames are a
+clean pair and the difference between them is attributable to the words.
 
 `glossy` and `specular highlight` are in the negative and this is the ONE place
 that is not merely hopeful. Beat 19's sapgloss sample measured a specular as a
 MID-SIGMA effect reachable by denoise strength, and measured `glossy` in the
 negative arriving anyway -- the positive-placement law's fifth firing. So the
 negative here is containment, and the thing actually doing the work is `matte
-and dusty` plus `flat colour` in the POSITIVE. Recorded so that if a gloss
+and dusty` plus `flat cel shading` in the POSITIVE. Recorded so that if a gloss
 arrives, nobody reads it as a surprise.
 
 THE STACK IS THE NO-ADAPTER, NO-CONTROLNET ONE, deliberately. The fig has a
@@ -49,7 +69,7 @@ run at rc 6 in one second. Asserted in --selftest.
 
 TOKENS ARE COUNTED ON THE STRING THE SAMPLER SEES, which on this route is the
 payload file byte-for-byte -- there is no count tag prepended here, unlike the
-goblin_ipa route that refused two guard jobs an hour ago. 75 positive, 68
+goblin_ipa route that refused two guard jobs an hour ago. 76 positive, 68
 negative, both under 77, both ending where they are meant to.
 
 $0, ~2 minutes of local GPU, one seed, one frame. The pick is R4's.
@@ -69,19 +89,36 @@ from derive_sapling_field_0821 import assert_under_clip77           # noqa: E402
 
 BEAT = 18
 NODE = "002b-first-citizen"
-SPEC_ID = "ep2-b18-celfig-0822"
-WORK = r"C:\banyan-farm\ep2-b18-celfig-0822"
+SPEC_ID = "ep2-b18-celfig-r2-0822"
+# ROUND 2. r1 came back as a FLAT PURPLE RECTANGLE with three black brush marks
+# in it -- no fig, no stem, no sky. The prompt asked for a purple fruit and for
+# `flat colour` in the same sentence and the model resolved that by making the
+# whole frame one flat purple field. `flat colour` is out, and the dialect is
+# now the phrase this repo ALREADY HAS WORKING rather than one I invented: the
+# five-clause head that opens every motion prompt in tonight's wave and
+# produces the approved look. It also moves to the FRONT, where it sits in
+# those prompts, because CLIP is order-sensitive and a style head that works at
+# position 0 is not the same string at position 40.
+R2 = True
+WORK = r"C:\banyan-farm\ep2-b18-celfig-r2-0822"
 DRIVER = "controlnet_plate.py"
 ARM = "nocontrol"
-SEED = 20260818
+SEED = 20260818  # held from r1: the WORDING is the variable
 RAW_BASE = "https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
 
-POSITIVE = (
+POSITIVE_R1 = (
     "One small deep purple-violet fig, green at its neck, matte and dusty, "
     "hanging from the thin bending stem of a tiny sapling against a soft pale "
     "sky, the only fruit in frame, cel shaded anime illustration, clean black "
     "ink outlines, flat colour, one hard shadow edge, extreme close-up, "
     "cinematic lighting, masterpiece, best quality, very aesthetic")
+
+POSITIVE = (
+    "2D anime, hand-drawn cel animation, flat cel shading, clean ink linework, "
+    "anime key art. One small deep purple-violet fig, green at its neck, matte "
+    "and dusty, hanging from the thin bending stem of a tiny sapling against a "
+    "pale sky, the only fruit in frame, extreme close-up, masterpiece, best "
+    "quality, very aesthetic")
 
 NEGATIVE = (
     "photorealistic, 3d render, abstract, text, watermark, signature, low "
@@ -102,9 +139,13 @@ BAR = (
     "PRE-REGISTERED FAIL MODES: a gloss arriving despite the negative, which is "
     "measured behaviour on this tree and would confirm rather than surprise; the "
     "cel words flattening the fig into a sticker with no form at all, which is the "
-    "opposite failure and the reason `one hard shadow edge` is in the positive "
-    "instead of `no shading`; a second fruit, which every wording round on this "
-    "beat has had to fight.")
+    "opposite failure and it is what ROUND 1 DID -- a flat purple rectangle, no "
+    "subject at all -- so it is not hypothetical here and a frame with no form is "
+    "scored as the same failure arriving twice; a second fruit, which every "
+    "wording round on this beat has had to fight. AND THE STOP RULE: this beat's "
+    "wording ladder closes at three rungs like every other in this tree. If round "
+    "2 also collapses, the dialect does not carry to an object on this checkpoint "
+    "and that is the finding -- not a round 4.")
 
 
 def driver_sha():
@@ -290,9 +331,16 @@ def _selftest():
                  "the only fruit in frame"):
         assert term in POSITIVE, term
     # The dialect clause, which is the entire point of the job.
-    for term in ("cel shaded anime illustration", "clean black ink outlines",
-                 "flat colour", "one hard shadow edge"):
+    for term in ("2D anime", "hand-drawn cel animation", "flat cel shading",
+                 "clean ink linework", "anime key art"):
         assert term in POSITIVE, term
+    # THE TERM THAT ATE THE FRAME. r1 asked for a purple fruit and `flat colour`
+    # in one sentence and got a flat purple frame. It may not come back.
+    assert "flat colour" not in POSITIVE
+    # The dialect head belongs at position 0 -- CLIP is order-sensitive and this
+    # is where the working motion prompts put it.
+    assert POSITIVE.startswith("2D anime, hand-drawn cel animation")
+    assert POSITIVE_R1 != POSITIVE
     # Gloss containment is a NEGATIVE and the positive carries the real lever.
     assert "glossy" in NEGATIVE and "specular highlight" in NEGATIVE
     assert "matte and dusty" in POSITIVE
