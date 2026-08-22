@@ -1,0 +1,237 @@
+id: ep2-b07-gradmotion-0822
+task: ep2-b07-gradmotion-0822
+node: 002b-first-citizen
+beat: 7
+runner: box
+priority: 14
+needs_gpu: true
+max_attempts: 1
+owner: the episode-finish compositor lane, 2026-08-22
+consumer: 'A CANDIDATE for beat 07 on review/ep2-beats-0821, and the evidence for one open question: does
+  the episode''s light arc survive motion. review/ep2-ship-0821 is NOT touched and no cut moves because
+  this landed. A swap happens only when this beat''s founder-named fault is measurably gone, and it is
+  veto-able in one line.'
+success: ONE 704x1280 105-frame 24fps mp4 in which the face is the one he approved -- small off-white
+  almond eyes, tiny dark pupils, eyebags, broad dome, near-horizontal ears -- and STAYS that face for
+  the whole clip. The named degenerate outcome is the eye drifting back to a large rendered iris over
+  the run, which is exactly what the head clause below was rewritten to prevent.
+why: 'THE FOUNDER VETOED THE FACE ON 2026-08-22 -- ''that aint my goblin'' -- and it was the EYE. Rounds
+  nine to twelve on beat 13 found it: naming the pupil (`slit pupils`, `constricted pupils`) draws a large
+  rendered iris every time, while `eyebags` flips the fill to an off-white field and `jitome` fixes the
+  size and shape. Both are RENDERING-CONVENTION tags, not feature tags, and that is the finding. Every
+  plate was re-rendered as w4 on the corrected recipe and opened at 1:1 on a common-scale contact sheet
+  before this spec was written.
+
+
+  THE ACTION IS CARRIED VERBATIM from ep2-b07-canonmotion-0821 so the plate is the only thing that changed.
+  THE HEAD CLAUSE IS NOT CARRIED AS WRITTEN: it said `off-white eyes with narrow vertical slit pupils`,
+  which is the vetoed eye, and a subject clause that disagrees with its own init is how this engine drifts
+  a face back to its prior over a clip.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  PYTHONUTF8: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b07-gradmotion-0822\b07-jobs-encode.json: '[{"beat": 20, "embeds": "C:\\banyan-farm\\ep2-b07-gradmotion-0822\\b07-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b07-gradmotion-0822\\b07-motion-prompt.txt", "negative_file":
+    "C:\\banyan-farm\\ep2-b07-gradmotion-0822\\b07-negative.txt"}]'
+  C:\banyan-farm\ep2-b07-gradmotion-0822\b07-jobs-render.json: '[{"beat": 20, "seed": 20260877, "embeds":
+    "C:\\banyan-farm\\ep2-b07-gradmotion-0822\\b07-embeds.pt", "init": "C:\\banyan-farm\\ep2-b07-gradmotion-0822\\b07-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b07-gradmotion-0822\\07-confiscate-LTX-ep2-b07-gradmotion-0822.mp4"}]'
+  C:\banyan-farm\ep2-b07-gradmotion-0822\b07-motion-prompt.txt: '2D anime, hand-drawn cel animation, static
+    locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject
+    already in frame: TWO figures, both present in the very first frame and in every frame after it. ONE
+    small green goblin with a bare hairless scalp, large pointed ears, small off-white almond eyes with
+    tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt,
+    dark shorts, dark boots, standing at the left. ONE TALL CITY GUARD, a grown man with near-black cropped
+    hair and round wire-rimmed glasses, wearing HIS OWN uniform and not the goblin''s: a tan wrap tunic
+    with a wide turned-down tan collar and a WHITE SASH OVER ONE SHOULDER, no mandarin collar and no frog
+    buttons. He stands at the right, facing the goblin, a full head taller. Both faces, both costumes
+    and the goblin''s skin colour DO NOT CHANGE for the whole clip. The goblin is standing, arms at sides,
+    beside tall grass, full body. THE ACTION: the guard''s arm comes up and points at him; he flinches
+    back a half step -- TWO figures the whole clip, and the point is aimed AT him. HALFWAY THROUGH the
+    guard''s arm is up and level, pointing at him, and he is leaning away.'
+  C:\banyan-farm\ep2-b07-gradmotion-0822\b07-negative.txt: second face, second goblin, two goblins, extra
+    head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing,
+    melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing,
+    cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark
+  C:\banyan-farm\ep2-b07-gradmotion-0822\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b07-gradmotion-0822\fetch_plate.py: "#!/usr/bin/env python3\n\"\"\"Fetch beat 07's\
+    \ GRADED pass-two plate, pinned by sha256.\n\nThe plate is a colour grade of a 0.30 identity pass\
+    \ off the founder's own\ncanon ref. A wrong byte is a clip in a light nobody chose, filed under this\n\
+    beat's name, so this refuses rather than warns.\"\"\"\nimport hashlib, os, sys, urllib.request\n\n\
+    OUT = r\"C:\\banyan-farm\\ep2-b07-gradmotion-0822\"\nURL = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/ep2-finish-graded-0822/b07-graded.png\"\
+    \nWANT = \"7cf2e09d8a3867c6dcf130f06d55d5f33d0cc61be62704887b4b84ea7a186d4f\"\nNAME = \"b07-graded.png\"\
+    \nUA = {\"User-Agent\": \"banyan-city-gradmotion/1.0 (albert.numbro@gmail.com)\"}\n\nos.makedirs(OUT,\
+    \ exist_ok=True)\nraw = urllib.request.urlopen(\n    urllib.request.Request(URL, headers=UA), timeout=120).read()\n\
+    have = hashlib.sha256(raw).hexdigest()\nif have != WANT:\n    sys.exit(\"!! SHA MISMATCH for %s --\
+    \ refusing.\" % NAME + chr(10) +\n             \"   want %s\" % WANT + chr(10) + \"   have %s\" %\
+    \ have)\nwith open(os.path.join(OUT, NAME), \"wb\") as fh:\n    fh.write(raw)\nprint(\"fetched %s\
+    \ %d bytes sha %s OK\" % (NAME, len(raw), have), flush=True)\n"
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b07-gradmotion-0822\fetch_plate.py
+- argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b07-gradmotion-0822\cover_crop.py
+  - --src
+  - C:\banyan-farm\ep2-b07-gradmotion-0822\b07-graded.png
+  - --sha256
+  - 7cf2e09d8a3867c6dcf130f06d55d5f33d0cc61be62704887b4b84ea7a186d4f
+  - --out
+  - C:\banyan-farm\ep2-b07-gradmotion-0822\b07-init-704x1280.png
+  - --size
+  - 704x1280
+  name: crop
+- argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b07-gradmotion-0822\b07-jobs-encode.json
+  name: encode
+- argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b07-gradmotion-0822\b07-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '105'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b07-gradmotion-0822
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b07-gradmotion-0822\bench-ep2-b07-gradmotion-0822.jsonl
+  - --bench-label
+  - ep2-b07-gradmotion-0822
+  name: render
+- allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b07-gradmotion-0822\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b07-gradmotion-0822/07-confiscate-LTX-ep2-b07-gradmotion-0822.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b07-gradmotion-0822/b07-init-704x1280.png\")\n  \
+    \           + glob.glob(\"C:/banyan-farm/ep2-b07-gradmotion-0822/bench-ep2-b07-gradmotion-0822.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b07-gradmotion-0822.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot\
+    \ pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+  name: publish
+artifacts:
+- C:\banyan-farm\ep2-b07-gradmotion-0822\07-confiscate-LTX-ep2-b07-gradmotion-0822.mp4
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. The line is untouched by this job. Beat 04''s staging is quoted in `script_line` from jerry_canon_0821.WAVE[4],
+  which is the same node text the canon plate under this clip was drawn against. NOTE ON PROVENANCE: this
+  spec''s parent is a BEAT 20 job and both of these keys cross derive_spec''s allow-list as structure
+  -- carried unedited they would have had beat 04 claiming beat 16''s restaging as its authority, so they
+  are re-stated here rather than inherited.'
+script_line: THE FOOTNOTE -- 'leans out from behind the trunk to look, and pulls straight back the moment
+  he has looked'. THE PEEK, the founder's own restaging pick (A, 2026-08-20). The eyes are the whole beat.
+bar: "THE CANON MOTION BAR. Read against taste/refs/goblin-canon-founder-0821.png\nfor the character and\
+  \ against this beat's done_when for the action.\n\n  M1  THE FACE IS DRAWN IN EVERY FRAME OF THE TRIMMED\
+  \ CLIP. This is the fault\n      the frame count exists to dodge and it is scored FIRST: step the clip\
+  \ and\n      confirm eyes, tiny dark pupils on an off-white field, eyebags, brow and mouth are present\
+  \ at the LAST frame,\n      not only the first. Silhouette and colour persisting while features\n  \
+  \    vanish is the exact failure signature -- it is a FAIL, not a soft frame.\n  M2  IDENTITY HOLDS.\
+  \ Same face at frame one and the last frame. Ears stay\n      large, lateral and pointed; eyes stay\
+  \ off-white with a slit pupil.\n  W1  WARDROBE HOLDS AND STAYS SEPARATE -- mandarin collar, shirt, dark\
+  \ shorts,\n      dark boots, and THE WAIST BOUNDARY IS STILL THERE. Shirt and shorts\n      resolving\
+  \ into one mass is the b08 garment-merge fault and it fails here\n      even if the colours are right.\n\
+  \  W2  NO CLOAK, NO HOOD, NO PATCHES appear at any point in the clip.\n  A1  THE BEAT'S ACTION COMPLETES\
+  \ INSIDE THE SLOT, and the frame number it\n      completes at is RECORDED. An action that completes\
+  \ after the trim point\n      did not happen as far as the cut is concerned.\n  C1  THE FRAME NEVER\
+  \ MOVES. No pan, no zoom, no drift.\n  C2  ONE SUBJECT, except beat 07, which requires TWO for its whole\
+  \ length."
+derivation:
+  parent: pipeline/jobs/ep2-b07-w4motion-0822.yaml
+  by: pipeline/file_gradmotion_0822.py
+  method: 'w4.build() verbatim, then exactly three edits: a sha-pinned fetch step in front, --src/--sha256
+    re-pointed at the fetched graded plate, and the provenance keys rewritten to say which light this
+    is and where it came from.'
+head_clause_rewrite: '''off-white eyes with narrow vertical slit pupils'' -> ''small off-white almond
+  eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression''. The ONLY edit to
+  the carried prompt.'
+not_done_on_purpose: 'ABSENT: ep2-b13-canon-w4curl-0821, the founder''s b13 story ruling (he curls DOWN
+  small, never rises) rendered as a second plate for that beat. It is a POSE change and gets its own motion
+  spec, not a slot in a wave whose variable is the face.'
+plate_provenance: 'farm-out/ep2-finish-graded-0822/b07-graded.png, 832x1216, sha256 7cf2e09d8a3867c6dcf130f06d55d5f33d0cc61be62704887b4b84ea7a186d4f.
+  Lineage: taste/refs (the founder''s own canon ref) -> farm-out/ep2-finish-plates-0822/b07.png (a 0.30
+  all-white-mask identity pass, which is why the face is his pixels and not a sample) -> this file, graded
+  by pipeline/ep2_finish_grade.py.
+
+  GRADE: station morning, converge t=1.000. lum 114.0 -> 131.2, R-B 20.1 -> 13.9, sat 0.268 -> 0.281.
+  Gates: ink lift +9.4 (max +14.0), newly clipped 0.272% high / 0.001% low (max 0.60%), mean hue drift
+  6.97 deg over 91.9% chromatic px (max 10.0). The grade is deterministic, $0, CPU, and its sidecar farm-out/ep2-finish-graded-0822/b07-graded.png.grade.json
+  carries every number above.
+
+  WHY A GRADE AT ALL: measured on all 19 pass-two plates, the 0.30 pass moved 33-48% of pixels more than
+  8 levels and the mean RGB by about ONE level, so the four lights the prompts asked for came back as
+  three inits at lum 170 / 115 / 97. The light in this frame was bought by the compositor because the
+  prompt could not buy it.'
+the_one_variable: THE PLATE'S LIGHT. Recipe, action sentence, head clause, eye clause, seed policy and
+  bar are carried byte-for-byte from ep2-b07-w4motion-0822, whose own one variable was the w4 plate. The
+  init here is the pass-two finish plate for this beat put through pipeline/ep2_finish_grade.py at station
+  'morning', converge t=1.000. A difference between this clip and its w4 sibling is attributable to the
+  grade and to nothing else.
+grade_sample_rule: BEHIND BEAT 17, WHICH IS THE GRADE'S ONE SAMPLE. Filed at priority 14 so 17 (priority
+  6) renders and is judged first. If 17's clip fails on the grade, cancel this spec; do not score it.
+plate_ack:
+- 'unfetchable: farm-out/ep2-finish-graded-0822/b07-graded.png is a Mac-side CPU colour grade of farm-out/ep2-finish-plates-0822/b07.png,
+  not a farm-out render, so it is not on origin/farm-results-rtx5090 and never will be. It is on origin/main
+  at sha256 7cf2e09d8a3867c6dcf130f06d55d5f33d0cc61be62704887b4b84ea7a186d4f and the job''s own fetch
+  step refuses any other bytes. OPENED AT 1:1 by the episode-finish compositor lane on 2026-08-22, side
+  by side against the ungraded plate, before this spec was written.'
+- 'unresolved: no farm-out job produced this plate and none should -- the grade is deterministic, $0 and
+  CPU-only (pipeline/ep2_finish_grade.py), and burning a GPU job to launder it into a farm-out directory
+  would buy provenance we already have. The producing tool, its station, its converge t and all three
+  gate readings are in farm-out/ep2-finish-graded-0822/b07-graded.png.grade.json, committed beside the
+  plate.'
