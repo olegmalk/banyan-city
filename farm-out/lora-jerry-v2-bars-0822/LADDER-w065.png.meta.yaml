@@ -1,0 +1,18 @@
+platform: "local-gpu (rtx5090, CUDA, bfloat16)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+lora: "bnyjerry-sdxl-v2.safetensors"
+lora_sha256: "4340857d02f17dbfa50c66e0a2d8f4dc3ffebb4fad1621bb3f59242e61bfeb8b"
+lora_weight: 0.65
+cost_usd: 0.0
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260822
+png_sha256: "5676b59ac6a2fb8e719f4b13d48bde5ac6531f108880fa636f5e33adccc3f65f"
+prompt: "bnyjerry, 1boy, solo, standing, upper body, in a dim workshop, single candle, anime style, cel shading, masterpiece, best quality, very aesthetic"
+negative_prompt: "lowres, worst quality, low quality, text, watermark, photorealism, 3d render, blurry, 2boys, multiple heads"
+approved: false
+provisional: true
+founder_verdict: null
+scored: false

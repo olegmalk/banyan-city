@@ -1,0 +1,18 @@
+platform: "local-gpu (rtx5090, CUDA, bfloat16)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+lora: "none"
+lora_sha256: "none"
+lora_weight: 0.8
+cost_usd: 0.0
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260822
+png_sha256: "e62c916ac0f8d7cda27a14c9e5a5bf235c7d4b1e6b56aae088f56b1f6a57223f"
+prompt: "a stone bridge over a river, green hills behind, soft daylight, anime style, cel shading, detailed background, masterpiece, best quality, very aesthetic"
+negative_prompt: "1boy, goblin, people, text, watermark, blurry"
+approved: false
+provisional: true
+founder_verdict: null
+scored: false
