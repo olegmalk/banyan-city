@@ -2,10 +2,10 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "fd901f9c2df1d695a5f7d614cbfcf3b943173ac9",
-  "measured_at": "2026-08-22T13:46:55Z",
-  "job_count": 1732,
-  "ok": 1604,
+  "source_commit": "c974e9d0c10fd89a9376b9fb41272a2b25786b58",
+  "measured_at": "2026-08-22T14:42:37Z",
+  "job_count": 1735,
+  "ok": 1607,
   "failed": 128,
   "upcoming_count": 118,
   "skipped_sidecars": null,
@@ -13,6 +13,237 @@
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-b13-lowerbody-w3-0822-1787409233",
+   "task": "ep2-b13-lowerbody-w3-0822",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T14:34:01Z",
+   "finished_at": "2026-08-22T14:34:26Z",
+   "duration_s": 25,
+   "sidecar": "farm-out/box/ep2-b13-lowerbody-w3-0822-1787409233.json",
+   "spec_file": "pipeline/jobs/ep2-b13-lowerbody-w3-0822.yaml",
+   "purpose": {
+    "consumer": "THE v3 DATASET. Round two proved the route: a mask splits identity from pose and they stop trading, and the frame is seated with his head held. What it did not prove is that the frames are ON MODEL below the cut, and a v3 trained on pale cream thighs and paw feet would learn pale cream thighs and paw feet -- the exact way a defect becomes canon. This cell is the gate between one proof frame and a stance set.",
+    "why": "ROUND TWO PASSED SEVEN CLAUSES AND FAILED ONE. He is seated, the knees come up and out past the authored hint, the seam is invisible, one figure, and his head held at mean |delta| 1.247 at strength 0.95 -- a strength the i2i route measured as destroying his face at 0.45. The single failure is P3: pale cream thighs where canon is desaturated sage, and rounded dark paws where canon has boots. THAT IS A WORDING DEFECT ON A ROUTE WHOSE WORDING LEVER HAS MOVED ONCE AND MOVED EVERYTHING. Round one dr…",
+    "success": "ONE 832x1216 png whose bare thigh reads desaturated sage against the canon's own shin sample and whose feet are boots, with every clause round two passed still passing.",
+    "owner": "the goblin v3 lane, 2026-08-22 -- round three",
+    "est_minutes": 4,
+    "priority": 2
+   },
+   "artifacts_dir": "farm-out/ep2-b13-lowerbody-w3-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-lowerbody-w3-0822/b13-lowerbody-w3-s20260823-mask.png",
+     "name": "b13-lowerbody-w3-s20260823-mask.png",
+     "bytes": 1724,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-lowerbody-w3-0822/b13-lowerbody-w3-s20260823.png",
+     "name": "b13-lowerbody-w3-s20260823.png",
+     "bytes": 875730,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-lowerbody-w3-0822/jerry-seat-hint-0822.png",
+     "name": "jerry-seat-hint-0822.png",
+     "bytes": 8794,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-lowerbody-w3-0822/jerry-seat-init-0822.png",
+     "name": "jerry-seat-init-0822.png",
+     "bytes": 808705,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-lowerbody-w3-0822/jerry-seat-mask-0822.png",
+     "name": "jerry-seat-mask-0822.png",
+     "bytes": 1724,
+     "kind": "image"
+    }
+   ],
+   "prompt": "1boy, solo, seated, bare sage green legs, dark shorts, dark leather boots, short grass, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "pale legs, mittens, paws, tall grass, overgrown, foliage, bushes, lowres, worst quality, low quality, text, watermark, photorealism, 3d render, blurry, 2boys, multiple heads",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-lowerbody-w3-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 13,
+    "episode": null,
+    "label": "Beat 13",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b13-lowerbody-w2-0822-1787408948",
+   "task": "ep2-b13-lowerbody-w2-0822",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T14:29:13Z",
+   "finished_at": "2026-08-22T14:29:39Z",
+   "duration_s": 26,
+   "sidecar": "farm-out/box/ep2-b13-lowerbody-w2-0822-1787408948.json",
+   "spec_file": "pipeline/jobs/ep2-b13-lowerbody-w2-0822.yaml",
+   "purpose": {
+    "consumer": "THE v3 DATASET, unchanged. Round one proved the MASK half of the design -- his head survived a strength that has destroyed it in every previous round -- and left the POSE half untested, because the sampler filled the region with grass instead of a body. This cell asks whether the region can be made to contain legs. If it can and they are seated, the factory exists and four to six stances is the v3 set.",
+    "why": "THE PROMPT CHOOSES NOUNS, AND ROUND ONE'S ONLY NOUN FOR THE MASKED REGION WAS GRASS. Wording A is `1boy, solo, in tall grass, ...`; the mask handed the sampler the bottom 27% of the frame; it drew tall grass and no legs, row luminance falling 128 to 73 between y 880 and y 1000. `ep2-b08-nostrap2-0820` measured this lever and named it: removing `goblin` from a positive removed the goblin entirely at unchanged strength. A skeleton conditions WHERE a body goes; it does not ask for one. SO THE NOUN…",
+    "success": "ONE 832x1216 png with VISIBLE LOWER LIMBS that are SEATED and JOINED to the preserved torso, with mean |delta| above y 890 still at or below 2.0. Round one's null -- no legs -- is a FAIL of this cell, not a null.",
+    "owner": "the goblin v3 lane, 2026-08-22 -- round two",
+    "est_minutes": 4,
+    "priority": 2
+   },
+   "artifacts_dir": "farm-out/ep2-b13-lowerbody-w2-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-lowerbody-w2-0822/b13-lowerbody-w2-s20260823-mask.png",
+     "name": "b13-lowerbody-w2-s20260823-mask.png",
+     "bytes": 1724,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-lowerbody-w2-0822/b13-lowerbody-w2-s20260823.png",
+     "name": "b13-lowerbody-w2-s20260823.png",
+     "bytes": 959263,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-lowerbody-w2-0822/jerry-seat-hint-0822.png",
+     "name": "jerry-seat-hint-0822.png",
+     "bytes": 8794,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-lowerbody-w2-0822/jerry-seat-init-0822.png",
+     "name": "jerry-seat-init-0822.png",
+     "bytes": 808705,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-lowerbody-w2-0822/jerry-seat-mask-0822.png",
+     "name": "jerry-seat-mask-0822.png",
+     "bytes": 1724,
+     "kind": "image"
+    }
+   ],
+   "prompt": "1boy, solo, seated, bare legs, dark shorts, dark boots, short grass, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "tall grass, overgrown, foliage, bushes, lowres, worst quality, low quality, text, watermark, photorealism, 3d render, blurry, 2boys, multiple heads",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-lowerbody-w2-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 13,
+    "episode": null,
+    "label": "Beat 13",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b13-lowerbody-0822-1787408589",
+   "task": "ep2-b13-lowerbody-0822",
+   "node": "002b-first-citizen",
+   "beat": 13,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T14:23:19Z",
+   "finished_at": "2026-08-22T14:23:47Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b13-lowerbody-0822-1787408589.json",
+   "spec_file": "pipeline/jobs/ep2-b13-lowerbody-0822.yaml",
+   "purpose": {
+    "consumer": "THE v3 DATASET, and it has no other consumer. bnyjerry v2 trains identity well and cannot be posed by any lever this tree owns, because 21 of 21 of its training frames stand. The fix everyone converges on is v3 on POSED frames of him, and the open question is how to MAKE one. This job is that question as a single frame: if the head comes back byte-identical and the legs come back seated, the dataset factory exists and four to six stances at $0 is the v3 set. If it does not, the answer is outsid…",
+    "why": "EVERY POSE LEVER THIS TREE OWNS IS CLOSED AND THEY ALL CLOSED THE SAME WAY. Words: B5 fails, `crouching` returns a standing figure. openpose + LoRA: 0.80 and 0.65 keep his face and never bend a knee, 0.50 and 0.35 bend nothing and lose his face -- the two curves do not cross. The two-pass: six cells on an init that IS a seat, and the only cell that keeps the seat is the only cell where he is somebody else. i2i from canon: the face breaks between 0.40 and 0.45 and the pose has not moved at 0.40.…",
+    "success": "ONE 832x1216 png in which rows 0..889 are byte-identical to the init (maxdiff 0, measured not eyeballed) AND the legs below the cut are SEATED AND JOINED. All three clauses in `bar` in the same frame. A seated frame with a broken seam is not a training frame.",
+    "owner": "the goblin v3 lane, 2026-08-22 -- authored by pipeline/author_jerry_lowerbody_0822.py",
+    "est_minutes": 4,
+    "priority": 2
+   },
+   "artifacts_dir": "farm-out/ep2-b13-lowerbody-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b13-lowerbody-0822/b13-lowerbody-s20260823-mask.png",
+     "name": "b13-lowerbody-s20260823-mask.png",
+     "bytes": 1724,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-lowerbody-0822/b13-lowerbody-s20260823.png",
+     "name": "b13-lowerbody-s20260823.png",
+     "bytes": 1014150,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-lowerbody-0822/jerry-seat-hint-0822.png",
+     "name": "jerry-seat-hint-0822.png",
+     "bytes": 8794,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-lowerbody-0822/jerry-seat-init-0822.png",
+     "name": "jerry-seat-init-0822.png",
+     "bytes": 808705,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b13-lowerbody-0822/jerry-seat-mask-0822.png",
+     "name": "jerry-seat-mask-0822.png",
+     "bytes": 1724,
+     "kind": "image"
+    }
+   ],
+   "prompt": "1boy, solo, in tall grass, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "lowres, worst quality, low quality, text, watermark, photorealism, 3d render, blurry, 2boys, multiple heads",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b13-lowerbody-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT WITH ITS FAULT NAMED: he settles at the base of the stem and the fold-into-it happens, the shade thin. No ep2-b13 job dated 0817, 0818 or 0819 exists anywhere in the tree, so nothing is filed for the card. HIS 2026-08-18 BOARD RULING — \"the shipped version stands (no slide, he sits down…",
+    "gate": "ships under the two-round rule"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 13,
+    "episode": null,
+    "label": "Beat 13",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
   {
    "id": "lora-jerry-v2-twopass7-0822-1787406141",
    "task": "lora-jerry-v2-twopass7-0822",
