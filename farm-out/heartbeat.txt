@@ -4544,3 +4544,5 @@
 09:25:46Z DONE task=ep2-b13-i2icnet-s30-0822-1787390483 rc=0 artifacts=2
 09:25:52Z STARTED task=ep2-b13-i2icnet-s35-0822-1787390489 attempt=1 on box-runner
 09:26:09Z DONE task=ep2-b13-i2icnet-s35-0822-1787390489 rc=0 artifacts=2
+09:26:16Z STARTED task=ep2-b13-i2icnet-s40-0822-1787390494 attempt=1 on box-runner
+09:26:34Z DONE task=ep2-b13-i2icnet-s40-0822-1787390494 rc=0 artifacts=2
