@@ -566,6 +566,59 @@ subjects:
   # were authored under it and a reader tracing any of them needs to find what
   # they were authored under, not a blank.
   # ///////////////////////////////////////////////////////////////////////////
+  # ///////////////////////////////////////////////////////////////////////////
+  # ROUTE CLOSURE 2026-08-22. READ THIS BEFORE founder_ruling_2026_08_21 BELOW.
+  # The ruling below still stands -- his image is still the character. What is
+  # closed is the METHOD every rung since has used to chase it.
+  # ///////////////////////////////////////////////////////////////////////////
+  route_closure_2026_08_22: >-
+    THE FOUNDER VETOED ALL FOUR EYE ROUNDS, INCLUDING r11a: "these are not my
+    goblin." That is the fourth veto on this axis and it lands on roughly
+    SIXTEEN ROUNDS of face work -- the w2 sweep, the age pivot, rounds nine
+    through thirteen, the sq45/sq65 reference re-cuts, the two eye samples of
+    08-22 morning. Every one of them moved WORDS or moved the IP-ADAPTER, and
+    every one of them was judged against the same image and missed.
+
+    THE PROMPT-SIDE FACE ROUTE IS CLOSED BY RULE, NOT BY DISCOURAGEMENT. No
+    further rung on this character may be spent on: a positive or negative tag
+    aimed at the eye, brow, pupil, lash, ear or skull; an IP-Adapter scale; or
+    a re-crop of the reference at a new head fraction. Sixteen rounds is the
+    argument and the record above is the evidence -- r9c "closest so far",
+    r13a "narrowest and closest", r11a vetoed. "Closest so far" arrived four
+    separate times and was vetoed four separate times, which is what a route
+    with no reachable target looks like.
+
+    WHY IT COULD NOT HAVE WORKED, STATED AS THE MECHANISM. An IP-Adapter
+    reference is ENCODED -- CLIPImageProcessor resizes to 224 and centre-crops,
+    so his face reaches the denoiser as a few hundred tokens of embedding, and
+    the denoiser then RESOLVES a face out of the checkpoint's own prior. The
+    record already measured this and read it as a tuning result rather than as
+    the finding it was: at sq65 (58.9% encoded) the eye came back a green anime
+    iris, at sq45 (28.3%) it came back closer -- LESS reference detail helped,
+    because more detail gave animagine more high-frequency face to re-resolve
+    into its own eye. An embedding cannot carry a face this checkpoint does not
+    already want to draw. His pixels have to enter as PIXELS.
+
+    THE REPLACEMENT ROUTE, AND IT IS A MECHANICS CALL: IMG2IMG FROM HIS IMAGE.
+    taste/refs/goblin-canon-founder-0821.png becomes the INIT, not the
+    reference, at low strength (0.30-0.45 bracket) so the pass finishes his
+    face rather than inventing one -- the same relationship the 0.30 sapling
+    composites have to their drawn plant, and that route has now finished six
+    composited objects and 44 dataset frames without once losing the thing it
+    was handed. Where a beat needs a different pose, the skeleton supplies it
+    at ControlNet. ONE SAMPLE ON BEAT 13, judged at 1:1 against his image and
+    against nothing else, at most two rounds.
+
+    AND THE DURABLE FIX IS A LoRA TRAINED ON HIS PIXELS. The img2img route's
+    passing outputs, plus augmentation, become a goblin dataset -- every frame
+    judged faithful at 1:1 before it enters, no near-misses, which is the rule
+    the 31-frame set failed. The precedent is directly overhead in this repo:
+    the sapling LoRA was trained on COMPOSITES to teach the checkpoint a thing
+    it had never once drawn from words, and the trigger now draws it. Same
+    move, same reason, different object. After that, train-jerry-v2.
+
+    NO MORE PROMPT-SIDE FACE WORK, EVER. Pixels from his pixels.
+
   founder_ruling_2026_08_21: >-
     THE FOUNDER SELECTED THE ANSWER. 2026-08-21 16:54, verbatim, with an image
     attached:

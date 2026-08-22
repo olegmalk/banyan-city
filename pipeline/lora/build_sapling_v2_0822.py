@@ -87,12 +87,44 @@ import build_sapling_0821 as V1                    # noqa: E402
 
 TRIGGER = "bnysapling"
 V1_FRAMES = "farm-out/ep3-saplora-frames-0821"
-FIG_FRAMES = "farm-out/ep3-saplora-fignat-%s-0822"
+# THE PUBLISHED PATH IS NOT THE JOB'S NAME, AND THE ARTIFACT IS KEPT WHERE THE
+# BOX PUT IT. The naturalize specs publish into `ep2-fignat-<cell>-r2-0820` --
+# wrong about the episode, the round AND the date -- because the retoken pair
+# `b16-sapcomp -> fignat-<cell>` rewrote the parent id `ep2-b16-sapcomp-r2-0820`
+# inside the publish step's destination string before the full-id pair could
+# reach it. This is the SAME bare-id retoken defect STATE.md recorded twice on
+# 2026-08-22 (b16 sapnat4 published to a `-0821` directory for the same
+# reason), arriving a third time in a lane that had read about it.
+#
+# IT IS NOT RENAMED AND THE SPECS ARE NOT EDITED. The ruling on sapnat4 stands
+# and applies verbatim: "the producing job's manifest is the authority, and a
+# spec edited to describe a run it did not produce is the worse lie." Every
+# frame below is verified against `ep2-fignat-<cell>-r2-0820.sha256`, which is
+# the file the box itself wrote. The FIX belongs in the deriver's retoken
+# ORDER for the next run, not in a directory rename here.
+FIG_FRAMES = "farm-out/ep2-fignat-%s-r2-0820"
 CAPTIONS = "pipeline/lora/captions/sapling-v2-0822"
 MANIFEST = "pipeline/lora/manifest-sapling-v2.yaml"
 
 STYLE = "anime style, cel shading, detailed background"
 ALONE = "alone in the frame"
+
+# ── DROPPED AFTER THE PASS, ON THE BAR THAT PREDICTED IT. The naturalize spec's
+# D4 named g7 as the one frame at risk and named the number: its composite's
+# `foliage_palette` sampled ONE green-dominant pixel, so the drawn plant was a
+# single flat olive with no light/dark at all, and a chroma-floor sweep from
+# 0.15 to 0.02 did not move it -- g7's forest floor is genuinely brown and its
+# ferns are desaturated past being green-dominant. The frame was carried
+# through step 3 anyway because a 0.30 pass RE-SHADES what it is handed and
+# might simply have fixed it. Judged at 1:1: it did not. The plant is still one
+# flat tone, and it lies across his legs, so it reads as a sticker on a
+# photograph. Dropped. The prediction and the drop are both on the record and
+# the frame stays published as the evidence.
+FIG_REJECT = {
+    "g7": "D4, drawn-not-pasted. Flat single-tone plant (palette n=1); the "
+          "0.30 pass did not shade it. Predicted in the spec before the "
+          "render and dropped after it.",
+}
 
 # ── THE GROUND TOKEN, PER v1 PLATE, READ OFF THE PLATE AT THE ROOT POINT.
 # NOT read off the scene string: the scene string is what was ASKED FOR and
@@ -268,6 +300,8 @@ def collect():
         pose, pose_words, emotion, ground, _ = P.CELLS[cell]
         d = FIG_FRAMES % cell
         img = os.path.join(REPO, d, "fignat-%s-s20260820.png" % cell)
+        if cell in FIG_REJECT:
+            continue
         if not os.path.isfile(img):
             missing.append("fig %s (%s)" % (cell, d))
             continue
@@ -277,8 +311,15 @@ def collect():
             fid="f-%s" % cell, source="figcell", plate=cell, tier=tier,
             image=os.path.relpath(img, REPO), sha256=sha_of(img),
             ground=ground, figure=figure, figure_present=True,
+            # THE SETTING CLAUSE DOES NOT REPEAT THE GROUND WORD. The first
+            # draft passed the material in twice -- "rooted in wet mud, wet
+            # mud, the figure set back" -- which is not just ugly: a token
+            # doubled in every frame of a subset is a weight on that subset,
+            # and these eight are the whole ground fix. The plates share a
+            # plain high-key backdrop by construction (the pose route puts a
+            # soft disc behind him), so that is what the setting says.
             caption=caption(tier, figure, ground,
-                            "%s, the figure set back" % ground),
+                            "soft daylight, plain pale backdrop"),
             geometry="root %s, stem %d px, tilt %.1f deg, leaf-frac %.2f, "
                      "leaf-spread %.1f deg, plant %s of the figure, plate "
                      "skeleton %s" % (list(root), height, tilt, lf, ls, side,

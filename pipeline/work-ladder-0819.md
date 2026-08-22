@@ -9585,3 +9585,75 @@ tail, and the beat's two other faults are untouched and not claimed fixed.
 > blade arrives at f064 of 121 and is therefore NOT a trim — the tilt it would
 > cut is the one measured clause the beat passes. Same instrument, opposite
 > answer, and that difference is the whole value of a per-frame reading.
+
+## FOUNDER VETO 2026-08-22 (fourth) — "these are not my goblin", AND THE PROMPT-SIDE FACE ROUTE IS CLOSED BY RULE
+
+**All four eye rounds are vetoed, r11a included.** That was the rung this
+ladder had called the best of the set. With it go roughly **sixteen rounds** on
+one axis: the w2 sweep, the age pivot, rounds nine through thirteen, the sq45 /
+sq65 reference re-cuts, and the two eye samples of this morning.
+
+**THE PATTERN IS THE FINDING, AND IT IS NOT "TRY A FIFTH TIME".** Read the
+ladder's own verdicts in order:
+
+| round | this ladder wrote | founder |
+|---|---|---|
+| w2 sweep | the recipe that holds identity | **"that aint my goblin"** |
+| r9c | "closest to his goblin so far" | vetoed |
+| r13a | "the narrowest and closest to the founder's image" | vetoed |
+| r11a | best of the eye rounds | **"these are not my goblin"** |
+
+*"Closest so far"* arrived four separate times from four separate levers and
+was vetoed four separate times. That is not a tuning problem with a fifth
+setting in it; it is a route whose target is unreachable.
+
+**WHY IT COULD NOT HAVE WORKED, AND THIS LADDER ALREADY MEASURED IT WITHOUT
+READING IT.** Round nine's own line: *"more reference detail gives the denoiser
+more high-frequency face to resolve, and it resolves it into a"* — its own eye.
+sq65 at 58.9% encoded came back a green anime iris; sq45 at 28.3% came back
+closer. **LESS of his face reaching the encoder produced MORE of his face in
+the output.** That reads as a curiosity if the reference is a knob and as a
+proof if it is not: an IP-Adapter reference is *encoded* — resized to 224,
+centre-cropped, a few hundred tokens — and the denoiser then RESOLVES a face
+out of animagine's prior. An embedding cannot carry a face the checkpoint does
+not already want to draw. Sixteen rounds is what it costs to learn that from
+the output side.
+
+### CLOSED BY RULE. No rung on this character may be spent on:
+- a positive or negative tag aimed at the eye, brow, pupil, lash, ear or skull;
+- an IP-Adapter scale;
+- a re-crop of the reference at a new head fraction.
+
+Recorded in `pipeline/canon.yaml` under `route_closure_2026_08_22`, above
+`founder_ruling_2026_08_21` — **his image is still the character; what is
+closed is the method used to chase it.**
+
+### THE REPLACEMENT: IMG2IMG FROM HIS IMAGE — his pixels enter as PIXELS
+
+`taste/refs/goblin-canon-founder-0821.png` becomes the **INIT**, not the
+reference, at **strength 0.30–0.45**, so the pass FINISHES his face instead of
+inventing one. Where a beat needs a different pose, the skeleton supplies it at
+ControlNet.
+
+**The precedent is in this repo and it is one lane over.** The 0.30 pass is
+exactly the relationship the sapling composites have to their drawn plant: hand
+the pass a structure it must keep, run 12 of 40 steps so the layout steps never
+run, and it finishes rather than invents. That route has now carried six
+composited objects and all 44 sapling dataset frames without once losing the
+thing it was handed. Same mechanism, pointed at a face.
+
+**ONE SAMPLE ON BEAT 13**, judged at 1:1 against his image and against nothing
+else — that is the only bar. At most two rounds.
+
+### AND THE DURABLE FIX IS A LoRA TRAINED ON HIS PIXELS
+
+The img2img route's passing outputs plus augmentation become a goblin dataset;
+**every frame judged faithful at 1:1 before it enters**, no near-misses — which
+is precisely the rule the 31-frame set failed. Then `train-jerry-v2`.
+
+The sapling lane is the precedent and it is already measured: that LoRA was
+trained on COMPOSITES to teach the checkpoint an object five wording ladders had
+failed to draw, and `bnysapling` now draws it. Same move, different object.
+
+**No more prompt-side face work, ever. Pixels from his pixels.**
+
