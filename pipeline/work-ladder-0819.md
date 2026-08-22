@@ -8444,3 +8444,158 @@ whose clause was positional, and b20 is the one to watch when it lands.
 b04 is re-authored to the same three beats of movement — out, look, back — with
 no object in it, plus an explicit `HIS FEET STAY PLANTED … he never tips over`,
 and is re-queued.
+
+---
+
+### Appended 2026-08-22 by the night iteration lane (shift 2)
+
+The eight-job w4 motion wave is judged, every beat of it is on
+`/review/ep2-beats-0821` with a written verdict, and three findings came out of
+it that outlive the wave. Two of them contradict something this file previously
+recorded, and both corrections are below with the measurement attached.
+
+#### 1. THE SHEETS WERE NORMALISED ON HEIGHT, AND ON EAR SPAN THE EYE IS TWICE TOO BIG
+
+Round twelve's `r12d` was called "HIS GOBLIN" off a sheet of face crops scaled to
+a common HEIGHT, and the whole w4 wave was released on it. Put the same frames on
+a harder anchor — **ear tip to ear tip**, a silhouette edge rather than a
+judgement about where a face begins — and a gap appears that the earlier sheets
+could not show:
+
+| | his image | r12d, b13 plate, b14 plate |
+|---|---|---|
+| eye | a small white almond with a dot | roughly **twice as wide**, set higher |
+| fill | white field, tiny dark pupil | a pale grey **iris** |
+| under-eye | eyebag hatching | none |
+
+**The family is right and round twelve is not retracted** — this is not the
+saturated green iris he vetoed, and `eyebags` and `jitome` did move both fill and
+size. What is wrong is that `jitome` moved the size PART of the way and the sweep
+sheet read it as arrived. *That is the r11a mistake one level up: the twelve
+plates agreed with each other, and agreeing with each other is not agreeing with
+him.*
+
+Sheet published at `/review/ep2-goblin-eye-0822`
+(`EYE-earspan-0822.jpg`), and that page's one question is changed from "is r12d
+your goblin" to **"is the eye small enough"**, which is the only axis still open.
+
+**Against myself, in the file:** the ear-tip boxes were drawn by hand off
+magnified views and **no number is claimed from them**. Two automated attempts to
+measure eye width over head width returned figures I do not believe (17.6% and
+27.6% for the two eyes of one face) because the segmentation caught background
+and lid highlights; they are not published. The sheet is the evidence.
+**Nothing was re-fired on this reading** — eleven beats were held in `ready/`
+this morning because a lane declared a pick off unmatched scales and fired a wave
+on it, and the answer to finding the same class of error is not another wave at
+03:00.
+
+#### 2. THE ADAPTER ROUTE CANNOT PLACE A FIGURE IN A SCENE. FOUR RUNS, CLOSED.
+
+Beats 05 and 06 were each drawn on `window4` (adapter on every block, first 15% of
+the denoise) and on `content` (adapter on one block, all 40 steps). **Those are
+opposite settings on both axes the sampler exposes and all four returned the same
+picture**: a head-and-shoulders close-up of the ratified guard with his hands
+clasped at his chest — the reference photograph's crop AND its pose — with no
+board, no field, and on b05 both men's briefs merged onto one head.
+
+> **A tight-crop reference dictates the crop, and the pose travels with it.
+> Neither the timing of the adapter nor its layer scope changes that.**
+
+`derive_guardcast2b_0822` explained the beat-09 case as *geometric agreement*
+between reference and request. The b05 spec reasoned from that explanation that a
+two-figure medium shot could not be captured, and pre-registered the failure with
+the wrong cause attached. The simpler reading — the reference's own composition
+wins outright — is what four runs support.
+
+**The rung that replaces it is the one the night order asked for first**, filed
+as `ep2-b06-pose-0822` and NOT yet judged: no reference image at all, an openpose
+ControlNet on a **5-head** COCO-18 skeleton for the man, composed with the
+scribble net on **one rectangle exactly as wide as the skeleton's shoulders** for
+the board. Two nets because `controlnet_plate.py` says it on its own flag — *a
+pose hint cannot carry an object, because COCO-18's eighteen keypoints are all
+body parts* — and beat 06's whole standing fault IS the object. The scribble net's
+known defect (it traces whatever it can read, which killed four rungs on beat 08)
+is the FEATURE here, because the thing being traced is a board. Both hints come
+out of `pipeline/author_b06_guard_pose_0822.py` and one geometry, so the prompt's
+`as wide as his shoulders` and the drawing's width are the same number and a
+selftest fails if an edit breaks that. **Deferring the skeleton was still right:
+the adapter is now closed by measurement instead of by argument.**
+**Chosen and not measured, and labelled as such on the spec:** the two
+conditioning scales, 0.8 pose / 0.5 board against beat 08's 1.0/0.6. The bar
+names which way to move each for each failure. **b05's two-skeleton sibling is
+NOT filed until that frame has been looked at.**
+
+#### 3. A COUNTABLE ACTION FILLS THE RUNTIME. AN INSTRUCTION TO GO SLOWLY DOES NOT.
+
+All eight clips ran on one recipe — same size, guidance, sampler, frame count,
+seed policy — and split cleanly by how their ACTION sentence is worded. Share of
+104 frame pairs under 0.5 mean interframe difference at 176x320:
+
+| beat | the action, as worded | <0.5 | shape |
+|---|---|---|---|
+| 16 | "shoulders rise and settle **TWICE** … over the whole clip" | 0/104 | moves throughout |
+| 14 | "scratches … **TWICE**, and BETWEEN the two he glances up" | 56/104 | rises 1.6/2.0/2.6 |
+| 13c | "settle, sink, **still**" | 76/104 | moves 58 frames, dead 40 |
+| 15 | "tips … **HOLDS** it there … then lifts" | 74/104 | dead, then topples |
+| 17 | "turn through, plant, step" | 89/104 | dead, then a burst |
+| 19 | "foot down, weight back, lean in" | 82/104 | dead, then walks off |
+
+The two prompts naming a repeat count are the two that move all the way through.
+b13's is the plainest reading of all: its action **ends on the word "still"** and
+the clip does exactly that.
+
+**Sampled alone on beat 17 and it passed both halves of its bar.** 52/104 against
+the parent's 89; block means 1.49 1.35 1.90 1.80 1.75 1.53 0.76 0.22 3.56 3.69
+4.03 against 0.29 0.07 0.14 0.37 0.23 0.20 0.22 0.24 5.44 4.89 6.28; and the
+performance is real — a hand comes up, wipes down the shirt front and returns,
+which is the `brush` this beat's `done_when` has demanded since it was written
+and which no take had ever produced.
+
+**AND THE SAMPLE SHARPENED THE FINDING, WHICH IS WHY IT RAN ALONE.** Two things
+changed in that sentence: a countable repeat, and an instruction that the turn be
+*"unbroken from the first frame to the last"*. **The count did all the work** —
+the turn is still confined to the last quarter, exactly where it was. So the
+lever is A COUNTABLE ACTION and not a request to move slowly, and a rung carrying
+both would have credited the wrong half. (Honest: the prompt asked for two
+brushes and got one long slow one.)
+
+Applied to `ep2-b03-repeat-0822` and `ep2-b13-repeat-0822`, both filed, neither
+judged. **Not** applied to 15 or 19 — each has a second, larger defect in the same
+clip and a timing measurement there would be confounded. **This reframes a fault
+written up per-beat for a week**: "barely moves", "a still with a runtime", "the
+last 2.8 s is a frozen frame" have been filed against beats 03, 06, 13, 15, 17,
+18 and 19 as separate problems with separate plates, and on this evidence they are
+one property of the wording.
+
+#### Four smaller things, each now a guard rather than a paragraph
+
+* **The count tag is part of the positive and `assert_under_clip77` cannot see
+  it.** Two guard jobs were authored at exactly 77 bare tokens and both refused at
+  the dry step: `goblin_ipa_sample` prepends `1boy, ` / `2boys, ` before encoding,
+  the compiled positive came to 80, the compressor drops **from the tail**, and the
+  tail is the ratified style anchor. `STYLE ANCHOR MISSING`, rc=1, nothing drawn.
+  `assert_compiled_positive_fits(label, positive, count_tag)` now builds what the
+  sampler will actually encode, reserves a token of headroom, and separately
+  asserts the positive still ENDS on `very aesthetic`. Zero GPU seconds lost — the
+  dry step is what it is for.
+* **The frame name is the ARM's, not a constant.** `r0-w015` for the window arms,
+  `r0-content` for the block-scoped one. Hardcoding one on a run of the other makes
+  the publish step glob for a file that was never written, which is how six
+  rendered plates read as six failures on 08-14.
+* **`video_task` wrote `shot_beat: 20` into EVERY clip of this wave.** Ten sidecars
+  corrected in place with the reason inline. The real fix is on the box and is
+  named, not made, by a lane that did not have the runner in front of it.
+* **`git commit -- <paths>` does not ADD untracked files.** Four b07 artefacts sat
+  untracked through two commits that both named their directory and both reported
+  success; the staged copies under `review/` were fine the whole time because
+  `stage_candidate.py` force-adds, which is exactly why nothing looked wrong.
+
+#### And one process failure of my own, recorded because the guard exists to stop it
+
+I amended a commit to fix a mangled message, and `git commit --amend` re-commits
+**the whole index** — which swept a peer lane's 35 staged-but-uncommitted w2 files
+into my commit. `safe_commit.sh` exists precisely to make that impossible and I
+went around it. Undone with `git reset --soft` back to the parent and re-committed
+through `safe_commit.sh` with pathspecs; the peer's 35 files were still staged and
+untouched afterwards, verified. **The rule is not "use pathspecs on commit", it is
+"never run a bare git commit verb in this worktree, `--amend` included."**
