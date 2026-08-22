@@ -1,0 +1,120 @@
+{
+  "id": "ep2-jds-n08-0822-1787394687",
+  "task": "ep2-jds-n08-0822",
+  "node": "002b-first-citizen",
+  "beat": 13,
+  "worker": "box-runner",
+  "priority": 55,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\jds-n08-0822\\fetch_init.py"
+      ]
+    },
+    {
+      "name": "dry",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\jds-n08-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\jds-n08-0822\\init-headnat-flip-0822.png",
+        "--init-sha256",
+        "d4c153059f5100cbf569a989ff825fc0014aad9d339c6f16b02bf02a1c87432b",
+        "--mask-png",
+        "C:\\banyan-farm\\jds-n08-0822\\fullframe-mask-832x832-0822.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\jds-n08-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\jds-n08-0822\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\jds-n08-0822\\b13-jds-n08-DRY.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.25",
+        "--pad-crop",
+        "0",
+        "--blur",
+        "8",
+        "--seed",
+        "20261209",
+        "--note",
+        "GOBLIN DATASET CELL n08. img2img from a cut of the canon image: init `headnat-flip` at 832x832, strength 0.25, full-frame white mask (which is what makes the SDXL inpaint pipeline on base weights behave as plain img2img). Ground `a wall of ferns`, light `deep shade`. This is a TRAINING FRAME candidate for the jerry v2 LoRA, not a plate for any beat.",
+        "--dry-run"
+      ]
+    },
+    {
+      "name": "s20261209",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\jds-n08-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\jds-n08-0822\\init-headnat-flip-0822.png",
+        "--init-sha256",
+        "d4c153059f5100cbf569a989ff825fc0014aad9d339c6f16b02bf02a1c87432b",
+        "--mask-png",
+        "C:\\banyan-farm\\jds-n08-0822\\fullframe-mask-832x832-0822.png",
+        "--prompt-file",
+        "C:\\banyan-farm\\jds-n08-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\jds-n08-0822\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\jds-n08-0822\\b13-jds-n08-s20261209.png",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--strength",
+        "0.25",
+        "--pad-crop",
+        "0",
+        "--blur",
+        "8",
+        "--seed",
+        "20261209",
+        "--note",
+        "GOBLIN DATASET CELL n08. img2img from a cut of the canon image: init `headnat-flip` at 832x832, strength 0.25, full-frame white mask (which is what makes the SDXL inpaint pipeline on base weights behave as plain img2img). Ground `a wall of ferns`, light `deep shade`. This is a TRAINING FRAME candidate for the jerry v2 LoRA, not a plate for any beat."
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/jds-n08-0822\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b13-jds-n08-r2-0820\"\nNAMES = [\n    \"b13-jds-n08-s20261209.png\",\n    \"b13-jds-n08-s20261209-mask.png\",\n    \"b13-jds-n08-s20261209.png.meta.yaml\",\n    \"init-headnat-flip-0822.png\",\n    \"fullframe-mask-832x832-0822.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b13-jds-n08-r2-0820.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\jds-n08-0822\\b13-jds-n08-s20261209.png",
+    "C:\\banyan-farm\\jds-n08-0822\\init-headnat-flip-0822.png"
+  ],
+  "spec_sha256": "fa9e0b99857a7699df1329dafa1b87eefa684e7904060a83e2e7e823e00f8f83",
+  "started_at": "2026-08-22T10:34:40Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-22T10:34:53Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\jds-n08-0822\\b13-jds-n08-s20261209.png",
+    "C:\\banyan-farm\\jds-n08-0822\\init-headnat-flip-0822.png"
+  ]
+}
