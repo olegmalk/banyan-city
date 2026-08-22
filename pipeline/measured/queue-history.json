@@ -2,10 +2,10 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "c1720bbb4cfde93aa5e1ba6ecb6ea75b6cd4f22e",
-  "measured_at": "2026-08-22T07:03:18Z",
-  "job_count": 1570,
-  "ok": 1477,
+  "source_commit": "f76e1a8c14124db52f03c6618cda99188e1dcf01",
+  "measured_at": "2026-08-22T07:49:29Z",
+  "job_count": 1574,
+  "ok": 1481,
   "failed": 93,
   "upcoming_count": 108,
   "skipped_sidecars": null,
@@ -13,6 +13,385 @@
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep3-saplora-figg1-0822-1787384655",
+   "task": "ep3-saplora-figg1-0822",
+   "node": "003b-one-leaf-for-yes",
+   "beat": null,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T07:44:20Z",
+   "finished_at": "2026-08-22T07:44:51Z",
+   "duration_s": 31,
+   "sidecar": "farm-out/box/ep3-saplora-figg1-0822-1787384655.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/ep3-saplora-figg1-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep3-saplora-figg1-0822/ep3-saplora-figg1-0822-ipahead.png",
+     "name": "ep3-saplora-figg1-0822-ipahead.png",
+     "bytes": 1068416,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-figg1-0822/jerry-canon-h37fcrouch-0821.png",
+     "name": "jerry-canon-h37fcrouch-0821.png",
+     "bytes": 10906,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep3-saplora-figg1-0822/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null,
+   "story": {
+    "kind": "support",
+    "label": "Sapling dataset — episode 3 prep",
+    "moment": "Not a story beat. Pictures of the sapling in many places, sizes and lights, collected to teach the model to draw it the same way every time."
+   }
+  },
+  {
+   "id": "lora-sapling-bars-e6-0822-1787383929",
+   "task": "lora-sapling-bars-e6-0822",
+   "node": "003b-one-leaf-for-yes",
+   "beat": null,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T07:33:06Z",
+   "finished_at": "2026-08-22T07:38:16Z",
+   "duration_s": 310,
+   "sidecar": "farm-out/box/lora-sapling-bars-e6-0822-1787383929.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/lora-sapling-bars-e6-0822",
+   "outputs": [
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P1-s20260822.png",
+     "name": "P1-s20260822.png",
+     "bytes": 1040117,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P1-s20260823.png",
+     "name": "P1-s20260823.png",
+     "bytes": 1098391,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P1-s20260824.png",
+     "name": "P1-s20260824.png",
+     "bytes": 1130418,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P2-s20260822.png",
+     "name": "P2-s20260822.png",
+     "bytes": 951050,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P2-s20260823.png",
+     "name": "P2-s20260823.png",
+     "bytes": 921677,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P2-s20260824.png",
+     "name": "P2-s20260824.png",
+     "bytes": 938079,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P3-s20260822.png",
+     "name": "P3-s20260822.png",
+     "bytes": 1188044,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P3-s20260823.png",
+     "name": "P3-s20260823.png",
+     "bytes": 1169505,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P3-s20260824.png",
+     "name": "P3-s20260824.png",
+     "bytes": 1121616,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P4-s20260822.png",
+     "name": "P4-s20260822.png",
+     "bytes": 1114838,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P4-s20260823.png",
+     "name": "P4-s20260823.png",
+     "bytes": 1064007,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P4-s20260824.png",
+     "name": "P4-s20260824.png",
+     "bytes": 981830,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P5-s20260822.png",
+     "name": "P5-s20260822.png",
+     "bytes": 1158751,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P5-s20260823.png",
+     "name": "P5-s20260823.png",
+     "bytes": 1109545,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/P5-s20260824.png",
+     "name": "P5-s20260824.png",
+     "bytes": 1121101,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-e6-0822/PROBE-fourleaf-s20260822.png",
+     "name": "PROBE-fourleaf-s20260822.png",
+     "bytes": 1124752,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null
+  },
+  {
+   "id": "lora-sapling-ladder-0822-1787382429",
+   "task": "lora-sapling-ladder-0822",
+   "node": "003b-one-leaf-for-yes",
+   "beat": null,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T07:11:34Z",
+   "finished_at": "2026-08-22T07:14:10Z",
+   "duration_s": 156,
+   "sidecar": "farm-out/box/lora-sapling-ladder-0822-1787382429.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/lora-sapling-ladder-0822",
+   "outputs": [
+    {
+     "path": "farm-out/lora-sapling-ladder-0822/CLEAN-w020.png",
+     "name": "CLEAN-w020.png",
+     "bytes": 1399936,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-ladder-0822/CLEAN-w035.png",
+     "name": "CLEAN-w035.png",
+     "bytes": 1404081,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-ladder-0822/CLEAN-w050.png",
+     "name": "CLEAN-w050.png",
+     "bytes": 1399627,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-ladder-0822/CLEAN-w065.png",
+     "name": "CLEAN-w065.png",
+     "bytes": 1460508,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-ladder-0822/SUBJECT-w020.png",
+     "name": "SUBJECT-w020.png",
+     "bytes": 1268926,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-ladder-0822/SUBJECT-w035.png",
+     "name": "SUBJECT-w035.png",
+     "bytes": 1066846,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-ladder-0822/SUBJECT-w050.png",
+     "name": "SUBJECT-w050.png",
+     "bytes": 1111642,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-ladder-0822/SUBJECT-w065.png",
+     "name": "SUBJECT-w065.png",
+     "bytes": 1157253,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null
+  },
+  {
+   "id": "lora-sapling-bars-0822-1787382340",
+   "task": "lora-sapling-bars-0822",
+   "node": "003b-one-leaf-for-yes",
+   "beat": null,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T07:06:09Z",
+   "finished_at": "2026-08-22T07:11:22Z",
+   "duration_s": 313,
+   "sidecar": "farm-out/box/lora-sapling-bars-0822-1787382340.json",
+   "spec_file": null,
+   "purpose": null,
+   "purpose_note": "no spec on main for this task — deleted or pre-box-queue; see git history of pipeline/jobs/",
+   "artifacts_dir": "farm-out/lora-sapling-bars-0822",
+   "outputs": [
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P1-s20260822.png",
+     "name": "P1-s20260822.png",
+     "bytes": 1098375,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P1-s20260823.png",
+     "name": "P1-s20260823.png",
+     "bytes": 904548,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P1-s20260824.png",
+     "name": "P1-s20260824.png",
+     "bytes": 1154568,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P2-s20260822.png",
+     "name": "P2-s20260822.png",
+     "bytes": 1102658,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P2-s20260823.png",
+     "name": "P2-s20260823.png",
+     "bytes": 933618,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P2-s20260824.png",
+     "name": "P2-s20260824.png",
+     "bytes": 935828,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P3-s20260822.png",
+     "name": "P3-s20260822.png",
+     "bytes": 1247270,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P3-s20260823.png",
+     "name": "P3-s20260823.png",
+     "bytes": 1171379,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P3-s20260824.png",
+     "name": "P3-s20260824.png",
+     "bytes": 1178884,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P4-s20260822.png",
+     "name": "P4-s20260822.png",
+     "bytes": 1127898,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P4-s20260823.png",
+     "name": "P4-s20260823.png",
+     "bytes": 1077079,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P4-s20260824.png",
+     "name": "P4-s20260824.png",
+     "bytes": 960934,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P5-s20260822.png",
+     "name": "P5-s20260822.png",
+     "bytes": 1103478,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P5-s20260823.png",
+     "name": "P5-s20260823.png",
+     "bytes": 1119241,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/P5-s20260824.png",
+     "name": "P5-s20260824.png",
+     "bytes": 992290,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/lora-sapling-bars-0822/PROBE-fourleaf-s20260822.png",
+     "name": "PROBE-fourleaf-s20260822.png",
+     "bytes": 1103591,
+     "kind": "image"
+    }
+   ],
+   "prompt": null,
+   "negative": null,
+   "prompt_source": "not recorded — no artifact sidecar on the branch",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": null,
+   "verdict": null
+  },
   {
    "id": "lora-sapling-sample-0822-1787381652",
    "task": "lora-sapling-sample-0822",
