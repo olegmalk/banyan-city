@@ -63,7 +63,26 @@ def src_of(letter, offset, mod=r5):
     return os.path.join(REPO, "farm-out", jid, "%s-%s.png" % (jid, mod.ARM))
 
 
-def build(judged, note, dry_run=False):
+AGECHECK = """
+<div class="ask" style="border-color:var(--good)"><b>the sheet is still on the
+card — but the age question is already answerable, so here it is on its own.</b>
+This is the round-5 wording on cell C, the same man and the same seed as the
+schoolboy below. <b>Is this the right age?</b> Say <code>age yes</code> or
+<code>age no, too old / too young</code> and the nine men behind him are drawn
+or re-cut accordingly. He has a drool bead at his mouth — that one is a
+known coin-flip this recipe loses about half the time, it is paid for with spare
+draws, and it is <i>not</i> what this frame is asking you about.</div>
+
+<div class="anchor" style="border-color:var(--accent);background:#1b1a13">
+<img src="%(url)s/r5-agecheck.jpg" alt="round 5 age check">
+<figcaption><span class="tag">C</span><span class="desc"><b>ROUND 5, THE AGE
+FIX.</b> Same seed as round 4's C in the evidence block below, one clause of
+wording apart. Judge the age and the neck, ignore the mouth.</span></figcaption>
+</div>
+"""
+
+
+def build(judged, note, dry_run=False, agecheck=False):
     os.makedirs(OUT, exist_ok=True)
     shown, missing = [], []
     for token in judged:
@@ -92,6 +111,16 @@ def build(judged, note, dry_run=False):
             p4._jpeg(src, os.path.join(OUT, "r4-%s.jpg" % letter))
         r4_shown.append((letter, desc))
 
+    agecheck_html = ""
+    if agecheck:
+        src = src_of(r5.SAMPLE, 0)
+        if not os.path.exists(src):
+            raise SystemExit("!! --agecheck asked for but %s is not rendered"
+                             % os.path.basename(src))
+        if not dry_run:
+            p4._jpeg(src, os.path.join(OUT, "r5-agecheck.jpg"))
+        agecheck_html = AGECHECK % {"url": URL}
+
     new_cards = "\n".join(card(l, n, d) for l, n, d in shown)
     r4_cards = "\n".join(card(l, "r4-%s.jpg" % l, d, cls="old")
                          for l, d in r4_shown)
@@ -106,10 +135,9 @@ def build(judged, note, dry_run=False):
 <title>Guard 2 — round 5, pick one</title>
 <style>%(css)s</style></head><body><div class="wrap">
 
-<h1>Guard 2 — round 5, %(n)d candidates in their twenties, pick one</h1>
+<h1>%(h1)s</h1>
 
-<div class="ask"><b>answer:</b> <code>guardcast5 &lt;letter&gt;</code>
-&nbsp;— or <code>none, because X</code>, and X is the next round's one variable.</div>
+%(ask)s
 
 <div class="settled"><b>YOU WERE RIGHT THAT THEY WERE TOO OLD, AND THE PROMPT WAS
 ASKING FOR IT.</b> Round 3 opened with the words <i>a grown guard man, mature
@@ -131,15 +159,9 @@ seeds, same negative that got the sweat and drool off their faces.</div>
 <figcaption><span class="tag" style="background:var(--good)">1</span><span class="desc"><b>THE AGE TO MATCH.</b> Guard 1, as you ruled him. Every face below was judged against this one and dropped if it read older <i>or</i> younger. Guard 2 is not this man — he just has to be the same age as him.</span></figcaption>
 </div>
 
-<h2>Round 5 — the %(n)d that came back clean</h2>
-<p class="note">Judged at 1:1: dropped for reading middle-aged, dropped for
-reading like a schoolboy, dropped for a hand on the face, dropped for a drool
-bead or a sweat drop. What is below survived all four. Pick the one who looks
-like he works next to guard 1 and is <b>not</b> the sharp one.</p>
+%(agecheck)s
 
-<div class="grid">
-%(new)s
-</div>
+%(sheet)s
 
 %(note)s
 
@@ -176,7 +198,32 @@ cut is untouched.</p>
 
 </div></body></html>
 """ % {"css": CSS, "n": len(shown), "url": URL, "new": new_cards,
-       "r4": r4_cards, "r3": r3_cards, "r2": r2_cards, "note": note}
+       "r4": r4_cards, "r3": r3_cards, "r2": r2_cards, "note": note,
+       "agecheck": agecheck_html,
+       "ask": ("""<div class="ask"><b>answer:</b> <code>guardcast5 &lt;letter&gt;</code>
+&nbsp;— or <code>none, because X</code>, and X is the next round's one variable.</div>"""
+               if shown else
+               """<div class="ask"><b>answer:</b> <code>age yes</code> or
+<code>age no, too old</code> / <code>age no, too young</code>
+&nbsp;— one question only, and it is the one below. The faces to choose between
+are still drawing.</div>"""),
+       "h1": ("Guard 2 — round 5, %d candidates in their twenties, pick one"
+              % len(shown)) if shown else
+             ("Guard 2 — round 5, the age fix, one face while the sheet "
+              "renders"),
+       "sheet": ("""<h2>Round 5 — the %d that came back clean</h2>
+<p class="note">Judged at 1:1: dropped for reading middle-aged, dropped for
+reading like a schoolboy, dropped for a hand on the face, dropped for a drool
+bead or a sweat drop. What is below survived all four. Pick the one who looks
+like he works next to guard 1 and is <b>not</b> the sharp one.</p>
+
+<div class="grid">
+%s
+</div>""" % (len(shown), new_cards)) if shown else
+                ("""<h2>The other nine are on the card now</h2>
+<p class="note">They are queued behind a training job on the same GPU and land
+in one batch, judged at 1:1 before any of them reaches this page. Nothing is
+waiting on them but this sheet.</p>""")}
 
     if dry_run:
         print("dry run: %d card(s), %d bytes" % (len(shown), len(page)))
@@ -191,13 +238,20 @@ cut is untouched.</p>
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--judged", required=True)
+    ap.add_argument("--judged", default="",
+                    help="comma-separated cells that PASSED the 1:1 judge; "
+                         "may be empty while the batch is still on the card")
+    ap.add_argument("--agecheck", action="store_true",
+                    help="put the round-5 SAMPLE at the top as an age-only "
+                         "question. Use while the sheet is still rendering: "
+                         "the age is the founder's open question and it does "
+                         "not need nine more faces to be answered.")
     ap.add_argument("--note", default="")
     ap.add_argument("--dry-run", action="store_true")
     a = ap.parse_args()
     note = ('<p class="note">%s</p>' % a.note) if a.note else ""
     return build([t for t in a.judged.split(",") if t.strip()], note,
-                 dry_run=a.dry_run)
+                 dry_run=a.dry_run, agecheck=a.agecheck)
 
 
 if __name__ == "__main__":
