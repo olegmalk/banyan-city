@@ -4829,3 +4829,5 @@
 17:41:20Z DONE task=ep2-b04-gradmotion-0822-1787419727 rc=0 artifacts=1
 17:41:28Z STARTED task=ep2-b07-gradmotion-0822-1787419733 attempt=1 on box-runner
 17:47:29Z DONE task=ep2-b07-gradmotion-0822-1787419733 rc=0 artifacts=1
+17:47:35Z STARTED task=ep2-b02-finishnat-0822-1787420718 attempt=1 on box-runner
+17:47:54Z FAIL task=ep2-b02-finishnat-0822-1787420718 rc=1 step=publish
