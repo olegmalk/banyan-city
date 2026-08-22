@@ -500,3 +500,24 @@ derivation:
     - payload fetch_init.py (1450 -> 2066 chars)
     payload:prompt.txt:
     - payload prompt.txt (171 -> 169 chars)
+
+verdict_0822: |-
+  DROP as a dataset frame; PASS as a route sample.
+
+  Judged at 1:1 against taste/refs/goblin-canon-founder-0821.png, 2026-08-22.
+  E1 the eye SHAPE holds -- narrow almond, off-white field, tiny pupil, heavy
+  upper lid -- but THE PUPIL IS YELLOW where his is dark. E2/E3/E4/E5 all hold.
+  D1 FAILS OUTRIGHT: the cell asked for `standing on dry cracked bare earth, a
+  green hedgerow far behind` and the frame came back on the init's own MEADOW.
+  The ground underfoot did not move at all; only the light and the far background
+  did.
+
+  TWO FINDINGS, BOTH OF WHICH CHANGED THE BATCH:
+    1. GROUND MATERIAL UNDERFOOT IS NOT REACHABLE ON THIS ROUTE at full-body
+       framing. Where the figure stands is global structure, decided in the
+       high-noise steps a strength of 0.40 never runs -- the same mechanism that
+       closed the posing route. The route doc's `different grass, different
+       background` meant GRASS VARIATION and a far backdrop, and this cell is
+       what reading it as `different material` costs.
+    2. THE PUPIL. Followed down the full-body row at 0.30 (k02) and 0.20 (m02)
+       and it is yellow at all three. It is NOT a strength effect.

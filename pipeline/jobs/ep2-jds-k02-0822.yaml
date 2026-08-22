@@ -500,3 +500,8 @@ derivation:
     - payload fetch_init.py (1450 -> 2066 chars)
     payload:prompt.txt:
     - payload prompt.txt (171 -> 169 chars)
+
+verdict_0822: |-
+  DROP. full body, 0.30. Judged at 1:1: narrow almond, ears near horizontal,
+  smooth face, sage palette, costume correct -- and the pupil is YELLOW. Ground
+  still the init's meadow. Second of three points on the full-body pupil row.

@@ -500,3 +500,23 @@ derivation:
     - payload fetch_init.py (1454 -> 2068 chars)
     payload:prompt.txt:
     - payload prompt.txt (171 -> 138 chars)
+
+verdict_0822: |-
+  DROP, AND THE FRAMING IS DROPPED WITH IT.
+
+  Judged at 1:1, 2026-08-22. The backdrop arrived (a sky), and the face is the
+  worst of the three samples: eyes markedly LARGER and ROUNDER than his with red
+  pupils, ears larger and upswept. ~49% of this frame is his face.
+
+  Swept to the floor -- 0.20 (k07) and 0.15 (k08) -- AND IT DRIFTS AT BOTH. A row
+  whose floor fails cannot be rescued by its ceiling, so 0.25 and 0.30 on this
+  init were not rendered and are not claimed to have been.
+
+  THE REAL CAUSE, FOUND BY BUILDING ITS REPLACEMENT: `init-headsq` is a 560x560
+  cut blown to 832x832, 1.486x of LANCZOS. That softens exactly the two features
+  his identity lives in -- a tiny dark pupil inside a narrow almond, and a thin
+  ear outline -- and a soft feature is not a weak instruction to a denoiser but an
+  AMBIGUOUS one, which animagine resolves into its own prior. `init-headnat` is
+  the same square aspect cut at 1.000x, and it HOLDS at 0.30 (m03) and 0.25
+  (m04). The magnification was the defect. Round nine's law -- his pixels have to
+  enter as PIXELS -- reads a third time: not an interpolation of his pixels.

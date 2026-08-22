@@ -500,3 +500,19 @@ derivation:
     - payload fetch_init.py (1471 -> 2080 chars)
     payload:prompt.txt:
     - payload prompt.txt (171 -> 140 chars)
+
+verdict_0822: |-
+  DROP.
+
+  Judged at 1:1, 2026-08-22. The CROP worked -- a genuine cowboy framing,
+  mirrored, with a real background change. The FACE did not: pupils PINK, the eye
+  opening toward round, and the ears larger and swept UP. That is the design
+  route_closure_2026_08_22 records four founder vetoes against, arriving from the
+  pixel side for the first time.
+
+  THE CAUSE IS THE CROP, NOT THE PROMPT. Same strength, same seed family, same
+  words as j01, whose face held its shape. The one thing that moved is how much
+  of the frame his face occupies: ~15% at full body, ~29% here. At a fixed
+  strength a bigger face gives animagine's prior more latent area to re-resolve,
+  and it takes it. Swept: cowboy holds perfectly at 0.20 (k05) and fails at 0.25
+  (k04), so this framing's number is 0.20 and it is measured.

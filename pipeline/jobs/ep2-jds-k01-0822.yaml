@@ -500,3 +500,8 @@ derivation:
     - payload fetch_init.py (1450 -> 2066 chars)
     payload:prompt.txt:
     - payload prompt.txt (171 -> 169 chars)
+
+verdict_0822: |-
+  DROP. full body, 0.35. Eye shape holds, pupil yellow. Ground did not
+  arrive. Same as j01 one rung down; the full-body row is about the pupil and the
+  pupil does not move with strength.

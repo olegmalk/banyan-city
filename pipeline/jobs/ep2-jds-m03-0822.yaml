@@ -500,3 +500,14 @@ derivation:
     - payload fetch_init.py (1457 -> 2070 chars)
     payload:prompt.txt:
     - payload prompt.txt (171 -> 138 chars)
+
+verdict_0822: |-
+  ADMIT. headnat, 0.30.
+
+  Judged at 1:1, 2026-08-22. E1 narrow almond, off-white field, tiny dark pupil.
+  E2 broad dome, ears near horizontal, his size. E3 smooth. E4 sage, high-key.
+  E5 collar and placket in frame and correct. D1: real change -- hazy hills, light
+  rays, a warmer key than the init's.
+
+  WITH m04 THIS RETIRES `headsq` AND VINDICATES THE NATIVE CUT. Same square
+  aspect, same subject, same everything except that this init magnifies nothing.

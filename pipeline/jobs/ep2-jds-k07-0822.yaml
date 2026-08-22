@@ -500,3 +500,7 @@ derivation:
     - payload fetch_init.py (1454 -> 2068 chars)
     payload:prompt.txt:
     - payload prompt.txt (171 -> 138 chars)
+
+verdict_0822: |-
+  DROP. headsq, 0.20. Eyes larger and rounder than his, pupils teal, ears
+  larger. Better than 0.40 and still not him.

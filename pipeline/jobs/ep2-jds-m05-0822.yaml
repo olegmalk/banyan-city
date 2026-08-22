@@ -500,3 +500,9 @@ derivation:
     - payload fetch_init.py (1457 -> 2070 chars)
     payload:prompt.txt:
     - payload prompt.txt (171 -> 138 chars)
+
+verdict_0822: |-
+  ADMIT (contingent). headnat, 0.20. Rendered as the row's floor. Face holds;
+  the scene change is the smallest of the three headnat rungs, which is the
+  expected trade at the bottom of a strength row. Kept as a dataset frame because
+  an admitted frame is an admitted frame, and named here as the least varied one.

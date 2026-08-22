@@ -500,3 +500,10 @@ derivation:
     - payload fetch_init.py (1457 -> 2070 chars)
     payload:prompt.txt:
     - payload prompt.txt (171 -> 138 chars)
+
+verdict_0822: |-
+  ADMIT. headnat, 0.25.
+
+  Judged at 1:1, 2026-08-22. Narrow almond eyes, small dark pupils, ears near
+  horizontal, smooth face, sage palette, costume correct, background moved to
+  hazy hills. Sets the lower end of the headnat working range; m03 sets 0.30.

@@ -500,3 +500,6 @@ derivation:
     - payload fetch_init.py (1450 -> 2066 chars)
     payload:prompt.txt:
     - payload prompt.txt (171 -> 169 chars)
+
+verdict_0822: |-
+  DROP. full body, 0.25. Pupil yellow. Third rung of the full-body row.

@@ -500,3 +500,23 @@ derivation:
     - payload fetch_init.py (1450 -> 2066 chars)
     payload:prompt.txt:
     - payload prompt.txt (171 -> 169 chars)
+
+verdict_0822: |-
+  DROP, AND THE FULL-BODY RENDER ROW CLOSES.
+
+  full body, 0.20. Judged at 1:1: eye shape, ears, face, palette and costume all
+  his -- and THE PUPIL IS STILL YELLOW, at the lowest strength that does anything
+  at all. Four points now (0.40, 0.35, 0.30, 0.25, 0.20 across j01/k01/k02/m01/m02)
+  and the pupil colour never comes back.
+
+  THE MECHANISM, AND IT IS THE OTHER END OF j14's. At full-body framing his face
+  is ~15% of the frame and his EYE is a handful of latent cells. A tiny dark pupil
+  inside a narrow almond is below the latent grid's ability to carry it, so
+  animagine repaints the iris with its own default warm colour no matter how few
+  steps run. j14 showed the prior taking over when the face is TOO BIG; this shows
+  it taking over when the face is TOO SMALL. There is a WINDOW, and full body sits
+  under it.
+
+  CONSEQUENCE: no full-body frame is RENDERED into this dataset. The set gets its
+  full-body view from the canon image itself and its mirror, which are his exact
+  pixels at zero strength and therefore cannot drift.

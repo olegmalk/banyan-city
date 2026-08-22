@@ -218,81 +218,90 @@ INITS = {
 # ground is three per cent of the frame and out of focus; asking for gravel there
 # would put a word in the caption that the pixels do not carry.
 CELLS = {
-    # ── FULL BODY. The ground axis lives here, because this is the only
-    # framing where the ground is actually in shot.
-    "j01": ("full", "0.40", "standing on dry cracked bare earth, a green hedgerow far behind",
-            "dry cracked earth", "low golden sun", "warm low sunlight"),
-    "j02": ("full-flip", "0.40", "standing on a grey gravel track, green weeds at the far edge",
-            "gravel", "flat overcast light", "overcast light"),
-    "j03": ("full", "0.40", "standing on a bare dirt path, grass verges to either side",
-            "a dirt path", "soft daylight", "soft daylight"),
-    "j04": ("full-flip", "0.40", "standing on flat grey rock, green moss in the cracks",
-            "flat grey rock", "cool morning haze", "cool morning light"),
-    "j05": ("full", "0.40", "standing on a forest floor of fallen brown leaves, green ferns behind",
-            "fallen leaves", "dappled shade under leaves", "dappled shade"),
-    "j06": ("full-flip", "0.40", "standing on pale dry sand, green dune grass far behind",
-            "pale dry sand", "bright midday sun", "bright sunlight"),
-    "j07": ("full", "0.40", "standing on a wet muddy track after rain, a green verge behind",
-            "wet mud", "grey light after rain", "grey wet light"),
-    "j08": ("full-flip", "0.40", "standing in a ploughed field of bare brown earth, a green hedgerow behind",
-            "bare tilled soil", "long evening light", "warm evening light"),
-    "j29": ("full", "0.40", "standing on packed dirt in a green hedgerow lane",
-            "packed dirt", "strong side light", "hard side light"),
-    "j32": ("full-flip", "0.40", "standing on mossy flat rock beside a stream",
-            "mossy rock", "heavy overcast, soft shadowless light", "shadowless light"),
-    # The init's own ground, kept so the set is not a monoculture of NON-grass
-    # either -- v1's answer to a monoculture must not be the opposite one
-    # (`derive_saplora_figplate_0822`: "THE ANSWER TO A MONOCULTURE IS NOT THE
-    # OPPOSITE MONOCULTURE"). These are the light-only cells.
-    "j09": ("full", "0.35", "standing in tall grass", "tall grass",
-            "blue hour dusk", "dusk light"),
-    "j10": ("full-flip", "0.35", "standing in tall grass", "tall grass",
-            "warm sunset backlight", "backlight"),
-    "j11": ("full", "0.30", "standing in tall grass", "tall grass",
-            "soft daylight", "soft daylight"),
-    "j12": ("full-flip", "0.30", "standing in tall grass", "tall grass",
-            "flat overcast light", "overcast light"),
+    # ══════════════════════════════════════════════════════════════════════
+    # THE BATCH, REBUILT ON THE MEASURED WINDOW. The `n` cells are the dataset;
+    # the `j`, `k` and `m` cells below them are the sample and the two sweep
+    # rounds that produced the numbers these use, kept because they are the
+    # evidence and because four of them are admitted frames in their own right.
+    #
+    # WHAT THE SWEEP MEASURED, IN ONE TABLE. Face fraction is the share of the
+    # frame his head occupies; mag is the init's magnification off the canon.
+    #
+    #   init      face   mag     result
+    #   full      15%   1.000x   eye SHAPE holds at every strength, PUPIL YELLOW
+    #                            at 0.40/0.35/0.30/0.25/0.20. Five points.
+    #   headnat   22%   1.000x   HOLDS at 0.30 and 0.25 and 0.20.
+    #   cowboy    29%   1.387x   HOLDS at 0.20. Eye opens at 0.25.
+    #   headsq    49%   1.486x   drifts at 0.40, 0.20 and 0.15. Retired.
+    #
+    # THE FINDING, AND IT IS TWO-SIDED. His eye survives only inside a WINDOW of
+    # face fraction. Above it -- j14 at 29% and 0.25, j21 at 49% -- animagine's
+    # prior has enough latent area to re-resolve the face and returns the round
+    # coloured iris and the tall upswept ear that four founder vetoes name. BELOW
+    # it -- every full-body cell -- his eye is a handful of latent cells, a tiny
+    # dark pupil in a narrow almond cannot be carried at that resolution, and the
+    # prior repaints the iris warm no matter how few steps run. The route doc's
+    # law reads a third time: HIS PIXELS HAVE TO ENTER AS PIXELS, at a size the
+    # latent grid can hold, and not as an interpolation of them.
+    #
+    # SO THE DATASET IS TWO RENDERED FRAMINGS AND ONE THAT IS NOT RENDERED AT ALL:
+    #   headnat / headnat-flip  at 0.25 and 0.30  -- the workhorse, 12 cells
+    #   cowboy  / cowboy-flip   at 0.20           -- the wider view,  8 cells
+    #   full    / full-flip     AT ZERO STRENGTH  -- the canon image itself and
+    #       its mirror, entered as training frames directly. They cannot drift
+    #       because nothing was denoised; they cost no GPU second; and they are
+    #       the only way this set sees his boots, his legs and his whole
+    #       silhouette, which a bust-only dataset would never teach.
+    #
+    # AND THE SECOND SLOT OF EVERY CAPTION IS NOW A SETTING, NOT A GROUND
+    # MATERIAL. j01 measured that the surface underfoot does NOT change on this
+    # route -- it is global structure, decided in steps a low strength never runs,
+    # which is the same sentence as everything else here. What DOES change is the
+    # far background and the light, measured on every admitted frame. Captioning
+    # a ground that did not arrive would be the lie build_jerry_v2_0822.py has no
+    # code path to write, so the axis is named as what it is.
+    # ══════════════════════════════════════════════════════════════════════
 
-    # ── COWBOY SHOT. Crown to mid-thigh, the framing most dialogue beats use.
-    "j13": ("cowboy", "0.40", "standing on grey stone paving", "stone paving",
-            "soft daylight", "soft daylight"),
-    "j14": ("cowboy-flip", "0.40", "standing on dry cracked bare earth", "dry cracked earth",
-            "low golden sun", "warm low sunlight"),
-    "j15": ("cowboy", "0.40", "standing among mossy stones", "mossy stones",
-            "dappled shade under leaves", "dappled shade"),
-    "j16": ("cowboy-flip", "0.40", "standing on a worn wooden plank floor indoors",
-            "a wooden floor", "warm lamplight", "warm lamplight"),
-    "j30": ("cowboy-flip", "0.40", "standing in dry brown grassland", "brown grassland",
-            "hazy warm dusk", "hazy warm light"),
-    "j17": ("cowboy", "0.35", "standing in tall grass", "tall grass",
-            "cool morning haze", "cool morning light"),
-    "j18": ("cowboy-flip", "0.35", "standing on grey gravel", "gravel",
-            "flat overcast light", "overcast light"),
-    "j19": ("cowboy", "0.30", "standing in tall grass", "tall grass",
-            "soft daylight", "soft daylight"),
-    "j20": ("cowboy-flip", "0.30", "standing on fallen brown leaves", "fallen leaves",
-            "late afternoon warmth", "warm afternoon light"),
-
-    # ── SQUARE PORTRAIT, 832x832. The frame that carries the face at the
-    # largest scale the source supports. Backdrop, not ground.
-    "j21": ("headsq", "0.40", "standing against a pale open sky", "a pale sky",
-            "low golden sun", "warm low sunlight"),
-    "j22": ("headsq-flip", "0.40", "standing against a dark forest", "a dark forest",
-            "dappled shade under leaves", "dappled shade"),
-    "j23": ("headsq", "0.40", "standing against a grey stone wall", "a stone wall",
-            "flat overcast light", "overcast light"),
-    "j24": ("headsq-flip", "0.40", "standing against an open field", "an open field",
-            "cool morning haze", "cool morning light"),
-    "j31": ("headsq", "0.40", "standing against a stone wall in shadow", "a shaded wall",
-            "strong side light", "hard side light"),
-    "j25": ("headsq", "0.35", "standing against a warm sunset sky", "a sunset sky",
-            "warm rim light", "rim light"),
-    "j26": ("headsq-flip", "0.35", "standing against a pale open sky", "a pale sky",
-            "soft daylight", "soft daylight"),
-    "j27": ("headsq", "0.30", "standing against an open field", "an open field",
-            "soft daylight", "soft daylight"),
-    "j28": ("headsq-flip", "0.30", "standing against a dark forest", "a dark forest",
-            "blue hour dusk", "dusk light"),
+    "n01": ("headnat", "0.30", "standing against a pale open sky",
+           "a pale sky", "low golden sun", "warm low sunlight"),
+    "n02": ("headnat-flip", "0.30", "standing against a dark forest",
+           "a dark forest", "dappled shade under leaves", "dappled shade"),
+    "n03": ("headnat", "0.25", "standing against a grey stone wall",
+           "a stone wall", "flat overcast light", "overcast light"),
+    "n04": ("headnat-flip", "0.25", "standing against an open field",
+           "an open field", "cool morning haze", "cool morning light"),
+    "n05": ("headnat", "0.30", "standing against a warm sunset sky",
+           "a sunset sky", "warm rim light", "rim light"),
+    "n06": ("headnat-flip", "0.30", "standing against a wet grey sky after rain",
+           "a rainy sky", "grey light after rain", "grey wet light"),
+    "n07": ("headnat", "0.25", "standing against a green hedgerow",
+           "a hedgerow", "strong side light", "hard side light"),
+    "n08": ("headnat-flip", "0.25", "standing against a wall of ferns",
+           "a wall of ferns", "deep shade", "deep shade"),
+    "n09": ("headnat", "0.30", "standing against distant blue hills",
+           "distant hills", "bright midday sun", "bright sunlight"),
+    "n10": ("headnat-flip", "0.30", "standing against a weathered barn wall",
+           "a barn wall", "warm lamplight", "warm lamplight"),
+    "n11": ("headnat", "0.25", "standing against a ploughed brown field",
+           "a ploughed field", "long evening light", "warm evening light"),
+    "n12": ("headnat-flip", "0.25", "standing against a pale sand horizon",
+           "a sand horizon", "heavy overcast, soft shadowless light", "shadowless light"),
+    "n13": ("cowboy", "0.20", "standing against a pale open sky",
+           "a pale sky", "low golden sun", "warm low sunlight"),
+    "n14": ("cowboy-flip", "0.20", "standing against a dark forest",
+           "a dark forest", "dappled shade under leaves", "dappled shade"),
+    "n15": ("cowboy", "0.20", "standing against a grey stone wall",
+           "a stone wall", "flat overcast light", "overcast light"),
+    "n16": ("cowboy-flip", "0.20", "standing against an open field",
+           "an open field", "cool morning haze", "cool morning light"),
+    "n17": ("cowboy", "0.20", "standing against a warm sunset sky",
+           "a sunset sky", "warm rim light", "rim light"),
+    "n18": ("cowboy-flip", "0.20", "standing against distant blue hills",
+           "distant hills", "bright midday sun", "bright sunlight"),
+    "n19": ("cowboy", "0.20", "standing against a green hedgerow",
+           "a hedgerow", "strong side light", "hard side light"),
+    "n20": ("cowboy-flip", "0.20", "standing against a wet grey sky after rain",
+           "a rainy sky", "grey light after rain", "grey wet light"),
 
     # ── THE STRENGTH SWEEP. Same init, same ground clause and same light as the
     # framing's own sample cell, so the ONLY thing that moves inside a row is the
@@ -399,7 +408,7 @@ def emit(cell: str, write: bool) -> str:
     # SEEDS DO NOT COLLIDE ACROSS THE TWO LETTER SERIES. `int(cell[1:])` alone
     # would give j01 and k01 the same draw, and the sweep's whole job is to be
     # comparable to the sample cell it descends from -- comparable, not identical.
-    seed = SEED0 + int(cell[1:]) + {"j": 0, "k": 100, "m": 200}[cell[0]]
+    seed = SEED0 + int(cell[1:]) + {"j": 0, "k": 100, "m": 200, "n": 300}[cell[0]]
 
     new_id = "ep2-jds-%s-0822" % cell
     dirtok = "jds-%s-0822" % cell
@@ -723,9 +732,7 @@ def main() -> int:
         cells = list(M_CELLS)
     elif a.batch:
         sample_gate()
-        cells = [c for c in sorted(CELLS)
-                 if c not in SAMPLE_CELLS and c not in SWEEP_CELLS
-                 and c not in M_CELLS]
+        cells = [c for c in sorted(CELLS) if c.startswith("n")]
     else:
         cells = sorted(CELLS)
 

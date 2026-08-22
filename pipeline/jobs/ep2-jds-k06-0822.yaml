@@ -500,3 +500,9 @@ derivation:
     - payload fetch_init.py (1454 -> 2068 chars)
     payload:prompt.txt:
     - payload prompt.txt (171 -> 138 chars)
+
+verdict_0822: |-
+  NOT JUDGED, AND NOT COUNTED. headsq, 0.25. Rendered before the row's floor
+  was read. Once 0.20 and 0.15 on the same init both failed, this frame could only
+  have been worse, and reading it would have been reading a monotonic curve for
+  reassurance. The init it is cut from is retired; see j21.

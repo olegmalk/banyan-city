@@ -500,3 +500,8 @@ derivation:
     - payload fetch_init.py (1471 -> 2080 chars)
     payload:prompt.txt:
     - payload prompt.txt (171 -> 140 chars)
+
+verdict_0822: |-
+  DROP. cowboy-flip, 0.30. Above the measured cowboy ceiling of 0.20-0.25;
+  not separately re-judged after k04 at 0.25 already failed on the same init and
+  the same axis. Recorded as bracketing, not as evidence.
