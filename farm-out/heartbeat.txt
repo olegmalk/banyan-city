@@ -4374,3 +4374,4 @@
 04:09:13Z box-runner idle ready=0 failed=90
 04:11:28Z STARTED task=ep2-b12-nosmear-0822-1787371876 attempt=1 on box-runner
 04:17:43Z DONE task=ep2-b12-nosmear-0822-1787371876 rc=0 artifacts=2
+04:19:48Z box-runner idle ready=0 failed=90
