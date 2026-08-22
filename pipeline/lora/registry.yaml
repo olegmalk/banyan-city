@@ -1,0 +1,96 @@
+# THE LoRA REGISTRY — where a trained character LoRA lives, and on what terms.
+#
+# ══════════════════════════════════════════════════════════════════════════
+# READ THIS FIRST: NOTHING IN THE PIPELINE READS THIS FILE YET, AND THAT IS THE
+# HONEST STATE RATHER THAN AN OVERSIGHT.
+#
+# `pipeline/research/character-lora-sdxl-0820.md` §7 settles where a character
+# LoRA belongs: the STILL side and only the still side — "it loads in whatever
+# draws the 832x1216 SDXL still (render_wave_sample.py / still_local.py /
+# controlnet_plate.py) and nothing in ltx_i2v.py changes."
+#
+# Grepped 2026-08-22: NONE OF THOSE THREE FILES CONTAINS THE STRING "lora".
+# There is no load point. `render_wave_sample.py:236` is where one would go —
+#
+#     pipe = StableDiffusionXLPipeline.from_pretrained(
+#         wg.BASE, torch_dtype=torch.bfloat16, use_safetensors=True)
+#     pipe.to("cuda")
+#
+# — and the change is about eight lines: two argparse flags, a
+# `load_lora_weights` + `fuse_lora` pair behind an `if`, and the lora name +
+# sha256 + weight added to `sidecar()` so §7.2 provenance survives. It is not
+# written, deliberately: the standing rule is no work without a consumer, and
+# the consumer for a plate-step LoRA loader is a LoRA THAT PASSED ITS BARS. As
+# of this file that has not happened — see `verdict` below. Wiring a loader for
+# weights that contaminate every frame they touch would be building the delivery
+# truck before the thing it delivers.
+#
+# WHAT THIS FILE IS FOR IN THE MEANTIME. Trained weights were sitting in a
+# scratch directory named after the day that made them, next to five checkpoints
+# and a staging tree, with nothing recording which one is which or what was
+# measured about it. This is the one place that answers "where is it, what drew
+# it, what is it allowed to be used at". When the loader is written, this is what
+# it reads.
+#
+# WEIGHTS ARE NOT IN GIT AND CANNOT BE. Each checkpoint is 228,453,516 bytes and
+# GitHub hard-rejects any blob over 100 MiB; `box_runner.Courier._publish` does
+# `git add -A -- farm-out` and pushes, so one of these in farm-out/ would leave a
+# permanently unpushable commit and stop EVERY lane's results reaching this tree.
+# Three .gitignore guards now block it. The sha256s below are the durable half:
+# a frame's sidecar names the LoRA and its hash, and this file says where those
+# bytes live, so provenance survives the blob staying on one machine.
+# ══════════════════════════════════════════════════════════════════════════
+
+updated: '2026-08-22'
+schema: 1
+
+loras:
+
+- trigger: bnysapling
+  subject: the sapling — the show's recurring protagonist, on screen in 16 of 16 nodes
+  status: MEASURED, NOT SHIPPABLE
+  base: cagliostrolab/animagine-xl-3.1
+  trained_by: pipeline/lora/train-sapling-0822.yaml
+  trained_on: '2026-08-22'
+  dataset: pipeline/lora/manifest-sapling.yaml   # 44 frames, 17 plates, all SDXL
+  recipe: kohya sd-scripts v0.11.1, dim 32 / alpha 16, unet_lr 1e-4, te_lr 5e-5,
+    cosine + 33 warmup, AdamW8bit, batch 2, repeat 3, 10 epochs, bf16, seed 20260822
+  measured: 660 optimizer steps in 20m02s at 1.82 s/it, final avr_loss 0.105, rc=0
+  cost_usd: 0.0
+
+  # THE STABLE PATH. The training job writes into a dated scratch dir; this copy
+  # is job-independent so a later spec can name a path that will not move.
+  box_path: C:\banyan-farm\loras\bnysapling-sdxl-v1-0822.safetensors
+  sha256: dbbe16b02b435795f69641f0e6f176f19b17d1308c45d8c29b4a3dfd34b2373d
+  bytes: 228453516
+
+  # ALL FIVE EPOCHS ARE KEPT. Picking the epoch is part of the job and
+  # overfitting past the sweet spot is the standard character-LoRA failure, so
+  # the axis stays samplable instead of being asserted. Only the final one has
+  # been drawn from so far.
+  checkpoints_on_box: C:\banyan-farm\lora-sapling-0822\out\
+  checkpoint_sha256:
+    epoch02: 0258e675db20858a1338fef4f2c025915a158dbf4d3fabade4207b5a21742b69
+    epoch04: fc4c2b348a6c0413c366a8618df995ee9f82371c862f2b9988294037cf0d7c9f
+    epoch06: 202c7c539e0e5943c074fb92f40a28224c2400d6d1dea37eeb41abeabd241965
+    epoch08: 3acbcdce463dd6b586a47af26a592a636a6437af79ab66e3290fe18e4f8d52ff
+    epoch10_final: dbbe16b02b435795f69641f0e6f176f19b17d1308c45d8c29b4a3dfd34b2373d
+
+  # NOT 0.8, AND NOT ANYTHING ELSE YET. 0.8 was copied from the Jerry spec
+  # before any pixel existed and it FAILS bar B3 — see verdict. The ladder job
+  # measures 0.65 / 0.5 / 0.35 / 0.2 on both sides. Until it reports, no weight
+  # is sanctioned and nothing should load this file.
+  shipping_weight: null
+  weight_ladder: pipeline/lora/ladder-sapling-0822.yaml
+
+  bars: pipeline/lora/train-sapling-0822.yaml '## BARS'
+  bar_grid: pipeline/lora/bars-sapling-0822.yaml
+  verdict: review/ep3-sapling-lora-0822/SHIP-0822.md
+
+  requires:
+    # diffusers 0.29.2 gates ALL LoRA loading behind USE_PEFT_BACKEND. peft was
+    # absent from both venvs on the box and that cost one run: twenty clean
+    # minutes of training, five checkpoints, then a nine-second ValueError.
+    # Installed 2026-08-22 with --no-deps; pip freeze differed by exactly one
+    # line and torch stayed 2.11.0+cu128.
+    render_venv_package: peft==0.12.0   # install with --no-deps, never bare
