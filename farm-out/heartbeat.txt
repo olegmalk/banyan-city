@@ -4353,3 +4353,5 @@
 03:16:50Z box-runner idle ready=0 failed=89
 03:25:05Z STARTED task=ep2-b16-canon-w5a-0821-1787369096 attempt=1 on box-runner
 03:25:42Z DONE task=ep2-b16-canon-w5a-0821-1787369096 rc=0 artifacts=1
+03:25:47Z STARTED task=ep2-b16-canon-w5b-0821-1787369099 attempt=1 on box-runner
+03:26:15Z DONE task=ep2-b16-canon-w5b-0821-1787369099 rc=0 artifacts=1
