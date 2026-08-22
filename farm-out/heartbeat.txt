@@ -4713,3 +4713,5 @@
 10:58:31Z STARTED task=lora-sapling-ladder-v2c-low-0822-1787396302 attempt=1 on box-runner
 11:00:27Z DONE task=lora-sapling-ladder-v2c-low-0822-1787396302 rc=0 artifacts=6
 11:00:34Z box-runner idle ready=0 failed=123
+11:03:49Z STARTED task=lora-jerry-v2-0822-1787396626 attempt=1 on box-runner
+11:23:07Z FAIL task=lora-jerry-v2-0822-1787396626 rc=2 step=sample
