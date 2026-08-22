@@ -9952,3 +9952,78 @@ at f064 of 121 and is therefore NOT a trim** — same instrument, opposite answe
 remaining rung on these beats needs either the founder's eye ruling (R4), a build
 (the smaller-span skeleton), or costs no GPU at all (trims). Nothing runnable was
 left unfired.
+
+## 2026-08-22 single-rung lane — THE SMALLER-SPAN SKELETON, and the survival law was wrong
+
+**$0. Four plate cells, one naturalize and two motion clips ≈ 30 GPU minutes. No
+provider spend, no cut swap.** The rung the early-morning lane named and could
+not fire is fired, and it landed.
+
+**THE FRAMING WAS ALWAYS GEOMETRY.** `jerry_canon_0821` gains a PLACEMENT axis —
+*where in the frame*, as distinct from *how strongly* — and three depth cells,
+`sitfar60/50/42`, at 60 / 50 / 42 % of the full-span sit's 866 px keypoint span.
+The crown is held at y=300 on all three so the SPAN is the only variable and the
+ghost-head fix (`MAX_EMPTY_TOP` 0.28) is not quietly spent to buy the framing;
+cx is 0.655 on all three because the DRAWN ear span at the 60 % cell hung 30 px
+off the right edge at 0.73 while every keypoint was comfortably inside — the
+selftest now measures the drawn flange, not the keypoint, and that check caught
+its own first draft. The h37f set is untouched and every plate already rendered
+through it reproduces.
+
+`ep2-b16-canon-w7{a,b,c}-0821` are those three cells with the prompt and the
+negative **byte-identical to w4's** and ControlNet held at 1.0. **All three put
+ground in front of him** — the thing the negative (four w5 cells), the positive's
+distance clause (same four) and the conditioning strength (w6a at 0.55) all
+failed to do. **w7a wins:** at 50 % the shirt's frog closures become a zip
+placket and the boots go to green blobs, at 42 % the sleeves gain a floral print
+and the ears shrink to flanges. w7a holds the collar, the closures, the shorts
+and the boots at full conditioning and has the most lateral ears of the three.
+
+**AND THE SURVIVAL LAW'S NEW BOUNDARY CONDITION IS WITHDRAWN THE DAY IT WAS
+WRITTEN.** `ep2-b16-sapnat4-0822` composites the corrected-palette plant into the
+new foreground at root 190,1200 / height 560 / tilt −3 / leaf-frac 0.25 — plant
+extent x 31..289 against his silhouette's left edge at x≈350, and the 0.30 pass
+moved it 9 px and left the gap. `ep2-b16-spanmotion-0822` is that frame through
+plantmotion's recipe with **one variable, the init**:
+
+| clip | plant | died |
+|---|---|---|
+| `ep2-b16-plantmotion-0822` | ON him, nearly his colour | f050 |
+| **`ep2-b16-spanmotion-0822`** | **clear of him, own space** | **f005** |
+
+8,311 leaf-green px in the plant's ROI at f000, 5,130 at f004, **zero from f005
+to f104.** Separation is not the cause and it is not even a mitigation — the
+separated plant died ten times faster. *"A composited object survives motion when
+the model can tell where it ends"* is **retracted on the record.**
+
+**WHAT IT ACTUALLY IS, AND IT IS 4-FOR-4 AND 0-FOR-2 READ OFF THE SPECS' OWN
+PAYLOADS.** Every composited object that has survived i2v in this tree was NAMED
+in its motion prompt — b12's sapling, b21's leaf, b19's fig, b06's board — and the
+only two that vanished are the only two whose prompt never mentions the object.
+Both are beat 16. That is **the prompt-summons law**, which this tree already
+paid for on beats 02, 03, 07 and 20 in its other direction.
+
+`ep2-b16-spanmotion-r2-0822` is the same init with the sapling **placed in the
+wording**, one added clause, figure clause and action untouched: **the plant is
+in all 105 frames** — ~8,500 leaf-green px at f000, ~8,800 at f104, same
+position, two leaves on one stem, never touching him, his design held throughout.
+**Beat 16's first footage with the corrected goblin AND the plant, staged
+plant-forward.** Staged as its candidate on `/review/ep2-beats-0821`, beat header
+rewritten with the geometry finding and the withdrawn theory in plain words.
+`qa_local` PASS routes=95. **The cut is NOT touched** — the swap is R4, and so is
+the eye.
+
+**STILL ON THE BEAT, named not hidden:** the camera drifts in (a carried defect of
+this whole motion recipe, not this beat's, and beat 06 broke the same clause this
+morning); and the plant reads closer to a decal than to a drawing — sapnat4's own
+predicted-failure list already names the lever, which is the INK and not the fill.
+
+**A FILING DEFECT CAUGHT, AND THIS TIME MADE CODE.** sapnat4 published to
+`farm-out/ep2-b16-sapnat4-0821/` — the parent's DATE — because the retoken pair
+inherited from sapnat3 rewrites only the `farm-out/…/` form and the publish step
+writes a WINDOWS path with backslashes that no such rule can reach. This is the
+same defect the early-morning lane recorded in prose and it recurred within
+twelve hours, so the fix is a bare-id pair plus an assertion that refuses the
+emit when any runner-read key names a sibling id. The artifact is kept exactly
+where the box put it: the producing job's manifest is the authority, and a spec
+edited to describe a run it did not produce is the worse lie.
