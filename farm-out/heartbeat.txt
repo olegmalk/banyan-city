@@ -4309,3 +4309,5 @@
 01:20:58Z box-runner idle ready=0 failed=86
 01:22:32Z STARTED task=ep2-b12-sapnat2-0822-1787361744 attempt=1 on box-runner
 01:22:33Z FAIL task=ep2-b12-sapnat2-0822-1787361744 rc=2 step=dry
+01:22:38Z STARTED task=ep2-b21-sapnat2-0822-1787361748 attempt=1 on box-runner
+01:22:39Z FAIL task=ep2-b21-sapnat2-0822-1787361748 rc=2 step=dry
