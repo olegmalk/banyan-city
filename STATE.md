@@ -10186,3 +10186,73 @@ selftest 32 → 41, golden byte-identity against `ep2-b08-str70-0820` intact. An
 §29 records that **no new pipeline was needed**: the driver already composed
 ControlNet inside an inpaint pipeline, and an all-white mask already made that
 pipeline img2img, so init+ControlNet was one command line away the whole time.
+
+---
+
+## 2026-08-22 — two orphaned result sets, recovered and judged
+
+Both lanes had closed with their results unjudged. Neither set existed.
+
+**GUARD-2 ROUND 5 — all fifteen cells had FAILED, and the guard is why.** Not
+one had run. Every spec died in the second it started with `rc=1` on step
+`stage`: `controlnet_plate.py sha 70bacd45..., wanted ece54f68...`. The sample
+(cell C) staged and drew at 10:04; the batch was filed at 10:06; between them
+`e71653025` landed on main and gave the driver a `--lora` arm. The stage step's
+job is to refuse a driver whose bytes it was not pinned to, and it did it
+fifteen times. Repinned all sixteen specs and re-fired — not a recipe change,
+because the new code is one `if a.lora:` block and guardcast passes no `--lora`,
+so the render path is byte-identical to the one cell C drew on.
+
+**Fifteen drawn, four seated: C-spare, E, F, J.** Live on
+`/review/ep2-guardcast2-0822`, round 5 above the fold; he answers
+`guardcast5 <letter>`. **The age clause did not miss once** — no schoolboy, no
+middle-aged man in fifteen frames, so `a guard man in his twenties, adult male
+face, thick neck` is settled and stops being a variable. Eight went to the
+hand-and-symbol lottery (seven hands, one drool string, 53% against the
+one-in-two the spares were bought for) and the spares worked: A, D, H and I lost
+their offset-0 draws and J's offset-0 seated. Three more were clean of both and
+still dropped on a NEW failure mode: A-spare and G have the head turned down and
+away, G-spare is wincing, and bar 8 wants the face to the lens while bar 4 wants
+blank. **One term missed on all fifteen and therefore drops nobody** — the white
+shoulder sash came back navy, red, orange or absent, 15 for 15. A term that
+fails uniformly cannot discriminate between cells; it is a recipe fault filed
+for round 6 as a wardrobe fix, and judging the cast on it would have handed him
+an empty sheet.
+
+**LoRA v2c — the grid was never authored, so the run that was the whole point
+of the experiment sat unscored.** Trained clean at 10:06 and its lane stopped.
+Wrote `bars-v2c-sapling-0822.yaml` as a pure string swap off v2b's (same
+prompts, seeds, negative, style tail, instrument — only the checkpoint path
+moves), gated it on v2c's own sample frame, and fired it on an idle card.
+
+**THE REPEAT WAS THE CAUSE, and the frames are innocent.**
+
+| bar | v1 | v2 | v2b | **v2c** |
+|---|---|---|---|---|
+| B1 identity (blind cold read) | 11/15 | 9/15 | 11/15 | **14/15 PASS** |
+| B5 leaf count = 2 | 14/15 | 11/15 | 11/15 | **14/15 PASS** |
+| B2 ground | 4/6 | 3/6 | 3/6 | 4/6 FAIL |
+| B2 scale | 0/3 | 0/3 | 0/3 | 0/3 FAIL |
+| B2 figure | 0/3 | 1/3 | 1/3 | 1/3 FAIL |
+| B3 no-regression @0.8 | FAIL | FAIL | FAIL | FAIL |
+
+Pixels and captions byte-identical to v2b's; repeat 2 → 3 and nothing else. The
+suspicion on record against the fifteen new frames is cleared — they are in v2c
+unchanged and the count came back anyway. **The two bars did not trade:** more
+passes was supposed to risk overfitting identity down toward 9/15 and B1 went
+*up* instead, to the first pass this bar has ever scored. **One defect accounts
+for both misses** — `P5-s20260823` draws a terminal blade above two laterals,
+and it is the only NO the blind reader gave, unprompted, as "three leaves, not
+two".
+
+**The dataset ladder is finished.** v2 asked whether more frames fix the scene
+bars (no), v2b asked which half of the cost was captions (the identity half),
+v2c asked whether the rest was volume (yes). Another retrain has no question
+left. What is still broken is the scene: ground splits brown-grass 3/3 against
+bare-tilled-earth 1/3 for the fourth run running, scale is 0/3 in every run, and
+B3 has now failed across four runs, three datasets, two caption schemes and two
+volumes — the fourth confirmation that it is not a dataset bar. **v2c supersedes
+v1 as the reference checkpoint; no shipping weight sanctioned.** The lever left
+is `ladder-sapling-0822.yaml`, which already ran against v1's weights and now
+carries a header saying how to re-point it and why eight cells wait on one rung
+being looked at first.
