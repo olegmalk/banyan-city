@@ -4712,3 +4712,4 @@
 10:55:24Z DONE task=lora-sapling-ladder-v2c-gate-0822-1787396072 rc=0 artifacts=2
 10:58:31Z STARTED task=lora-sapling-ladder-v2c-low-0822-1787396302 attempt=1 on box-runner
 11:00:27Z DONE task=lora-sapling-ladder-v2c-low-0822-1787396302 rc=0 artifacts=6
+11:00:34Z box-runner idle ready=0 failed=123
