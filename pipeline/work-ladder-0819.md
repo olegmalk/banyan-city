@@ -9546,3 +9546,26 @@ and the grass mostly left the frame.
 has carried this beat as a straight TRADE — corrected face, no plant — since
 last night; this is the first render that can have both, and it does not answer
 the staging question either way.
+
+#### AND THE FIRST COMPOSITED OBJECT THAT DOES NOT SURVIVE MOTION — ON THE PLATE WHERE IT OVERLAPS THE FIGURE
+
+`ep2-b16-plantmotion-0822`, `w4motion` with one variable, the init. **The plant
+is in frame at f000 and gone by f050.** The camera also pushes in, against eight
+camera-motion terms in the negative — the same clause beat 06 broke this morning.
+
+> **THREE BEATS SAID A COMPOSITED OBJECT SURVIVES i2v — b12's leaves (identity),
+> b06's board (size), b19's fig (position) — AND THIS IS THE FIRST ONE THAT
+> DOES NOT.** What is different is not the object and not the recipe: it is that
+> the plant sits ON THE FIGURE, in nearly the figure's own colour, instead of
+> against sky or ground. So the survival law wants a boundary condition: **a
+> composited object survives motion when the model can tell where it ends.**
+> Beat 16's framing problem arriving through a third door, and the fourth
+> independent argument for the smaller-span skeleton.
+
+**AND THE COUNT INSTRUMENT HAS A MEASURED LIMIT, found on this clip.** Pointed at
+beat 16 it reads SIXTEEN objects at frame 0, because the plant stands in grass of
+its own palette inside its own ROI. The leaf class works where the plant is
+silhouetted against something that is not its colour — b12's sky, b21's sky and
+golden field — and does not work where it stands in matching grass. That is a
+statement about which beats it can be a judge step for, and it is better said
+here than discovered by a lane that trusted a "16".

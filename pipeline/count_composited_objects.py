@@ -68,6 +68,15 @@ WHAT EACH CLASS LOOKS AT, and the difference is not cosmetic:
         can afford the whole frame because canon violet is a colour the plate
         does not otherwise contain.
 
+A MEASURED LIMIT, found on beat 16 the day this was written. Pointed at
+`ep2-b16-plantmotion-0822` the leaf class reads SIXTEEN objects at frame 0,
+because that plant stands in GRASS OF ITS OWN PALETTE inside its own ROI. The
+leaf class works where the plant is silhouetted against something that is not
+its colour -- beat 12's cumulus, beat 21's sky and golden field -- and it does
+not work where the plant stands in matching foliage. An opening count that is
+not the number you drew is the tool telling you it cannot see this beat; it is
+not a count fault, and it is not something to threshold around.
+
 WHAT IT IS NOT. It is not a taste judgement and it does not know what a leaf
 looks like. It answers one question -- did the number of objects in the
 object's own colour change during the clip -- and it answers it as a NUMBER

@@ -754,9 +754,21 @@ BEATS = {
             "blurred behind it\u2019, and that needs a frame with room in front of him. Four "
             "plate re-renders were fired this morning to try to buy that with words \u2014 "
             "killing the blur, naming distant hills \u2014 and all four changed nothing, because "
-            "the pose skeleton decides how much of the frame he takes and no word outranks it."),
+            "the pose skeleton decides how much of the frame he takes and no word outranks it. A fifth "
+            "attempt turned the skeleton's grip DOWN instead of arguing with words, and the "
+            "framing did not move either \u2014 he still fills the frame, and the costume "
+            "started drifting. And the motion render off the new plate is below: the plant "
+            "dissolves within two seconds. Everything now points one way \u2014 this beat needs "
+            "a frame with room in front of him, and that is a change to the pose skeleton "
+            "itself, which is a build rather than a render."),
         faults_from="ship-manifest.yaml beat 16",
         candidates=[
+            dict(file=f"{CAND_URL}/16-why-LTX-ep2-b16-plantmotion-0822.mp4",
+                 poster=f"{POSTER_URL}/16-why-LTX-ep2-b16-plantmotion-0822.jpg",
+                 label="the same clip off a plate that HAS the plant \u2014 and the plant dissolves. 08-22", tag="fail",
+                 verdict="It starts with the sapling in front of him and by two seconds in there is no plant in the picture at all. The camera also pushes in, against a prompt that forbids it in eight separate terms. So the trade below stands and this does not replace it. WHY IT IS UP: this is the first time a drawn plant has FAILED to survive a motion render in this tree \u2014 beat 12's leaves, beat 19's fig and beat 06's board all held. What is different here is that the plant sits ON him, in almost his own colour, instead of against sky or ground. That is the same framing problem this beat has had all along, arriving through a third door.",
+                 diff="One variable: the starting picture, now the plate with the plant drawn into it. Everything else is byte for byte the clip below.",
+                 src="pipeline/jobs/ep2-b16-plantmotion-0822.yaml"),
             dict(file=f"{CAND_URL}/16-why-LTX-ep2-b16-w4motion-0822.mp4",
                  poster=f"{POSTER_URL}/16-why-LTX-ep2-b16-w4motion-0822.jpg",
                  label="tonight's re-render — it fixes the design fault and it costs the plant", tag="warn",
