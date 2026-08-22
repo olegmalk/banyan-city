@@ -15,6 +15,20 @@ the same mechanism that made it useless as a POSING route (measured to death on
 0.40) and it is exactly what makes it the right route for plates whose posture is
 already the canon's. `goblin-i2i-route-0822.md` section 3.
 
+FRAMING_LAW, PAID FOR ON 2026-08-22 AND WRITTEN HERE SO IT CANNOT BITE A THIRD
+TIME. **FRAMING IS NOT PROMPTABLE AT STRENGTH 0.30.** Pass one of this very file
+asked each beat's prompt for a framing word and a ground, and returned fifteen
+plates that were essentially TWO IMAGES: nine identical standing goblins and six
+identical guard portraits. A cell specified `close-up` came back as the same
+full-body shot. The evidence was already in the v2 manifest and was misread: that
+set's three framings did not come from prompts, they came from THREE DIFFERENT
+INIT CROPS, and its dropped-cell notes say all but two cells came back on the
+init's own meadow. At 0.30 the output IS the init with a lighting nudge -- which
+is precisely why the face survives, and precisely why nothing else moves. So:
+
+    FRAMING comes from the CROP.  GROUND comes from the COMPOSITOR.
+    THE PROMPT BUYS LIGHT, AND NOTHING ELSE.
+
 WHAT IT CAN AND CANNOT MOVE, measured on 19 cells and not assumed:
   LIGHT   -- moves cleanly. Eleven distinct lights came out of one hazy meadow.
   GROUND  -- moves PARTIALLY. Most cells came back on the init's own meadow, so
@@ -50,12 +64,26 @@ PY_RENDER = r"C:\banyan-farm\venv\Scripts\python.exe"
 RAW = "https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
 OUT = "pipeline/jobs/ep2-finish-plates-0822.yaml"
 
-GOBLIN = "goblin-canon-founder-0821.png"
-GOBLIN_REL = "taste/refs/%s" % GOBLIN
-GUARD = "guard1-canon-founder-0822.png"
-GUARD_REL = "taste/refs/%s" % GUARD
-MASK = "fullframe-mask-0822.png"
-MASK_REL = "farm-out/ep2-goblin-i2i-src-0822/%s" % MASK
+# ── THE INITS, AND FRAMING IS CHOSEN HERE RATHER THAN IN A PROMPT.
+# Pass one asked the prompt for framing and got fifteen plates that were two
+# images; see FRAMING_LAW below. These crops already exist -- they are the v2
+# dataset's own inits, built by pipeline/lora/build_jerry_inits_0822.py.
+INITS = {
+    "full":    ("init-full-0822.png",    "farm-out/ep2-goblin-i2i-src-0822"),
+    "cowboy":  ("init-cowboy-0822.png",  "farm-out/ep2-goblin-i2i-src-0822"),
+    "headnat": ("init-headnat-0822.png", "farm-out/ep2-goblin-i2i-src-0822"),
+    "guard1":  ("guard1-canon-founder-0822.png", "taste/refs"),
+    "guard2":  ("guard2-canon-founder-0822.png", "taste/refs"),
+}
+# ── THE MASK IS ALL-WHITE AND MUST BE THE INIT'S EXACT SIZE. The driver refuses
+# a mask that is not (rc 6), which is correct and is why there are two: the
+# `headnat` crop is the 1.000x native SQUARE and the others are 9:16. Both files
+# already exist and are committed; verified all-white (min=max=255).
+MASKS = {
+    (832, 1216): "fullframe-mask-832x1216-0822.png",
+    (832, 832): "fullframe-mask-832x832-0822.png",
+}
+MASK_DIR = "farm-out/ep2-goblin-i2i-src-0822"
 
 STRENGTH = "0.30"
 STEPS, CFG, BLUR = "40", "7.5", "8"
@@ -87,79 +115,69 @@ BEATS_ELSEWHERE = {
 # STANDING in every one of these, which is why each beat below is a beat whose
 # staging reads on body and context rather than on a leg position.
 PLATES = {
-    # -- GOBLIN, off his own canon --------------------------------------------
-    "b02": (GOBLIN, "a small green goblin standing in a morning field, dust "
-                    "kicked up around his feet, wide shot, bright morning light",
-            "THE SPRINT. Plate only: the panic and the dive are MOTION's job, "
-            "and the founder's named fault on this beat was the ragdoll, which "
-            "is a slot-length render question and not a plate one."),
-    "b03": (GOBLIN, "a small green goblin standing beside a tiny seedling in "
-                    "short grass, wide shot, soft morning light",
-            "BAD COVER. The comedy is that the plant hides none of him, which "
-            "is STAGING -- the plate supplies him and the field, the composite "
-            "supplies the sapling at its real 40cm."),
-    "b04": (GOBLIN, "a small green goblin close-up, head and shoulders, soft "
-                    "morning light, shallow green field behind",
-            "THE FOOTNOTE. A close-up off the canon: his face is the init's own "
-            "pixels at 0.30, which is the whole point of this route on the one "
-            "beat that is entirely his face."),
-    "b14": (GOBLIN, "a small green goblin low close-up, loose dirt and pebbles "
-                    "in the foreground, shallow green grass background, "
-                    "warm midday light",
-            "THE DEFENSE. Hands in dirt is motion; the plate is the low framing "
-            "and the ground."),
-    "b15": (GOBLIN, "a small green goblin standing in warm midday grass beside "
-                    "a tiny seedling, two-shot, lonely warm light",
-            "GOOD LISTENER. Scripted as a sit -- filed here STANDING and flagged: "
-            "if the sit is load-bearing for the founder this beat routes to the "
-            "v3 seat cell like b13 does, and that is a swap, not a re-render."),
-    "b17": (GOBLIN, "a small green goblin standing in an open field, turning "
-                    "away, afternoon light warming toward amber, wide shot",
-            "GOODBYE. The beat's own action IS standing up and turning away, so "
-            "the canon's posture is the beat's posture."),
-    "b19": (GOBLIN, "a small green goblin standing in amber afternoon grass, "
-                    "wide shot, long warm light",
-            "THE DROP. He is walking away and stopping mid-step; the plate is "
-            "him and the amber field, the fruit and the bounce are composited "
-            "and animated."),
-    "b20": (GOBLIN, "a small green goblin standing in amber afternoon grass "
-                    "holding something in both hands, warm amber light",
-            "EVIDENCE. Scripted as a crouch. Filed standing, flagged the same "
-            "way as b15: the crouch exists as a v3 posed frame if the founder "
-            "needs it."),
-    "b08g": (GOBLIN, "a small green goblin standing in a morning field looking "
-                     "down at himself, medium shot, flat morning light",
-             "INSIDE HIM, the GOBLIN HALF. Two-character beat: this plate is "
-             "composited with the guard plate below by integer translation, "
-             "which is the proven pattern -- neither figure is generated twice."),
-    # -- GUARDS, off the guard canon ------------------------------------------
-    "b05": (GUARD, "a round guard in mismatched armor standing in an empty "
-                   "morning field, wide shot, long soft shadows",
-            "THE PATROL. Two guards in the beat; ONE plate is rendered and the "
-            "second figure is the same plate composited at a different "
-            "translation, which is how this tree has always made a two-guard "
-            "frame without generating a second stranger."),
-    "b06": (GUARD, "a round guard in mismatched armor medium close-up, holding "
-                   "something in both hands at chest height, soft morning light",
-            "THE CLIPBOARD. The bark board itself is an INPAINT step with its "
-            "own quad mask -- four wording attempts closed the wording lever on "
+    # -- GOBLIN. Framing is the CROP; the prompt is one light clause. --------
+    "b02": ("full", "bright morning light",
+            "THE SPRINT. Full-body crop: the beat is a wide action. Panic and "
+            "the dive are MOTION's job and the founder's named fault here was "
+            "the ragdoll, which is a slot-length render question."),
+    "b03": ("full", "soft morning light",
+            "BAD COVER. Full body -- the joke is that a 40cm plant hides none "
+            "of him, which needs his whole silhouette in frame. The sapling is "
+            "composited at its real height."),
+    "b04": ("headnat", "soft morning light",
+            "THE FOOTNOTE. The 832x832 native upper-body crop, NOT a prompt "
+            "asking for a close-up. 1.000x magnification, so the init is not "
+            "softened before it is denoised."),
+    "b08g": ("cowboy", "flat morning light",
+             "INSIDE HIM, GOBLIN HALF. Cowboy crop because the beat points at "
+             "his BELLY -- the frame has to contain it. Composited with the "
+             "guard half by integer translation."),
+    "b14": ("headnat", "warm midday light",
+            "THE DEFENSE. Upper-body crop; the dirt and pebbles are foreground "
+            "the compositor adds, not a ground the prompt can buy."),
+    "b17": ("full", "amber afternoon light",
+            "GOODBYE. Full body, and the beat's own action is standing up and "
+            "turning away -- the canon's posture IS this beat's posture."),
+    "b19": ("full", "warm amber afternoon light",
+            "THE DROP. Full body in amber. Fruit, bounce and the stop mid-step "
+            "are composite and motion."),
+    # -- GUARDS. Both canons are tight FACE PORTRAITS -- there is no full-body
+    # -- guard art in this tree. Beats 05 and 11 are restaged wide -> medium
+    # -- two-shots on that basis (steward staging call, veto-able).
+    "b05g1": ("guard1", "long soft morning shadows",
+              "THE PATROL, guard one. RESTAGED WIDE -> MEDIUM TWO-SHOT: no "
+              "full-body guard art exists, and this show is 9:16 phone-first "
+              "whose chronic fault has been wide shots with unreadable faces. "
+              "Jogging in reads at medium as entering frame."),
+    "b05g2": ("guard2", "long soft morning shadows",
+              "THE PATROL, guard two. A DIFFERENT MAN, not the same plate "
+              "translated -- guard pairs in this show are two different men."),
+    "b06": ("guard1", "soft morning light",
+            "THE CLIPBOARD. The bark board is a separate INPAINT step with its "
+            "own quad mask; four wording attempts closed the wording lever on "
             "that prop's geometry, so it is not asked for here."),
-    "b07": (GUARD, "a round guard in mismatched armor standing in a morning "
-                   "field, chin raised, medium shot, morning light",
-            "CONFISCATE. The pointing arm is motion; the partner's shoulder at "
-            "frame edge is a composite."),
-    "b09": (GUARD, "a round guard close-up, head and shoulders, helmet, "
-                   "flat morning light, shallow field behind",
-            "THE PAUSE. Entirely a face beat, and the face is the guard canon's "
-            "own pixels at 0.30."),
-    "b10": (GUARD, "a round guard in mismatched armor medium shot holding "
-                   "something flat up toward the viewer, morning light",
-            "NO FORM. The founder's named fault here was TWO DISTINCT OBJECTS, "
-            "which is a plate-side separation problem -- the board and its blank "
-            "back are inpainted separately onto this plate."),
-    "b11": (GUARD, "a round guard in mismatched armor walking away from camera "
-                   "across an empty field, wide shot, long morning shadows",
-            "THEY LEAVE. Same one-plate-two-translations composite as b05."),
+    "b07": ("guard2", "morning light",
+            "CONFISCATE. Guard two. The pointing arm is motion; the partner's "
+            "shoulder at frame edge is a composite."),
+    "b09": ("guard1", "flat morning light",
+            "THE PAUSE. Entirely a face beat, which is the ONE guard beat the "
+            "portrait inits fit without restaging."),
+    "b10": ("guard1", "morning light",
+            "NO FORM. The founder's named fault was TWO DISTINCT OBJECTS -- a "
+            "plate-side separation, so the board and its blank back are "
+            "inpainted separately onto this plate."),
+    "b11g1": ("guard1", "long morning shadows",
+              "THEY LEAVE, guard one. Restaged medium for the same reason as "
+              "b05; walking away reads as receding between cuts."),
+    "b11g2": ("guard2", "long morning shadows",
+              "THEY LEAVE, guard two."),
+}
+
+# Beats served by frames ALREADY ON DISK at $0 -- no cell is filed for them.
+BEATS_FROM_POSED_FRAMES = {
+    "13": "farm-out/ep2-goblin-lowerbody-0822/jerry-posed-seat-w2-0822.png",
+    "15": "farm-out/ep2-goblin-lowerbody-0822/jerry-posed-seat-w2-0822.png",
+    "20": "farm-out/ep2-goblin-lowerbody-0822/jerry-posed-crouch-0822.png",
 }
 
 
@@ -217,7 +235,12 @@ if n == 0:
 '''
 
 
-def cell(tag, init_name, init_sha, seed, note):
+SUBJECT = {"full": "a small green goblin", "cowboy": "a small green goblin",
+           "headnat": "a small green goblin",
+           "guard1": "a round guard", "guard2": "a round guard"}
+
+
+def cell(tag, init_name, init_sha, mask_name, seed, note):
     return {"name": tag, "argv": [
         PY_RENDER, r"%s\inpaint_fruit.py" % WORK,
         "--init", r"%s\%s" % (WORK, init_name),
@@ -225,7 +248,7 @@ def cell(tag, init_name, init_sha, seed, note):
         # ALL-WHITE MASK + --pad-crop 0 IS THE "THIS IS IMG2IMG" PAIR. The whole
         # frame is denoised from a latent that still carries the founder's own
         # picture; there is no region to crop and nothing to align.
-        "--mask-png", r"%s\%s" % (WORK, MASK),
+        "--mask-png", r"%s\%s" % (WORK, mask_name),
         "--strength", STRENGTH, "--pad-crop", "0", "--blur", BLUR,
         "--prompt-file", r"%s\prompt-%s.txt" % (WORK, tag),
         "--negative-file", r"%s\negative.txt" % WORK,
@@ -236,30 +259,50 @@ def cell(tag, init_name, init_sha, seed, note):
 
 def main() -> int:
     write = "--write" in sys.argv
-    gsha, ssha, msha = sha_of(GOBLIN_REL), sha_of(GUARD_REL), sha_of(MASK_REL)
+    from PIL import Image
+    shas = {k: sha_of("%s/%s" % (d, f)) for k, (f, d) in INITS.items()}
+    # EVERY INIT'S SIZE IS READ OFF THE FILE, so a crop swapped later cannot
+    # silently pair with the wrong mask -- it would refuse at rc 6 instead, but
+    # refusing on the card costs a job and refusing here costs nothing.
+    isize = {k: Image.open(os.path.join(REPO, d, f)).size
+             for k, (f, d) in INITS.items()}
+    for k, sz in isize.items():
+        if sz not in MASKS:
+            raise SystemExit("!! init %s is %dx%d and no all-white mask that "
+                             "size is committed. The driver refuses a mask "
+                             "that is not the init's size (rc 6)." % (k,) + sz)
 
     steps = [{"name": "fetch", "argv": [PY_RENDER, r"%s\fetch_inits.py" % WORK]}]
     pay = {r"%s\inpaint_fruit.py" % WORK: open(
         os.path.join(REPO, "pipeline/inpaint_fruit.py"), encoding="utf-8").read(),
         r"%s\negative.txt" % WORK: NEG}
-    for i, (tag, (init, body, note)) in enumerate(sorted(PLATES.items())):
-        pay[r"%s\prompt-%s.txt" % (WORK, tag)] = "%s, %s" % (body, TAIL)
-        steps.append(cell(tag, init,
-                          gsha if init == GOBLIN else ssha, SEED0 + i,
-                          "EP2 FINISH PLATE %s. %s  ROUTE: img2img off the "
-                          "founder's own canon at strength %s -- his face is "
-                          "the init's pixels, not a generation. Light and "
-                          "framing are the prompt's job; POSE IS THE CANON'S "
-                          "and does not move at this strength. No LoRA, no "
-                          "ControlNet, no face tags (route_closure_2026_08_22)."
-                          % (tag.upper(), note, STRENGTH)))
+    for i, (tag, (ikey, light, note)) in enumerate(sorted(PLATES.items())):
+        # THE PROMPT IS A SUBJECT NOUN AND A LIGHT CLAUSE. Nothing else. The
+        # noun stays because deleting the subject noun deleted the subject,
+        # first try, on the b08 route; the light is the one axis 0.30 moves.
+        pay[r"%s\prompt-%s.txt" % (WORK, tag)] = "%s, %s, %s" % (
+            SUBJECT[ikey], light, TAIL)
+        steps.append(cell(tag, INITS[ikey][0], shas[ikey],
+                          MASKS[isize[ikey]], SEED0 + i,
+                          "EP2 FINISH PLATE %s (pass two). %s  INIT: %s -- "
+                          "FRAMING IS THE CROP, not the prompt: pass one asked "
+                          "prompts for framing and returned fifteen plates that "
+                          "were two images. GROUND is the compositor's. The "
+                          "prompt buys LIGHT (%r) and nothing else. img2img off "
+                          "the founder's own pixels at strength %s, no LoRA, no "
+                          "ControlNet, no face tags."
+                          % (tag.upper(), note, INITS[ikey][0], light, STRENGTH)))
     steps.append({"name": "publish", "argv": [PY_RENDER, "-c", PUB_PY % (
         WORK.replace("\\", "/") + "/out", FARMOUT.replace("\\", "/"), JOB)]})
 
     lines = []
-    for rel in (GOBLIN_REL, GUARD_REL, MASK_REL):
-        lines.append('    "%s": ("%s%s", "%s"),'
-                     % (os.path.basename(rel), RAW, rel, sha_of(rel)))
+    for f, d in sorted(set(INITS.values())):
+        lines.append('    "%s": ("%s%s/%s", "%s"),'
+                     % (f, RAW, d, f, sha_of("%s/%s" % (d, f))))
+    for mname in sorted(set(MASKS.values())):
+        mrel = "%s/%s" % (MASK_DIR, mname)
+        lines.append('    "%s": ("%s%s", "%s"),' % (mname, RAW, mrel,
+                                                    sha_of(mrel)))
     pay[r"%s\fetch_inits.py" % WORK] = FETCH_PY % (WORK, chr(10).join(lines))
 
     n = len(PLATES)
@@ -270,32 +313,36 @@ def main() -> int:
         "est_minutes": max(8, int(n * 0.6) + 4),
         "owner": "the ep2 finish lane, 2026-08-22",
         "consumer": (
-            "EPISODE TWO'S WATCH-THROUGH, TONIGHT. Every cell here is a plate a "
-            "beat is currently missing, and each one feeds a motion render and "
-            "then a swap into review/ep2-ship-0821. Nothing downstream of this "
-            "can start until the plates exist, which is why all %d are filed in "
-            "one pass rather than beat by beat." % n),
+            "EPISODE TWO'S WATCH-THROUGH TONIGHT. Each cell is a plate a beat "
+            "is missing; each feeds a motion render and then a swap into "
+            "review/ep2-ship-0821."),
         "success": (
-            "%d plates in which the character is RECOGNISABLY THE FOUNDER'S -- "
-            "judged at contact level against his canon -- with each beat's "
-            "light and framing arrived at. A plate whose ground stayed the "
-            "canon's meadow is NOT a failure: the route moves light cleanly and "
-            "ground only partially, that was measured over 19 cells, and the "
-            "compositor supplies the setting where it matters." % n),
+            "%d plates in which the character is RECOGNISABLY THE FOUNDER'S at "
+            "contact level AND the framing is the beat's. Pass one failed the "
+            "second half of that -- fifteen cells, two distinct images -- so "
+            "the bar this time is that the plates DIFFER FROM EACH OTHER in the "
+            "way their beats do." % n),
         "why": (
-            "THE FACE RIDES THE INIT, WHICH IS THE ONLY THING ON THIS TREE THAT "
-            "HAS EVER RELIABLY DRAWN HIM. Sixteen rounds of prompt-side face "
-            "work were vetoed four times and canon.yaml closed that route by "
-            "rule; the replacement puts his pixels in AS PIXELS at a strength "
-            "that never runs the steps where a face would be re-decided.\n\n"
-            "AND THE POSE PROBLEM DOES NOT BLOCK THIS. Today's v3 ladder "
-            "measured that the pose axis DID open -- 4 of 6 skeleton cells "
-            "adopted, including a stride the dataset never contained -- but the "
-            "skin desaturates under a pose net and three free levers plus a "
-            "block-weight sweep all failed to bring it back. So the finish lane "
-            "uses the route with no pose net in it, on the beats whose staging "
-            "reads on body and context, and routes the genuinely seated beats "
-            "to the v3 seat cell instead."),
+            "PASS ONE FAILED AND THIS IS THE CORRECTION. It asked each prompt "
+            "for a framing word and a ground at strength 0.30, and returned "
+            "nine identical standing goblins and six identical guard portraits "
+            "-- a cell specified `close-up` came back as the same full-body "
+            "shot. At 0.30 the output IS the init with a lighting nudge, which "
+            "is exactly why the face survives and exactly why nothing else "
+            "moves.\n\n"
+            "SO FRAMING NOW COMES FROM THE CROP. These are the v2 dataset's own "
+            "inits -- full, cowboy and the 1.000x native square -- which is "
+            "where that set's three framings always came from. Ground comes "
+            "from the compositor. The prompt buys light.\n\n"
+            "AND THE GUARD BEATS ARE RESTAGED, as a steward call the founder "
+            "can veto. Both guard canons are tight FACE PORTRAITS; there is no "
+            "full-body guard art in this tree, so beats 05 and 11 cannot be the "
+            "wide two-guard shots they are written as. They become MEDIUM "
+            "two-shots: the show is 9:16 phone-first and its chronic fault has "
+            "been wide shots with unreadable faces, jogging-in reads at medium "
+            "as entering frame, and walking-away reads as receding between "
+            "cuts. Guard pairs are TWO DIFFERENT MEN, so each gets its own "
+            "plate off its own canon rather than one plate translated twice."),
         "env": {
             "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8",
             "PYTHONUNBUFFERED": "1",
@@ -305,7 +352,12 @@ def main() -> int:
             "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True",
         },
         "plate_count": n,
+        "framing_law": (
+            "FRAMING IS NOT PROMPTABLE AT STRENGTH 0.30. Framing comes from the "
+            "CROP, ground from the COMPOSITOR, and the prompt buys LIGHT. Paid "
+            "for by pass one of this job on 2026-08-22."),
         "beats_not_in_this_pass": BEATS_ELSEWHERE,
+        "beats_served_by_frames_already_on_disk": BEATS_FROM_POSED_FRAMES,
         "recipe": (
             "ep2-b13-i2icanon-s30-0822's, unchanged: all-white mask + "
             "--pad-crop 0 (= plain img2img on base weights), strength %s, %s "
@@ -318,8 +370,8 @@ def main() -> int:
 
     if not write:
         print("would emit %s with %d plates" % (OUT, n))
-        for tag, (init, body, _n) in sorted(PLATES.items()):
-            print("   %-5s %-28s %s" % (tag, init.split("-")[0], body[:64]))
+        for tag, (ikey, light, _n) in sorted(PLATES.items()):
+            print("   %-6s %-30s %s" % (tag, INITS[ikey][0], light))
         print("   NOT in this pass: %s"
               % ", ".join("%s (%s)" % kv for kv in sorted(BEATS_ELSEWHERE.items())))
         return 0

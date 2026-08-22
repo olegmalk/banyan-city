@@ -13,27 +13,31 @@ priority: 70
 max_attempts: 1
 est_minutes: 13
 owner: the ep2 finish lane, 2026-08-22
-consumer: EPISODE TWO'S WATCH-THROUGH, TONIGHT. Every cell here is a plate a beat is currently
-  missing, and each one feeds a motion render and then a swap into review/ep2-ship-0821. Nothing
-  downstream of this can start until the plates exist, which is why all 15 are filed in one
-  pass rather than beat by beat.
-success: '15 plates in which the character is RECOGNISABLY THE FOUNDER''S -- judged at contact
-  level against his canon -- with each beat''s light and framing arrived at. A plate whose
-  ground stayed the canon''s meadow is NOT a failure: the route moves light cleanly and ground
-  only partially, that was measured over 19 cells, and the compositor supplies the setting
-  where it matters.'
-why: 'THE FACE RIDES THE INIT, WHICH IS THE ONLY THING ON THIS TREE THAT HAS EVER RELIABLY
-  DRAWN HIM. Sixteen rounds of prompt-side face work were vetoed four times and canon.yaml
-  closed that route by rule; the replacement puts his pixels in AS PIXELS at a strength that
-  never runs the steps where a face would be re-decided.
+consumer: EPISODE TWO'S WATCH-THROUGH TONIGHT. Each cell is a plate a beat is missing; each
+  feeds a motion render and then a swap into review/ep2-ship-0821.
+success: 15 plates in which the character is RECOGNISABLY THE FOUNDER'S at contact level AND
+  the framing is the beat's. Pass one failed the second half of that -- fifteen cells, two
+  distinct images -- so the bar this time is that the plates DIFFER FROM EACH OTHER in the
+  way their beats do.
+why: 'PASS ONE FAILED AND THIS IS THE CORRECTION. It asked each prompt for a framing word
+  and a ground at strength 0.30, and returned nine identical standing goblins and six identical
+  guard portraits -- a cell specified `close-up` came back as the same full-body shot. At
+  0.30 the output IS the init with a lighting nudge, which is exactly why the face survives
+  and exactly why nothing else moves.
 
 
-  AND THE POSE PROBLEM DOES NOT BLOCK THIS. Today''s v3 ladder measured that the pose axis
-  DID open -- 4 of 6 skeleton cells adopted, including a stride the dataset never contained
-  -- but the skin desaturates under a pose net and three free levers plus a block-weight sweep
-  all failed to bring it back. So the finish lane uses the route with no pose net in it, on
-  the beats whose staging reads on body and context, and routes the genuinely seated beats
-  to the v3 seat cell instead.'
+  SO FRAMING NOW COMES FROM THE CROP. These are the v2 dataset''s own inits -- full, cowboy
+  and the 1.000x native square -- which is where that set''s three framings always came from.
+  Ground comes from the compositor. The prompt buys light.
+
+
+  AND THE GUARD BEATS ARE RESTAGED, as a steward call the founder can veto. Both guard canons
+  are tight FACE PORTRAITS; there is no full-body guard art in this tree, so beats 05 and
+  11 cannot be the wide two-guard shots they are written as. They become MEDIUM two-shots:
+  the show is 9:16 phone-first and its chronic fault has been wide shots with unreadable faces,
+  jogging-in reads at medium as entering frame, and walking-away reads as receding between
+  cuts. Guard pairs are TWO DIFFERENT MEN, so each gets its own plate off its own canon rather
+  than one plate translated twice.'
 env:
   PYTHONUTF8: '1'
   PYTHONIOENCODING: utf-8
@@ -44,6 +48,8 @@ env:
   HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
   PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
 plate_count: 15
+framing_law: FRAMING IS NOT PROMPTABLE AT STRENGTH 0.30. Framing comes from the CROP, ground
+  from the COMPOSITOR, and the prompt buys LIGHT. Paid for by pass one of this job on 2026-08-22.
 beats_not_in_this_pass:
   '01': plant + fruit only
   '12': leaves only
@@ -51,6 +57,10 @@ beats_not_in_this_pass:
   '16': leaf close-up
   '18': fruit only
   '21': leaf only
+beats_served_by_frames_already_on_disk:
+  '13': farm-out/ep2-goblin-lowerbody-0822/jerry-posed-seat-w2-0822.png
+  '15': farm-out/ep2-goblin-lowerbody-0822/jerry-posed-seat-w2-0822.png
+  '20': farm-out/ep2-goblin-lowerbody-0822/jerry-posed-crouch-0822.png
 recipe: 'ep2-b13-i2icanon-s30-0822''s, unchanged: all-white mask + --pad-crop 0 (= plain img2img
   on base weights), strength 0.30, 40 steps, cfg 7.5, blur 8. No LoRA, no ControlNet, no face
   tags.'
@@ -1120,63 +1130,56 @@ payload:
     \          flush=True)\n    return 0\n\n\nif __name__ == \"__main__\":\n    raise SystemExit(main())\n"
   C:\banyan-farm\ep2-finish-plates-0822\negative.txt: lowres, worst quality, low quality,
     text, watermark, photorealism, 3d render, blurry, 2boys, multiple heads
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b02.txt: a small green goblin standing in a
-    morning field, dust kicked up around his feet, wide shot, bright morning light, detailed
-    cinematic anime, masterpiece, best quality, very aesthetic
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b03.txt: a small green goblin standing beside
-    a tiny seedling in short grass, wide shot, soft morning light, detailed cinematic anime,
-    masterpiece, best quality, very aesthetic
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b04.txt: a small green goblin close-up, head
-    and shoulders, soft morning light, shallow green field behind, detailed cinematic anime,
-    masterpiece, best quality, very aesthetic
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b05.txt: a round guard in mismatched armor
-    standing in an empty morning field, wide shot, long soft shadows, detailed cinematic anime,
-    masterpiece, best quality, very aesthetic
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b06.txt: a round guard in mismatched armor
-    medium close-up, holding something in both hands at chest height, soft morning light,
-    detailed cinematic anime, masterpiece, best quality, very aesthetic
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b07.txt: a round guard in mismatched armor
-    standing in a morning field, chin raised, medium shot, morning light, detailed cinematic
-    anime, masterpiece, best quality, very aesthetic
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b08g.txt: a small green goblin standing in
-    a morning field looking down at himself, medium shot, flat morning light, detailed cinematic
-    anime, masterpiece, best quality, very aesthetic
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b09.txt: a round guard close-up, head and shoulders,
-    helmet, flat morning light, shallow field behind, detailed cinematic anime, masterpiece,
-    best quality, very aesthetic
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b10.txt: a round guard in mismatched armor
-    medium shot holding something flat up toward the viewer, morning light, detailed cinematic
-    anime, masterpiece, best quality, very aesthetic
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b11.txt: a round guard in mismatched armor
-    walking away from camera across an empty field, wide shot, long morning shadows, detailed
-    cinematic anime, masterpiece, best quality, very aesthetic
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b14.txt: a small green goblin low close-up,
-    loose dirt and pebbles in the foreground, shallow green grass background, warm midday
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b02.txt: a small green goblin, bright morning
     light, detailed cinematic anime, masterpiece, best quality, very aesthetic
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b15.txt: a small green goblin standing in warm
-    midday grass beside a tiny seedling, two-shot, lonely warm light, detailed cinematic anime,
-    masterpiece, best quality, very aesthetic
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b17.txt: a small green goblin standing in an
-    open field, turning away, afternoon light warming toward amber, wide shot, detailed cinematic
-    anime, masterpiece, best quality, very aesthetic
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b19.txt: a small green goblin standing in amber
-    afternoon grass, wide shot, long warm light, detailed cinematic anime, masterpiece, best
-    quality, very aesthetic
-  C:\banyan-farm\ep2-finish-plates-0822\prompt-b20.txt: a small green goblin standing in amber
-    afternoon grass holding something in both hands, warm amber light, detailed cinematic
-    anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b03.txt: a small green goblin, soft morning
+    light, detailed cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b04.txt: a small green goblin, soft morning
+    light, detailed cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b05g1.txt: a round guard, long soft morning
+    shadows, detailed cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b05g2.txt: a round guard, long soft morning
+    shadows, detailed cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b06.txt: a round guard, soft morning light,
+    detailed cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b07.txt: a round guard, morning light, detailed
+    cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b08g.txt: a small green goblin, flat morning
+    light, detailed cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b09.txt: a round guard, flat morning light,
+    detailed cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b10.txt: a round guard, morning light, detailed
+    cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b11g1.txt: a round guard, long morning shadows,
+    detailed cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b11g2.txt: a round guard, long morning shadows,
+    detailed cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b14.txt: a small green goblin, warm midday
+    light, detailed cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b17.txt: a small green goblin, amber afternoon
+    light, detailed cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-finish-plates-0822\prompt-b19.txt: a small green goblin, warm amber afternoon
+    light, detailed cinematic anime, masterpiece, best quality, very aesthetic
   C:\banyan-farm\ep2-finish-plates-0822\fetch_inits.py: "#!/usr/bin/env python3\n\"\"\"Fetch\
     \ the two canon inits and the full-frame mask, each pinned by sha256.\n\nThe inits are\
     \ the FOUNDER'S OWN IMAGES. A wrong byte here is a plate of somebody\nelse's character\
     \ rendered under his name, so it refuses rather than warns.\"\"\"\nimport hashlib, os,\
     \ sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\ep2-finish-plates-0822\"\nUA = {\"\
     User-Agent\": \"banyan-city-ep2finish/1.0 (albert.numbro@gmail.com)\"}\nWANT = {\n   \
-    \ \"goblin-canon-founder-0821.png\": (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/taste/refs/goblin-canon-founder-0821.png\"\
-    , \"b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00\"),\n    \"guard1-canon-founder-0822.png\"\
-    : (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/taste/refs/guard1-canon-founder-0822.png\"\
-    , \"420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a\"),\n    \"fullframe-mask-0822.png\"\
-    : (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/ep2-goblin-i2i-src-0822/fullframe-mask-0822.png\"\
-    , \"5cb2f709bfa7eab1aae0ffebb398fefd5224a6da61e5a730779322a84321894b\"),\n}\n\nos.makedirs(OUT,\
+    \ \"guard1-canon-founder-0822.png\": (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/taste/refs/guard1-canon-founder-0822.png\"\
+    , \"420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a\"),\n    \"guard2-canon-founder-0822.png\"\
+    : (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/taste/refs/guard2-canon-founder-0822.png\"\
+    , \"871b11216482629801fa351f211347d88009481aeed8cd4d7d6c1ed14589c84c\"),\n    \"init-cowboy-0822.png\"\
+    : (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/ep2-goblin-i2i-src-0822/init-cowboy-0822.png\"\
+    , \"630265052064cdd3623e9e3b0a409d8c1c9d700a57b7a0c10d8cca456f51f386\"),\n    \"init-full-0822.png\"\
+    : (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/ep2-goblin-i2i-src-0822/init-full-0822.png\"\
+    , \"0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7\"),\n    \"init-headnat-0822.png\"\
+    : (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/ep2-goblin-i2i-src-0822/init-headnat-0822.png\"\
+    , \"d14a0524afdb4e3667b2784ab577f26720344bd2eac21b3cefdbd846daaed0dd\"),\n    \"fullframe-mask-832x1216-0822.png\"\
+    : (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/ep2-goblin-i2i-src-0822/fullframe-mask-832x1216-0822.png\"\
+    , \"5cb2f709bfa7eab1aae0ffebb398fefd5224a6da61e5a730779322a84321894b\"),\n    \"fullframe-mask-832x832-0822.png\"\
+    : (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/ep2-goblin-i2i-src-0822/fullframe-mask-832x832-0822.png\"\
+    , \"1498c9256710b7b5f8fe486bea2a0b7c9fd1221249938d69a90bcc51e10bfcc4\"),\n}\n\nos.makedirs(OUT,\
     \ exist_ok=True)\nfor name, (url, want) in WANT.items():\n    raw = urllib.request.urlopen(\n\
     \        urllib.request.Request(url, headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n\
     \    if have != want:\n        sys.exit(\"!! SHA MISMATCH for %s -- refusing.\" % name\
@@ -1193,11 +1196,11 @@ steps:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-finish-plates-0822\inpaint_fruit.py
   - --init
-  - C:\banyan-farm\ep2-finish-plates-0822\goblin-canon-founder-0821.png
+  - C:\banyan-farm\ep2-finish-plates-0822\init-full-0822.png
   - --init-sha256
-  - b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00
+  - 0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7
   - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x1216-0822.png
   - --strength
   - '0.30'
   - --pad-crop
@@ -1217,22 +1220,23 @@ steps:
   - --out
   - C:\banyan-farm\ep2-finish-plates-0822\out\b02.png
   - --note
-  - 'EP2 FINISH PLATE B02. THE SPRINT. Plate only: the panic and the dive are MOTION''s job,
-    and the founder''s named fault on this beat was the ragdoll, which is a slot-length render
-    question and not a plate one.  ROUTE: img2img off the founder''s own canon at strength
-    0.30 -- his face is the init''s pixels, not a generation. Light and framing are the prompt''s
-    job; POSE IS THE CANON''S and does not move at this strength. No LoRA, no ControlNet,
-    no face tags (route_closure_2026_08_22).'
+  - 'EP2 FINISH PLATE B02 (pass two). THE SPRINT. Full-body crop: the beat is a wide action.
+    Panic and the dive are MOTION''s job and the founder''s named fault here was the ragdoll,
+    which is a slot-length render question.  INIT: init-full-0822.png -- FRAMING IS THE CROP,
+    not the prompt: pass one asked prompts for framing and returned fifteen plates that were
+    two images. GROUND is the compositor''s. The prompt buys LIGHT (''bright morning light'')
+    and nothing else. img2img off the founder''s own pixels at strength 0.30, no LoRA, no
+    ControlNet, no face tags.'
 - name: b03
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-finish-plates-0822\inpaint_fruit.py
   - --init
-  - C:\banyan-farm\ep2-finish-plates-0822\goblin-canon-founder-0821.png
+  - C:\banyan-farm\ep2-finish-plates-0822\init-full-0822.png
   - --init-sha256
-  - b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00
+  - 0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7
   - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x1216-0822.png
   - --strength
   - '0.30'
   - --pad-crop
@@ -1252,22 +1256,23 @@ steps:
   - --out
   - C:\banyan-farm\ep2-finish-plates-0822\out\b03.png
   - --note
-  - 'EP2 FINISH PLATE B03. BAD COVER. The comedy is that the plant hides none of him, which
-    is STAGING -- the plate supplies him and the field, the composite supplies the sapling
-    at its real 40cm.  ROUTE: img2img off the founder''s own canon at strength 0.30 -- his
-    face is the init''s pixels, not a generation. Light and framing are the prompt''s job;
-    POSE IS THE CANON''S and does not move at this strength. No LoRA, no ControlNet, no face
-    tags (route_closure_2026_08_22).'
+  - 'EP2 FINISH PLATE B03 (pass two). BAD COVER. Full body -- the joke is that a 40cm plant
+    hides none of him, which needs his whole silhouette in frame. The sapling is composited
+    at its real height.  INIT: init-full-0822.png -- FRAMING IS THE CROP, not the prompt:
+    pass one asked prompts for framing and returned fifteen plates that were two images. GROUND
+    is the compositor''s. The prompt buys LIGHT (''soft morning light'') and nothing else.
+    img2img off the founder''s own pixels at strength 0.30, no LoRA, no ControlNet, no face
+    tags.'
 - name: b04
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-finish-plates-0822\inpaint_fruit.py
   - --init
-  - C:\banyan-farm\ep2-finish-plates-0822\goblin-canon-founder-0821.png
+  - C:\banyan-farm\ep2-finish-plates-0822\init-headnat-0822.png
   - --init-sha256
-  - b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00
+  - d14a0524afdb4e3667b2784ab577f26720344bd2eac21b3cefdbd846daaed0dd
   - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x832-0822.png
   - --strength
   - '0.30'
   - --pad-crop
@@ -1287,13 +1292,14 @@ steps:
   - --out
   - C:\banyan-farm\ep2-finish-plates-0822\out\b04.png
   - --note
-  - 'EP2 FINISH PLATE B04. THE FOOTNOTE. A close-up off the canon: his face is the init''s
-    own pixels at 0.30, which is the whole point of this route on the one beat that is entirely
-    his face.  ROUTE: img2img off the founder''s own canon at strength 0.30 -- his face is
-    the init''s pixels, not a generation. Light and framing are the prompt''s job; POSE IS
-    THE CANON''S and does not move at this strength. No LoRA, no ControlNet, no face tags
-    (route_closure_2026_08_22).'
-- name: b05
+  - 'EP2 FINISH PLATE B04 (pass two). THE FOOTNOTE. The 832x832 native upper-body crop, NOT
+    a prompt asking for a close-up. 1.000x magnification, so the init is not softened before
+    it is denoised.  INIT: init-headnat-0822.png -- FRAMING IS THE CROP, not the prompt: pass
+    one asked prompts for framing and returned fifteen plates that were two images. GROUND
+    is the compositor''s. The prompt buys LIGHT (''soft morning light'') and nothing else.
+    img2img off the founder''s own pixels at strength 0.30, no LoRA, no ControlNet, no face
+    tags.'
+- name: b05g1
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-finish-plates-0822\inpaint_fruit.py
@@ -1302,7 +1308,7 @@ steps:
   - --init-sha256
   - 420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a
   - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x1216-0822.png
   - --strength
   - '0.30'
   - --pad-crop
@@ -1310,7 +1316,7 @@ steps:
   - --blur
   - '8'
   - --prompt-file
-  - C:\banyan-farm\ep2-finish-plates-0822\prompt-b05.txt
+  - C:\banyan-farm\ep2-finish-plates-0822\prompt-b05g1.txt
   - --negative-file
   - C:\banyan-farm\ep2-finish-plates-0822\negative.txt
   - --steps
@@ -1320,14 +1326,50 @@ steps:
   - --seed
   - '20260904'
   - --out
-  - C:\banyan-farm\ep2-finish-plates-0822\out\b05.png
+  - C:\banyan-farm\ep2-finish-plates-0822\out\b05g1.png
   - --note
-  - 'EP2 FINISH PLATE B05. THE PATROL. Two guards in the beat; ONE plate is rendered and the
-    second figure is the same plate composited at a different translation, which is how this
-    tree has always made a two-guard frame without generating a second stranger.  ROUTE: img2img
-    off the founder''s own canon at strength 0.30 -- his face is the init''s pixels, not a
-    generation. Light and framing are the prompt''s job; POSE IS THE CANON''S and does not
-    move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22).'
+  - 'EP2 FINISH PLATE B05G1 (pass two). THE PATROL, guard one. RESTAGED WIDE -> MEDIUM TWO-SHOT:
+    no full-body guard art exists, and this show is 9:16 phone-first whose chronic fault has
+    been wide shots with unreadable faces. Jogging in reads at medium as entering frame.  INIT:
+    guard1-canon-founder-0822.png -- FRAMING IS THE CROP, not the prompt: pass one asked prompts
+    for framing and returned fifteen plates that were two images. GROUND is the compositor''s.
+    The prompt buys LIGHT (''long soft morning shadows'') and nothing else. img2img off the
+    founder''s own pixels at strength 0.30, no LoRA, no ControlNet, no face tags.'
+- name: b05g2
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-finish-plates-0822\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\ep2-finish-plates-0822\guard2-canon-founder-0822.png
+  - --init-sha256
+  - 871b11216482629801fa351f211347d88009481aeed8cd4d7d6c1ed14589c84c
+  - --mask-png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x1216-0822.png
+  - --strength
+  - '0.30'
+  - --pad-crop
+  - '0'
+  - --blur
+  - '8'
+  - --prompt-file
+  - C:\banyan-farm\ep2-finish-plates-0822\prompt-b05g2.txt
+  - --negative-file
+  - C:\banyan-farm\ep2-finish-plates-0822\negative.txt
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --seed
+  - '20260905'
+  - --out
+  - C:\banyan-farm\ep2-finish-plates-0822\out\b05g2.png
+  - --note
+  - 'EP2 FINISH PLATE B05G2 (pass two). THE PATROL, guard two. A DIFFERENT MAN, not the same
+    plate translated -- guard pairs in this show are two different men.  INIT: guard2-canon-founder-0822.png
+    -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned
+    fifteen plates that were two images. GROUND is the compositor''s. The prompt buys LIGHT
+    (''long soft morning shadows'') and nothing else. img2img off the founder''s own pixels
+    at strength 0.30, no LoRA, no ControlNet, no face tags.'
 - name: b06
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
@@ -1337,7 +1379,7 @@ steps:
   - --init-sha256
   - 420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a
   - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x1216-0822.png
   - --strength
   - '0.30'
   - --pad-crop
@@ -1353,26 +1395,27 @@ steps:
   - --cfg
   - '7.5'
   - --seed
-  - '20260905'
+  - '20260906'
   - --out
   - C:\banyan-farm\ep2-finish-plates-0822\out\b06.png
   - --note
-  - 'EP2 FINISH PLATE B06. THE CLIPBOARD. The bark board itself is an INPAINT step with its
-    own quad mask -- four wording attempts closed the wording lever on that prop''s geometry,
-    so it is not asked for here.  ROUTE: img2img off the founder''s own canon at strength
-    0.30 -- his face is the init''s pixels, not a generation. Light and framing are the prompt''s
-    job; POSE IS THE CANON''S and does not move at this strength. No LoRA, no ControlNet,
-    no face tags (route_closure_2026_08_22).'
+  - 'EP2 FINISH PLATE B06 (pass two). THE CLIPBOARD. The bark board is a separate INPAINT
+    step with its own quad mask; four wording attempts closed the wording lever on that prop''s
+    geometry, so it is not asked for here.  INIT: guard1-canon-founder-0822.png -- FRAMING
+    IS THE CROP, not the prompt: pass one asked prompts for framing and returned fifteen plates
+    that were two images. GROUND is the compositor''s. The prompt buys LIGHT (''soft morning
+    light'') and nothing else. img2img off the founder''s own pixels at strength 0.30, no
+    LoRA, no ControlNet, no face tags.'
 - name: b07
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-finish-plates-0822\inpaint_fruit.py
   - --init
-  - C:\banyan-farm\ep2-finish-plates-0822\guard1-canon-founder-0822.png
+  - C:\banyan-farm\ep2-finish-plates-0822\guard2-canon-founder-0822.png
   - --init-sha256
-  - 420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a
+  - 871b11216482629801fa351f211347d88009481aeed8cd4d7d6c1ed14589c84c
   - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x1216-0822.png
   - --strength
   - '0.30'
   - --pad-crop
@@ -1388,25 +1431,26 @@ steps:
   - --cfg
   - '7.5'
   - --seed
-  - '20260906'
+  - '20260907'
   - --out
   - C:\banyan-farm\ep2-finish-plates-0822\out\b07.png
   - --note
-  - 'EP2 FINISH PLATE B07. CONFISCATE. The pointing arm is motion; the partner''s shoulder
-    at frame edge is a composite.  ROUTE: img2img off the founder''s own canon at strength
-    0.30 -- his face is the init''s pixels, not a generation. Light and framing are the prompt''s
-    job; POSE IS THE CANON''S and does not move at this strength. No LoRA, no ControlNet,
-    no face tags (route_closure_2026_08_22).'
+  - 'EP2 FINISH PLATE B07 (pass two). CONFISCATE. Guard two. The pointing arm is motion; the
+    partner''s shoulder at frame edge is a composite.  INIT: guard2-canon-founder-0822.png
+    -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned
+    fifteen plates that were two images. GROUND is the compositor''s. The prompt buys LIGHT
+    (''morning light'') and nothing else. img2img off the founder''s own pixels at strength
+    0.30, no LoRA, no ControlNet, no face tags.'
 - name: b08g
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-finish-plates-0822\inpaint_fruit.py
   - --init
-  - C:\banyan-farm\ep2-finish-plates-0822\goblin-canon-founder-0821.png
+  - C:\banyan-farm\ep2-finish-plates-0822\init-cowboy-0822.png
   - --init-sha256
-  - b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00
+  - 630265052064cdd3623e9e3b0a409d8c1c9d700a57b7a0c10d8cca456f51f386
   - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x1216-0822.png
   - --strength
   - '0.30'
   - --pad-crop
@@ -1422,16 +1466,17 @@ steps:
   - --cfg
   - '7.5'
   - --seed
-  - '20260907'
+  - '20260908'
   - --out
   - C:\banyan-farm\ep2-finish-plates-0822\out\b08g.png
   - --note
-  - 'EP2 FINISH PLATE B08G. INSIDE HIM, the GOBLIN HALF. Two-character beat: this plate is
-    composited with the guard plate below by integer translation, which is the proven pattern
-    -- neither figure is generated twice.  ROUTE: img2img off the founder''s own canon at
-    strength 0.30 -- his face is the init''s pixels, not a generation. Light and framing are
-    the prompt''s job; POSE IS THE CANON''S and does not move at this strength. No LoRA, no
-    ControlNet, no face tags (route_closure_2026_08_22).'
+  - 'EP2 FINISH PLATE B08G (pass two). INSIDE HIM, GOBLIN HALF. Cowboy crop because the beat
+    points at his BELLY -- the frame has to contain it. Composited with the guard half by
+    integer translation.  INIT: init-cowboy-0822.png -- FRAMING IS THE CROP, not the prompt:
+    pass one asked prompts for framing and returned fifteen plates that were two images. GROUND
+    is the compositor''s. The prompt buys LIGHT (''flat morning light'') and nothing else.
+    img2img off the founder''s own pixels at strength 0.30, no LoRA, no ControlNet, no face
+    tags.'
 - name: b09
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
@@ -1441,7 +1486,7 @@ steps:
   - --init-sha256
   - 420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a
   - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x1216-0822.png
   - --strength
   - '0.30'
   - --pad-crop
@@ -1457,15 +1502,16 @@ steps:
   - --cfg
   - '7.5'
   - --seed
-  - '20260908'
+  - '20260909'
   - --out
   - C:\banyan-farm\ep2-finish-plates-0822\out\b09.png
   - --note
-  - 'EP2 FINISH PLATE B09. THE PAUSE. Entirely a face beat, and the face is the guard canon''s
-    own pixels at 0.30.  ROUTE: img2img off the founder''s own canon at strength 0.30 -- his
-    face is the init''s pixels, not a generation. Light and framing are the prompt''s job;
-    POSE IS THE CANON''S and does not move at this strength. No LoRA, no ControlNet, no face
-    tags (route_closure_2026_08_22).'
+  - 'EP2 FINISH PLATE B09 (pass two). THE PAUSE. Entirely a face beat, which is the ONE guard
+    beat the portrait inits fit without restaging.  INIT: guard1-canon-founder-0822.png --
+    FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned fifteen
+    plates that were two images. GROUND is the compositor''s. The prompt buys LIGHT (''flat
+    morning light'') and nothing else. img2img off the founder''s own pixels at strength 0.30,
+    no LoRA, no ControlNet, no face tags.'
 - name: b10
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
@@ -1475,7 +1521,7 @@ steps:
   - --init-sha256
   - 420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a
   - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x1216-0822.png
   - --strength
   - '0.30'
   - --pad-crop
@@ -1491,17 +1537,18 @@ steps:
   - --cfg
   - '7.5'
   - --seed
-  - '20260909'
+  - '20260910'
   - --out
   - C:\banyan-farm\ep2-finish-plates-0822\out\b10.png
   - --note
-  - 'EP2 FINISH PLATE B10. NO FORM. The founder''s named fault here was TWO DISTINCT OBJECTS,
-    which is a plate-side separation problem -- the board and its blank back are inpainted
-    separately onto this plate.  ROUTE: img2img off the founder''s own canon at strength 0.30
-    -- his face is the init''s pixels, not a generation. Light and framing are the prompt''s
-    job; POSE IS THE CANON''S and does not move at this strength. No LoRA, no ControlNet,
-    no face tags (route_closure_2026_08_22).'
-- name: b11
+  - 'EP2 FINISH PLATE B10 (pass two). NO FORM. The founder''s named fault was TWO DISTINCT
+    OBJECTS -- a plate-side separation, so the board and its blank back are inpainted separately
+    onto this plate.  INIT: guard1-canon-founder-0822.png -- FRAMING IS THE CROP, not the
+    prompt: pass one asked prompts for framing and returned fifteen plates that were two images.
+    GROUND is the compositor''s. The prompt buys LIGHT (''morning light'') and nothing else.
+    img2img off the founder''s own pixels at strength 0.30, no LoRA, no ControlNet, no face
+    tags.'
+- name: b11g1
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-finish-plates-0822\inpaint_fruit.py
@@ -1510,7 +1557,7 @@ steps:
   - --init-sha256
   - 420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a
   - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x1216-0822.png
   - --strength
   - '0.30'
   - --pad-crop
@@ -1518,7 +1565,7 @@ steps:
   - --blur
   - '8'
   - --prompt-file
-  - C:\banyan-farm\ep2-finish-plates-0822\prompt-b11.txt
+  - C:\banyan-farm\ep2-finish-plates-0822\prompt-b11g1.txt
   - --negative-file
   - C:\banyan-farm\ep2-finish-plates-0822\negative.txt
   - --steps
@@ -1526,24 +1573,60 @@ steps:
   - --cfg
   - '7.5'
   - --seed
-  - '20260910'
+  - '20260911'
   - --out
-  - C:\banyan-farm\ep2-finish-plates-0822\out\b11.png
+  - C:\banyan-farm\ep2-finish-plates-0822\out\b11g1.png
   - --note
-  - 'EP2 FINISH PLATE B11. THEY LEAVE. Same one-plate-two-translations composite as b05.  ROUTE:
-    img2img off the founder''s own canon at strength 0.30 -- his face is the init''s pixels,
-    not a generation. Light and framing are the prompt''s job; POSE IS THE CANON''S and does
-    not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22).'
+  - 'EP2 FINISH PLATE B11G1 (pass two). THEY LEAVE, guard one. Restaged medium for the same
+    reason as b05; walking away reads as receding between cuts.  INIT: guard1-canon-founder-0822.png
+    -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned
+    fifteen plates that were two images. GROUND is the compositor''s. The prompt buys LIGHT
+    (''long morning shadows'') and nothing else. img2img off the founder''s own pixels at
+    strength 0.30, no LoRA, no ControlNet, no face tags.'
+- name: b11g2
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-finish-plates-0822\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\ep2-finish-plates-0822\guard2-canon-founder-0822.png
+  - --init-sha256
+  - 871b11216482629801fa351f211347d88009481aeed8cd4d7d6c1ed14589c84c
+  - --mask-png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x1216-0822.png
+  - --strength
+  - '0.30'
+  - --pad-crop
+  - '0'
+  - --blur
+  - '8'
+  - --prompt-file
+  - C:\banyan-farm\ep2-finish-plates-0822\prompt-b11g2.txt
+  - --negative-file
+  - C:\banyan-farm\ep2-finish-plates-0822\negative.txt
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --seed
+  - '20260912'
+  - --out
+  - C:\banyan-farm\ep2-finish-plates-0822\out\b11g2.png
+  - --note
+  - 'EP2 FINISH PLATE B11G2 (pass two). THEY LEAVE, guard two.  INIT: guard2-canon-founder-0822.png
+    -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned
+    fifteen plates that were two images. GROUND is the compositor''s. The prompt buys LIGHT
+    (''long morning shadows'') and nothing else. img2img off the founder''s own pixels at
+    strength 0.30, no LoRA, no ControlNet, no face tags.'
 - name: b14
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-finish-plates-0822\inpaint_fruit.py
   - --init
-  - C:\banyan-farm\ep2-finish-plates-0822\goblin-canon-founder-0821.png
+  - C:\banyan-farm\ep2-finish-plates-0822\init-headnat-0822.png
   - --init-sha256
-  - b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00
+  - d14a0524afdb4e3667b2784ab577f26720344bd2eac21b3cefdbd846daaed0dd
   - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x832-0822.png
   - --strength
   - '0.30'
   - --pad-crop
@@ -1559,60 +1642,26 @@ steps:
   - --cfg
   - '7.5'
   - --seed
-  - '20260911'
+  - '20260913'
   - --out
   - C:\banyan-farm\ep2-finish-plates-0822\out\b14.png
   - --note
-  - 'EP2 FINISH PLATE B14. THE DEFENSE. Hands in dirt is motion; the plate is the low framing
-    and the ground.  ROUTE: img2img off the founder''s own canon at strength 0.30 -- his face
-    is the init''s pixels, not a generation. Light and framing are the prompt''s job; POSE
-    IS THE CANON''S and does not move at this strength. No LoRA, no ControlNet, no face tags
-    (route_closure_2026_08_22).'
-- name: b15
-  argv:
-  - C:\banyan-farm\venv\Scripts\python.exe
-  - C:\banyan-farm\ep2-finish-plates-0822\inpaint_fruit.py
-  - --init
-  - C:\banyan-farm\ep2-finish-plates-0822\goblin-canon-founder-0821.png
-  - --init-sha256
-  - b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00
-  - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
-  - --strength
-  - '0.30'
-  - --pad-crop
-  - '0'
-  - --blur
-  - '8'
-  - --prompt-file
-  - C:\banyan-farm\ep2-finish-plates-0822\prompt-b15.txt
-  - --negative-file
-  - C:\banyan-farm\ep2-finish-plates-0822\negative.txt
-  - --steps
-  - '40'
-  - --cfg
-  - '7.5'
-  - --seed
-  - '20260912'
-  - --out
-  - C:\banyan-farm\ep2-finish-plates-0822\out\b15.png
-  - --note
-  - 'EP2 FINISH PLATE B15. GOOD LISTENER. Scripted as a sit -- filed here STANDING and flagged:
-    if the sit is load-bearing for the founder this beat routes to the v3 seat cell like b13
-    does, and that is a swap, not a re-render.  ROUTE: img2img off the founder''s own canon
-    at strength 0.30 -- his face is the init''s pixels, not a generation. Light and framing
-    are the prompt''s job; POSE IS THE CANON''S and does not move at this strength. No LoRA,
-    no ControlNet, no face tags (route_closure_2026_08_22).'
+  - 'EP2 FINISH PLATE B14 (pass two). THE DEFENSE. Upper-body crop; the dirt and pebbles are
+    foreground the compositor adds, not a ground the prompt can buy.  INIT: init-headnat-0822.png
+    -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned
+    fifteen plates that were two images. GROUND is the compositor''s. The prompt buys LIGHT
+    (''warm midday light'') and nothing else. img2img off the founder''s own pixels at strength
+    0.30, no LoRA, no ControlNet, no face tags.'
 - name: b17
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-finish-plates-0822\inpaint_fruit.py
   - --init
-  - C:\banyan-farm\ep2-finish-plates-0822\goblin-canon-founder-0821.png
+  - C:\banyan-farm\ep2-finish-plates-0822\init-full-0822.png
   - --init-sha256
-  - b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00
+  - 0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7
   - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x1216-0822.png
   - --strength
   - '0.30'
   - --pad-crop
@@ -1628,25 +1677,26 @@ steps:
   - --cfg
   - '7.5'
   - --seed
-  - '20260913'
+  - '20260914'
   - --out
   - C:\banyan-farm\ep2-finish-plates-0822\out\b17.png
   - --note
-  - 'EP2 FINISH PLATE B17. GOODBYE. The beat''s own action IS standing up and turning away,
-    so the canon''s posture is the beat''s posture.  ROUTE: img2img off the founder''s own
-    canon at strength 0.30 -- his face is the init''s pixels, not a generation. Light and
-    framing are the prompt''s job; POSE IS THE CANON''S and does not move at this strength.
-    No LoRA, no ControlNet, no face tags (route_closure_2026_08_22).'
+  - 'EP2 FINISH PLATE B17 (pass two). GOODBYE. Full body, and the beat''s own action is standing
+    up and turning away -- the canon''s posture IS this beat''s posture.  INIT: init-full-0822.png
+    -- FRAMING IS THE CROP, not the prompt: pass one asked prompts for framing and returned
+    fifteen plates that were two images. GROUND is the compositor''s. The prompt buys LIGHT
+    (''amber afternoon light'') and nothing else. img2img off the founder''s own pixels at
+    strength 0.30, no LoRA, no ControlNet, no face tags.'
 - name: b19
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\ep2-finish-plates-0822\inpaint_fruit.py
   - --init
-  - C:\banyan-farm\ep2-finish-plates-0822\goblin-canon-founder-0821.png
+  - C:\banyan-farm\ep2-finish-plates-0822\init-full-0822.png
   - --init-sha256
-  - b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00
+  - 0b0459aeb31378b9e529495e6761cf21016f38421344a590bb377787cffeece7
   - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
+  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-832x1216-0822.png
   - --strength
   - '0.30'
   - --pad-crop
@@ -1662,49 +1712,16 @@ steps:
   - --cfg
   - '7.5'
   - --seed
-  - '20260914'
+  - '20260915'
   - --out
   - C:\banyan-farm\ep2-finish-plates-0822\out\b19.png
   - --note
-  - 'EP2 FINISH PLATE B19. THE DROP. He is walking away and stopping mid-step; the plate is
-    him and the amber field, the fruit and the bounce are composited and animated.  ROUTE:
-    img2img off the founder''s own canon at strength 0.30 -- his face is the init''s pixels,
-    not a generation. Light and framing are the prompt''s job; POSE IS THE CANON''S and does
-    not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22).'
-- name: b20
-  argv:
-  - C:\banyan-farm\venv\Scripts\python.exe
-  - C:\banyan-farm\ep2-finish-plates-0822\inpaint_fruit.py
-  - --init
-  - C:\banyan-farm\ep2-finish-plates-0822\goblin-canon-founder-0821.png
-  - --init-sha256
-  - b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00
-  - --mask-png
-  - C:\banyan-farm\ep2-finish-plates-0822\fullframe-mask-0822.png
-  - --strength
-  - '0.30'
-  - --pad-crop
-  - '0'
-  - --blur
-  - '8'
-  - --prompt-file
-  - C:\banyan-farm\ep2-finish-plates-0822\prompt-b20.txt
-  - --negative-file
-  - C:\banyan-farm\ep2-finish-plates-0822\negative.txt
-  - --steps
-  - '40'
-  - --cfg
-  - '7.5'
-  - --seed
-  - '20260915'
-  - --out
-  - C:\banyan-farm\ep2-finish-plates-0822\out\b20.png
-  - --note
-  - 'EP2 FINISH PLATE B20. EVIDENCE. Scripted as a crouch. Filed standing, flagged the same
-    way as b15: the crouch exists as a v3 posed frame if the founder needs it.  ROUTE: img2img
-    off the founder''s own canon at strength 0.30 -- his face is the init''s pixels, not a
-    generation. Light and framing are the prompt''s job; POSE IS THE CANON''S and does not
-    move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22).'
+  - 'EP2 FINISH PLATE B19 (pass two). THE DROP. Full body in amber. Fruit, bounce and the
+    stop mid-step are composite and motion.  INIT: init-full-0822.png -- FRAMING IS THE CROP,
+    not the prompt: pass one asked prompts for framing and returned fifteen plates that were
+    two images. GROUND is the compositor''s. The prompt buys LIGHT (''warm amber afternoon
+    light'') and nothing else. img2img off the founder''s own pixels at strength 0.30, no
+    LoRA, no ControlNet, no face tags.'
 - name: publish
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
