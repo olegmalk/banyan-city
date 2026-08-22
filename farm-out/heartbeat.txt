@@ -4400,3 +4400,4 @@
 05:25:31Z DONE task=ep2-b16-sapnat4-0822-1787376304 rc=0 artifacts=2
 05:29:18Z STARTED task=ep2-b16-spanmotion-0822-1787376547 attempt=1 on box-runner
 05:35:16Z DONE task=ep2-b16-spanmotion-0822-1787376547 rc=0 artifacts=1
+05:35:20Z box-runner idle ready=0 failed=90
