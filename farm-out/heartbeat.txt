@@ -4322,3 +4322,5 @@
 01:40:59Z DONE task=ep2-b12-leafmotion-0822-1787362474 rc=0 artifacts=2
 01:41:05Z STARTED task=ep2-b21-leafmotion-0822-1787362480 attempt=1 on box-runner
 01:47:18Z DONE task=ep2-b21-leafmotion-0822-1787362480 rc=0 artifacts=2
+01:47:24Z STARTED task=ep2-b06-boardnat-0822-1787362569 attempt=1 on box-runner
+01:47:42Z DONE task=ep2-b06-boardnat-0822-1787362569 rc=0 artifacts=2
