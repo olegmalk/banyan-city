@@ -482,12 +482,146 @@ def sidecar_text(*, pipeline_class: str, in_ch: int, W: int, H: int, steps: int,
     ])
 
 
-def lora_meta_lines(lora: str, weight, lora_sha: str) -> list:
+# ── LoRA BLOCK WEIGHTS -------------------------------------------------------
+#
+# WHY THIS EXISTS, AND IT IS A MEASUREMENT AND NOT A HUNCH. `bnyjerry v3` poses:
+# 4 of 6 B2 cells adopted their skeleton at weight 0.8 against a control of 0/6,
+# including a STRIDE the dataset never contained. It also keeps his face: B1 is
+# sage in 15 of 15 cells at the same checkpoint and the same weight. The single
+# clause between that and a shippable recipe is HIS SKIN UNDER A POSE NET --
+# sage in 15/15 without a skeleton, tan in 6/6 with one -- and three free levers
+# are measured dead, one variable each:
+#
+#   prompt dialect  lora-jerry-v3-capshape-0822   caption-shaped prompt -> TAN
+#   hint volume     lora-jerry-v3-cnetscale-0822  --scale 0.7 and 0.5   -> TAN
+#   trigger volume  lora-jerry-v3-loraweight-0822 --lora-weight 1.0/1.2 -> nudge
+#
+# So the palette is not reachable by either channel's VOLUME, which says the
+# defect is structural in how a fused LoRA composes with the ControlNet pipeline
+# -- and per-block scaling is the instrument that addresses exactly that.
+#
+# THE BLOCK MAP IS COMMUNITY, NOT PUBLISHED, AND IS LABELLED THAT WAY.
+# hako-mikan's sd-webui-lora-block-weight and its successor report that INPUT
+# blocks retain structural identity (facial symmetry, hair shape, facial
+# features) while OUTPUT blocks house background detail and AESTHETIC RENDERING,
+# and they ship opposed CHARACTER and LAYOUT presets on that basis. There is
+# paper-grade backing for block-level separation of identity from style
+# (Block-wise LoRA, arXiv 2403.07500) but its abstract does not say WHICH blocks
+# do what, so the direction below is COMMUNITY and the presets are named for the
+# hypothesis they encode rather than for a result.
+#
+#   https://github.com/hako-mikan/sd-webui-lora-block-weight
+#   https://github.com/SiliconeShojo/lora-block-weight-neo
+#   https://arxiv.org/abs/2403.07500
+#
+# THE API IS PRESENT IN THE VERSION WE RUN, read off the box's own installed
+# source rather than off `main`'s docs: diffusers 0.29.2 / peft 0.12.0,
+# UNet2DConditionLoadersMixin.set_adapters(adapter_names, weights: Optional[
+# Union[float, Dict, List[float], List[Dict], List[None]]]), and
+# unet_loader_utils._maybe_expand_lora_scales_for_one_adapter documents in its
+# own docstring that it expands {"down": 2, "mid": 3, "up": {...}} into
+# per-transformer scales.
+LORA_BLOCK_PRESETS = {
+    # THE INSTRUMENT CHECK, AND IT IS NOT OPTIONAL. A flat 1.0 through
+    # set_adapters should behave like the fused path at weight 1.0. Without this
+    # cell a null result is unattributable between "block weighting does not
+    # help" and "the set_adapters wiring is not doing anything", which is the
+    # exact class of mistake that costs this tree days.
+    "flat": {"down": 1.0, "mid": 1.0, "up": 1.0},
+    # THE HYPOTHESIS: the palette lives in the output blocks. Push those up and
+    # leave the structural blocks near where they already work.
+    "palette": {"down": 0.8, "mid": 0.8, "up": 1.4},
+    # THE SAME HYPOTHESIS, HARDER, and with the other half of the reasoning in
+    # it: the input blocks are the ones the community map says carry structure,
+    # and structure is what the pose net is trying to supply. Starving them
+    # should cost nothing the ControlNet is not already providing, while the
+    # output blocks carry his colour.
+    "palette-starve": {"down": 0.4, "mid": 0.4, "up": 1.4},
+}
+
+
+def parse_lora_blocks(spec: str):
+    """A preset name or a JSON dict -> the nested weights `set_adapters` takes.
+
+    Pure, so `--selftest` exercises it with no torch, no CUDA and no network.
+    Returns None for an empty spec, and NONE IS THE DEFAULT PATH: every caller
+    that does not pass this flag gets the fused branch, unchanged.
+    """
+    import json
+    spec = (spec or "").strip()
+    if not spec:
+        return None
+    if spec in LORA_BLOCK_PRESETS:
+        return dict(LORA_BLOCK_PRESETS[spec])
+    if not spec.startswith("{"):
+        raise ControlError(
+            "!! --lora-blocks %r is neither a preset nor a JSON object.\n"
+            "   presets: %s\n"
+            "   or pass a dict, e.g. '{\"down\": 0.8, \"mid\": 0.8, \"up\": 1.4}'"
+            % (spec, ", ".join(sorted(LORA_BLOCK_PRESETS))), 17)
+    try:
+        val = json.loads(spec)
+    except Exception as e:
+        raise ControlError("!! --lora-blocks is not valid JSON: %s" % e, 17)
+    if not isinstance(val, dict) or not val:
+        raise ControlError("!! --lora-blocks must be a non-empty JSON object", 17)
+    bad = [k for k in val if k not in ("down", "mid", "up")]
+    if bad:
+        raise ControlError(
+            "!! --lora-blocks has unknown top-level key(s) %s. diffusers 0.29.2's "
+            "_maybe_expand_lora_scales_for_one_adapter understands `down`, `mid` "
+            "and `up` (each a number, or a dict of block_N -> number/list)."
+            % ", ".join(sorted(bad)), 17)
+    return val
+
+
+def lora_block_meta_lines(blocks) -> list:
+    """The block-weight block, or NOTHING AT ALL when no blocks were passed.
+
+    SAME EMPTINESS CONTRACT AS `control_meta_lines` AND `lora_meta_lines`, and
+    here it is load-bearing for every verdict this driver has ever filed: a run
+    without --lora-blocks must write the bytes it wrote before this flag
+    existed. `--selftest` asserts that against the filed golden sidecar.
+    """
+    if not blocks:
+        return []
+    import json
+    return [
+        "lora_block_weights: %s" % json.dumps(blocks, sort_keys=True),
+        "lora_block_map_provenance: >-",
+        yaml_block(
+            "COMMUNITY, NOT PUBLISHED. The direction -- input blocks carry "
+            "structural identity, output blocks carry aesthetic rendering -- is "
+            "hako-mikan's sd-webui-lora-block-weight and its successor. "
+            "Block-wise LoRA (arXiv 2403.07500) backs block-level separation of "
+            "identity from style but does not say which blocks do what. Treat "
+            "the mapping as a hypothesis this cell is testing, not as a fact it "
+            "is applying."),
+        "lora_applied_by: >-",
+        yaml_block(
+            "set_adapters, NOT fuse_lora. Per-block scaling requires the "
+            "adapter to stay live on the UNet, so this run does NOT bake a "
+            "scalar delta into the tensors. Two consequences are recorded "
+            "rather than glossed: (1) `--lora-weight` is IGNORED on this path -- "
+            "the per-block numbers are the weights; (2) set_adapters scales "
+            "ATTENTION weights only, so ResNets and samplers stay at 1.0, and a "
+            "prior living outside attention is out of this lever's reach."),
+    ]
+
+
+def lora_meta_lines(lora: str, weight, lora_sha: str, fused: bool = True) -> list:
     """The LoRA block, or NOTHING AT ALL when no LoRA was fused.
 
     Same emptiness contract as `control_meta_lines`, and here it is load-bearing
     for six filed b08 verdicts: a run with no --lora must write the bytes it
     wrote before this flag existed, or none of them is reproducible any more.
+
+    `fused` DEFAULTS TO TRUE AND THE DEFAULT IS THE CONTRACT. Added 2026-08-22
+    with the block-weight arm, which cannot fuse: per-block scaling needs the
+    adapter to stay live, so on that path the last line would otherwise assert
+    an ordering that did not happen. Every existing caller passes nothing and
+    gets the exact bytes it got before, which `--selftest` checks against a
+    filed sidecar rather than by inspection.
     """
     if not lora:
         return []
@@ -499,9 +633,15 @@ def lora_meta_lines(lora: str, weight, lora_sha: str) -> list:
         "lora_path: %s" % lora.replace("\\", "/"),
         "lora_sha256: %s" % (lora_sha or "unmeasured"),
         "lora_weight: %s" % weight,
+    ] + ([
         "lora_fused_before_controlnet_swap: true  # from_pipe reuses the module "
         "objects, so a fused UNet travels into the swapped pipeline",
-    ]
+    ] if fused else [
+        "lora_fused_before_controlnet_swap: false  # per-block scaling keeps the "
+        "adapter LIVE on the UNet instead of baking a scalar delta; from_pipe "
+        "reuses the same module objects either way, so the adapter still "
+        "travels into the swapped pipeline by identity",
+    ])
 
 
 def control_meta_lines(controls, region) -> list:
@@ -668,6 +808,16 @@ def main() -> int:
                          "pipeline by identity")
     ap.add_argument("--lora-weight", type=float, default=0.8,
                     help="lora_scale at fuse time")
+    ap.add_argument("--lora-blocks", default="",
+                    help="PER-BLOCK LoRA scaling: a preset name (%s) or a JSON "
+                         "object like '{\"down\": 0.8, \"mid\": 0.8, \"up\": "
+                         "1.4}'. PRESENT switches the LoRA from fuse_lora to "
+                         "set_adapters, which is the only way diffusers 0.29.2 "
+                         "will scale per block; ABSENT is the fused path this "
+                         "driver has always taken and is byte-identical to it. "
+                         "On this path --lora-weight is IGNORED: the per-block "
+                         "numbers ARE the weights."
+                         % ", ".join(sorted(LORA_BLOCK_PRESETS)))
     ap.add_argument("--lora-sha256", default="",
                     help="pin for --lora; refused on mismatch (rc 16). A "
                          "checkpoint directory holds five epochs with names one "
@@ -771,9 +921,17 @@ def main() -> int:
     # is caught at the same $0 step the mask geometry is.
     try:
         controls = resolve_controls(a, (W, H))
+        # AND THE BLOCK SPEC, resolved at the same $0 step and for the same
+        # reason: a typo in a preset name or a stray brace must cost zero GPU
+        # seconds, and the dry run must be able to print what will be applied.
+        lora_blocks = parse_lora_blocks(getattr(a, "lora_blocks", ""))
     except ControlError as e:
         print(str(e), flush=True)
         return e.code
+    if lora_blocks is not None and not a.lora:
+        print("!! --lora-blocks was passed with no --lora. Per-block scaling "
+              "with nothing to scale is a recipe nobody can read.", flush=True)
+        return 17
 
     # The crop box, from THIS driver's vendored copy of diffusers'
     # get_crop_region, on the same blurred mask the pipeline will be handed. In
@@ -817,6 +975,9 @@ def main() -> int:
             print("pad_crop region (vendored get_crop_region on the blurred "
                   "mask) = %s -- diffusers applies THIS SAME box to the init, "
                   "the mask and every hint" % (region,), flush=True)
+        if lora_blocks is not None:
+            print("lora blocks %r -- set_adapters path, NO fuse, --lora-weight "
+                  "%s ignored" % (lora_blocks, a.lora_weight), flush=True)
         print("WROTE %s" % mask_png, flush=True)
         print("rc=0 dry_run=1", flush=True)
         return 0
@@ -872,12 +1033,49 @@ def main() -> int:
             print("!! LoRA sha256 mismatch -- refusing.\n   want %s\n   have %s"
                   % (a.lora_sha256, lora_sha), flush=True)
             return 16
-        pipe.load_lora_weights(os.path.dirname(os.path.abspath(a.lora)),
-                               weight_name=os.path.basename(a.lora))
-        pipe.fuse_lora(lora_scale=float(a.lora_weight))
-        print("LORA %s fused at weight %.2f, sha %s"
-              % (os.path.basename(a.lora), float(a.lora_weight), lora_sha[:16]),
-              flush=True)
+        if lora_blocks is None:
+            # ---- THE DEFAULT PATH, UNCHANGED. Six filed b08 verdicts and every
+            # goblin cell to date were measured through these three lines and
+            # they do not move.
+            pipe.load_lora_weights(os.path.dirname(os.path.abspath(a.lora)),
+                                   weight_name=os.path.basename(a.lora))
+            pipe.fuse_lora(lora_scale=float(a.lora_weight))
+            print("LORA %s fused at weight %.2f, sha %s"
+                  % (os.path.basename(a.lora), float(a.lora_weight),
+                     lora_sha[:16]), flush=True)
+        else:
+            # ---- THE BLOCK-WEIGHT ARM. NOT A FUSE, and that is the whole point:
+            # fuse_lora bakes ONE scalar into the tensors and there is no scalar
+            # that means "more in the output blocks". set_adapters keeps the
+            # adapter live and takes the nested dict that
+            # _maybe_expand_lora_scales_for_one_adapter expands per transformer.
+            #
+            # ON THE UNET AND NOT ON THE PIPE, deliberately: the dict-capable
+            # signature read off the box's installed source is
+            # UNet2DConditionLoadersMixin.set_adapters, and the pipeline-level
+            # wrapper also drives the text encoders, which have no block map and
+            # would silently take a float. Block weighting is a UNet question.
+            #
+            # AND IT REFUSES RATHER THAN FALLING BACK. A silent fallback to the
+            # fused path would produce a perfectly plausible frame answering a
+            # different question -- the same failure the hint-sha guard exists
+            # to stop -- so an exception here is a hard stop with its own code.
+            pipe.load_lora_weights(os.path.dirname(os.path.abspath(a.lora)),
+                                   weight_name=os.path.basename(a.lora),
+                                   adapter_name="ch")
+            try:
+                pipe.unet.set_adapters(["ch"], [lora_blocks])
+            except Exception as e:
+                print("!! set_adapters REFUSED the per-block dict and this run "
+                      "will NOT fall back to a fuse -- a fused frame filed "
+                      "under a block-weight cell would answer a different "
+                      "question.\n   dict: %r\n   %s: %s"
+                      % (lora_blocks, type(e).__name__, e), flush=True)
+                return 17
+            print("LORA %s applied PER BLOCK via set_adapters (no fuse): %r, "
+                  "sha %s -- --lora-weight %s is IGNORED on this path"
+                  % (os.path.basename(a.lora), lora_blocks, lora_sha[:16],
+                     a.lora_weight), flush=True)
 
     # ---- THE CLASS SWAP, AND IT HAPPENS ONLY IF A HINT WAS PASSED.
     # from_pipe rebuilds the class around the SAME loaded modules, so one set of
@@ -1035,7 +1233,9 @@ def main() -> int:
             cfg=a.cfg, strength=a.strength, seed=a.seed, pad_crop=a.pad_crop,
             blur=a.blur, init=a.init, init_sha=have,
             mask_png_name=os.path.basename(mask_png), mask_lines=mask_lines,
-            lora_lines=lora_meta_lines(a.lora, a.lora_weight, lora_sha),
+            lora_lines=(lora_meta_lines(a.lora, a.lora_weight, lora_sha,
+                                        fused=lora_blocks is None)
+                        + lora_block_meta_lines(lora_blocks)),
             control_lines=control_meta_lines(controls, region), stamp=stamp,
             render_s=render_s, wall_s=time.time() - t0, versions=versions,
             note=a.note, prompt=prompt, negative=negative))
@@ -1062,6 +1262,19 @@ def main() -> int:
 # crops_coords diffusers derives from the mask. Both halves are asserted -- the
 # size equality, and the absence of any crop call in the source.
 # ---------------------------------------------------------------------------
+# THE SECOND GOLDEN, AND IT COVERS THE BRANCH THE BLOCK ARM EDITED. The one
+# below is a no-LoRA run; this is `b2-seat-s1` of the v3 ladder, a real filed
+# cell that loaded a LoRA and fused it, and it is the exact cell the block
+# sweep varies against. Added 2026-08-22 with --lora-blocks.
+LORA_GOLDEN_SIDECAR = \
+    "farm-out/lora-jerry-v3-ladder-0822/b2-seat-s1.png.meta.yaml"
+LORA_GOLDEN_SHA = \
+    "e07356b5a17018127e3e810ed7de5017ebafc5c58ef02269bc2bdc684fa40f18"
+LORA_GOLDEN_PATH = r"C:\banyan-farm\lora-jerry-v3-0822\out\bnyjerry-sdxl-v3.safetensors"
+LORA_GOLDEN_WEIGHT = "0.8"
+LORA_GOLDEN_SHA256 = \
+    "d2062ac060a4ac44e217815464de143897550f078294eb59b3f303cc5f8a0cdd"
+
 GOLDEN_SIDECAR = "farm-out/ep2-b08-str70-0820/b08-str70-s20260822.png.meta.yaml"
 GOLDEN_SIDECAR_SHA = \
     "363f1d42a8f078ed2b177a7896e2749038901a4db94e13c380e4d11e14639d5e"
@@ -1217,6 +1430,101 @@ def selftest() -> int:
           < isrc.index("pipe = AutoPipelineForInpainting.from_pipe("))
     check("the PEFT backend is gated before any LoRA load is attempted",
           isrc.index("USE_PEFT_BACKEND") < isrc.index("pipe.load_lora_weights("))
+
+    # ---- 2b. THE BLOCK-WEIGHT ARM, AND THE FIRST CLAUSE IS THE ONLY ONE THAT
+    # ---- REALLY MATTERS: THE DEFAULT PATH DID NOT MOVE.
+    #
+    # Six filed b08 verdicts plus every goblin cell in the v3 ladder were
+    # measured through the fused path. This arm may not change one byte of what
+    # they wrote, and "may not" is worth exactly what it is checked with. The
+    # golden-sidecar reproduction above already runs through the NEW signature
+    # (fused defaults True, lora_block_meta_lines returns []), so that check IS
+    # the no-regression proof; these clauses say the same thing at the unit
+    # below it and name it out loud so a future edit cannot quietly relax it.
+    check("no --lora-blocks emits NO block lines at all",
+          lora_block_meta_lines(None) == [] and lora_block_meta_lines({}) == [])
+    # ---- THE LoRA-PATH GOLDEN, AND IT IS THE CLAUSE THIS ARM IS GATED ON.
+    #
+    # `GOLDEN_SIDECAR` above is a no-LoRA run, so reproducing it proves the
+    # base path and says nothing about the branch actually edited here. This
+    # reads a REAL FILED SIDECAR FROM A RUN THAT LOADED A LoRA -- b2-seat-s1 of
+    # the v3 ladder, the exact cell the block sweep is about to vary against --
+    # and asserts that today's `lora_meta_lines` still emits its five lines byte
+    # for byte. If this arm ever changes what a fused run writes, the ladder's
+    # 24 cells and the six b08 verdicts stop being reproducible, and this fails
+    # instead of the discovery happening months later.
+    lgold = os.path.join(repo, LORA_GOLDEN_SIDECAR)
+    if os.path.isfile(lgold):
+        lraw = open(lgold, "rb").read()
+        check("the LoRA golden sidecar is the filed bytes",
+              hashlib.sha256(lraw).hexdigest() == LORA_GOLDEN_SHA)
+        filed = [l for l in lraw.decode("utf-8").splitlines()
+                 if l.startswith("lora")]
+        check("a FUSED run's sidecar block is byte-identical to the filed one",
+              filed == lora_meta_lines(LORA_GOLDEN_PATH, LORA_GOLDEN_WEIGHT,
+                                       LORA_GOLDEN_SHA256))
+    else:
+        # NOT SILENTLY SKIPPED. A missing golden is reported as a missing
+        # golden, because "the check did not run" and "the check passed" must
+        # never look the same in this output.
+        check("!! the LoRA golden sidecar is MISSING (%s) -- the fused-path "
+              "byte-identity clause DID NOT RUN" % LORA_GOLDEN_SIDECAR, False)
+    check("the fused sidecar block is byte-identical with fused defaulted vs "
+          "passed explicitly",
+          lora_meta_lines(LORA, 0.8, "4" * 64)
+          == lora_meta_lines(LORA, 0.8, "4" * 64, fused=True))
+    check("the DEFAULT LoRA block still asserts the fuse-before-swap ordering",
+          any(l.startswith("lora_fused_before_controlnet_swap: true")
+              for l in lora_meta_lines(LORA, 0.8, "4" * 64)))
+    # AND THE BLOCK PATH TELLS THE TRUTH ABOUT ITSELF instead of inheriting a
+    # line that would assert an ordering that did not happen.
+    nf = lora_meta_lines(LORA, 0.8, "4" * 64, fused=False)
+    check("the block path records that it did NOT fuse",
+          any(l.startswith("lora_fused_before_controlnet_swap: false")
+              for l in nf)
+          and not any(l.startswith("lora_fused_before_controlnet_swap: true")
+                      for l in nf))
+    check("the block path's sidecar is otherwise the fused one",
+          nf[:4] == lora_meta_lines(LORA, 0.8, "4" * 64)[:4])
+    # ---- the spec parser, which is where a typo has to die.
+    check("no spec is the default path", parse_lora_blocks("") is None
+          and parse_lora_blocks(None) is None)
+    check("every preset resolves and none of them is empty",
+          all(parse_lora_blocks(p) for p in LORA_BLOCK_PRESETS))
+    check("the instrument-check preset is a flat 1.0 on all three groups",
+          parse_lora_blocks("flat") == {"down": 1.0, "mid": 1.0, "up": 1.0})
+    check("the palette presets push UP above DOWN, which is the hypothesis",
+          all(parse_lora_blocks(p)["up"] > parse_lora_blocks(p)["down"]
+              for p in ("palette", "palette-starve")))
+    check("a JSON object parses", parse_lora_blocks('{"up": 1.4}') == {"up": 1.4})
+    check("a preset returns a COPY, so a caller cannot mutate the table",
+          (lambda d: (d.__setitem__("up", 99),
+                      LORA_BLOCK_PRESETS["palette"]["up"] != 99)[1])(
+                          parse_lora_blocks("palette")))
+    for bad, why in (("nope", "an unknown preset name"),
+                     ("{", "malformed JSON"),
+                     ("{}", "an empty object"),
+                     ('{"middle": 1.0}', "an unknown block group"),
+                     ('["up"]', "a JSON array rather than an object")):
+        try:
+            parse_lora_blocks(bad)
+            check("parse_lora_blocks refuses %s" % why, False)
+        except ControlError as e:
+            check("parse_lora_blocks refuses %s (rc %d)" % (why, e.code),
+                  e.code == 17)
+    # ---- and the source order, for the same reason the fuse clause is checked
+    # ---- that way: there is no asserting this without a GPU otherwise.
+    check("the block spec is parsed BEFORE any model loads",
+          isrc.index("lora_blocks = parse_lora_blocks(")
+          < isrc.index("pipe = StableDiffusionXLInpaintPipeline.from_pretrained("))
+    check("set_adapters is reached only on the non-default branch",
+          isrc.index("if lora_blocks is None:")
+          < isrc.index("pipe.unet.set_adapters("))
+    check("the block arm is applied BEFORE the controlnet swap, like the fuse",
+          isrc.index("pipe.unet.set_adapters(")
+          < isrc.index("pipe = AutoPipelineForInpainting.from_pipe("))
+    check("a set_adapters failure REFUSES rather than falling back to a fuse",
+          "will NOT fall back to a fuse" in isrc)
 
     # ---- 3. THE TWO HINTS, RESOLVED ---------------------------------------
     both = _Args(controlnet=NET_POSE, control=os.path.join(repo, HINT_POSE),
