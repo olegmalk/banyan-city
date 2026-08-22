@@ -270,6 +270,61 @@ def figure(head_frac, pose="stand", cx_frac=0.5,
         kp["Lelb"] = (cx + th * 0.90, up(TPL["elb"]))
         kp["Rwri"] = (cx - th * 0.30, up(TPL["wri"]) + 0.015 * stature)
         kp["Lwri"] = (cx + th * 0.30, up(TPL["wri"]) + 0.015 * stature)
+    elif pose == "hunchdeep":
+        # ==================================================================
+        # THE HUNCH, RE-AUTHORED 2026-08-22, AND IT IS THE SAME KIND OF FIX
+        # `seatspan` WAS: the hint was not asking for what its name says.
+        #
+        # `hunch` above differs from `stand` by a head lowered 0.25 of its own
+        # height -- 0.06 of stature -- and shoulders rolled 0.02 in. Measured
+        # against the set it is the SMALLEST departure from standing there is:
+        # span 0.807 where stand is 0.867, and hip, knee and ankle fractions
+        # identical to three places. On 2026-08-22 it was driven twice at
+        # scale 1.0 with no LoRA -- once on the relit wording and once on the
+        # wording that provably drives a seat and a crouch -- and both times
+        # the net drew a standing figure with its head slightly down, which is
+        # the CORRECT rendering of that skeleton. The net was never the fault.
+        #
+        # A hunch is a SPINE, and a frontal projection has one channel for it:
+        # the crown comes down much further than the shoulders do, so the neck
+        # disappears into the collar and the head reads as pushed forward. The
+        # legs carry it too -- a person who folds inward also softens the
+        # knees, which shortens the whole figure. So this pose moves span from
+        # 0.807 to roughly the 0.70 band, between `stand` (0.867) and
+        # `seatspan` (0.596), both of which are known points on the curve.
+        #
+        # THE ANKLES DO NOT MOVE. The authored foot line is the invariant this
+        # route has held since n1 and a bent knee is a raised HIP, not a
+        # lifted foot. And the head still travels as one rigid block, so
+        # head_frac and the five head keypoints mean exactly what they mean in
+        # every other rung -- the proportion-diversity gate is untouched.
+        # ==================================================================
+        # THE NUMBERS ARE A SECOND PASS. The first draft dropped the head 0.85
+        # of its own height against a 0.42 shoulder drop, which closed the
+        # nose-to-neck gap to 19 px out of a standing 120 -- and the drawn hint
+        # was a torso with the head cluster sitting ON the shoulder bar. That
+        # is not a hunch, it is a decapitation, and it would have asked the net
+        # for a creature rather than a posture. Looked at the PNG before
+        # spending a card second on it. These two drop the crown 141 px and the
+        # shoulder girdle 82, leaving a 60 px neck -- half the standing gap,
+        # visibly sunk, still unmistakably a head above a body.
+        drop_head(0.605 * head_h)
+        drop_upper(0.35 * head_h)
+        kp["Rsho"] = (cx - th * 0.72, kp["Rsho"][1])
+        kp["Lsho"] = (cx + th * 0.72, kp["Lsho"][1])
+        kp["neck"] = (cx, kp["neck"][1])
+        # Softened knees: the hips come DOWN toward the knees and the knees
+        # come forward and in. The ankles stay on the line.
+        kp["Rhip"] = (cx - th * 0.58, up(TPL["hip"]) + 0.055 * stature)
+        kp["Lhip"] = (cx + th * 0.58, up(TPL["hip"]) + 0.055 * stature)
+        kp["Rkne"] = (cx - th * 0.62, up(TPL["kne"]) + 0.020 * stature)
+        kp["Lkne"] = (cx + th * 0.62, up(TPL["kne"]) + 0.020 * stature)
+        # Arms folded in across the front, hands low and together -- canon's
+        # "hunched inward", and beat 04's peek is a figure making itself small.
+        kp["Relb"] = (cx - th * 0.86, kp["Rsho"][1] + 0.115 * stature)
+        kp["Lelb"] = (cx + th * 0.86, kp["Lsho"][1] + 0.115 * stature)
+        kp["Rwri"] = (cx - th * 0.22, kp["Rsho"][1] + 0.205 * stature)
+        kp["Lwri"] = (cx + th * 0.22, kp["Lsho"][1] + 0.205 * stature)
     elif pose not in ("stand", "stride"):
         raise ValueError("unknown pose %r" % (pose,))
 
@@ -360,6 +415,18 @@ HINTS = [
      "AGE B, squatting. Beats 03 (BAD COVER) and 20 (EVIDENCE)."),
     ("jerry-skel-h240hunch-0821.png", AGE_B_HEAD_FRAC, "hunch",
      "AGE B, hunched. Beat 04 -- THE FOOTNOTE, the peek."),
+    # ---- THE HUNCH, RE-AUTHORED 2026-08-22, and it is the only hint in the
+    # ---- AGE B set that needed it. On 2026-08-22 all four were driven at
+    # ---- scale 1.0 with no LoRA on the wording that provably drives:
+    # ---- seatspan sat, crouch crouched, stride strode, and hunch came back a
+    # ---- standing figure with its head slightly down -- which is what its
+    # ---- skeleton asks for. See the `hunchdeep` branch in figure() for the
+    # ---- measurement and the fix. The old hint is NOT deleted: it is the
+    # ---- control this one is read against.
+    ("jerry-skel-h240hunchdeep-0822.png", AGE_B_HEAD_FRAC, "hunchdeep",
+     "AGE B, hunched FOR REAL -- span 0.721 against the old hint's 0.807, the "
+     "neck halved to 60 px so the collar rises to the jaw, shoulders narrowed "
+     "to 172 px and the knees softened. Beat 04 -- THE FOOTNOTE, the peek."),
 ]
 
 
@@ -409,6 +476,48 @@ def selftest():
           abs(ks["Lank"][1] - kp19["Lank"][1]) < 1e-6)
     check("the stride pose actually differs from standing",
           ks["Rank"] != kp19["Rank"] and ks["Lwri"] != kp19["Lwri"])
+
+    # THE RE-AUTHORED HUNCH, asserted as the geometry it claims to be. The old
+    # hint passed every bar this file had and still asked for standing, so the
+    # bars are now about the DEPARTURE and not just about validity.
+    kh, mh = figure(AGE_B_HEAD_FRAC, pose="hunch")
+    kd, md = figure(AGE_B_HEAD_FRAC, pose="hunchdeep")
+    kst, mst = figure(AGE_B_HEAD_FRAC, pose="stand")
+
+    def span_of(kp, m):
+        ys = [p[1] for p in kp.values()]
+        return (max(ys) - min(ys)) / m["stature_px"]
+
+    print("     span at head_frac %.3f: stand %.3f, hunch %.3f, hunchdeep %.3f"
+          % (AGE_B_HEAD_FRAC, span_of(kst, mst), span_of(kh, mh),
+             span_of(kd, md)))
+    check("hunchdeep departs from standing further than the old hunch did",
+          span_of(kd, md) < span_of(kh, mh) - 0.07)
+    check("hunchdeep still stands on the authored foot line -- a bent knee is "
+          "a raised hip, never a lifted foot",
+          abs(kd["Rank"][1] - kst["Rank"][1]) < 1e-6
+          and abs(kd["Lank"][1] - kst["Lank"][1]) < 1e-6)
+    # TWO-SIDED ON PURPOSE. The upper bar is the hunch; the LOWER bar is the
+    # draft that had to be thrown away, where the head cluster landed on the
+    # shoulder bar and the figure had no neck at all.
+    check("hunchdeep sinks the head into the collar (nose-to-neck between a "
+          "third and two thirds of the standing gap)",
+          0.33 * (kst["neck"][1] - kst["nose"][1])
+          < (kd["neck"][1] - kd["nose"][1])
+          < 0.66 * (kst["neck"][1] - kst["nose"][1]))
+    check("hunchdeep keeps the nose above the neck -- a sunk head is not an "
+          "inverted one", kd["nose"][1] < kd["neck"][1])
+    check("hunchdeep moves the head as ONE RIGID BLOCK, so head_frac still "
+          "means what it means everywhere else",
+          len({round(kd[n][1] - kst[n][1], 6)
+               for n in ("nose", "Reye", "Leye", "Rear", "Lear")}) == 1)
+    check("hunchdeep holds head_frac, stature and the ground line",
+          md["head_frac"] == mst["head_frac"]
+          and md["stature_px"] == mst["stature_px"]
+          and md["ground_y_px"] == mst["ground_y_px"])
+    check("hunchdeep is still a STANDING departure -- longer than the seat",
+          span_of(kd, md) > span_of(figure(AGE_B_HEAD_FRAC, pose="seatspan")[0],
+                                    figure(AGE_B_HEAD_FRAC, pose="seatspan")[1]))
 
     check("the canvas is controlnet_plate's own size", (W, H) == (832, 1216))
     try:
