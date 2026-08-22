@@ -1831,15 +1831,59 @@ steps:
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - -c
-  - "\nimport hashlib, glob, os, shutil\nOUT = r\"C:\\banyan-farm\\lora-jerry-v2-bars-0822\\\
-    out\"\nDST = r\"C:\\banyan-farm\\courier-box\\farm-out\\lora-jerry-v2-bars-0822\"\nos.makedirs(DST,\
-    \ exist_ok=True)\nn = 0\nfor p in sorted(glob.glob(os.path.join(OUT, \"*\"))):\n    if\
-    \ os.path.isfile(p):\n        shutil.copyfile(p, os.path.join(DST, os.path.basename(p)))\n\
-    \        n += 1\nwith open(os.path.join(DST, \"lora-jerry-v2-bars-0822.sha256\"), \"w\"\
-    , encoding=\"utf-8\") as fh:\n    for name in sorted(os.listdir(DST)):\n        q = os.path.join(DST,\
-    \ name)\n        if os.path.isfile(q) and not name.endswith(\".sha256\"):\n          \
-    \  fh.write(\"%s  %s\\n\" % (\n                hashlib.sha256(open(q, \"rb\").read()).hexdigest(),\
-    \ name))\nprint(\"published\", n, \"file(s) ->\", DST, flush=True)\nif n == 0:\n    raise\
-    \ SystemExit(\"NOTHING TO PUBLISH -- the grid produced no files\")\n"
+  - "\nimport hashlib, glob, os, shutil\n# FORWARD SLASHES AND A PLAIN `name = \"literal\"\
+    `, BOTH FOR THE SAME NON-HUMAN\n# READER. box_enqueue's arm guard resolves publish globs\
+    \ statically so it can\n# check that every --arm step's picture is claimed by something;\
+    \ it matches\n# `name = \"literal\"` (no r-prefix), it resolves `VAR + \"/pattern\"` (not\n\
+    # os.path.join), and it normalises forward slashes itself. Written any other way\n# the\
+    \ guard cannot see the patterns, reports the B2 pictures as unclaimed, and\n# refuses\
+    \ the job -- which is the guard working correctly on a spec that was\n# talking past it.\
+    \ Windows takes forward slashes in every path API used here.\nOUT = \"C:/banyan-farm/lora-jerry-v2-bars-0822/out\"\
+    \nDST = \"C:/banyan-farm/courier-box/farm-out/lora-jerry-v2-bars-0822\"\nos.makedirs(DST,\
+    \ exist_ok=True)\n# THE GLOB IS `*.png` AND NOT `*`, AND THAT IS FOR A READER RATHER THAN\
+    \ FOR\n# CORRECTNESS. box_enqueue's arm guard scans publish globs for the picture each\n\
+    # --arm step will write, and it only inspects patterns whose basename mentions\n# .png\
+    \ -- a bare `*` names nothing it can check, so the guard reports the B2\n# cells as unclaimed\
+    \ and refuses the job. Spelling the extension is how the\n# guard is satisfied honestly,\
+    \ rather than by adding a path that lies.\n# THE GLOB CALLS ARE LITERAL, ONE PER PATTERN,\
+    \ AND THAT IS FOR A READER THAT IS\n# NOT HUMAN. box_enqueue's arm guard parses this source\
+    \ for glob() calls and\n# resolves their arguments statically, so it can check that every\
+    \ --arm step's\n# picture is actually claimed by something. A pattern held in a LOOP VARIABLE\
+    \ is\n# unresolvable, the guard leaves it alone rather than guessing, and the B2 cells\n\
+    # then read as unclaimed -- which is how eight good ep2-b04-tileread renders\n# exited\
+    \ rc=1 on 2026-08-21 with the pictures already on the card. Spelling each\n# pattern out\
+    \ is what lets the guard do its job instead of being talked past.\nn = 0\nfound = []\n\
+    found += sorted(glob.glob(OUT + \"/*.png\"))\nfound += sorted(glob.glob(OUT + \"/*.png.meta.yaml\"\
+    ))\nfound += sorted(glob.glob(OUT + \"/*.txt\"))\nfor p in found:\n    if os.path.isfile(p):\n\
+    \        shutil.copyfile(p, os.path.join(DST, os.path.basename(p)))\n        n += 1\n\
+    with open(os.path.join(DST, \"lora-jerry-v2-bars-0822.sha256\"), \"w\", encoding=\"utf-8\"\
+    ) as fh:\n    for name in sorted(os.listdir(DST)):\n        q = os.path.join(DST, name)\n\
+    \        if os.path.isfile(q) and not name.endswith(\".sha256\"):\n            fh.write(\"\
+    %s  %s\\n\" % (\n                hashlib.sha256(open(q, \"rb\").read()).hexdigest(), name))\n\
+    print(\"published\", n, \"file(s) ->\", DST, flush=True)\nif n == 0:\n    raise SystemExit(\"\
+    NOTHING TO PUBLISH -- the grid produced no files\")\n"
 artifacts:
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p1-s1.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p1-s2.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p1-s3.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p2-s1.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p2-s2.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p2-s3.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p3-s1.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p3-s2.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p3-s3.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p4-s1.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p4-s2.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p4-s3.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p5-s1.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p5-s2.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B1-p5-s3.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B3-base.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B3-w80.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\B3-w50.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\LADDER-w08.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\LADDER-w065.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\LADDER-w05.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\LADDER-w035.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\LADDER-w02.png
 - C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-bars-0822\lora-jerry-v2-bars-0822.sha256
