@@ -1,0 +1,14 @@
+#### job lora-jerry-v2-tp1rest-0822-1787403561 attempt 1 start 2026-08-22T12:59:27Z
+
+==== step fetch START 2026-08-22T12:59:27Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\lora-jerry-v2-tp1rest-0822\\fetch_hints.py"]
+fetched jerry-skel-h240stride-0821.png 10793 bytes OK
+fetched jerry-skel-h240crouch-0821.png 8439 bytes OK
+fetched jerry-skel-h240hunch-0821.png 9376 bytes OK
+==== step fetch END rc=0 2026-08-22T12:59:28Z ====
+
+==== step tp1rest-b02stride START 2026-08-22T12:59:28Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\lora-jerry-v2-tp1rest-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\lora-jerry-v2-tp1rest-0822\\jerry-poseproof-init-0822.png", "--init-sha256", "79c80689a43452f8fc11d22c2da86aee1c0a073d2255ddf1cb1d3cdc446f5f7f", "--mask-png", "C:\\banyan-farm\\lora-jerry-v2-tp1rest-0822\\jerry-poseproof-maskall-0822.png", "--strength", "1.0", "--pad-crop", "0", "--blur", "0", "--controlnet", "C:\\banyan-farm\\cnet-openpose-twins", "--control", "C:\\banyan-farm\\lora-jerry-v2-tp1rest-0822\\jerry-skel-h240stride-0821.png", "--control-sha256", "f6150add3a2c603b2681d5e2f5c76e252ccb2442c43d15d285e7b15141eb67a2", "--scale", "1.0", "--prompt-file", "C:\\banyan-farm\\lora-jerry-v2-tp1rest-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\lora-jerry-v2-tp1rest-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260822", "--out", "C:\\banyan-farm\\lora-jerry-v2-tp1rest-0822\\out\\tp1rest-b02stride.png", "--note", "PASS ONE, beat 02, THE SPRINT. No LoRA: this plate carries the POSE and the flat overcast daylight, and pass two puts bnyjerry into it at strength 0.75 -- the recipe beat 13 passed both halves on."]
+!! init not found: C:\banyan-farm\lora-jerry-v2-tp1rest-0822\jerry-poseproof-init-0822.png
+==== step tp1rest-b02stride END rc=2 2026-08-22T12:59:28Z ====
+#### job lora-jerry-v2-tp1rest-0822-1787403561 finished rc=2 2026-08-22T12:59:28Z
