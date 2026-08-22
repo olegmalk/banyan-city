@@ -1,0 +1,42 @@
+# Provenance (7.2), written AT RENDER TIME by controlnet_plate.py on
+# the rtx5090. A SAMPLE, not a pick and not canon.
+platform: local-gpu (rtx5090)
+task: b2r3-crouch-w08
+arm: hint
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLControlNetPipeline (text2img + scribble control)
+size: 832x1216
+steps: 40
+guidance: 7.5
+seed: 20260822
+cost_usd: 0
+lora: C:\banyan-farm\lora-jerry-v2-0822\out\bnyjerry-sdxl-v2.safetensors
+lora_sha256: 4340857d02f17dbfa50c66e0a2d8f4dc3ffebb4fad1621bb3f59242e61bfeb8b
+lora_weight: 0.8
+lora_fused_before_controlnet_swap: true  # from_pipe reuses the module objects, so a fused UNet travels into the swapped pipeline
+controlnet: C:\banyan-farm\cnet-openpose-twins
+controlnet_licence: apache-2.0 (D15 SAFE, no attribution condition) -- the `twins` variant of xinsir/controlnet-openpose-sdxl-1.0, blob diffusion_pytorch_model_twins.safetensors sha256 54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4, 2502139104 bytes, renamed into a loadable directory by ep2-b08-twins-fetch-0819. Identical terms to the default weight in that same repo; no annotator is used -- the hint is authored in PIL
+controlnet_variant: None (xinsir ships no fp16 variant file; passing one raises)
+controlnet_conditioning_scale: 1.0
+control_guidance_start: 0.0
+control_guidance_end: 1.0
+control_image: C:\banyan-farm\lora-jerry-v2-b2r3-0822\jerry-canon-h37fcrouch-0821.png
+control_image_sha256: df84ac615d3cc830dd8634cfee905dba0937a3380910911fe81a0427cacbd5af
+control_polarity: white-on-black
+control_authored_by: pipeline/author_b08_pose_hint.py (PIL, no model, no photo-derived edge map, no annotator)
+repo_commit: unknown
+model_load_seconds: 8.2
+render_seconds: 13.7
+rendered_utc: 2026-08-22T12:24:17Z
+torch_version: 2.11.0+cu128
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon.
+  Never takes a canon filename, is not published to the site, not
+  posted, and not assembled into an episode. Ground truth is the
+  founder (R4).
+prompt: |-
+  bnyjerry, 1boy, solo, in tall grass, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  lowres, worst quality, low quality, text, watermark, photorealism, 3d render, blurry, 2boys, multiple heads

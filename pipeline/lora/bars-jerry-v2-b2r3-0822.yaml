@@ -1,0 +1,1232 @@
+# B2 ROUND THREE -- the TWINS openpose blob. GENERATED.
+
+id: lora-jerry-v2-b2r3-0822
+task: lora-jerry-v2-b2r3-0822
+node: 002b-first-citizen
+runner: box
+needs_gpu: true
+needs:
+- cuda
+- vram20
+priority: 56
+max_attempts: 1
+est_minutes: 10
+owner: the goblin-LoRA lane, 2026-08-22
+depends_on: lora-jerry-v2-0822
+consumer: THE B2 VERDICT, AND THE GOBLIN WAVE BEHIND IT. Every per-beat plate the founder
+  pre-authorised is staged with a pose skeleton, so a pose net that does not drive is not
+  a bar problem, it is a production blocker.
+success: THE THREE `base` CELLS ADOPT THEIR SKELETONS with no LoRA loaded. That is a working
+  instrument; only then does the w08 arm say anything about the LoRA.
+why: 'ROUND TWO''S CONTROL FAILED: with NO LoRA in the pipeline the openpose net at scale
+  1.0 drew an unrelated figure, standing. The cause is named in this driver''s own allowlist
+  -- xinsir ships TWO openpose blobs and the one this tree has ever made work is `twins`,
+  renamed into a loadable directory by ep2-b08-twins-fetch-0819 because from_pretrained cannot
+  pick a blob by filename. Rounds one and two passed the bare repo id and got the default
+  blob. ONE VARIABLE MOVES HERE: the net.'
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+cell_count:
+  no_lora_control_twins: 3
+  lora_w08_twins: 3
+payload:
+  C:\banyan-farm\lora-jerry-v2-b2r3-0822\controlnet_plate.py: "#!/usr/bin/env python3\nr\"\
+    \"\"Render a PLATE with an optional hand-authored scribble ControlNet condition.\n\nWHAT\
+    \ THIS IS AND WHY IT IS A SEPARATE FILE FROM THE PROBE.\n`pipeline/controlnet_probe.py`\
+    \ answered \"does the condition BIND on\nanimagine-xl-3.1?\" and its answer is filed:\
+    \ bind_ratio 35.363 left / 21.530\nright against a bar of 1.25 that was written in code\
+    \ before any pixels existed\n(`pipeline/jobs/ep2-cnet-probe-0817.yaml`, verdict appended\
+    \ 2026-08-19). That\nfile's prompt, size, seed and four arms are its OWN, deliberately\
+    \ not any beat's\nwording, so that a drafting lane could never collide with it -- and\
+    \ its verdict\nis filed against those constants. Editing it to take a beat's prompt would\n\
+    retroactively change what its own verdict was measured on.\n\nSo this is the probe's render\
+    \ path with its constants lifted into arguments,\nand NOTHING ELSE IS DIFFERENT. Same\
+    \ base, same ControlNet, same variant trap,\nsame `from_pipe` module reuse, same sidecar\
+    \ shape. The pipeline this drives is\nthe one that was measured; only the words, the hint\
+    \ and the size are the\ncaller's.\n\nWHAT IT DELIBERATELY DOES NOT DO: it does not pair\
+    \ a ControlNet with a MASK.\n`b08-arm-route-0819.md` §4 Route B is a separate one-sample\
+    \ question with its\nown bar -- no driver in this tree does control-plus-inpaint, and\
+    \ the probe's\n`observed_not_scored` (a sparse hint at scale 0.8 FLATTENS THE WHOLE FRAME)\
+    \ is\nprecisely the failure that would show up outside such a mask. It must not be\nsmuggled\
+    \ in as an implementation detail of a beat job, so it is not here.\n\nNO VIDEO, NO ENCODER,\
+    \ NO CRF ANYWHERE. This writes a PNG. (Stated because a\npeer lane measured --image-crf\
+    \ 33 destroying i2v conditioning on 2026-08-19;\nno value from any motion recipe is inherited\
+    \ by this path.)\n\n    python3 pipeline/controlnet_plate.py --arm hint --control C.png\
+    \ \\\n        --prompt-file p.txt --negative-file n.txt --out DIR --task ep2-x-0819\n\
+    \    python3 pipeline/controlnet_plate.py --selftest        # no GPU, no weights\n\"\"\
+    \"\nfrom __future__ import annotations\n\nimport argparse\nimport datetime\nimport hashlib\n\
+    import subprocess\nimport sys\nfrom pathlib import Path\n\nREPO = Path(__file__).resolve().parent.parent\n\
+    \nBASE = \"cagliostrolab/animagine-xl-3.1\"\nBASE_LICENCE = \"CreativeML Open RAIL++-M\
+    \ (use restrictions travel; D15)\"\n\n# Apache-2.0 and already complete in the box cache.\
+    \ MistoLine would also work\n# but its README puts a standing visible-attribution obligation\
+    \ on anything it\n# renders, so the permissive net is the default. Same choice as the\
+    \ probe's.\nCONTROLNET = \"xinsir/controlnet-scribble-sdxl-1.0\"\nCONTROLNET_LICENCE =\
+    \ \"apache-2.0 (D15 SAFE, no attribution condition)\"\n\n# WHICH NETS MAY BE NAMED, AND\
+    \ WHY IT IS AN ALLOWLIST RATHER THAN A FREE STRING.\n# `--controlnet` exists so the openpose\
+    \ rung can run WITHOUT editing the constant\n# above, which four filed verdicts were measured\
+    \ against. But a driver that\n# accepts any repo id by string is one typo away from attaching\
+    \ somebody else's\n# terms to a canon frame, and two of the near neighbours are real hazards:\n\
+    #   thibaud/controlnet-openpose-sdxl-1.0 -- its card reads, in full, \"License:\n#   \
+    \  refers to the OpenPose's one\". CMU OpenPose upstream is academic /\n#     non-commercial.\
+    \ B01-R9-PLAN.md §9 already flags lllyasviel/Annotators DO\n#     NOT USE FOR CANON for\
+    \ inheriting exactly those terms; this inherits them at\n#     the WEIGHTS level, where\
+    \ they would attach to every frame it ever renders.\n#   MistoLine -- loads fine, but\
+    \ its README puts a standing VISIBLE ATTRIBUTION\n#     obligation on anything it renders.\
+    \ That is why the permissive net was the\n#     default in the first place.\n# So the\
+    \ licence travels WITH the name, in one table, and an unlisted net is\n# refused before\
+    \ any weight loads rather than silently recorded as apache-2.0.\nCONTROLNETS = {\n   \
+    \ \"xinsir/controlnet-scribble-sdxl-1.0\":\n        \"apache-2.0 (D15 SAFE, no attribution\
+    \ condition)\",\n    \"xinsir/controlnet-openpose-sdxl-1.0\":\n        \"apache-2.0 (D15\
+    \ SAFE, no attribution condition; front matter and body \"\n        \"both, and no annotator\
+    \ is used -- the hint is authored in PIL)\",\n    # A PATH, IN A TABLE OF REPO IDS, AND\
+    \ THAT NEEDS ITS REASON STATED.\n    # xinsir ships the `twins` variant as a SECOND blob\
+    \ inside the openpose repo,\n    # `diffusion_pytorch_model_twins.safetensors`. from_pretrained\
+    \ cannot load a\n    # weight by filename, so ep2-b08-twins-fetch-0819 renamed our own\
+    \ copy into a\n    # loadable directory -- which means the only name this driver ever\
+    \ sees for\n    # those weights is a local path, and a path carries no terms. Rather than\n\
+    \    # weaken the guard (the guard is right: thibaud's SDXL openpose inherits CMU\n  \
+    \  # OpenPose's non-commercial licence at the weights level), the path is\n    # allowlisted\
+    \ with a licence string that NAMES ITS UPSTREAM, its variant\n    # filename and its digest\
+    \ -- so the sidecar it writes is self-describing even\n    # though the net's name is\
+    \ a directory. Same repo, same apache-2.0, verified\n    # by the fetch on both front\
+    \ matter and body.\n    r\"C:\\banyan-farm\\cnet-openpose-twins\":\n        \"apache-2.0\
+    \ (D15 SAFE, no attribution condition) -- the `twins` variant \"\n        \"of xinsir/controlnet-openpose-sdxl-1.0,\
+    \ blob \"\n        \"diffusion_pytorch_model_twins.safetensors sha256 \"\n        \"54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4,\
+    \ \"\n        \"2502139104 bytes, renamed into a loadable directory by \"\n        \"\
+    ep2-b08-twins-fetch-0819. Identical terms to the default weight in that \"\n        \"\
+    same repo; no annotator is used -- the hint is authored in PIL\",\n}\n\n# THE VARIANT\
+    \ TRAP, carried verbatim because it is why a naive constant-swap\n# crashes: the xinsir\
+    \ repos ship ONLY `diffusion_pytorch_model.safetensors`, so\n# passing variant=\"fp16\"\
+    \ raises. diffusers/* and MistoLine ship ONLY\n# `*.fp16.safetensors`, so OMITTING it\
+    \ raises. Verified against the box's\n# snapshot listing, not assumed.\nCONTROLNET_VARIANT\
+    \ = None\n\nW, H = 832, 1216          # beat 01's proven size, and the size the probe\
+    \ bound at\nSTEPS = 40\nCFG = 7.5\nSCALE = 0.8               # thick-line + high-scale:\
+    \ the condition-wins end, and\n                          # the ONLY conditioning scale\
+    \ this repo has measured.\n\n# ---------------------------------------------------------------------------\n\
+    # MASKED IP-ADAPTER -- ADDED 2026-08-19, AND EVERY PATH ABOVE IS UNCHANGED.\n#\n# WHY\
+    \ IT IS HERE. `b08-arm-route-0819.md` §8-§10 bracketed conditioning scale,\n# stroke weight\
+    \ and hint class over five rungs and every single frame returned\n# TWO GREEN FIGURES.\
+    \ That is not a tuning failure: a contour says how tall, not\n# WHICH BODY an attribute\
+    \ belongs to, so `green skin` enters CLIP's pooled\n# embedding and lands on both. §10's\
+    \ closing line is that identity is no longer\n# blocked, it is simply the next open question,\
+    \ and that geometric conditioning\n# on this net will not help it. A reference image behind\
+    \ a MASK is a per-location\n# identity channel, which is the one thing the hint cannot\
+    \ be.\n#\n# WHY IT COSTS NOTHING AND NEEDS NO DOWNLOAD, verified read-only on the box\
+    \ by\n# `pipeline/research/openpose-controlnet-sdxl-0819.md` §3 and §5 rather than\n#\
+    \ assumed here: diffusers 0.29.2, `IPAdapterMaskProcessor` imports,\n# `StableDiffusionXLControlNetPipeline.__call__`\
+    \ accepts `ip_adapter_image`, and\n# `models--h94--IP-Adapter` is complete in the cache\
+    \ with 0 .incomplete files.\n# One pipeline, pose control AND per-region image conditioning;\
+    \ no community\n# pipeline, no fork, no version bump.\n#\n# THE ENCODER FOLDER IS THE\
+    \ TRAP THAT WOULD HAVE COST THE FIRST RUN. diffusers\n# defaults `image_encoder_folder=\"\
+    image_encoder\"` and, when the name contains no\n# slash, resolves it as `Path(subfolder,\
+    \ image_encoder_folder)` -- i.e.\n# `sdxl_models/image_encoder`, which is the ViT-bigG\
+    \ encoder and IS NOT IN THE\n# BOX CACHE. `dir /s /b` on the snapshot lists exactly four\
+    \ blobs and the only\n# encoder among them is `models/image_encoder`, the ViT-H one that\
+    \ every\n# `_vit-h` adapter actually requires. A name WITH a slash is taken as a full\n\
+    # path, so `models/image_encoder` is both correct and the only offline-reachable\n# spelling.\
+    \ Getting this wrong is not a wrong picture, it is a hard miss under\n# HF_HUB_OFFLINE=1.\n\
+    # ---------------------------------------------------------------------------\nIP_REPO\
+    \ = \"h94/IP-Adapter\"\nIP_LICENCE = \"apache-2.0\"\nIP_SUBFOLDER = \"sdxl_models\"\n\
+    IP_WEIGHT = \"ip-adapter-plus_sdxl_vit-h.safetensors\"\nIP_IMAGE_ENCODER_FOLDER = \"models/image_encoder\"\
+    \   # see the trap above\nIP_SCALE = 0.7            # the value diffusers' own masking\
+    \ example uses\n\n# WHICH ADAPTER WEIGHTS MAY BE NAMED, AND WHY THIS TABLE IS NOT OPTIONAL.\n\
+    # Same discipline as CONTROLNETS above, and it earns its place here for a reason\n# that\
+    \ table does not have: **THE TWO SDXL ViT-H ADAPTERS ARE THE SAME NUMBER OF\n# BYTES.**\
+    \ `ip-adapter-plus_sdxl_vit-h.safetensors` and\n# `ip-adapter-plus-face_sdxl_vit-h.safetensors`\
+    \ are both 847,517,512 bytes\n# exactly. A size check passes on the wrong one. A filename\
+    \ typo that resolves\n# to a real file in that repo is a DIFFERENT MODEL rendering under\
+    \ the sidecar\n# of the one the verdict thinks it is reading -- and rungs k1..k5 have\
+    \ filed\n# verdicts resting on the `plus` weight specifically.\n#\n# So the digest travels\
+    \ WITH the name, in one table, and an unlisted weight is\n# refused before any model loads.\
+    \ This is mac_preflight's rule at the adapter\n# level: macbook1 rendered SDXL as pure\
+    \ noise for days on a UNet that was the\n# exact right LENGTH.\n#\n# The `.bin` variants\
+    \ are deliberately absent. They are pickles, they are a\n# different size (1,013,454,761\
+    \ for the face one), and safetensors carries the\n# same weights without the pickle.\n\
+    IP_WEIGHTS = {\n    \"ip-adapter-plus_sdxl_vit-h.safetensors\":\n        \"apache-2.0\
+    \ (D15 SAFE, no attribution condition) -- h94/IP-Adapter \"\n        \"sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors,\
+    \ 847517512 bytes, \"\n        \"sha256 3f5062b8400c94b7159665b21ba5c62acdcd7682262743d7f2aefedef00e6581.\
+    \ \"\n        \"The general (non-face) PLUS adapter; the weight every rung from k1 to\
+    \ \"\n        \"k5 was measured on\",\n    \"ip-adapter-plus-face_sdxl_vit-h.safetensors\"\
+    :\n        \"apache-2.0 (D15 SAFE, no attribution condition) -- h94/IP-Adapter \"\n  \
+    \      \"sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors, 847517512 \"\n     \
+    \   \"bytes, sha256 \"\n        \"677ad8860204f7d0bfba12d29e6c31ded9beefdf3e4bbd102518357d31a292c1,\
+    \ \"\n        \"fetched by ep2-ipa-facewt-fetch-0821. THE SAME LENGTH as the general \"\
+    \n        \"adapter above and only the digest separates them. Trained for faces \"\n \
+    \       \"that must survive a small share of the reference, which is the regime \"\n \
+    \       \"where k5a's mouth disappeared\",\n}\n\n\n\ndef sha256_file(path):\n    h = hashlib.sha256()\n\
+    \    with open(path, \"rb\") as fh:\n        for chunk in iter(lambda: fh.read(1 << 20),\
+    \ b\"\"):\n            h.update(chunk)\n    return h.hexdigest()\n\n\ndef git_rev(root):\n\
+    \    try:\n        # encoding named explicitly: a text-mode read that defaults to the\n\
+    \        # platform codec decodes as cp1252 on the box, and test_pipeline.py\n       \
+    \ # enforces this repo-wide.\n        return subprocess.run([\"git\", \"-C\", str(root),\
+    \ \"rev-parse\", \"HEAD\"],\n                              capture_output=True, text=True,\
+    \ encoding=\"utf-8\",\n                              timeout=20).stdout.strip() or \"\
+    unknown\"\n    except Exception:\n        return \"unknown\"\n\n\ndef read_text(path):\n\
+    \    \"\"\"A prompt file, stripped of a trailing newline and nothing else.\n\n    Read\
+    \ as utf-8 by name. The box's default codec is cp1252 and a prompt that\n    round-trips\
+    \ through it silently loses any character outside latin-1 -- which\n    is how a wording\
+    \ measured here stops being the wording rendered there.\n    \"\"\"\n    s = Path(path).read_text(encoding=\"\
+    utf-8\").strip()\n    if not s:\n        raise ValueError(\"%s is empty -- refusing to\
+    \ render a blank prompt\" % path)\n    return s\n\n\ndef token_overflow(text, tokenizer):\n\
+    \    \"\"\"How many tokens past CLIP's 77 this text runs, measured not estimated.\n\n\
+    \    WHY THIS REFUSES INSTEAD OF WARNING. diffusers truncates silently at\n    `model_max_length`,\
+    \ and what falls off the end is the TAIL -- which in this\n    repo's drafts is always\
+    \ the style anchor (`masterpiece, best quality, very\n    aesthetic`). A plate rendered\
+    \ with the anchor amputated does not look like a\n    truncation, it looks like the recipe\
+    \ failed, and that is a whole round spent\n    on a diagnosis that was available for free\
+    \ before the first step.\n    `insert_b08_cast_draft_0817.py` gave up an entire clause\
+    \ -- `hedgerow` --\n    precisely to keep the anchor, so losing it by accident here would\
+    \ throw away\n    somebody else's measured decision.\n\n    Checked against the REAL tokenizer\
+    \ on the box. This machine has none\n    (`sd_prompt._clip_tokenizer()` returns None here),\
+    \ so an authoring-time\n    number is an estimate and only the box can make it a fact.\n\
+    \    \"\"\"\n    limit = getattr(tokenizer, \"model_max_length\", 77)\n    n = len(tokenizer(text)[\"\
+    input_ids\"])\n    return max(0, n - limit), n, limit\n\n\ndef check_control(ctrl_img,\
+    \ want_w, want_h):\n    \"\"\"The control must be the render size EXACTLY, or the geometry\
+    \ is a lie.\n\n    diffusers will happily resize a mismatched condition, and then the\
+    \ pose that\n    was authored -- the feet on one ground line, the fingertip short of the\n\
+    \    belly -- is not the pose the model saw. Refusing is the whole point; this is\n  \
+    \  the probe's rc=7 guard, kept.\n    \"\"\"\n    if ctrl_img.size != (want_w, want_h):\n\
+    \        raise ValueError(\n            \"control is %s but the render is %s. diffusers\
+    \ would resize it and \"\n            \"the authored geometry would not be the geometry\
+    \ the model saw. \"\n            \"Re-author the hint at the render size.\"\n        \
+    \    % (ctrl_img.size, (want_w, want_h)))\n    return True\n\n\ndef parse_rect(s, width,\
+    \ height):\n    \"\"\"`x0,y0,x1,y1` in RENDER pixels -> a validated tuple.\n\n    In render\
+    \ pixels and not fractions on purpose: the hint that these masks\n    accompany is authored\
+    \ in absolute pixels by `author_b08_pose_hint.py`, whose\n    metadata reports the figures'\
+    \ cx, stature, head_cy and shoulder_y in exactly\n    those units. A fraction here would\
+    \ mean the mask and the geometry it is meant\n    to agree with are stated in two different\
+    \ coordinate systems, and nobody\n    would notice a 4% disagreement by eye.\n    \"\"\
+    \"\n    parts = [p.strip() for p in str(s).split(\",\")]\n    if len(parts) != 4:\n  \
+    \      raise ValueError(\"a mask rect is x0,y0,x1,y1 -- got %r\" % (s,))\n    try:\n \
+    \       x0, y0, x1, y1 = (int(round(float(p))) for p in parts)\n    except ValueError:\n\
+    \        raise ValueError(\"a mask rect must be four numbers -- got %r\" % (s,))\n   \
+    \ if x1 <= x0 or y1 <= y0:\n        raise ValueError(\"mask rect %r is empty or inverted\
+    \ (need x1>x0, y1>y0)\"\n                         % (s,))\n    if x0 < 0 or y0 < 0 or\
+    \ x1 > width or y1 > height:\n        raise ValueError(\"mask rect %r falls outside the\
+    \ %dx%d render\" %\n                         (s, width, height))\n    return (x0, y0,\
+    \ x1, y1)\n\n\ndef rects_overlap(a, b):\n    \"\"\"Do two mask rects share any pixel?\n\
+    \n    REFUSED rather than warned about. Two IP-Adapter masks that overlap put two\n  \
+    \  identities on the same pixels, and the whole premise of this rung is that\n    each\
+    \ figure gets ONE reference. An overlap would produce exactly the blended\n    result\
+    \ the rung exists to disprove, and it would look like the mechanism\n    failing rather\
+    \ than like the masks being wrong.\n    \"\"\"\n    return not (a[2] <= b[0] or b[2] <=\
+    \ a[0] or a[3] <= b[1] or b[3] <= a[1])\n\n\ndef mask_images(rects, width, height):\n\
+    \    \"\"\"One white-on-black L mask per rect, at the render size.\n\n    Drawn here rather\
+    \ than taken as PNG files so the numbers in the job's argv\n    ARE the mask -- there\
+    \ is no second artifact that could drift from them, and\n    the sidecar records the same\
+    \ four integers the render was conditioned on.\n    \"\"\"\n    from PIL import Image,\
+    \ ImageDraw\n    out = []\n    for r in rects:\n        m = Image.new(\"L\", (width, height),\
+    \ 0)\n        ImageDraw.Draw(m).rectangle([r[0], r[1], r[2] - 1, r[3] - 1], fill=255)\n\
+    \        out.append(m)\n    return out\n\n\n# ---------------------------------------------------------------------------\n\
+    # CAPSULE MASKS -- ADDED 2026-08-19. RECTS REMAIN THE DEFAULT; THIS IS A FLAG.\n#\n# WHY.\
+    \ ep2-b08-twins-sample-0819 put the guard's pointing hand at x 204-270,\n# y 650-730 while\
+    \ the goblin's body and his own hanging arm occupy x 100-265 at\n# the same heights: HER\
+    \ FINGER IS DRAWN OVERLAPPING HIS ARM. Two axis-aligned\n# rectangles cannot separate\
+    \ that. Widen hers and her fingertip falls in HIS\n# mask, handing her finger his identity;\
+    \ narrow his and his own arm falls in\n# HERS. The rect path is not wrong, it is simply\
+    \ not expressive enough for two\n# figures whose limbs interleave, and that is now the\
+    \ normal case on this beat.\n#\n# WHAT A CAPSULE IS. One line segment dilated by a radius\
+    \ -- a thick line with\n# round caps. A figure's mask is the UNION of one capsule per\
+    \ limb, which is the\n# same geometry the openpose hint is drawn from, so a mask built\
+    \ this way cannot\n# disagree with the hint it accompanies. `author_b08_openpose_hint.figure_capsules`\n\
+    # emits them straight off `stage()`'s keypoints and LIMBS table.\n#\n# WHY IN ARGV AND\
+    \ NOT A PNG. Same reason the rects are: the numbers in the job's\n# argv ARE the mask.\
+    \ A mask FILE is a second artifact that can drift from the\n# hint, and the sidecar could\
+    \ then record a sha for a shape nobody can read.\n#\n# THE OVERLAP GUARD GENERALISES RATHER\
+    \ THAN RELAXES. Rects were compared as\n# intervals; arbitrary shapes are compared AS\
+    \ LIT PIXELS. Two capsule masks whose\n# BOUNDING BOXES overlap are fine, and that is\
+    \ the entire point -- what is\n# refused, exactly as before, is two references sharing\
+    \ a single pixel.\n# ---------------------------------------------------------------------------\n\
+    def parse_capsules(s, width, height):\n    \"\"\"`x0,y0,x1,y1,r; x0,y0,x1,y1,r; ...` ->\
+    \ a validated list of capsules.\n\n    Render pixels, like parse_rect, and for the same\
+    \ reason: the hint these\n    masks accompany is authored in absolute pixels, and two\
+    \ coordinate systems\n    is how a 4% disagreement goes unnoticed.\n    \"\"\"\n    caps\
+    \ = []\n    for chunk in str(s).split(\";\"):\n        chunk = chunk.strip()\n       \
+    \ if not chunk:\n            continue\n        parts = [p.strip() for p in chunk.split(\"\
+    ,\")]\n        if len(parts) != 5:\n            raise ValueError(\"a capsule is x0,y0,x1,y1,r\
+    \ -- got %r\" % (chunk,))\n        try:\n            x0, y0, x1, y1, r = (float(p) for\
+    \ p in parts)\n        except ValueError:\n            raise ValueError(\"a capsule must\
+    \ be five numbers -- got %r\" % (chunk,))\n        if r <= 0:\n            raise ValueError(\"\
+    capsule radius must be > 0 -- got %r\" % (chunk,))\n        for vx, vy in ((x0, y0), (x1,\
+    \ y1)):\n            if not (-r <= vx <= width + r and -r <= vy <= height + r):\n    \
+    \            raise ValueError(\"capsule %r falls outside the %dx%d render\"\n        \
+    \                         % (chunk, width, height))\n        caps.append((x0, y0, x1,\
+    \ y1, r))\n    if not caps:\n        raise ValueError(\"a capsule mask needs at least\
+    \ one capsule -- got %r\" % (s,))\n    return caps\n\n\ndef capsule_mask(caps, width,\
+    \ height):\n    \"\"\"One white-on-black L mask: the union of every capsule.\n\n    Drawn\
+    \ with a wide line plus a disc at each end, which is exactly a capsule\n    (Minkowski\
+    \ sum of the segment and a disc of radius r). PIL's `width=` on a\n    line gives butt-ish\
+    \ ends, so the caps are drawn explicitly -- without them a\n    limb's mask stops square\
+    \ at the wrist and the hand falls outside it, which is\n    the very defect this path\
+    \ exists to fix.\n    \"\"\"\n    from PIL import Image, ImageDraw\n    m = Image.new(\"\
+    L\", (width, height), 0)\n    d = ImageDraw.Draw(m)\n    for x0, y0, x1, y1, r in caps:\n\
+    \        d.line([(x0, y0), (x1, y1)], fill=255, width=max(1, int(round(2 * r))))\n   \
+    \     for cx, cy in ((x0, y0), (x1, y1)):\n            d.ellipse([cx - r, cy - r, cx +\
+    \ r, cy + r], fill=255)\n    return m\n\n\ndef masks_overlap(a, b):\n    \"\"\"Do two\
+    \ L masks share a single lit pixel?\n\n    The rect guard, generalised to arbitrary shapes.\
+    \ `rects_overlap` compares\n    intervals and so refuses any two figures whose BOUNDING\
+    \ BOXES touch; this\n    compares the masks themselves, which is what the guard always\
+    \ meant. The\n    rule it enforces is unchanged and is not relaxed: one pixel, one identity.\n\
+    \    \"\"\"\n    from PIL import ImageChops\n    return ImageChops.multiply(a, b).getbbox()\
+    \ is not None\n\n\ndef sidecar_lines(a, use_cn, ctrl_sha, rev, prompt, negative, load_s,\
+    \ render_s,\n                  stamp, torch_version, ip=None, ctrl2_sha=None, lora_sha=None):\n\
+    \    \"\"\"The 7.2 provenance block, written AT RENDER TIME, on the box.\"\"\"\n    side\
+    \ = [\n        \"# Provenance (7.2), written AT RENDER TIME by controlnet_plate.py on\"\
+    ,\n        \"# the rtx5090. A SAMPLE, not a pick and not canon.\",\n        \"platform:\
+    \ local-gpu (rtx5090)\",\n        \"task: %s\" % a.task,\n        \"arm: %s\" % a.arm,\n\
+    \        \"model: %s\" % BASE,\n        \"model_licence: %s\" % BASE_LICENCE,\n      \
+    \  (\"pipeline: StableDiffusionXLControlNetPipeline (text2img + scribble control)\"\n\
+    \         if use_cn else \"pipeline: StableDiffusionXLPipeline (text2img, NO control)\"\
+    ),\n        \"size: %dx%d\" % (a.width, a.height),\n        \"steps: %d\" % a.steps,\n\
+    \        \"guidance: %s\" % a.cfg,\n        \"seed: %d\" % a.seed,\n        \"cost_usd:\
+    \ 0\",\n    ]\n    # THE LoRA IS NAMED AND HASHED, OR THE BLOCK IS BYTE-IDENTICAL TO WHAT\
+    \ IT\n    # ALWAYS WAS. A checkpoint directory holds five epochs whose filenames\n   \
+    \ # differ by one character, and a bar grid is only evidence if each frame\n    # says\
+    \ which bytes drew it -- registry.yaml keeps the weights on the box and\n    # the sha256\
+    \ is the half that travels. When no LoRA is loaded NOTHING is\n    # emitted, so every\
+    \ sidecar this driver has already written stays reproducible.\n    if getattr(a, \"lora\"\
+    , None):\n        side += [\n            \"lora: %s\" % a.lora,\n            \"lora_sha256:\
+    \ %s\" % (lora_sha or \"unmeasured\"),\n            \"lora_weight: %s\" % getattr(a, \"\
+    lora_weight\", 0.8),\n            \"lora_fused_before_controlnet_swap: true  # from_pipe\
+    \ reuses the \"\n            \"module objects, so a fused UNet travels into the swapped\
+    \ pipeline\",\n        ]\n    if use_cn:\n        # getattr with the constant as the default,\
+    \ so a caller that predates\n        # --controlnet produces the byte-identical block\
+    \ it always did.\n        net = getattr(a, \"controlnet\", None) or CONTROLNET\n     \
+    \   side += [\n            \"controlnet: %s\" % net,\n            \"controlnet_licence:\
+    \ %s\" % CONTROLNETS.get(net, CONTROLNET_LICENCE),\n            \"controlnet_variant:\
+    \ %r (xinsir ships no fp16 variant file; passing \"\n            \"one raises)\" % CONTROLNET_VARIANT,\n\
+    \            \"controlnet_conditioning_scale: %s\" % a.scale,\n            \"control_guidance_start:\
+    \ 0.0\",\n            \"control_guidance_end: 1.0\",\n            \"control_image: %s\"\
+    \ % a.control,\n            \"control_image_sha256: %s\" % ctrl_sha,\n            \"control_polarity:\
+    \ white-on-black\",\n            \"control_authored_by: pipeline/author_b08_pose_hint.py\
+    \ (PIL, no \"\n            \"model, no photo-derived edge map, no annotator)\",\n    \
+    \    ]\n        # ONLY WHEN A SECOND NET WAS ACTUALLY COMPOSED. Absent, not empty: a\n\
+    \        # one-net sidecar must be the byte-identical block six filed verdicts\n     \
+    \   # cite, and selftest() holds two of them to sha256.\n        net2 = getattr(a, \"\
+    controlnet2\", None)\n        if net2:\n            side += [\n                \"controlnet_2:\
+    \ %s\" % net2,\n                \"controlnet_2_licence: %s\"\n                % CONTROLNETS.get(net2,\
+    \ CONTROLNET_LICENCE),\n                \"controlnet_2_conditioning_scale: %s\"\n    \
+    \            % (getattr(a, \"scale2\", None) if getattr(a, \"scale2\", None)\n       \
+    \            is not None else a.scale),\n                \"control_2_image: %s\" % getattr(a,\
+    \ \"control2\", None),\n                \"control_2_image_sha256: %s\" % (ctrl2_sha,),\n\
+    \                \"control_2_polarity: white-on-black\",\n                \"control_2_authored_by:\
+    \ pipeline/author_b08_board_hint.py (PIL, \"\n                \"no model, no photo-derived\
+    \ edge map, no annotator)\",\n                \"controlnet_composition: MultiControlNetModel,\
+    \ nets applied in \"\n                \"the order listed -- 1 = pose (WHICH BODY GOES\
+    \ WHERE), 2 = \"\n                \"object (WHAT IS IN THE HAND). Both run the full denoise,\
+    \ \"\n                \"control_guidance 0.0-1.0\",\n            ]\n    else:\n      \
+    \  side.append(\"controlnet: none (the control arm; same seed, same prompt)\")\n    #\
+    \ ONLY WHEN AN IP-ADAPTER WAS ACTUALLY USED. An arm that ran without one must\n    # produce\
+    \ the byte-identical sidecar it produced before this feature existed,\n    # and selftest()\
+    \ asserts that against a sha taken from the pre-change file --\n    # otherwise four filed\
+    \ verdicts would be resting on a provenance block whose\n    # wording had quietly moved\
+    \ under them.\n    if ip:\n        side += [\n            \"ip_adapter: %s (%s)\" % (ip[\"\
+    repo\"], ip[\"licence\"]),\n            \"ip_adapter_weight: %s/%s\" % (ip[\"subfolder\"\
+    ], ip[\"weight\"]),\n            \"ip_adapter_image_encoder: %s (ViT-H; the folder the\
+    \ _vit-h adapters \"\n            \"require, and the only encoder in the box cache)\"\n\
+    \            % ip[\"image_encoder_folder\"],\n            \"ip_adapter_scale: %s\" % (ip[\"\
+    scale\"],),\n            \"ip_adapter_refs: %s\" % (ip[\"refs\"],),\n            \"ip_adapter_ref_sha256:\
+    \ %s\" % (ip[\"ref_sha256\"],),\n        ]\n        if ip.get(\"capsule_mode\"):\n   \
+    \         side += [\n                \"ip_adapter_mask_geometry: capsules (union of dilated\
+    \ limb \"\n                \"segments; the same geometry the openpose hint is drawn from,\
+    \ so \"\n                \"a mask cannot disagree with the hint it accompanies)\",\n \
+    \               \"ip_adapter_masks: %s (x0,y0,x1,y1,r per capsule in RENDER \"\n     \
+    \           \"pixels, drawn by controlnet_plate.capsule_mask -- no mask file \"\n    \
+    \            \"exists to drift)\" % (ip[\"caps\"],),\n                \"ip_adapter_masks_overlap:\
+    \ false (asserted AS LIT PIXELS, not as \"\n                \"bounding boxes; the figures\
+    \ interleave and their boxes do \"\n                \"overlap, their ink does not)\",\n\
+    \            ]\n        else:\n            side += [\n                \"ip_adapter_mask_geometry:\
+    \ rects\",\n                \"ip_adapter_masks: %s (x0,y0,x1,y1 in RENDER pixels, drawn\
+    \ by \"\n                \"controlnet_plate.mask_images -- no mask file exists to drift)\"\
+    \n                % (ip[\"rects\"],),\n                \"ip_adapter_masks_overlap: false\
+    \ (asserted; two identities on one \"\n                \"pixel is refused, not warned\
+    \ about)\",\n            ]\n    side += [\n        \"repo_commit: %s\" % rev,\n      \
+    \  \"model_load_seconds: %.1f\" % load_s,\n        \"render_seconds: %.1f\" % render_s,\n\
+    \        \"rendered_utc: %s\" % stamp,\n        \"torch_version: %s\" % torch_version,\n\
+    \        \"approved: false\",\n        \"provisional: >-\",\n        \"  PROVISIONAL.\
+    \ A steward-rendered SAMPLE, not a pick and not canon.\",\n        \"  Never takes a canon\
+    \ filename, is not published to the site, not\",\n        \"  posted, and not assembled\
+    \ into an episode. Ground truth is the\",\n        \"  founder (R4).\",\n        \"prompt:\
+    \ |-\",\n    ]\n    side += [\"  \" + ln for ln in prompt.splitlines()]\n    side.append(\"\
+    negative: |-\")\n    side += [\"  \" + ln for ln in negative.splitlines()]\n    return\
+    \ side\n\n\ndef render(a):\n    import torch\n    from PIL import Image\n\n    root =\
+    \ Path(a.root) if a.root else REPO\n    use_cn = a.arm != \"nocontrol\"\n\n    out_dir\
+    \ = Path(a.out)\n    out_dir.mkdir(parents=True, exist_ok=True)\n    out_png = out_dir\
+    \ / (\"%s-%s.png\" % (a.task, a.arm))\n\n    prompt = read_text(a.prompt_file)\n    negative\
+    \ = read_text(a.negative_file)\n\n    # ---- the IP-Adapter references and their masks,\
+    \ RESOLVED BEFORE ANY WEIGHT\n    # LOADS. A missing reference, a bad rect or an overlap\
+    \ costs three seconds\n    # here and a whole model load plus a 40-step render if it is\
+    \ found later.\n    ip = None\n    if a.ip_ref:\n        # ONE MASK GEOMETRY PER JOB,\
+    \ NEVER BOTH. Mixing rect and capsule masks\n        # across references would mean the\
+    \ overlap guard compares intervals for\n        # one pair and pixels for another, so\
+    \ \"no overlap\" would mean two\n        # different things inside a single render.\n\
+    \        capsule_mode = bool(a.ip_mask_capsules)\n        if capsule_mode and a.ip_mask:\n\
+    \            print(\"!! both --ip-mask and --ip-mask-capsules were given. A job \"\n \
+    \                 \"uses ONE mask geometry: rects (the default) or capsules. \"\n    \
+    \              \"Mixing them would have the overlap guard comparing intervals \"\n   \
+    \               \"for one pair of references and lit pixels for another.\",\n        \
+    \          file=sys.stderr)\n            return 10\n        masks_given = a.ip_mask_capsules\
+    \ if capsule_mode else a.ip_mask\n        if len(a.ip_ref) != len(masks_given):\n    \
+    \        print(\"!! %d --ip-ref but %d %s. Each reference needs exactly \"\n         \
+    \         \"one mask: the mask is what says WHICH FIGURE that reference is \"\n      \
+    \            \"for, and an unmasked reference applies to the whole frame -- \"\n     \
+    \             \"which is the broadcast failure this rung exists to fix.\"\n          \
+    \        % (len(a.ip_ref), len(masks_given),\n                     \"--ip-mask-capsules\"\
+    \ if capsule_mode else \"--ip-mask\"),\n                  file=sys.stderr)\n         \
+    \   return 10\n        if a.ip_ref_sha256 and len(a.ip_ref_sha256) != len(a.ip_ref):\n\
+    \            print(\"!! %d --ip-ref-sha256 for %d --ip-ref\"\n                  % (len(a.ip_ref_sha256),\
+    \ len(a.ip_ref)), file=sys.stderr)\n            return 10\n        try:\n            if\
+    \ capsule_mode:\n                caps = [parse_capsules(s, a.width, a.height)\n      \
+    \                  for s in a.ip_mask_capsules]\n                rects = None\n      \
+    \      else:\n                rects = [parse_rect(s, a.width, a.height) for s in a.ip_mask]\n\
+    \                caps = None\n        except ValueError as e:\n            print(\"!!\
+    \ %s\" % e, file=sys.stderr)\n            return 10\n        # THE SAME RULE, ENFORCED\
+    \ ON WHICHEVER GEOMETRY WAS GIVEN. Rects are\n        # compared as intervals (cheap,\
+    \ and identical to every prior run's\n        # behaviour); capsules are compared as lit\
+    \ pixels, which is the only\n        # comparison that lets two interleaved figures pass\
+    \ while still refusing\n        # a single shared pixel.\n        if capsule_mode:\n \
+    \           imgs = [capsule_mask(c, a.width, a.height) for c in caps]\n            for\
+    \ i in range(len(imgs)):\n                for j in range(i + 1, len(imgs)):\n        \
+    \            if masks_overlap(imgs[i], imgs[j]):\n                        print(\"!! capsule\
+    \ mask %d and capsule mask %d share lit \"\n                              \"pixels. Two\
+    \ references on the same pixels is two \"\n                              \"identities\
+    \ on one body, and the blended result \"\n                              \"would look like\
+    \ the mechanism failing rather than \"\n                              \"like the masks\
+    \ being wrong. Bounding boxes MAY \"\n                              \"overlap on this\
+    \ path -- actual ink may not.\"\n                              % (i, j), file=sys.stderr)\n\
+    \                        return 10\n        else:\n            for i in range(len(rects)):\n\
+    \                for j in range(i + 1, len(rects)):\n                    if rects_overlap(rects[i],\
+    \ rects[j]):\n                        print(\"!! mask %d %s and mask %d %s OVERLAP. Two\
+    \ references \"\n                              \"on the same pixels is two identities\
+    \ on one body, and \"\n                              \"the blended result would look like\
+    \ the mechanism \"\n                              \"failing rather than like the masks\
+    \ being wrong.\"\n                              % (i, rects[i], j, rects[j]), file=sys.stderr)\n\
+    \                        return 10\n        ref_paths, ref_shas = [], []\n        for\
+    \ i, r in enumerate(a.ip_ref):\n            rp = Path(r)\n            if not rp.is_absolute():\n\
+    \                rp = root / r\n            if not rp.exists():\n                print(\"\
+    ip reference missing: %s\" % rp, file=sys.stderr)\n                return 10\n       \
+    \     sha = sha256_file(rp)\n            if a.ip_ref_sha256 and sha != a.ip_ref_sha256[i]:\n\
+    \                print(\"!! ip reference %d sha mismatch\\n   want %s\\n   have %s\"\n\
+    \                      % (i, a.ip_ref_sha256[i], sha), file=sys.stderr)\n            \
+    \    return 11\n            ref_paths.append(rp)\n            ref_shas.append(sha)\n \
+    \       # THE WEIGHT IS ALLOWLISTED BEFORE ANY MODEL LOADS. See IP_WEIGHTS: the\n    \
+    \    # face and non-face SDXL adapters are the same number of bytes, so the\n        #\
+    \ digest is the only thing that separates them and the sidecar must\n        # carry it.\n\
+    \        if a.ip_weight not in IP_WEIGHTS:\n            print(\"!! %r is not in this driver's\
+    \ IP-Adapter allowlist. The \"\n                  \"digest travels with the name (see\
+    \ IP_WEIGHTS) because \"\n                  \"ip-adapter-plus_sdxl_vit-h and ip-adapter-plus-face_sdxl_\"\
+    \n                  \"vit-h are BOTH 847,517,512 bytes -- a size check passes on \"\n\
+    \                  \"the wrong one and the sidecar would name a model that did \"\n  \
+    \                \"not render the frame. Add it to the table with its real \"\n      \
+    \            \"digest and licence, or use one of: %s\"\n                  % (a.ip_weight,\
+    \ \", \".join(sorted(IP_WEIGHTS))),\n                  file=sys.stderr)\n            return\
+    \ 12\n        ip = {\"repo\": a.ip_repo, \"licence\": IP_WEIGHTS[a.ip_weight],\n     \
+    \         \"subfolder\": a.ip_subfolder, \"weight\": a.ip_weight,\n              \"image_encoder_folder\"\
+    : a.ip_image_encoder_folder,\n              \"scale\": [[float(a.ip_scale)] * len(ref_paths)],\n\
+    \              \"refs\": [str(p) for p in ref_paths], \"ref_sha256\": ref_shas,\n    \
+    \          \"rects\": rects, \"caps\": caps, \"capsule_mode\": capsule_mode,\n       \
+    \       \"mask_imgs\": imgs if capsule_mode else None,\n              \"paths\": ref_paths}\n\
+    \n    ctrl_img = None\n    ctrl_sha = None\n    if use_cn:\n        if not a.control:\n\
+    \            print(\"--control is required for a control arm\", file=sys.stderr)\n   \
+    \         return 6\n        cp = Path(a.control)\n        if not cp.is_absolute():\n \
+    \           cp = root / a.control\n        if not cp.exists():\n            print(\"control\
+    \ hint missing: %s\" % cp, file=sys.stderr)\n            return 6\n        ctrl_sha =\
+    \ sha256_file(cp)\n        if a.control_sha256 and ctrl_sha != a.control_sha256:\n   \
+    \         print(\"!! control sha mismatch\\n   want %s\\n   have %s\"\n              \
+    \    % (a.control_sha256, ctrl_sha), file=sys.stderr)\n            return 8\n        ctrl_img\
+    \ = Image.open(cp).convert(\"RGB\")\n        try:\n            check_control(ctrl_img,\
+    \ a.width, a.height)\n        except ValueError as e:\n            print(str(e), file=sys.stderr)\n\
+    \            return 7\n\n    # ---- THE SECOND HINT, resolved and PINNED on the same terms\
+    \ as the first.\n    # A second net doubles the number of ways the geometry can be a lie,\
+    \ so it\n    # gets the identical treatment: size-checked against the render (diffusers\n\
+    \    # would silently resize it) and sha-checked against the value the job\n    # committed\
+    \ to before any weight loads.\n    ctrl2_img = None\n    ctrl2_sha = None\n    net2 =\
+    \ getattr(a, \"controlnet2\", None)\n    if net2:\n        if not use_cn:\n          \
+    \  print(\"--controlnet2 on the nocontrol arm is a contradiction\",\n                \
+    \  file=sys.stderr)\n            return 6\n        if not getattr(a, \"control2\", None):\n\
+    \            print(\"--controlnet2 needs --control2: a second net with no second \"\n\
+    \                  \"hint would be conditioned on nothing\", file=sys.stderr)\n      \
+    \      return 6\n        cp2 = Path(a.control2)\n        if not cp2.is_absolute():\n \
+    \           cp2 = root / a.control2\n        if not cp2.exists():\n            print(\"\
+    second control hint missing: %s\" % cp2, file=sys.stderr)\n            return 6\n    \
+    \    ctrl2_sha = sha256_file(cp2)\n        want2 = getattr(a, \"control2_sha256\", None)\n\
+    \        if want2 and ctrl2_sha != want2:\n            print(\"!! second control sha mismatch\\\
+    n   want %s\\n   have %s\"\n                  % (want2, ctrl2_sha), file=sys.stderr)\n\
+    \            return 8\n        ctrl2_img = Image.open(cp2).convert(\"RGB\")\n        try:\n\
+    \            check_control(ctrl2_img, a.width, a.height)\n        except ValueError as\
+    \ e:\n            print(str(e), file=sys.stderr)\n            return 7\n\n    net = a.controlnet\
+    \ or CONTROLNET\n    if use_cn and net2 and net2 not in CONTROLNETS:\n        print(\"\
+    !! %r is not in this driver's ControlNet allowlist (second net). \"\n              \"\
+    The licence travels with the name -- see CONTROLNETS. Use one \"\n              \"of:\
+    \ %s\" % (net2, \", \".join(sorted(CONTROLNETS))), file=sys.stderr)\n        return 12\n\
+    \    if use_cn and net2 and net2 == net:\n        print(\"!! --controlnet2 is the same\
+    \ net as --controlnet (%r). Composing \"\n              \"a net with itself doubles its\
+    \ weight on the same question and is \"\n              \"never what was meant.\" % net,\
+    \ file=sys.stderr)\n        return 12\n    if use_cn and net not in CONTROLNETS:\n   \
+    \     print(\"!! %r is not in this driver's ControlNet allowlist. The licence \"\n   \
+    \           \"travels with the name (see CONTROLNETS), and an unlisted net \"\n      \
+    \        \"would be recorded with the wrong terms -- thibaud's SDXL openpose \"\n    \
+    \          \"inherits CMU OpenPose's non-commercial licence AT THE WEIGHTS \"\n      \
+    \        \"LEVEL, and MistoLine puts a standing visible-attribution \"\n             \
+    \ \"obligation on anything it renders. Add it to the table with its \"\n             \
+    \ \"real licence, or use one of: %s\"\n              % (net, \", \".join(sorted(CONTROLNETS))),\
+    \ file=sys.stderr)\n        return 12\n\n    if not torch.cuda.is_available():\n     \
+    \   print(\"no CUDA -- this is a box job\", file=sys.stderr)\n        return 5\n\n   \
+    \ # BEFORE any weights load, so a wording that cannot fit costs 3 seconds and\n    # not\
+    \ a 40-step render on a card another lane is waiting for.\n    if not a.allow_truncation:\n\
+    \        from transformers import CLIPTokenizer\n        tok = CLIPTokenizer.from_pretrained(BASE,\
+    \ subfolder=\"tokenizer\")\n        for label, text in ((\"prompt\", prompt), (\"negative\"\
+    , negative)):\n            over, n, limit = token_overflow(text, tok)\n            print(\"\
+    \  %s tokens: %d (limit %d)\" % (label, n, limit), flush=True)\n            if over:\n\
+    \                print(\"!! the %s runs %d tokens past CLIP's %d and diffusers would \"\
+    \n                      \"TRUNCATE it silently. The tail of every draft in this repo \"\
+    \n                      \"is the style anchor, so what gets dropped is exactly what \"\
+    \n                      \"makes the plate look like the show. Shorten it, or pass \"\n\
+    \                      \"--allow-truncation if the overflow is deliberate.\"\n       \
+    \               % (label, over, limit), file=sys.stderr)\n                return 9\n\n\
+    \    from diffusers import (AutoPipelineForText2Image, ControlNetModel,\n            \
+    \               StableDiffusionXLPipeline)\n\n    t0 = datetime.datetime.now(datetime.timezone.utc)\n\
+    \    pipe = StableDiffusionXLPipeline.from_pretrained(\n        BASE, torch_dtype=torch.bfloat16,\
+    \ use_safetensors=True)\n    pipe.to(\"cuda\")\n    pipe.set_progress_bar_config(disable=True)\n\
+    \n    # ---- THE CHARACTER LoRA, FUSED BEFORE THE CONTROLNET SWAP -------------\n    #\n\
+    \    # WHY THIS ARM EXISTS AT ALL, AND IT IS ONE MEASUREMENT.\n    # `pipeline/goblin-i2i-route-0822.md`\
+    \ closed img2img-from-canon as a POSING\n    # route on a mechanism: at strength <= 0.40\
+    \ only the last s*N steps run,\n    # global structure is decided in the HIGH-noise steps\
+    \ the pass never enters,\n    # and so an OpenPose skeleton at scale 1.0 moved grass,\
+    \ light and background\n    # by mean abs 15.05 and did not bend a single knee. Its section\
+    \ 4 named the\n    # only remaining route -- a LoRA trained on his pixels -- and named\
+    \ exactly\n    # why: \"a LoRA and a skeleton can both act at strength 1.0 because there\
+    \ is\n    # no init competing with them.\"\n    #\n    # THAT SENTENCE IS A CLAIM, AND\
+    \ UNTIL THIS FLAG EXISTED THERE WAS NO WAY TO\n    # TEST IT. `sample_lora.py` loads a\
+    \ LoRA and cannot take a hint; this file\n    # takes a hint and could not load a LoRA.\
+    \ The decisive cell of the jerry v2\n    # bar grid -- trigger plus skeleton, txt2img,\
+    \ strength 1.0, does his identity\n    # reach the steps where the pose is decided --\
+    \ needs both in one pass. That\n    # cell is the consumer registry.yaml said a LoRA loader\
+    \ must wait for, and\n    # it is a bar rather than a plate: nothing here ships a frame.\n\
+    \    #\n    # FUSED BEFORE `from_pipe`, DELIBERATELY, AND FOR THE MIRROR OF THE REASON\n\
+    \    # THE IP-ADAPTER IS REGISTERED AFTER IT. from_pipe rebuilds the pipeline\n    # class\
+    \ around THE SAME MODULE OBJECTS, so a weight change fused into the\n    # UNet here travels\
+    \ into the swapped pipeline, while an ADAPTER registered\n    # on the pre-swap object\
+    \ would be registered on a pipeline nobody calls.\n    # fuse_lora bakes the delta into\
+    \ the UNet tensors; the swap then carries it\n    # by identity. The two orderings are\
+    \ opposite because the two mechanisms are.\n    lora_sha = \"none\"\n    if getattr(a,\
+    \ \"lora\", None):\n        lora_path = Path(a.lora)\n        if not lora_path.is_file():\n\
+    \            print(\"!! no such LoRA: %s\" % a.lora, file=sys.stderr)\n            return\
+    \ 16\n        # THE PEFT GATE, and it is copied from sample_lora.py because it already\n\
+    \        # cost this tree a run: diffusers 0.29.2 gates ALL LoRA loading behind\n    \
+    \    # USE_PEFT_BACKEND, peft was absent from both venvs on the box, and a\n        #\
+    \ training job spent twenty clean minutes and five checkpoints before\n        # dying\
+    \ in nine seconds on `PEFT backend is required for this method.`\n        # Checked BEFORE\
+    \ the 6.9 GB base load would have been better still; it is\n        # checked here, which\
+    \ is before the ControlNet and the adapter.\n        from diffusers.utils import USE_PEFT_BACKEND\n\
+    \        if not USE_PEFT_BACKEND:\n            print(\"!! diffusers has no PEFT backend,\
+    \ so load_lora_weights() \"\n                  \"cannot run.\\n   fix:  <this venv>/python.exe\
+    \ -m pip install \"\n                  \"--no-deps peft==0.12.0\\n   --no-deps is required\
+    \ -- a plain \"\n                  \"install may resolve torch away from 2.11.0+cu128\
+    \ and break \"\n                  \"every render on this card.\", file=sys.stderr)\n \
+    \           return 16\n        lora_sha = hashlib.sha256(lora_path.read_bytes()).hexdigest()\n\
+    \        if a.lora_sha256 and a.lora_sha256 != lora_sha:\n            print(\"!! LoRA\
+    \ sha256 mismatch -- refusing.\\n   want %s\\n   have %s\"\n                  % (a.lora_sha256,\
+    \ lora_sha), file=sys.stderr)\n            return 16\n        pipe.load_lora_weights(str(lora_path.parent.resolve()),\n\
+    \                               weight_name=lora_path.name)\n        pipe.fuse_lora(lora_scale=float(a.lora_weight))\n\
+    \        print(\"  LoRA %s fused at weight %.2f, sha %s\"\n              % (lora_path.name,\
+    \ float(a.lora_weight), lora_sha[:16]), flush=True)\n\n    kw = {}\n    if use_cn:\n \
+    \       cn_kw = {} if CONTROLNET_VARIANT is None else {\"variant\": CONTROLNET_VARIANT}\n\
+    \        cn = ControlNetModel.from_pretrained(\n            net, torch_dtype=torch.bfloat16,\
+    \ **cn_kw)\n        cn.to(\"cuda\")\n        # from_pipe swaps the class while REUSING\
+    \ the loaded modules, so one set\n        # of base weights serves both arms -- r8/r9's\
+    \ discipline.\n        if net2:\n            # A LIST, which StableDiffusionXLControlNetPipeline.__init__\
+    \ wraps\n            # into a MultiControlNetModel. `image` and\n            # `controlnet_conditioning_scale`\
+    \ then become per-net lists in the\n            # same order; control_guidance_start/end\
+    \ stay scalars and diffusers\n            # broadcasts them across the nets.\n       \
+    \     cn2 = ControlNetModel.from_pretrained(\n                net2, torch_dtype=torch.bfloat16,\
+    \ **cn_kw)\n            cn2.to(\"cuda\")\n            s2 = float(a.scale2) if getattr(a,\
+    \ \"scale2\", None) is not None \\\n                else float(a.scale)\n            pipe\
+    \ = AutoPipelineForText2Image.from_pipe(pipe, controlnet=[cn, cn2])\n            kw =\
+    \ {\"image\": [ctrl_img, ctrl2_img],\n                  \"controlnet_conditioning_scale\"\
+    : [float(a.scale), s2],\n                  \"control_guidance_start\": 0.0,\n        \
+    \          \"control_guidance_end\": 1.0}\n            print(\"  multi-controlnet: 2 nets,\
+    \ scales %s\"\n                  % kw[\"controlnet_conditioning_scale\"], flush=True)\n\
+    \        else:\n            pipe = AutoPipelineForText2Image.from_pipe(pipe, controlnet=cn)\n\
+    \            kw = {\"image\": ctrl_img,\n                  \"controlnet_conditioning_scale\"\
+    : float(a.scale),\n                  \"control_guidance_start\": 0.0,\n              \
+    \    \"control_guidance_end\": 1.0}\n\n    # ---- MASKED IP-ADAPTER, LOADED ONTO THE FINAL\
+    \ PIPELINE ----------------\n    # AFTER the from_pipe swap, deliberately. from_pipe rebuilds\
+    \ the class around\n    # the same modules, and an adapter registered on the pre-swap\
+    \ object is\n    # registered on a pipeline nobody is about to call.\n    if ip:\n   \
+    \     from diffusers.image_processor import IPAdapterMaskProcessor\n        from PIL import\
+    \ Image as _Image\n\n        pipe.load_ip_adapter(\n            ip[\"repo\"], subfolder=ip[\"\
+    subfolder\"], weight_name=ip[\"weight\"],\n            image_encoder_folder=ip[\"image_encoder_folder\"\
+    ])\n        # ONE adapter carrying N images, so the scale is ONE nested list of N --\n\
+    \        # the shape diffusers' own masking example uses, and the shape the attn\n   \
+    \     # processor demands: it asserts\n        # len(ip_adapter_masks) == len(self.scale)\
+    \ == len(ip_hidden_states),\n        # where len(self.scale) counts ADAPTERS (1) and each\
+    \ entry may itself be\n        # a per-image list.\n        pipe.set_ip_adapter_scale(ip[\"\
+    scale\"])\n        proc = IPAdapterMaskProcessor()\n        # The capsule masks were already\
+    \ rasterised during validation -- the very\n        # images the overlap guard checked\
+    \ are the images that condition the\n        # render, so there is no second rasterisation\
+    \ that could differ from the\n        # one that was proved disjoint.\n        raw_masks\
+    \ = (ip[\"mask_imgs\"] if ip[\"capsule_mode\"]\n                     else mask_images(ip[\"\
+    rects\"], a.width, a.height))\n        masks = proc.preprocess(raw_masks, height=a.height,\
+    \ width=a.width)\n        # The reshape is not cosmetic: each element of ip_adapter_masks\
+    \ must be\n        # a tensor of [1, num_images_for_this_adapter, h, w]. preprocess returns\n\
+    \        # [N, 1, h, w], so it is folded into a single [1, N, h, w] and wrapped in\n \
+    \       # a one-element list -- one entry for the one adapter.\n        masks = [masks.reshape(1,\
+    \ masks.shape[0], masks.shape[2], masks.shape[3])]\n        refs = [[_Image.open(p).convert(\"\
+    RGB\") for p in ip[\"paths\"]]]\n        kw[\"ip_adapter_image\"] = refs\n        kw[\"\
+    cross_attention_kwargs\"] = {\"ip_adapter_masks\": masks}\n        print(\"  ip-adapter:\
+    \ %s/%s, %d ref(s), scale %s, masks %s\"\n              % (ip[\"subfolder\"], ip[\"weight\"\
+    ], len(ip[\"paths\"]), ip[\"scale\"],\n                 ip[\"rects\"]), flush=True)\n\n\
+    \    g = torch.Generator(\"cuda\").manual_seed(a.seed)\n    t1 = datetime.datetime.now(datetime.timezone.utc)\n\
+    \    img = pipe(prompt=prompt, negative_prompt=negative,\n               width=a.width,\
+    \ height=a.height,\n               num_inference_steps=a.steps, guidance_scale=a.cfg,\n\
+    \               generator=g, **kw).images[0]\n    t2 = datetime.datetime.now(datetime.timezone.utc)\n\
+    \    img.save(out_png)\n\n    # A LOOSE COPY IS NOT A GIT CHECKOUT. When the driver is\
+    \ staged outside a\n    # checkout `git rev-parse` finds nothing and the sidecar would\
+    \ say\n    # `unknown`, which is the exact defect B01-R9-PLAN.md's stage 1 shipped --\n\
+    \    # so the caller passes the commit its copy was cut from.\n    rev = a.repo_commit\
+    \ or git_rev(root)\n    side = sidecar_lines(a, use_cn, ctrl_sha, rev, prompt, negative,\n\
+    \                         (t1 - t0).total_seconds(), (t2 - t1).total_seconds(),\n    \
+    \                     t2.strftime(\"%Y-%m-%dT%H:%M:%SZ\"), torch.__version__,\n      \
+    \                   ip=ip, ctrl2_sha=ctrl2_sha, lora_sha=lora_sha)\n    (out_dir / (\"\
+    %s-%s.png.meta.yaml\" % (a.task, a.arm))).write_text(\n        \"\\n\".join(side) + \"\
+    \\n\", encoding=\"utf-8\")\n\n    print(\"OK %s load=%.1fs render=%.1fs\"\n          %\
+    \ (out_png.name, (t1 - t0).total_seconds(), (t2 - t1).total_seconds()),\n          flush=True)\n\
+    \    print(\"rc=0\", flush=True)\n    return 0\n\n\ndef selftest():\n    \"\"\"Everything\
+    \ in this file that does not need a GPU. No torch, no weights.\"\"\"\n    import tempfile\n\
+    \    from PIL import Image\n    fails = []\n\n    def check(name, cond):\n        print((\"\
+    \  ok   \" if cond else \"  FAIL \") + name)\n        if not cond:\n            fails.append(name)\n\
+    \n    # The size guard is the one that keeps the authored geometry honest.\n    check(\"\
+    a control at the render size is accepted\",\n          check_control(Image.new(\"RGB\"\
+    , (W, H)), W, H))\n    try:\n        check_control(Image.new(\"RGB\", (768, 1024)), W,\
+    \ H)\n        check(\"a control at the WRONG size is refused\", False)\n    except ValueError:\n\
+    \        check(\"a control at the WRONG size is refused\", True)\n\n    with tempfile.TemporaryDirectory()\
+    \ as td:\n        p = Path(td) / \"p.txt\"\n        p.write_text(\"  a guard points at\
+    \ a goblin  \\n\", encoding=\"utf-8\")\n        check(\"a prompt file is read and stripped\"\
+    ,\n              read_text(p) == \"a guard points at a goblin\")\n        e = Path(td)\
+    \ / \"e.txt\"\n        e.write_text(\"   \\n\\n\", encoding=\"utf-8\")\n        try:\n\
+    \            read_text(e)\n            check(\"an EMPTY prompt file is refused\", False)\n\
+    \        except ValueError:\n            check(\"an EMPTY prompt file is refused\", True)\n\
+    \        # utf-8 by name, not by platform default -- the box is cp1252.\n        u = Path(td)\
+    \ / \"u.txt\"\n        u.write_text(\"arm’s length apart\", encoding=\"utf-8\")\n    \
+    \    check(\"utf-8 survives the read\", read_text(u).endswith(\"length apart\"))\n\n \
+    \       # The sidecar must name the control arm's conditioning honestly, and\n       \
+    \ # must NOT claim a ControlNet on the arm that had none.\n        ap = argparse.Namespace(\n\
+    \            task=\"t\", arm=\"hint\", width=W, height=H, steps=STEPS, cfg=CFG,\n    \
+    \        seed=1, scale=SCALE, control=\"c.png\", control_sha256=None,\n            root=None,\
+    \ repo_commit=\"abc\", out=td, prompt_file=str(p),\n            negative_file=str(p))\n\
+    \        s = \"\\n\".join(sidecar_lines(ap, True, \"deadbeef\", \"abc\", \"pos\", \"neg\"\
+    ,\n                                    1.0, 2.0, \"now\", \"2.4\"))\n        check(\"\
+    a control arm's sidecar names the net and its scale\",\n              CONTROLNET in s\
+    \ and \"controlnet_conditioning_scale: 0.8\" in s)\n        check(\"a control arm's sidecar\
+    \ carries the hint's sha\",\n              \"control_image_sha256: deadbeef\" in s)\n\
+    \        ap.arm = \"nocontrol\"\n        s0 = \"\\n\".join(sidecar_lines(ap, False, None,\
+    \ \"abc\", \"pos\", \"neg\",\n                                     1.0, 2.0, \"now\",\
+    \ \"2.4\"))\n        check(\"the nocontrol arm's sidecar claims NO controlnet\",\n   \
+    \           \"controlnet: none\" in s0 and CONTROLNET not in s0)\n        check(\"every\
+    \ sidecar says approved: false\", \"approved: false\" in s\n              and \"approved:\
+    \ false\" in s0)\n        check(\"cost is recorded and is zero\", \"cost_usd: 0\" in s0)\n\
+    \n        # ---- THE IP-ADAPTER FEATURE MAY NOT MOVE THE OLD PATHS -------------\n   \
+    \     # Rungs 1, 2, 4 and 5 have FILED VERDICTS resting on frames this file\n        #\
+    \ rendered, and their sidecars are the provenance those verdicts cite. So\n        # the\
+    \ no-IP sidecar is asserted BYTE-IDENTICAL to what it was before the\n        # feature\
+    \ landed, on a sha256 taken from the pre-change file at\n        # 80dc35dc -- not eyeballed,\
+    \ and not merely \"contains no ip_ lines\".\n        GOLDEN_CN = (\"de46c2b340256a9e866e5d6d80a1cd18\"\
+    \n                     \"9f5830e71bae379b3d44875c0feb4e3d\")\n        GOLDEN_NOCN = (\"\
+    4f057ef052a7ebb7d2312cca1dc7ef41\"\n                       \"e114bb3981cc1656205dbb767cb7f59f\"\
+    )\n        check(\"a control arm's sidecar is BYTE-IDENTICAL to the pre-IP-Adapter \"\n\
+    \              \"file's\", hashlib.sha256(s.encode()).hexdigest() == GOLDEN_CN)\n    \
+    \    check(\"the nocontrol arm's sidecar is BYTE-IDENTICAL to the \"\n              \"\
+    pre-IP-Adapter file's\",\n              hashlib.sha256(s0.encode()).hexdigest() == GOLDEN_NOCN)\n\
+    \        check(\"no ip_adapter line appears when no reference was passed\",\n        \
+    \      \"ip_adapter\" not in s and \"ip_adapter\" not in s0)\n\n        # And when one\
+    \ IS passed, the sidecar names every part of it, because a\n        # frame whose identity\
+    \ came from a reference and does not say so is a\n        # 7.2 provenance failure.\n\
+    \        ipm = {\"repo\": IP_REPO, \"licence\": IP_LICENCE, \"subfolder\": IP_SUBFOLDER,\n\
+    \               \"weight\": IP_WEIGHT,\n               \"image_encoder_folder\": IP_IMAGE_ENCODER_FOLDER,\n\
+    \               \"scale\": [[0.7, 0.7]], \"refs\": [\"g.png\", \"o.png\"],\n         \
+    \      \"ref_sha256\": [\"aa\", \"bb\"],\n               \"rects\": [(1, 2, 3, 4), (5,\
+    \ 6, 7, 8)]}\n        ap.arm = \"hint\"\n        si = \"\\n\".join(sidecar_lines(ap, True,\
+    \ \"deadbeef\", \"abc\", \"pos\", \"neg\",\n                                     1.0,\
+    \ 2.0, \"now\", \"2.4\", ip=ipm))\n        for needle in (IP_REPO, IP_WEIGHT, IP_IMAGE_ENCODER_FOLDER,\n\
+    \                       \"[[0.7, 0.7]]\", \"aa\", \"bb\", \"(1, 2, 3, 4)\"):\n       \
+    \     check(\"the IP sidecar records %r\" % needle, needle in si)\n        check(\"the\
+    \ IP sidecar still carries the ControlNet block too\",\n              CONTROLNET in si\
+    \ and \"controlnet_conditioning_scale\" in si)\n\n        # ---- THE ADAPTER ALLOWLIST\
+    \ -----------------------------------------\n        # The whole reason this table exists,\
+    \ asserted rather than commented:\n        # the two SDXL ViT-H adapters are indistinguishable\
+    \ by length, so the\n        # digest is the only separator and both must carry their\
+    \ own.\n        check(\"the default IP weight is in the allowlist\", IP_WEIGHT in IP_WEIGHTS)\n\
+    \        check(\"the FACE adapter is in the allowlist\",\n              \"ip-adapter-plus-face_sdxl_vit-h.safetensors\"\
+    \ in IP_WEIGHTS)\n        check(\"every allowlisted adapter carries a sha256 in its licence\
+    \ line\",\n              all(\"sha256 \" in v and len(v.split(\"sha256 \")[1].split(\"\
+    ,\")[0]\n                                          .split(\".\")[0].strip()) == 64\n \
+    \                 for v in IP_WEIGHTS.values()))\n        check(\"the two adapters' digests\
+    \ differ even though their sizes do not\",\n              len({v.split(\"sha256 \")[1][:64]\
+    \ for v in IP_WEIGHTS.values()})\n              == len(IP_WEIGHTS)\n              and\
+    \ all(\"847517512\" in v for v in IP_WEIGHTS.values()))\n        for wname, wlic in IP_WEIGHTS.items():\n\
+    \            sw = \"\\n\".join(sidecar_lines(\n                ap, True, \"deadbeef\"\
+    , \"abc\", \"pos\", \"neg\", 1.0, 2.0, \"now\",\n                \"2.4\", ip=dict(ipm,\
+    \ weight=wname, licence=wlic)))\n            check(\"the sidecar for %s names that weight\
+    \ and ITS OWN digest\"\n                  % wname, wname in sw and wlic.split(\"sha256\
+    \ \")[1][:64] in sw)\n\n        # ---- THE SECOND NET MAY NOT MOVE THE ONE-NET PATHS EITHER\
+    \ ----------\n        # Same discipline as the IP-Adapter's, same reason, and asserted\
+    \ against\n        # the SAME two golden shas: a fixture Namespace with no `controlnet2`\n\
+    \        # attribute at all must still produce the pre-existing bytes, because\n     \
+    \   # that is exactly the shape every caller before this feature had.\n        check(\"\
+    a one-net sidecar is STILL byte-identical with the multi-net \"\n              \"feature\
+    \ in the file\", hashlib.sha256(s.encode()).hexdigest()\n              == GOLDEN_CN)\n\
+    \        check(\"no controlnet_2 line appears when no second net was passed\",\n     \
+    \         \"controlnet_2\" not in s and \"controlnet_2\" not in s0\n              and\
+    \ \"controlnet_2\" not in si)\n\n        # And when one IS composed, every part of it\
+    \ is named -- a frame whose\n        # clipboard came from a second net and does not say\
+    \ so is a 7.2 failure.\n        _twins = r\"C:\\banyan-farm\\cnet-openpose-twins\"\n \
+    \       ap2n = argparse.Namespace(\n            task=\"t\", arm=\"hint\", width=W, height=H,\
+    \ steps=STEPS, cfg=CFG,\n            seed=1, scale=1.0, control=\"pose.png\", control_sha256=None,\n\
+    \            root=None, repo_commit=\"abc\", out=td, prompt_file=str(p),\n           \
+    \ negative_file=str(p), controlnet=_twins,\n            controlnet2=CONTROLNET, control2=\"\
+    board.png\", scale2=0.6)\n        s2 = \"\\n\".join(sidecar_lines(ap2n, True, \"deadbeef\"\
+    , \"abc\", \"pos\", \"neg\",\n                                     1.0, 2.0, \"now\",\
+    \ \"2.4\", ctrl2_sha=\"cafe\"))\n        for needle in (\"controlnet_2: %s\" % CONTROLNET,\n\
+    \                       \"controlnet_2_conditioning_scale: 0.6\",\n                  \
+    \     \"control_2_image: board.png\",\n                       \"control_2_image_sha256:\
+    \ cafe\",\n                       \"MultiControlNetModel\",\n                       \"\
+    author_b08_board_hint.py\"):\n            check(\"the multi-net sidecar records %r\" %\
+    \ needle, needle in s2)\n        check(\"the multi-net sidecar still names the FIRST net\
+    \ and its scale\",\n              _twins in s2 and \"controlnet_conditioning_scale: 1.0\"\
+    \ in s2)\n        check(\"each net's own licence travels with its own name\",\n      \
+    \        CONTROLNETS[_twins] in s2 and CONTROLNETS[CONTROLNET] in s2)\n        # scale2\
+    \ omitted must fall back to scale, not to None or to a default.\n        ap2n.scale2 =\
+    \ None\n        s3 = \"\\n\".join(sidecar_lines(ap2n, True, \"deadbeef\", \"abc\", \"\
+    pos\", \"neg\",\n                                     1.0, 2.0, \"now\", \"2.4\", ctrl2_sha=\"\
+    cafe\"))\n        # Scoped to the line itself. A first version grepped the whole block\
+    \ for\n        # \"None\" and tripped on `controlnet_variant: None`, which is a correct\n\
+    \        # and deliberate line -- a check that fires on an unrelated truth is a\n    \
+    \    # check that will be silenced.\n        check(\"an omitted --scale2 is recorded as\
+    \ the FIRST net's scale, never \"\n              \"as None\", \"controlnet_2_conditioning_scale:\
+    \ 1.0\" in s3\n              and \"controlnet_2_conditioning_scale: None\" not in s3)\n\
+    \n    # The token guard, against a stand-in with CLIP's shape. The real tokenizer\n  \
+    \  # is only on the box; what is testable here is that the arithmetic refuses\n    # an\
+    \ overflow and passes a fit, and that it reads the limit off the\n    # tokenizer rather\
+    \ than hardcoding one.\n    class _Tok:\n        model_max_length = 77\n\n        def\
+    \ __init__(self, n):\n            self.n = n\n\n        def __call__(self, text):\n  \
+    \          return {\"input_ids\": list(range(self.n))}\n\n    over, n, limit = token_overflow(\"\
+    x\", _Tok(90))\n    check(\"a prompt past 77 tokens reports its overflow\", (over, n,\
+    \ limit) == (13, 90, 77))\n    check(\"a prompt that fits reports no overflow\", token_overflow(\"\
+    x\", _Tok(68))[0] == 0)\n    check(\"exactly at the limit is not an overflow\", token_overflow(\"\
+    x\", _Tok(77))[0] == 0)\n\n    class _Tok88(_Tok):\n        model_max_length = 88\n  \
+    \  check(\"the limit is read off the tokenizer, not hardcoded\",\n          token_overflow(\"\
+    x\", _Tok88(80))[0] == 0)\n\n    # ---- THE CONTROLNET ALLOWLIST -----------------------------------------\n\
+    \    # The licence has to travel WITH the name, or a net swap records the wrong\n    #\
+    \ terms on every frame it renders.\n    check(\"the default net is in the allowlist\"\
+    , CONTROLNET in CONTROLNETS)\n    check(\"the allowlist's entry for the default net IS\
+    \ the default licence\",\n          CONTROLNETS[CONTROLNET] == CONTROLNET_LICENCE)\n \
+    \   check(\"the openpose net is in the allowlist\",\n          \"xinsir/controlnet-openpose-sdxl-1.0\"\
+    \ in CONTROLNETS)\n    check(\"every allowlisted net is apache-2.0 -- no attribution condition\
+    \ and \"\n          \"no inherited non-commercial terms\",\n          all(v.startswith(\"\
+    apache-2.0\") for v in CONTROLNETS.values()))\n    # The twins entry is a PATH, so its\
+    \ licence string is the only place a reader\n    # can learn what it is. Assert it says\
+    \ so, or the guard passes a net whose\n    # provenance block names a directory on one\
+    \ machine and nothing else.\n    _twins = r\"C:\\banyan-farm\\cnet-openpose-twins\"\n\
+    \    check(\"the twins variant dir is allowlisted\", _twins in CONTROLNETS)\n    check(\"\
+    the twins entry names its upstream repo, variant blob and digest\",\n          all(s in\
+    \ CONTROLNETS[_twins] for s in\n              (\"xinsir/controlnet-openpose-sdxl-1.0\"\
+    ,\n               \"diffusion_pytorch_model_twins.safetensors\",\n               \"54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4\"\
+    )))\n    for hazard in (\"thibaud/controlnet-openpose-sdxl-1.0\",\n                  \
+    \ \"TheMistoAI/MistoLine\",\n                   \"xinsir/controlnet-union-sdxl-1.0\",\n\
+    \                   \"lllyasviel/Annotators\"):\n        check(\"%s is NOT allowlisted\"\
+    \ % hazard, hazard not in CONTROLNETS)\n    # The sidecar must name whatever net was passed,\
+    \ with THAT net's licence.\n    ap2 = argparse.Namespace(\n        task=\"t\", arm=\"\
+    hint\", width=W, height=H, steps=STEPS, cfg=CFG, seed=1,\n        scale=SCALE, control=\"\
+    c.png\", control_sha256=None, root=None,\n        repo_commit=\"abc\", out=\".\", prompt_file=\"\
+    p\", negative_file=\"n\",\n        controlnet=\"xinsir/controlnet-openpose-sdxl-1.0\"\
+    )\n    sp = \"\\n\".join(sidecar_lines(ap2, True, \"dead\", \"abc\", \"p\", \"n\", 1.0,\
+    \ 2.0,\n                                 \"now\", \"2.4\"))\n    check(\"a pose-net sidecar\
+    \ names the POSE net and not the scribble one\",\n          \"controlnet: xinsir/controlnet-openpose-sdxl-1.0\"\
+    \ in sp\n          and CONTROLNET not in sp)\n    check(\"a pose-net sidecar carries the\
+    \ pose net's own licence line\",\n          \"no annotator is used\" in sp)\n\n    # ----\
+    \ THE LoRA ARM. Added 2026-08-22 for the jerry v2 pose-adoption bar.\n    #\n    # THE\
+    \ FIRST CLAUSE IS THE ONE THAT MATTERS AND IT IS A NON-CHANGE CLAUSE.\n    # Six b08/b17\
+    \ verdicts and the whole casting ladder cite sidecars this\n    # function wrote; if adding\
+    \ a flag moved one byte of a no-LoRA sidecar, every\n    # one of them would stop being\
+    \ reproducible. `ap2` above has no `lora`\n    # attribute at all -- it is the pre-change\
+    \ namespace -- and its block must\n    # come back with no lora line in it.\n    check(\"\
+    a sidecar from a caller that predates --lora carries NO lora line\",\n          \"lora\"\
+    \ not in sp)\n    ap_l = argparse.Namespace(\n        task=\"t\", arm=\"hint\", width=W,\
+    \ height=H, steps=STEPS, cfg=CFG, seed=1,\n        scale=SCALE, control=\"c.png\", control_sha256=None,\
+    \ root=None,\n        repo_commit=\"abc\", out=\".\", prompt_file=\"p\", negative_file=\"\
+    n\",\n        controlnet=\"xinsir/controlnet-openpose-sdxl-1.0\",\n        lora=r\"C:\\\
+    banyan-farm\\loras\\bnyjerry-sdxl-v2.safetensors\",\n        lora_weight=0.8)\n    spl\
+    \ = \"\\n\".join(sidecar_lines(ap_l, True, \"dead\", \"abc\", \"p\", \"n\", 1.0, 2.0,\n\
+    \                                   \"now\", \"2.4\", lora_sha=\"f\" * 64))\n    check(\"\
+    a LoRA sidecar names the weights file\",\n          \"bnyjerry-sdxl-v2.safetensors\" in\
+    \ spl)\n    check(\"a LoRA sidecar carries the sha256 of the bytes that drew the frame\"\
+    ,\n          \"lora_sha256: \" + \"f\" * 64 in spl)\n    check(\"a LoRA sidecar records\
+    \ the weight it was fused at\",\n          \"lora_weight: 0.8\" in spl)\n    check(\"\
+    a LoRA sidecar records the fuse-before-swap ordering\",\n          \"lora_fused_before_controlnet_swap:\
+    \ true\" in spl)\n    check(\"the LoRA block does not disturb the controlnet block\",\n\
+    \          \"controlnet: xinsir/controlnet-openpose-sdxl-1.0\" in spl)\n    # AND THE\
+    \ UNMEASURED CASE IS NAMED RATHER THAN BLANK. A sidecar that says\n    # `lora_sha256:`\
+    \ with nothing after it reads as \"no hash exists\"; it must say\n    # that a hash was\
+    \ not taken, which is a different and reportable fact.\n    spu = \"\\n\".join(sidecar_lines(ap_l,\
+    \ True, \"dead\", \"abc\", \"p\", \"n\", 1.0, 2.0,\n                                 \
+    \  \"now\", \"2.4\"))\n    check(\"a LoRA sidecar with no measured sha says so in words\"\
+    ,\n          \"lora_sha256: unmeasured\" in spu)\n\n    # ---- THE MASK GRAMMAR -------------------------------------------------\n\
+    \    check(\"a rect parses to four ints in render pixels\",\n          parse_rect(\" 10,\
+    \ 20 ,30,40 \", W, H) == (10, 20, 30, 40))\n    check(\"a float rect rounds rather than\
+    \ truncating\",\n          parse_rect(\"10.6,20,30,40\", W, H) == (11, 20, 30, 40))\n\
+    \    for bad in (\"1,2,3\", \"1,2,3,4,5\", \"a,2,3,4\", \"30,20,10,40\", \"10,40,30,20\"\
+    ,\n                \"10,20,10,40\", \"-1,0,10,20\", \"0,0,%d,20\" % (W + 1),\n       \
+    \         \"0,0,20,%d\" % (H + 1)):\n        try:\n            parse_rect(bad, W, H)\n\
+    \            check(\"refuses rect %r\" % bad, False)\n        except ValueError:\n   \
+    \         check(\"refuses rect %r\" % bad, True)\n    check(\"a rect filling the frame\
+    \ exactly is accepted\",\n          parse_rect(\"0,0,%d,%d\" % (W, H), W, H) == (0, 0,\
+    \ W, H))\n\n    # Overlap is the failure that would look like the MECHANISM failing.\n\
+    \    check(\"adjacent rects sharing an edge do NOT overlap\",\n          not rects_overlap((0,\
+    \ 0, 10, 10), (10, 0, 20, 10)))\n    check(\"rects sharing one pixel DO overlap\",\n \
+    \         rects_overlap((0, 0, 11, 10), (10, 0, 20, 10)))\n    check(\"stacked rects sharing\
+    \ a row overlap\",\n          rects_overlap((0, 0, 10, 11), (0, 10, 10, 20)))\n    check(\"\
+    disjoint rects do not overlap\",\n          not rects_overlap((0, 0, 10, 10), (50, 50,\
+    \ 60, 60)))\n\n    # And the drawn mask has to be the rect, at the render size, or the\
+    \ region\n    # the model is conditioned on is not the region that was specified.\n  \
+    \  ms = mask_images([(100, 200, 300, 500)], W, H)\n    check(\"one mask per rect, at the\
+    \ render size\",\n          len(ms) == 1 and ms[0].size == (W, H) and ms[0].mode == \"\
+    L\")\n    px = ms[0].load()\n    check(\"the mask is white INSIDE the rect\", px[100,\
+    \ 200] == 255\n          and px[299, 499] == 255 and px[200, 350] == 255)\n    check(\"\
+    the mask is black OUTSIDE the rect\", px[99, 200] == 0\n          and px[300, 499] ==\
+    \ 0 and px[100, 199] == 0 and px[0, 0] == 0)\n    lit = sum(ms[0].histogram()[128:])\n\
+    \    check(\"the mask's lit area is exactly the rect's (%d px)\" % lit,\n          lit\
+    \ == (300 - 100) * (500 - 200))\n\n    # ---- CAPSULE MASKS ----------------------------------------------------\n\
+    \    # The path that exists because ep2-b08-twins-sample-0819's two figures\n    # interleave.\
+    \ Every check below is either a refusal or the interleaving case\n    # itself, in that\
+    \ frame's own measured coordinates.\n    for bad in (\"1,2,3,4\", \"1,2,3,4,5,6\", \"\
+    a,2,3,4,5\", \"1,2,3,4,0\",\n                \"1,2,3,4,-5\", \"\"):\n        _bad = bad\n\
+    \        try:\n            parse_capsules(_bad, W, H)\n            check(\"refuses capsule\
+    \ %r\" % _bad, False)\n        except ValueError:\n            check(\"refuses capsule\
+    \ %r\" % _bad, True)\n    cps = parse_capsules(\"10,10,100,10,5 ; 100,10,100,90,5\", W,\
+    \ H)\n    check(\"a two-capsule chain parses\", len(cps) == 2 and cps[1][4] == 5.0)\n\
+    \    cm = capsule_mask([(50, 60, 250, 60, 12)], W, H)\n    check(\"a capsule is lit ON\
+    \ its segment\", cm.getpixel((150, 60)) == 255)\n    check(\"a capsule is lit at its ROUND\
+    \ CAP beyond the endpoint\",\n          cm.getpixel((258, 60)) == 255)\n    check(\"a\
+    \ capsule is dark well away from its segment\",\n          cm.getpixel((150, 200)) ==\
+    \ 0)\n\n    # THE TEST CASE, IN beat 08's OWN AUTHORED COORDINATES rather than in numbers\n\
+    \    # invented here: the guard's forearm runs Relb (360.0,484.9) -> Rwri\n    # (257.4,657.3)\
+    \ and the goblin's near arm hangs Lsho (222.5,550.8) -> Lelb\n    # (237.1,762.4). Her\
+    \ wrist is 27.6 px from his arm at that height, so their\n    # BOUNDING BOXES overlap\
+    \ in x while their ink does not. Two rectangles cannot\n    # express that; two capsules\
+    \ at the measured r=12 can, and r=14 collides.\n    guard_arm = capsule_mask([(360.0,\
+    \ 484.9, 257.4, 657.3, 12)], W, H)\n    goblin_arm = capsule_mask([(222.5, 550.8, 237.1,\
+    \ 762.4, 12)], W, H)\n    gb_a, gb_b = guard_arm.getbbox(), goblin_arm.getbbox()\n   \
+    \ boxes_overlap = rects_overlap(gb_a, gb_b)\n    check(\"the interleaved limbs' BOUNDING\
+    \ BOXES do overlap (so rects would be \"\n          \"refused, which is the whole reason\
+    \ this path exists)\", boxes_overlap)\n    check(\"the interleaved limbs' LIT PIXELS do\
+    \ not overlap, so capsules pass\",\n          not masks_overlap(guard_arm, goblin_arm))\n\
+    \    # and the guard rule is not merely loosened -- ink that really touches is\n    #\
+    \ still refused. Same two limbs, radius raised past the measured 13 px\n    # ceiling:\
+    \ 12 passes, 14 collides, and that is the clearance being real\n    # rather than lucky.\n\
+    \    check(\"the same two limbs at r=14 DO share ink, so r=12 is a measured \"\n     \
+    \     \"clearance and not a lucky one\",\n          masks_overlap(capsule_mask([(360.0,\
+    \ 484.9, 257.4, 657.3, 14)], W, H),\n                        capsule_mask([(222.5, 550.8,\
+    \ 237.1, 762.4, 14)], W, H)))\n    crossing = capsule_mask([(240, 660, 240, 900, 18)],\
+    \ W, H)\n    check(\"capsule masks that really share ink ARE refused\",\n          masks_overlap(guard_arm,\
+    \ crossing))\n    check(\"a capsule mask does not light the whole frame\",\n         \
+    \ sum(guard_arm.point(lambda v: 1 if v else 0)\n              .getdata()) < W * H // 4)\n\
+    \n    # A peer lane measured --image-crf 33 destroying i2v conditioning on\n    # 2026-08-19\
+    \ (crf 10 holds identity). Nothing here encodes video, and this\n    # asserts it as code\
+    \ rather than as a promise in the docstring: no flag and\n    # no keyword in this file\
+    \ is named crf, so no motion recipe's default can be\n    # inherited by copy-paste without\
+    \ the assertion going red.\n    # The needles are assembled at runtime rather than written\
+    \ out: spelled\n    # literally, this check finds ITSELF in the source and fails a clean\
+    \ file.\n    src = Path(__file__).read_text(encoding=\"utf-8\").lower()\n    stem = \"\
+    c\" + \"rf\"\n    check(\"no argument or keyword in this file is named crf\",\n      \
+    \    not any(n in src for n in (stem + \"=\", \"-\" + stem + '\"',\n                 \
+    \                    \"-\" + stem + \"'\", \"_\" + stem)))\n\n    print((\"SELFTEST FAIL:\
+    \ %d\" % len(fails)) if fails else \"SELFTEST PASS\")\n    return 1 if fails else 0\n\n\
+    \ndef main():\n    ap = argparse.ArgumentParser(description=\"text2img plate, optional\
+    \ scribble control\")\n    ap.add_argument(\"--arm\", default=None,\n                \
+    \    help=\"arm name; 'nocontrol' renders WITHOUT the ControlNet\")\n    ap.add_argument(\"\
+    --task\", default=None, help=\"task id; names the output png\")\n    ap.add_argument(\"\
+    --control\", default=None, help=\"hint PNG (abs, or repo-relative)\")\n    ap.add_argument(\"\
+    --control-sha256\", default=None,\n                    help=\"assert the hint's bytes;\
+    \ a staged copy is not a checkout\")\n    ap.add_argument(\"--prompt-file\", default=None)\n\
+    \    ap.add_argument(\"--negative-file\", default=None)\n    ap.add_argument(\"--out\"\
+    , default=None, help=\"output DIRECTORY (absolute)\")\n    ap.add_argument(\"--root\"\
+    , default=None)\n    # ---- THE SECOND NET, AND WHY IT IS A SEPARATE FLAG RATHER THAN\
+    \ A\n    # ---- REPEATABLE ONE.\n    # The obvious design is `action=\"append\"` on --controlnet/--control/--scale.\n\
+    \    # It was not taken, for a reason that is about EVIDENCE and not taste:\n    # `--scale`\
+    \ is `type=float` and `sidecar_lines` interpolates it directly, so\n    # making it repeatable\
+    \ turns `controlnet_conditioning_scale: 0.8` into\n    # `[0.8]` in EVERY sidecar this\
+    \ file has ever written -- and six filed\n    # verdicts cite those sidecars as their\
+    \ provenance. selftest() pins two of\n    # them to sha256 for exactly that reason. A\
+    \ second, separate flag cannot\n    # perturb the one-net path by construction: when it\
+    \ is absent, every byte\n    # downstream is what it was. That is the same shape the masked\
+    \ IP-Adapter\n    # was added in, and the same reason.\n    # A THIRD net would justify\
+    \ the repeatable rewrite. Two does not.\n    ap.add_argument(\"--controlnet2\", default=None,\n\
+    \                    help=\"a SECOND ControlNet, composed with --controlnet as a \"\n\
+    \                         \"MultiControlNetModel. Allowlisted like the first. The \"\n\
+    \                         \"openpose+scribble composition beat 08 needs: a pose \"\n \
+    \                        \"hint cannot carry an object, because COCO-18's \"\n       \
+    \                  \"eighteen keypoints are all body parts\")\n    ap.add_argument(\"\
+    --control2\", default=None,\n                    help=\"the SECOND hint PNG, for --controlnet2\"\
+    )\n    ap.add_argument(\"--control2-sha256\", default=None,\n                    help=\"\
+    pin for the second hint, same guard as --control-sha256\")\n    ap.add_argument(\"--scale2\"\
+    , type=float, default=None,\n                    help=\"conditioning scale for the second\
+    \ net (defaults to \"\n                         \"--scale when omitted)\")\n    ap.add_argument(\"\
+    --controlnet\", default=CONTROLNET,\n                    help=\"ControlNet repo id; must\
+    \ be in the CONTROLNETS \"\n                         \"allowlist, which carries each net's\
+    \ licence\")\n    ap.add_argument(\"--scale\", type=float, default=SCALE)\n    ap.add_argument(\"\
+    --seed\", type=int, default=None)\n    ap.add_argument(\"--steps\", type=int, default=STEPS)\n\
+    \    ap.add_argument(\"--cfg\", type=float, default=CFG)\n    ap.add_argument(\"--width\"\
+    , type=int, default=W)\n    ap.add_argument(\"--height\", type=int, default=H)\n    ap.add_argument(\"\
+    --repo-commit\", default=None,\n                    help=\"commit this driver was cut\
+    \ from; required when it runs \"\n                         \"as a loose copy outside a\
+    \ checkout, or the sidecar \"\n                         \"records repo_commit: unknown\"\
+    )\n    # ---- masked IP-Adapter (2026-08-19). Omit them all and every path above\n   \
+    \ # behaves exactly as it did for rungs 1-5; selftest asserts that on a sha.\n    ap.add_argument(\"\
+    --ip-ref\", action=\"append\", default=[],\n                    help=\"identity reference\
+    \ image, once per figure (abs, or \"\n                         \"repo-relative). Each\
+    \ one needs its own --ip-mask\")\n    ap.add_argument(\"--ip-mask\", action=\"append\"\
+    , default=[],\n                    help=\"x0,y0,x1,y1 in RENDER pixels for the matching\
+    \ \"\n                         \"--ip-ref. Rects may not overlap\")\n    ap.add_argument(\"\
+    --ip-mask-capsules\", action=\"append\", default=[],\n                    metavar=\"X0,Y0,X1,Y1,R;...\"\
+    ,\n                    help=\"ALTERNATIVE to --ip-mask, one per --ip-ref: a mask \"\n\
+    \                         \"built as the union of dilated limb segments. Use when \"\n\
+    \                         \"the figures INTERLEAVE and no pair of rectangles can \"\n\
+    \                         \"separate them. Bounding boxes may overlap; lit pixels \"\n\
+    \                         \"may not. Rects remain the default path.\")\n    ap.add_argument(\"\
+    --ip-ref-sha256\", action=\"append\", default=[],\n                    help=\"assert each\
+    \ reference's bytes, in --ip-ref order\")\n    ap.add_argument(\"--ip-scale\", type=float,\
+    \ default=IP_SCALE)\n    ap.add_argument(\"--ip-repo\", default=IP_REPO)\n    ap.add_argument(\"\
+    --ip-subfolder\", default=IP_SUBFOLDER)\n    ap.add_argument(\"--ip-weight\", default=IP_WEIGHT)\n\
+    \    ap.add_argument(\"--ip-image-encoder-folder\", default=IP_IMAGE_ENCODER_FOLDER,\n\
+    \                    help=\"MUST contain a slash to be read as a full path; the \"\n \
+    \                        \"slashless default resolves under --ip-subfolder, where \"\n\
+    \                         \"the box cache has no encoder at all\")\n    ap.add_argument(\"\
+    --allow-truncation\", action=\"store_true\",\n                    help=\"render even though\
+    \ CLIP will drop the tail; the tail is \"\n                         \"the style anchor,\
+    \ so this is almost never what you want\")\n    # ---- THE CHARACTER LoRA ARM ----------------------------------------\n\
+    \    # Absent by default, so every existing caller of this driver behaves\n    # exactly\
+    \ as it did before -- selftest asserts that on a sha.\n    ap.add_argument(\"--lora\"\
+    , default=None,\n                    help=\"a character LoRA .safetensors, fused into\
+    \ the UNet \"\n                         \"BEFORE the ControlNet swap. Its whole reason\
+    \ is the \"\n                         \"pose-adoption bar: goblin-i2i-route-0822.md section\
+    \ 4 \"\n                         \"claims a LoRA and a skeleton can both act at strength\
+    \ \"\n                         \"1.0 because no init competes with them, and until this\
+    \ \"\n                         \"flag there was no way to test that claim -- \"\n    \
+    \                     \"sample_lora.py takes no hint and this file took no \"\n      \
+    \                   \"LoRA.\")\n    ap.add_argument(\"--lora-weight\", type=float, default=0.8,\n\
+    \                    help=\"lora_scale at fuse time\")\n    ap.add_argument(\"--lora-sha256\"\
+    , default=None,\n                    help=\"pin for --lora; refused on mismatch (rc 16).\
+    \ A \"\n                         \"checkpoint directory holds five epochs with names one\
+    \ \"\n                         \"character apart and the sidecar has to name the bytes\
+    \ \"\n                         \"that actually drew the frame.\")\n    ap.add_argument(\"\
+    --selftest\", action=\"store_true\")\n    a = ap.parse_args()\n\n    if a.selftest:\n\
+    \        return selftest()\n    missing = [f for f, v in ((\"--arm\", a.arm), (\"--task\"\
+    , a.task),\n                              (\"--out\", a.out), (\"--prompt-file\", a.prompt_file),\n\
+    \                              (\"--negative-file\", a.negative_file),\n             \
+    \                 (\"--seed\", a.seed)) if v in (None, \"\")]\n    if missing:\n     \
+    \   ap.error(\"required: %s\" % \", \".join(missing))\n    return render(a)\n\n\nif __name__\
+    \ == \"__main__\":\n    sys.exit(main())\n"
+  C:\banyan-farm\lora-jerry-v2-b2r3-0822\sample_lora.py: "#!/usr/bin/env python3\n\"\"\"Draw\
+    \ ONE frame from a trained character LoRA, in the renderer that ships plates.\n\n    <venv>/python.exe\
+    \ pipeline/lora/sample_lora.py \\\n        --lora out/bnyjerry-sdxl-v1.safetensors --lora-weight\
+    \ 0.8 \\\n        --prompt \"bnyjerry, 1boy, solo, standing, ...\" \\\n        --out SAMPLE-bnyjerry-standing-dusk.png\n\
+    \nWHY THIS FILE EXISTS RATHER THAN A FLAG ON still_local.py. still_local.py's CLI\nis\
+    \ `genome node --beat N` -- it resolves a prompt out of a beat's shot board and\nis wired\
+    \ to MPS/float32 for the Mac loop. Nothing in it takes a free prompt, a\nLoRA, or an output\
+    \ path, and bending it into taking all three would put a\ntraining-only concern into the\
+    \ path that renders episodes. This is ~90 lines\nthat does the one thing.\n\nIT RUNS IN\
+    \ THE RENDER VENV, NOT venv-lora, and that is deliberate. The plates we\nship are drawn\
+    \ by `C:\\\\banyan-farm\\\\venv` (torch 2.11.0+cu128, diffusers 0.29.2)\nat bfloat16 on\
+    \ CUDA. Sampling anywhere else measures a LoRA in an environment\nthat will never draw\
+    \ a frame for the show. It also keeps the training venv's\ndependency set out of the answer\
+    \ -- whatever diffusers version sd-scripts pins\nis irrelevant to whether the weights\
+    \ work where we need them to.\n\nbfloat16 and a CPU-seeded generator match render_wave_sample.py\
+    \ exactly\n(pipeline/render_wave_sample.py:236,243). This matters more than it looks:\
+    \ the\nMac and this box were measured on 2026-08-16 to disagree by MAE 61 of 255 on\n\
+    byte-identical inputs at an identical seed, so a sample drawn under different\ndtype or\
+    \ device conventions is not comparable to the plates it is judged\nagainst.\n\nWrites\
+    \ a §7.2 sidecar beside the PNG naming the LoRA file and its sha256, so a\nframe can always\
+    \ be traced to the exact weights that drew it.\n\"\"\"\n\nimport argparse\nimport hashlib\n\
+    import os\nimport sys\n\nBASE = \"cagliostrolab/animagine-xl-3.1\"\n\n\ndef main():\n\
+    \    ap = argparse.ArgumentParser()\n    ap.add_argument(\"--lora\", required=True, help=\"\
+    path to the .safetensors LoRA\")\n    ap.add_argument(\"--lora-weight\", type=float, default=0.8)\n\
+    \    ap.add_argument(\"--prompt\", required=True)\n    ap.add_argument(\"--negative\"\
+    , default=\"\")\n    ap.add_argument(\"--width\", type=int, default=832)\n    ap.add_argument(\"\
+    --height\", type=int, default=1216)\n    ap.add_argument(\"--steps\", type=int, default=40)\n\
+    \    ap.add_argument(\"--guidance\", type=float, default=7.5)\n    ap.add_argument(\"\
+    --seed\", type=int, default=20260820)\n    ap.add_argument(\"--out\", required=True)\n\
+    \    ap.add_argument(\"--no-lora\", action=\"store_true\",\n                    help=\"\
+    draw the SAME prompt+seed with no LoRA loaded -- the B side \"\n                     \
+    \    \"of the no-regression bar. The pair is the evidence; either \"\n               \
+    \          \"frame alone proves nothing.\")\n    args = ap.parse_args()\n\n    import\
+    \ torch\n    from diffusers import StableDiffusionXLPipeline\n\n    if not args.no_lora\
+    \ and not os.path.exists(args.lora):\n        sys.exit(\"no such LoRA: %s\" % args.lora)\n\
+    \n    # THE PEFT GATE, ADDED 2026-08-22 AFTER IT COST A RUN. This file was written\n \
+    \   # on 2026-08-20 and committed without ever being executed; the first time it\n   \
+    \ # ran was the sapling training job, which trained for twenty clean minutes,\n    # wrote\
+    \ five checkpoints, and then died in nine seconds inside diffusers with\n    # `ValueError:\
+    \ PEFT backend is required for this method.` diffusers 0.29.2\n    # gates ALL LoRA loading\
+    \ behind USE_PEFT_BACKEND, which is False unless peft\n    # is installed -- and it was\
+    \ not, in either venv on the box.\n    #\n    # Checking it BEFORE the 6.9 GB checkpoint\
+    \ load turns a nine-second waste at\n    # the end of an hour into a one-second refusal\
+    \ at the start, and the message\n    # carries the exact fix instead of a stack trace.\
+    \ `--no-deps` is not\n    # decoration: the render venv is what draws every plate the\
+    \ show ships, and\n    # SETUP.md's standing warning is that a careless pip resolve on\
+    \ this sm_120\n    # card silently replaces torch with a build that has no Blackwell kernels.\n\
+    \    # peft's own requirements are all already present, so --no-deps installs one\n  \
+    \  # pure-python package and moves nothing else. Verified 2026-08-22: pip freeze\n   \
+    \ # differed by exactly one line and torch stayed 2.11.0+cu128.\n    from diffusers.utils\
+    \ import USE_PEFT_BACKEND\n    if not args.no_lora and not USE_PEFT_BACKEND:\n       \
+    \ sys.exit(\n            \"diffusers has no PEFT backend, so load_lora_weights() cannot\
+    \ run and\\n\"\n            \"every LoRA sample would fail AFTER loading the base checkpoint.\\\
+    n\"\n            \"  fix:  <this venv>/python.exe -m pip install --no-deps peft==0.12.0\\\
+    n\"\n            \"  then: re-run. --no-deps is required -- a plain install may resolve\\\
+    n\"\n            \"        torch away from 2.11.0+cu128 and break every render on the\
+    \ box.\")\n\n    pipe = StableDiffusionXLPipeline.from_pretrained(\n        BASE, torch_dtype=torch.bfloat16,\
+    \ use_safetensors=True)\n    pipe.to(\"cuda\")\n\n    lora_sha = \"none\"\n    if not\
+    \ args.no_lora:\n        with open(args.lora, \"rb\") as fh:\n            lora_sha = hashlib.sha256(fh.read()).hexdigest()\n\
+    \        # kohya-format LoRAs load through the same entry point; diffusers\n        #\
+    \ converts the key naming on the way in.\n        pipe.load_lora_weights(os.path.dirname(os.path.abspath(args.lora)),\n\
+    \                               weight_name=os.path.basename(args.lora))\n        pipe.fuse_lora(lora_scale=args.lora_weight)\n\
+    \n    gen = torch.Generator(device=\"cpu\").manual_seed(args.seed)\n    image = pipe(\n\
+    \        prompt=args.prompt,\n        negative_prompt=args.negative or None,\n       \
+    \ width=args.width, height=args.height,\n        num_inference_steps=args.steps,\n   \
+    \     guidance_scale=args.guidance,\n        generator=gen,\n    ).images[0]\n\n    os.makedirs(os.path.dirname(os.path.abspath(args.out)),\
+    \ exist_ok=True)\n    image.save(args.out)\n\n    with open(args.out, \"rb\") as fh:\n\
+    \        png_sha = hashlib.sha256(fh.read()).hexdigest()\n    with open(args.out + \"\
+    .meta.yaml\", \"w\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(\n\
+    \            'platform: \"local-gpu (rtx5090, CUDA, bfloat16)\"\\n'\n            'model:\
+    \ \"%s\"\\n'\n            'model_licence: \"CreativeML Open RAIL++-M (use restrictions\
+    \ travel; D15)\"\\n'\n            'lora: \"%s\"\\n'\n            'lora_sha256: \"%s\"\\\
+    n'\n            'lora_weight: %s\\n'\n            'cost_usd: 0.0\\n'\n            'size:\
+    \ \"%dx%d\"\\n'\n            'steps: %d\\n'\n            'guidance: %s\\n'\n         \
+    \   'seed: %d\\n'\n            'png_sha256: \"%s\"\\n'\n            'prompt: \"%s\"\\\
+    n'\n            'negative_prompt: \"%s\"\\n'\n            'approved: false\\n'\n     \
+    \       'provisional: true\\n'\n            'founder_verdict: null\\n'\n            'scored:\
+    \ false\\n'\n            % (BASE,\n               \"none\" if args.no_lora else os.path.basename(args.lora),\n\
+    \               lora_sha, args.lora_weight,\n               args.width, args.height, args.steps,\
+    \ args.guidance, args.seed,\n               png_sha,\n               args.prompt.replace('\"\
+    ', \"'\"),\n               args.negative.replace('\"', \"'\")))\n\n    print(\"wrote\"\
+    , args.out)\n    print(\"  lora=%s weight=%s seed=%d\" %\n          (\"none\" if args.no_lora\
+    \ else os.path.basename(args.lora),\n           args.lora_weight, args.seed))\n    return\
+    \ 0\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n"
+  C:\banyan-farm\lora-jerry-v2-b2r3-0822\b2-prompt.txt: bnyjerry, 1boy, solo, in tall grass,
+    detailed cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\lora-jerry-v2-b2r3-0822\negative.txt: lowres, worst quality, low quality,
+    text, watermark, photorealism, 3d render, blurry, 2boys, multiple heads
+  C:\banyan-farm\lora-jerry-v2-b2r3-0822\fetch_hints.py: "#!/usr/bin/env python3\n\"\"\"Fetch\
+    \ the three authored OpenPose skeletons, each by sha256.\n\nThey are `jerry_canon_0821`\
+    \ hints at head_frac 0.370 -- the proportion measured\noff the founder's own image --\
+    \ and are the SAME hints round two drove at scale\n1.0 when it scored zero on pose adoption.\
+    \ Using the identical bytes is what\nmakes B2 comparable to that control.\"\"\"\nimport\
+    \ hashlib, os, sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\lora-jerry-v2-b2r3-0822\"\
+    \nUA = {\"User-Agent\": \"banyan-city-jerrybars/1.0 (albert.numbro@gmail.com)\"}\nWANT\
+    \ = {\n    \"jerry-canon-h37fcrouch-0821.png\": (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-canon-assets-0821/jerry-canon-h37fcrouch-0821.png\"\
+    , \"df84ac615d3cc830dd8634cfee905dba0937a3380910911fe81a0427cacbd5af\"),\n    \"jerry-canon-h37fsit-0821.png\"\
+    : (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-canon-assets-0821/jerry-canon-h37fsit-0821.png\"\
+    , \"3db75427b2696b3beafd3c665281bfcfaa84ae03d7e35d51ee1257abbcd77b0e\"),\n    \"jerry-canon-h37fstride-0821.png\"\
+    : (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-canon-assets-0821/jerry-canon-h37fstride-0821.png\"\
+    , \"677ee4904bc54b823eee45cb592d4ca10618920fbb238d9718dd5394a1e1b24a\"),\n}\n\nos.makedirs(OUT,\
+    \ exist_ok=True)\nfor name, (url, want) in WANT.items():\n    raw = urllib.request.urlopen(\n\
+    \        urllib.request.Request(url, headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n\
+    \    if have != want:\n        sys.exit(\"!! SHA MISMATCH for %s -- refusing.\" + chr(10)\
+    \ +\n                 \"   want %s\" % want + chr(10) + \"   have %s\" % have)\n    with\
+    \ open(os.path.join(OUT, name), \"wb\") as fh:\n        fh.write(raw)\n    print(\"fetched\
+    \ %s %d bytes OK\" % (name, len(raw)), flush=True)\n"
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\fetch_hints.py
+- name: b2r3-crouch-base
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\controlnet_plate.py
+  - --task
+  - b2r3-crouch-base
+  - --arm
+  - hint
+  - --controlnet
+  - C:\banyan-farm\cnet-openpose-twins
+  - --control
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\jerry-canon-h37fcrouch-0821.png
+  - --scale
+  - '1.0'
+  - --prompt-file
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\b2-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\negative.txt
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\out
+- name: b2r3-sit-base
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\controlnet_plate.py
+  - --task
+  - b2r3-sit-base
+  - --arm
+  - hint
+  - --controlnet
+  - C:\banyan-farm\cnet-openpose-twins
+  - --control
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\jerry-canon-h37fsit-0821.png
+  - --scale
+  - '1.0'
+  - --prompt-file
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\b2-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\negative.txt
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\out
+- name: b2r3-stride-base
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\controlnet_plate.py
+  - --task
+  - b2r3-stride-base
+  - --arm
+  - hint
+  - --controlnet
+  - C:\banyan-farm\cnet-openpose-twins
+  - --control
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\jerry-canon-h37fstride-0821.png
+  - --scale
+  - '1.0'
+  - --prompt-file
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\b2-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\negative.txt
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\out
+- name: b2r3-crouch-w08
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\controlnet_plate.py
+  - --task
+  - b2r3-crouch-w08
+  - --arm
+  - hint
+  - --controlnet
+  - C:\banyan-farm\cnet-openpose-twins
+  - --control
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\jerry-canon-h37fcrouch-0821.png
+  - --scale
+  - '1.0'
+  - --prompt-file
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\b2-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\negative.txt
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\out
+  - --lora
+  - C:\banyan-farm\lora-jerry-v2-0822\out\bnyjerry-sdxl-v2.safetensors
+  - --lora-weight
+  - '0.8'
+- name: b2r3-sit-w08
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\controlnet_plate.py
+  - --task
+  - b2r3-sit-w08
+  - --arm
+  - hint
+  - --controlnet
+  - C:\banyan-farm\cnet-openpose-twins
+  - --control
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\jerry-canon-h37fsit-0821.png
+  - --scale
+  - '1.0'
+  - --prompt-file
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\b2-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\negative.txt
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\out
+  - --lora
+  - C:\banyan-farm\lora-jerry-v2-0822\out\bnyjerry-sdxl-v2.safetensors
+  - --lora-weight
+  - '0.8'
+- name: b2r3-stride-w08
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\controlnet_plate.py
+  - --task
+  - b2r3-stride-w08
+  - --arm
+  - hint
+  - --controlnet
+  - C:\banyan-farm\cnet-openpose-twins
+  - --control
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\jerry-canon-h37fstride-0821.png
+  - --scale
+  - '1.0'
+  - --prompt-file
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\b2-prompt.txt
+  - --negative-file
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\negative.txt
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-jerry-v2-b2r3-0822\out
+  - --lora
+  - C:\banyan-farm\lora-jerry-v2-0822\out\bnyjerry-sdxl-v2.safetensors
+  - --lora-weight
+  - '0.8'
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "\nimport hashlib, glob, os, shutil\nOUT = \"C:/banyan-farm/lora-jerry-v2-b2r3-0822/out\"\
+    \nDST = \"C:/banyan-farm/courier-box/farm-out/lora-jerry-v2-b2r3-0822\"\nos.makedirs(DST,\
+    \ exist_ok=True)\nn = 0\nfound = sorted(glob.glob(OUT + \"/*.png\")) + sorted(glob.glob(OUT\
+    \ + \"/*.png.meta.yaml\"))\nfor p in found:\n    if os.path.isfile(p):\n        shutil.copyfile(p,\
+    \ os.path.join(DST, os.path.basename(p)))\n        n += 1\nwith open(os.path.join(DST,\
+    \ \"lora-jerry-v2-b2r3-0822.sha256\"), \"w\", encoding=\"utf-8\") as fh:\n    for name\
+    \ in sorted(os.listdir(DST)):\n        q = os.path.join(DST, name)\n        if os.path.isfile(q)\
+    \ and not name.endswith(\".sha256\"):\n            fh.write(\"%s  %s\" % (hashlib.sha256(open(q,\
+    \ \"rb\").read()).hexdigest(), name) + chr(10))\nprint(\"published\", n, \"file(s) ->\"\
+    , DST, flush=True)\nif n == 0:\n    raise SystemExit(\"NOTHING TO PUBLISH\")\n"
+artifacts:
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-b2r3-0822\lora-jerry-v2-b2r3-0822.sha256

@@ -51,6 +51,10 @@ JOB2 = "lora-jerry-v2-b2r2-0822"
 WORK2 = r"C:\banyan-farm\%s" % JOB2
 FARMOUT2 = r"C:\banyan-farm\courier-box\farm-out\%s" % JOB2
 OUT2 = "pipeline/lora/bars-jerry-v2-b2r2-0822.yaml"
+JOB3 = "lora-jerry-v2-b2r3-0822"
+WORK3 = r"C:\banyan-farm\%s" % JOB3
+FARMOUT3 = r"C:\banyan-farm\courier-box\farm-out\%s" % JOB3
+OUT3 = "pipeline/lora/bars-jerry-v2-b2r3-0822.yaml"
 PUB2 = '''
 import hashlib, glob, os, shutil
 OUT = "%s"
@@ -71,6 +75,26 @@ print("published", n, "file(s) ->", DST, flush=True)
 if n == 0:
     raise SystemExit("NOTHING TO PUBLISH")
 ''' % (WORK2.replace("\\", "/") + "/out", FARMOUT2.replace("\\", "/"), JOB2)
+PUB3 = '''
+import hashlib, glob, os, shutil
+OUT = "%s"
+DST = "%s"
+os.makedirs(DST, exist_ok=True)
+n = 0
+found = sorted(glob.glob(OUT + "/*.png")) + sorted(glob.glob(OUT + "/*.png.meta.yaml"))
+for p in found:
+    if os.path.isfile(p):
+        shutil.copyfile(p, os.path.join(DST, os.path.basename(p)))
+        n += 1
+with open(os.path.join(DST, "%s.sha256"), "w", encoding="utf-8") as fh:
+    for name in sorted(os.listdir(DST)):
+        q = os.path.join(DST, name)
+        if os.path.isfile(q) and not name.endswith(".sha256"):
+            fh.write("%%s  %%s" %% (hashlib.sha256(open(q, "rb").read()).hexdigest(), name) + chr(10))
+print("published", n, "file(s) ->", DST, flush=True)
+if n == 0:
+    raise SystemExit("NOTHING TO PUBLISH")
+''' % (WORK3.replace("\\", "/") + "/out", FARMOUT3.replace("\\", "/"), JOB3)
 
 SHIP_WEIGHT = "0.8"          # the ladder below is what decides the real one
 SEEDS = ("20260822", "20260823", "20260824")
@@ -154,6 +178,52 @@ LADDER = ("0.8", "0.65", "0.5", "0.35", "0.2")
 # LoRA at all. Running the weight rungs without this control would have been the
 # lane measuring a knob whose instrument it had not checked.
 B2R2_WEIGHTS = ("0.5", "0.35", None)   # None = the no-LoRA control
+
+
+# ── B2 ROUND THREE: THE NET ITSELF WAS THE WRONG BLOB.
+#
+# Round two's no-LoRA control drew an unrelated human girl, upper body, not
+# crouching -- so the pose net was not driving the composition with NO LoRA in
+# the pipeline at all, and B2's 0/6 measured nothing about the LoRA.
+#
+# THE CAUSE IS IN THIS FILE'S OWN ALLOWLIST, TWO SCREENS UP. xinsir ships the
+# openpose net as TWO blobs in one repo, and the one that works in this tree is
+# `diffusion_pytorch_model_twins.safetensors` -- so load-bearing that
+# ep2-b08-twins-fetch-0819 renamed a copy into its own loadable directory,
+# because from_pretrained cannot select a blob by filename. Section 28 of
+# b08-arm-route-0819.md drove THAT path. Rounds one and two passed the bare repo
+# id `xinsir/controlnet-openpose-sdxl-1.0`, which loads the repo DEFAULT blob --
+# a different weight, and evidently an inert one at this task.
+#
+# ONE VARIABLE: the net. Same skeletons, same seed, same scale, same prompt. The
+# no-LoRA arm runs FIRST again, because a working control is what round two
+# proved this lane cannot assume.
+TWINS = r"C:\banyan-farm\cnet-openpose-twins"
+
+
+def steps_b2r3():
+    out = [{"name": "fetch",
+            "argv": [PY_RENDER, r"%s\fetch_hints.py" % WORK3]}]
+    for w in (None, "0.8"):
+        tag = "base" if w is None else "w" + w.replace(".", "")
+        for name in sorted(B2_SKELETONS):
+            hint = B2_SKELETONS[name][0]
+            argv = [PY_RENDER, r"%s\controlnet_plate.py" % WORK3,
+                    "--task", "b2r3-%s-%s" % (name, tag),
+                    "--arm", "hint",
+                    "--controlnet", TWINS,
+                    "--control", r"%s\%s" % (WORK3, hint),
+                    "--scale", "1.0",
+                    "--prompt-file", r"%s\b2-prompt.txt" % WORK3,
+                    "--negative-file", r"%s\negative.txt" % WORK3,
+                    "--width", "832", "--height", "1216",
+                    "--seed", "20260822",
+                    "--out", r"%s\out" % WORK3]
+            if w is not None:
+                argv += ["--lora", LORA, "--lora-weight", w]
+            out.append({"name": "b2r3-%s-%s" % (name, tag), "argv": argv})
+    out.append({"name": "publish", "argv": [PY_RENDER, "-c", PUB3]})
+    return out
 
 
 def steps_b2r2():
@@ -491,6 +561,39 @@ def main() -> int:
                  "# pipeline/lora/emit_bars_jerry_v2_0822.py, not this file.\n\n")
         yaml.safe_dump(spec2, fh, sort_keys=False, width=88, allow_unicode=True)
     print("wrote %s  (%d steps)" % (OUT2, len(st2)))
+
+    st3 = steps_b2r3()
+    spec3 = dict(spec)
+    spec3.update({
+        "id": JOB3, "task": JOB3, "priority": 56, "est_minutes": 10,
+        "depends_on": TRAIN_JOB,
+        "consumer": (
+            "THE B2 VERDICT, AND THE GOBLIN WAVE BEHIND IT. Every per-beat "
+            "plate the founder pre-authorised is staged with a pose skeleton, "
+            "so a pose net that does not drive is not a bar problem, it is a "
+            "production blocker."),
+        "success": (
+            "THE THREE `base` CELLS ADOPT THEIR SKELETONS with no LoRA loaded. "
+            "That is a working instrument; only then does the w08 arm say "
+            "anything about the LoRA."),
+        "why": (
+            "ROUND TWO'S CONTROL FAILED: with NO LoRA in the pipeline the "
+            "openpose net at scale 1.0 drew an unrelated figure, standing. The "
+            "cause is named in this driver's own allowlist -- xinsir ships TWO "
+            "openpose blobs and the one this tree has ever made work is "
+            "`twins`, renamed into a loadable directory by "
+            "ep2-b08-twins-fetch-0819 because from_pretrained cannot pick a "
+            "blob by filename. Rounds one and two passed the bare repo id and "
+            "got the default blob. ONE VARIABLE MOVES HERE: the net."),
+        "payload": payloads(WORK3),
+        "steps": st3,
+        "artifacts": [r"%s\%s.sha256" % (FARMOUT3, JOB3)],
+        "cell_count": {"no_lora_control_twins": 3, "lora_w08_twins": 3},
+    })
+    with open(os.path.join(REPO, OUT3), "w", encoding="utf-8") as fh:
+        fh.write("# B2 ROUND THREE -- the TWINS openpose blob. GENERATED.\n\n")
+        yaml.safe_dump(spec3, fh, sort_keys=False, width=88, allow_unicode=True)
+    print("wrote %s  (%d steps)" % (OUT3, len(st3)))
     return 0
 
 

@@ -611,6 +611,31 @@ loras:
       is fixed. Reporting 0/6 as a LoRA verdict would have been the lane
       measuring a knob whose instrument it had not checked -- the control cost
       three renders and is the difference between a finding and a guess.
+
+      ROUND THREE TESTED THE OBVIOUS CAUSE AND IT IS NOT THE CAUSE.
+      `bars-jerry-v2-b2r3-0822` re-ran the same three skeletons on the TWINS
+      openpose blob -- `C:\banyan-farm\cnet-openpose-twins`, the weights section
+      28 of b08-arm-route-0819.md actually drove, renamed into a loadable
+      directory by ep2-b08-twins-fetch-0819 because from_pretrained cannot pick
+      a blob by filename. Rounds one and two had passed the bare repo id, which
+      loads the repo's OTHER blob. The twins net drew the same unrelated figure,
+      standing, bust-framed, with no LoRA loaded. TWO BLOBS, TWO CONTROLS, ONE
+      OUTCOME.
+
+      WHAT THAT NARROWS IT TO, AND IT IS A HANDOFF RATHER THAN A CONCLUSION:
+      the defect is in `controlnet_plate.py`'s TXT2IMG path, not in the weights
+      and not in the hint (a valid COCO-18 skeleton on black, loaded at exactly
+      832x1216 -- the driver hard-refuses rc 7 on any size mismatch, so it was
+      the right size). The SAME openpose net demonstrably works elsewhere in
+      this tree: round two of the goblin i2i route measured it moving 15.05 mean
+      abs through `inpaint_fruit.py`. The difference between the two callers is
+      the pipeline construction -- inpaint composes ControlNet inside an inpaint
+      pipeline, controlnet_plate does `AutoPipelineForText2Image.from_pipe`.
+      THAT is where the next lane should look, and the cheapest fix may be to
+      skip the question entirely: `inpaint_fruit.py` with an all-white mask at
+      strength 1.0 IS txt2img-with-ControlNet, on the one code path in this repo
+      where the pose net is proven to act. It would need the same eight-line
+      `--lora` arm `controlnet_plate.py` just grew.
     B3_no_regression: not scored — pending, the grid rendered its three arms
     B4_style: not scored
   shipping_weight: null
@@ -621,9 +646,12 @@ loras:
     named -- 21 of 21 standing frames), and the skeleton route is unmeasured
     because its own control fails with no LoRA in the pipeline.
 
-    THE NEXT CUT IS NOT ANOTHER TRAINING RUN. It is `controlnet_plate.py`'s
-    txt2img+openpose path, which must be made to move a pose with NO LoRA
-    loaded before any goblin-wave plate depends on it. Until that control
-    passes, per-beat pose skeletons are an unproven mechanism and a wave built
-    on them would be fifteen beats of the standing figure this LoRA already
-    draws.
+    THE NEXT CUT IS NOT ANOTHER TRAINING RUN. It is the pose instrument, and it
+    is now narrowed to one code path by two controls: `controlnet_plate.py`'s
+    txt2img+openpose arm does not move a pose with NO LoRA loaded, on either of
+    xinsir's two openpose blobs, while `inpaint_fruit.py` drives the same net
+    measurably. Until a no-LoRA control ADOPTS A SKELETON, per-beat pose
+    skeletons are an unproven mechanism, and a goblin wave built on them would
+    render fifteen beats of the one standing pose this LoRA already draws --
+    which is the pose-locked-character-LoRA failure `curation-tile-0820` refused
+    a dataset over, arriving at the plate step instead.
