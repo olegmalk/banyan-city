@@ -4754,3 +4754,5 @@
 13:01:53Z STARTED task=lora-jerry-v2-tp1rest-0822-1787403709-againf5c7b0 attempt=1 on box-runner
 13:03:07Z DONE task=lora-jerry-v2-tp1rest-0822-1787403709-againf5c7b0 rc=0 artifacts=1
 13:08:13Z box-runner idle ready=0 failed=127
+13:15:58Z STARTED task=lora-jerry-v2-twopass3-0822-1787404542 attempt=1 on box-runner
+13:17:33Z DONE task=lora-jerry-v2-twopass3-0822-1787404542 rc=0 artifacts=1
