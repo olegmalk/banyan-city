@@ -4708,3 +4708,5 @@
 10:45:00Z STARTED task=ep2-jds-p18-0822-1787395453 attempt=1 on box-runner
 10:45:13Z DONE task=ep2-jds-p18-0822-1787395453 rc=0 artifacts=2
 10:49:18Z box-runner idle ready=0 failed=123
+10:54:44Z STARTED task=lora-sapling-ladder-v2c-gate-0822-1787396072 attempt=1 on box-runner
+10:55:24Z DONE task=lora-sapling-ladder-v2c-gate-0822-1787396072 rc=0 artifacts=2
