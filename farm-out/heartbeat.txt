@@ -4742,3 +4742,5 @@
 12:47:28Z box-runner idle ready=0 failed=126
 12:48:03Z STARTED task=lora-jerry-v2-b2r7-0822-1787402875 attempt=1 on box-runner
 12:49:47Z DONE task=lora-jerry-v2-b2r7-0822-1787402875 rc=0 artifacts=1
+12:52:43Z STARTED task=lora-jerry-v2-twopass-0822-1787403153 attempt=1 on box-runner
+12:53:26Z DONE task=lora-jerry-v2-twopass-0822-1787403153 rc=0 artifacts=1
