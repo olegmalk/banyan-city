@@ -9107,3 +9107,30 @@ about whose pixels are in it is exactly what §7.2 exists to prevent.
 > retargeted in `derive_ep2_b06motion_0822.py` now and both are asserted in its
 > selftest — a derived spec that still names the parent's mp4 refuses to be
 > written. Any future derive off an LTX parent wants the same two lines.
+
+#### THE STRENGTH BOUNDARY IS ABOUT EDGE HARDNESS, NOT ABOUT BEING MAN-MADE
+
+Beat 19's fig went through both settings on the same composite and the pair
+answers the question beat 06's board raised:
+
+| | 0.30 | 0.45 |
+|---|---|---|
+| leaves | as flat as drawn | soft gradient, lighter and more natural ink |
+| fig | matte, flat ovoid with a hard crescent | rounded, drawn — **and a specular pinpoint** |
+| everything else | P2-P6 pass | P2, P3, P5, P6 pass |
+
+**0.30 was the right first ask and it under-drew, on an ORGANIC object.** So the
+rule beat 06 produced this morning — *a hard-edged made object wants 0.45 where a
+leaf wants 0.30* — is the wrong shape. What actually predicts it is the PLATE:
+beats 12 and 21 are hard-inked cel frames and 0.30 drew into them cleanly; beat
+06's and beat 19's w4 plates are soft high-key renders with little line weight
+for the pass to imitate, and both needed 0.45.
+
+> **The strength follows the plate's own line weight, not the object's material.**
+> Next composite: look at the plate before choosing the number, and if it is a
+> soft high-key render start at 0.45.
+
+**And 0.45 costs something on an organic object:** it put a specular pinpoint on
+a fruit canon says is MATTE, which is the direction the old b19 plate's faceted
+crystals came from. At the size it plays it is probably invisible; it is recorded
+because it is a drift direction and not a one-off.

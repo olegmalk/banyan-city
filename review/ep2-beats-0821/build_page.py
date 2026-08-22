@@ -757,10 +757,15 @@ BEATS = {
             "fall \u2014 is NOT done and is not claimed to be. It went behind beats 12, 21 and 06 "
             "this morning because those three had a shape fault that one drawing session closes, "
             "and this one needs a fruit drawn on a stem beside a standing figure, which is a "
-            "different tool from the one the leaf beats use. It is the top item on this beat and "
-            "it costs a drawing session before it costs a GPU minute."),
+            "different tool from the one the leaf beats use. IT IS DONE NOW \u2014 the plate is the "
+            "first picture below, and the motion render off it is the only step left."),
         faults_from="ship-manifest.yaml beat 19 + farm-out/ep2-b19-dropcomp-0819/",
         candidates=[
+            dict(file=f"{POSTER_URL}/19-the-drop-PLATE-fignat-r2-0822.jpg", still=True,
+                 label="a PLATE — the fig, on the CURRENT face. The thing the clip below asked for.", tag="warn",
+                 verdict="One small violet fig hanging on the stem of a two-leaf sapling in the grass beside him — and this time the goblin behind it is YOUR goblin, drawn on the corrected face, not the old one the clip below is stuck with. One fruit, not four; a fig and not the faceted violet crystal the old plate actually contained; matte at a glance. He is untouched: the plant sits clear of his leg and the pass never reached him. WHAT IS SMALL AND WRONG: a pinpoint of shine has appeared on the fruit's shoulder, and canon says this fig is matte. At the size it plays it is probably invisible; it is named because the old plate's fruit was a gem with hard specular and that is the direction this must not drift.",
+                 diff="This is what the clip below asked for and did not have. Its own fault is that its plate predates your goblin correction, so the face in it was never yours. The plant and the fruit are drawn into the current plate in software and settled in — and this needed a new tool: the compositor that could draw a fig had the OLD plate typed into it, so the parametric one got an optional fruit. Two rounds: the light pass at the usual setting left the fruit and leaves as flat as they were drawn, and the stronger setting that beat 06's board needed this morning drew them properly — and put the shine on. The motion render off this plate is the next thing.",
+                 src="pipeline/jobs/ep2-b19-fignat-r2-0822.yaml"),
             dict(file=f"{CAND_URL}/19-the-drop-LTX-ep2-b19-dropmotion-0822.mp4",
                  poster=f"{POSTER_URL}/19-the-drop-LTX-ep2-b19-dropmotion-0822.jpg",
                  label="THE FRUIT FALLS. First time in this beat's life. — tonight, newest", tag="warn",
