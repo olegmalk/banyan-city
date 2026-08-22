@@ -1,0 +1,88 @@
+{
+  "id": "ep2-guardcast3-h30-0822-1787387860",
+  "task": "ep2-guardcast3-h30-0822",
+  "node": "002b-first-citizen",
+  "beat": 6,
+  "worker": "box-runner",
+  "priority": 6,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_OFFLINE": "1",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "stage",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\nroot = r\"C:\\banyan-farm\\ep2-guardcast3-h30-0822\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root, \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base + \"pipeline/\" + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n    if got != sha:\n        raise SystemExit(\"!! %s sha %s, wanted %s\" % (name, got, sha))\n    with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n    print(\"staged\", name, got[:12])\n"
+      ]
+    },
+    {
+      "name": "cast",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\ep2-guardcast3-h30-0822\\src\\pipeline\\controlnet_plate.py",
+        "--root",
+        "C:\\banyan-farm\\ep2-guardcast3-h30-0822\\src",
+        "--task",
+        "ep2-guardcast3-h30-0822",
+        "--arm",
+        "nocontrol",
+        "--seed",
+        "20297725",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--width",
+        "832",
+        "--height",
+        "1216",
+        "--prompt-file",
+        "C:\\banyan-farm\\ep2-guardcast3-h30-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\ep2-guardcast3-h30-0822\\negative.txt",
+        "--out",
+        "C:\\banyan-farm\\ep2-guardcast3-h30-0822\\out"
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "# The courier pushes from farm-out and from nowhere else.\n# The CONDITIONS travel with the frame: prompt and negative go too, so\n# the sheet can be re-read months from now without this spec in hand.\nimport glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-guardcast3-h30-0822\"\nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(\"C:/banyan-farm/ep2-guardcast3-h30-0822/out/ep2-guardcast3-h30-0822-nocontrol.png*\")\n               + glob.glob(\"C:/banyan-farm/ep2-guardcast3-h30-0822/prompt.txt\")\n               + glob.glob(\"C:/banyan-farm/ep2-guardcast3-h30-0822/negative.txt\"))\nlines = []\nfor f in files:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \"\n                     + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-guardcast3-h30-0822.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 3 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\ep2-guardcast3-h30-0822\\out\\ep2-guardcast3-h30-0822-nocontrol.png"
+  ],
+  "backlog": {
+    "filed_at": 1787387860,
+    "filed_at_iso": "2026-08-22T08:37:40Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/jobs/ep2-guardcast3-h30-0822.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "spec_sha256": "027082edc74d8768670e39d3c7950c45ce7aa65b89f7d1cfd89fb80ef494bcbb",
+  "started_at": "2026-08-22T08:48:41Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-22T08:49:00Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\ep2-guardcast3-h30-0822\\out\\ep2-guardcast3-h30-0822-nocontrol.png"
+  ]
+}
