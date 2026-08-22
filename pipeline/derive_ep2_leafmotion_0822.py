@@ -97,6 +97,32 @@ STIR_NEW = ("THE LEAVES STIR GENTLY IN A LIGHT BREEZE \u2014 they lift and "
             "Nothing else moves and the plant stays exactly where it is in "
             "frame.")
 
+# BEAT 21 ROUND 2. r1's clip tilts beautifully and grows a THIRD BLADE in the
+# last second, and reading the sentence it inherited explains why: it was
+# written for the lance plate and it says "NOTHING IN THE FRAME MOVES EXCEPT
+# THIS ONE LEAF ... the other leaves do not move at all". On a two-leaf sapling
+# "this one leaf" and "the other leaves" are both false, and the second phrase
+# positively asserts that other leaves exist. Round 2 rewrites exactly that
+# clause for the plant that is now in the plate and names the count that must
+# not change -- which is the b12 finding applied: name the thing that must not
+# move, do not merely ban movement.
+TILT_OLD = ("THE AIR IS DEAD STILL AND NOTHING IN THE FRAME MOVES EXCEPT THIS "
+            "ONE LEAF: slowly and deliberately it TILTS, turning steadily over "
+            "on its stalk through a small clear arc, and then it HOLDS in the "
+            "new position and stays there, still. The movement is smooth, "
+            "purposeful and one-directional \u2014 not a flutter, not a wobble, "
+            "not wind. The stem below it does not sway and the other leaves do "
+            "not move at all.")
+TILT_NEW = ("THE AIR IS DEAD STILL AND NOTHING IN THE FRAME MOVES EXCEPT THIS "
+            "ONE SEEDLING: slowly and deliberately the whole little plant "
+            "TILTS, leaning steadily over through a small clear arc, and then "
+            "it HOLDS in the new position and stays there, still. The movement "
+            "is smooth, purposeful and one-directional \u2014 not a flutter, "
+            "not a wobble, not wind. THE PLANT HAS EXACTLY TWO LEAVES AND KEEPS "
+            "EXACTLY TWO: no third leaf grows, no leaf splits, and the two "
+            "blades are the same two, the same shape, in the last frame as in "
+            "the first.")
+
 ROWS = [
     {
         "beat": 12,
@@ -120,13 +146,14 @@ ROWS = [
         "beat": 21,
         "parent": "pipeline/jobs/ep2-b21-daylight-0814.yaml",
         "parent_id": "ep2-b21-daylight-0814",
-        "new_id": "ep2-b21-leafmotion-0822",
+        "new_id": "ep2-b21-twoleaf-r2-0822",
         "dirtok": "ep2-b21-daylight-0814",
         "pubdir": "ep2-b21-daylight-0814",
         "nat": "ep2-b21-sapnat2-0822",
         "png": "b21-sapnat2-s20260820.png",
         "sha": "859243c1813812cad87cf2428b5e9068dbdf085cb7a066882164de0420461fc3",
         "was": "ONE GIANT LANCE-SHAPED LEAF standing straight up",
+        "tilt_r2": True,
         "hard_clause": (
             "THE TILT, MONOTONE, AND IT STOPS. The parent take is the only "
             "clip in episode 2 whose definition is fully met and this is the "
@@ -270,7 +297,21 @@ def build(row):
                          % (row["beat"], hit))
     child["steps"] = steps
 
-    if row.get("stir"):
+    for flag, old_t, new_t in (("stir", STIR_OLD, STIR_NEW),
+                               ("tilt_r2", TILT_OLD, TILT_NEW)):
+        if not row.get(flag):
+            continue
+        pay = dict(child.get("payload") or {})
+        pk = [k for k in pay if k.endswith("motion-prompt.txt")]
+        if len(pk) != 1:
+            raise SystemExit("!! beat %d: expected one motion prompt" % row["beat"])
+        if old_t not in pay[pk[0]]:
+            raise SystemExit("!! beat %d: the %s clause is not in the parent "
+                             "payload verbatim -- refusing to guess"
+                             % (row["beat"], flag))
+        pay[pk[0]] = pay[pk[0]].replace(old_t, new_t)
+        child["payload"] = pay
+    if False:
         pay = dict(child.get("payload") or {})
         pk = [k for k in pay if k.endswith("motion-prompt.txt")]
         if len(pk) != 1:
@@ -299,14 +340,17 @@ def _selftest():
         pk = [k for k in parent["payload"] if k.endswith("motion-prompt.txt")]
         ck = [k for k in spec["payload"] if k.endswith("motion-prompt.txt")]
         assert len(pk) == len(ck) == 1, (pk, ck)
-        if row.get("stir"):
-            # ROUND 2's ONE VARIABLE IS THIS CLAUSE AND NOTHING ELSE. Asserted
+        swap = ((STIR_OLD, STIR_NEW) if row.get("stir")
+                else (TILT_OLD, TILT_NEW) if row.get("tilt_r2") else None)
+        if swap:
+            STIR_OLD_, STIR_NEW_ = swap
+            # THE ROUND'S ONE VARIABLE IS THIS CLAUSE AND NOTHING ELSE. Asserted
             # both ways: the new sentence is in and the old one is out, and the
             # rest of the prompt is byte-identical either side of the swap.
             a_, b_ = parent["payload"][pk[0]], spec["payload"][ck[0]]
-            assert STIR_OLD in a_ and STIR_OLD not in b_
-            assert STIR_NEW in b_
-            assert a_.replace(STIR_OLD, STIR_NEW) == b_, (
+            assert STIR_OLD_ in a_ and STIR_OLD_ not in b_
+            assert STIR_NEW_ in b_
+            assert a_.replace(STIR_OLD_, STIR_NEW_) == b_, (
                 "beat %d: something other than the stir clause moved"
                 % row["beat"])
         else:

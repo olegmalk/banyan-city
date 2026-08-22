@@ -9208,3 +9208,27 @@ So the named no-grow clause **did no harm and added nothing**, and the useful pa
 is what that says about r1: **zero climb reproduces at a second wording**, so r1's
 result is a property of the new PLATE and not a lucky seed. r1 stays the
 candidate; r3 is filed as its control and is not staged.
+
+#### AND THE COUNT AXIS IS NOT A WORDING PROBLEM EITHER, ON TWO BEATS INDEPENDENTLY
+
+`ep2-b21-twoleaf-r2-0822`: one clause, and it was the right clause to suspect.
+r1's sentence was written for the LANCE plate and says *"nothing in the frame
+moves except THIS ONE LEAF ... the other leaves do not move at all"* — on a
+two-leaf sapling both halves are false and the second one positively asserts
+that other leaves exist. Round 2 rewrote it for the plant that is actually in the
+plate and named the count that must not change: *"THE PLANT HAS EXACTLY TWO
+LEAVES AND KEEPS EXACTLY TWO: no third leaf grows, no leaf splits."*
+
+**The tilt still works and the third blade still grows in.** So the count is not
+carried by the sentence, on a plate that contains the correct count, with the
+correct count named in the positive.
+
+> **A COMPOSITED OBJECT'S COUNT IS THE ONE AXIS MOTION DOES NOT PROTECT, and it
+> is now measured on two independent beats in one morning:** beat 19 added two
+> figs to the sky off a plate with exactly one, and beat 21 added a third blade
+> off a plate with exactly two. Identity holds (b12), size holds (b06), position
+> holds (b19) — count does not. The next instrument for it is NOT a seventh
+> adjective; the wording ladder for leaf count closed by measurement on 08-17 at
+> 0 of 16 frames, and this is that same wall arriving through motion.
+
+b21's r1 stays the candidate and r2 is filed as its null, not staged.
