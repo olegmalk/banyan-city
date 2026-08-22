@@ -1,0 +1,13 @@
+#### job ep2-b12-sapnat2-0822-1787361744 attempt 1 start 2026-08-22T01:22:32Z
+
+==== step fetch START 2026-08-22T01:22:32Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b12sapnat2-0822\\fetch_init.py"]
+fetched b12-sapnat-in-0822.png 595545 bytes sha e1d79db63bf779c0f0998ef86861cdd344473d29441b698b606c4bda06dd5187 OK
+fetched b12-sapnat-in-mask-0822.png 5810 bytes sha cdaf0a4077f69d8c5dac999ca4c0f1b29dab2dc703d2832e201154cb130cac92 OK
+==== step fetch END rc=0 2026-08-22T01:22:33Z ====
+
+==== step dry START 2026-08-22T01:22:33Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b12sapnat2-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b12sapnat2-0822\\b12-sapnat-in-0822.png", "--init-sha256", "e1d79db63bf779c0f0998ef86861cdd344473d29441b698b606c4bda06dd5187", "--mask-png", "C:\\banyan-farm\\b12sapnat2-0822\\b12-sapnat-in-mask-0822.png", "--prompt-file", "C:\\banyan-farm\\b12sapnat2-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b12sapnat2-0822\\negative.txt", "--out", "C:\\banyan-farm\\b12sapnat2-0822\\b12-sapnat2-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "ATTACHED TO BOTH THE DRY STEP AND THE RENDER STEP, and true of each. ON THE DRY STEP it is a MASK GEOMETRY CHECK: it writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. WHAT TO CHECK on beat 12: (1) one connected blob shaped like a stem with two leaves plus the region the OLD plant was erased out of -- this mask is deliberately larger than the b16 rung's because it has to cover the hole as well as the drawing; (2) it does not reach the top of the frame; (3) THERE IS NO PERSON IN THIS PLATE and the negative bans one, so a figure appearing inside the mask is a hard fail and not a curiosity. ON THE RENDER STEP: one pass, one seed. 0.30 runs 12 of 40 steps from a latent that still holds the drawn structure, so the layout steps never run and the pass FINISHES the shape rather than inventing one.", "--dry-run"]
+!! init not found: C:\banyan-farm\b12sapnat2-0822\b12-sapnat-in-0822.png
+==== step dry END rc=2 2026-08-22T01:22:33Z ====
+#### job ep2-b12-sapnat2-0822-1787361744 finished rc=2 2026-08-22T01:22:33Z
