@@ -4569,3 +4569,5 @@
 10:06:37Z FAIL task=ep2-guardcast5-a-0822-1787391566 rc=1 step=stage
 10:06:42Z STARTED task=ep2-guardcast5-a50-0822-1787391594 attempt=1 on box-runner
 10:06:42Z FAIL task=ep2-guardcast5-a50-0822-1787391594 rc=1 step=stage
+10:06:47Z STARTED task=ep2-guardcast5-b-0822-1787391569 attempt=1 on box-runner
+10:06:48Z FAIL task=ep2-guardcast5-b-0822-1787391569 rc=1 step=stage
