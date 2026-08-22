@@ -8743,3 +8743,45 @@ setting.**
 one lance leaf, both needing canon's *average leaves* drawn in. One compositor
 serves three beats. **That is the top rung on this ladder for whoever picks it
 up next**, and it costs a drawing session before it costs a GPU minute.
+
+#### THE SAPLING DATASET'S ROUND 7 RAN ON 08-21 AND NOBODY READ IT. THE CONTROL FAILED.
+
+Four cells finished `rc 0` at 19:12Z on 2026-08-21 and sat unjudged; `box_enqueue`
+refused a re-file with exactly the right sentence — *"the first thing a resuming
+lane owes a dead one is a look at done/, not a re-file."* So this lane looked.
+
+**x04 IS THE CONTROL AND THE ROUND'S OWN SPEC SAYS TO READ IT FIRST.** Its
+pre-registered fourth fail mode, verbatim: *"IT INVALIDATES THE BATCH RATHER THAN
+ANSWERING IT: x04, the control, fails. w02's words at a new seed producing tan
+grass or no plane would mean round 6's warm-light finding rests on one picture."*
+
+Green-dominant share of the LOWER HALF, the bar's one arithmetic clause, measured
+on the published pngs:
+
+| cell | scene | lower half | lower centre |
+|---|---|---|---|
+| x01 | grassy courtyard, colonnade receding | **0.0%** | 0.0% |
+| x02 | low stone wall running into the distance | 4.8% | 8.8% |
+| x03 | cobbled lane between stone houses | **0.0%** | 0.0% |
+| **x04** | **green meadow, distant hills — CONTROL** | **0.2%** | 0.1% |
+
+**THE CONTROL FAILED, SO THE ROUND MEASURES NOTHING ABOUT ITS VARIABLE.** All four
+came back as SUNSETS: `low sun behind thin cloud, warm diffuse glow` — the clause
+round 6 froze *because it was the one setting known to keep a green ground* —
+drew an orange-and-blue dusk on four new seeds, and grass at dusk is not green.
+So round 6's warm-light finding **rests on one picture (w02)** and is now
+explicitly unsupported at other seeds. That is a real result and it was worth the
+264 s: it explains why earlier rounds kept losing the palette.
+
+**Recorded but NOT scored, because a round with a failed control scores nothing:**
+two of the three BUILT cells drew a strong receding ground plane — x01's paved
+path between columns and x03's cobbled lane are as clean a recession as anything
+in the set — and x02 drew no wall at all, so its collapse is an absent feature
+rather than a refuted rule. Read as an eyeball, the built-feature question looks
+LIVE. It has not been answered and must not be recorded as answered.
+
+**NO ROUND 8 IS FILED, and that is the dataset lane's own ruling, not a deferral:**
+its spec says *"This lane also does NOT refill after these four: the campaign owns
+the card."* The next move belongs to it and is one cell: **w02's words at a THIRD
+seed, or a light clause that survives a seed change.** Until the palette gate can
+be passed twice in a row, no scene clause can be tested through it.
