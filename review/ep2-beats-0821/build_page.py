@@ -568,7 +568,12 @@ BEATS = {
             "its job correctly by preserving the thing it was given. Filling the hole in both "
             "directions instead of one removes it, and the light pass then drew real cloud into "
             "the gap. The corrected plate is below and the motion re-render off it is on the card "
-            "as you read this."),
+            "as you read this. IT LANDED, AND IT IS A TRADE: the sky is clean and the plant grows "
+            "108 px where the candidate above grows 5. The lead does not change. And it corrects "
+            "one sentence you were told earlier today \u2014 the zero-climb result was called a "
+            "property of the plate on the strength of a third round reproducing it, but that "
+            "round reused the same starting picture, so it tested the words and never tested the "
+            "plate."),
         faults_from="review/ep2-picks/done-definitions.yaml beats.12 + review/ep2-b12-trim-0821/verdict-0821.yaml",
         candidates=[
             dict(file=f"{CAND_URL}/12-related-LTX-leaf-0813.mp4",
@@ -577,6 +582,12 @@ BEATS = {
                  verdict="TWO AVERAGE LEAVES ON ONE STEM IN EVERY FRAME, first to last \u2014 no discs, no third leaf, no second plant. AND THE BEAT'S RECORDED FAULT IS GONE, measured rather than eyeballed: the take in the cut climbs 140 px across the shot and this one climbs ZERO. The plant stays rooted with the camera locked for the whole five seconds. WHAT IS LEFT: your line says 'perfectly still' and the two leaves do open, spread, droop and lift. That is a much smaller thing than a growing plant, and it is your call whether it is still too much \u2014 worth knowing that the prompt under this clip literally asks for it, in the words \u201cthe leaves stir gently in a light breeze\u201d. AND THE SMEAR SURVIVED: the soft horizontal band across the cloud bank, left by removing the old discs, is still there in every frame \u2014 a hundred and twenty-one frames of LTX did not repaint it.",
                  diff="Same action sentence, byte for byte. Same seed, same size, same frame count, same everything — the ONLY change is the starting picture, which is now the plate above with canon's leaves drawn into it. That is deliberate: neither this beat's wording nor its timing has ever been the problem, so changing them at the same time would make it impossible to say which edit did what. What this proves beyond the beat is that a hand-drawn plant survives a full motion render at the right shape, which is the thing beats 16, 20 and 21 are all waiting on.",
                  src="pipeline/jobs/ep2-b12-leafmotion-0822.yaml"),
+            dict(file=f"{CAND_URL}/12-related-LTX-nosmear-0822.mp4",
+                 poster=f"{POSTER_URL}/12-related-LTX-nosmear-0822.jpg",
+                 label="THE SMEAR IS GONE \u2014 and the plant grows again. 08-22, and it is a straight trade", tag="fail",
+                 verdict="THE SKY IS FIXED: no horizontal bars anywhere in the five seconds, continuous cloud behind the plant. AND THE BEAT'S OWN FAULT CAME BACK. Measured the same way as everything else on this beat \u2014 top of the leaf mass, first frame against last: the candidate above climbs 5 px and this one climbs 108. Your line says \u2018perfectly still\u2019, so on the fault that actually decides this beat, this is the worse clip. THE CANDIDATE ABOVE STAYS THE LEAD. This one is up because of what it says, not because it is usable.",
+                 diff="One variable and it is the starting picture: the same clip re-rendered off the corrected plate. Same seed, same action sentence byte for byte, same everything else. WHAT IT CORRECTS ABOUT WHAT YOU WERE TOLD THIS MORNING: the zero-climb result was written up as \u2018a property of the plate, not a lucky seed\u2019 because a third round reproduced it at different wording. That third round used the SAME starting picture \u2014 so it tested the words and never tested the plate. Change the picture and the climb comes back. A control that holds the starting picture constant cannot tell you the result belongs to the picture, and this beat now has both halves measured.",
+                 src="pipeline/jobs/ep2-b12-nosmear-0822.yaml"),
             dict(file=f"{CAND_URL}/12-related-LTX-stillmotion-r2-0822.mp4",
                  poster=f"{POSTER_URL}/12-related-LTX-stillmotion-r2-0822.jpg",
                  label="the same thing with the breeze taken OUT — worse, and the reason is useful", tag="fail",

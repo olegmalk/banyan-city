@@ -9406,3 +9406,45 @@ and the directory is beat-correct; only the date lies.
 > this morning's prefix and filename escapes: the token that reaches the courier
 > is not the token that reaches the URL, and a pair written for one will not
 > cover the other.
+
+#### AND THE CLEAN SKY COSTS BEAT 12 ITS STILLNESS — A CONTROL THAT HOLDS X CONSTANT SAYS NOTHING ABOUT X
+
+`ep2-b12-nosmear-0822`, r1 re-rendered on the harmonic plate, one variable and it
+is two strings. **The bars are gone from all 121 frames. And the apex climbs 108
+px.** Measured on the top of the leaf mass, f000 against f120, the same
+instrument every reading on this beat uses:
+
+| take | apex climb |
+|---|---|
+| the take in the cut | 140 px — the recorded shipping fault |
+| **r1** (smeared plate) | **5 px** |
+| stillmotion-r2 (stillness clause) | 340 px |
+| **nosmear** (clean plate, r1's words) | **108 px** |
+
+**r1 STAYS THE LEAD.** The smear is the lesser of beat 12's two faults and the
+approved line names the other one.
+
+> **THIS MORNING'S CONCLUSION IS WRONG AND THE ERROR IS METHODOLOGICAL, NOT
+> ARITHMETICAL.** Round 3 was read as *"zero climb reproduces at a second
+> wording, so r1's result is a property of the new PLATE and not a lucky seed."*
+> **r3 held the plate constant.** It varied the wording, so it is a control on
+> the WORDING and it can say nothing whatever about the plate. The plate claim
+> was never tested until the plate changed, and when it did the climb came back.
+> A control that holds X constant is not evidence about X, however many rounds
+> agree.
+
+**AND IT LEAVES EXACTLY ONE CELL UNTRIED**, which is now on the card as
+`ep2-b12-nogrow-clean-0822`: r3's explicit no-grow sentence on the CLEAN plate.
+r3's clause was filed as *"no harm, no help"* — but it was asked of a plate
+already at 0 px, so it had nothing to resist. It has something to resist now.
+One variable against r3 (the init) and one against nosmear (the clause).
+
+**The count instrument reads 2 on all 121 frames of nosmear**, same as r1, so the
+count axis is clean on this beat in both directions.
+
+**And the publish directory got away a third time in one day:** the clip landed
+in `farm-out/ep2-b12-tightB/` — the grandparent's publish token, which is a
+PREFIX of nothing this job names. The FILENAME retoken held, so nothing was
+overwritten and the mp4 is uniquely named; only the directory lies. Third
+instance of one family today (a prefix token, a filename that never contained the
+id, and a pair written with a trailing slash that the destination does not have).
