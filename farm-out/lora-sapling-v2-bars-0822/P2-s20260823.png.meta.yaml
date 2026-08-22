@@ -1,0 +1,18 @@
+platform: "local-gpu (rtx5090, CUDA, bfloat16)"
+model: "cagliostrolab/animagine-xl-3.1"
+model_licence: "CreativeML Open RAIL++-M (use restrictions travel; D15)"
+lora: "bnysapling-sdxl-v2.safetensors"
+lora_sha256: "1b1997155bffce2a908fff501347314e1c9d31741ce512b6e62618e237e9e911"
+lora_weight: 0.8
+cost_usd: 0.0
+size: "832x1216"
+steps: 40
+guidance: 7.5
+seed: 20260823
+png_sha256: "12bcad52bba063cdababb84adbec78b406922eb03da0bbf5074b348489e97db1"
+prompt: "bnysapling, a young sapling, two leaves, 15 cm tall, close-up, in a clay pot on a windowsill, warm lamplight, indoor, anime style, cel shading, detailed background, masterpiece, best quality, very aesthetic"
+negative_prompt: "1boy, 1girl, people, goblin, text, watermark, signature, photorealism, 3d render, low quality, worst quality, blurry"
+approved: false
+provisional: true
+founder_verdict: null
+scored: false
