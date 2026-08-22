@@ -4813,3 +4813,5 @@
 16:18:03Z DONE task=lora-jerry-v3-loraweight-0822-1787415406 rc=0 artifacts=1
 16:27:09Z box-runner idle ready=0 failed=129
 16:37:12Z box-runner idle ready=0 failed=129
+16:39:17Z STARTED task=lora-jerry-v3-blockweight-0822-1787416750 attempt=1 on box-runner
+16:40:44Z DONE task=lora-jerry-v3-blockweight-0822-1787416750 rc=0 artifacts=1
