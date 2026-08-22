@@ -1,0 +1,175 @@
+# SAPLING LoRA — THE SAME BAR GRID ON EPOCH 6. Filed 2026-08-22.
+#
+# $0. ~18 GPU-minutes. Card measured idle when this was filed.
+#
+# THIS IS THE MOVE `bars-sapling-0822.yaml` PRE-DECLARED, in its own words and
+# before any pixel existed: "If the final checkpoint reads overfit by eye, the
+# correct move is a SECOND grid on an earlier epoch, filed as its own job, and
+# both verdicts kept. It is not an edit to this file after the pixels."
+#
+# THE FINAL CHECKPOINT DOES READ OVERFIT, and the defect has a shape. Epoch 10
+# scored B4 style 15/15 and B5 leaf count 14/15 — it has the plant — but it
+# FAILED identity at 11/15, the figure bar at 0/3, and no-regression, and the
+# same artifact runs through all three: THE LoRA REFUSES FIGURES. Asked for a
+# goblin it drew none twice and, once, a creature with the sapling fused into its
+# body; in the no-regression pair it deleted a person from a prompt it was not
+# invited to. That is what overfitting to "plant alone on grass" looks like, and
+# 44 of 44 training frames are exactly that.
+#
+# SO THE QUESTION THIS ANSWERS IS NARROW AND WORTH EIGHTEEN MINUTES: does an
+# EARLIER checkpoint still draw the canon sapling while leaving room for the rest
+# of the frame? Epoch 6 is 396 optimizer steps against the final's 660. If the
+# fusion is weaker there and the plant still holds, the shipping checkpoint is
+# epoch 6 and the dataset rung gets cheaper. If the plant is gone, the finding is
+# that this LoRA needs all ten epochs to beat the base checkpoint's mascot prior,
+# and the ONLY fix left is the figure batch.
+#
+# EVERYTHING ELSE IS BYTE-IDENTICAL TO THE EPOCH-10 GRID: the same run_grid.py
+# payload, the same five prompts, the same three seeds, the same negatives, the
+# same probe, the same weight 0.8. Two checkpoints, one instrument — that is the
+# whole point, and changing any cell would make the two grids uncomparable.
+#
+# WHAT MOVED: --lora (epoch 6, sha256
+# 202c7c539e0e5943c074fb92f40a28224c2400d6d1dea37eeb41abeabd241965), --out-dir,
+# and the publish destination. Nothing else.
+
+id: lora-sapling-bars-e6-0822
+task: lora-sapling-bars-e6-0822
+node: 003b-one-leaf-for-yes
+runner: box
+needs_gpu: true
+priority: 72
+max_attempts: 1
+owner: the sapling-LoRA lane, 2026-08-22
+script_authority: 'Not a render of a script and not an episode assembly. This draws 16 test stills from
+  a weight file to score pre-registered bars; nothing it produces enters an episode, a leaf, or a shot
+  board, and every frame is written with approved: false / provisional: true by sample_lora.py itself.'
+consumer: The checkpoint choice for bnysapling. Five epochs are on the box and only epoch 10 has been
+  graded; picking the epoch is part of the job and overfitting past the sweet spot is the standard character-LoRA
+  failure. registry.yaml carries all five sha256s and no sanctioned weight, so this is the measurement
+  that could give it one.
+success: Sixteen frames from epoch 6, judged at 1:1 against the SAME bars and compared cell for cell with
+  the epoch-10 grid. Both verdicts are kept; neither is edited.
+why: The card is idle, the founder is asleep, and the epoch-10 verdict named this as ladder rung 3. Eighteen
+  GPU-minutes either finds a better checkpoint or closes the axis.
+est_minutes: 18
+needs:
+- cuda
+- vram20
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: grid
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-sapling-0822\run_grid.py
+  - --lora
+  - C:\banyan-farm\lora-sapling-0822\out\bnysapling-sdxl-v1-000006.safetensors
+  - --lora-weight
+  - '0.8'
+  - --sampler
+  - C:\banyan-farm\lora-sapling-0822\sample_lora.py
+  - --out-dir
+  - C:\banyan-farm\lora-sapling-0822\grid-e6
+  - --require
+  - P1-s20260822.png
+  - P5-s20260824.png
+  - PROBE-fourleaf-s20260822.png
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = r\"C:\\banyan-farm\\courier-box\\farm-out\\lora-sapling-bars-e6-0822\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(r\"C:\\banyan-farm\\lora-sapling-0822\\\
+    grid-e6\\*.png\")\n             + glob.glob(r\"C:\\banyan-farm\\lora-sapling-0822\\grid-e6\\*.meta.yaml\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, os.path.basename(f)),\
+    \ \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"lora-sapling-bars-e6-0822.sha256\"), \"w\", newline=\"\\n\") as fh:\n\
+    \    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) ->\", dst)\n\
+    raise SystemExit(0 if len(src) >= 32 else 1)\n"
+artifacts:
+- C:\banyan-farm\lora-sapling-0822\grid-e6\P1-s20260822.png
+- C:\banyan-farm\lora-sapling-0822\grid-e6\P5-s20260824.png
+- C:\banyan-farm\lora-sapling-0822\grid-e6\PROBE-fourleaf-s20260822.png
+payload:
+  C:\banyan-farm\lora-sapling-0822\run_grid.py: "#!/usr/bin/env python3\nr\"\"\"Draw the sapling LoRA's\
+    \ pre-registered bar grid — 15 cells plus one probe.\n\n    <render-venv>/python.exe pipeline/lora/run_grid.py\
+    \ \\\n        --lora out/bnysapling-sdxl-v1.safetensors --lora-weight 0.8 \\\n        --sampler pipeline/lora/sample_lora.py\
+    \ --out-dir grid\n\nWHY A SEPARATE FILE AND NOT SIXTEEN STEPS IN THE JOB SPEC. Sixteen `sample_lora`\n\
+    steps would re-import torch and re-load a 6.9 GB SDXL checkpoint sixteen times —\nroughly nine minutes\
+    \ of pure model loading against ninety seconds of drawing.\nMore importantly it would put the PROMPTS\
+    \ in sixteen places, and the whole point\nof pre-registering them is that they exist once, verbatim,\
+    \ and cannot be\nre-picked cell by cell after a bad frame.\n\nWHY IT SHELLS OUT TO sample_lora.py\
+    \ INSTEAD OF IMPORTING THE PIPELINE. Every\nframe must carry the same §7.2 sidecar the ONE SAMPLE\
+    \ carried — same model line,\nsame lora_sha256, same `approved: false` / `provisional: true`. Re-implementing\n\
+    that here would be a second writer of the same record, and the two would drift.\nThe model-load cost\
+    \ that buys is real and accepted: correctness of the record\nbeats nine minutes of card time, and\
+    \ the card is idle.\n\nTHE PROMPTS BELOW ARE FROZEN. They are copied verbatim from the `## BARS` block\n\
+    of `pipeline/lora/train-sapling-0822.yaml`, committed at 9a4042299 before any\npixel of this LoRA\
+    \ existed. Editing one after seeing a frame is re-picking a bar\nafter the fact, which is how 8/12\
+    \ \"passes\" became 0/12 usable on this project.\nIf a prompt is badly worded, that goes in the verdict;\
+    \ the bar stays as scored.\n\n$0. No network beyond the checkpoint already cached on the box, no provider.\n\
+    \"\"\"\n\nfrom __future__ import annotations\n\nimport argparse\nimport subprocess\nimport sys\nfrom\
+    \ pathlib import Path\n\nTAIL = (\"anime style, cel shading, detailed background, \"\n        \"masterpiece,\
+    \ best quality, very aesthetic\")\n\n# The house negative for this grid. It carries NO leaf-count\
+    \ and NO leaf-shape\n# word, deliberately: bar B5 asks whether the LoRA itself draws two ordinary\n\
+    # blades, and the dataset's own negative (\"three leaves, four leaves, many\n# leaves, extra stalk,\
+    \ branching stem, pointed lance leaves, lobed leaves...\")\n# would answer that on the LoRA's behalf.\
+    \ See train-sapling-0822.yaml step 3.\nNEG = (\"1boy, 1girl, people, goblin, text, watermark, signature,\
+    \ \"\n       \"photorealism, 3d render, low quality, worst quality, blurry\")\n\n# P4's whole question\
+    \ is a figure in frame, so `1boy` and `goblin` come OUT of\n# its negative and only its negative.\
+    \ Declared here rather than discovered in a\n# log later.\nNEG_P4 = (\"1girl, text, watermark, signature,\
+    \ \"\n          \"photorealism, 3d render, low quality, worst quality, blurry\")\n\nSEEDS = (20260822,\
+    \ 20260823, 20260824)\n\nPROMPTS = {\n    # id: (positive, negative)\n    \"P1\": (\"bnysapling, a\
+    \ young sapling, two leaves, 25 cm tall, medium shot, \"\n           \"bare tilled earth field, a\
+    \ low stone wall behind, overcast, \" + TAIL, NEG),\n    \"P2\": (\"bnysapling, a young sapling, two\
+    \ leaves, 15 cm tall, close-up, \"\n           \"in a clay pot on a windowsill, warm lamplight, indoor,\
+    \ \" + TAIL, NEG),\n    \"P3\": (\"bnysapling, a young sapling, two leaves, 90 cm tall, wide shot,\
+    \ \"\n           \"open green meadow, distant hills, clear sky, flat daylight, \" + TAIL, NEG),\n\
+    \    \"P4\": (\"bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, \"\n           \"\
+    a goblin crouching beside it, open green meadow, flat daylight, \" + TAIL, NEG_P4),\n    \"P5\": (\"\
+    bnysapling, a young sapling, two leaves, 25 cm tall, medium shot, \"\n           \"dry autumn grassland,\
+    \ brown grass, low sun, \" + TAIL, NEG),\n}\n\n# RECORDED, NOT GRADED. One seed. The manifest's leaf_count_values\
+    \ is 1 — every\n# training frame is two-leaf — so this measures where v1 stands on leaf-count\n# promptability\
+    \ and carries no pass or fail attached to it.\nPROBE = (\"bnysapling, a young sapling, four leaves,\
+    \ 40 cm tall, medium shot, \"\n         \"open green meadow, flat daylight, \" + TAIL, NEG)\n\n\n\
+    def main() -> int:\n    ap = argparse.ArgumentParser()\n    ap.add_argument(\"--lora\", required=True)\n\
+    \    ap.add_argument(\"--lora-weight\", default=\"0.8\")\n    ap.add_argument(\"--sampler\", required=True,\n\
+    \                    help=\"path to sample_lora.py — the one writer of the sidecar\")\n    ap.add_argument(\"\
+    --out-dir\", required=True)\n    ap.add_argument(\"--dry-run\", action=\"store_true\",\n         \
+    \           help=\"print the 16 cells and draw nothing\")\n    # WHY THIS FLAG EXISTS AND IS NOT DECORATION.\
+    \ box_enqueue.py's\n    # output_path_problems refuses any spec whose `artifacts:` names a file no\n\
+    \    # step's argv mentions -- because the runner's missing-artifact check is\n    # worthless if\
+    \ the list was carried over from another job. The cell names\n    # here are DERIVED (prompt id x\
+    \ seed), so nothing in the spec's argv would\n    # name them and the job could not be filed at all.\
+    \ Naming the sentinel cells\n    # on the command line satisfies that guard AND makes this script\
+    \ assert what\n    # it produced, which is strictly better than the spec asserting it alone.\n   \
+    \ ap.add_argument(\"--require\", nargs=\"*\", default=[],\n                    help=\"basenames that\
+    \ MUST exist when the grid finishes\")\n    a = ap.parse_args()\n\n    out = Path(a.out_dir)\n   \
+    \ cells = [(f\"{pid}-s{seed}\", pos, neg, seed)\n             for pid, (pos, neg) in PROMPTS.items()\n\
+    \             for seed in SEEDS]\n    cells.append((\"PROBE-fourleaf-s%d\" % SEEDS[0], PROBE[0], PROBE[1],\
+    \ SEEDS[0]))\n\n    if a.dry_run:\n        for name, pos, _neg, seed in cells:\n            print(f\"\
+    {name}  seed={seed}  {pos[:72]}...\")\n        print(f\"{len(cells)} cells\")\n        return 0\n\n\
+    \    out.mkdir(parents=True, exist_ok=True)\n    failed = []\n    for i, (name, pos, neg, seed) in\
+    \ enumerate(cells, 1):\n        dest = out / f\"{name}.png\"\n        argv = [sys.executable, a.sampler,\n\
+    \                \"--lora\", a.lora, \"--lora-weight\", str(a.lora_weight),\n                \"--prompt\"\
+    , pos, \"--negative\", neg,\n                \"--width\", \"832\", \"--height\", \"1216\",\n     \
+    \           \"--steps\", \"40\", \"--guidance\", \"7.5\",\n                \"--seed\", str(seed),\
+    \ \"--out\", str(dest)]\n        print(f\"[{i}/{len(cells)}] {name}\", flush=True)\n        rc = subprocess.call(argv)\n\
+    \        # A single bad cell must not throw away the fifteen that worked; the\n        # denominator\
+    \ is what the bars are scored on, so a missing cell is\n        # reported rather than silently reducing\
+    \ N.\n        if rc != 0 or not dest.exists():\n            failed.append(name)\n            print(f\"\
+    \   !! {name} did not render (rc={rc})\", flush=True)\n\n    print(f\"\\n{len(cells) - len(failed)}\
+    \ of {len(cells)} cells drawn -> {out}\")\n    if failed:\n        print(\"MISSING: \" + \", \".join(failed))\n\
+    \n    absent = [r for r in a.require if not (out / r).exists()]\n    if absent:\n        print(\"\
+    REQUIRED CELL ABSENT: \" + \", \".join(absent))\n\n    # Nonzero if the grid is too thin to score\
+    \ the bars at their stated\n    # denominators (15 graded cells + 1 probe), or if a sentinel is missing.\n\
+    \    return 0 if not failed and not absent else 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n"
