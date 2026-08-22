@@ -1,0 +1,30 @@
+#### job ep2-b13-lowerbody-crouch-0822-1787411945 attempt 1 start 2026-08-22T15:19:17Z
+
+==== step fetch START 2026-08-22T15:19:17Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b13lowerbodycrouch-0822\\fetch_init.py"]
+fetched jerry-seat-init-0822.png 808705 bytes sha 67ad5c8ba2082496780cdadbe93883835ae9df6e147b0663d9aafefb5e1323c9 OK
+fetched jerry-seat-mask-0822.png 1724 bytes sha 81357e39419054bd594f631e1de6f2c3f77de44b3239a0cb2acc2dc7b873919b OK
+Traceback (most recent call last):
+  File "C:\banyan-farm\b13lowerbodycrouch-0822\fetch_init.py", line 36, in <module>
+    raw = urllib.request.urlopen(
+          ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "C:\Users\artvn\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 404: Not Found
+==== step fetch END rc=1 2026-08-22T15:19:18Z ====
+#### job ep2-b13-lowerbody-crouch-0822-1787411945 finished rc=1 2026-08-22T15:19:18Z
