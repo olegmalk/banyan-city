@@ -291,3 +291,53 @@ jobs:
           done
           echo "::error::could not push the refreshed ledger after 5 tries"
           exit 1
+
+  # THE LIVE-DEPTH STRIP HAS A WATCHER NOW. Separate job on purpose: it must
+  # never be able to stop the ledger above from committing, and it checks a
+  # different failure entirely.
+  #
+  # /queue's depth chips are fetched by the reader's own browser from
+  # farm-telemetry-rtx5090, so no build makes them fresh and no build makes
+  # them stale — only the box's telemetry daemon does. On 2026-08-21T10:12Z
+  # that daemon's push started failing (a thin-pack delta base it could not
+  # read in its blobless clone; fixed with --no-thin in pipeline/telemetry.py)
+  # and kept failing every five minutes for 25 HOURS while sampling perfectly.
+  # The page said so the whole time — "the box has stopped publishing" — and
+  # the founder was the one who read it. The banner is the right words at the
+  # wrong time: it is a sign, and a sign needs someone standing in front of it.
+  # This job is the alarm. Hourly, so the worst case is ~1 h, not a day.
+  #
+  # Threshold 60 min against a 5-minute pulse: eleven missed publishes plus
+  # raw.githubusercontent's own few minutes of CDN cache. Nothing transient
+  # gets here, and a run that goes red is a real dead heartbeat every time.
+  telemetry-freshness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: the box is still publishing its queue depth
+        env:
+          URL: https://raw.githubusercontent.com/${{ github.repository }}/farm-telemetry-rtx5090/telemetry.json
+        run: |
+          curl -fsSL --retry 3 -H 'Cache-Control: no-cache' "$URL" > tel.json || {
+            echo "::error::farm-telemetry-rtx5090/telemetry.json is not fetchable"\
+                 "— /queue's live depth strip is showing nothing at all."
+            exit 1
+          }
+          python3 - <<'PY'
+          import json, sys, time
+          d = json.load(open("tel.json", encoding="utf-8"))
+          at = (d.get("queue") or {}).get("at") or d.get("at")
+          if not at:
+              print("::error::telemetry.json carries no timestamp — "
+                    "/queue cannot age it either"); sys.exit(1)
+          age = int(time.time() - at)
+          print(f"last reading {age // 60} min old")
+          if age > 3600:
+              print(f"::error::the rtx5090 telemetry daemon has not published for "
+                    f"{age // 60} min. /queue's live depth strip is stale and says "
+                    f"so to every visitor. On the box: check the tail of "
+                    f"C:\\banyan-farm\\telemetry.log — the daemon samples happily "
+                    f"while its git push fails, so 'the task is Running' proves "
+                    f"nothing.")
+              sys.exit(1)
+          PY

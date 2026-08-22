@@ -1235,13 +1235,29 @@ def publish(obj: dict = None) -> str:
     if not commit:
         log("commit-tree failed")
         return ""
-    args = ["push"]
+    # --no-thin IS LOAD-BEARING IN A PARTIAL CLONE. A thin push deltas the new
+    # blob against an object it believes the remote already has — and here the
+    # obvious candidate is an OLDER telemetry.json, which in a blobless clone we
+    # do not have. pack-objects then tries to lazy-fetch its own delta base,
+    # GIT_NO_LAZY_FETCH (see git()) correctly refuses, and the pack stream stops
+    # mid-object; the remote reports the truncation as `fatal: early EOF` /
+    # `remote unpack failed: index-pack failed`, which reads like a rejected push
+    # and is nothing of the kind. That is how the telemetry branch died at
+    # 2026-08-21T10:12Z and stayed dead for 25 hours while the daemon sampled,
+    # distilled and retried every five minutes, perfectly healthy, into a wall.
+    # The payload is one 50 KB json — there is no delta worth having.
+    args = ["push", "--no-thin"]
     if lease:
         args.append(f"--force-with-lease=refs/heads/{BRANCH}:{lease}")
     r = git(*(args + ["origin", f"{commit}:refs/heads/{BRANCH}"]))
     if r.returncode:
-        log(f"push rejected (branch moved — retrying next cycle): "
-            f"{(r.stderr or r.stdout).strip()[-300:]}")
+        # 900, not 300: the 25-hour outage above was diagnosable in one line —
+        # `fatal: could not fetch <sha> from promisor remote` — and 300
+        # characters of tail cut that line off and left only the remote's
+        # confusing `early EOF`. Never truncate a push failure to the part the
+        # remote wrote; the local half is where the cause lives.
+        log(f"push failed (retrying next cycle): "
+            f"{(r.stderr or r.stdout).strip()[-900:]}")
         return ""
     return commit
 
