@@ -24,6 +24,43 @@
 # THIS DOES NOT RE-GRADE ANYTHING. B3 was pre-registered and scored at 0.8 and
 # stays scored at 0.8. This is a later, separate measurement whose output is a
 # recommended weight for the NEXT run. Bars tighten forward only.
+#
+# ══════════════════════════════════════════════════════════════════════════
+# ███ 2026-08-22, AFTER v2c: THIS SPEC HAS RUN, AND IT RAN ON THE WRONG   ███
+# ███ CHECKPOINT. DO NOT RE-FILE IT AS IT STANDS.                          ███
+#
+# Every path below names `lora-sapling-0822\out\bnysapling-sdxl-v1.safetensors`.
+# That was correct when it was written -- v1 was the only checkpoint that
+# existed -- and the job ran to completion against it. It is no longer the
+# checkpoint anyone would ship.
+#
+# v2c (registry.yaml, THE REPEAT CUT) is the first run to pass BOTH subject
+# bars: identity 14/15 against v1's 11/15, and leaf count 14/15, tying v1 and
+# beating v2/v2b's 11/15. It gives nothing back -- every control held and no
+# bar sits below where v1 left it. It supersedes v1 as the reference.
+#
+# AND THE LADDER IS NOW THE ONLY LEVER LEFT. The dataset ladder is finished: v2
+# asked whether more frames fix the scene bars (no), v2b asked which half of
+# the cost was captions (the identity half, all of it), v2c asked whether the
+# rest was training volume (yes, all of it). Both regressions are explained and
+# closed and the new frames are exonerated. B3 has now failed at weight 0.8
+# across FOUR runs, three datasets, two caption schemes and two training
+# volumes, which is the fourth independent confirmation of v2b's ruling that B3
+# is not a dataset bar. A rung sweep is what is left.
+#
+# TO RE-POINT IT: swap `lora-sapling-0822` -> `lora-sapling-v2c-0822` and
+# `bnysapling-sdxl-v1` -> `bnysapling-sdxl-v2c` throughout, exactly as
+# bars-v2c-sapling-0822.yaml was derived from bars-v2b by string swap and
+# nothing else -- the rungs, prompts and seeds must not be re-picked or the
+# curve stops being comparable to this one. Note the free-endpoint trick in the
+# paragraph above does NOT carry: v2c's 0.8 and 0.0 frames exist (the training
+# job's own no-regression pair, same seed), so check they match this spec's
+# seed before assuming the endpoints are free.
+#
+# NOT DONE HERE, DELIBERATELY. This is a SET of eight cells, the standing rule
+# is one sample before any batch, and re-pointing a spent spec at a new
+# checkpoint is a recipe change. Its gate is a single rung drawn and looked at.
+# ══════════════════════════════════════════════════════════════════════════
 
 id: lora-sapling-ladder-0822
 task: lora-sapling-ladder-0822
