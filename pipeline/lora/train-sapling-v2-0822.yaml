@@ -178,6 +178,51 @@ why: 'THE v1 SCORE, AND IT IS THE ONLY ARGUMENT THIS RUN NEEDS.
 
 est_minutes: 60
 
+# ── THE THREE DEFECTS THE v1 RUN FILED, CARRIED HERE SO THIS RUN CANNOT REPEAT
+# THEM. All three are handover items from the lane that trained v1, and each is
+# a one-line fact with a place in this file where it is either already true or
+# now made true.
+#
+#   1. `min_bucket_reso` IS 832, NOT 1024. sd-scripts asserts
+#      min(resolution) >= min_bucket_reso before loading a weight and
+#      min(832,1216) is 832. v1 died on this in fifteen seconds with a clean
+#      dataset behind it. Inherited correct here; the full write-up is in the
+#      block above the `train` step. The identical landmine in
+#      train-jerry-0820.yaml was fixed on 2026-08-22 by this lane.
+#   2. `peft` IS INSTALLED WITH --no-deps AND ONLY WITH --no-deps. diffusers
+#      0.29.2 gates ALL LoRA loading behind USE_PEFT_BACKEND, so the `sample`
+#      step below cannot run without it -- v1 trained cleanly for twenty
+#      minutes and then died in nine seconds on its absence. It is present on
+#      the box as of 2026-08-22 (peft==0.12.0, installed --no-deps; the pip
+#      freeze differed by exactly one line and torch stayed 2.11.0+cu128). A
+#      bare `pip install peft` would resolve its own torch and break every
+#      render on the card, which is why the flag is part of the fact.
+#   3. NEVER GLOB *.safetensors INTO farm-out WITHOUT THE IGNORE IN PLACE. A
+#      rank-32 SDXL checkpoint is 228 MB, not the ~35 MB research §5 claims
+#      (that is the SD1.5 number, wrong by 6.5x), GitHub hard-rejects any blob
+#      over 100 MiB, and the courier commits farm-out before pushing -- so one
+#      of these would leave a permanently unpushable commit and stop EVERY
+#      lane's results reaching the tree. The publish step below DOES still glob
+#      them, deliberately: the weights are wanted on the box's farm-out so their
+#      shas can be read, and `.gitignore:96` (`farm-out/**/*.safetensors`) is
+#      what stops them travelling. VERIFIED FOR THIS RUN with
+#      `git check-ignore -v farm-out/lora-sapling-0822/bnysapling-sdxl-v2.safetensors`
+#      -> matched by .gitignore:96. The sha256s are the durable half and they go
+#      in registry.yaml.
+#
+# AND ONE DEFECT THIS FILE HAD OF ITS OWN, FOUND BY READING IT AGAINST THAT
+# HANDOVER. The publish step's destination was inherited as
+# `courier-box\farm-out\lora-sapling-0822` -- V1'S DIRECTORY -- because the
+# v1->v2 path rewrite matched `C:\banyan-farm\lora-sapling-0822` and this
+# string does not contain it. It would have written v2's samples and a
+# `lora-sapling-0822.sha256` over v1's published evidence. Fixed to
+# `lora-sapling-v2-0822` here. THE RUN THAT IS ALREADY ON THE CARD CARRIES THE
+# OLD VALUE, because a queued job runs its own snapshot: its outputs will land
+# in the v1 directory and that is recorded rather than renamed, on the same
+# rule the sapnat4 misfiling was settled under -- the producing job's manifest
+# is the authority and a spec edited to describe a run it did not produce is
+# the worse lie.
+
 needs:
 - cuda
 - vram20
@@ -542,7 +587,7 @@ steps:
   - -c
   - |
     import glob, hashlib, os, shutil
-    dst = r"C:\banyan-farm\courier-box\farm-out\lora-sapling-0822"
+    dst = r"C:\banyan-farm\courier-box\farm-out\lora-sapling-v2-0822"
     os.makedirs(dst, exist_ok=True)
     src = sorted(glob.glob(r"C:\banyan-farm\lora-sapling-v2-0822\out\*.safetensors")
                  + glob.glob(r"C:\banyan-farm\lora-sapling-v2-0822\out\SAMPLE-*.png")
@@ -552,7 +597,7 @@ steps:
         shutil.copy2(f, dst)
         with open(os.path.join(dst, os.path.basename(f)), "rb") as fh:
             lines.append(hashlib.sha256(fh.read()).hexdigest() + "  " + os.path.basename(f))
-    with open(os.path.join(dst, "lora-sapling-0822.sha256"), "w", newline="\n") as fh:
+    with open(os.path.join(dst, "lora-sapling-v2-0822.sha256"), "w", newline="\n") as fh:
         fh.write("\n".join(lines) + "\n")
     print("published", len(src), "file(s) ->", dst)
     raise SystemExit(0 if len(src) >= 4 else 1)
