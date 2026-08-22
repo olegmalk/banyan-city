@@ -4442,3 +4442,4 @@
 07:54:49Z DONE task=ep3-saplora-figg7-0822-1787385094 rc=0 artifacts=1
 07:54:55Z STARTED task=ep3-saplora-figg8-0822-1787385098 attempt=1 on box-runner
 07:55:23Z DONE task=ep3-saplora-figg8-0822-1787385098 rc=0 artifacts=1
+07:59:28Z box-runner idle ready=0 failed=92
