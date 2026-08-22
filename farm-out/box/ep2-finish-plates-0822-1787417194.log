@@ -1,0 +1,200 @@
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b05.png.meta.yaml
+rc=0 render_s=3.8
+==== step b05 END rc=0 2026-08-22T16:47:45Z ====
+
+==== step b06 START 2026-08-22T16:47:45Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\guard1-canon-founder-0822.png", "--init-sha256", "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b06.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260905", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b06.png", "--note", "EP2 FINISH PLATE B06. THE CLIPBOARD. The bark board itself is an INPAINT step with its own quad mask -- four wording attempts closed the wording lever on that prop's geometry, so it is not asked for here.  ROUTE: img2img off the founder's own canon at strength 0.30 -- his face is the init's pixels, not a generation. Light and framing are the prompt's job; POSE IS THE CANON'S and does not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22)."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:03,  1.86it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:02<00:05,  1.17s/it]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:02<00:02,  1.39it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  3.72it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.83it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b06.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b06-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b06.png.meta.yaml
+rc=0 render_s=3.8
+==== step b06 END rc=0 2026-08-22T16:47:58Z ====
+
+==== step b07 START 2026-08-22T16:47:58Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\guard1-canon-founder-0822.png", "--init-sha256", "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b07.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260906", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b07.png", "--note", "EP2 FINISH PLATE B07. CONFISCATE. The pointing arm is motion; the partner's shoulder at frame edge is a composite.  ROUTE: img2img off the founder's own canon at strength 0.30 -- his face is the init's pixels, not a generation. Light and framing are the prompt's job; POSE IS THE CANON'S and does not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22)."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00, 11.39it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:01<00:01,  1.91it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.94it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.90it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b07.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b07-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b07.png.meta.yaml
+rc=0 render_s=3.7
+==== step b07 END rc=0 2026-08-22T16:48:10Z ====
+
+==== step b08g START 2026-08-22T16:48:10Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\goblin-canon-founder-0821.png", "--init-sha256", "b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b08g.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260907", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b08g.png", "--note", "EP2 FINISH PLATE B08G. INSIDE HIM, the GOBLIN HALF. Two-character beat: this plate is composited with the guard plate below by integer translation, which is the proven pattern -- neither figure is generated twice.  ROUTE: img2img off the founder's own canon at strength 0.30 -- his face is the init's pixels, not a generation. Light and framing are the prompt's job; POSE IS THE CANON'S and does not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22)."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00, 13.69it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00, 12.80it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  1.88it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.82it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b08g.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b08g-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b08g.png.meta.yaml
+rc=0 render_s=3.7
+==== step b08g END rc=0 2026-08-22T16:48:24Z ====
+
+==== step b09 START 2026-08-22T16:48:24Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\guard1-canon-founder-0822.png", "--init-sha256", "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b09.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260908", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b09.png", "--note", "EP2 FINISH PLATE B09. THE PAUSE. Entirely a face beat, and the face is the guard canon's own pixels at 0.30.  ROUTE: img2img off the founder's own canon at strength 0.30 -- his face is the init's pixels, not a generation. Light and framing are the prompt's job; POSE IS THE CANON'S and does not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22)."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  3.42it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:02<00:03,  1.20it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.41it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.87it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b09.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b09-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b09.png.meta.yaml
+rc=0 render_s=3.7
+==== step b09 END rc=0 2026-08-22T16:48:36Z ====
+
+==== step b10 START 2026-08-22T16:48:36Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\guard1-canon-founder-0822.png", "--init-sha256", "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b10.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260909", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b10.png", "--note", "EP2 FINISH PLATE B10. NO FORM. The founder's named fault here was TWO DISTINCT OBJECTS, which is a plate-side separation problem -- the board and its blank back are inpainted separately onto this plate.  ROUTE: img2img off the founder's own canon at strength 0.30 -- his face is the init's pixels, not a generation. Light and framing are the prompt's job; POSE IS THE CANON'S and does not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22)."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:01<00:04,  1.14it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:01<00:01,  2.34it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.34it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.72it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b10.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b10-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b10.png.meta.yaml
+rc=0 render_s=3.7
+==== step b10 END rc=0 2026-08-22T16:48:49Z ====
+
+==== step b11 START 2026-08-22T16:48:49Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\guard1-canon-founder-0822.png", "--init-sha256", "420fc2c0238eb9b4f5a615cde09ed3639ffc5cc92bfbe990a9c14686329a809a", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b11.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260910", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b11.png", "--note", "EP2 FINISH PLATE B11. THEY LEAVE. Same one-plate-two-translations composite as b05.  ROUTE: img2img off the founder's own canon at strength 0.30 -- his face is the init's pixels, not a generation. Light and framing are the prompt's job; POSE IS THE CANON'S and does not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22)."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  3.83it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00,  6.86it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.03it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.81it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b11.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b11-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b11.png.meta.yaml
+rc=0 render_s=3.8
+==== step b11 END rc=0 2026-08-22T16:49:02Z ====
+
+==== step b14 START 2026-08-22T16:49:02Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\goblin-canon-founder-0821.png", "--init-sha256", "b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b14.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260911", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b14.png", "--note", "EP2 FINISH PLATE B14. THE DEFENSE. Hands in dirt is motion; the plate is the low framing and the ground.  ROUTE: img2img off the founder's own canon at strength 0.30 -- his face is the init's pixels, not a generation. Light and framing are the prompt's job; POSE IS THE CANON'S and does not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22)."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:03,  1.90it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00,  4.56it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:00<00:00,  7.33it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.44it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.88it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b14.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b14-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b14.png.meta.yaml
+rc=0 render_s=3.8
+==== step b14 END rc=0 2026-08-22T16:49:15Z ====
+
+==== step b15 START 2026-08-22T16:49:15Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\goblin-canon-founder-0821.png", "--init-sha256", "b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b15.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260912", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b15.png", "--note", "EP2 FINISH PLATE B15. GOOD LISTENER. Scripted as a sit -- filed here STANDING and flagged: if the sit is load-bearing for the founder this beat routes to the v3 seat cell like b13 does, and that is a swap, not a re-render.  ROUTE: img2img off the founder's own canon at strength 0.30 -- his face is the init's pixels, not a generation. Light and framing are the prompt's job; POSE IS THE CANON'S and does not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22)."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  43%|████▎     | 3/7 [00:01<00:02,  1.76it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:01<00:00,  3.52it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.02it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.85it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b15.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b15-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b15.png.meta.yaml
+rc=0 render_s=3.8
+==== step b15 END rc=0 2026-08-22T16:49:28Z ====
+
+==== step b17 START 2026-08-22T16:49:28Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\goblin-canon-founder-0821.png", "--init-sha256", "b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b17.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260913", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b17.png", "--note", "EP2 FINISH PLATE B17. GOODBYE. The beat's own action IS standing up and turning away, so the canon's posture is the beat's posture.  ROUTE: img2img off the founder's own canon at strength 0.30 -- his face is the init's pixels, not a generation. Light and framing are the prompt's job; POSE IS THE CANON'S and does not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22)."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:01,  3.55it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:02<00:01,  1.69it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:02<00:00,  2.23it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.74it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.85it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b17.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b17-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b17.png.meta.yaml
+rc=0 render_s=3.7
+==== step b17 END rc=0 2026-08-22T16:49:41Z ====
+
+==== step b19 START 2026-08-22T16:49:41Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\goblin-canon-founder-0821.png", "--init-sha256", "b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b19.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260914", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b19.png", "--note", "EP2 FINISH PLATE B19. THE DROP. He is walking away and stopping mid-step; the plate is him and the amber field, the fruit and the bounce are composited and animated.  ROUTE: img2img off the founder's own canon at strength 0.30 -- his face is the init's pixels, not a generation. Light and framing are the prompt's job; POSE IS THE CANON'S and does not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22)."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:01<00:10,  1.74s/it]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:01<00:04,  1.20it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:02<00:01,  2.05it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  4.23it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.64it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b19.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b19-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b19.png.meta.yaml
+rc=0 render_s=3.7
+==== step b19 END rc=0 2026-08-22T16:49:54Z ====
+
+==== step b20 START 2026-08-22T16:49:54Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\ep2-finish-plates-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\ep2-finish-plates-0822\\goblin-canon-founder-0821.png", "--init-sha256", "b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00", "--mask-png", "C:\\banyan-farm\\ep2-finish-plates-0822\\fullframe-mask-0822.png", "--strength", "0.30", "--pad-crop", "0", "--blur", "8", "--prompt-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\prompt-b20.txt", "--negative-file", "C:\\banyan-farm\\ep2-finish-plates-0822\\negative.txt", "--steps", "40", "--cfg", "7.5", "--seed", "20260915", "--out", "C:\\banyan-farm\\ep2-finish-plates-0822\\out\\b20.png", "--note", "EP2 FINISH PLATE B20. EVIDENCE. Scripted as a crouch. Filed standing, flagged the same way as b15: the crouch exists as a v3 posed frame if the founder needs it.  ROUTE: img2img off the founder's own canon at strength 0.30 -- his face is the init's pixels, not a generation. Light and framing are the prompt's job; POSE IS THE CANON'S and does not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22)."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  14%|█▍        | 1/7 [00:00<00:01,  5.44it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:00<00:00, 14.87it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:02<00:00,  2.04it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.90it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b20.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b20-mask.png
+WROTE C:\banyan-farm\ep2-finish-plates-0822\out\b20.png.meta.yaml
+rc=0 render_s=3.7
+==== step b20 END rc=0 2026-08-22T16:50:08Z ====
+
+==== step publish START 2026-08-22T16:50:08Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "\nimport hashlib, glob, os, shutil\nOUT = \"C:/banyan-farm/ep2-finish-plates-0822/out\"\nDST = \"C:/banyan-farm/courier-box/farm-out/ep2-finish-plates-0822\"\nos.makedirs(DST, exist_ok=True)\nn = 0\nfor p in sorted(glob.glob(OUT + \"/*.png\")) + sorted(\n        glob.glob(OUT + \"/*.png.meta.yaml\")):\n    if os.path.isfile(p):\n        shutil.copyfile(p, os.path.join(DST, os.path.basename(p)))\n        n += 1\nwith open(os.path.join(DST, \"ep2-finish-plates-0822.sha256\"), \"w\", encoding=\"utf-8\") as fh:\n    for name in sorted(os.listdir(DST)):\n        q = os.path.join(DST, name)\n        if os.path.isfile(q) and not name.endswith(\".sha256\"):\n            fh.write(\"%s  %s\" % (\n                hashlib.sha256(open(q, \"rb\").read()).hexdigest(), name) + chr(10))\nprint(\"published\", n, \"file(s) ->\", DST, flush=True)\nif n == 0:\n    raise SystemExit(\"NOTHING TO PUBLISH -- the plate pass produced no files\")\n"]
+published 45 file(s) -> C:/banyan-farm/courier-box/farm-out/ep2-finish-plates-0822
+==== step publish END rc=0 2026-08-22T16:50:08Z ====
+#### job ep2-finish-plates-0822-1787417194 finished rc=0 2026-08-22T16:50:08Z

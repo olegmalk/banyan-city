@@ -1,0 +1,42 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 0.3
+seed: 20260914
+padding_mask_crop: null
+mask_blur_factor: 8
+init_image: C:/banyan-farm/ep2-finish-plates-0822/goblin-canon-founder-0821.png
+init_sha256: b62f333644c2f3161c0d5933f122f32c46c7608d1a97f758f3c53e4692eb4f00
+mask_png: b19-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/ep2-finish-plates-0822/fullframe-mask-0822.png
+mask_png_sha256: 5cb2f709bfa7eab1aae0ffebb398fefd5224a6da61e5a730779322a84321894b
+mask_white_px: 1011712
+mask_bbox_px: [0, 0, 831, 1215]
+mask_width_frac: 0.9988
+mask_height_frac: 0.9992
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-22T16:49:53Z
+render_seconds: 3.7
+wall_seconds: 9.6
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  EP2 FINISH PLATE B19. THE DROP. He is walking away and stopping mid-step; the plate is him and the amber field, the fruit and the bounce are composited and animated.  ROUTE: img2img off the founder's own canon at strength 0.30 -- his face is the init's pixels, not a generation. Light and framing are the prompt's job; POSE IS THE CANON'S and does not move at this strength. No LoRA, no ControlNet, no face tags (route_closure_2026_08_22).
+prompt: |-
+  a small green goblin standing in amber afternoon grass, wide shot, long warm light, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  lowres, worst quality, low quality, text, watermark, photorealism, 3d render, blurry, 2boys, multiple heads
