@@ -1,0 +1,92 @@
+{
+  "id": "lora-jerry-v2-tp1day-0822-1787403331",
+  "task": "lora-jerry-v2-tp1day-0822",
+  "node": "002b-first-citizen",
+  "beat": null,
+  "worker": "box-runner",
+  "priority": 65,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "fetch",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\lora-jerry-v2-tp1day-0822\\fetch_hints.py"
+      ]
+    },
+    {
+      "name": "tp1day-b13seat",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\lora-jerry-v2-tp1day-0822\\inpaint_fruit.py",
+        "--init",
+        "C:\\banyan-farm\\lora-jerry-v2-tp1day-0822\\jerry-poseproof-init-0822.png",
+        "--init-sha256",
+        "79c80689a43452f8fc11d22c2da86aee1c0a073d2255ddf1cb1d3cdc446f5f7f",
+        "--mask-png",
+        "C:\\banyan-farm\\lora-jerry-v2-tp1day-0822\\jerry-poseproof-maskall-0822.png",
+        "--strength",
+        "1.0",
+        "--pad-crop",
+        "0",
+        "--blur",
+        "0",
+        "--controlnet",
+        "C:\\banyan-farm\\cnet-openpose-twins",
+        "--control",
+        "C:\\banyan-farm\\lora-jerry-v2-tp1day-0822\\jerry-skel-h240seat-0821.png",
+        "--control-sha256",
+        "1e95abc723f366f2e8c6b486937cfe8709edcbe2d8af0186fa82461c8e792686",
+        "--scale",
+        "1.0",
+        "--prompt-file",
+        "C:\\banyan-farm\\lora-jerry-v2-tp1day-0822\\prompt.txt",
+        "--negative-file",
+        "C:\\banyan-farm\\lora-jerry-v2-tp1day-0822\\negative.txt",
+        "--steps",
+        "40",
+        "--cfg",
+        "7.5",
+        "--seed",
+        "20260822",
+        "--out",
+        "C:\\banyan-farm\\lora-jerry-v2-tp1day-0822\\out\\tp1day-b13seat.png",
+        "--note",
+        "PASS ONE, RELIT. No LoRA -- this plate exists to carry a POSE and a LIGHT, and pass two puts bnyjerry into it. Identical to round six's control cell, which drew a correct h240seat stance, except that the prompt now names the flat overcast daylight the founder's canon frame is lit by. The i2i route re-lights and does not re-ground, so pass two inherits this light -- which is why the mauve skin is fixed here."
+      ]
+    },
+    {
+      "name": "publish",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "-c",
+        "\nimport hashlib, glob, os, shutil\nOUT = \"C:/banyan-farm/lora-jerry-v2-tp1day-0822/out\"\nDST = \"C:/banyan-farm/courier-box/farm-out/lora-jerry-v2-tp1day-0822\"\nos.makedirs(DST, exist_ok=True)\nn = 0\nfound = []\nfound += sorted(glob.glob(OUT + \"/*.png\"))\nfound += sorted(glob.glob(OUT + \"/*.png.meta.yaml\"))\nfor p in found:\n    if os.path.isfile(p):\n        shutil.copyfile(p, os.path.join(DST, os.path.basename(p)))\n        n += 1\nwith open(os.path.join(DST, \"lora-jerry-v2-tp1day-0822.sha256\"), \"w\", encoding=\"utf-8\") as fh:\n    for name in sorted(os.listdir(DST)):\n        q = os.path.join(DST, name)\n        if os.path.isfile(q) and not name.endswith(\".sha256\"):\n            fh.write(\"%s  %s\" % (\n                hashlib.sha256(open(q, \"rb\").read()).hexdigest(), name) + chr(10))\nprint(\"published\", n, \"file(s) ->\", DST, flush=True)\nif n == 0:\n    raise SystemExit(\"NOTHING TO PUBLISH -- the sample produced no files\")\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\courier-box\\farm-out\\lora-jerry-v2-tp1day-0822\\lora-jerry-v2-tp1day-0822.sha256"
+  ],
+  "spec_sha256": "8c1b2f0ccfc9ff85c2375f96213ed2eed5fe383fe3694174fa75bba5716dfdca",
+  "started_at": "2026-08-22T12:55:43Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-22T12:56:07Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\courier-box\\farm-out\\lora-jerry-v2-tp1day-0822\\lora-jerry-v2-tp1day-0822.sha256"
+  ]
+}
