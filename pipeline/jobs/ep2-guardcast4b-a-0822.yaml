@@ -1,0 +1,201 @@
+id: ep2-guardcast4b-a-0822
+task: ep2-guardcast4b-a-0822
+node: 002b-first-citizen
+beat: 6
+runner: box
+priority: 6
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: guard lane, 2026-08-22 -- round 4, filed on the founder's round-3 note that the men came back too
+  old
+consumer: 'THE FOUNDER, on /review/ep2-guardcast2-0822, which this round UPDATES in place -- round 4 on
+  top, round 3 collapsed and greyed beneath it so the age comparison he is owed survives on one page.
+  He is actively reviewing. Nothing downstream consumes these frames until he picks: no beat plate, no
+  motion job, no clip, and review/ep2-ship-0821 is untouched.'
+success: 'ONE 832x1216 png at the seed named in this spec, scored AT 1:1 and by eye, never by a metric.
+  THE ROUND''S OWN CLAUSE, and it cuts BOTH WAYS, which is new: (0) HE IS A YOUNG ADULT MAN IN HIS TWENTIES.
+  The founder''s words on round 3 were "the new guard generations look a bit like tooo grown adults".
+  A middle-aged read is now a DROP -- moustache, grey, jowls, receding hairline, crow''s feet, forty-year-old
+  skin -- and a TEENAGER is still a DROP, no softer than before. The age anchor is a picture and not a
+  word: taste/refs/guard1-canon-founder-0822.png, the guard the founder himself ruled in. Young, but unmistakably
+  a man. (0b) THE SILHOUETTE HOLDS HIM ADULT: shoulder width against jaw width, and a thick neck. A narrow-shouldered,
+  thin-necked young man is a teen and is dropped however good the face is -- this arm loads no ControlNet,
+  so nothing but the words is pinning his frame. THE STANDING BAR, repeated term for term rather than
+  referenced because a bar that lives in another spec is a bar nobody reads: (1) NO EFFECT SYMBOL ANYWHERE
+  ON THE FACE -- no sweat drop, no steam or sigh puff, no dizzy spiral, no drool or foam bead, no sparkle,
+  no bubble; round 3 bought this and round 4 does not hand it back. (2) ONE MAN alone in frame -- child
+  or female is a DROP; (3) the face reads DUMB at a glance -- slack, blank, gormless ("they should look
+  like grown men. yes. dumb grown men") -- read as ANATOMY, not as an expression label; (4) DETAILED CINEMATIC
+  ANIME, the look of taste/refs/guard1-canon-founder-0822.png; a flat or muted tag-sheet look is a fail;
+  (5) NO GLASSES and NO HAND in frame; (6) cream shirt collar and white shoulder sash read as the costume
+  family; (7) head and shoulders, face toward the lens, real grass-and-hedgerow background; (8) HE IS
+  NOT GUARD 1. PRE-REGISTERED FAIL MODES: the age clause taking the shoulders with it and delivering a
+  schoolboy, which is what the silhouette clause above is watched for and is read on the CONTACT SHEET
+  rather than on any single frame; and the hand-on-face prior round 3 bought with `raised eyebrows`, which
+  is why a, b, d, h, j each carry a recovery draw at offset 40 that swaps that one term for `thick eyebrows`.'
+why: 'GUARD 2, CELL A OF TEN, AGE DOWN TO THE TWENTIES: thick dark brown hair, heavy square jaw, thick
+  neck. The founder''s round-3 verdict was "the new guard generations look a bit like tooo grown adults",
+  and round 3 was asked for exactly that -- it opens `a grown guard man, mature male face` and its cells
+  carry moustache, grey streaks, stubble and a receding hairline. ONE CLAUSE MOVES: that head clause becomes
+  ''a young guard man, early twenties, adult male build, broad shoulders'', which takes the years off
+  and puts the adult frame back on in the same breath, because this arm loads no ControlNet and words
+  are the only thing pinning his stature. The five middle-aged CELL clauses are re-cut with it (b, d,
+  f, g here; see the file) since a young head clause fighting a jowly cell clause loses. Negative and
+  expression string are INHERITED byte for byte -- they are what fixed his last complaint about gas and
+  liquid on the faces and they are not reopened. Seed 20260725 is 2B''s and round 3''s cell-A seed, so
+  this frame is a true A/B against the one he is looking at. $0, local card. Full reasoning in pipeline/derive_guardcast4_0822.py.'
+est_minutes: 2
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-guardcast4b-a-0822\prompt.txt: 1boy, a young guard man, early twenties, adult male
+    build, broad shoulders, thick dark brown hair, heavy square jaw, thick neck, slack open mouth, raised
+    eyebrows, dull half-closed eyes, close on his face, cream shirt collar, white shoulder sash, tall
+    grass, hedgerow behind, cinematic lighting, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-guardcast4b-a-0822\negative.txt: sweatdrop, steam, sigh, spiral eyes, dizzy, speech
+    bubble, sparkle, drool, girl, child, teenager, glasses, hands, photorealistic, 3d render, realistic
+    skin texture, blurry, low quality, jpeg artifacts, deformed, extra limbs, text, watermark, clipboard,
+    armor, helmet, white background, dark, night
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
+    \nroot = r\"C:\\banyan-farm\\ep2-guardcast4b-a-0822\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")]\n\
+    for name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
+    \ + \"pipeline/\" + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
+    \    if got != sha:\n        raise SystemExit(\"!! %s sha %s, wanted %s\" % (name, got, sha))\n  \
+    \  with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n    print(\"staged\"\
+    , name, got[:12])\n"
+- name: cast
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-guardcast4b-a-0822\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\ep2-guardcast4b-a-0822\src
+  - --task
+  - ep2-guardcast4b-a-0822
+  - --arm
+  - nocontrol
+  - --seed
+  - '20260725'
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --prompt-file
+  - C:\banyan-farm\ep2-guardcast4b-a-0822\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\ep2-guardcast4b-a-0822\negative.txt
+  - --out
+  - C:\banyan-farm\ep2-guardcast4b-a-0822\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The courier pushes from farm-out and from nowhere else.\n# The CONDITIONS travel with the frame:\
+    \ prompt and negative go too, so\n# the sheet can be re-read months from now without this spec in\
+    \ hand.\nimport glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-guardcast4b-a-0822\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(\"C:/banyan-farm/ep2-guardcast4b-a-0822/out/ep2-guardcast4b-a-0822-nocontrol.png*\"\
+    )\n               + glob.glob(\"C:/banyan-farm/ep2-guardcast4b-a-0822/prompt.txt\")\n            \
+    \   + glob.glob(\"C:/banyan-farm/ep2-guardcast4b-a-0822/negative.txt\"))\nlines = []\nfor f in files:\n\
+    \    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\"\
+    ) as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \"\n                  \
+    \   + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-guardcast4b-a-0822.sha256\"), \"w\"\
+    , newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 3 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-guardcast4b-a-0822\out\ep2-guardcast4b-a-0822-nocontrol.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. A STILL CASTING PLATE on an approved node: no voice, no motion, no episode assembly, no
+  publication.'
+script_line: 'Beat 06 THE CLIPBOARD: guard 2, the one with the bark board. Head and shoulders, no prop
+  -- the question is his FACE.'
+age_anchor: 'taste/refs/guard1-canon-founder-0822.png -- the founder''s own guard 1, ruled in by him.
+  He is the age target for guard 2 and the only one: not a word, not a tag, a picture. Judge every frame
+  of this round against it at 1:1 and drop in BOTH directions.'
+cell: 'round 4, cell A of ten. Sheet: /review/ep2-guardcast2-0822. Reasoning: pipeline/derive_guardcast4_0822.py.'
+one_sample_rule: 'CELL A IS THE SAMPLE AND IT IS FILED FIRST, and the box runs its queue in order. This
+  is a recipe change -- the head clause that reaches CLIP moves -- so the rule applies rather than being
+  waived. The fourteen behind it are filed in the same batch because the whole batch is about seven card-minutes
+  at $0 and the founder is at the page now, but the gate is real: cell A is judged at 1:1 the moment it
+  lands and if the age clause produced a teenager the queued remainder is PULLED, not published.'
+recipe_trace: 'pipeline/jobs/ep2-guardcast3-a-0822.yaml with ONE clause of the positive replaced -- `a
+  grown guard man, mature male face` -> ''a young guard man, early twenties, adult male build, broad shoulders''
+  -- plus the age re-cut of the cell clause. Negative INHERITED unchanged from round 3. Driver pipeline/controlnet_plate.py
+  sha ece54f687d892d1f, fetched and sha-checked before a GPU second is spent; --control unset so no ControlNet
+  loads, no --ip-ref passed so no adapter loads. Both strings MEASURED on animagine''s own vocab with
+  pipeline/clip_token_count.py: positive 75 of 77, negative 73 of 77, nothing dropped.'
+seed_note: 'Seeds are the sheet''s own arithmetic, unchanged for a third round: SEED_BASE + index*1000,
+  i.e. 20260725 for cell A and 20261725..20269725 for B..J -- IDENTICAL to rounds 2B and 3 cell for cell,
+  which is what makes round 4 an A/B on AGE rather than fifteen unrelated pictures. The five hand-prior
+  cells (a, b, d, h, j) each carry one recovery draw at offset 40, clear of 2B''s 0..9, 2D''s 10 and 20
+  and round 3''s 30.'
+superseded_sample: 'pipeline/jobs/ep2-guardcast4-g-0822.yaml -- filed to test `raised eyebrows` -> `thick
+  eyebrows` and never fired. It is NOT enqueued: it carries round 3''s middle-aged head clause and would
+  answer a question about a man the founder has rejected. Its variable is folded into this round''s five
+  recovery draws at offset 40 instead.'
+derivation:
+  parent: pipeline/jobs/ep2-guardcast3-a-0822.yaml
+  by: pipeline/derive_guardcast4_0822.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - age_anchor
+  - cell
+  - consumer
+  - one_sample_rule
+  - owner
+  - recipe_trace
+  - seed_note
+  - success
+  - superseded_sample
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - one_sample_rule
+  - recipe_trace
+  - seed_note
+  retokened:
+  - ep2-guardcast3-a-0822 -> ep2-guardcast4b-a-0822
+  - ep2-guardcast3-a-0822 -> ep2-guardcast4b-a-0822
+  overrides_applied_and_asserted:
+    payload:prompt.txt:
+    - payload prompt.txt (304 -> 337 chars)
