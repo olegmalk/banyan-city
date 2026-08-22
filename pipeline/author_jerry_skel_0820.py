@@ -413,6 +413,20 @@ HINTS = [
      "AGE B, striding. Beat 02 -- THE SPRINT."),
     ("jerry-skel-h240crouch-0821.png", AGE_B_HEAD_FRAC, "crouch",
      "AGE B, squatting. Beats 03 (BAD COVER) and 20 (EVIDENCE)."),
+    # ---- ADDED 2026-08-22 FOR THE v3 LADDER, and it is the only hint that set
+    # ---- needed. `train-jerry-v3-0822.yaml`'s B2 names three skeletons -- seat,
+    # ---- KNEEL and stride -- because two of them are stances the v3 dataset
+    # ---- contains and the third is not, which is the only way to tell a
+    # ---- trigger that learned three postures from a pose axis that opened.
+    # ---- The AGE B set had seat, stride, crouch and hunch and no kneel, and
+    # ---- the bar was committed before the training frames were admitted, so
+    # ---- the hint is authored to match the bar rather than the bar quietly
+    # ---- re-pointed at the crouch that happened to be on disk. `kneel` is an
+    # ---- existing pose in figure(); only the head_frac is new.
+    ("jerry-skel-h240kneel-0822.png", AGE_B_HEAD_FRAC, "kneel",
+     "AGE B, kneeling. THE v3 LADDER'S SECOND IN-DATASET CELL -- v3 trains on "
+     "a kneeling frame (posed-kneel), so a v3 that cannot be driven into a "
+     "kneel by a skeleton has not learned the stance it was shown."),
     ("jerry-skel-h240hunch-0821.png", AGE_B_HEAD_FRAC, "hunch",
      "AGE B, hunched. Beat 04 -- THE FOOTNOTE, the peek."),
     # ---- THE HUNCH, RE-AUTHORED 2026-08-22, and it is the only hint in the
