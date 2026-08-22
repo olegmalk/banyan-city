@@ -1,0 +1,76 @@
+{
+  "id": "lora-sapling-ladder-0822-1787382429",
+  "task": "lora-sapling-ladder-0822",
+  "node": "003b-one-leaf-for-yes",
+  "beat": null,
+  "worker": "box-runner",
+  "priority": 71,
+  "needs_gpu": true,
+  "max_attempts": 1,
+  "env": {
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "PYTHONUNBUFFERED": "1",
+    "HF_HOME": "C:\\Users\\artvn\\.cache\\huggingface",
+    "HF_HUB_DISABLE_XET": "1",
+    "HF_HUB_DOWNLOAD_TIMEOUT": "60",
+    "HF_HUB_DISABLE_SYMLINKS_WARNING": "1",
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "steps": [
+    {
+      "name": "ladder",
+      "argv": [
+        "C:\\banyan-farm\\venv\\Scripts\\python.exe",
+        "C:\\banyan-farm\\lora-sapling-0822\\run_ladder.py",
+        "--lora",
+        "C:\\banyan-farm\\lora-sapling-0822\\out\\bnysapling-sdxl-v1.safetensors",
+        "--sampler",
+        "C:\\banyan-farm\\lora-sapling-0822\\sample_lora.py",
+        "--out-dir",
+        "C:\\banyan-farm\\lora-sapling-0822\\ladder",
+        "--require",
+        "SUBJECT-w065.png",
+        "CLEAN-w065.png",
+        "SUBJECT-w020.png",
+        "CLEAN-w020.png"
+      ]
+    },
+    {
+      "name": "publish",
+      "allow_fail": true,
+      "argv": [
+        "C:\\banyan-farm\\venv-lora\\Scripts\\python.exe",
+        "-c",
+        "import glob, hashlib, os, shutil\ndst = r\"C:\\banyan-farm\\courier-box\\farm-out\\lora-sapling-ladder-0822\"\nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(r\"C:\\banyan-farm\\lora-sapling-0822\\ladder\\*.png\")\n             + glob.glob(r\"C:\\banyan-farm\\lora-sapling-0822\\ladder\\*.meta.yaml\"))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, os.path.basename(f)), \"rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"lora-sapling-ladder-0822.sha256\"), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) ->\", dst)\nraise SystemExit(0 if len(src) >= 16 else 1)\n"
+      ]
+    }
+  ],
+  "artifacts": [
+    "C:\\banyan-farm\\lora-sapling-0822\\ladder\\SUBJECT-w065.png",
+    "C:\\banyan-farm\\lora-sapling-0822\\ladder\\CLEAN-w065.png",
+    "C:\\banyan-farm\\lora-sapling-0822\\ladder\\SUBJECT-w020.png",
+    "C:\\banyan-farm\\lora-sapling-0822\\ladder\\CLEAN-w020.png"
+  ],
+  "backlog": {
+    "filed_at": 1787382429,
+    "filed_at_iso": "2026-08-22T07:07:09Z",
+    "expires_h": 36.0,
+    "spec": "pipeline/lora/ladder-sapling-0822.yaml",
+    "filed_by": "box_enqueue --backlog"
+  },
+  "spec_sha256": "a53181b903c8b86b611fe4d040b6d2f313a94c059d592b6d79075f7bffe19a76",
+  "started_at": "2026-08-22T07:11:34Z",
+  "attempts": 1,
+  "runner_pid": 17576,
+  "runner_host": "MSI",
+  "finished_at": "2026-08-22T07:14:10Z",
+  "rc": 0,
+  "failed_step": null,
+  "artifacts_present": [
+    "C:\\banyan-farm\\lora-sapling-0822\\ladder\\SUBJECT-w065.png",
+    "C:\\banyan-farm\\lora-sapling-0822\\ladder\\CLEAN-w065.png",
+    "C:\\banyan-farm\\lora-sapling-0822\\ladder\\SUBJECT-w020.png",
+    "C:\\banyan-farm\\lora-sapling-0822\\ladder\\CLEAN-w020.png"
+  ]
+}
