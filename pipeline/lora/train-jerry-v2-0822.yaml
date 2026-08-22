@@ -176,9 +176,36 @@ steps:
   - '20260822'
   - --out
   - C:\banyan-farm\lora-jerry-v2-0822\out\SAMPLE-bnyjerry-wall-overcast.png
+- name: publish
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - -c
+  - "\nimport hashlib, glob, os, shutil, yaml\nOUT = r\"C:\\banyan-farm\\lora-jerry-v2-0822\\\
+    out\"\nDST = r\"C:\\banyan-farm\\courier-box\\farm-out\\lora-jerry-v2-0822\"\nos.makedirs(DST,\
+    \ exist_ok=True)\n\ndef sha(p):\n    return hashlib.sha256(open(p, \"rb\").read()).hexdigest()\n\
+    \n# 1. THE SAMPLE TRAVELS.\npublished = []\nfor png in sorted(glob.glob(os.path.join(OUT,\
+    \ \"SAMPLE-*.png\"))):\n    shutil.copyfile(png, os.path.join(DST, os.path.basename(png)))\n\
+    \    published.append(os.path.basename(png))\n    print(\"published\", os.path.basename(png),\
+    \ flush=True)\n\n# 2. THE WEIGHTS DO NOT. Their hashes and box paths do, which is the\
+    \ half that\n#    makes provenance survive the blob staying on one machine.\nck = {}\n\
+    for w in sorted(glob.glob(os.path.join(OUT, \"*.safetensors\"))):\n    b = os.path.basename(w)\n\
+    \    ck[b] = {\"sha256\": sha(w), \"bytes\": os.path.getsize(w), \"box_path\": w}\n  \
+    \  print(\"hashed\", b, ck[b][\"sha256\"][:16], flush=True)\nif not ck:\n    raise SystemExit(\"\
+    NO CHECKPOINTS in %s -- training produced nothing\" % OUT)\n\ndoc = {\"job\": \"lora-jerry-v2-0822\"\
+    , \"trigger\": \"bnyjerry\",\n       \"weights_stay_on_the_box\": (\n           \"Each\
+    \ checkpoint is ~228 MB. GitHub rejects blobs over 100 MiB and \"\n           \"the courier\
+    \ does `git add -A -- farm-out`, so a checkpoint here \"\n           \"would leave a permanently\
+    \ unpushable commit and block every lane. \"\n           \"The sha256s below are the durable\
+    \ half.\"),\n       \"checkpoints\": ck, \"samples\": published}\nwith open(os.path.join(DST,\
+    \ \"weights-jerry-v2-0822.yaml\"), \"w\",\n          encoding=\"utf-8\") as fh:\n    yaml.safe_dump(doc,\
+    \ fh, sort_keys=False, width=88)\n\n# 3. A .sha256 BESIDE EVERYTHING THAT TRAVELLED.\n\
+    with open(os.path.join(DST, \"lora-jerry-v2-0822.sha256\"), \"w\", encoding=\"utf-8\"\
+    ) as fh:\n    for n in sorted(os.listdir(DST)):\n        q = os.path.join(DST, n)\n  \
+    \      if os.path.isfile(q) and not n.endswith(\".sha256\"):\n            fh.write(\"\
+    %s  %s\\n\" % (sha(q), n))\nprint(\"publish complete ->\", DST, flush=True)\n"
 artifacts:
-- C:\banyan-farm\lora-jerry-v2-0822\out\bnyjerry-sdxl-v2.safetensors
-- C:\banyan-farm\lora-jerry-v2-0822\out\SAMPLE-bnyjerry-wall-overcast.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-0822\SAMPLE-bnyjerry-wall-overcast.png
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-0822\weights-jerry-v2-0822.yaml
 
 ## BARS
 #

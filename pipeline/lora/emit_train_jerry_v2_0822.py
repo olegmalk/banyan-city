@@ -79,6 +79,54 @@ OUT = "pipeline/lora/train-jerry-v2-0822.yaml"
 JOB = "lora-jerry-v2-0822"
 WORK = r"C:\banyan-farm\%s" % JOB
 TRIGGER = "bnyjerry"
+FARMOUT = r"C:\banyan-farm\courier-box\farm-out\%s" % JOB
+
+# THE PUBLISH STEP. Copies what may travel; hashes what may not.
+PUBLISH_PY = r"""
+import hashlib, glob, os, shutil, yaml
+OUT = r"%(work)s\out"
+DST = r"%(farmout)s"
+os.makedirs(DST, exist_ok=True)
+
+def sha(p):
+    return hashlib.sha256(open(p, "rb").read()).hexdigest()
+
+# 1. THE SAMPLE TRAVELS.
+published = []
+for png in sorted(glob.glob(os.path.join(OUT, "SAMPLE-*.png"))):
+    shutil.copyfile(png, os.path.join(DST, os.path.basename(png)))
+    published.append(os.path.basename(png))
+    print("published", os.path.basename(png), flush=True)
+
+# 2. THE WEIGHTS DO NOT. Their hashes and box paths do, which is the half that
+#    makes provenance survive the blob staying on one machine.
+ck = {}
+for w in sorted(glob.glob(os.path.join(OUT, "*.safetensors"))):
+    b = os.path.basename(w)
+    ck[b] = {"sha256": sha(w), "bytes": os.path.getsize(w), "box_path": w}
+    print("hashed", b, ck[b]["sha256"][:16], flush=True)
+if not ck:
+    raise SystemExit("NO CHECKPOINTS in %%s -- training produced nothing" %% OUT)
+
+doc = {"job": "%(job)s", "trigger": "%(trigger)s",
+       "weights_stay_on_the_box": (
+           "Each checkpoint is ~228 MB. GitHub rejects blobs over 100 MiB and "
+           "the courier does `git add -A -- farm-out`, so a checkpoint here "
+           "would leave a permanently unpushable commit and block every lane. "
+           "The sha256s below are the durable half."),
+       "checkpoints": ck, "samples": published}
+with open(os.path.join(DST, "weights-jerry-v2-0822.yaml"), "w",
+          encoding="utf-8") as fh:
+    yaml.safe_dump(doc, fh, sort_keys=False, width=88)
+
+# 3. A .sha256 BESIDE EVERYTHING THAT TRAVELLED.
+with open(os.path.join(DST, "%(job)s.sha256"), "w", encoding="utf-8") as fh:
+    for n in sorted(os.listdir(DST)):
+        q = os.path.join(DST, n)
+        if os.path.isfile(q) and not n.endswith(".sha256"):
+            fh.write("%%s  %%s\n" %% (sha(q), n))
+print("publish complete ->", DST, flush=True)
+"""
 
 # ══════════════════════════════════════════════════════════════════════════
 # BARS — pre-registered, written before a single training frame was admitted.
@@ -366,10 +414,30 @@ def main() -> int:
                       "--steps", "40", "--guidance", "7.5",
                       "--seed", "20260822",
                       "--out", r"%s\out\SAMPLE-bnyjerry-wall-overcast.png" % WORK]},
+            # ── 4. PUBLISH. The courier pushes from farm-out and from nowhere
+            # else. ep2-cnet-probe-0817 rendered all four arms successfully,
+            # left them in its own job dir, and was recorded as never having run
+            # in two separate documents for TWO DAYS -- then passed its own
+            # pre-registered bar when someone finally looked at the box by hand.
+            # This step is that lesson as code, and box_enqueue refuses the spec
+            # without it.
+            {"name": "publish",
+             "argv": [r"C:\banyan-farm\venv-lora\Scripts\python.exe", "-c",
+                      PUBLISH_PY % {"work": WORK, "farmout": FARMOUT,
+                                    "trigger": TRIGGER, "job": JOB}]},
         ],
+        # THE WEIGHTS ARE NOT AN ARTIFACT AND THAT IS POLICY, NOT AN OVERSIGHT.
+        # Each checkpoint is ~228 MB; GitHub hard-rejects any blob over 100 MiB
+        # and `box_runner.Courier._publish` does `git add -A -- farm-out` then
+        # pushes, so ONE checkpoint in farm-out leaves a permanently unpushable
+        # commit and stops every other lane's results reaching this tree. What
+        # travels is the SAMPLE and the SHA256s: the publish step writes a
+        # manifest naming all five epochs, their hashes and their box paths,
+        # which is what registry.yaml reads and what keeps a frame traceable to
+        # the exact bytes that drew it.
         "artifacts": [
-            r"%s\out\%s-sdxl-v2.safetensors" % (WORK, TRIGGER),
-            r"%s\out\SAMPLE-bnyjerry-wall-overcast.png" % WORK,
+            r"%s\SAMPLE-bnyjerry-wall-overcast.png" % FARMOUT,
+            r"%s\weights-jerry-v2-0822.yaml" % FARMOUT,
         ],
     }
 
