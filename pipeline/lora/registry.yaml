@@ -268,3 +268,69 @@ loras:
     come back to v1 levels, the cause is caption dilution and the fix is a
     shorter scheme. If they do not, it is the frames.
   shipping_weight: null
+
+- trigger: bnysapling
+  subject: >-
+    the sapling — v2b, THE DILUTION CUT. Same 59 pixels as v2, same recipe, same
+    seed; the only thing that moves is the caption strings on the original 44
+    frames, which get v1's EXACT captions back (verified byte-identical, 44 of
+    44). The two new clauses stay only on the 15 new frames.
+  status: MEASURED — SPLITS THE v2 REGRESSION IN TWO
+  base: cagliostrolab/animagine-xl-3.1
+  trained_by: pipeline/lora/train-sapling-v2b-0822.yaml
+  trained_on: '2026-08-22'
+  dataset: pipeline/lora/manifest-sapling-v2b.yaml   # the v2 frames, v1 captions on 44
+  bar_grid: pipeline/lora/bars-v2b-sapling-0822.yaml
+  cost_usd: 0.0
+  measured: >-
+    590 optimizer steps, final avr_loss ~0.099, rc=0. staged 59 image+caption
+    pairs, all 59 sha256 verified, all 59 SDXL-provenance asserted.
+
+  bars_result:
+    B1_identity_blind_cold_read: 11/15   # v1 11/15, v2 9/15. RECOVERED EXACTLY.
+    B2_ground: 3/6                       # v1 4/6, v2 3/6. Unrecovered.
+    B2_light_setting: 3/3                # control, held in all three runs
+    B2_scale: 0/3                        # unchanged in all three
+    B2_figure: 1/3                       # v1 0/3, v2 1/3. Same count, but the
+                                         # passing frame is the best any run has
+                                         # made: goblin AND a rooted two-leaf
+                                         # sapling, both legible and separate.
+    B3_no_regression_at_0.8: FAIL        # FAILS IN ALL THREE RUNS
+    B4_style: 15/15                      # control, held in all three
+    B5_leaf_count_two: 11/15             # v1 14/15, v2 11/15. NOT RECOVERED.
+
+  the_finding: >-
+    THE CUT WORKED AND IT SPLIT THE REGRESSION IN TWO, which is a better result
+    than either answer alone would have been.
+
+    IDENTITY WAS CAPTION DILUTION. B1 went 11 -> 9 -> 11. Restoring v1's exact
+    captions on the 44 unchanged frames recovered the identity bar EXACTLY, with
+    the pixels and the recipe held. Lengthening every caption by two clauses cost
+    two frames of identity and giving them back returned them. THIS IS NOW A RULE
+    FOR EVERY LoRA IN THIS TREE: do not lengthen the captions of frames that are
+    already working in order to describe frames that are new. Name a new axis on
+    the frames that carry it.
+
+    LEAF COUNT WAS NOT. B5 is 11/15 in BOTH v2 and v2b against v1's 14/15, and
+    the caption change did not move it by a single frame. Whatever costs the
+    count is in the other two differences and this run cannot separate them:
+    the 15 new frames themselves, or the repeat drop 3 -> 2. The next cut is
+    therefore ONE variable again -- retrain v2b's captions and pixels at repeat
+    3 (1770 image passes). If B5 returns to 14/15 the cost was training volume;
+    if it does not, it is the frames, and the specific suspicion is on record:
+    several of the 15 put the plant small, at the frame edge, or overlapping a
+    figure, and two harvested frames carry unusually tall stems (866 px, 760 px)
+    against v1's 150-660 range.
+
+    AND B3 IS NOT A DATASET PROBLEM AT ALL. The figure on the bridge is deleted
+    at weight 0.8 in v1, in v2 and in v2b -- three datasets, two caption schemes,
+    one outcome. Fifteen frames that carry a figure did not stop the LoRA
+    deleting one. B3 should stop being treated as a dataset bar; the next thing
+    to test against it is the WEIGHT and the merge, not more frames.
+  shipping_weight: null
+  verdict: >-
+    NOTHING IS SHIPPABLE. v2b ties v1 on identity and loses to it on leaf count,
+    and every run fails B2_figure, B2_ground, B2_scale and B3. What this run
+    bought is not a weight, it is a CAUSE: one of the two regressions is
+    explained and closed, the other is narrowed to two candidates with a
+    one-variable test named for it.
