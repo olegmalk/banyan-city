@@ -303,6 +303,23 @@ CELLS = {
     "n20": ("cowboy-flip", "0.20", "standing against a wet grey sky after rain",
            "a rainy sky", "grey light after rain", "grey wet light"),
 
+    # ── BACKFILL. Seven of the nineteen were dropped and one (n18) never
+    # rendered, which left the set at 18 against a target of 20. Five of the
+    # seven drops failed on PUPIL COLOUR ALONE -- everything else about those
+    # faces is his -- and pupil colour is a per-seed lottery on this route, not a
+    # property of the cell. So the three cleanest of those cells are re-drawn at
+    # a NEW SEED, nothing else moved, and n18 is finally fired. A reseed is not a
+    # second chance at a judgement; the new frame is judged from scratch and the
+    # old one stays dropped either way.
+    "p03": ("headnat", "0.25", "standing against a grey stone wall", "a stone wall",
+            "flat overcast light", "overcast light"),
+    "p07": ("headnat", "0.25", "standing against a green hedgerow", "a hedgerow",
+            "strong side light", "hard side light"),
+    "p17": ("cowboy", "0.20", "standing against a warm sunset sky", "a sunset sky",
+            "warm rim light", "rim light"),
+    "p18": ("cowboy-flip", "0.20", "standing against distant blue hills", "distant hills",
+            "bright midday sun", "bright sunlight"),
+
     # ── THE STRENGTH SWEEP. Same init, same ground clause and same light as the
     # framing's own sample cell, so the ONLY thing that moves inside a row is the
     # strength. A cell that passes the E-bar here is a dataset frame like any
@@ -408,7 +425,7 @@ def emit(cell: str, write: bool) -> str:
     # SEEDS DO NOT COLLIDE ACROSS THE TWO LETTER SERIES. `int(cell[1:])` alone
     # would give j01 and k01 the same draw, and the sweep's whole job is to be
     # comparable to the sample cell it descends from -- comparable, not identical.
-    seed = SEED0 + int(cell[1:]) + {"j": 0, "k": 100, "m": 200, "n": 300}[cell[0]]
+    seed = SEED0 + int(cell[1:]) + {"j": 0, "k": 100, "m": 200, "n": 300, "p": 400}[cell[0]]
 
     new_id = "ep2-jds-%s-0822" % cell
     dirtok = "jds-%s-0822" % cell
@@ -707,6 +724,9 @@ def main() -> int:
     ap.add_argument("--write", action="store_true")
     ap.add_argument("--sample", action="store_true",
                     help="the three recipe-change cells and nothing else")
+    ap.add_argument("--backfill", action="store_true",
+                    help="re-draw the pupil-lottery drops at a new seed, and "
+                         "the one cell that never fired")
     ap.add_argument("--sweep2", action="store_true",
                     help="sweep round two: the full-body row below 0.30, and "
                          "the native square that replaces the magnified one")
@@ -733,6 +753,8 @@ def main() -> int:
     elif a.batch:
         sample_gate()
         cells = [c for c in sorted(CELLS) if c.startswith("n")]
+    elif a.backfill:
+        cells = [c for c in sorted(CELLS) if c.startswith("p")]
     else:
         cells = sorted(CELLS)
 

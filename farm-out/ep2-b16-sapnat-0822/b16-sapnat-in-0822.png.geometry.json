@@ -1,0 +1,87 @@
+{
+ "apex": [
+  398.2,
+  581.5
+ ],
+ "c5_measures": "the drawn plant's FILL, silhouette eroded by ink_width",
+ "c5_reference": "field",
+ "c5_reference_luma": 110.3,
+ "erase_box": null,
+ "erased_px": 0,
+ "field_mean_luma": 110.3,
+ "height_px": 620.0,
+ "leaf_len_px": 204.6,
+ "leaves": [
+  {
+   "len": 204.6,
+   "node": [
+    397.2,
+    586.5
+   ],
+   "side": -1.0,
+   "tip": [
+    223.7,
+    519.3
+   ]
+  },
+  {
+   "len": 216.9,
+   "node": [
+    399.2,
+    581.5
+   ],
+   "side": 1.0,
+   "tip": [
+    597.4,
+    526.8
+   ]
+  }
+ ],
+ "light_dx": -1.0,
+ "light_dy": 0.03,
+ "lit_side": "left",
+ "mask_fraction": 0.0568,
+ "palette": {
+  "dark": [
+   101,
+   121,
+   101
+  ],
+  "ink": [
+   3,
+   1,
+   8
+  ],
+  "light": [
+   239,
+   255,
+   230
+  ],
+  "mid": [
+   109,
+   128,
+   106
+  ],
+  "n_sampled": 183122,
+  "source": "the field's own greens"
+ },
+ "plant_extent": [
+  222,
+  598,
+  511,
+  1202
+ ],
+ "plant_fill_luma": 143.7,
+ "plant_fraction": 0.0344,
+ "plate": "farm-out/ep2-b16-sapnat-0822/b16-plate-src-0822.png",
+ "plate_sha256": "6849fcd1a2fe451f7f61a40ffd4fe0be64b3294330fc30aa9795a82642ceb2e2",
+ "root": [
+  355.0,
+  1200.0
+ ],
+ "size": [
+  832,
+  1216
+ ],
+ "tilt_deg": 4.0
+}

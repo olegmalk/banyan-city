@@ -53,6 +53,7 @@ sys.path.insert(0, os.path.join(REPO, "pipeline"))
 import derive_goblin_dataset_0822 as D                    # noqa: E402
 
 ADMISSIONS = "pipeline/lora/admissions-jerry-v2-0822.yaml"
+SRC_DIR = "farm-out/ep2-goblin-i2i-src-0822"
 CAPTION_DIR = "pipeline/lora/captions/jerry-v2-0822"
 MANIFEST = "pipeline/lora/manifest-jerry-v2-0822.yaml"
 TARGET_PASSES = 1200
@@ -60,9 +61,19 @@ EPOCHS = 10
 
 
 def frame_path(cell: str) -> str:
-    """Where the runner's courier lands this cell's only output."""
-    return "farm-out/ep2-jds-%s-0822/b13-jds-%s-s%d.png" % (
-        cell, cell, D.SEED0 + int(cell[1:]))
+    """Where the runner's courier lands this cell's only output.
+
+    THE DIRECTORY IS NOT THE JOB ID AND THAT IS NOT A BUG TO FIX HERE. Every one
+    of these specs descends from `ep2-b13-i2icanon-s30-0822`, which descends from
+    a beat-16 sapling composite, and derive_spec's retoken rewrote the job's
+    NAME while the parent's OUTPUT-DIRECTORY token (`-r2-0820`) came through
+    intact -- so the courier publishes `ep2-b13-jds-<cell>-r2-0820`. The frames
+    are correct, named for their cell, and sha-verified below; renaming a
+    published directory after the fact would break the sha256 sidecars that
+    point into it. The path is written down as observed rather than as assumed.
+    """
+    seed = D.SEED0 + int(cell[1:]) + {"j": 0, "k": 100, "m": 200, "n": 300}[cell[0]]
+    return "farm-out/ep2-b13-jds-%s-r2-0820/b13-jds-%s-s%d.png" % (cell, cell, seed)
 
 
 def load_admissions() -> dict:
@@ -97,10 +108,17 @@ def main() -> int:
     # character LoRA is worse than no LoRA because it appears to work on the
     # beat it was trained on." Framing is this set's only geometric axis, so a
     # framing that admits nothing is that refusal arriving again.
-    by_framing = {}
+    frames_canon = []
+    by_framing = {"full body": ["canon-full", "canon-full-flip"]}
     for c in admitted:
         by_framing.setdefault(D.INITS[D.CELLS[c][0]][2], []).append(c)
-    missing = [f for f in ("full body", "cowboy shot", "portrait")
+    # THE THREE FRAMINGS ARE THE THREE THAT SURVIVED THE SWEEP. `portrait` was
+    # `init-headsq`'s word and that init is retired -- it drifted at its own
+    # floor because it magnifies 1.486x. Its replacement `init-headnat` is cut at
+    # 1.000x and holds head, torso AND hands, so its caption word is `upper body`
+    # and the check names that. Requiring a framing no admissible init can
+    # produce would refuse every dataset forever.
+    missing = [f for f in ("full body", "cowboy shot", "upper body")
                if not by_framing.get(f)]
     if missing:
         raise SystemExit(
@@ -110,12 +128,55 @@ def main() -> int:
             "framing or drop the run; do NOT back-fill from another framing."
             % " and ".join(missing))
 
-    N = len(admitted)
+    # ── THE TWO FRAMES THAT WERE NEVER RENDERED, AND WHY THEY BELONG.
+    #
+    # The sweep measured that NO full-body frame can be rendered on this route:
+    # at ~15% face fraction his eye is a handful of latent cells, and animagine
+    # repaints the pupil warm at 0.40, 0.35, 0.30, 0.25 AND 0.20 -- five points,
+    # every one of them yellow where his is dark. The prior takes over when the
+    # face is too SMALL just as it does when the face is too big.
+    #
+    # But a set with no full-body view teaches a BUST. The trigger would never
+    # have seen his legs, his boots or his whole silhouette, and every full-body
+    # prompt afterwards would be animagine inventing the two thirds of him the
+    # LoRA never learned.
+    #
+    # THE ANSWER IS THE ONE FULL-BODY FRAME THAT CANNOT DRIFT: the canon image
+    # itself, and its mirror. Zero strength, nothing denoised, no GPU second, his
+    # exact pixels. They carry no lighting variety and are not pretended to --
+    # they are here for the SILHOUETTE, and the caption says only what is true of
+    # them. This is the same instrument as everything else in the set (a cut of
+    # the canon, entered as pixels), with the denoising pass set to nothing.
+    for key in ("full", "full-flip"):
+        rel = "%s/%s" % (SRC_DIR, D.INITS[key][0])
+        p = os.path.join(REPO, rel)
+        if not os.path.isfile(p):
+            raise SystemExit("!! the canon full-body frame %s is missing" % rel)
+        frames_canon.append({
+            "cell": "canon-%s" % key,
+            "image": rel,
+            "sha256": hashlib.sha256(open(p, "rb").read()).hexdigest(),
+            "caption_file": "%s/canon-%s.txt" % (CAPTION_DIR, key),
+            "caption": D.CAPTION_TMPL % ("full body", "tall grass", "soft daylight"),
+            "init": key,
+            "framing": "full body",
+            "ground": "tall grass",
+            "light": "soft daylight",
+            "strength": "0.00",
+            "why_kept": (
+                "THE CANON ITSELF (or its mirror), at zero strength. Nothing was "
+                "denoised, so it cannot have drifted. It is in the set for the "
+                "SILHOUETTE -- the only full-body view the route can supply, "
+                "because every rendered full-body cell came back with a yellow "
+                "pupil at five separate strengths."),
+        })
+
+    N = len(admitted) + len(frames_canon)
     repeat = max(1, round(TARGET_PASSES / float(EPOCHS * N)))
     passes = N * repeat * EPOCHS
     steps = passes // 2  # train_batch_size 2
 
-    frames = []
+    frames = list(frames_canon)
     for cell in admitted:
         rel = frame_path(cell)
         p = os.path.join(REPO, rel)
