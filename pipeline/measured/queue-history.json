@@ -2,17 +2,474 @@
  "_meta": {
   "writer": "pipeline/queue_history.py — do not hand-edit; re-run it (then commit) when you want /queue's history to move",
   "source_branch": "farm-results-rtx5090",
-  "source_commit": "77623bc8188fc3c45e6b2297fb3990b3abadfa6a",
-  "measured_at": "2026-08-22T04:53:26Z",
-  "job_count": 1560,
-  "ok": 1469,
+  "source_commit": "0b1badecbe07a2e7215d4058f2c47477454b52ba",
+  "measured_at": "2026-08-22T05:46:36Z",
+  "job_count": 1567,
+  "ok": 1476,
   "failed": 91,
-  "upcoming_count": 109,
+  "upcoming_count": 108,
   "skipped_sidecars": null,
   "skipped_specs": null,
   "verdict_notes": null
  },
  "jobs": [
+  {
+   "id": "ep2-b16-spanmotion-r2-0822-1787377179",
+   "task": "ep2-b16-spanmotion-r2-0822",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T05:39:45Z",
+   "finished_at": "2026-08-22T05:45:47Z",
+   "duration_s": 362,
+   "sidecar": "farm-out/box/ep2-b16-spanmotion-r2-0822-1787377179.json",
+   "spec_file": "pipeline/jobs/ep2-b16-spanmotion-r2-0822.yaml",
+   "purpose": {
+    "consumer": "BEAT 16's CANDIDATE MOTION IF IT PASSES, and either way it closes the survival law. review/ep2-ship-0821 is NOT touched.",
+    "why": "ROUND ONE KILLED ITS OWN HYPOTHESIS AND THE RECORD NAMED THE REPLACEMENT. The plant separated from the figure, in its own space against out-of-focus grass, died FASTER than the plant that sat on him: gone by f005 against f050. So 'the model can tell where it ends' is not the boundary condition. THE OTHER CANDIDATE IS 4-FOR-4 AND 0-FOR-2. Every composited object that has survived i2v in this tree was NAMED in its motion prompt -- b12's sapling, b21's leaf, b19's fig, b06's board -- and the only…",
+    "success": "ONE 704x1280 105-frame clip whose lower-left sapling is still in the picture at frame 104, measured as leaf-green pixels in its ROI and not judged by eye alone.",
+    "owner": "single-rung lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 19
+   },
+   "artifacts_dir": "farm-out/ep2-b16-spanmotion-r2-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b16-spanmotion-r2-0822/16-why-LTX-ep2-b16-spanmotion-r2-0822.mp4",
+     "name": "16-why-LTX-ep2-b16-spanmotion-r2-0822.mp4",
+     "bytes": 183003,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b16-spanmotion-r2-0822/b16-init-704x1280.png",
+     "name": "b16-init-704x1280.png",
+     "bytes": 1077465,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is sitting, in tall grass, full body. IN THE FOREGROUND AT THE LOWER LEFT, CLOSE TO CAMERA, THERE IS A TINY SAPLING AND IT IS THERE FOR THE WHOLE CLIP: one slender upright green stem carrying EXACTLY TWO broad rounded cotyledon leaves with soft round tips, standing in the grass clear of him and not touching him. THE SAPLING DOES NOT MOVE, DOES NOT GROW, DOES NOT FADE AND DOES NOT LEAVE THE FRAME -- it is in the picture at the first frame and it is still in the picture at the last frame, the same size, the same shape and in the same place. TWO LEAVES ONLY: no third leaf, no crown, no bush. THE ACTION: he breathes -- his shoulders rise and settle twice -- and his head drifts slowly to one side and back to centre over the whole clip. Nothing else moves. HALFWAY THROUGH his head is over to one side, shoulders down.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260886,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b16-sapnat4-0821/b16-sapnat4-s20260820.png",
+    "sha256": "8b5a432428c99c79a7349f8001b55c2ed268747d989fbf871a413dda8c2869c0"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 16,
+    "episode": null,
+    "label": "Beat 16",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b16-spanmotion-0822-1787376547",
+   "task": "ep2-b16-spanmotion-0822",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T05:29:18Z",
+   "finished_at": "2026-08-22T05:35:16Z",
+   "duration_s": 358,
+   "sidecar": "farm-out/box/ep2-b16-spanmotion-0822-1787376547.json",
+   "spec_file": "pipeline/jobs/ep2-b16-spanmotion-0822.yaml",
+   "purpose": {
+    "consumer": "THE TEST OF THE SURVIVAL LAW'S BOUNDARY CONDITION, and beat 16's candidate motion if it passes. review/ep2-ship-0821 is NOT touched by this job -- a passing clip is staged for the founder, and the swap is his call.",
+    "why": "ep2-b16-spanmotion-0822 lost its plant by f050 -- the first composited object in this tree that does not survive i2v -- and the difference was that it sat ON the figure in nearly the figure's own colour. The proposed law is that a composited object survives motion when the model can tell where it ends. The smaller-span plate (ep2-b16-canon-w7a-0821) puts a foreground plane in the frame for the first time, the plant now stands in it clear of him, and this clip changes NOTHING ELSE.",
+    "success": "ONE 704x1280 105-frame clip in which the sapling standing in the lower-left foreground is STILL THERE at the last frame and has not touched the figure. Scored on the bar in `bar`.",
+    "owner": "single-rung lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 18
+   },
+   "artifacts_dir": "farm-out/ep2-b16-spanmotion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b16-spanmotion-0822/16-why-LTX-ep2-b16-spanmotion-0822.mp4",
+     "name": "16-why-LTX-ep2-b16-spanmotion-0822.mp4",
+     "bytes": 186071,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b16-spanmotion-0822/b16-init-704x1280.png",
+     "name": "b16-init-704x1280.png",
+     "bytes": 1077465,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is sitting, in tall grass, full body. THE ACTION: he breathes -- his shoulders rise and settle twice -- and his head drifts slowly to one side and back to centre over the whole clip. Nothing else moves. HALFWAY THROUGH his head is over to one side, shoulders down.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260886,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b16-sapnat4-0821/b16-sapnat4-s20260820.png",
+    "sha256": "8b5a432428c99c79a7349f8001b55c2ed268747d989fbf871a413dda8c2869c0"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 16,
+    "episode": null,
+    "label": "Beat 16",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b16-sapnat4-0822-1787376304",
+   "task": "ep2-b16-sapnat4-0822",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "inpaint",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T05:25:17Z",
+   "finished_at": "2026-08-22T05:25:31Z",
+   "duration_s": 14,
+   "sidecar": "farm-out/box/ep2-b16-sapnat4-0822-1787376304.json",
+   "spec_file": "pipeline/jobs/ep2-b16-sapnat4-0822.yaml",
+   "purpose": {
+    "consumer": "BEAT 16's PLATE CANDIDATE -- the first one in this tree that has the corrected goblin AND the plant AND them not touching. A pass here is staged as the beat's candidate and the motion sample fires off it. review/ep2-ship-0821 IS NOT TOUCHED: plate -> candidate -> motion -> founder -> swap.",
+    "why": "THE SPAN LEVER LANDED. Beat 16's framing was the last thing holding this beat, three levers were measured dead against it (the negative and the distance clause across four w5 cells, and ControlNet 0.55 in w6a), and the one left was the skeleton's own SPAN -- the 08-21 seated-gate law, verbatim: 'the skeleton's span sets the drawn SIZE, so author the span you want and let the fold come from the WORDING.' w7a is that skeleton at 60% of the full-span sit, and it has a foreground plane in front of…",
+    "success": "ONE 832x1216 png in which the canon two-leaf sapling is drawn into the LOWER LEFT in the plate's own green, has not moved, and STILL DOES NOT TOUCH THE FIGURE. Judged by eye at 1:1 against farm-out/ep2-b16-sapnat4-0822/b16-sapnat4-in-0822.png, the composite going in.",
+    "owner": "single-rung lane, 2026-08-22",
+    "est_minutes": 5,
+    "priority": 18
+   },
+   "artifacts_dir": null,
+   "outputs": [],
+   "prompt": "a young sapling with exactly two wide oval leaves with soft round tips on one thin bare stem, rooted in the grass in the foreground, with one small green goblin sitting in tall grass behind it, solo, sunny grassy field, detailed cinematic anime, masterpiece, best quality, very aesthetic",
+   "negative": "three leaves, many leaves, extra stalk, branching stem, pointed lance leaves, lobed leaves, bud, flower, fruit, large tree, thick branch, forest, second plant, plant girl, alraune, child, text, photorealism, 3d render, low quality",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b16-sapnat4-0822.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 16,
+    "episode": null,
+    "label": "Beat 16",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b16-canon-w7c-0821-1787375799",
+   "task": "ep2-b16-canon-w7c-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T05:17:49Z",
+   "finished_at": "2026-08-22T05:18:17Z",
+   "duration_s": 28,
+   "sidecar": "farm-out/box/ep2-b16-canon-w7c-0821-1787375799.json",
+   "spec_file": "pipeline/jobs/ep2-b16-canon-w7c-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 16. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 16 OF THE CANON PATCH WAVE, ROUND w7c. WHY -- 'Close on the sapling's leaf; the scavenger sits blurred behind it.' NOTE ON STAGING, and it is why this row exists at all: the shot is a leaf close-up and he is the blurred figure behind it, so this plate is the FIGURE, not the framing. The founder's verdict on this beat was 'old man goblin. very wrong', which means he is legible enough in the take to be judged, so the design has to be right even at this depth. THE RECIPE CHANGED WHOLESALE AT…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 16's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 8
+   },
+   "artifacts_dir": "farm-out/ep2-b16-canon-w7c-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b16-canon-w7c-0821/ep2-b16-canon-w7c-0821-ipahead.png",
+     "name": "ep2-b16-canon-w7c-0821-ipahead.png",
+     "bytes": 1373497,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b16-canon-w7c-0821/jerry-canon-h37fsitfar42-0822.png",
+     "name": "jerry-canon-h37fsitfar42-0822.png",
+     "bytes": 7924,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b16-canon-w7c-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, sitting, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b16-canon-w7c-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 16,
+    "episode": null,
+    "label": "Beat 16",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b16-canon-w7b-0821-1787375796",
+   "task": "ep2-b16-canon-w7b-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T05:17:16Z",
+   "finished_at": "2026-08-22T05:17:43Z",
+   "duration_s": 27,
+   "sidecar": "farm-out/box/ep2-b16-canon-w7b-0821-1787375796.json",
+   "spec_file": "pipeline/jobs/ep2-b16-canon-w7b-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 16. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 16 OF THE CANON PATCH WAVE, ROUND w7b. WHY -- 'Close on the sapling's leaf; the scavenger sits blurred behind it.' NOTE ON STAGING, and it is why this row exists at all: the shot is a leaf close-up and he is the blurred figure behind it, so this plate is the FIGURE, not the framing. The founder's verdict on this beat was 'old man goblin. very wrong', which means he is legible enough in the take to be judged, so the design has to be right even at this depth. THE RECIPE CHANGED WHOLESALE AT…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 16's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 8
+   },
+   "artifacts_dir": "farm-out/ep2-b16-canon-w7b-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b16-canon-w7b-0821/ep2-b16-canon-w7b-0821-ipahead.png",
+     "name": "ep2-b16-canon-w7b-0821-ipahead.png",
+     "bytes": 1370368,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b16-canon-w7b-0821/jerry-canon-h37fsitfar50-0822.png",
+     "name": "jerry-canon-h37fsitfar50-0822.png",
+     "bytes": 8519,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b16-canon-w7b-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, sitting, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b16-canon-w7b-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 16,
+    "episode": null,
+    "label": "Beat 16",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b16-canon-w7a-0821-1787375789",
+   "task": "ep2-b16-canon-w7a-0821",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "other",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T05:16:34Z",
+   "finished_at": "2026-08-22T05:17:10Z",
+   "duration_s": 36,
+   "sidecar": "farm-out/box/ep2-b16-canon-w7a-0821-1787375789.json",
+   "spec_file": "pipeline/jobs/ep2-b16-canon-w7a-0821.yaml",
+   "purpose": {
+    "consumer": "The canon patch wave's plate for beat 16. A pass here becomes a plate CANDIDATE; the pick is a separate judgement, the motion re-derive is a separate spec, and review/ep2-ship-0821 is NOT touched by this job.",
+    "why": "BEAT 16 OF THE CANON PATCH WAVE, ROUND w7a. WHY -- 'Close on the sapling's leaf; the scavenger sits blurred behind it.' NOTE ON STAGING, and it is why this row exists at all: the shot is a leaf close-up and he is the blurred figure behind it, so this plate is the FIGURE, not the framing. The founder's verdict on this beat was 'old man goblin. very wrong', which means he is legible enough in the take to be judged, so the design has to be right even at this depth. THE RECIPE CHANGED WHOLESALE AT…",
+    "success": "ONE 832x1216 png at seed 20260823 on the CANON recipe, scored at 1:1 against taste/refs/goblin-canon-founder-0821.png on the bar in `bar`. Beat 16's own emotion (B3) is scored against the stage direction in this spec, not against a general impression.",
+    "owner": "canon lane, 2026-08-21",
+    "est_minutes": 4,
+    "priority": 8
+   },
+   "artifacts_dir": "farm-out/ep2-b16-canon-w7a-0821",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b16-canon-w7a-0821/ep2-b16-canon-w7a-0821-ipahead.png",
+     "name": "ep2-b16-canon-w7a-0821-ipahead.png",
+     "bytes": 1241520,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b16-canon-w7a-0821/jerry-canon-h37fsitfar60-0822.png",
+     "name": "jerry-canon-h37fsitfar60-0822.png",
+     "bytes": 9296,
+     "kind": "image"
+    },
+    {
+     "path": "farm-out/ep2-b16-canon-w7a-0821/jerry-canon-sq45-0821.png",
+     "name": "jerry-canon-sq45-0821.png",
+     "bytes": 48956,
+     "kind": "image"
+    }
+   ],
+   "prompt": "best quality, 1boy, solo, goblin, green skin, bald, pointy ears, eyebags, jitome, mandarin collar, green shirt, black shorts, boots, muted color, closed mouth, frown, sitting, in tall grass, full body",
+   "negative": "lowres, worst quality, low quality, text, watermark, large eyes, big eyes, thick eyebrows, cloak, hood, patchwork, human face, wrinkled skin, old man, hair, beard, child, chibi, 2boys, multiple heads, disembodied head, glowing eyes, orange eyes, third eye, eyepatch",
+   "prompt_source": "job spec `pipeline/jobs/ep2-b16-canon-w7a-0821.yaml`, payload `prompt.txt` — the exact bytes the box was handed",
+   "recipe": null,
+   "init": null,
+   "reference": null,
+   "prompt_from": "spec",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 16,
+    "episode": null,
+    "label": "Beat 16",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
+  {
+   "id": "ep2-b16-plantmotion-0822-1787374062",
+   "task": "ep2-b16-plantmotion-0822",
+   "node": "002b-first-citizen",
+   "beat": 16,
+   "kind": "motion",
+   "rc": 0,
+   "failed_step": null,
+   "attempts": 1,
+   "runner_host": "MSI",
+   "started_at": "2026-08-22T04:47:58Z",
+   "finished_at": "2026-08-22T04:53:57Z",
+   "duration_s": 359,
+   "sidecar": "farm-out/box/ep2-b16-plantmotion-0822-1787374062.json",
+   "spec_file": "pipeline/jobs/ep2-b16-plantmotion-0822.yaml",
+   "purpose": {
+    "consumer": "BEAT 16's CANDIDATE SLOT. The clip in the cut has the superseded adult goblin; tonight's w4motion take fixed the face and lost the plant, and this page has carried that as a straight TRADE since. This is the first render that could have both.",
+    "why": "BEAT 16's PLATE FINALLY CONTAINS THE PLANT, so the question that has never been askable is askable. The blocker was never the plate: foliage_palette's green test admitted blown white highlights -- 44% of the sample on this plate and the top 44% by luminance -- so the tool drew a white plant and the route was refused twice. A chroma floor fixed it and ep2-b16-sapnat3-0822 is the result. WHAT THIS CANNOT FIX, said before the render so a pass is not over-read: on this plate the figure fills the fr…",
+    "success": "ONE 704x1280 clip in which the corrected goblin sits with the canon two-leaf sapling in frame for the whole take, the plant does not relocate or gain a third blade, and the camera stays where it is.",
+    "owner": "early-morning lane, 2026-08-22",
+    "est_minutes": 8,
+    "priority": 18
+   },
+   "artifacts_dir": "farm-out/ep2-b16-plantmotion-0822",
+   "outputs": [
+    {
+     "path": "farm-out/ep2-b16-plantmotion-0822/16-why-LTX-ep2-b16-plantmotion-0822.mp4",
+     "name": "16-why-LTX-ep2-b16-plantmotion-0822.mp4",
+     "bytes": 288649,
+     "kind": "video"
+    },
+    {
+     "path": "farm-out/ep2-b16-plantmotion-0822/b16-init-704x1280.png",
+     "name": "b16-init-704x1280.png",
+     "bytes": 996527,
+     "kind": "image"
+    }
+   ],
+   "prompt": "2D anime, hand-drawn cel animation, static locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole clip. He is sitting, in tall grass, full body. THE ACTION: he breathes -- his shoulders rise and settle twice -- and his head drifts slowly to one side and back to centre over the whole clip. Nothing else moves. HALFWAY THROUGH his head is over to one side, shoulders down.",
+   "negative": "second face, second goblin, two goblins, extra head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing, melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing, cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark",
+   "prompt_source": "spec payload (the exact bytes the encode step read)",
+   "recipe": {
+    "size": "704x1280",
+    "frames": "105",
+    "fps": "24",
+    "guidance": "2.0",
+    "mode": "production",
+    "model": "diffusers/LTX-2.3-Distilled-Diffusers (Lightricks LTX-2.3 distilled, bf16)",
+    "steps": "8@352x640+3@704x1280",
+    "seed": 20260886,
+    "seconds": 4.375
+   },
+   "init": {
+    "path": "farm-out/ep2-b16-sapnat3-0821/b16-sapnat3-s20260820.png",
+    "sha256": "3ebad0cd38095aa47b92fee098a5dc4dc80fb8064df67afb748722efbbbdd07b"
+   },
+   "reference": null,
+   "prompt_from": "record",
+   "verdict": {
+    "beat_state": "candidate-awaiting-founder",
+    "beat_note": "IN THE CUT AS A CARRY-FORWARD HE HAS ALREADY REJECTED, which is why this is not a beat awaiting his look. Shown legs A and B on 2026-08-16 he answered \"the difference between leg b and a is just how this big leaf looks, both of them are wrong though and do not resemble the sapling\" — a taste ruling…",
+    "gate": "ships under the two-round rule -- SUPERSEDED, do not act on it: see `gate_CORRECTION_0817` in review/ep2-picks/gate-evidence.yaml"
+   },
+   "story": {
+    "kind": "beat",
+    "beat": 16,
+    "episode": null,
+    "label": "Beat 16",
+    "moment": null,
+    "why": "the script on main has no beat by this number"
+   }
+  },
   {
    "id": "ep2-b16-canon-w6a-0821-1787373800",
    "task": "ep2-b16-canon-w6a-0821",
@@ -110768,28 +111225,6 @@
     "beat": 14,
     "episode": null,
     "label": "Beat 14",
-    "moment": null,
-    "why": "the script on main has no beat by this number"
-   }
-  },
-  {
-   "id": "ep2-b16-plantmotion-0822",
-   "node": "002b-first-citizen",
-   "beat": 16,
-   "kind": "motion",
-   "state": "authored",
-   "priority": 18,
-   "est_minutes": 8,
-   "consumer": "BEAT 16's CANDIDATE SLOT. The clip in the cut has the superseded adult goblin; tonight's w4motion take fixed the face and lost the plant, and this page has carried that as a straight TRADE since. This is the first render that could have both.",
-   "why_first": "BEAT 16's PLATE FINALLY CONTAINS THE PLANT, so the question that has never been askable is askable.",
-   "hold_reason": null,
-   "spec_file": "pipeline/jobs/ep2-b16-plantmotion-0822.yaml",
-   "authored_at": 1787374088,
-   "story": {
-    "kind": "beat",
-    "beat": 16,
-    "episode": null,
-    "label": "Beat 16",
     "moment": null,
     "why": "the script on main has no beat by this number"
    }
