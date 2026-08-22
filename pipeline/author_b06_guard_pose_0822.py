@@ -138,14 +138,28 @@ def render():
 # AS WIDE AS HIS SHOULDERS, which is the clause the prompt asserts, measured off
 # the same skeleton so the hint and the words cannot disagree.
 BOARD_STROKE = 7
-BOARD_H = 152.0
+BOARD_H = 168.0
+
+# WHERE THE RECTANGLE SITS, CORRECTED BY A RENDER. The first geometry centred the
+# board ON the wrist line, so half of it hung BELOW his hands. At --scale2 0.85
+# the scribble net anchored on the rectangle's top edge and grew a PLANK
+# DOWNWARD out of it: a post standing in front of him, with his hands dropped to
+# his sides. Nothing was holding anything.
+#
+# A board being READ is held UP: the hands are at its bottom edge and the blade
+# rises in front of the chest. So the rectangle now sits entirely ABOVE the
+# wrists, its bottom edge ON the wrist line, and there is nothing below the hands
+# for the net to extend. Width is unchanged and still measured off the skeleton's
+# own shoulders, which is what keeps the prompt clause `as wide as his shoulders`
+# and the drawing the same number.
+BOARD_BOTTOM_LIFT = 6.0   # the blade starts just above the knuckles
 
 
 def board_box():
     kps = keypoints()
     half = abs(kps["Lsho"][0] - kps["Rsho"][0]) / 2.0
-    ymid = kps["Rwri"][1]
-    return (CX - half, ymid - BOARD_H * 0.5, CX + half, ymid + BOARD_H * 0.5)
+    y1 = kps["Rwri"][1] - BOARD_BOTTOM_LIFT
+    return (CX - half, y1 - BOARD_H, CX + half, y1)
 
 
 def render_board():
@@ -220,8 +234,15 @@ def selftest():
           "asserts, measured off the same skeleton so hint and words cannot "
           "disagree (%.0f px vs %.0f)" % (x1 - x0, sho_w),
           abs((x1 - x0) - sho_w) < 1.0)
-    check("the board straddles the hands rather than floating above or below "
-          "them", y0 < kps2["Rwri"][1] < y1)
+    check("THE BOARD SITS ABOVE THE HANDS, not straddling them -- the first "
+          "geometry centred it on the wrist line and the net grew a plank "
+          "downward out of the half that hung below",
+          y1 <= kps2["Rwri"][1])
+    check("its bottom edge is AT the hands, within a knuckle, so they read as "
+          "holding it rather than pointing at it",
+          0 < kps2["Rwri"][1] - y1 < 0.03 * STATURE)
+    check("the blade rises in front of the chest and stops below the chin",
+          kps2["nose"][1] < y0 < kps2["Rsho"][1] + 0.02 * STATURE)
     check("the board is inside the canvas",
           0 < x0 and x1 < W and 0 < y0 and y1 < H)
     bimg = render_board()

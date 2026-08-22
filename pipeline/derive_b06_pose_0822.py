@@ -82,8 +82,8 @@ from derive_sapling_field_0821 import assert_under_clip77           # noqa: E402
 
 BEAT = 6
 NODE = "002b-first-citizen"
-SPEC_ID = "ep2-b06-pose-r2-0822"
-WORK = r"C:\banyan-farm\ep2-b06-pose-r2-0822"
+SPEC_ID = "ep2-b06-pose-r3-0822"
+WORK = r"C:\banyan-farm\ep2-b06-pose-r3-0822"
 DRIVER = "controlnet_plate.py"
 AUTHOR = "author_b06_guard_pose_0822.py"
 ARM = "posebooth"
@@ -93,7 +93,7 @@ BOARD_NET = "xinsir/controlnet-scribble-sdxl-1.0"
 POSE_SCALE = "0.8"
 BOARD_SCALE = "0.85"
 POSE_HINT = "pipeline/hints/b06-guard-pose-0822.png"
-BOARD_HINT = "pipeline/hints/b06-board-0822.png"
+BOARD_HINT = "pipeline/hints/b06-board-r3-0822.png"
 RAW_BASE = "https://raw.githubusercontent.com/olegmalk/banyan-city/main/"
 
 POSITIVE_R1 = (
@@ -126,11 +126,20 @@ POSITIVE_R1 = (
 # hands instead of a slab. The hands were in the right place; nothing rectangular
 # arrived in them.
 #
-# ONE MORE VARIABLE THAN IS IDEAL, and said out loud rather than hidden: the
-# light and the scale move together. They are separable if this fails -- the
-# light clause is free to test alone -- but a second night-time frame with a
-# glowing orb would answer neither question, and both changes were written down
-# BEFORE the pixels existed, in r1's own pre-registered fail modes.
+# ROUND 3 IS A CHANGE TO THE DRAWING AND NOTHING ELSE. r2's two edits both
+# landed: the sky came back DAYLIGHT, and a slab of wood arrived in the picture,
+# which no attempt on this beat had ever produced. It arrived TOO LITERALLY. The
+# first geometry centred the rectangle ON the wrist line, so half of it hung
+# BELOW his hands, and at 0.85 the net anchored on its top edge and grew a PLANK
+# DOWNWARD out of the lower half -- a post standing in front of him, with his
+# hands dropped to his sides. Nothing was holding anything.
+#
+# A board being READ is held UP: the hands are at its bottom edge and the blade
+# rises in front of the chest. `board_box()` now puts the whole rectangle ABOVE
+# the wrists with its bottom edge on the wrist line, so there is nothing below
+# the hands for the net to extend. WIDTH IS UNCHANGED and still measured off the
+# skeleton's own shoulders. The scale stays at 0.85, the prompt is byte-identical
+# to r2's, the seed is unchanged: ONE VARIABLE, and it is a drawing.
 POSITIVE = (
     "A grown guard man with dark cropped hair and round wire-rim glasses, "
     "cream shirt collar and white shoulder sash, standing in tall grass in "
@@ -423,6 +432,10 @@ def _selftest():
     assert "bright morning sunlight" in POSITIVE and "pale sky" in POSITIVE
     assert POSITIVE != POSITIVE_R1
     assert float(BOARD_SCALE) > 0.5, "r1's bar said raise it if no board arrives"
+    # ROUND 3's ONE VARIABLE: the board sits ABOVE the wrists so there is nothing
+    # below the hands for the net to grow a plank out of.
+    _, _, _, by1 = author.board_box()
+    assert by1 <= author.keypoints()["Rwri"][1], "the board must not hang below the hands"
     assert abs(author.STATURE / (author.HEAD_FRAC * author.STATURE) - 5.0) < 0.01
     # The hints on disk must BE the ones the author produces, or the sha in the
     # spec is asserting bytes nobody drew.
