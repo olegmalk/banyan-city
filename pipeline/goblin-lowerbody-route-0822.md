@@ -48,12 +48,13 @@ ears, eye, collar and placket outside; put the legs, the hem and the ground
 inside. The tension stops existing because they are no longer the same pixels.
 
 **And no LoRA is loaded.** `bnyjerry v2` is where the standing prior lives — 21
-of 21 training frames stand, pre-registered before a frame was admitted — and
+of 21 training frames stand, pre-registered before a frame was admitted, and §6
+measures that it is even narrower than that — and
 this pass does not need it: the identity is the init's own pixels. It is also
 the one configuration in which the pose net has been observed to drive in this
 tree (four of four postures, twopass CORRECTION §3).
 
-## 3. What three rounds measured
+## 3. What four rounds measured
 
 | round | the one variable | result |
 |---|---|---|
@@ -62,7 +63,7 @@ tree (four of four postures, twopass CORRECTION §3).
 | r3 | the wording again, aimed at P3: `bare sage green legs`, `dark leather boots` | Real boots with soles and heels — and they run knee-high and hide the thighs, and the stance narrows. Not better than r2, differently wrong. |
 | **gate** | **the hint only** — seat → kneel, with the positive still saying `seated`, byte-identical | **THE HINT WON.** The legs go down and forward instead of up and out: limb mass at y 1180 is 245 px against r2's 0, and at y 1040 it spans x 0..746 against r2's 0..567. Against a contradicting noun. |
 
-Held across all three: init sha, mask sha, hint sha, net, scale 1.0,
+Held across all four: init sha, mask sha, hint sha, net, scale 1.0,
 `--pad-crop 0`, 40 steps, cfg 7.5, seed 20260823, no LoRA.
 
 ### The findings, ranked by how much they generalise
@@ -113,15 +114,15 @@ canon's own bare shin (RGB 120.4 / 130.0 / 110.4, sampled at 355..385 x
 `beat20_fig_recolor.py`.
 
 **The stance set is NOT queued**, and the reason is no longer "does the route
-generalise" — the gate answered that — it is a dataset design question rather
-than a rendering one. Every frame this route makes off
-the canon shares ONE upper body, byte for byte. Six of those in a v3 set would
-teach the trigger that upper body. **The fix is to run the same masked pass on
-the 21 FOUNDER-RATIFIED FRAMES** of `manifest-jerry-v2-0822.yaml` instead of on
-the canon alone: each has its own torso, its own arms and its own light, and the
-mask makes each one a posed frame of him with a different upper body. That needs
-a per-frame cut line and hip measurement, which is a script rather than a
-research question.
+generalise" — the gate answered that. It is that the v3 dataset design changed
+this afternoon, and §6 is why.
+
+**And the plan this section carried an hour ago was wrong.** It said: run the
+same masked pass on the 21 founder-ratified frames, so each posed frame gets its
+own torso. That cannot be done. **Nineteen of the 21 have no lower body in
+them** — 11 are upper-body crops and 8 are cowboy shots — so there is nothing
+below a cut to replace. The two that do are the canon and its mirror. The
+correction is §6.
 
 **One more thing the gate bought at $0, and it is a guard finding.** Its first
 attempt refused on the card in two seconds: `SHA MISMATCH for
@@ -141,3 +142,68 @@ It is not a plate for beat 13 and it is not a taste call. The founder's question
 page at `/review/ep2-goblin-twopass-0822` stands unchanged — whether this posture
 is the show is R4 and not the steward's. What changed today is that the steward
 can now put him in a posture at all.
+
+## 6. THE DIAGNOSIS WAS UNDERSTATED, AND THE CORRECTION MAKES THE FIX SMALLER
+
+`registry.yaml` and every document downstream of it say the pose is locked
+because **"21 of 21 training frames are standing"**. That is true and it is not
+the whole shape of the problem. Measured on `manifest-jerry-v2-0822.yaml` today:
+
+| framing | frames |
+|---|---|
+| upper body | 11 |
+| cowboy shot (mid-thigh) | 8 |
+| **full body** | **2** |
+
+and the two full-body frames are `canon-full` and `canon-full-flip`, verified
+byte-identical to `taste/refs/goblin-canon-founder-0821.png` and to its mirror
+(mean abs delta 0.000, maxdiff 0, both directions).
+
+**So the standing prior is not 21 frames deep. It is ONE frame deep.** The LoRA
+has been shown this character's legs exactly once, plus that once flipped. That
+reframes three things at once:
+
+1. **It explains why no knob reached it.** Round seven walked the weight down to
+   0.35 and the seated legs never arrived; the twopass walked strength and
+   weight across six cells. Both were looking for a competing lower-body
+   configuration to fade *toward*. There isn't one in the weights. There is one
+   picture.
+
+2. **It makes the caption failure legible.** All 21 captions carry `standing` —
+   including the 19 that do not show a standing leg. The token was attached to
+   frames with no lower body in them at all, which is the most literal possible
+   form of "a tag with nowhere to attach". The setting tag worked in the same 21
+   files because every one of them *does* show a background.
+
+3. **AND IT MAKES THE FIX MUCH SMALLER THAN A REBUILD.** The plan was reading as
+   "manufacture a posed dataset". It does not need to be. The 19 crops carry no
+   lower-body signal, so they cannot fight a new one; the entire opposition is
+   two frames of one picture. **Three or four posed full-body frames would make
+   posed the MAJORITY of everything the trigger has ever seen below the waist**,
+   in a dataset otherwise byte-identical to the one whose identity bars already
+   pass.
+
+### The v3 spec this implies, and it is deliberately minimal
+
+* **KEEP all 21 frames and all 21 captions byte-identical.** v2b measured that
+  lengthening the captions of frames that are already working costs identity —
+  B1 went 11 → 9 → 11 as two clauses were added and taken back with pixels and
+  recipe held. Nothing that currently passes gets touched.
+* **ADD 3–4 posed full-body frames** from this route. Seat and kneel are on disk
+  already, and the gate says a further stance is one hint PNG.
+* **Their captions name the stance** (`sitting`, `kneeling`) where the existing
+  two full-body captions say `standing`. That gives the pose token real contrast
+  **on the only frames that carry a lower body at all** — 4 posed against 2
+  standing — which is the first time in this project that token has had anywhere
+  to attach.
+* **One variable against v2**, so a score is attributable: the added frames. Not
+  the recipe, not the captions of the 21, not the repeat count.
+
+### The risk this carries, named before the run
+
+Every posed frame shares ONE upper body, byte for byte — the canon's, moved by
+an integer. Four of them is four copies of one torso, one pair of arms and one
+light. If v3's identity bar falls, that is the first suspect, and it has a cheap
+answer: the frames can be reframed and re-cropped after the pass, and the pass
+can run at more than one `DROP` so the torso sits at a different height in each.
+**Neither is a research question and neither needs the card.**
