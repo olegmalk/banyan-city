@@ -224,15 +224,15 @@ payload:
     \n    print(\"WROTE %s\" % a.out, flush=True)\n    print(\"WROTE %s\" % mask_png, flush=True)\n  \
     \  print(\"WROTE %s\" % sidecar, flush=True)\n    print(\"rc=0 render_s=%.1f\" % render_s, flush=True)\n\
     \    return 0\n\n\nif __name__ == \"__main__\":\n    raise SystemExit(main())\n"
-  C:\banyan-farm\saplora-fignat-g2-0822\fetch_init.py: "#!/usr/bin/env python3\n\"\"\"Fetch beat 16's\
-    \ WHOLE-SAPLING composite and its mask, refusing on any sha\nmismatch. Both files are on origin/main,\
-    \ so these sha256s are verifiable\nagainst the repo by anyone who clones it. They were made on a Mac\
-    \ by\npipeline/beat16_sapling_composite.py, so they are NOT on the box's courier\nworktree -- the\
-    \ courier only ever contains what the box produced.\"\"\"\nimport hashlib, os, sys, urllib.request\n\
-    \nOUT = r\"C:\\banyan-farm\\saplora-fignat-g2-0822\"\nRAW = (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
-    \n       \"farm-out/ep2-fignat-g2-0820/\")\nUA = {\"User-Agent\": \"banyan-city-fignat-g2/1.0 (albert.numbro@gmail.com)\"\
-    }\nWANT = {\n    \"16-why-sapcomp-0820.png\":\n        \"1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d\"\
-    ,\n    \"16-why-sapcomp-mask-0820.png\":\n        \"6d4d1f3f8b3e7ce1b52177a08d1f8a7b01b180c99a2d1097d9b5b6966cb0cbe5\"\
+  C:\banyan-farm\saplora-fignat-g2-0822\fetch_init.py: "#!/usr/bin/env python3\n\"\"\"Fetch this dataset\
+    \ frame's composited init and its mask, refusing on any sha\nmismatch. Both are on origin/main under\
+    \ farm-out/ep3-saplora-figinit-0822/, so these\nsha256s are verifiable against the repo by anyone\
+    \ who clones it. They were\ndrawn on a Mac by pipeline/beat16_sapling_composite.py, so they are NOT\
+    \ on the\nbox's courier worktree -- the courier only holds what the box produced.\"\"\"\nimport hashlib,\
+    \ os, sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\saplora-fignat-g2-0822\"\nRAW = (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
+    \n       \"farm-out/ep3-saplora-figinit-0822/\")\nUA = {\"User-Agent\": \"banyan-city-saplora/1.0\
+    \ (albert.numbro@gmail.com)\"}\nWANT = {\n    \"sapfig-g2-0822.png\":\n        \"8fa887e544db9b958e95e009cff4385091b24208808c1bdd3a3b4567aaca4dad\"\
+    ,\n    \"sapfig-g2-mask-0822.png\":\n        \"e2a4911e7769bd85bef88aa9ce5ec54f9b129e283cdc7128787d35f914bd6e1e\"\
     ,\n}\n\nos.makedirs(OUT, exist_ok=True)\nfor name, want in WANT.items():\n    raw = urllib.request.urlopen(\n\
     \        urllib.request.Request(RAW + name, headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n\
     \    if have != want:\n        sys.exit(\"!! SHA MISMATCH for %s -- refusing.\\n   want %s\\n   have\
@@ -250,36 +250,17 @@ steps:
 - name: fetch
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
-  - -c
-  - "#!/usr/bin/env python3\n\"\"\"Fetch this dataset frame's composited init and its mask, refusing on\
-    \ any sha\nmismatch. Both are on origin/main under farm-out/ep3-saplora-figinit-0822/, so these\n\
-    sha256s are verifiable against the repo by anyone who clones it. They were\ndrawn on a Mac by pipeline/beat16_sapling_composite.py,\
-    \ so they are NOT on the\nbox's courier worktree -- the courier only holds what the box produced.\"\
-    \"\"\nimport hashlib, os, sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\saplora-fignat-g2-0822\"\
-    \nRAW = (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\n       \"farm-out/ep3-saplora-figinit-0822/\"\
-    )\nUA = {\"User-Agent\": \"banyan-city-saplora/1.0 (albert.numbro@gmail.com)\"}\nWANT = {\n    \"\
-    sapfig-g2-0822.png\":\n        \"8fa887e544db9b958e95e009cff4385091b24208808c1bdd3a3b4567aaca4dad\"\
-    ,\n    \"sapfig-g2-mask-0822.png\":\n        \"e2a4911e7769bd85bef88aa9ce5ec54f9b129e283cdc7128787d35f914bd6e1e\"\
-    ,\n}\n\nos.makedirs(OUT, exist_ok=True)\nfor name, want in WANT.items():\n    raw = urllib.request.urlopen(\n\
-    \        urllib.request.Request(RAW + name, headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n\
-    \    if have != want:\n        sys.exit(\"!! SHA MISMATCH for %s -- refusing.\\n   want %s\\n   have\
-    \ %s\"\n                 % (name, want, have))\n    with open(os.path.join(OUT, name), \"wb\") as\
-    \ fh:\n        fh.write(raw)\n    print(\"fetched %s %d bytes sha %s OK\" % (name, len(raw), have),\
-    \ flush=True)\n"
-- name: fetch
-  argv:
-  - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\saplora-fignat-g2-0822\fetch_init.py
 - name: dry
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\saplora-fignat-g2-0822\inpaint_fruit.py
   - --init
-  - C:\banyan-farm\saplora-fignat-g2-0822\16-why-sapcomp-0820.png
+  - C:\banyan-farm\saplora-fignat-g2-0822\sapfig-g2-0822.png
   - --init-sha256
   - 1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d
   - --mask-png
-  - C:\banyan-farm\saplora-fignat-g2-0822\16-why-sapcomp-mask-0820.png
+  - C:\banyan-farm\saplora-fignat-g2-0822\sapfig-g2-mask-0822.png
   - --prompt-file
   - C:\banyan-farm\saplora-fignat-g2-0822\prompt.txt
   - --negative-file
@@ -315,11 +296,11 @@ steps:
   - C:\banyan-farm\venv\Scripts\python.exe
   - C:\banyan-farm\saplora-fignat-g2-0822\inpaint_fruit.py
   - --init
-  - C:\banyan-farm\saplora-fignat-g2-0822\16-why-sapcomp-0820.png
+  - C:\banyan-farm\saplora-fignat-g2-0822\sapfig-g2-0822.png
   - --init-sha256
   - 1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d
   - --mask-png
-  - C:\banyan-farm\saplora-fignat-g2-0822\16-why-sapcomp-mask-0820.png
+  - C:\banyan-farm\saplora-fignat-g2-0822\sapfig-g2-mask-0822.png
   - --prompt-file
   - C:\banyan-farm\saplora-fignat-g2-0822\prompt.txt
   - --negative-file
@@ -359,17 +340,17 @@ steps:
     \ ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\n\
     from_dir = \"C:/banyan-farm/saplora-fignat-g2-0822\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-fignat-g2-r2-0820\"\
     \nNAMES = [\n    \"fignat-g2-s20260820.png\",\n    \"fignat-g2-s20260820-mask.png\",\n    \"fignat-g2-s20260820.png.meta.yaml\"\
-    ,\n    \"16-why-sapcomp-0820.png\",\n    \"16-why-sapcomp-mask-0820.png\",\n    \"prompt.txt\",\n\
-    \    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f\
-    \ = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing\
-    \ %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst,\
-    \ name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"\
-    \  \" + name)\nwith open(os.path.join(dst, \"ep2-fignat-g2-r2-0820.sha256\"), \"w\",\n          newline=\"\
-    \\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines),\
-    \ \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
+    ,\n    \"sapfig-g2-0822.png\",\n    \"sapfig-g2-mask-0822.png\",\n    \"prompt.txt\",\n    \"negative.txt\"\
+    ,\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir,\
+    \ name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call\
+    \ the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\")\
+    \ as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\n\
+    with open(os.path.join(dst, \"ep2-fignat-g2-r2-0820.sha256\"), \"w\",\n          newline=\"\\n\")\
+    \ as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"\
+    file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"
 artifacts:
 - C:\banyan-farm\saplora-fignat-g2-0822\fignat-g2-s20260820.png
-- C:\banyan-farm\saplora-fignat-g2-0822\16-why-sapcomp-0820.png
+- C:\banyan-farm\saplora-fignat-g2-0822\sapfig-g2-0822.png
 script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
   2026-08-03`. The LINE is untouched; what changes is the STAGING, which is a stage direction. The restage
   was logged by the coordinator lane on 2026-08-20 as the option that satisfies BOTH the brief and the
@@ -509,6 +490,8 @@ derivation:
   - the_mask_is_the_bet
   - the_one_variable
   retokened:
+  - 16-why-sapcomp-mask-0820 -> sapfig-g2-mask-0822
+  - 16-why-sapcomp-0820 -> sapfig-g2-0822
   - b16sapcomp-r2-0820 -> saplora-fignat-g2-0822
   - b16-sapcomp -> fignat-g2
   - ep2-b16-sapcomp-r2-0820 -> ep3-saplora-fignat-g2-0822
@@ -524,6 +507,8 @@ derivation:
     - key priority = 9
     key:sample:
     - key sample = False
+    payload:fetch_init.py:
+    - payload fetch_init.py (1389 -> 1424 chars)
     payload:negative.txt:
     - payload negative.txt (322 -> 242 chars)
     payload:prompt.txt:

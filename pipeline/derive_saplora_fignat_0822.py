@@ -58,6 +58,16 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PARENT = "pipeline/jobs/ep2-b16-sapcomp-r2-0820.yaml"
 PARENT_DIRTOK = "b16sapcomp-r2-0820"
 PARENT_OUTTOK = "b16-sapcomp"
+# THE INIT AND MASK FILENAMES ARE RETOKENS TOO, AND LEAVING THEM OUT COST THE
+# FIRST ATTEMPT ALL EIGHT JOBS. The parent names its init and mask in the argv
+# of BOTH inpaint steps and again in the publish step's NAMES list; a child
+# that fetches `sapfig-g2-0822.png` but still tells the inpainter to open
+# `16-why-sapcomp-0820.png` is a job that cannot run. They are separate pairs
+# because "16-why-sapcomp-mask-0820" does not contain "16-why-sapcomp-0820" as
+# a substring -- the date sits at the end of both -- so one rule cannot reach
+# the other, and the mask pair is listed first regardless.
+PARENT_MASKTOK = "16-why-sapcomp-mask-0820"
+PARENT_INITTOK = "16-why-sapcomp-0820"
 SRC_DIR = "farm-out/ep3-saplora-figinit-0822"
 SEED = 20260820   # the parent job's, unchanged
 
@@ -253,8 +263,22 @@ for name, want in WANT.items():
                 "payload:prompt.txt": prompt,
                 "payload:negative.txt": NEGATIVE,
                 "argv:--seed": str(SEED),
+                # THE FETCH SCRIPT IS A PAYLOAD OVERRIDE, NOT AN EXTRA STEP,
+                # and the first attempt got this wrong in a way worth keeping
+                # on the record. The parent ALREADY HAS a `fetch` step that
+                # runs `fetch_init.py` out of its payload; inserting a second
+                # fetch step left the parent's in place, pointed at a
+                # farm-out directory that has never existed, and all eight
+                # jobs died rc=1 on HTTP 404 -- AFTER the inserted step had
+                # fetched the right bytes and printed OK. A guard would not
+                # have caught it: both steps were named `fetch` and both were
+                # legal. Overriding the payload replaces the script the
+                # parent's own step runs, so there is exactly one fetch.
+                "payload:fetch_init.py": fetch,
             },
-            retoken=[(PARENT_DIRTOK, dirtok),
+            retoken=[(PARENT_MASKTOK, "sapfig-%s-mask-0822" % cell),
+                     (PARENT_INITTOK, "sapfig-%s-0822" % cell),
+                     (PARENT_DIRTOK, dirtok),
                      (PARENT_OUTTOK, "fignat-%s" % cell)],
             extra={
                 "bar": BAR,
@@ -290,18 +314,23 @@ for name, want in WANT.items():
             },
             by="pipeline/derive_saplora_fignat_0822.py")
 
-        child["steps"].insert(0, {
-            "name": "fetch",
-            "argv": [r"C:\banyan-farm\venv\Scripts\python.exe", "-c", fetch]})
-
         out = "pipeline/jobs/%s.yaml" % new_id
         # `derivation` is EXCLUDED because naming the parent is its entire job
         # -- it is the provenance record, and the `retokened` list inside it
         # necessarily prints both sides of every rename. Everything the runner
         # actually reads is checked.
         joined = repr({k: v for k, v in child.items() if k != "derivation"})
-        if PARENT_DIRTOK in joined or PARENT_OUTTOK in joined:
-            raise SystemExit("!! %s still names the parent job dir" % new_id)
+        for tok in (PARENT_DIRTOK, PARENT_OUTTOK, PARENT_INITTOK,
+                    PARENT_MASKTOK):
+            if tok in joined:
+                raise SystemExit("!! %s still names the parent's %r"
+                                 % (new_id, tok))
+        # EXACTLY ONE FETCH STEP. This is the assertion the first attempt did
+        # not have, and it is the one that would have saved eight jobs.
+        names = [st["name"] for st in child["steps"]]
+        if names.count("fetch") != 1:
+            raise SystemExit("!! %s has %d fetch steps, want 1: %s"
+                             % (new_id, names.count("fetch"), names))
         pay = child["payload"][r"C:\banyan-farm\%s\prompt.txt" % dirtok]
         # THE FIGURE MUST BE IN THE POSITIVE AND OUT OF THE NEGATIVE. This is
         # the one inversion the whole file exists for, so it is the one thing
