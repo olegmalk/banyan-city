@@ -536,3 +536,15 @@ derivation:
     - payload negative.txt (322 -> 107 chars)
     payload:prompt.txt:
     - payload prompt.txt (374 -> 171 chars)
+verdict_0822: |-
+  FAIL, AND IT IS THE PROBE DOING ITS JOB.
+
+  JUDGED AT 1:1. E1 FAILS HARD --
+  a clear magenta iris, larger than 0.45's. E2 FAILS -- large upswept ears.
+  E4 drifts: greener, more saturated, darker than the washed high-key init.
+  E5 holds.
+  THE PROBE WAS WORTH ITS THREE MINUTES. It was filed to find where the range
+  ends rather than to be picked, and it found it: the bracket 0.30-0.45 was set
+  in the right place and the answer is at its BOTTOM, not above it. Nobody now
+  has to wonder whether a higher strength would have bought more scene change
+  for free -- it does not, it buys the vetoed face.

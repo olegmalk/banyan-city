@@ -533,3 +533,31 @@ derivation:
     - payload negative.txt (322 -> 107 chars)
     payload:prompt.txt:
     - payload prompt.txt (374 -> 171 chars)
+verdict_0822: |-
+  PICK.
+
+  JUDGED AT 1:1 AGAINST taste/refs/goblin-canon-founder-0821.png, 2026-08-22,
+  on the published frame (sha verified against this job's own .sha256).
+  Sheet: review/COMPARE/GOBLIN-i2icanon-r1-0822.png, init leftmost.
+
+  THIS IS THE PICK, AND THE HEADLINE IS ONE LINE: HIS EYE SURVIVES TO THE
+  OUTPUT. Narrow almond, off-white field, tiny dark pupil, heavy upper lid --
+  E1, the axis four founder vetoes and roughly sixteen rounds were spent on,
+  and the first frame in this tree's record to hold it. Every prompt-side and
+  IP-Adapter round returned a large coloured iris; this one does not, and the
+  reason is mechanical rather than lucky: his face was never encoded.
+
+  E1 EYE      PASS -- his eye, essentially unchanged from the init.
+  E2 SKULL/EARS PASS -- broad low dome; ears very slightly larger than the
+     init but still near-horizontal, not the vetoed upswept pair.
+  E3 SMOOTH   PASS -- no furrows, no folds, no jowls.
+  E4 PALETTE  PASS -- desaturated sage, washed and high-key.
+  E5 COSTUME  PASS -- shirt and placket, dark shorts, dark boots.
+  R1 DID ANYTHING HAPPEN?  PASS, BUT ONLY JUST, AND THIS IS THE HONEST LIMIT
+     OF THE CELL. The background, the grass detail, the light and the near
+     sprouts all moved; THE FIGURE DID NOT. At 0.30 this is a re-render of his
+     picture, not a new picture of him. That is a pass on the bar as written
+     and it is NOT yet a plate route -- see round two.
+
+  POSE: unchanged, standing. NOT SCORED and predicted in advance; beat 13 is
+  seated and the skeleton is round two's job.

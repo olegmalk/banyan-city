@@ -533,3 +533,12 @@ derivation:
     - payload negative.txt (322 -> 107 chars)
     payload:prompt.txt:
     - payload prompt.txt (374 -> 171 chars)
+verdict_0822: |-
+  FAIL.
+
+  JUDGED AT 1:1. E1 FAILS AND IT FAILS IN THE VETOED DIRECTION: the
+  pupils have gone PINK -- a coloured iris, which is the exact defect four
+  vetoes were spent on. E2 also drifts, ears larger and more upswept, and the
+  legs gain wrappings the init does not have. E3/E4 still hold.
+  THIS IS THE CEILING AND IT IS NOW MEASURED RATHER THAN GUESSED. The face
+  breaks between 0.40 and 0.45.

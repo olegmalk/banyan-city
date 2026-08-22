@@ -533,3 +533,13 @@ derivation:
     - payload negative.txt (322 -> 107 chars)
     payload:prompt.txt:
     - payload prompt.txt (374 -> 171 chars)
+verdict_0822: |-
+  USABLE, SECOND.
+
+  JUDGED AT 1:1. E1 PASS -- the eye still reads as his, pale
+  field and small dark pupils, marginally rounder than 0.30. E3/E4/E5 PASS.
+  E2 MARGINAL: the ears are visibly larger and more upswept than the init, the
+  first step toward the vetoed pair. R1 PASS and better than 0.30 -- more scene
+  change for a face that still holds.
+  KEPT AS THE SECOND CANDIDATE AND AS THE HEADROOM READING: whatever round two
+  needs to spend on a skeleton, 0.40 says there is some to spend.
