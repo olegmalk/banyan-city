@@ -167,14 +167,29 @@ blocks carrying his face are not the blocks carrying his standing composition.
   images *"faithful to input prompts and target identity and also with desired
   style"* from per-block fine-tuning. **PAPER — and its abstract does not name
   which blocks do what; the block map above is COMMUNITY, not published.**
-- **It is runnable on OUR stack, which is the part that matters.** diffusers
-  `set_adapters()` accepts a nested dict instead of a scalar, scaling `down` /
-  `mid` / `up` and individual transformer blocks separately
+- **It is runnable on OUR stack, and that is now ASSERTED rather than hoped.**
+  The docs say `set_adapters()` accepts a nested dict instead of a scalar
   ([Load adapters](https://huggingface.co/docs/diffusers/main/using-diffusers/loading_adapters),
-  [using_peft_for_inference](https://github.com/huggingface/diffusers/blob/main/docs/source/en/tutorials/using_peft_for_inference.md)).
-  Caveat, and it is load-bearing: **the docs read are `main`, and the box runs
-  diffusers 0.29.2** — presence must be asserted on the box before a spec is
-  written, exactly as `peft` was.
+  [using_peft_for_inference](https://github.com/huggingface/diffusers/blob/main/docs/source/en/tutorials/using_peft_for_inference.md))
+  — but those docs are `main` and the box runs 0.29.2, so it was read off the
+  box's own installed source instead of believed. **DEMONSTRATED, 2026-08-22, on
+  the rtx5090:**
+
+      diffusers 0.29.2 / peft 0.12.0
+      UNet2DConditionLoadersMixin.set_adapters(adapter_names,
+          weights: Optional[Union[float, Dict, List[float], List[Dict], List[None]]])
+      ... weights = _maybe_expand_lora_scales(self, weights)
+
+  and `unet_loader_utils._maybe_expand_lora_scales_for_one_adapter` documents in
+  its own docstring that it turns
+  `{"down": 2, "mid": 3, "up": {"block_0": 4, "block_1": [5, 6, 7]}}` into
+  per-transformer scales. **The feature is present in the version we run.**
+- **But the driver cannot use it as written, and that is the real cost.**
+  `inpaint_fruit.py:877` does `pipe.fuse_lora(lora_scale=...)` — it BAKES one
+  scalar delta into the UNet tensors, and its own selftest asserts the fuse
+  happens before `from_pipe`. Per-block scaling needs `set_adapters` with the
+  fuse skipped, so the sweep is an eight-line arm on the driver plus a selftest
+  clause, not a spec-only change. **DEMONSTRATED, in-house.**
 - Second caveat: `set_adapters()` **scales attention weights only**; ResNets and
   samplers stay at 1.0. If the standing prior lives outside attention, the lever
   cannot reach it. **MAINTAINER.**
@@ -230,9 +245,10 @@ reached about B3 across three datasets and two caption schemes.
    a handful of posed frames makes posed the majority of everything the trigger
    has ever seen below the waist. One variable against v2: the added frames.
    Spec in `goblin-lowerbody-route-0822.md` §6.
-2. **A LoRA Block Weight sweep on the v2 weights (§4)**, after asserting the
-   diffusers 0.29.2 dict API exists on the box. Costs no training run and its
-   failure is a real finding.
+2. **A LoRA Block Weight sweep on the v2 weights (§4).** The dict API is
+   confirmed present on the box, so the only build is an eight-line
+   `set_adapters`-instead-of-`fuse_lora` arm on `inpaint_fruit.py`. Costs no
+   training run, and its failure is a real finding either way.
 3. **A `Lower Body` crop pass**, which the method our set came from lists and our
    set omits (§1). It is free — it is a crop of the canon — and it is the
    cheapest possible increase in leg evidence, though it adds no new POSE.
