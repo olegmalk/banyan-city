@@ -353,6 +353,74 @@ def resolve_controls(a, size, open_image=None):
     return out
 
 
+# §28's FINDING, AS A NUMBER. `padding_mask_crop` rescales the hint along with
+# the init, and a pose hint's semantics are scale-dependent in a way an init
+# image's are not: the authored hint was two whole figures at frame scale and
+# what the net received was one torso filling the frame -- a different
+# instruction, which the sampler obeyed, and which every automatic clause on the
+# route passed. A little slack is allowed because a mask that is already
+# effectively the frame produces a box the same size as the frame and magnifies
+# nothing; anything past that is the defect.
+HINT_MAGNIFICATION_CEILING = 1.05
+
+
+def hint_magnification(region, W: int, H: int) -> float:
+    """How much diffusers' crop box will magnify a full-frame hint. 1.0 = none.
+
+    `region` is None whenever padding_mask_crop is off, and off is the
+    configuration in which this whole class of defect cannot occur.
+    """
+    if not region:
+        return 1.0
+    return max(W / float(region[2] - region[0]), H / float(region[3] - region[1]))
+
+
+def assert_hint_survives_crop(controls, region, W: int, H: int) -> float:
+    """Refuse a hint that `padding_mask_crop` would magnify. §28, in code.
+
+    THIS IS THE ONE THING THE ROUTE LEARNED THAT WAS NOT YET ENFORCED. §28
+    closed beat 08's fill on a mechanism rather than a tally, and wrote down the
+    rule its own last paragraph states: this driver "is usable at `--pad-crop 0`,
+    on a region large enough not to need the crop, and it is not usable on a
+    small region." That sentence sat in prose for two days while the flags that
+    violate it stayed one command line away.
+
+    It is deliberately NOT a blanket ban on combining hints with
+    padding_mask_crop. The defect is the MAGNIFICATION, not the flag: a mask that
+    already covers the frame yields a crop box the size of the frame, magnifies
+    nothing, and is safe. So the guard measures the thing that broke rather than
+    banning the flag that happened to be set when it broke -- and a full-frame
+    img2img pass, which is what this route is, is admitted by construction.
+
+    Returns the magnification factor so a caller can log it. No controls, or no
+    crop, is 1.0 and never raises -- the no-control path must stay the path six
+    filed b08 verdicts were measured on.
+    """
+    if not controls:
+        return 1.0
+    mag = hint_magnification(region, W, H)
+    if mag > HINT_MAGNIFICATION_CEILING:
+        raise ControlError(
+            "!! THE CROP WOULD MAGNIFY THE HINT %.2fx -- refusing.\n"
+            "   frame     %dx%d\n"
+            "   crop box  %s  (%dx%d)\n"
+            "   A ControlNet hint's meaning is SCALE-DEPENDENT in a way an init\n"
+            "   image's is not. diffusers derives ONE crops_coords from the mask\n"
+            "   and applies it to the init, the mask AND every control image, then\n"
+            "   resizes all of them back to %dx%d. The alignment stays exact and\n"
+            "   the conditioning is still wrong: the net is handed a magnified\n"
+            "   fragment saying 'a body THIS BIG, HERE' instead of the pose that\n"
+            "   was authored. That is ep2-b08-cnetfill-0820, whose frame was the\n"
+            "   worst on the route while every automatic clause passed it --\n"
+            "   see pipeline/b08-arm-route-0819.md section 28.\n"
+            "   There is no value of --pad-crop that satisfies both halves on a\n"
+            "   small region. Either drop the hint, or run at --pad-crop 0 on a\n"
+            "   region large enough not to need the crop."
+            % (mag, W, H, tuple(region), region[2] - region[0],
+               region[3] - region[1], W, H), 15)
+    return mag
+
+
 def sidecar_text(*, pipeline_class: str, in_ch: int, W: int, H: int, steps: int,
                  cfg, strength, seed: int, pad_crop, blur: int, init: str,
                  init_sha: str, mask_png_name: str, mask_lines, control_lines,
@@ -669,6 +737,20 @@ def main() -> int:
     blur_preview = (mask.filter(ImageFilter.GaussianBlur(a.blur)) if a.blur
                     else mask)
     region = crop_region(blur_preview, W, H, a.pad_crop) if a.pad_crop else None
+
+    # ---- §28's LESSON, ENFORCED HERE AND AT $0. The crop that makes a small
+    # region drawable is the same crop that destroys a hint's meaning, and the
+    # two are mutually exclusive in this tool. Checked before the dry run
+    # returns, so the refusal costs no GPU seconds and no model load.
+    try:
+        mag = assert_hint_survives_crop(controls, region, W, H)
+    except ControlError as e:
+        print(str(e), flush=True)
+        return e.code
+    if controls:
+        print("HINT MAGNIFICATION %.3fx (ceiling %.2f) -- the hint reaches the "
+              "net at the scale it was authored" % (mag, HINT_MAGNIFICATION_CEILING),
+              flush=True)
 
     if a.dry_run:
         print("DRY RUN -- no model loaded, nothing rendered.", flush=True)
@@ -1094,6 +1176,74 @@ def selftest() -> int:
           "leaving every pre-existing line in its filed order",
           withctl.index("mask_height_frac") < withctl.index("controlnet: ")
           < withctl.index("mask_is_the_stewards"))
+
+    # ---- 7. THE CROP-MAGNIFICATION REFUSAL, AND THE CONFIGURATION IT ADMITS
+    # §28 measured this defect and wrote the rule in prose. These clauses are
+    # that rule, and the numbers are the ones the filed verdict reported, not
+    # numbers invented for a test.
+    check("the no-control path never raises, even on a magnifying box (rc none)",
+          assert_hint_survives_crop([], region, 832, 1216) == 1.0)
+    check("section 28's own crop box magnifies the hint 3.07x, as it reported",
+          abs(hint_magnification((468, 384, 739, 780), 832, 1216) - 3.07) < 0.01)
+    check("a hint that the crop would magnify is REFUSED (rc 15)",
+          raises(lambda: assert_hint_survives_crop(
+              controls, (468, 384, 739, 780), 832, 1216), 15))
+    try:
+        assert_hint_survives_crop(controls, (468, 384, 739, 780), 832, 1216)
+        refusal = ""
+    except ControlError as e:
+        refusal = str(e)
+    check("the refusal names the verdict and the mechanism, so the next caller "
+          "reads section 28 instead of rediscovering it at a render's cost",
+          "section 28" in refusal and "3.07x" in refusal
+          and "--pad-crop 0" in refusal)
+
+    # PAD-CROP 0 IS THE CONFIGURATION THIS ROUTE RUNS IN, and the guard admits it
+    # by construction: no crop, no rescale, no way for the defect to occur.
+    check("at --pad-crop 0 the region is None and the magnification is exactly "
+          "1.0 -- the section 28 defect is structurally impossible there",
+          hint_magnification(None, 832, 1216) == 1.0
+          and assert_hint_survives_crop(controls, None, 832, 1216) == 1.0)
+
+    # AND THE GUARD IS NOT A BAN ON THE FLAG. A mask that already covers the
+    # frame yields a box the size of the frame and magnifies nothing, so it is
+    # admitted WITH padding_mask_crop on. The guard measures the defect, not the
+    # flag that happened to be set when the defect was found.
+    full = Image.open(os.path.join(
+        repo, "farm-out/ep2-goblin-i2i-src-0822/fullframe-mask-0822.png")
+    ).convert("L")
+    freg = crop_region(full.filter(ImageFilter.GaussianBlur(8)), 832, 1216, 64)
+    check("a FULL-FRAME mask crops to the whole frame, so even with "
+          "--pad-crop 64 nothing is magnified and the hint is admitted",
+          hint_magnification(freg, 832, 1216) <= HINT_MAGNIFICATION_CEILING
+          and assert_hint_survives_crop(controls, freg, 832, 1216) <= 1.05)
+
+    # ---- 8. THE ROUND-2 SIDECAR: ONE POSE NET, FULL-FRAME MASK, NO CROP ----
+    one = resolve_controls(
+        _Args(controlnet=NET_POSE, control=os.path.join(repo, HINT_POSE),
+              control_sha256=HINT_POSE_SHA, scale=1.0), (832, 1216))
+    r2lines = control_meta_lines(one, None)
+    r2joined = "\n".join(r2lines)
+    check("a single net records its composition as 'one net' and emits no "
+          "second-net block",
+          "controlnet_composition: one net" in r2joined
+          and "controlnet_2:" not in r2joined)
+    check("with the crop off the sidecar says so in the box field rather than "
+          "carrying a stale or invented region",
+          "pad_crop_region_px: null (padding_mask_crop off)" in r2joined)
+    r2side = sidecar_text(
+        pipeline_class="StableDiffusionXLControlNetInpaintPipeline", in_ch=4,
+        W=832, H=1216, steps=40, cfg=7.5, strength=0.35, seed=20260823,
+        pad_crop=0, blur=8, init="canon.png", init_sha="0" * 64,
+        mask_png_name="m.png", mask_lines=mask_lines, control_lines=r2lines,
+        stamp="2026-08-22T00:00:00Z", render_s=1.0, wall_s=2.0,
+        versions={"python": "3", "torch": "2", "diffusers": "0.29.2"},
+        note="n", prompt="p", negative="q")
+    check("the round-2 shape -- init + ONE ControlNet at --pad-crop 0 -- "
+          "produces a complete sidecar naming the ControlNet pipeline",
+          "pipeline: StableDiffusionXLControlNetInpaintPipeline" in r2side
+          and "padding_mask_crop: null" in r2side
+          and "strength: 0.35" in r2side)
 
     bad = [c for c, ok in checks if not ok]
     print("\n%d/%d assertions passed" % (len(checks) - len(bad), len(checks)),
