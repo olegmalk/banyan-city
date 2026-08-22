@@ -1,0 +1,47 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 1.0
+seed: 20260901
+padding_mask_crop: null
+mask_blur_factor: 0
+init_image: C:/banyan-farm/lora-jerry-v3-ladder-0822/jerry-poseproof-init-0822.png
+init_sha256: 79c80689a43452f8fc11d22c2da86aee1c0a073d2255ddf1cb1d3cdc446f5f7f
+mask_png: b1-night-s2-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/lora-jerry-v3-ladder-0822/jerry-poseproof-maskall-0822.png
+mask_png_sha256: 5cb2f709bfa7eab1aae0ffebb398fefd5224a6da61e5a730779322a84321894b
+mask_white_px: 1011712
+mask_bbox_px: [0, 0, 831, 1215]
+mask_width_frac: 0.9988
+mask_height_frac: 0.9992
+lora: bnyjerry-sdxl-v3.safetensors
+lora_path: C:/banyan-farm/lora-jerry-v3-0822/out/bnyjerry-sdxl-v3.safetensors
+lora_sha256: d2062ac060a4ac44e217815464de143897550f078294eb59b3f303cc5f8a0cdd
+lora_weight: 0.8
+lora_fused_before_controlnet_swap: true  # from_pipe reuses the module objects, so a fused UNet travels into the swapped pipeline
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-22T15:59:51Z
+render_seconds: 9.9
+wall_seconds: 17.5
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  B1 IDENTITY ON A FRESH SETTING: a snowy blue night, cold moonlight, upper body framing, seed 20260901, LoRA bnyjerry-sdxl-v3.safetensors at 0.8, NO skeleton. Fresh means a setting, a light and a framing no admitted frame carries -- the dataset's only grounds are `a hazy meadow` and `tall grass`. This is v2's bar re-run unchanged, as a no-regression bar on the axis v2 already passes: all three added frames share ONE torso byte-for-byte, so if identity fell, it fell here.
+prompt: |-
+  bnyjerry, 1boy, solo, standing, looking at viewer, upper body, a snowy blue night, cold moonlight, anime style, cel shading, masterpiece, best quality, very aesthetic
+negative: |-
+  lowres, worst quality, low quality, text, watermark, photorealism, 3d render, blurry, 2boys, multiple heads

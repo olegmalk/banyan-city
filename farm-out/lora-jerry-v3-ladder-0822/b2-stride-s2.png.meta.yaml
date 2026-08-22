@@ -1,0 +1,59 @@
+# Still provenance (7.2), written AT RENDER TIME by inpaint_fruit.py
+# on the rtx5090. The plate outside the mask is the founder's own
+# pixels; only the region described below was redrawn.
+platform: local-gpu (rtx5090)
+model: cagliostrolab/animagine-xl-3.1
+model_licence: CreativeML Open RAIL++-M (use restrictions travel; D15)
+pipeline: StableDiffusionXLControlNetInpaintPipeline (base weights, unet.in_channels=4)
+size: 832x1216
+steps: 40
+guidance: 7.5
+strength: 1.0
+seed: 20260901
+padding_mask_crop: null
+mask_blur_factor: 0
+init_image: C:/banyan-farm/lora-jerry-v3-ladder-0822/jerry-poseproof-init-0822.png
+init_sha256: 79c80689a43452f8fc11d22c2da86aee1c0a073d2255ddf1cb1d3cdc446f5f7f
+mask_png: b2-stride-s2-mask.png
+mask_shape: png
+mask_png_source: C:/banyan-farm/lora-jerry-v3-ladder-0822/jerry-poseproof-maskall-0822.png
+mask_png_sha256: 5cb2f709bfa7eab1aae0ffebb398fefd5224a6da61e5a730779322a84321894b
+mask_white_px: 1011712
+mask_bbox_px: [0, 0, 831, 1215]
+mask_width_frac: 0.9988
+mask_height_frac: 0.9992
+lora: bnyjerry-sdxl-v3.safetensors
+lora_path: C:/banyan-farm/lora-jerry-v3-0822/out/bnyjerry-sdxl-v3.safetensors
+lora_sha256: d2062ac060a4ac44e217815464de143897550f078294eb59b3f303cc5f8a0cdd
+lora_weight: 0.8
+lora_fused_before_controlnet_swap: true  # from_pipe reuses the module objects, so a fused UNet travels into the swapped pipeline
+controlnet: C:\banyan-farm\cnet-openpose-twins
+controlnet_licence: apache-2.0 (D15 SAFE, no attribution condition) -- the `twins` variant of xinsir/controlnet-openpose-sdxl-1.0, blob diffusion_pytorch_model_twins.safetensors sha256 54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4, 2502139104 bytes, renamed into a loadable directory by ep2-b08-twins-fetch-0819. Identical terms to the default weight in that same repo; no annotator is used -- the hint is authored in PIL
+controlnet_conditioning_scale: 1.0
+control_image: jerry-skel-h240stride-0821.png
+control_image_sha256: f6150add3a2c603b2681d5e2f5c76e252ccb2442c43d15d285e7b15141eb67a2
+controlnet_variant: None (xinsir ships no fp16 variant file)
+control_guidance_start: 0.0
+control_guidance_end: 1.0
+controlnet_composition: one net
+control_hint_alignment: >-
+  BY CONSTRUCTION, NOT BY ARITHMETIC. Every hint is handed to diffusers FULL-FRAME at the init's own 832 x 1216, and StableDiffusionXLControlNetInpaintPipeline computes ONE crops_coords from the mask and passes that same tuple to the init, to the mask and to each control image (prepare_control_image(..., crops_coords=crops_coords, resize_mode=resize_mode) in both the single-net and MultiControlNetModel branches of 0.29.2). This driver crops nothing itself, so it has nothing to disagree with. The box below is that tuple, read back from the live pipe.mask_processor.get_crop_region on the blurred mask and checked against this driver's vendored copy before the render; a mismatch is a hard stop, not a warning.
+pad_crop_region_px: null (padding_mask_crop off)
+mask_is_the_stewards: >-
+  THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said `inpaint` and named no size, no position, no colour and no shape. The mask above is the steward's and is the first thing his correction should move -- 'lower', 'smaller', 'other side' is one number here; the words in the prompt are his own approved shots.md wording.
+rendered_utc: 2026-08-22T15:58:06Z
+render_seconds: 14.1
+wall_seconds: 22.8
+cost_usd: 0
+python_version: 3.12.10
+torch_version: 2.11.0+cu128
+diffusers_version: 0.29.2
+approved: false
+provisional: >-
+  PROVISIONAL. A steward-rendered SAMPLE, not a pick and not canon. Never takes a canon filename, is not published, not posted, and not assembled into an episode. Ground truth is the founder (R4).
+note: >-
+  B2, stride skeleton at conditioning scale 1.0, LoRA bnyjerry-sdxl-v3.safetensors at weight 0.8, seed 20260901. IN THE v3 DATASET: NO. **NOT IN THE DATASET, DELIBERATELY.** The single most informative cell in this job. Seat and kneel passing tells us the frames took; only stride tells us whether the POSE AXIS opened. shots.md asks for a goblin walking away and stopping mid-step in three of its prompt lines, so this is also the cell a beat is actually waiting on. The prompt carries the trigger and NO POSE WORD -- the pose is the skeleton's job and a pose word would make a passing cell unattributable between the net and the wording.
+prompt: |-
+  bnyjerry, 1boy, solo, in tall grass, detailed cinematic anime, masterpiece, best quality, very aesthetic
+negative: |-
+  lowres, worst quality, low quality, text, watermark, photorealism, 3d render, blurry, 2boys, multiple heads
