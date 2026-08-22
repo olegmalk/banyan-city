@@ -1,0 +1,242 @@
+# SAPLING LoRA — THE SAMPLES, RE-FILED. The weights already exist.
+#
+# 2026-08-22. $0 (local card). ~6 GPU-minutes.
+#
+# ══════════════════════════════════════════════════════════════════════════
+# WHY THIS EXISTS AS A SEPARATE JOB AND WHY IT DOES NOT RE-TRAIN.
+#
+# `lora-sapling-0822-1787380176` TRAINED CLEANLY: 660 optimizer steps in 20m02s
+# at 1.82 s/it, avr_loss 0.105, "model saved", step `train` END rc=0 at
+# 06:50:52Z. FIVE checkpoints are on the box, 228,453,516 bytes each:
+#
+#   C:\banyan-farm\lora-sapling-0822\out\bnysapling-sdxl-v1-000002.safetensors
+#   ...-000004 / -000006 / -000008
+#   C:\banyan-farm\lora-sapling-0822\out\bnysapling-sdxl-v1.safetensors  (final)
+#
+# The job was then marked FAILED by its `sample` step, nine seconds later, for a
+# reason that has nothing to do with the training:
+#
+#   File "...\sample_lora.py", line 76, in main
+#     pipe.load_lora_weights(...)
+#   ValueError: PEFT backend is required for this method.
+#
+# diffusers 0.29.2 gates ALL LoRA loading behind `USE_PEFT_BACKEND`, which is
+# False unless `peft` is importable. It was absent from BOTH venvs on the box --
+# render venv AND venv-lora -- because `sample_lora.py` was written on 2026-08-20
+# and committed without ever being run. RE-TRAINING WOULD FIX NOTHING AND WOULD
+# BURN THE CARD FOR TWENTY MINUTES TO REPRODUCE A FILE THAT IS ALREADY CORRECT.
+# So this spec is the three sample steps and the publish step, pointed at the
+# weights that already exist.
+#
+# THE ENVIRONMENT FIX, AND WHAT WAS DONE TO MAKE IT SAFE. `peft==0.12.0` was
+# installed into `C:\banyan-farm\venv` with `--no-deps`, at 06:53Z, with the
+# queue empty and no job running. `--no-deps` is the whole safety argument:
+# SETUP.md's standing warning is that a careless pip resolve on this sm_120 card
+# silently replaces torch with a build that has no Blackwell kernels and breaks
+# EVERY render on the box. peft's own requirements were all already present.
+# Verified rather than asserted, immediately after:
+#   * `pip freeze` before vs after differs by EXACTLY ONE LINE, `peft==0.12.0`
+#   * torch still 2.11.0+cu128, transformers still 4.44.2, diffusers still 0.29.2
+#   * a bf16 matmul on the card returns: "cuda ok NVIDIA GeForce RTX 5090 Laptop GPU"
+#   * `USE_PEFT_BACKEND` is now True
+# `sample_lora.py` now refuses up front when the backend is missing, with the
+# `--no-deps` command in the message, so this cannot cost another run.
+#
+# WHICH CHECKPOINT: the FINAL one, which is what the original spec's sample step
+# named. Grading an earlier epoch is a separate job and a separate verdict; the
+# five are on disk precisely so that choice stays open, and picking one now
+# because it is convenient would be picking before looking.
+# ══════════════════════════════════════════════════════════════════════════
+
+id: lora-sapling-sample-0822
+task: lora-sapling-sample-0822
+node: 003b-one-leaf-for-yes
+runner: box
+needs_gpu: true
+priority: 70
+max_attempts: 1
+owner: the sapling-LoRA lane, 2026-08-22
+
+script_authority: 'Not a render of a script and not an episode assembly. Three
+  test stills from a weight file that already exists; nothing enters an episode,
+  a leaf or a shot board, and sample_lora.py writes approved: false /
+  provisional: true into every sidecar itself.'
+
+consumer: 'Step 0 of train-sapling-0822.yaml BARS — the ONE SAMPLE that gates
+  whether the 15-frame grid (pipeline/lora/bars-sapling-0822.yaml, written and
+  deliberately unfiled) is ever rendered. Without these three frames the LoRA is
+  909 MB of weights nobody can rule on, and the founder has nothing to look at.'
+
+success: 'Three PNGs and their sidecars in farm-out. The tilled-earth frame is
+  looked at by eye at 1:1 before anything else is filed; the no-regression pair
+  is judged side by side. A bad sample is a full result and stops the ladder.'
+
+why: 'The card is idle, the founder is asleep, and every beat rung in flight is
+  founder-gated. Six GPU-minutes turns a finished training run into a decision.'
+
+est_minutes: 8
+
+needs:
+- cuda
+- vram20
+
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+steps:
+
+# ── 1. THE ONE SAMPLE. Prompt, negative, size, steps, cfg and seed are copied
+# byte-for-byte from the sample step of train-sapling-0822.yaml, which was
+# committed at 9a4042299 BEFORE any pixel of this LoRA existed. Re-typing them
+# would be re-picking a bar after the weights exist.
+#
+# It asks for BARE TILLED EARTH because all 44 training frames stand on green
+# ground — the set's sharpest monoculture and the likeliest thing for the trigger
+# to have swallowed. The negative deliberately carries no leaf-count and no
+# leaf-shape word, so bar B5 is not answered by the negative on the LoRA's behalf.
+- name: sample
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-sapling-0822\sample_lora.py
+  - --lora
+  - C:\banyan-farm\lora-sapling-0822\out\bnysapling-sdxl-v1.safetensors
+  - --lora-weight
+  - '0.8'
+  - --prompt
+  - bnysapling, a young sapling, two leaves, 25 cm tall, medium shot, bare tilled earth
+    field, a low stone wall behind, overcast, anime style, cel shading, detailed background,
+    masterpiece, best quality, very aesthetic
+  - --negative
+  - 1boy, 1girl, people, goblin, text, watermark, signature, photorealism, 3d render,
+    low quality, worst quality, blurry
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --steps
+  - '40'
+  - --guidance
+  - '7.5'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-sapling-0822\out\SAMPLE-bnysapling-tilled-overcast.png
+
+# ── 2 and 3. THE NO-REGRESSION PAIR, both sides in one job so they share a
+# session and a checkpoint state. The pair IS the evidence; either frame alone
+# proves nothing (sample_lora.py says so in its own --no-lora help text).
+- name: noregress-lora
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-sapling-0822\sample_lora.py
+  - --lora
+  - C:\banyan-farm\lora-sapling-0822\out\bnysapling-sdxl-v1.safetensors
+  - --lora-weight
+  - '0.8'
+  - --prompt
+  - a stone bridge over a river, forest, afternoon light, anime style, cel shading,
+    detailed background, masterpiece, best quality, very aesthetic
+  - --negative
+  - text, watermark, signature, photorealism, 3d render, low quality, worst quality,
+    blurry
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --steps
+  - '40'
+  - --guidance
+  - '7.5'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-sapling-0822\out\SAMPLE-noregress-A-lora.png
+
+- name: noregress-base
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-sapling-0822\sample_lora.py
+  - --no-lora
+  - --lora
+  - C:\banyan-farm\lora-sapling-0822\out\bnysapling-sdxl-v1.safetensors
+  - --lora-weight
+  - '0.8'
+  - --prompt
+  - a stone bridge over a river, forest, afternoon light, anime style, cel shading,
+    detailed background, masterpiece, best quality, very aesthetic
+  - --negative
+  - text, watermark, signature, photorealism, 3d render, low quality, worst quality,
+    blurry
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --steps
+  - '40'
+  - --guidance
+  - '7.5'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-sapling-0822\out\SAMPLE-noregress-B-base.png
+
+# ── 4. PUBLISH.
+#
+# THE .safetensors ARE DELIBERATELY NOT COPIED, and this is the one place this
+# spec differs from the original in intent rather than in scope. Each checkpoint
+# is 228,453,516 bytes; GitHub hard-rejects any blob over 100 MiB; and
+# box_runner.Courier._publish runs `git add -A -- farm-out` and then pushes, so
+# ONE oversized file would leave a permanently unpushable commit at the head of
+# farm-results-rtx5090 and every other lane's results would stop reaching the
+# tree behind it. That is a repo-wide outage caused by one lane's publish step.
+# Three guards now block it (repo .gitignore, a farm-out/.gitignore on the box's
+# courier worktree, and a per-job one), all verified with `git check-ignore`, but
+# the honest thing is for the glob not to reach for them in the first place.
+#
+# The sha256 manifest DOES travel and it names the weights, so any sample here
+# remains traceable to the exact bytes that drew it — that is the property the
+# checkpoint copy was there to provide, and it survives.
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - -c
+  - |
+    import glob, hashlib, os, shutil
+    dst = r"C:\banyan-farm\courier-box\farm-out\lora-sapling-0822"
+    os.makedirs(dst, exist_ok=True)
+    src = sorted(glob.glob(r"C:\banyan-farm\lora-sapling-0822\out\SAMPLE-*.png")
+                 + glob.glob(r"C:\banyan-farm\lora-sapling-0822\out\SAMPLE-*.meta.yaml"))
+    lines = []
+    for f in src:
+        shutil.copy2(f, dst)
+        with open(os.path.join(dst, os.path.basename(f)), "rb") as fh:
+            lines.append(hashlib.sha256(fh.read()).hexdigest() + "  " + os.path.basename(f))
+    # The weights stay on the box, but their hashes travel -- otherwise a sample
+    # is traceable only to a filename, and a filename is not bytes.
+    for w in sorted(glob.glob(r"C:\banyan-farm\lora-sapling-0822\out\*.safetensors")):
+        with open(w, "rb") as fh:
+            lines.append(hashlib.sha256(fh.read()).hexdigest()
+                         + "  ON-BOX-ONLY " + os.path.basename(w))
+    with open(os.path.join(dst, "lora-sapling-0822.sha256"), "w", newline="\n") as fh:
+        fh.write("\n".join(lines) + "\n")
+    print("published", len(src), "file(s) ->", dst)
+    raise SystemExit(0 if len(src) >= 6 else 1)
+
+artifacts:
+- C:\banyan-farm\lora-sapling-0822\out\SAMPLE-bnysapling-tilled-overcast.png
+- C:\banyan-farm\lora-sapling-0822\out\SAMPLE-noregress-A-lora.png
+- C:\banyan-farm\lora-sapling-0822\out\SAMPLE-noregress-B-base.png
+
+# ══════════════════════════════════════════════════════════════════════════
+# THE BARS ARE NOT RESTATED HERE. They live in train-sapling-0822.yaml `## BARS`
+# and were pre-registered before any pixel existed. This job renders; it does not
+# get to say what counts as passing.
+# ══════════════════════════════════════════════════════════════════════════

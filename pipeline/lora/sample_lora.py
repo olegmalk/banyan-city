@@ -63,6 +63,32 @@ def main():
     if not args.no_lora and not os.path.exists(args.lora):
         sys.exit("no such LoRA: %s" % args.lora)
 
+    # THE PEFT GATE, ADDED 2026-08-22 AFTER IT COST A RUN. This file was written
+    # on 2026-08-20 and committed without ever being executed; the first time it
+    # ran was the sapling training job, which trained for twenty clean minutes,
+    # wrote five checkpoints, and then died in nine seconds inside diffusers with
+    # `ValueError: PEFT backend is required for this method.` diffusers 0.29.2
+    # gates ALL LoRA loading behind USE_PEFT_BACKEND, which is False unless peft
+    # is installed -- and it was not, in either venv on the box.
+    #
+    # Checking it BEFORE the 6.9 GB checkpoint load turns a nine-second waste at
+    # the end of an hour into a one-second refusal at the start, and the message
+    # carries the exact fix instead of a stack trace. `--no-deps` is not
+    # decoration: the render venv is what draws every plate the show ships, and
+    # SETUP.md's standing warning is that a careless pip resolve on this sm_120
+    # card silently replaces torch with a build that has no Blackwell kernels.
+    # peft's own requirements are all already present, so --no-deps installs one
+    # pure-python package and moves nothing else. Verified 2026-08-22: pip freeze
+    # differed by exactly one line and torch stayed 2.11.0+cu128.
+    from diffusers.utils import USE_PEFT_BACKEND
+    if not args.no_lora and not USE_PEFT_BACKEND:
+        sys.exit(
+            "diffusers has no PEFT backend, so load_lora_weights() cannot run and\n"
+            "every LoRA sample would fail AFTER loading the base checkpoint.\n"
+            "  fix:  <this venv>/python.exe -m pip install --no-deps peft==0.12.0\n"
+            "  then: re-run. --no-deps is required -- a plain install may resolve\n"
+            "        torch away from 2.11.0+cu128 and break every render on the box.")
+
     pipe = StableDiffusionXLPipeline.from_pretrained(
         BASE, torch_dtype=torch.bfloat16, use_safetensors=True)
     pipe.to("cuda")
