@@ -4505,3 +4505,5 @@
 08:44:06Z DONE task=ep2-b13-i2icanon-s55-0822-1787387271 rc=0 artifacts=2
 08:44:12Z STARTED task=ep2-guardcast3-a-0822-1787387814 attempt=1 on box-runner
 08:44:31Z DONE task=ep2-guardcast3-a-0822-1787387814 rc=0 artifacts=1
+08:44:37Z STARTED task=ep2-guardcast3-a30-0822-1787387850 attempt=1 on box-runner
+08:44:56Z DONE task=ep2-guardcast3-a30-0822-1787387850 rc=0 artifacts=1
