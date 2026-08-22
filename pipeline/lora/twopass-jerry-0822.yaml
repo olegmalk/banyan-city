@@ -1,0 +1,1030 @@
+# B2 ROUND FOUR -- the pose bar on inpaint_fruit.py's proven
+# ControlNet path. GENERATED. Edit
+# pipeline/lora/emit_poseproof_jerry_0822.py, not this file.
+
+id: lora-jerry-v2-twopass-0822
+task: lora-jerry-v2-twopass-0822
+node: 002b-first-citizen
+runner: box
+needs_gpu: true
+needs:
+- cuda
+- vram20
+priority: 64
+max_attempts: 1
+est_minutes: 5
+owner: the wave lane, 2026-08-22
+depends_on: lora-jerry-v2-0822
+consumer: THE GOBLIN WAVE, and this is the last mechanism available to it before the answer
+  becomes a retrain. Pass one is proven and free; this is the half that decides.
+success: ONE CELL WHERE HE SITS AND HE IS HIMSELF. That is the wave's recipe and it is a two-pass
+  rather than a one-pass. If both cells come back as a seated human boy, the LoRA cannot reach
+  through an init at any strength that preserves the pose, and the answer is a RETRAIN on
+  posed frames -- a card-hour that needs no human -- rather than any further knob.
+why: 'ROUND SEVEN CLOSED THE ONE-PASS ROUTE: identity leaves between 0.65 and 0.50 and the
+  seated legs never arrive, because 21 of 21 training frames are standing and that is a lower-body
+  prior no weight or scale reaches. But round six''s own control cell IS a correctly seated
+  figure -- the pose exists, it is wearing the wrong person. This asks the two questions of
+  two passes instead of one, and the second pass is the i2i route used for the property it
+  was CLOSED for: it re-lights and cannot re-ground.'
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+cell_count:
+  strength_bracket: 2
+payload:
+  C:\banyan-farm\lora-jerry-v2-twopass-0822\inpaint_fruit.py: "#!/usr/bin/env python3\nr\"\
+    \"\"Paint ONE object into ONE masked region of an approved plate. SDXL, $0, local.\n\n\
+    WHY THIS EXISTS. Beat 01 asks for \"one small round green fruit hanging from the\nstem\"\
+    \ and the prompt cannot deliver it: 0 of 24 across the wording rounds, and\n0 of 12 in\
+    \ round 8's img2img -- which is the decisive one, because r8's init\ncarried no fruit\
+    \ at all and so was a clean test of whether img2img will ADD an\nobject the init lacks.\
+    \ It will not, at strength 0.35 or 0.55. The founder chose\n`inpaint` over `drop` on 2026-08-10\
+    \ (ledger `ep2-b01-fig-route-0810`), so the\nfruit becomes its own step and this is that\
+    \ step.\n\nTHE METHOD, AND EVERY CHOICE IN IT IS SOURCED RATHER THAN INVENTED.\n\n  *\
+    \ animagine-xl-3.1 has NO inpainting variant, so this loads the BASE weights\n    into\
+    \ StableDiffusionXLInpaintPipeline. diffusers 0.29.2 supports that\n    explicitly --\
+    \ its own check is \"The unet should have either 4 or 9 input\n    channels\", and at\
+    \ 4 (a normal SDXL checkpoint) it takes the latent-blend\n    branch instead of concatenating\
+    \ mask channels:\n        latents = (1 - init_mask) * init_latents_proper + init_mask\
+    \ * latents\n    HF's docs name the trade-off in their own words: \"the overall image\
+    \ quality\n    may be lower, but it generally tends to preserve the mask area (that is\
+    \ why\n    you can see the mask outline)\". Preserving the unmasked area is exactly what\n\
+    \    we want here -- the plate is the founder's and must come back unchanged\n    outside\
+    \ the mask.\n  * `padding_mask_crop` is the countermeasure for the failure mode this beat\
+    \ has:\n    a SMALL object in a LARGE frame. It crops the masked region with padding,\n\
+    \    upscales that crop to the pipeline resolution, inpaints there, and pastes it\n  \
+    \  back -- so the fruit is drawn at full model resolution instead of at the ~5%\n    of\
+    \ the frame it will occupy. Verified present in 0.29.2's __call__ on the box.\n  * `strength`\
+    \ must be high to ADD something. It is not the img2img case; the\n    unmasked region\
+    \ is restored every step by the blend above, so a high strength\n    costs nothing outside\
+    \ the mask.\n\n    diffusers 0.29.2 source: https://raw.githubusercontent.com/huggingface/diffusers/v0.29.2/src/diffusers/pipelines/stable_diffusion_xl/pipeline_stable_diffusion_xl_inpaint.py\n\
+    \    inpaint docs:            https://huggingface.co/docs/diffusers/v0.29.2/en/using-diffusers/inpaint\n\
+    \    model card + licence:    https://huggingface.co/cagliostrolab/animagine-xl-3.1\n\
+    \    padding_mask_crop issue: https://github.com/huggingface/diffusers/issues/6345\n\n\
+    WHAT THIS SCRIPT REFUSES TO DO. It will not run on an init whose sha256 does not\nmatch\
+    \ the one named on the command line. G1 says a conditioned render starts from\na frame\
+    \ the founder has passed, and the only way that gate means anything is if\nthe bytes are\
+    \ asserted rather than the filename. It also never writes a canon\nfilename and always\
+    \ writes `approved: false` in the sidecar.\n\nTHE MASK IS GEOMETRY AND IT IS THE STEWARD'S,\
+    \ NOT HIS. He approved a method, not\na size or a position. The ellipse is passed in on\
+    \ the command line, drawn to a\nPNG beside the output so it can be looked at, and reported\
+    \ in the sidecar in both\npixels and as a fraction of the frame, so the first correction\
+    \ he makes can be\n\"lower\", \"smaller\", \"other side\" and it is one number.\n\nSECOND\
+    \ CALLER, 2026-08-15: THE BARK BOARD, AND WHY THE MASK GREW STRAIGHT EDGES.\nA prop --\
+    \ a clipboard made of bark -- gates three beats of 002b (06 \"turns over a\nclipboard\
+    \ made of bark and reads\", 08 \"lowers the clipboard and points\", 10\n\"flips the clipboard\
+    \ around: the back is blank\"). Four wording attempts closed\nthe wording lever for good\
+    \ (see `a5e61487`, `c7a11ff0`): they established that\nwording reaches the prop's MATERIAL\
+    \ -- deleting the noun killed the chrome clip\nand white paper in 12 frames of 12 -- and\
+    \ that wording does NOT reach its\nGEOMETRY. `large flat rectangular` was in the positive\
+    \ of a clean, uncontested\nprompt and all four seeds still rounded the object into a lozenge,\
+    \ a dome, a\nsurfboard blank and a basket lid. So the geometry has to come from the mask,\
+    \ and\nan ELLIPSE MASK CANNOT SUPPLY IT: an ellipse is the rounded blob that four\nprompts\
+    \ already failed against, and masking a board with one would re-draw the\ndefect under\
+    \ test. Hence `--quad`, four corners and four straight edges. A\nrectangle is a quad;\
+    \ a rectangular board held at an angle is a quad in\nperspective, which an axis-aligned\
+    \ rectangle would not fit either.\n\nTHIRD CALLER, 2026-08-17: EYEWEAR ON ONE MAN OF TWO,\
+    \ AND WHY THE MASK BECAME\nARBITRARY. `glasses` named in ONE man's clause lands on BOTH\
+    \ men, 5 of 5 -- a\ndifferent failure from the prop above, which goes to ONE WRONG figure.\
+    \ The\nfounder ruled \"draw the second man without glasses. we need to have control.\"\
+    \nThe published cause (ALE-Edit, arXiv 2412.04715) is that CLIP is causal and its\nEOS\
+    \ carries global prompt semantics, so the token steers the whole frame and no\nwording\
+    \ says WHICH face; a negative cannot unbind it. The mask is therefore the\nonly lever,\
+    \ and the region that matters here is a THIN BAND along a spectacle\nframe -- neither\
+    \ a blob nor a convex polygon, so neither `--ellipse` nor `--quad`\ncan express it. Hence\
+    \ `--mask-png`, which also retires the board-MINUS-the-hand\nlimitation recorded against\
+    \ this script in wave-drafts.yaml. The band is authored\nby pipeline/attribute_mask.py,\
+    \ a $0 step with no GPU and no sampler in it, which\nis what makes \"control\" checkable\
+    \ instead of asserted.\n\nFOURTH CALLER, 2026-08-20: A CONTROLNET, BECAUSE THE LAST DEFECT\
+    \ IS A SHAPE.\n`b08-arm-route-0819.md` §§21-27 spent five renders and one CPU compositor\
+    \ on one\nregion of beat 08 and closed every lever this script had. Measured, not argued:\n\
+    mask SIZE does not choose the noun (18408 px drew a head, 10020 px drew a fist);\nthe\
+    \ PROMPT does choose a KIND (deleting `goblin` deleted it, first try); a\nNEGATIVE removes\
+    \ a kind and NOT A COUNT (`second strap` redrew 91.3 % of the fill\nand the second strap\
+    \ came back in the same place); STRENGTH governs invention\nsymmetrically and neither\
+    \ end lands on the plate's own line quality. What is left\non the best frame is a crossing\
+    \ band -- a SHAPE -- and §27's closing line names\nthe only two levers that reach one:\
+    \ a controlnet or a hand-authored matte (R4).\n\nSo the control flags below exist, and\
+    \ diffusers 0.29.2 already has the pipeline:\n`StableDiffusionXLControlNetInpaintPipeline`.\
+    \ Three facts were read out of its\nsource before a line of this was written, because\
+    \ the alignment class is exactly\nhow this beat died before:\n\n  * it takes the SAME\
+    \ latent-blend branch at unet.in_channels == 4 (its own\n    `return_image_latents = num_channels_unet\
+    \ == 4`), so the base animagine\n    weights load into it on the identical terms as the\
+    \ plain inpaint pipeline;\n  * it accepts `padding_mask_crop`, computes ONE `crops_coords`\
+    \ from the mask,\n    and passes THAT SAME TUPLE to the init, to the mask AND to every\
+    \ control\n    image (`prepare_control_image(..., crops_coords=crops_coords,\n    resize_mode=resize_mode)`,\
+    \ in both the single-net and MultiControlNetModel\n    branches). ALIGNMENT IS THEREFORE\
+    \ BY CONSTRUCTION AND NOT BY ARITHMETIC HERE:\n    the hint is handed over FULL-FRAME,\
+    \ in the init's own coordinates, and this\n    script contains no crop of its own to disagree\
+    \ with diffusers';\n  * `AutoPipelineForInpainting.from_pipe(pipe, controlnet=[cn, cn2])`\
+    \ swaps the\n    class while reusing the loaded modules, and a LIST is wrapped into a\n\
+    \    MultiControlNetModel by the constructor -- the same composition\n    `controlnet_plate.py`\
+    \ uses on the txt2img side, whose two hints are what this\n    is for.\n\n    controlnet\
+    \ inpaint sdxl: https://raw.githubusercontent.com/huggingface/diffusers/v0.29.2/src/diffusers/pipelines/controlnet/pipeline_controlnet_inpaint_sd_xl.py\n\
+    \    get_crop_region:         https://raw.githubusercontent.com/huggingface/diffusers/v0.29.2/src/diffusers/image_processor.py\n\
+    \nTWO GUARDS CARRY THAT, RATHER THAN A COMMENT SAYING IT IS FINE. (1) A hint whose\npixel\
+    \ size is not the init's is REFUSED before any weight loads -- a resized hint\nis a hint\
+    \ in another coordinate system, and diffusers would resize it silently.\n(2) Before the\
+    \ render, this script's own vendored copy of `get_crop_region` is\ncompared against the\
+    \ live `pipe.mask_processor.get_crop_region`, on the same\nblurred mask, and a mismatch\
+    \ is a hard stop -- so the crop box written into the\nsidecar is the box the sampler actually\
+    \ used.\n\nWITH NO CONTROL FLAGS THIS SCRIPT IS THE SCRIPT IT WAS. Same class, same call\n\
+    kwargs, same sidecar bytes; `--selftest` proves the last one against a filed\nverdict's\
+    \ sidecar (`ep2-b08-str70-0820`) and the first two by construction.\n\n    python inpaint_fruit.py\
+    \ --init PLATE.png --init-sha256 <hex> \\\n        (--ellipse cx,cy,rx,ry | --quad x0,…,y3\
+    \ | --mask-png m.png) \\\n        --prompt-file p.txt --negative-file n.txt \\\n     \
+    \   --out OUT.png [--steps 40] [--cfg 7.5] [--strength 0.99] \\\n        [--seed N] [--pad-crop\
+    \ 64] [--blur 8] [--dry-run] \\\n        [--controlnet REPO --control H.png --control-sha256\
+    \ <hex> --scale 1.0 \\\n         [--controlnet2 REPO --control2 H2.png --control2-sha256\
+    \ <hex> \\\n          --scale2 0.3]]\n    python inpaint_fruit.py --selftest        #\
+    \ $0, no torch, no CUDA, no network\n\"\"\"\n\nfrom __future__ import annotations\n\n\
+    import argparse\nimport datetime as _dt\nimport hashlib\nimport os\nimport sys\nimport\
+    \ time\n\nBASE = \"cagliostrolab/animagine-xl-3.1\"\nBASE_LICENCE = \"CreativeML Open\
+    \ RAIL++-M (use restrictions travel; D15)\"\n\n# THE SAME ALLOWLIST AS controlnet_plate.py,\
+    \ AND FOR THE SAME REASON: the licence\n# travels with the NAME, so an unlisted net is\
+    \ refused before any weight loads\n# instead of being recorded as apache-2.0 by default.\
+    \ thibaud's SDXL openpose\n# inherits CMU OpenPose's non-commercial terms AT THE WEIGHTS\
+    \ LEVEL and MistoLine\n# puts a standing visible-attribution obligation on anything it\
+    \ renders; neither\n# may attach itself to a frame by way of a typo. Kept as its own copy\
+    \ rather than\n# imported because this file is shipped to the box as a STANDALONE payload\
+    \ string\n# -- an import of a sibling module would be a NameError on the card.\nCONTROLNETS\
+    \ = {\n    \"xinsir/controlnet-scribble-sdxl-1.0\":\n        \"apache-2.0 (D15 SAFE, no\
+    \ attribution condition)\",\n    \"xinsir/controlnet-openpose-sdxl-1.0\":\n        \"\
+    apache-2.0 (D15 SAFE, no attribution condition; front matter and body \"\n        \"both,\
+    \ and no annotator is used -- the hint is authored in PIL)\",\n    r\"C:\\banyan-farm\\\
+    cnet-openpose-twins\":\n        \"apache-2.0 (D15 SAFE, no attribution condition) -- the\
+    \ `twins` variant \"\n        \"of xinsir/controlnet-openpose-sdxl-1.0, blob \"\n    \
+    \    \"diffusion_pytorch_model_twins.safetensors sha256 \"\n        \"54a2afb1bd21349e475566e5428884bc937a4caecf863b29dea08acc40612fa4,\
+    \ \"\n        \"2502139104 bytes, renamed into a loadable directory by \"\n        \"\
+    ep2-b08-twins-fetch-0819. Identical terms to the default weight in that \"\n        \"\
+    same repo; no annotator is used -- the hint is authored in PIL\",\n}\n\n# The xinsir repos\
+    \ ship ONLY `diffusion_pytorch_model.safetensors`, so passing\n# variant=\"fp16\" raises.\
+    \ Same trap, same value, as the txt2img driver.\nCONTROLNET_VARIANT = None\n\n# control_guidance\
+    \ is NOT a flag. The txt2img route that authored both hints ran\n# them over the full\
+    \ denoise and every filed b08 verdict was measured that way;\n# a second free knob here\
+    \ would make this sample two variables instead of one.\nCONTROL_GUIDANCE = (0.0, 1.0)\n\
+    \n\nclass ControlError(RuntimeError):\n    \"\"\"A refusal with the exit code the driver\
+    \ should return.\"\"\"\n\n    def __init__(self, message: str, code: int):\n        super().__init__(message)\n\
+    \        self.code = code\n\n\ndef crop_region(mask_image, width: int, height: int, pad:\
+    \ int = 0):\n    \"\"\"diffusers 0.29.2 `VaeImageProcessor.get_crop_region`, vendored\
+    \ VERBATIM.\n\n    Vendored, not imported, on purpose: this runs in `--dry-run` and `--selftest`\n\
+    \    where diffusers is not installed, and its whole job is to be checkable\n    against\
+    \ the live method before the render. Any drift between this copy and\n    the installed\
+    \ one is caught by that comparison and stops the job -- which is\n    the opposite of\
+    \ the usual risk with a vendored function.\n\n    https://raw.githubusercontent.com/huggingface/diffusers/v0.29.2/src/diffusers/image_processor.py\n\
+    \    \"\"\"\n    import numpy as np\n\n    mask_image = mask_image.convert(\"L\")\n  \
+    \  mask = np.array(mask_image)\n    h, w = mask.shape\n    crop_left = 0\n    for i in\
+    \ range(w):\n        if not (mask[:, i] == 0).all():\n            break\n        crop_left\
+    \ += 1\n    crop_right = 0\n    for i in reversed(range(w)):\n        if not (mask[:,\
+    \ i] == 0).all():\n            break\n        crop_right += 1\n    crop_top = 0\n    for\
+    \ i in range(h):\n        if not (mask[i] == 0).all():\n            break\n        crop_top\
+    \ += 1\n    crop_bottom = 0\n    for i in reversed(range(h)):\n        if not (mask[i]\
+    \ == 0).all():\n            break\n        crop_bottom += 1\n\n    x1, y1, x2, y2 = (\n\
+    \        int(max(crop_left - pad, 0)),\n        int(max(crop_top - pad, 0)),\n       \
+    \ int(min(w - crop_right + pad, w)),\n        int(min(h - crop_bottom + pad, h)),\n  \
+    \  )\n\n    ratio_crop_region = (x2 - x1) / (y2 - y1)\n    ratio_processing = width /\
+    \ height\n    if ratio_crop_region > ratio_processing:\n        desired_height = (x2 -\
+    \ x1) / ratio_processing\n        desired_height_diff = int(desired_height - (y2 - y1))\n\
+    \        y1 -= desired_height_diff // 2\n        y2 += desired_height_diff - desired_height_diff\
+    \ // 2\n        if y2 >= mask_image.height:\n            diff = y2 - mask_image.height\n\
+    \            y2 -= diff\n            y1 -= diff\n        if y1 < 0:\n            y2 -=\
+    \ y1\n            y1 -= y1\n        if y2 >= mask_image.height:\n            y2 = mask_image.height\n\
+    \    else:\n        desired_width = (y2 - y1) * ratio_processing\n        desired_width_diff\
+    \ = int(desired_width - (x2 - x1))\n        x1 -= desired_width_diff // 2\n        x2\
+    \ += desired_width_diff - desired_width_diff // 2\n        if x2 >= mask_image.width:\n\
+    \            diff = x2 - mask_image.width\n            x2 -= diff\n            x1 -= diff\n\
+    \        if x1 < 0:\n            x2 -= x1\n            x1 -= x1\n        if x2 >= mask_image.width:\n\
+    \            x2 = mask_image.width\n\n    return x1, y1, x2, y2\n\n\ndef resolve_controls(a,\
+    \ size, open_image=None):\n    \"\"\"Validate the control flags and load the hints. Pure\
+    \ enough to unit-test.\n\n    Returns a list of dicts, EMPTY when no control flag was\
+    \ passed -- and empty\n    is the branch that must stay byte-identical to this script\
+    \ before today.\n\n    THE SIZE REFUSAL IS THE POINT OF THIS FUNCTION. A hint that is\
+    \ not exactly\n    the init's pixel size is a hint in a different coordinate system; diffusers\n\
+    \    would resize it to (height, width) without complaint and the skeleton would\n   \
+    \ land somewhere the plate's figure is not. That is the failure class that ate\n    this\
+    \ beat before, so it is a hard stop with its own exit code and it happens\n    before\
+    \ any weight loads.\n    \"\"\"\n    if open_image is None:\n        from PIL import Image\n\
+    \        open_image = Image.open\n\n    net = getattr(a, \"controlnet\", \"\") or \"\"\
+    \n    net2 = getattr(a, \"controlnet2\", \"\") or \"\"\n    ctl = getattr(a, \"control\"\
+    , \"\") or \"\"\n    ctl2 = getattr(a, \"control2\", \"\") or \"\"\n\n    if not (net\
+    \ or net2 or ctl or ctl2):\n        return []\n\n    pairs = [(\"--controlnet\", net,\
+    \ \"--control\", ctl, getattr(a, \"scale\", None),\n              getattr(a, \"control_sha256\"\
+    , \"\") or \"\")]\n    if net2 or ctl2:\n        pairs.append((\"--controlnet2\", net2,\
+    \ \"--control2\", ctl2,\n                      getattr(a, \"scale2\", None),\n       \
+    \               getattr(a, \"control2_sha256\", \"\") or \"\"))\n\n    for nflag, nval,\
+    \ cflag, cval, scale, want_sha in pairs:\n        if nval and not cval:\n            raise\
+    \ ControlError(\"!! %s needs %s: a net with no hint is \"\n                          \
+    \     \"conditioned on nothing\" % (nflag, cflag), 6)\n        if cval and not nval:\n\
+    \            raise ControlError(\"!! %s needs %s: a hint with no net is read by \"\n \
+    \                              \"nobody\" % (cflag, nflag), 6)\n        if nval not in\
+    \ CONTROLNETS:\n            raise ControlError(\n                \"!! %r is not in this\
+    \ driver's ControlNet allowlist. The licence \"\n                \"travels with the name\
+    \ (see CONTROLNETS), and an unlisted net \"\n                \"would be recorded with\
+    \ the wrong terms. Use one of: %s\"\n                % (nval, \", \".join(sorted(CONTROLNETS))),\
+    \ 12)\n        if scale is None:\n            raise ControlError(\n                \"\
+    !! %s was given without its conditioning scale. A scale that \"\n                \"was\
+    \ never stated is not a recipe -- pass %s explicitly.\"\n                % (nflag, \"\
+    --scale\" if nflag == \"--controlnet\" else \"--scale2\"),\n                6)\n     \
+    \   if not os.path.isfile(cval):\n            raise ControlError(\"!! hint not found:\
+    \ %s\" % cval, 6)\n        if not want_sha:\n            raise ControlError(\n       \
+    \         \"!! %s must be pinned with its sha256. A staged copy is not a \"\n        \
+    \        \"checkout and an unpinned hint is an unrecorded variable.\"\n              \
+    \  % cflag, 8)\n\n    if len(pairs) == 2 and pairs[0][1] == pairs[1][1]:\n        raise\
+    \ ControlError(\n            \"!! --controlnet2 is the same net as --controlnet (%r).\
+    \ Composing a \"\n            \"net with itself doubles its weight on one question and\
+    \ is never \"\n            \"what was meant.\" % pairs[0][1], 12)\n\n    out = []\n  \
+    \  for nflag, nval, cflag, cval, scale, want_sha in pairs:\n        have = sha256_of(cval)\n\
+    \        if have != want_sha:\n            raise ControlError(\"!! hint sha mismatch for\
+    \ %s\\n   want %s\\n\"\n                               \"   have %s\" % (cval, want_sha,\
+    \ have), 8)\n        img = open_image(cval).convert(\"RGB\")\n        if img.size != tuple(size):\n\
+    \            raise ControlError(\n                \"!! HINT SIZE MISMATCH -- refusing.\\\
+    n   init %dx%d\\n   hint %dx%d \"\n                \"(%s)\\n   A hint that is not the\
+    \ init's size is a hint in another \"\n                \"coordinate system. diffusers\
+    \ would resize it silently and the \"\n                \"conditioning would land off the\
+    \ figure -- which is the exact \"\n                \"class of defect this route already\
+    \ lost days to.\"\n                % (size[0], size[1], img.size[0], img.size[1], cval),\
+    \ 13)\n        out.append({\"net\": nval, \"licence\": CONTROLNETS[nval], \"path\": cval,\n\
+    \                    \"sha256\": have, \"scale\": float(scale), \"image\": img})\n   \
+    \ return out\n\n\n# §28's FINDING, AS A NUMBER. `padding_mask_crop` rescales the hint\
+    \ along with\n# the init, and a pose hint's semantics are scale-dependent in a way an\
+    \ init\n# image's are not: the authored hint was two whole figures at frame scale and\n\
+    # what the net received was one torso filling the frame -- a different\n# instruction,\
+    \ which the sampler obeyed, and which every automatic clause on the\n# route passed. A\
+    \ little slack is allowed because a mask that is already\n# effectively the frame produces\
+    \ a box the same size as the frame and magnifies\n# nothing; anything past that is the\
+    \ defect.\nHINT_MAGNIFICATION_CEILING = 1.05\n\n\ndef hint_magnification(region, W: int,\
+    \ H: int) -> float:\n    \"\"\"How much diffusers' crop box will magnify a full-frame\
+    \ hint. 1.0 = none.\n\n    `region` is None whenever padding_mask_crop is off, and off\
+    \ is the\n    configuration in which this whole class of defect cannot occur.\n    \"\"\
+    \"\n    if not region:\n        return 1.0\n    return max(W / float(region[2] - region[0]),\
+    \ H / float(region[3] - region[1]))\n\n\ndef assert_hint_survives_crop(controls, region,\
+    \ W: int, H: int) -> float:\n    \"\"\"Refuse a hint that `padding_mask_crop` would magnify.\
+    \ §28, in code.\n\n    THIS IS THE ONE THING THE ROUTE LEARNED THAT WAS NOT YET ENFORCED.\
+    \ §28\n    closed beat 08's fill on a mechanism rather than a tally, and wrote down the\n\
+    \    rule its own last paragraph states: this driver \"is usable at `--pad-crop 0`,\n\
+    \    on a region large enough not to need the crop, and it is not usable on a\n    small\
+    \ region.\" That sentence sat in prose for two days while the flags that\n    violate\
+    \ it stayed one command line away.\n\n    It is deliberately NOT a blanket ban on combining\
+    \ hints with\n    padding_mask_crop. The defect is the MAGNIFICATION, not the flag: a\
+    \ mask that\n    already covers the frame yields a crop box the size of the frame, magnifies\n\
+    \    nothing, and is safe. So the guard measures the thing that broke rather than\n  \
+    \  banning the flag that happened to be set when it broke -- and a full-frame\n    img2img\
+    \ pass, which is what this route is, is admitted by construction.\n\n    Returns the magnification\
+    \ factor so a caller can log it. No controls, or no\n    crop, is 1.0 and never raises\
+    \ -- the no-control path must stay the path six\n    filed b08 verdicts were measured\
+    \ on.\n    \"\"\"\n    if not controls:\n        return 1.0\n    mag = hint_magnification(region,\
+    \ W, H)\n    if mag > HINT_MAGNIFICATION_CEILING:\n        raise ControlError(\n     \
+    \       \"!! THE CROP WOULD MAGNIFY THE HINT %.2fx -- refusing.\\n\"\n            \" \
+    \  frame     %dx%d\\n\"\n            \"   crop box  %s  (%dx%d)\\n\"\n            \" \
+    \  A ControlNet hint's meaning is SCALE-DEPENDENT in a way an init\\n\"\n            \"\
+    \   image's is not. diffusers derives ONE crops_coords from the mask\\n\"\n          \
+    \  \"   and applies it to the init, the mask AND every control image, then\\n\"\n    \
+    \        \"   resizes all of them back to %dx%d. The alignment stays exact and\\n\"\n\
+    \            \"   the conditioning is still wrong: the net is handed a magnified\\n\"\n\
+    \            \"   fragment saying 'a body THIS BIG, HERE' instead of the pose that\\n\"\
+    \n            \"   was authored. That is ep2-b08-cnetfill-0820, whose frame was the\\\
+    n\"\n            \"   worst on the route while every automatic clause passed it --\\n\"\
+    \n            \"   see pipeline/b08-arm-route-0819.md section 28.\\n\"\n            \"\
+    \   There is no value of --pad-crop that satisfies both halves on a\\n\"\n           \
+    \ \"   small region. Either drop the hint, or run at --pad-crop 0 on a\\n\"\n        \
+    \    \"   region large enough not to need the crop.\"\n            % (mag, W, H, tuple(region),\
+    \ region[2] - region[0],\n               region[3] - region[1], W, H), 15)\n    return\
+    \ mag\n\n\ndef sidecar_text(*, pipeline_class: str, in_ch: int, W: int, H: int, steps:\
+    \ int,\n                 cfg, strength, seed: int, pad_crop, blur: int, init: str,\n \
+    \                init_sha: str, mask_png_name: str, mask_lines, control_lines,\n     \
+    \            stamp: str, render_s: float, wall_s: float, versions: dict,\n           \
+    \      note: str, prompt: str, negative: str, lora_lines=()) -> str:\n    \"\"\"The whole\
+    \ sidecar as one string, so a test can sha it.\n\n    Split out of main() on 2026-08-20\
+    \ with the ControlNet flags. It is a pure\n    function of its arguments and `--selftest`\
+    \ reproduces a FILED verdict's\n    sidecar byte-for-byte through it (`ep2-b08-str70-0820`),\
+    \ which is how the\n    no-regression claim for the six b08 verdicts is checked rather\
+    \ than asserted.\n    \"\"\"\n    return \"\\n\".join([\n        \"# Still provenance\
+    \ (7.2), written AT RENDER TIME by inpaint_fruit.py\",\n        \"# on the rtx5090. The\
+    \ plate outside the mask is the founder's own\",\n        \"# pixels; only the region\
+    \ described below was redrawn.\",\n        \"platform: local-gpu (rtx5090)\",\n      \
+    \  \"model: %s\" % BASE,\n        \"model_licence: %s\" % BASE_LICENCE,\n        \"pipeline:\
+    \ %s (base weights, unet.in_channels=%d)\" % (pipeline_class, in_ch),\n        \"size:\
+    \ %dx%d\" % (W, H),\n        \"steps: %d\" % steps,\n        \"guidance: %s\" % cfg,\n\
+    \        \"strength: %s\" % strength,\n        \"seed: %d\" % seed,\n        \"padding_mask_crop:\
+    \ %s\" % (pad_crop or \"null\"),\n        \"mask_blur_factor: %d\" % blur,\n        \"\
+    init_image: %s\" % init.replace(\"\\\\\", \"/\"),\n        \"init_sha256: %s\" % init_sha,\n\
+    \        \"mask_png: %s\" % mask_png_name,\n    ] + list(mask_lines) + list(lora_lines)\
+    \ + list(control_lines) + [\n        \"mask_is_the_stewards: >-\",\n        yaml_block(\"\
+    THE FOUNDER APPROVED A METHOD, NOT THIS GEOMETRY. He said \"\n                   \"`inpaint`\
+    \ and named no size, no position, no colour and no \"\n                   \"shape. The\
+    \ mask above is the steward's and is the first \"\n                   \"thing his correction\
+    \ should move -- 'lower', 'smaller', \"\n                   \"'other side' is one number\
+    \ here; the words in the prompt \"\n                   \"are his own approved shots.md\
+    \ wording.\"),\n        \"rendered_utc: %s\" % stamp,\n        \"render_seconds: %.1f\"\
+    \ % render_s,\n        \"wall_seconds: %.1f\" % wall_s,\n        \"cost_usd: 0\",\n  \
+    \      \"python_version: %s\" % versions[\"python\"],\n        \"torch_version: %s\" %\
+    \ versions[\"torch\"],\n        \"diffusers_version: %s\" % versions[\"diffusers\"],\n\
+    \        \"approved: false\",\n        \"provisional: >-\",\n        yaml_block(\"PROVISIONAL.\
+    \ A steward-rendered SAMPLE, not a pick and not \"\n                   \"canon. Never\
+    \ takes a canon filename, is not published, not \"\n                   \"posted, and not\
+    \ assembled into an episode. Ground truth is \"\n                   \"the founder (R4).\"\
+    ),\n        \"note: >-\",\n        yaml_block(note or \"one inpainted sample; the fruit\
+    \ question.\"),\n        \"prompt: |-\",\n        yaml_block(prompt),\n        \"negative:\
+    \ |-\",\n        yaml_block(negative),\n        \"\",\n    ])\n\n\ndef lora_meta_lines(lora:\
+    \ str, weight, lora_sha: str) -> list:\n    \"\"\"The LoRA block, or NOTHING AT ALL when\
+    \ no LoRA was fused.\n\n    Same emptiness contract as `control_meta_lines`, and here\
+    \ it is load-bearing\n    for six filed b08 verdicts: a run with no --lora must write\
+    \ the bytes it\n    wrote before this flag existed, or none of them is reproducible any\
+    \ more.\n    \"\"\"\n    if not lora:\n        return []\n    # os.path.basename on a\
+    \ WINDOWS path under POSIX returns the whole string --\n    # the box's paths are `C:\\\
+    banyan-farm\\...` and the selftest runs on a Mac,\n    # so the separator is normalised\
+    \ first or the sidecar names a drive letter.\n    return [\n        \"lora: %s\" % lora.replace(\"\
+    \\\\\", \"/\").rsplit(\"/\", 1)[-1],\n        \"lora_path: %s\" % lora.replace(\"\\\\\"\
+    , \"/\"),\n        \"lora_sha256: %s\" % (lora_sha or \"unmeasured\"),\n        \"lora_weight:\
+    \ %s\" % weight,\n        \"lora_fused_before_controlnet_swap: true  # from_pipe reuses\
+    \ the module \"\n        \"objects, so a fused UNet travels into the swapped pipeline\"\
+    ,\n    ]\n\n\ndef control_meta_lines(controls, region) -> list:\n    \"\"\"The ControlNet\
+    \ block, or NOTHING AT ALL when there is no controlnet.\n\n    Emptiness matters: a run\
+    \ with no control flags must write the same bytes it\n    wrote before these flags existed.\n\
+    \    \"\"\"\n    if not controls:\n        return []\n    lines = []\n    for i, c in\
+    \ enumerate(controls):\n        tag = \"\" if i == 0 else \"_%d\" % (i + 1)\n        lines\
+    \ += [\n            \"controlnet%s: %s\" % (tag, c[\"net\"]),\n            \"controlnet%s_licence:\
+    \ %s\" % (tag, c[\"licence\"]),\n            \"controlnet%s_conditioning_scale: %s\" %\
+    \ (tag, c[\"scale\"]),\n            \"control%s_image: %s\" % (tag, os.path.basename(c[\"\
+    path\"])),\n            \"control%s_image_sha256: %s\" % (tag, c[\"sha256\"]),\n     \
+    \   ]\n    lines += [\n        \"controlnet_variant: %s\" % (CONTROLNET_VARIANT or\n \
+    \                                   \"None (xinsir ships no fp16 variant file)\"),\n \
+    \       \"control_guidance_start: %s\" % CONTROL_GUIDANCE[0],\n        \"control_guidance_end:\
+    \ %s\" % CONTROL_GUIDANCE[1],\n        \"controlnet_composition: %s\"\n        % (\"MultiControlNetModel,\
+    \ nets applied in the order listed\"\n           if len(controls) > 1 else \"one net\"\
+    ),\n        \"control_hint_alignment: >-\",\n        yaml_block(\n            \"BY CONSTRUCTION,\
+    \ NOT BY ARITHMETIC. Every hint is handed to \"\n            \"diffusers FULL-FRAME at\
+    \ the init's own %d x %d, and \"\n            \"StableDiffusionXLControlNetInpaintPipeline\
+    \ computes ONE crops_coords \"\n            \"from the mask and passes that same tuple\
+    \ to the init, to the mask \"\n            \"and to each control image (prepare_control_image(...,\
+    \ \"\n            \"crops_coords=crops_coords, resize_mode=resize_mode) in both the \"\
+    \n            \"single-net and MultiControlNetModel branches of 0.29.2). This driver \"\
+    \n            \"crops nothing itself, so it has nothing to disagree with. The box \"\n\
+    \            \"below is that tuple, read back from the live \"\n            \"pipe.mask_processor.get_crop_region\
+    \ on the blurred mask and checked \"\n            \"against this driver's vendored copy\
+    \ before the render; a mismatch is \"\n            \"a hard stop, not a warning.\"\n \
+    \           % (controls[0][\"image\"].size[0], controls[0][\"image\"].size[1])),\n   \
+    \     \"pad_crop_region_px: %s\" % (\"[%d, %d, %d, %d]\" % tuple(region)\n           \
+    \                         if region else \"null (padding_mask_crop off)\"),\n    ]\n \
+    \   return lines\n\n\ndef sha256_of(path: str) -> str:\n    h = hashlib.sha256()\n   \
+    \ with open(path, \"rb\") as fh:\n        for chunk in iter(lambda: fh.read(1 << 20),\
+    \ b\"\"):\n            h.update(chunk)\n    return h.hexdigest()\n\n\ndef read_text(path:\
+    \ str) -> str:\n    with open(path, \"r\", encoding=\"utf-8\") as fh:\n        return\
+    \ fh.read().strip()\n\n\ndef yaml_block(text: str, indent: str = \"  \") -> str:\n   \
+    \ return \"\\n\".join(indent + line for line in text.splitlines())\n\n\ndef module_version(name:\
+    \ str) -> str:\n    try:\n        return __import__(name).__version__\n    except Exception:\n\
+    \        return \"unresolved\"\n\n\ndef main() -> int:\n    ap = argparse.ArgumentParser(description=__doc__,\n\
+    \                                 formatter_class=argparse.RawDescriptionHelpFormatter)\n\
+    \    # NOT argparse-required, and that is deliberate: `--selftest` runs the whole\n  \
+    \  # module with no init, no plate and no prompt, and argparse would reject it\n    #\
+    \ before main() ever saw the flag. The four are asserted by hand below,\n    # AFTER the\
+    \ selftest branch, so a real invocation still cannot omit them.\n    ap.add_argument(\"\
+    --init\")\n    ap.add_argument(\"--init-sha256\",\n                    help=\"asserted\
+    \ before anything loads; a mismatch is a hard stop\")\n    ap.add_argument(\"--ellipse\"\
+    , default=\"\",\n                    help=\"cx,cy,rx,ry in pixels of the init image\"\
+    )\n    ap.add_argument(\"--quad\", default=\"\",\n                    help=\"x0,y0,x1,y1,x2,y2,x3,y3\
+    \ -- four corners in order, a \"\n                         \"STRAIGHT-EDGED mask. A rectangle\
+    \ is a quad, and a \"\n                         \"rectangular board seen at an angle is\
+    \ a quad and is NOT \"\n                         \"an ellipse. Exactly one of --ellipse/--quad/--mask-png\
+    \ \"\n                         \"is required.\")\n    ap.add_argument(\"--mask-png\",\
+    \ default=\"\",\n                    help=\"an 8-bit mask PNG the same size as --init:\
+    \ white is \"\n                         \"redrawn, black is preserved. This is the general\
+    \ case \"\n                         \"the two shape flags are special cases of. It exists\
+    \ \"\n                         \"because a region worth masking is often neither a blob\
+    \ \"\n                         \"nor a convex polygon -- a THIN BAND along a spectacle\
+    \ \"\n                         \"frame, or a board MINUS the hand holding it (a \"\n \
+    \                        \"limitation recorded against this script in \"\n           \
+    \              \"wave-drafts.yaml and not expressible as one ellipse or \"\n         \
+    \                \"one quad). Authoring the geometry is a separate $0 step \"\n      \
+    \                   \"with no GPU and no sampler in it, which is the point: \"\n     \
+    \                    \"WHICH PIXELS MAY CHANGE BECOMES A DECISION WE MAKE AND \"\n   \
+    \                      \"CAN DIFF, not something the model gets a vote on. See \"\n  \
+    \                       \"pipeline/attribute_mask.py.\")\n    ap.add_argument(\"--dry-run\"\
+    , action=\"store_true\",\n                    help=\"assert the sha, draw the mask PNG\
+    \ beside --out and stop \"\n                         \"BEFORE loading any model. Costs\
+    \ nothing and is the step \"\n                         \"where a misplaced mask gets caught\
+    \ by eye.\")\n    ap.add_argument(\"--prompt-file\")\n    ap.add_argument(\"--negative-file\"\
+    )\n    ap.add_argument(\"--out\")\n    ap.add_argument(\"--steps\", type=int, default=40)\n\
+    \    ap.add_argument(\"--cfg\", type=float, default=7.5)\n    ap.add_argument(\"--strength\"\
+    , type=float, default=0.99)\n    ap.add_argument(\"--seed\", type=int, default=20260810)\n\
+    \    ap.add_argument(\"--pad-crop\", type=int, default=64,\n                    help=\"\
+    padding_mask_crop; 0 disables it\")\n    ap.add_argument(\"--blur\", type=int, default=8,\
+    \ help=\"mask blur_factor\")\n    ap.add_argument(\"--note\", default=\"\")\n    # ----\
+    \ CONTROL FLAGS. All default to nothing, and nothing is the branch that\n    # is byte-identical\
+    \ to this script before 2026-08-20. See the docstring's\n    # FOURTH CALLER note for\
+    \ why they exist and what diffusers does with them.\n    ap.add_argument(\"--controlnet\"\
+    , default=\"\",\n                    help=\"ControlNet repo id or local dir; must be in\
+    \ the \"\n                         \"CONTROLNETS allowlist, because the licence travels\
+    \ \"\n                         \"with the name\")\n    ap.add_argument(\"--control\",\
+    \ default=\"\",\n                    help=\"the hint PNG. MUST be exactly the init's pixel\
+    \ size: \"\n                         \"it is handed over FULL-FRAME and diffusers crops\
+    \ it \"\n                         \"with the same crops_coords it crops the init with\"\
+    )\n    ap.add_argument(\"--control-sha256\", default=\"\",\n                    help=\"\
+    pin the hint's bytes; required whenever --control is \"\n                         \"passed\"\
+    )\n    ap.add_argument(\"--scale\", type=float, default=None,\n                    help=\"\
+    controlnet_conditioning_scale for --controlnet; \"\n                         \"required\
+    \ when --controlnet is passed\")\n    ap.add_argument(\"--controlnet2\", default=\"\"\
+    ,\n                    help=\"a SECOND net, composed with the first as a \"\n        \
+    \                 \"MultiControlNetModel\")\n    ap.add_argument(\"--control2\", default=\"\
+    \", help=\"the second hint PNG\")\n    ap.add_argument(\"--control2-sha256\", default=\"\
+    \", help=\"pin for --control2\")\n    ap.add_argument(\"--scale2\", type=float, default=None,\n\
+    \                    help=\"conditioning scale for --controlnet2\")\n    # ---- THE CHARACTER\
+    \ LoRA ARM ----------------------------------------\n    # Added 2026-08-22, eight lines\
+    \ mirroring the one controlnet_plate.py grew\n    # the same day, and it exists because\
+    \ of where the pose net WORKS.\n    # `registry.yaml`'s bnyjerry v2 entry closed B2 as\
+    \ VOID rather than failed:\n    # controlnet_plate.py's TXT2IMG path did not move a pose\
+    \ with NO LoRA loaded,\n    # on either of xinsir's two openpose blobs, while THIS driver\
+    \ measurably\n    # drives the same net (15.05 mean abs, goblin i2i route round two).\
+    \ So the\n    # pose-adoption bar has to be run here -- and `inpaint_fruit.py` with an\n\
+    \    # ALL-WHITE MASK at STRENGTH 1.0 *is* txt2img-with-ControlNet, on the one\n    #\
+    \ code path in this repo where the pose net is proven to act.\n    #\n    # Absent by\
+    \ default, so every existing caller behaves exactly as it did:\n    # `--selftest` reproduces\
+    \ the filed `ep2-b08-str70-0820` sidecar byte for\n    # byte through the same function,\
+    \ and that golden call passes no LoRA.\n    ap.add_argument(\"--lora\", default=\"\",\n\
+    \                    help=\"a character LoRA .safetensors, fused into the UNet \"\n  \
+    \                       \"BEFORE the ControlNet swap. from_pipe rebuilds the \"\n    \
+    \                     \"class around THE SAME module objects, so a delta \"\n        \
+    \                 \"baked into the UNet here travels into the swapped \"\n           \
+    \              \"pipeline by identity\")\n    ap.add_argument(\"--lora-weight\", type=float,\
+    \ default=0.8,\n                    help=\"lora_scale at fuse time\")\n    ap.add_argument(\"\
+    --lora-sha256\", default=\"\",\n                    help=\"pin for --lora; refused on\
+    \ mismatch (rc 16). A \"\n                         \"checkpoint directory holds five epochs\
+    \ with names one \"\n                         \"character apart and the sidecar has to\
+    \ name the bytes \"\n                         \"that actually drew the frame.\")\n   \
+    \ ap.add_argument(\"--selftest\", action=\"store_true\",\n                    help=\"\
+    $0, no torch, no CUDA, no network: reproduces a filed \"\n                         \"\
+    verdict's sidecar byte-for-byte and proves the control \"\n                         \"\
+    flags cannot change the no-control path\")\n    a = ap.parse_args()\n\n    if a.selftest:\n\
+    \        return selftest()\n\n    missing = [f for f, v in ((\"--init\", a.init), (\"\
+    --init-sha256\", a.init_sha256),\n                              (\"--prompt-file\", a.prompt_file),\n\
+    \                              (\"--negative-file\", a.negative_file),\n             \
+    \                 (\"--out\", a.out)) if not v]\n    if missing:\n        print(\"!! missing\
+    \ required argument(s): %s\" % \", \".join(missing),\n              flush=True)\n    \
+    \    return 2\n\n    if not os.path.isfile(a.init):\n        print(\"!! init not found:\
+    \ %s\" % a.init, flush=True)\n        return 2\n    have = sha256_of(a.init)\n    if have\
+    \ != a.init_sha256:\n        print(\"!! INIT SHA MISMATCH -- refusing.\\n   want %s\\\
+    n   have %s\"\n              % (a.init_sha256, have), flush=True)\n        return 3\n\n\
+    \    if sum(1 for v in (a.ellipse, a.quad, a.mask_png) if v) != 1:\n        print(\"!!\
+    \ pass exactly one of --ellipse, --quad or --mask-png\", flush=True)\n        return 2\n\
+    \n    cx = cy = rx = ry = 0\n    corners: list = []\n    mask_sha = \"\"\n    if a.mask_png:\n\
+    \        if not os.path.isfile(a.mask_png):\n            print(\"!! --mask-png not found:\
+    \ %s\" % a.mask_png, flush=True)\n            return 2\n        mask_sha = sha256_of(a.mask_png)\n\
+    \        shape = \"png\"\n        bbox = []\n    elif a.ellipse:\n        try:\n     \
+    \       cx, cy, rx, ry = (int(v) for v in a.ellipse.split(\",\"))\n        except Exception:\n\
+    \            print(\"!! --ellipse wants cx,cy,rx,ry\", flush=True)\n            return\
+    \ 2\n        shape = \"ellipse\"\n        bbox = [cx - rx, cy - ry, cx + rx, cy + ry]\n\
+    \    else:\n        try:\n            vals = [int(v) for v in a.quad.split(\",\")]\n \
+    \       except Exception:\n            vals = []\n        if len(vals) != 8:\n       \
+    \     print(\"!! --quad wants x0,y0,x1,y1,x2,y2,x3,y3 (8 integers)\", flush=True)\n  \
+    \          return 2\n        corners = list(zip(vals[0::2], vals[1::2]))\n        xs =\
+    \ [p[0] for p in corners]\n        ys = [p[1] for p in corners]\n        shape = \"quad\"\
+    \n        bbox = [min(xs), min(ys), max(xs), max(ys)]\n\n    from PIL import Image, ImageDraw\n\
+    \n    plate = Image.open(a.init).convert(\"RGB\")\n    W, H = plate.size\n    mask = Image.new(\"\
+    L\", (W, H), 0)\n    if shape == \"png\":\n        supplied = Image.open(a.mask_png).convert(\"\
+    L\")\n        if supplied.size != (W, H):\n            print(\"!! MASK SIZE MISMATCH --\
+    \ refusing.\\n   init %dx%d\\n   mask %dx%d\"\n                  % (W, H, supplied.size[0],\
+    \ supplied.size[1]), flush=True)\n            return 6\n        mask = supplied\n    \
+    \    box = mask.point(lambda v: 255 if v > 0 else 0).getbbox()\n        if box is None:\n\
+    \            print(\"!! mask is entirely black -- nothing would be redrawn.\", flush=True)\n\
+    \            return 7\n        # getbbox()'s right/bottom are exclusive; the sidecar reports\
+    \ inclusive px.\n        bbox = [box[0], box[1], box[2] - 1, box[3] - 1]\n    elif shape\
+    \ == \"ellipse\":\n        ImageDraw.Draw(mask).ellipse(bbox, fill=255)\n    else:\n \
+    \       ImageDraw.Draw(mask).polygon(corners, fill=255)\n\n    os.makedirs(os.path.dirname(os.path.abspath(a.out))\
+    \ or \".\", exist_ok=True)\n    mask_png = os.path.splitext(a.out)[0] + \"-mask.png\"\n\
+    \    mask.save(mask_png)\n\n    prompt = read_text(a.prompt_file)\n    negative = read_text(a.negative_file)\n\
+    \n    # ---- CONTROL HINTS, resolved BEFORE any weight loads and before the dry\n    #\
+    \ run returns, so a mis-sized or mis-pinned hint costs zero GPU seconds and\n    # is\
+    \ caught at the same $0 step the mask geometry is.\n    try:\n        controls = resolve_controls(a,\
+    \ (W, H))\n    except ControlError as e:\n        print(str(e), flush=True)\n        return\
+    \ e.code\n\n    # The crop box, from THIS driver's vendored copy of diffusers'\n    #\
+    \ get_crop_region, on the same blurred mask the pipeline will be handed. In\n    # the\
+    \ dry run it is the number the operator checks the hint against by eye;\n    # in the\
+    \ real run it is re-derived from the LIVE method and the two must\n    # agree. Blurring\
+    \ here costs nothing and is not the pipeline's blur call --\n    # `mask_processor.blur`\
+    \ is `ImageFilter.GaussianBlur(blur_factor)` and\n    # nothing else, so this is the same\
+    \ image.\n    from PIL import ImageFilter\n    blur_preview = (mask.filter(ImageFilter.GaussianBlur(a.blur))\
+    \ if a.blur\n                    else mask)\n    region = crop_region(blur_preview, W,\
+    \ H, a.pad_crop) if a.pad_crop else None\n\n    # ---- §28's LESSON, ENFORCED HERE AND\
+    \ AT $0. The crop that makes a small\n    # region drawable is the same crop that destroys\
+    \ a hint's meaning, and the\n    # two are mutually exclusive in this tool. Checked before\
+    \ the dry run\n    # returns, so the refusal costs no GPU seconds and no model load.\n\
+    \    try:\n        mag = assert_hint_survives_crop(controls, region, W, H)\n    except\
+    \ ControlError as e:\n        print(str(e), flush=True)\n        return e.code\n    if\
+    \ controls:\n        print(\"HINT MAGNIFICATION %.3fx (ceiling %.2f) -- the hint reaches\
+    \ the \"\n              \"net at the scale it was authored\" % (mag, HINT_MAGNIFICATION_CEILING),\n\
+    \              flush=True)\n\n    if a.dry_run:\n        print(\"DRY RUN -- no model loaded,\
+    \ nothing rendered.\", flush=True)\n        print(\"init_sha256 OK %s\" % have, flush=True)\n\
+    \        print(\"mask %s corners=%s bbox=%s  %.4f x %.4f of %dx%d\"\n              % (shape,\
+    \ corners or \"-\", bbox,\n                 (bbox[2] - bbox[0]) / float(W),\n        \
+    \         (bbox[3] - bbox[1]) / float(H), W, H), flush=True)\n        for i, c in enumerate(controls):\n\
+    \            print(\"hint %d %s scale %s sha %s -- %dx%d, MATCHES the init\"\n       \
+    \           % (i + 1, os.path.basename(c[\"path\"]), c[\"scale\"],\n                 \
+    \    c[\"sha256\"][:16], c[\"image\"].size[0], c[\"image\"].size[1]),\n              \
+    \    flush=True)\n        if controls:\n            print(\"pad_crop region (vendored\
+    \ get_crop_region on the blurred \"\n                  \"mask) = %s -- diffusers applies\
+    \ THIS SAME box to the init, \"\n                  \"the mask and every hint\" % (region,),\
+    \ flush=True)\n        print(\"WROTE %s\" % mask_png, flush=True)\n        print(\"rc=0\
+    \ dry_run=1\", flush=True)\n        return 0\n\n    import torch\n    from diffusers import\
+    \ StableDiffusionXLInpaintPipeline\n\n    if not torch.cuda.is_available():\n        print(\"\
+    !! no CUDA. This is the box's job; stopping.\", flush=True)\n        return 4\n\n    t0\
+    \ = time.time()\n    pipe = StableDiffusionXLInpaintPipeline.from_pretrained(\n      \
+    \  BASE, torch_dtype=torch.bfloat16, use_safetensors=True)\n    pipe = pipe.to(\"cuda\"\
+    )\n    pipe.set_progress_bar_config(disable=True)\n    in_ch = int(pipe.unet.config.in_channels)\n\
+    \    print(\"MODEL_LOADED %s cuda/bfloat16 unet.in_channels=%d in %.0fs\"\n          %\
+    \ (BASE, in_ch, time.time() - t0), flush=True)\n    if in_ch not in (4, 9):\n        print(\"\
+    !! unexpected unet.in_channels=%d\" % in_ch, flush=True)\n        return 5\n\n    # ----\
+    \ THE CHARACTER LoRA, FUSED BEFORE THE CONTROLNET SWAP -------------\n    #\n    # FUSED\
+    \ HERE, DELIBERATELY, AND FOR THE MIRROR OF THE REASON AN IP-ADAPTER\n    # WOULD BE REGISTERED\
+    \ AFTER. `from_pipe` rebuilds the pipeline class around\n    # THE SAME MODULE OBJECTS,\
+    \ so a weight delta fused into the UNet at this\n    # point travels into the swapped\
+    \ ControlNet pipeline by identity, while an\n    # ADAPTER registered on the pre-swap\
+    \ object would be registered on a\n    # pipeline nobody calls. fuse_lora bakes the delta\
+    \ into the UNet tensors.\n    lora_sha = \"\"\n    if a.lora:\n        if not os.path.isfile(a.lora):\n\
+    \            print(\"!! no such LoRA: %s\" % a.lora, flush=True)\n            return 16\n\
+    \        # THE PEFT GATE, checked BEFORE the ControlNet download and before any\n    \
+    \    # further weight load, because it already cost this tree a run:\n        # diffusers\
+    \ 0.29.2 gates ALL LoRA loading behind USE_PEFT_BACKEND, peft\n        # was absent from\
+    \ both venvs on the box, and a training job spent twenty\n        # clean minutes and\
+    \ five checkpoints before dying in nine seconds on\n        # `PEFT backend is required\
+    \ for this method.`\n        from diffusers.utils import USE_PEFT_BACKEND\n        if\
+    \ not USE_PEFT_BACKEND:\n            print(\"!! diffusers has no PEFT backend, so load_lora_weights()\
+    \ \"\n                  \"cannot run.\\n   fix:  <this venv>/python.exe -m pip install\
+    \ \"\n                  \"--no-deps peft==0.12.0\\n   --no-deps is required -- a plain\
+    \ \"\n                  \"install may resolve torch away from 2.11.0+cu128 and break \"\
+    \n                  \"every render on this card.\", flush=True)\n            return 16\n\
+    \        lora_sha = sha256_of(a.lora)\n        if a.lora_sha256 and a.lora_sha256 != lora_sha:\n\
+    \            print(\"!! LoRA sha256 mismatch -- refusing.\\n   want %s\\n   have %s\"\n\
+    \                  % (a.lora_sha256, lora_sha), flush=True)\n            return 16\n \
+    \       pipe.load_lora_weights(os.path.dirname(os.path.abspath(a.lora)),\n           \
+    \                    weight_name=os.path.basename(a.lora))\n        pipe.fuse_lora(lora_scale=float(a.lora_weight))\n\
+    \        print(\"LORA %s fused at weight %.2f, sha %s\"\n              % (os.path.basename(a.lora),\
+    \ float(a.lora_weight), lora_sha[:16]),\n              flush=True)\n\n    # ---- THE CLASS\
+    \ SWAP, AND IT HAPPENS ONLY IF A HINT WAS PASSED.\n    # from_pipe rebuilds the class\
+    \ around the SAME loaded modules, so one set of\n    # base weights serves both arms and\
+    \ the no-control path never touches this.\n    pipeline_class = \"StableDiffusionXLInpaintPipeline\"\
+    \n    control_kwargs = {}\n    if controls:\n        from diffusers import AutoPipelineForInpainting,\
+    \ ControlNetModel\n\n        cn_kw = {} if CONTROLNET_VARIANT is None else {\"variant\"\
+    : CONTROLNET_VARIANT}\n        nets = []\n        for c in controls:\n            m =\
+    \ ControlNetModel.from_pretrained(c[\"net\"],\n                                      \
+    \          torch_dtype=torch.bfloat16, **cn_kw)\n            m.to(\"cuda\")\n        \
+    \    nets.append(m)\n        # A LIST is wrapped into a MultiControlNetModel by the constructor,\
+    \ and\n        # `control_image` / `controlnet_conditioning_scale` then become per-net\n\
+    \        # lists in the same order. A single net stays a bare model and bare\n       \
+    \ # values -- the shape controlnet_plate.py uses on the txt2img side.\n        pipe =\
+    \ AutoPipelineForInpainting.from_pipe(\n            pipe, controlnet=(nets if len(nets)\
+    \ > 1 else nets[0]))\n        pipeline_class = type(pipe).__name__\n        if len(nets)\
+    \ > 1:\n            control_kwargs = {\n                \"control_image\": [c[\"image\"\
+    ] for c in controls],\n                \"controlnet_conditioning_scale\": [c[\"scale\"\
+    ] for c in controls]}\n        else:\n            control_kwargs = {\n               \
+    \ \"control_image\": controls[0][\"image\"],\n                \"controlnet_conditioning_scale\"\
+    : controls[0][\"scale\"]}\n        control_kwargs[\"control_guidance_start\"] = CONTROL_GUIDANCE[0]\n\
+    \        control_kwargs[\"control_guidance_end\"] = CONTROL_GUIDANCE[1]\n        print(\"\
+    PIPELINE %s, %d net(s), scales %s\"\n              % (pipeline_class, len(nets),\n   \
+    \              control_kwargs[\"controlnet_conditioning_scale\"]), flush=True)\n\n   \
+    \     # ---- A COPY-PASTE BUG IN 0.29.2's check_inputs, AND THE PROOF IS\n        # ----\
+    \ INSIDE check_inputs ITSELF.\n        # `__call__` passes CONTROL_IMAGE as the parameter\
+    \ that function calls\n        # `image`. Its padding_mask_crop branch then says:\n  \
+    \      #     if not isinstance(image, PIL.Image.Image):\n        #         raise ValueError(\"\
+    The image should be a PIL image when\n        #                           inpainting mask\
+    \ crop, ...\")\n        # -- which is lifted verbatim from the plain inpaint pipeline,\
+    \ where\n        # `image` IS the init. Twenty lines further down the SAME function\n\
+    \        # requires that same argument to be a LIST whenever the controlnet is a\n   \
+    \     # MultiControlNetModel (\"For multiple controlnets: `image` must be type\n     \
+    \   # `list`\"). The two clauses contradict each other, so with two nets the\n       \
+    \ # call can never be valid, and with one net the check passes only by\n        # accident\
+    \ -- it happens to be looking at a PIL image that is not the\n        # one it was written\
+    \ to guard. The init, which the branch MEANT, is\n        # never type-checked by this\
+    \ pipeline at all.\n        #\n        # Everything downstream of the check handles the\
+    \ list correctly:\n        # `prepare_control_image` is called in a loop over `control_image`\
+    \ in\n        # the MultiControlNetModel branch, with the SAME crops_coords and the\n\
+    \        # same resize_mode as the init and the mask. So the render is sound and\n   \
+    \     # only the validator is wrong.\n        #\n        # THE PATCH IS THEREFORE THE\
+    \ NARROWEST ONE THAT EXISTS: call diffusers'\n        # own check with padding_mask_crop=None\
+    \ -- which skips ONLY that branch\n        # and leaves every other clause, including\
+    \ the multi-net list checks,\n        # running exactly as written -- and re-assert the\
+    \ three things the\n        # branch actually wanted, against the images it actually meant.\n\
+    \        if a.pad_crop and isinstance(control_kwargs[\"control_image\"], list):\n    \
+    \        _orig_check = pipe.check_inputs\n\n            def _checked(*args, **kw):\n \
+    \               if \"padding_mask_crop\" in kw:\n                    kw[\"padding_mask_crop\"\
+    ] = None\n                elif len(args) >= 21:\n                    args = args[:20]\
+    \ + (None,) + args[21:]\n                _orig_check(*args, **kw)\n                from\
+    \ PIL import Image as _I\n                bad = [i for i, c in enumerate(control_kwargs[\"\
+    control_image\"])\n                       if not isinstance(c, _I.Image)]\n          \
+    \      if bad:\n                    raise ValueError(\"hint %s is not a PIL image\" %\
+    \ bad)\n                if not isinstance(plate, _I.Image):\n                    raise\
+    \ ValueError(\"the init must be a PIL image with \"\n                                \
+    \     \"padding_mask_crop\")\n                if not isinstance(blurred, _I.Image):\n\
+    \                    raise ValueError(\"the mask must be a PIL image with \"\n       \
+    \                              \"padding_mask_crop\")\n\n            pipe.check_inputs\
+    \ = _checked\n            print(\"CHECK_INPUTS wrapped: 0.29.2 asserts the CONTROL image\
+    \ is a \"\n                  \"single PIL under padding_mask_crop, and the same function\
+    \ \"\n                  \"requires it to be a LIST under MultiControlNetModel. The \"\n\
+    \                  \"branch is skipped and its three real checks are re-run here \"\n\
+    \                  \"against the init, the mask and each hint.\", flush=True)\n\n    blurred\
+    \ = pipe.mask_processor.blur(mask, blur_factor=a.blur) if a.blur else mask\n\n    # ----\
+    \ ALIGNMENT, CHECKED AGAINST THE LIVE METHOD RATHER THAN ASSERTED.\n    # diffusers derives\
+    \ ONE crops_coords from this blurred mask and applies it to\n    # the init, the mask\
+    \ and every control image. If the installed version's\n    # get_crop_region disagrees\
+    \ with the copy vendored above, the box written\n    # into the sidecar would be fiction\
+    \ and the hint's alignment would be\n    # unverified -- so it is a hard stop. Control\
+    \ runs only: the no-control path\n    # must stay the path six filed verdicts were measured\
+    \ on.\n    if controls and a.pad_crop:\n        live = tuple(int(v) for v in pipe.mask_processor.get_crop_region(\n\
+    \            blurred, W, H, pad=a.pad_crop))\n        if live != tuple(region):\n    \
+    \        print(\"!! CROP REGION DISAGREES WITH THE VENDORED COPY -- refusing.\\n\"\n \
+    \                 \"   vendored %s\\n   diffusers %s\\n   The hint is cropped by \"\n\
+    \                  \"diffusers' box, so a sidecar carrying a different one cannot \"\n\
+    \                  \"be trusted about alignment.\" % (tuple(region), live), flush=True)\n\
+    \            return 14\n        print(\"CROP REGION %s -- vendored == live; the init,\
+    \ the mask and every \"\n              \"hint are cropped by this one box\" % (live,),\
+    \ flush=True)\n\n    kwargs = dict(prompt=prompt, negative_prompt=negative, image=plate,\n\
+    \                  mask_image=blurred, width=W, height=H,\n                  num_inference_steps=a.steps,\
+    \ guidance_scale=a.cfg,\n                  strength=a.strength,\n                  generator=torch.Generator(\"\
+    cuda\").manual_seed(a.seed))\n    if a.pad_crop:\n        kwargs[\"padding_mask_crop\"\
+    ] = a.pad_crop\n    kwargs.update(control_kwargs)\n\n    t1 = time.time()\n    out = pipe(**kwargs).images[0]\n\
+    \    render_s = time.time() - t1\n\n    out.save(a.out)\n\n    versions = {\"python\"\
+    : sys.version.split()[0], \"torch\": module_version(\"torch\"),\n                \"diffusers\"\
+    : module_version(\"diffusers\")}\n    stamp = _dt.datetime.now(_dt.timezone.utc).strftime(\"\
+    %Y-%m-%dT%H:%M:%SZ\")\n    mask_lines = [\"mask_shape: %s\" % shape]\n    if shape ==\
+    \ \"png\":\n        mask_lines += [\"mask_png_source: %s\" % a.mask_png.replace(\"\\\\\
+    \", \"/\"),\n                       \"mask_png_sha256: %s\" % mask_sha,\n            \
+    \           \"mask_white_px: %d\"\n                       % (W * H - mask.point(lambda\
+    \ v: 255 if v > 0 else 0)\n                          .histogram()[0])]\n    elif shape\
+    \ == \"ellipse\":\n        mask_lines += [\"mask_centre_px: [%d, %d]\" % (cx, cy),\n \
+    \                      \"mask_radii_px: [%d, %d]\" % (rx, ry)]\n    else:\n        mask_lines\
+    \ += [\"mask_corners_px: %s\"\n                       % str([[int(x), int(y)] for x, y\
+    \ in corners])]\n    mask_lines += [\n        \"mask_bbox_px: [%d, %d, %d, %d]\" % tuple(bbox),\n\
+    \        \"mask_width_frac: %.4f\" % ((bbox[2] - bbox[0]) / float(W)),\n        \"mask_height_frac:\
+    \ %.4f\" % ((bbox[3] - bbox[1]) / float(H)),\n    ]\n    sidecar = a.out + \".meta.yaml\"\
+    \n    with open(sidecar, \"w\", encoding=\"utf-8\", newline=\"\\n\") as fh:\n        fh.write(sidecar_text(\n\
+    \            pipeline_class=pipeline_class, in_ch=in_ch, W=W, H=H, steps=a.steps,\n  \
+    \          cfg=a.cfg, strength=a.strength, seed=a.seed, pad_crop=a.pad_crop,\n       \
+    \     blur=a.blur, init=a.init, init_sha=have,\n            mask_png_name=os.path.basename(mask_png),\
+    \ mask_lines=mask_lines,\n            lora_lines=lora_meta_lines(a.lora, a.lora_weight,\
+    \ lora_sha),\n            control_lines=control_meta_lines(controls, region), stamp=stamp,\n\
+    \            render_s=render_s, wall_s=time.time() - t0, versions=versions,\n        \
+    \    note=a.note, prompt=prompt, negative=negative))\n\n    print(\"WROTE %s\" % a.out,\
+    \ flush=True)\n    print(\"WROTE %s\" % mask_png, flush=True)\n    print(\"WROTE %s\"\
+    \ % sidecar, flush=True)\n    print(\"rc=0 render_s=%.1f\" % render_s, flush=True)\n \
+    \   return 0\n\n\n# ---------------------------------------------------------------------------\n\
+    # SELFTEST. $0, no torch, no CUDA, no network, no GPU.\n#\n# IT IS ANCHORED ON A FILED\
+    \ VERDICT AND NOT ON A FIXTURE I WROTE TODAY.\n# `ep2-b08-str70-0820` is one of the six\
+    \ b08 verdicts these ControlNet flags must\n# not disturb. Its sidecar is in the tree,\
+    \ its sha is pinned below, and the test\n# reproduces it BYTE FOR BYTE through the refactored\
+    \ `sidecar_text()`. A\n# fixture-based test would only prove the new code agrees with\
+    \ itself.\n#\n# THE ALIGNMENT CLAUSE IS STRUCTURAL, because that is the class of defect\
+    \ that\n# ate this beat: the hints are handed over FULL-FRAME and this module contains\
+    \ no\n# crop of its own, so there is nothing here that can disagree with the single\n\
+    # crops_coords diffusers derives from the mask. Both halves are asserted -- the\n# size\
+    \ equality, and the absence of any crop call in the source.\n# ---------------------------------------------------------------------------\n\
+    GOLDEN_SIDECAR = \"farm-out/ep2-b08-str70-0820/b08-str70-s20260822.png.meta.yaml\"\nGOLDEN_SIDECAR_SHA\
+    \ = \\\n    \"363f1d42a8f078ed2b177a7896e2749038901a4db94e13c380e4d11e14639d5e\"\nGOLDEN_MASK\
+    \ = \"farm-out/ep2-b08-str70-0820/08-first-citizen-eraseonly-mask-0820.png\"\nGOLDEN_INIT\
+    \ = \"farm-out/ep2-b08-str70-0820/08-first-citizen-eraseonly-0820.png\"\nHINT_POSE = \"\
+    farm-out/ep2-b08-scale30-0820/b08-openpose-nat-0819.png\"\nHINT_POSE_SHA = \\\n    \"\
+    562911c8174a6ecc21bc8710a1ac1b7f965c3f2d865093a742c2598c37d952e0\"\nHINT_BOARD = \"farm-out/ep2-b08-scale30-0820/b08-board-0820.png\"\
+    \nHINT_BOARD_SHA = \\\n    \"38cd39da304dbb0317aa2522e1ccca099bef583e88e6573fde03b287358213d6\"\
+    \nNET_POSE = r\"C:\\banyan-farm\\cnet-openpose-twins\"\nNET_BOARD = \"xinsir/controlnet-scribble-sdxl-1.0\"\
+    \n\n\nclass _Args(object):\n    \"\"\"argparse.Namespace by another name, so the validator\
+    \ can be called.\"\"\"\n\n    def __init__(self, **kw):\n        self.controlnet = self.control\
+    \ = self.control_sha256 = \"\"\n        self.controlnet2 = self.control2 = self.control2_sha256\
+    \ = \"\"\n        self.scale = self.scale2 = None\n        self.__dict__.update(kw)\n\n\
+    \ndef selftest() -> int:\n    import re\n\n    from PIL import Image, ImageFilter\n\n\
+    \    repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))\n    checks =\
+    \ []\n\n    def check(label, ok):\n        checks.append((label, bool(ok)))\n        print(\"\
+    %s %s\" % (\"ok  \" if ok else \"FAIL\", label), flush=True)\n\n    def raises(fn, code):\n\
+    \        try:\n            fn()\n        except ControlError as e:\n            return\
+    \ e.code == code\n        return False\n\n    # ---- 1. THE GOLDEN SIDECAR, REPRODUCED\
+    \ BYTE FOR BYTE ------------------\n    gpath = os.path.join(repo, GOLDEN_SIDECAR)\n \
+    \   golden = open(gpath, \"rb\").read()\n    check(\"the golden sidecar is the bytes this\
+    \ test was written against\",\n          hashlib.sha256(golden).hexdigest() == GOLDEN_SIDECAR_SHA)\n\
+    \    gtext = golden.decode(\"utf-8\")\n    glines = gtext.split(\"\\n\")\n\n    def body_after(key):\n\
+    \        \"\"\"The yaml_block body under a `key: >-` / `key: |-` line, unindented.\"\"\
+    \"\n        i = glines.index(key)\n        out = []\n        for line in glines[i + 1:]:\n\
+    \            if line.startswith(\"  \"):\n                out.append(line[2:])\n     \
+    \       else:\n                break\n        return \"\\n\".join(out)\n\n    # The mask\
+    \ block is REBUILT from the real mask PNG rather than sliced out of\n    # the golden,\
+    \ so the numbers in it are proved and not copied.\n    mask = Image.open(os.path.join(repo,\
+    \ GOLDEN_MASK)).convert(\"L\")\n    W, H = mask.size\n    box = mask.point(lambda v: 255\
+    \ if v > 0 else 0).getbbox()\n    bbox = [box[0], box[1], box[2] - 1, box[3] - 1]\n  \
+    \  mask_lines = [\n        \"mask_shape: png\",\n        \"mask_png_source: C:/banyan-farm/b08str70-0820/\"\
+    \n        \"08-first-citizen-eraseonly-mask-0820.png\",\n        \"mask_png_sha256: %s\"\
+    \ % sha256_of(os.path.join(repo, GOLDEN_MASK)),\n        \"mask_white_px: %d\"\n     \
+    \   % (W * H - mask.point(lambda v: 255 if v > 0 else 0).histogram()[0]),\n        \"\
+    mask_bbox_px: [%d, %d, %d, %d]\" % tuple(bbox),\n        \"mask_width_frac: %.4f\" % ((bbox[2]\
+    \ - bbox[0]) / float(W)),\n        \"mask_height_frac: %.4f\" % ((bbox[3] - bbox[1]) /\
+    \ float(H)),\n    ]\n    i0 = glines.index(\"mask_shape: png\")\n    check(\"the mask\
+    \ block computed off the real mask matches the filed one\",\n          glines[i0:i0 +\
+    \ len(mask_lines)] == mask_lines)\n\n    rebuilt = sidecar_text(\n        pipeline_class=\"\
+    StableDiffusionXLInpaintPipeline\", in_ch=4, W=832, H=1216,\n        steps=40, cfg=7.5,\
+    \ strength=0.7, seed=20260822, pad_crop=64, blur=8,\n        init=r\"C:\\banyan-farm\\\
+    b08str70-0820\\08-first-citizen-eraseonly-0820.png\",\n        init_sha=sha256_of(os.path.join(repo,\
+    \ GOLDEN_INIT)),\n        mask_png_name=\"b08-str70-s20260822-mask.png\", mask_lines=mask_lines,\n\
+    \        control_lines=[], stamp=\"2026-08-20T14:24:24Z\", render_s=7.3,\n        wall_s=13.3,\n\
+    \        versions={\"python\": \"3.12.10\", \"torch\": \"2.11.0+cu128\",\n           \
+    \       \"diffusers\": \"0.29.2\"},\n        note=body_after(\"note: >-\"), prompt=body_after(\"\
+    prompt: |-\"),\n        negative=body_after(\"negative: |-\"))\n    check(\"a NO-CONTROL\
+    \ sidecar is byte-identical to the filed verdict's\",\n          rebuilt.encode(\"utf-8\"\
+    ) == golden)\n\n    # ---- 2. THE DEFAULT PATH CANNOT BE TOUCHED BY THE NEW FLAGS -----------\n\
+    \    check(\"no control flag resolves to NO controls at all\",\n          resolve_controls(_Args(),\
+    \ (832, 1216)) == [])\n    check(\"no controls emit NO sidecar lines\", control_meta_lines([],\
+    \ None) == [])\n    check(\"no controls leave the pipeline class alone\",\n          \"\
+    pipeline: StableDiffusionXLInpaintPipeline (base weights, \"\n          \"unet.in_channels=4)\"\
+    \ in gtext)\n\n    # ---- 2b. THE LoRA ARM. Added 2026-08-22 for the goblin pose-adoption\
+    \ bar.\n    #\n    # THE FIRST CLAUSE IS THE ONE THAT MATTERS AND IT IS A NON-CHANGE CLAUSE.\n\
+    \    # Six filed b08 verdicts cite sidecars this function wrote; the byte-identity\n \
+    \   # check above already runs through the NEW signature (`lora_lines` defaults\n    #\
+    \ to empty), so the golden reproduction IS the no-regression proof. These\n    # clauses\
+    \ say the same thing at the unit below it.\n    check(\"no --lora emits NO sidecar lines\
+    \ at all\",\n          lora_meta_lines(\"\", 0.8, \"\") == [])\n    check(\"a LoRA-less\
+    \ sidecar carries no lora line anywhere\",\n          \"lora\" not in gtext)\n    LORA\
+    \ = r\"C:\\banyan-farm\\lora-jerry-v2-0822\\out\\bnyjerry-sdxl-v2.safetensors\"\n    ll\
+    \ = lora_meta_lines(LORA, 0.8, \"4\" * 64)\n    check(\"a LoRA sidecar names the weights\
+    \ file\",\n          \"lora: bnyjerry-sdxl-v2.safetensors\" in ll)\n    check(\"a LoRA\
+    \ sidecar carries the sha256 of the bytes that drew the frame\",\n          \"lora_sha256:\
+    \ \" + \"4\" * 64 in ll)\n    check(\"a LoRA sidecar records the weight it was fused at\"\
+    ,\n          \"lora_weight: 0.8\" in ll)\n    check(\"a LoRA sidecar records the fuse-before-swap\
+    \ ordering\",\n          any(l.startswith(\"lora_fused_before_controlnet_swap: true\"\
+    ) for l in ll))\n    # AND THE UNMEASURED CASE IS NAMED RATHER THAN BLANK. A sidecar that\
+    \ says\n    # `lora_sha256:` with nothing after it reads as \"no hash exists\"; it must\
+    \ say\n    # that a hash was not taken, which is a different and reportable fact.\n  \
+    \  check(\"a LoRA sidecar with no measured sha says so in words\",\n          \"lora_sha256:\
+    \ unmeasured\" in lora_meta_lines(LORA, 0.8, \"\"))\n    # AND THE BLOCK DOES NOT DISTURB\
+    \ THE CONTROLNET BLOCK IT SITS BESIDE.\n    with_both = sidecar_text(\n        pipeline_class=\"\
+    StableDiffusionXLControlNetInpaintPipeline\", in_ch=4,\n        W=832, H=1216, steps=40,\
+    \ cfg=7.5, strength=1.0, seed=1, pad_crop=0,\n        blur=8, init=\"i.png\", init_sha=\"\
+    d\" * 64, mask_png_name=\"m.png\",\n        mask_lines=[\"mask_shape: png\"], lora_lines=ll,\n\
+    \        control_lines=[\"controlnet: %s\" % NET_POSE], stamp=\"now\", render_s=1.0,\n\
+    \        wall_s=2.0, versions={\"python\": \"3\", \"torch\": \"2\", \"diffusers\": \"\
+    0\"},\n        note=\"n\", prompt=\"p\", negative=\"q\")\n    check(\"the LoRA block does\
+    \ not disturb the controlnet block\",\n          \"controlnet: %s\" % NET_POSE in with_both\n\
+    \          and \"lora: bnyjerry-sdxl-v2.safetensors\" in with_both)\n    # THE FUSE IS\
+    \ BEFORE THE SWAP IN THE SOURCE, WHICH IS THE WHOLE MECHANISM.\n    # from_pipe carries\
+    \ a fused UNet by identity; a fuse after it would be fused\n    # into a pipeline nobody\
+    \ calls. Asserted on the source order, because there\n    # is no way to assert it without\
+    \ a GPU otherwise.\n    isrc = open(os.path.abspath(__file__), \"r\", encoding=\"utf-8\"\
+    ).read()\n    check(\"fuse_lora is called BEFORE AutoPipelineForInpainting.from_pipe\"\
+    ,\n          isrc.index(\"pipe.fuse_lora(\")\n          < isrc.index(\"pipe = AutoPipelineForInpainting.from_pipe(\"\
+    ))\n    check(\"the PEFT backend is gated before any LoRA load is attempted\",\n     \
+    \     isrc.index(\"USE_PEFT_BACKEND\") < isrc.index(\"pipe.load_lora_weights(\"))\n\n\
+    \    # ---- 3. THE TWO HINTS, RESOLVED ---------------------------------------\n    both\
+    \ = _Args(controlnet=NET_POSE, control=os.path.join(repo, HINT_POSE),\n              \
+    \   control_sha256=HINT_POSE_SHA, scale=1.0,\n                 controlnet2=NET_BOARD,\
+    \ control2=os.path.join(repo, HINT_BOARD),\n                 control2_sha256=HINT_BOARD_SHA,\
+    \ scale2=0.3)\n    controls = resolve_controls(both, (832, 1216))\n    check(\"two hints\
+    \ resolve to two nets in the order given\",\n          [c[\"net\"] for c in controls]\
+    \ == [NET_POSE, NET_BOARD])\n    check(\"their scales are the ones passed, not defaults\"\
+    ,\n          [c[\"scale\"] for c in controls] == [1.0, 0.3])\n    check(\"both nets carry\
+    \ their licence out of the allowlist\",\n          all(\"apache-2.0\" in c[\"licence\"\
+    ] for c in controls))\n\n    # ---- 4. ALIGNMENT, THE CLAUSE THIS BEAT DIED ON -----------------------\n\
+    \    init = Image.open(os.path.join(repo, GOLDEN_INIT))\n    check(\"every hint is handed\
+    \ over FULL-FRAME, in the init's own size\",\n          all(c[\"image\"].size == init.size\
+    \ for c in controls))\n    src = open(os.path.abspath(__file__), \"r\", encoding=\"utf-8\"\
+    ).read()\n    check(\"this module crops NOTHING itself -- diffusers' one crops_coords\
+    \ is \"\n          \"the only crop there is\",\n          not re.search(r\"\\.crop\\(\"\
+    , src))\n    blurred = mask.filter(ImageFilter.GaussianBlur(8))\n    region = crop_region(blurred,\
+    \ 832, 1216, 64)\n    check(\"the vendored crop_region returns one box inside the frame\"\
+    ,\n          len(region) == 4 and 0 <= region[0] < region[2] <= 832\n          and 0 <=\
+    \ region[1] < region[3] <= 1216)\n    check(\"that box contains the whole mask, which\
+    \ is what padding means\",\n          region[0] <= bbox[0] and region[1] <= bbox[1]\n\
+    \          and region[2] > bbox[2] and region[3] > bbox[3])\n    check(\"the crop keeps\
+    \ the render's aspect ratio, so no hint is stretched \"\n          \"differently from\
+    \ the init\",\n          abs((region[2] - region[0]) / (region[3] - region[1]) - 832 /\
+    \ 1216)\n          < 0.01)\n    small = Image.open(os.path.join(repo, HINT_POSE)).convert(\"\
+    RGB\").resize((831, 1216))\n    check(\"a hint that is not the init's size is REFUSED\
+    \ (rc 13)\",\n          raises(lambda: resolve_controls(\n              _Args(controlnet=NET_POSE,\
+    \ control=os.path.join(repo, HINT_POSE),\n                    control_sha256=HINT_POSE_SHA,\
+    \ scale=1.0),\n              (832, 1216), open_image=lambda _p: small), 13))\n\n    #\
+    \ ---- 5. THE REFUSALS ---------------------------------------------------\n    check(\"\
+    an unlisted net is refused before any weight loads (rc 12)\",\n          raises(lambda:\
+    \ resolve_controls(\n              _Args(controlnet=\"thibaud/controlnet-openpose-sdxl-1.0\"\
+    ,\n                    control=os.path.join(repo, HINT_POSE),\n                    control_sha256=HINT_POSE_SHA,\
+    \ scale=1.0), (832, 1216)), 12))\n    check(\"a net with no hint is refused (rc 6)\",\n\
+    \          raises(lambda: resolve_controls(\n              _Args(controlnet=NET_POSE,\
+    \ scale=1.0), (832, 1216)), 6))\n    check(\"a hint with no net is refused (rc 6)\",\n\
+    \          raises(lambda: resolve_controls(\n              _Args(control=os.path.join(repo,\
+    \ HINT_POSE)), (832, 1216)), 6))\n    check(\"a net with no stated scale is refused (rc\
+    \ 6)\",\n          raises(lambda: resolve_controls(\n              _Args(controlnet=NET_POSE,\
+    \ control=os.path.join(repo, HINT_POSE),\n                    control_sha256=HINT_POSE_SHA),\
+    \ (832, 1216)), 6))\n    check(\"an unpinned hint is refused (rc 8)\",\n          raises(lambda:\
+    \ resolve_controls(\n              _Args(controlnet=NET_POSE, control=os.path.join(repo,\
+    \ HINT_POSE),\n                    scale=1.0), (832, 1216)), 8))\n    check(\"a hint whose\
+    \ bytes are not the pinned ones is refused (rc 8)\",\n          raises(lambda: resolve_controls(\n\
+    \              _Args(controlnet=NET_POSE, control=os.path.join(repo, HINT_POSE),\n   \
+    \                 control_sha256=\"0\" * 64, scale=1.0), (832, 1216)), 8))\n    check(\"\
+    the same net twice is refused (rc 12)\",\n          raises(lambda: resolve_controls(\n\
+    \              _Args(controlnet=NET_BOARD, control=os.path.join(repo, HINT_BOARD),\n \
+    \                   control_sha256=HINT_BOARD_SHA, scale=0.3,\n                    controlnet2=NET_BOARD,\
+    \ control2=os.path.join(repo, HINT_POSE),\n                    control2_sha256=HINT_POSE_SHA,\
+    \ scale2=0.3), (832, 1216)), 12))\n\n    # ---- 6. THE CONTROL BLOCK IN THE SIDECAR -------------------------------\n\
+    \    cl = control_meta_lines(controls, region)\n    joined = \"\\n\".join(cl)\n    for\
+    \ needle in (\"controlnet: \" + NET_POSE, \"controlnet_2: \" + NET_BOARD,\n          \
+    \         \"controlnet_conditioning_scale: 1.0\",\n                   \"controlnet_2_conditioning_scale:\
+    \ 0.3\",\n                   \"control_image_sha256: \" + HINT_POSE_SHA,\n           \
+    \        \"control_2_image_sha256: \" + HINT_BOARD_SHA,\n                   \"MultiControlNetModel\"\
+    ,\n                   \"pad_crop_region_px: [%d, %d, %d, %d]\" % tuple(region)):\n   \
+    \     check(\"the control block records %r\" % needle[:46], needle in joined)\n    withctl\
+    \ = sidecar_text(\n        pipeline_class=\"StableDiffusionXLControlNetInpaintPipeline\"\
+    , in_ch=4,\n        W=832, H=1216, steps=40, cfg=7.5, strength=0.7, seed=20260822,\n \
+    \       pad_crop=64, blur=8, init=\"x.png\", init_sha=\"0\" * 64,\n        mask_png_name=\"\
+    m.png\", mask_lines=mask_lines, control_lines=cl,\n        stamp=\"2026-08-20T14:24:24Z\"\
+    , render_s=1.0, wall_s=2.0,\n        versions={\"python\": \"3\", \"torch\": \"2\", \"\
+    diffusers\": \"0.29.2\"},\n        note=\"n\", prompt=\"p\", negative=\"q\")\n    check(\"\
+    a control run names the ControlNet pipeline in its sidecar\",\n          \"pipeline: StableDiffusionXLControlNetInpaintPipeline\"\
+    \ in withctl)\n    check(\"the control block sits between the mask block and the steward\
+    \ note, \"\n          \"leaving every pre-existing line in its filed order\",\n      \
+    \    withctl.index(\"mask_height_frac\") < withctl.index(\"controlnet: \")\n         \
+    \ < withctl.index(\"mask_is_the_stewards\"))\n\n    # ---- 7. THE CROP-MAGNIFICATION REFUSAL,\
+    \ AND THE CONFIGURATION IT ADMITS\n    # §28 measured this defect and wrote the rule in\
+    \ prose. These clauses are\n    # that rule, and the numbers are the ones the filed verdict\
+    \ reported, not\n    # numbers invented for a test.\n    check(\"the no-control path never\
+    \ raises, even on a magnifying box (rc none)\",\n          assert_hint_survives_crop([],\
+    \ region, 832, 1216) == 1.0)\n    check(\"section 28's own crop box magnifies the hint\
+    \ 3.07x, as it reported\",\n          abs(hint_magnification((468, 384, 739, 780), 832,\
+    \ 1216) - 3.07) < 0.01)\n    check(\"a hint that the crop would magnify is REFUSED (rc\
+    \ 15)\",\n          raises(lambda: assert_hint_survives_crop(\n              controls,\
+    \ (468, 384, 739, 780), 832, 1216), 15))\n    try:\n        assert_hint_survives_crop(controls,\
+    \ (468, 384, 739, 780), 832, 1216)\n        refusal = \"\"\n    except ControlError as\
+    \ e:\n        refusal = str(e)\n    check(\"the refusal names the verdict and the mechanism,\
+    \ so the next caller \"\n          \"reads section 28 instead of rediscovering it at a\
+    \ render's cost\",\n          \"section 28\" in refusal and \"3.07x\" in refusal\n   \
+    \       and \"--pad-crop 0\" in refusal)\n\n    # PAD-CROP 0 IS THE CONFIGURATION THIS\
+    \ ROUTE RUNS IN, and the guard admits it\n    # by construction: no crop, no rescale,\
+    \ no way for the defect to occur.\n    check(\"at --pad-crop 0 the region is None and\
+    \ the magnification is exactly \"\n          \"1.0 -- the section 28 defect is structurally\
+    \ impossible there\",\n          hint_magnification(None, 832, 1216) == 1.0\n        \
+    \  and assert_hint_survives_crop(controls, None, 832, 1216) == 1.0)\n\n    # AND THE GUARD\
+    \ IS NOT A BAN ON THE FLAG. A mask that already covers the\n    # frame yields a box the\
+    \ size of the frame and magnifies nothing, so it is\n    # admitted WITH padding_mask_crop\
+    \ on. The guard measures the defect, not the\n    # flag that happened to be set when\
+    \ the defect was found.\n    full = Image.open(os.path.join(\n        repo, \"farm-out/ep2-goblin-i2i-src-0822/fullframe-mask-0822.png\"\
+    )\n    ).convert(\"L\")\n    freg = crop_region(full.filter(ImageFilter.GaussianBlur(8)),\
+    \ 832, 1216, 64)\n    check(\"a FULL-FRAME mask crops to the whole frame, so even with\
+    \ \"\n          \"--pad-crop 64 nothing is magnified and the hint is admitted\",\n   \
+    \       hint_magnification(freg, 832, 1216) <= HINT_MAGNIFICATION_CEILING\n          and\
+    \ assert_hint_survives_crop(controls, freg, 832, 1216) <= 1.05)\n\n    # ---- 8. THE ROUND-2\
+    \ SIDECAR: ONE POSE NET, FULL-FRAME MASK, NO CROP ----\n    one = resolve_controls(\n\
+    \        _Args(controlnet=NET_POSE, control=os.path.join(repo, HINT_POSE),\n         \
+    \     control_sha256=HINT_POSE_SHA, scale=1.0), (832, 1216))\n    r2lines = control_meta_lines(one,\
+    \ None)\n    r2joined = \"\\n\".join(r2lines)\n    check(\"a single net records its composition\
+    \ as 'one net' and emits no \"\n          \"second-net block\",\n          \"controlnet_composition:\
+    \ one net\" in r2joined\n          and \"controlnet_2:\" not in r2joined)\n    check(\"\
+    with the crop off the sidecar says so in the box field rather than \"\n          \"carrying\
+    \ a stale or invented region\",\n          \"pad_crop_region_px: null (padding_mask_crop\
+    \ off)\" in r2joined)\n    r2side = sidecar_text(\n        pipeline_class=\"StableDiffusionXLControlNetInpaintPipeline\"\
+    , in_ch=4,\n        W=832, H=1216, steps=40, cfg=7.5, strength=0.35, seed=20260823,\n\
+    \        pad_crop=0, blur=8, init=\"canon.png\", init_sha=\"0\" * 64,\n        mask_png_name=\"\
+    m.png\", mask_lines=mask_lines, control_lines=r2lines,\n        stamp=\"2026-08-22T00:00:00Z\"\
+    , render_s=1.0, wall_s=2.0,\n        versions={\"python\": \"3\", \"torch\": \"2\", \"\
+    diffusers\": \"0.29.2\"},\n        note=\"n\", prompt=\"p\", negative=\"q\")\n    check(\"\
+    the round-2 shape -- init + ONE ControlNet at --pad-crop 0 -- \"\n          \"produces\
+    \ a complete sidecar naming the ControlNet pipeline\",\n          \"pipeline: StableDiffusionXLControlNetInpaintPipeline\"\
+    \ in r2side\n          and \"padding_mask_crop: null\" in r2side\n          and \"strength:\
+    \ 0.35\" in r2side)\n\n    bad = [c for c, ok in checks if not ok]\n    print(\"\\n%d/%d\
+    \ assertions passed\" % (len(checks) - len(bad), len(checks)),\n          flush=True)\n\
+    \    if bad:\n        print(\"FAILED: %s\" % \"; \".join(bad), flush=True)\n        return\
+    \ 1\n    print(\"SELFTEST PASS -- the no-control path is byte-identical to the filed \"\
+    \n          \"ep2-b08-str70-0820 sidecar, and hint alignment is by construction.\",\n\
+    \          flush=True)\n    return 0\n\n\nif __name__ == \"__main__\":\n    raise SystemExit(main())\n"
+  C:\banyan-farm\lora-jerry-v2-twopass-0822\prompt.txt: bnyjerry, 1boy, solo, in tall grass,
+    detailed cinematic anime, masterpiece, best quality, very aesthetic
+  C:\banyan-farm\lora-jerry-v2-twopass-0822\negative.txt: lowres, worst quality, low quality,
+    text, watermark, photorealism, 3d render, blurry, 2boys, multiple heads
+  C:\banyan-farm\lora-jerry-v2-twopass-0822\fetch_hints.py: "#!/usr/bin/env python3\n\"\"\"\
+    Fetch the skeleton and the two flat plates, each by sha256.\n\nThe skeleton is the SAME\
+    \ BYTES rounds one through three drove -- that is what\nmakes this comparable to their\
+    \ filed failures. The plates are generated and\ncommitted by pipeline/author_jerry_poseproof_0822.py.\"\
+    \"\"\nimport hashlib, os, sys, urllib.request\n\nOUT = r\"C:\\banyan-farm\\lora-jerry-v2-twopass-0822\"\
+    \nUA = {\"User-Agent\": \"banyan-city-poseproof/1.0 (albert.numbro@gmail.com)\"}\nWANT\
+    \ = {\n    \"jerry-skel-h240seat-0821.png\": (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-skel-assets-0820/jerry-skel-h240seat-0821.png\"\
+    , \"1e95abc723f366f2e8c6b486937cfe8709edcbe2d8af0186fa82461c8e792686\"),\n    \"jerry-poseproof-init-0822.png\"\
+    : (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-poseproof-assets-0822/jerry-poseproof-init-0822.png\"\
+    , \"79c80689a43452f8fc11d22c2da86aee1c0a073d2255ddf1cb1d3cdc446f5f7f\"),\n    \"jerry-poseproof-maskall-0822.png\"\
+    : (\"https://raw.githubusercontent.com/olegmalk/banyan-city/main/farm-out/jerry-poseproof-assets-0822/jerry-poseproof-maskall-0822.png\"\
+    , \"5cb2f709bfa7eab1aae0ffebb398fefd5224a6da61e5a730779322a84321894b\"),\n}\n\nos.makedirs(OUT,\
+    \ exist_ok=True)\nfor name, (url, want) in WANT.items():\n    raw = urllib.request.urlopen(\n\
+    \        urllib.request.Request(url, headers=UA), timeout=120).read()\n    have = hashlib.sha256(raw).hexdigest()\n\
+    \    if have != want:\n        sys.exit(\"!! SHA MISMATCH for %s -- refusing.\" % name\
+    \ + chr(10) +\n                 \"   want %s\" % want + chr(10) + \"   have %s\" % have)\n\
+    \    with open(os.path.join(OUT, name), \"wb\") as fh:\n        fh.write(raw)\n    print(\"\
+    fetched %s %d bytes OK\" % (name, len(raw)), flush=True)\n"
+steps:
+- name: fetch
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-jerry-v2-twopass-0822\fetch_hints.py
+- name: twopass-b13seat-s050
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-jerry-v2-twopass-0822\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-b2r6-0822\b2r6-b13seat-base.png
+  - --init-sha256
+  - 5f7d41a616edf80744d9961a573dafc59a003944272b65a535c01aecd415acef
+  - --mask-png
+  - C:\banyan-farm\lora-jerry-v2-twopass-0822\jerry-poseproof-maskall-0822.png
+  - --strength
+  - '0.50'
+  - --pad-crop
+  - '0'
+  - --blur
+  - '0'
+  - --controlnet
+  - C:\banyan-farm\cnet-openpose-twins
+  - --control
+  - C:\banyan-farm\lora-jerry-v2-twopass-0822\jerry-skel-h240seat-0821.png
+  - --control-sha256
+  - 1e95abc723f366f2e8c6b486937cfe8709edcbe2d8af0186fa82461c8e792686
+  - --scale
+  - '1.0'
+  - --prompt-file
+  - C:\banyan-farm\lora-jerry-v2-twopass-0822\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\lora-jerry-v2-twopass-0822\negative.txt
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-jerry-v2-twopass-0822\out\twopass-b13seat-s050.png
+  - --lora
+  - C:\banyan-farm\lora-jerry-v2-0822\out\bnyjerry-sdxl-v2.safetensors
+  - --lora-weight
+  - '0.8'
+  - --lora-sha256
+  - 4340857d02f17dbfa50c66e0a2d8f4dc3ffebb4fad1621bb3f59242e61bfeb8b
+  - --note
+  - 'THE TWO-PASS at strength 0.50. Pass one''s seated plate as the init, all-white mask,
+    bnyjerry at 0.8, beat 13''s skeleton still attached at 1.0. The i2i route''s own mechanism
+    is the reason this can work: at low strength the high-noise steps that decide structure
+    never run, so the seat is not up for negotiation and the LoRA only repaints.'
+- name: twopass-b13seat-s065
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-jerry-v2-twopass-0822\inpaint_fruit.py
+  - --init
+  - C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-b2r6-0822\b2r6-b13seat-base.png
+  - --init-sha256
+  - 5f7d41a616edf80744d9961a573dafc59a003944272b65a535c01aecd415acef
+  - --mask-png
+  - C:\banyan-farm\lora-jerry-v2-twopass-0822\jerry-poseproof-maskall-0822.png
+  - --strength
+  - '0.65'
+  - --pad-crop
+  - '0'
+  - --blur
+  - '0'
+  - --controlnet
+  - C:\banyan-farm\cnet-openpose-twins
+  - --control
+  - C:\banyan-farm\lora-jerry-v2-twopass-0822\jerry-skel-h240seat-0821.png
+  - --control-sha256
+  - 1e95abc723f366f2e8c6b486937cfe8709edcbe2d8af0186fa82461c8e792686
+  - --scale
+  - '1.0'
+  - --prompt-file
+  - C:\banyan-farm\lora-jerry-v2-twopass-0822\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\lora-jerry-v2-twopass-0822\negative.txt
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --seed
+  - '20260822'
+  - --out
+  - C:\banyan-farm\lora-jerry-v2-twopass-0822\out\twopass-b13seat-s065.png
+  - --lora
+  - C:\banyan-farm\lora-jerry-v2-0822\out\bnyjerry-sdxl-v2.safetensors
+  - --lora-weight
+  - '0.8'
+  - --lora-sha256
+  - 4340857d02f17dbfa50c66e0a2d8f4dc3ffebb4fad1621bb3f59242e61bfeb8b
+  - --note
+  - THE TWO-PASS at strength 0.65. The upper bracket. Too high and the seated legs go the
+    way they went in round seven's ladder; this cell says where that edge is.
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "\nimport hashlib, glob, os, shutil\nOUT = \"C:/banyan-farm/lora-jerry-v2-twopass-0822/out\"\
+    \nDST = \"C:/banyan-farm/courier-box/farm-out/lora-jerry-v2-twopass-0822\"\nos.makedirs(DST,\
+    \ exist_ok=True)\nn = 0\nfound = []\nfound += sorted(glob.glob(OUT + \"/*.png\"))\nfound\
+    \ += sorted(glob.glob(OUT + \"/*.png.meta.yaml\"))\nfor p in found:\n    if os.path.isfile(p):\n\
+    \        shutil.copyfile(p, os.path.join(DST, os.path.basename(p)))\n        n += 1\n\
+    with open(os.path.join(DST, \"lora-jerry-v2-twopass-0822.sha256\"), \"w\", encoding=\"\
+    utf-8\") as fh:\n    for name in sorted(os.listdir(DST)):\n        q = os.path.join(DST,\
+    \ name)\n        if os.path.isfile(q) and not name.endswith(\".sha256\"):\n          \
+    \  fh.write(\"%s  %s\" % (\n                hashlib.sha256(open(q, \"rb\").read()).hexdigest(),\
+    \ name) + chr(10))\nprint(\"published\", n, \"file(s) ->\", DST, flush=True)\nif n ==\
+    \ 0:\n    raise SystemExit(\"NOTHING TO PUBLISH -- the sample produced no files\")\n"
+artifacts:
+- C:\banyan-farm\courier-box\farm-out\lora-jerry-v2-twopass-0822\lora-jerry-v2-twopass-0822.sha256

@@ -636,9 +636,77 @@ loras:
       strength 1.0 IS txt2img-with-ControlNet, on the one code path in this repo
       where the pose net is proven to act. It would need the same eight-line
       `--lora` arm `controlnet_plate.py` just grew.
+    B2_rounds_four_to_seven: >-
+      SCORED AT LAST, AND THE ANSWER IS A SPLIT. Four more rounds ran on
+      2026-08-22 and B2 is no longer void: the instrument works, the bar is
+      HALF PASSED, and the half that fails does so for the reason that was
+      pre-registered before the weights existed.
+
+      ROUND FOUR ran the fix this entry named -- `inpaint_fruit.py` with an
+      all-white mask at strength 1.0, which is txt2img-with-ControlNet -- after
+      that driver grew the same eight-line `--lora` arm (selftest 51/51, the
+      filed `ep2-b08-str70-0820` sidecar still reproduced byte for byte). The
+      no-LoRA control drew a bust-framed girl. THREE CONTROLS ON TWO PATHS AND
+      TWO BLOBS, ALL FAILED.
+
+      AND THIS ENTRY'S OWN READING OF THE i2i MEASUREMENT WAS THE ERROR. "The
+      net moved 15.05 mean abs through inpaint_fruit.py" was taken as proof the
+      net drives on that path. The same sentence in `goblin-i2i-route-0822.md`
+      says it "did not bend a single knee": 15.05 is grass and light. The net
+      had never been observed POSING anything in this tree, on any path.
+
+      ROUND FIVE FOUND THE ACTUAL VARIABLE, AND IT IS THE ONE NEVER MOVED --
+      THE HINT. `b08-openpose-nat-0819`, the hint section 28 of
+      `b08-arm-route-0819.md` drove and the one `inpaint_fruit.py`'s selftest is
+      pinned to, on the same driver, mask, strength, net, scale, seed and
+      prompt: the no-LoRA control drew TWO full-body figures, at the skeleton's
+      two positions, at its two different heights, out of a `1boy, solo`
+      prompt. Complete adoption. The `w08` cell then held identity ON TOP of
+      that composition -- two goblins, dome, near-horizontal ears, narrow
+      almond eye, tiny dark pupil, correct at 1:1.
+
+      WHAT WAS WRONG WITH THE OLD HINT IS ITS PROPORTION, NOT ITS RENDERING.
+      Rounds one to four all drove `jerry-canon-h37f*-0821`: head_frac 0.370, a
+      2.7-head figure whose shoulder line sits at 0.615 of stature. Both
+      families come out of the same `author_b08_openpose_hint.draw_bodypose`, so
+      the renderer is not the difference. A net trained on annotator output from
+      photographs of people has never seen a body that shape and contributed
+      nothing. THAT SHAPE WAS ONLY EVER NEEDED BECAUSE THE SKELETON USED TO BE
+      THE SOLE CARRIER OF HIS PROPORTIONS. The LoRA carries them now, so the
+      constraint that produced the defect is gone.
+
+      ROUND SIX, ON THE PRODUCTION HINT, SPLIT THE BAR. Beat 13's own AGE B seat
+      skeleton (`jerry-skel-h240seat-0821`, head_frac 0.240, the founder's own
+      age dial):
+        base, no LoRA  -> A CORRECTLY SEATED FIGURE. Knees up, forearms on the
+                          knees, hands clasped. THE NET DRIVES AT 0.240.
+        w08            -> a STANDING goblin, bust-to-hip, arms at his sides.
+                          Identity perfect, pose gone.
+
+      ROUND SEVEN WALKED BOTH KNOBS AND THE TWO CURVES DO NOT CROSS.
+        weight 0.80  goblin, standing        identity yes, pose no
+        weight 0.65  goblin, standing        identity yes, pose no
+        weight 0.50  a human boy, standing   identity GONE, pose still no
+        weight 0.35  a human boy, standing   identity GONE, pose still no
+        weight 0.80 at hint scale 1.4        identity yes, pose no
+      His face leaves between 0.65 and 0.50 and the seated legs have still not
+      arrived by 0.35. Every cell adopted the hint's UPPER body -- clasped
+      hands, forearms in, a forward lean -- and not one adopted the leg fold.
+      THE LOCK IS A LOWER-BODY PRIOR and its cause is the one written into
+      `emit_train_jerry_v2_0822.BARS` before a frame was admitted: 21 of 21
+      training frames are standing. No weight and no conditioning scale reaches
+      that, which is why round seven is the last knob round rather than the
+      first of five.
+    B2_verdict: >-
+      ONE PASS CANNOT CARRY BOTH. TWO PASSES CAN, and that is the route.
+      Full detail in `pipeline/goblin-twopass-route-0822.md`.
     B3_no_regression: not scored — pending, the grid rendered its three arms
     B4_style: not scored
-  shipping_weight: null
+  shipping_weight: >-
+    0.8, AND ONLY IN PASS TWO OF THE TWO-PASS at strength 0.75. It is not a
+    one-pass shipping weight: at 0.8 in a single pass the LoRA overrides every
+    non-standing skeleton, and every weight that lets a pose through has already
+    lost his face. See `pipeline/goblin-twopass-route-0822.md`.
   verdict: >-
     NOTHING SHIPS YET, AND THE BLOCKER IS NOT THE LoRA. Identity trained well
     against a founder-ratified set and settings generalise cleanly. The two
@@ -655,3 +723,15 @@ loras:
     render fifteen beats of the one standing pose this LoRA already draws --
     which is the pose-locked-character-LoRA failure `curation-tile-0820` refused
     a dataset over, arriving at the plate step instead.
+
+    SUPERSEDED IN PART, 2026-08-22 EVENING -- read `B2_rounds_four_to_seven`
+    above and `pipeline/goblin-twopass-route-0822.md`. The paragraph above got
+    the diagnosis half right and half wrong, and both halves are worth keeping
+    visible. RIGHT: the instrument was broken and a wave built on it would have
+    rendered fifteen standing beats -- that refusal was correct and it saved
+    the wave. WRONG: it blamed the CODE PATH, on a misreading of the 15.05
+    figure as a pose measurement when its own source says the net did not bend
+    a knee. The fault was the HINT's proportion, and the fix that works is a
+    TWO-PASS: the net poses a stranger with no LoRA in the pass, then the LoRA
+    repaints him at strength 0.75 through a route that provably re-lights and
+    cannot re-ground. Beat 13 holds both halves at 1:1.
