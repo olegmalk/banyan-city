@@ -10294,3 +10294,12 @@ move, for the same mechanism that stops the pose moving. And his eye survives
 only inside a **window of face fraction** (~22–29 %); full body is below it and
 comes back with a yellow pupil at every strength.
 
+
+## 2026-08-22 — PROJECT STOPPED (founder): "stop working. remove the vercel
+project and subscription, you can keep github"
+All lanes stopped, supervisor tick deleted, box queue held
+(.HOLD-project-stopped-0822). Both Vercel projects DELETED (banyan team +
+hobby duplicate) — banyan.city now 404s; the GitHub repo and Pages mirror
+remain intact. Subscription/billing cancellation is a dashboard action for
+the account holder (Settings → Billing → the banyan team → cancel plan).
+Next chapter per the founder: computer science lessons.
