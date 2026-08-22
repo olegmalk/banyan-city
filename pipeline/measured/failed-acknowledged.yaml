@@ -1,9 +1,9 @@
-measured_at: 2026-08-21T07:43Z
+measured_at: 2026-08-22T12:14Z
 source: ssh rtx5090, `dir /b C:\banyan-queue\failed` filtered to *.json — the same thing telemetry.py counts. 67
   jsons and 69 logs (136 files); the two extra logs are not failures (see orphan_logs below). Re-measured
   2026-08-21 by the triage lane, which also re-read every one of the 67 jsons for `rc`/`failed_step` and the
   tail of its log, so every row below now cites a line somebody actually read rather than a class it resembles.
-count: 67
+count: 124
 orphan_logs:
 - ep2-b04-balloon-pair-0813
 - ep2-b19-overhead-0812
@@ -355,6 +355,396 @@ acknowledged:
     Caller bug, not a box fault; fixed and retried as ep2-b08-cnetfill-0820-1787240980-againa2e448, rc=0 at
     15:50:32Z. VERIFIED in done/. Superseded.'
   doc: pipeline/jobs/ep2-b08-cnetfill-0820.yaml; twin ep2-b08-cnetfill-0820-1787240980-againa2e448 in done/
+- id: ep3-sapfield-pp01-0821-1787303071
+  group: clip77-guard
+  why: 'rc=9 at `hintskel`, 09:06-09:09Z 08-21: controlnet_plate refused before any GPU because the negative ran
+    135 tokens, 58 past CLIP''s 77 (positive 30 was fine) -- same clip77 class as the 08-20 tileread arms.
+    Retried as ...-1787304798-againd53828, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep3-sapfield-p01-0821.yaml; twin ep3-sapfield-p01-0821-1787304798-againd53828 in done/
+- id: ep3-sapfield-pp02-0821-1787303074
+  group: clip77-guard
+  why: 'rc=9 at `hintskel`, 09:06-09:09Z 08-21: controlnet_plate refused before any GPU because the negative ran
+    135 tokens, 58 past CLIP''s 77 (positive ~30 was fine) -- same clip77 class as the 08-20 tileread arms.
+    Retried as ...-1787304802-again6f8ca8, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep3-sapfield-p02-0821.yaml; twin ep3-sapfield-p02-0821-1787304802-again6f8ca8 in done/
+- id: ep3-sapfield-pp03-0821-1787303077
+  group: clip77-guard
+  why: 'rc=9 at `hintskel`, 09:06-09:09Z 08-21: controlnet_plate refused before any GPU because the negative ran
+    135 tokens, 58 past CLIP''s 77 (positive ~30 was fine) -- same clip77 class as the 08-20 tileread arms.
+    Retried as ...-1787304805-againf56b80, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep3-sapfield-p03-0821.yaml; twin ep3-sapfield-p03-0821-1787304805-againf56b80 in done/
+- id: ep3-sapfield-pp04-0821-1787303079
+  group: clip77-guard
+  why: 'rc=9 at `hintskel`, 09:06-09:09Z 08-21: controlnet_plate refused before any GPU because the negative ran
+    135 tokens, 58 past CLIP''s 77 (positive ~30 was fine) -- same clip77 class as the 08-20 tileread arms.
+    Retried as ...-1787304808-again178658, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep3-sapfield-p04-0821.yaml; twin ep3-sapfield-p04-0821-1787304808-again178658 in done/
+- id: ep3-sapfield-pp05-0821-1787303082
+  group: clip77-guard
+  why: 'rc=9 at `hintskel`, 09:06-09:09Z 08-21: controlnet_plate refused before any GPU because the negative ran
+    135 tokens, 58 past CLIP''s 77 (positive 36 was fine) -- same clip77 class as the 08-20 tileread arms.
+    Retried as ...-1787304811-again3eae40, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep3-sapfield-p05-0821.yaml; twin ep3-sapfield-p05-0821-1787304811-again3eae40 in done/
+- id: ep3-sapfield-pp06-0821-1787303085
+  group: clip77-guard
+  why: 'rc=9 at `hintskel`, 09:06-09:09Z 08-21: controlnet_plate refused before any GPU because the negative ran
+    135 tokens, 58 past CLIP''s 77 (positive ~30 was fine) -- same clip77 class as the 08-20 tileread arms.
+    Retried as ...-1787304814-againd64ab0, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep3-sapfield-p06-0821.yaml; twin ep3-sapfield-p06-0821-1787304814-againd64ab0 in done/
+- id: ep3-sapfield-pp07-0821-1787303088
+  group: clip77-guard
+  why: 'rc=9 at `hintskel`, 09:06-09:09Z 08-21: controlnet_plate refused before any GPU because the negative ran
+    135 tokens, 58 past CLIP''s 77 (positive ~30 was fine) -- same clip77 class as the 08-20 tileread arms.
+    Retried as ...-1787304817-again05e930, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep3-sapfield-p07-0821.yaml; twin ep3-sapfield-p07-0821-1787304817-again05e930 in done/
+- id: ep3-sapfield-pp08-0821-1787303091
+  group: clip77-guard
+  why: 'rc=9 at `hintskel`, 09:06-09:09Z 08-21: controlnet_plate refused before any GPU because the negative ran
+    135 tokens, 58 past CLIP''s 77 (positive ~30 was fine) -- same clip77 class as the 08-20 tileread arms.
+    Retried as ...-1787304820-againee5ef0, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep3-sapfield-p08-0821.yaml; twin ep3-sapfield-p08-0821-1787304820-againee5ef0 in done/
+- id: ep3-sapfield-pp09-0821-1787303093
+  group: clip77-guard
+  why: 'rc=9 at `hintskel`, 09:06-09:09Z 08-21: controlnet_plate refused before any GPU because the negative ran
+    135 tokens, 58 past CLIP''s 77 (positive ~30 was fine) -- same clip77 class as the 08-20 tileread arms.
+    Retried as ...-1787304823-again81ef98, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep3-sapfield-p09-0821.yaml; twin ep3-sapfield-p09-0821-1787304823-again81ef98 in done/
+- id: ep3-sapfield-pp10-0821-1787303096
+  group: clip77-guard
+  why: 'rc=9 at `hintskel`, 09:06-09:09Z 08-21: controlnet_plate refused before any GPU because the negative ran
+    135 tokens, 58 past CLIP''s 77 (positive ~30 was fine) -- same clip77 class as the 08-20 tileread arms.
+    Retried as ...-1787304826-again07a650, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep3-sapfield-p10-0821.yaml; twin ep3-sapfield-p10-0821-1787304826-again07a650 in done/
+- id: ep2-guardcast5-a-0822-1787391566
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394001, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-a-0822.yaml; twin ep2-guardcast5-a-0822-1787394001 in done/
+- id: ep2-guardcast5-a50-0822-1787391594
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394029, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-a50-0822.yaml; twin ep2-guardcast5-a50-0822-1787394029 in done/
+- id: ep2-guardcast5-b-0822-1787391569
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394004, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-b-0822.yaml; twin ep2-guardcast5-b-0822-1787394004 in done/
+- id: ep2-guardcast5-b50-0822-1787391598
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394032, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-b50-0822.yaml; twin ep2-guardcast5-b50-0822-1787394032 in done/
+- id: ep2-guardcast5-c50-0822-1787391601
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394035, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-c50-0822.yaml; twin ep2-guardcast5-c50-0822-1787394035 in done/
+- id: ep2-guardcast5-d-0822-1787391572
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394007, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-d-0822.yaml; twin ep2-guardcast5-d-0822-1787394007 in done/
+- id: ep2-guardcast5-e-0822-1787391575
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394010, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-e-0822.yaml; twin ep2-guardcast5-e-0822-1787394010 in done/
+- id: ep2-guardcast5-e50-0822-1787391604
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394038, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-e50-0822.yaml; twin ep2-guardcast5-e50-0822-1787394038 in done/
+- id: ep2-guardcast5-f-0822-1787391578
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394014, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-f-0822.yaml; twin ep2-guardcast5-f-0822-1787394014 in done/
+- id: ep2-guardcast5-g-0822-1787391581
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394017, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-g-0822.yaml; twin ep2-guardcast5-g-0822-1787394017 in done/
+- id: ep2-guardcast5-g50-0822-1787391607
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394042, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-g50-0822.yaml; twin ep2-guardcast5-g50-0822-1787394042 in done/
+- id: ep2-guardcast5-h-0822-1787391584
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394020, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-h-0822.yaml; twin ep2-guardcast5-h-0822-1787394020 in done/
+- id: ep2-guardcast5-i-0822-1787391587
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394023, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-i-0822.yaml; twin ep2-guardcast5-i-0822-1787394023 in done/
+- id: ep2-guardcast5-j-0822-1787391591
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394026, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-j-0822.yaml; twin ep2-guardcast5-j-0822-1787394026 in done/
+- id: ep2-guardcast5-j50-0822-1787391610
+  group: stage-sha-mismatch-lora-deploy
+  why: 'rc=1 at `stage`, 10:06-10:07Z 08-22: the spec pinned controlnet_plate.py at sha ece54f68..., main served
+    70bacd45... -- the --lora deploy changed the file between spec authoring and run, and the stage guard
+    refused before any GPU. All 15 arms hit it in the same two minutes (arm c had already run clean at
+    1787391480, before the deploy landed). Re-fired ~40 min later as ...-1787394045, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast5-j50-0822.yaml; twin ep2-guardcast5-j50-0822-1787394045 in done/
+- id: ep2-b13-canon-r4-0821-1787320098
+  group: stage-sha-mismatch-control-asset
+  why: 'rc=1 at `stage`, 13:48:29Z 08-21: jerry-canon-h37sit-0821.png fetched with sha 5a37c536..., spec
+    expected 3db75427... -- the control PNG in farm-out/jerry-canon-assets-0821 was republished between
+    authoring and run; guard refused before any GPU (controlnet_plate.py itself staged clean). Retried as
+    ...-1787320310, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-b13-canon-r4-0821.yaml; twin ep2-b13-canon-r4-0821-1787320310 in done/
+- id: ep3-saplora-fignat-g1-0822-1787385859
+  group: fetch-404
+  why: 'rc=1 at the FIRST step `fetch`, 08:04Z 08-22: HTTP 404 out of fetch_init.py -- the sapfig-g1 assets were
+    not yet reachable on main; the derive_fetch_guard.py class again, all 8 arms at once. No GPU ran. Third
+    firing rc=0 (see the init-sha-spec-mismatch row below for the second).'
+  doc: pipeline/derive_fetch_guard.py; twin ep3-saplora-fignat-g1-0822-1787386416 in done/
+- id: ep3-saplora-fignat-g2-0822-1787385865
+  group: fetch-404
+  why: 'rc=1 at the FIRST step `fetch`, 08:04Z 08-22: HTTP 404 out of fetch_init.py -- the sapfig-g2 assets were
+    not yet reachable on main; the derive_fetch_guard.py class again, all 8 arms at once. No GPU ran. Third
+    firing rc=0 (see the init-sha-spec-mismatch row below for the second).'
+  doc: pipeline/derive_fetch_guard.py; twin ep3-saplora-fignat-g2-0822-1787386420 in done/
+- id: ep3-saplora-fignat-g3-0822-1787385869
+  group: fetch-404
+  why: 'rc=1 at the FIRST step `fetch`, 08:04Z 08-22: HTTP 404 out of fetch_init.py -- the sapfig-g3 assets were
+    not yet reachable on main; the derive_fetch_guard.py class again, all 8 arms at once. No GPU ran. Third
+    firing rc=0 (see the init-sha-spec-mismatch row below for the second).'
+  doc: pipeline/derive_fetch_guard.py; twin ep3-saplora-fignat-g3-0822-1787386425 in done/
+- id: ep3-saplora-fignat-g4-0822-1787385874
+  group: fetch-404
+  why: 'rc=1 at the FIRST step `fetch`, 08:04Z 08-22: HTTP 404 out of fetch_init.py -- the sapfig-g4 assets were
+    not yet reachable on main; the derive_fetch_guard.py class again, all 8 arms at once. No GPU ran. Third
+    firing rc=0 (see the init-sha-spec-mismatch row below for the second).'
+  doc: pipeline/derive_fetch_guard.py; twin ep3-saplora-fignat-g4-0822-1787386430 in done/
+- id: ep3-saplora-fignat-g5-0822-1787385878
+  group: fetch-404
+  why: 'rc=1 at the FIRST step `fetch`, 08:04Z 08-22: HTTP 404 out of fetch_init.py -- the sapfig-g5 assets were
+    not yet reachable on main; the derive_fetch_guard.py class again, all 8 arms at once. No GPU ran. Third
+    firing rc=0 (see the init-sha-spec-mismatch row below for the second).'
+  doc: pipeline/derive_fetch_guard.py; twin ep3-saplora-fignat-g5-0822-1787386435 in done/
+- id: ep3-saplora-fignat-g6-0822-1787385885
+  group: fetch-404
+  why: 'rc=1 at the FIRST step `fetch`, 08:04Z 08-22: HTTP 404 out of fetch_init.py -- the sapfig-g6 assets were
+    not yet reachable on main; the derive_fetch_guard.py class again, all 8 arms at once. No GPU ran. Third
+    firing rc=0 (see the init-sha-spec-mismatch row below for the second).'
+  doc: pipeline/derive_fetch_guard.py; twin ep3-saplora-fignat-g6-0822-1787386439 in done/
+- id: ep3-saplora-fignat-g7-0822-1787385890
+  group: fetch-404
+  why: 'rc=1 at the FIRST step `fetch`, 08:04Z 08-22: HTTP 404 out of fetch_init.py -- the sapfig-g7 assets were
+    not yet reachable on main; the derive_fetch_guard.py class again, all 8 arms at once. No GPU ran. Third
+    firing rc=0 (see the init-sha-spec-mismatch row below for the second).'
+  doc: pipeline/derive_fetch_guard.py; twin ep3-saplora-fignat-g7-0822-1787386444 in done/
+- id: ep3-saplora-fignat-g8-0822-1787385896
+  group: fetch-404
+  why: 'rc=1 at the FIRST step `fetch`, 08:04Z 08-22: HTTP 404 out of fetch_init.py -- the sapfig-g8 assets were
+    not yet reachable on main; the derive_fetch_guard.py class again, all 8 arms at once. No GPU ran. Third
+    firing rc=0 (see the init-sha-spec-mismatch row below for the second).'
+  doc: pipeline/derive_fetch_guard.py; twin ep3-saplora-fignat-g8-0822-1787386448 in done/
+- id: ep3-saplora-fignat-g1-0822-1787386273
+  group: init-sha-spec-mismatch
+  why: 'rc=3 at `dry`, 08:11Z 08-22: fetch landed sapfig-g1-0822.png and asserted its sha OK, but the spec''s
+    --init-sha256 pinned 1f978230... -- the SAME sha in all eight specs against eight different files, a
+    template sha never edited per arm. inpaint_fruit refused before a model loaded. Fixed specs re-fired as
+    ...-1787386416, rc=0. VERIFIED in done/.'
+  doc: twin ep3-saplora-fignat-g1-0822-1787386416 in done/
+- id: ep3-saplora-fignat-g2-0822-1787386278
+  group: init-sha-spec-mismatch
+  why: 'rc=3 at `dry`, 08:11Z 08-22: fetch landed sapfig-g2-0822.png and asserted its sha OK, but the spec''s
+    --init-sha256 pinned 1f978230... -- the SAME sha in all eight specs against eight different files, a
+    template sha never edited per arm. inpaint_fruit refused before a model loaded. Fixed specs re-fired as
+    ...-1787386420, rc=0. VERIFIED in done/.'
+  doc: twin ep3-saplora-fignat-g2-0822-1787386420 in done/
+- id: ep3-saplora-fignat-g3-0822-1787386283
+  group: init-sha-spec-mismatch
+  why: 'rc=3 at `dry`, 08:11Z 08-22: fetch landed sapfig-g3-0822.png and asserted its sha OK, but the spec''s
+    --init-sha256 pinned 1f978230... -- the SAME sha in all eight specs against eight different files, a
+    template sha never edited per arm. inpaint_fruit refused before a model loaded. Fixed specs re-fired as
+    ...-1787386425, rc=0. VERIFIED in done/.'
+  doc: twin ep3-saplora-fignat-g3-0822-1787386425 in done/
+- id: ep3-saplora-fignat-g4-0822-1787386288
+  group: init-sha-spec-mismatch
+  why: 'rc=3 at `dry`, 08:11Z 08-22: fetch landed sapfig-g4-0822.png and asserted its sha OK, but the spec''s
+    --init-sha256 pinned 1f978230... -- the SAME sha in all eight specs against eight different files, a
+    template sha never edited per arm. inpaint_fruit refused before a model loaded. Fixed specs re-fired as
+    ...-1787386430, rc=0. VERIFIED in done/.'
+  doc: twin ep3-saplora-fignat-g4-0822-1787386430 in done/
+- id: ep3-saplora-fignat-g5-0822-1787386293
+  group: init-sha-spec-mismatch
+  why: 'rc=3 at `dry`, 08:11Z 08-22: fetch landed sapfig-g5-0822.png and asserted its sha OK, but the spec''s
+    --init-sha256 pinned 1f978230... -- the SAME sha in all eight specs against eight different files, a
+    template sha never edited per arm. inpaint_fruit refused before a model loaded. Fixed specs re-fired as
+    ...-1787386435, rc=0. VERIFIED in done/.'
+  doc: twin ep3-saplora-fignat-g5-0822-1787386435 in done/
+- id: ep3-saplora-fignat-g6-0822-1787386298
+  group: init-sha-spec-mismatch
+  why: 'rc=3 at `dry`, 08:11Z 08-22: fetch landed sapfig-g6-0822.png and asserted its sha OK, but the spec''s
+    --init-sha256 pinned 1f978230... -- the SAME sha in all eight specs against eight different files, a
+    template sha never edited per arm. inpaint_fruit refused before a model loaded. Fixed specs re-fired as
+    ...-1787386439, rc=0. VERIFIED in done/.'
+  doc: twin ep3-saplora-fignat-g6-0822-1787386439 in done/
+- id: ep3-saplora-fignat-g7-0822-1787386303
+  group: init-sha-spec-mismatch
+  why: 'rc=3 at `dry`, 08:11Z 08-22: fetch landed sapfig-g7-0822.png and asserted its sha OK, but the spec''s
+    --init-sha256 pinned 1f978230... -- the SAME sha in all eight specs against eight different files, a
+    template sha never edited per arm. inpaint_fruit refused before a model loaded. Fixed specs re-fired as
+    ...-1787386444, rc=0. VERIFIED in done/.'
+  doc: twin ep3-saplora-fignat-g7-0822-1787386444 in done/
+- id: ep3-saplora-fignat-g8-0822-1787386308
+  group: init-sha-spec-mismatch
+  why: 'rc=3 at `dry`, 08:11Z 08-22: fetch landed sapfig-g8-0822.png and asserted its sha OK, but the spec''s
+    --init-sha256 pinned 1f978230... -- the SAME sha in all eight specs against eight different files, a
+    template sha never edited per arm. inpaint_fruit refused before a model loaded. Fixed specs re-fired as
+    ...-1787386448, rc=0. VERIFIED in done/.'
+  doc: twin ep3-saplora-fignat-g8-0822-1787386448 in done/
+- id: ep2-b05-guards-f-0822-1787354387
+  group: dry-guard-style-anchor
+  why: 'rc=1 at `dry`, 23:22:51Z 08-21: the prompt-budget pass dropped the positive''s tail past CLIP''s 77 and
+    with it the style anchor (`very aesthetic` not in positive; POSITIVE DROPPED: Both wear white shoulder
+    sashes, cinematic lighting, masterpiece, best quality, very aesthetic). Nothing drawn. Retried as
+    ...-1787355214-again0a6d10, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-b05-guards-f-0822.yaml; twin ep2-b05-guards-f-0822-1787355214-again0a6d10 in done/
+- id: ep2-b06-guard1-0822-1787354108
+  group: drafts-sha-guard
+  why: 'rc=12 at `dry`, 23:22:56Z 08-21: wave-drafts.yaml on the harness no longer matched the job''s --expect-
+    drafts-sha256 -- the job was cleared against wording that is not what the harness would render, and the
+    guard refused rather than publish frames under a prompt nobody approved. Re-enqueued against the current
+    wording as ...-1787355211-again5ace30, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-b06-guard1-0822.yaml; twin ep2-b06-guard1-0822-1787355211-again5ace30 in done/
+- id: ep2-b06-guard1-0822-1787354385-againa6e748
+  group: dry-guard-style-anchor
+  why: 'rc=1 at `dry`, 23:23:02Z 08-21: first re-fire of the rc=12 row above, and the budget pass ran the
+    positive to 76/77 and dropped `quality | very aesthetic` -- style anchor gone, guard refused, nothing drawn.
+    Second re-fire ...-1787355211-again5ace30 shortened the positive and rendered rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-b06-guard1-0822.yaml; twin ep2-b06-guard1-0822-1787355211-again5ace30 in done/
+- id: ep2-guardcast2b-a-0822-1787347596
+  group: cast-missing-control
+  why: 'rc=6 at `cast`, 21:26:48Z 08-21: `--control is required for a control arm` -- the arm-a spec declared a
+    control arm and passed no --control; controlnet_plate refused in one second, no GPU. Arms b-j were authored
+    right and ran clean. Retried as ...-1787347721-again748278, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-guardcast2b-a-0822.yaml; twin ep2-guardcast2b-a-0822-1787347721-again748278 in done/
+- id: ep2-b06-boardnat-0822-1787362361
+  group: dry-init-vanished
+  why: 'rc=2 at `dry`, 01:32Z 08-22: fetch downloaded and sha-verified the init OK, and the dry step the same
+    second found no file at the identical path (`!! init not found`). Three jobs (b06/b12/b21) hit it in the
+    same ten minutes; the byte-identical spec re-fired as ...-1787362569 and both steps passed, rc=0. VERIFIED
+    in done/. Transient -- the payload dir was rewritten between steps; cause not pinned, but the guard held and
+    nothing rendered off a missing init.'
+  doc: twin ep2-b06-boardnat-0822-1787362569 in done/
+- id: ep2-b12-sapnat2-0822-1787361744
+  group: dry-init-vanished
+  why: 'rc=2 at `dry`, 01:22Z 08-22: fetch downloaded and sha-verified the init OK, and the dry step the same
+    second found no file at the identical path (`!! init not found`). Three jobs (b06/b12/b21) hit it in the
+    same ten minutes; the byte-identical spec re-fired as ...-1787361944 and both steps passed, rc=0. VERIFIED
+    in done/. Transient -- the payload dir was rewritten between steps; cause not pinned, but the guard held and
+    nothing rendered off a missing init.'
+  doc: twin ep2-b12-sapnat2-0822-1787361944 in done/
+- id: ep2-b21-sapnat2-0822-1787361748
+  group: dry-init-vanished
+  why: 'rc=2 at `dry`, 01:22Z 08-22: fetch downloaded and sha-verified the init OK, and the dry step the same
+    second found no file at the identical path (`!! init not found`). Three jobs (b06/b12/b21) hit it in the
+    same ten minutes; the byte-identical spec re-fired as ...-1787361949 and both steps passed, rc=0. VERIFIED
+    in done/. Transient -- the payload dir was rewritten between steps; cause not pinned, but the guard held and
+    nothing rendered off a missing init.'
+  doc: twin ep2-b21-sapnat2-0822-1787361949 in done/
+- id: ep2-b12-nosmear-0822-1787371401
+  group: crop-src-sha-mismatch
+  why: 'rc=1 at `crop`, 04:03:34Z 08-22: cover_crop refused -- the src b12-sapnat3-s20260820.png in farm-out had
+    sha 680b50fb..., spec pinned 5ecde65e... (the sapnat3 output was republished after the nosmear spec was
+    cut). Retried as ...-1787371876 eight minutes later against the current bytes, rc=0. VERIFIED in done/.'
+  doc: pipeline/jobs/ep2-b12-nosmear-0822.yaml; twin ep2-b12-nosmear-0822-1787371876 in done/
+- id: ep2-jerry-expref-0821-1787306750
+  group: code-bug-retried
+  why: 'rc=1 at `soft045`, 10:06:04Z 08-21: diffusers check_inputs -- `height` and `width` have to be divisible
+    by 8 but are 1236 and 680; the job passed the whole adult-b19 tile instead of an /8 crop. Caller bug.
+    Reworked as the -again row below and finally as ep2-jerry-expref-r2-0821-1787307550, rc=0. VERIFIED in
+    done/.'
+  doc: twin ep2-jerry-expref-r2-0821-1787307550 in done/
+- id: ep2-jerry-expref-0821-1787307422-again28af40
+  group: code-bug-retried
+  why: 'rc=2 at `soft045`, 10:17:14Z 08-21: the re-fire fixed the geometry (staged a 224x224 head crop, /8
+    clean) and then omitted the required --init-sha256, so inpaint_fruit refused before a model loaded. Second
+    caller bug in the same job, two minutes of wall time each. Superseded by ep2-jerry-
+    expref-r2-0821-1787307550, rc=0. VERIFIED in done/.'
+  doc: twin ep2-jerry-expref-r2-0821-1787307550 in done/
+- id: lora-sapling-0822-1787379857
+  group: code-bug-retried
+  why: 'rc=1 at `train`, 06:27:27Z 08-22: sd-scripts AssertionError, min_bucket_reso must be <= resolution --
+    the dataset config''s bucket floor was wrong for the training resolution. Config bug, no GPU cycles lost
+    past dataset init. Re-fired as ...-1787380176: train ran 630 steps and SAVED the checkpoint (that firing
+    died later at sample, next row). VERIFIED in done/ via the v-chain (lora-sapling-sample/v2/v2b/v2c all
+    rc=0).'
+  doc: twin lora-sapling-sample-0822-1787381652 in done/
+- id: lora-sapling-0822-1787380176
+  group: code-bug-retried
+  why: 'rc=1 at `sample`, 06:51:01Z 08-22, AFTER train rc=0 saved the checkpoint: diffusers load_lora_weights
+    raised `PEFT backend is required for this method` -- the farm venv lacks peft and sample_lora.py used the
+    peft-only loader. The checkpoint is NOT lost: lora-sapling-sample-0822-1787381652 sampled it rc=0 nine
+    minutes later, and the whole v2/v2b/v2c ladder ran off this line. VERIFIED in done/.'
+  doc: twin lora-sapling-sample-0822-1787381652 in done/
+- id: lora-jerry-v2-0822-1787396626
+  group: sample-script-missing
+  why: 'rc=2 at `sample`, 11:23:07Z 08-22, AFTER train rc=0 (630 steps, 18m50s, avr_loss 0.0831) saved bnyjerry-
+    sdxl-v2.safetensors: the sample step invoked C:\banyan-farm\lora-jerry-v2-0822\sample_lora.py and the spec
+    never staged that file -- Errno 2 in under a second. The checkpoint is NOT lost: lora-
+    jerry-v2-bars-0822-1787398453 fused the exact safetensors (sha 4340857d...) at 11:34Z, rc=0, so the trained
+    weights are consumed and sampled. VERIFIED in done/ and in the bars log.'
+  doc: twin lora-jerry-v2-bars-0822-1787398453 in done/
+- id: ep2-b15-canonmotion-0822-1787346274
+  group: encode-write-error-NO-TWIN
+  why: 'LIVE -- NOT SUPERSEDED. rc=1 at `encode`, 21:12-21:13Z 08-21: torch.save on the prompt-embed cache died
+    mid-write -- RuntimeError inline_container.cc:672 unexpected pos 385361152 vs 385361040, with
+    ios_base::badbit in the same traceback: a WRITE error on disk, not a model or code fault.
+    ep2-b14-canonmotion, enqueued seconds earlier, encoded rc=0 minutes before; b15 and its sibling died the
+    same way within 55s of each other and NOTHING has re-fired them -- no twin in done/, nothing in ready/,
+    backlog/ or running/ (checked 08-22). C: shows 225 GiB free now, so whatever starved the write has passed.
+    The beat has no motion render until somebody re-enqueues; recovery is a plain re-fire, no spec change known
+    to be needed.'
+  doc: pipeline/jobs/ep2-b15-canonmotion-0822.yaml; NO twin anywhere in the queue tree
+- id: ep2-b16-canonmotion-0822-1787346280
+  group: encode-write-error-NO-TWIN
+  why: 'LIVE -- NOT SUPERSEDED. rc=1 at `encode`, 21:12-21:13Z 08-21: torch.save on the prompt-embed cache died
+    mid-write -- RuntimeError inline_container.cc:672 unexpected pos 1024 vs 918, with ios_base::badbit in the
+    same traceback: a WRITE error on disk, not a model or code fault. ep2-b14-canonmotion, enqueued seconds
+    earlier, encoded rc=0 minutes before; b16 and its sibling died the same way within 55s of each other and
+    NOTHING has re-fired them -- no twin in done/, nothing in ready/, backlog/ or running/ (checked 08-22). C:
+    shows 225 GiB free now, so whatever starved the write has passed. The beat has no motion render until
+    somebody re-enqueues; recovery is a plain re-fire, no spec change known to be needed.'
+  doc: pipeline/jobs/ep2-b16-canonmotion-0822.yaml; NO twin anywhere in the queue tree
 count_note_0819: 'The `count: 39` field at the top of this file is STALE and was already stale before this
   entry: `acknowledged` held 41 rows against it. Left as measured rather than silently corrected, because the
   number is written by a measuring pass with its own `measured_at` (2026-08-18T17:29Z) and hand-editing it
@@ -367,3 +757,13 @@ count_note_0821: 'RESOLVED. The 2026-08-21 triage lane re-ran that measuring pas
   arms fired at 17:48 and again at 17:56) and each firing gets its own row, because they failed for two
   different reasons. NOT everything below is superseded: the eight `publish-glob-armname` rows are LIVE — the
   renders succeeded and their PNGs have never reached the repo.'
+count_note_0822: 'Re-measured by the 08-22 triage lane: 124 jsons in failed/, 126 logs, the same 2 orphan
+  logs as both prior passes. 67 old rows matched 1:1 by name (pre-0819 rows carry no epoch suffix; matching
+  strips the trailing -17xxxxxxxxx, which is how the 08-21 pass matched them too). 57 new jsons, every one read
+  for rc/failed_step plus its log tail, one row each above. 55 of 57 are refusals or caller bugs with an rc=0
+  twin VERIFIED in done/ -- the guards (clip77, stage-sha, init-sha, drafts-sha, src-sha, style-anchor,
+  missing-control) all fired before a GPU second was spent, which is those guards doing their job, not a
+  defect streak. THE TWO THAT ARE NOT SUPERSEDED: ep2-b15-canonmotion-0822 and ep2-b16-canonmotion-0822, both
+  encode-stage torch.save write errors on 08-21 21:12Z, no twin, no re-enqueue anywhere in the tree -- those
+  beats have no motion render until re-fired. The .HOLD renames in ready/ (age-pivot, eyesize, r4-sample-teen)
+  are not failures and are not counted; the goblin-design duplicates sit in held/, not failed/.'
