@@ -1,0 +1,150 @@
+id: ep2-guardcast4-g-0822
+task: ep2-guardcast4-g-0822
+node: 002b-first-citizen
+beat: 6
+runner: box
+priority: 6
+needs_gpu: true
+max_attempts: 1
+sample: true
+owner: guard lane, 2026-08-22 -- round 4 sample, filed the moment round 3's sheet was judged
+consumer: 'THE STEWARD, as the gate on whether a round-4 BATCH is worth the card. Its reader is the decision,
+  not the founder: he is choosing between round 3''s five men on /review/ep2-guardcast2-0822 right now
+  and this frame does not go on that page unless he says none. Nothing downstream consumes it.'
+success: 'ONE 832x1216 png at seed 20266725, scored at 1:1. THE ONLY QUESTION IS THE HAND, because this
+  cell is a control that has already failed: G was CLEAN in round 2 at this seed and came back with a
+  hand on his face in round 3, and the brow term is the only thing being blamed. PASS = no hand in frame
+  AND no symbol on the face AND the face still reads slack rather than sharp. A pass justifies a round-4
+  batch of ten; a fail kills the expression theory and the next round moves something else.'
+why: 'GUARD 2, ROUND 4 SAMPLE: `raised eyebrows` -> `thick eyebrows`, one term, nothing else. Round 3''s
+  symbol strip worked -- 14 of 15 frames clean of sweat, steam and drool -- but its replacement expression
+  read as DISTRESS, and distress brings hands: 8 of 15 held their face, including G and I which were clean
+  at the same seeds in round 2. That rules out the checkpoint-prior explanation rounds 2B/2C/2D settled
+  on and points at the wording. `thick eyebrows` is the goblin work''s answer to the same brow problem
+  -- heavy, non-cute, not scowling -- where `raised` overshot into anguish. $0, one frame. Full reasoning
+  in pipeline/derive_guardcast4_sample_0822.py.'
+est_minutes: 2
+needs:
+- cuda
+- vram12
+- sdxl-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_OFFLINE: '1'
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-guardcast4-g-0822\prompt.txt: 1boy, a grown guard man, mature male face, receding
+    sandy hair, high forehead, narrow face, slack open mouth, thick eyebrows, dull half-closed eyes, close
+    on his face, cream shirt collar, white shoulder sash, tall grass, hedgerow behind, cinematic lighting,
+    masterpiece, best quality, very aesthetic
+  C:\banyan-farm\ep2-guardcast4-g-0822\negative.txt: sweatdrop, steam, sigh, spiral eyes, dizzy, speech
+    bubble, sparkle, drool, girl, child, teenager, glasses, hands, photorealistic, 3d render, realistic
+    skin texture, blurry, low quality, jpeg artifacts, deformed, extra limbs, text, watermark, clipboard,
+    armor, helmet, white background, dark, night
+steps:
+- name: stage
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\
+    \nroot = r\"C:\\banyan-farm\\ep2-guardcast4-g-0822\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root,\
+    \ \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")]\n\
+    for name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base\
+    \ + \"pipeline/\" + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n\
+    \    if got != sha:\n        raise SystemExit(\"!! %s sha %s, wanted %s\" % (name, got, sha))\n  \
+    \  with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n    print(\"staged\"\
+    , name, got[:12])\n"
+- name: cast
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-guardcast4-g-0822\src\pipeline\controlnet_plate.py
+  - --root
+  - C:\banyan-farm\ep2-guardcast4-g-0822\src
+  - --task
+  - ep2-guardcast4-g-0822
+  - --arm
+  - nocontrol
+  - --seed
+  - '20266725'
+  - --steps
+  - '40'
+  - --cfg
+  - '7.5'
+  - --width
+  - '832'
+  - --height
+  - '1216'
+  - --prompt-file
+  - C:\banyan-farm\ep2-guardcast4-g-0822\prompt.txt
+  - --negative-file
+  - C:\banyan-farm\ep2-guardcast4-g-0822\negative.txt
+  - --out
+  - C:\banyan-farm\ep2-guardcast4-g-0822\out
+- name: publish
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "# The courier pushes from farm-out and from nowhere else.\n# The CONDITIONS travel with the frame:\
+    \ prompt and negative go too, so\n# the sheet can be re-read months from now without this spec in\
+    \ hand.\nimport glob, hashlib, os, shutil\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-guardcast4-g-0822\"\
+    \nos.makedirs(dst, exist_ok=True)\nfiles = sorted(glob.glob(\"C:/banyan-farm/ep2-guardcast4-g-0822/out/ep2-guardcast4-g-0822-nocontrol.png*\"\
+    )\n               + glob.glob(\"C:/banyan-farm/ep2-guardcast4-g-0822/prompt.txt\")\n             \
+    \  + glob.glob(\"C:/banyan-farm/ep2-guardcast4-g-0822/negative.txt\"))\nlines = []\nfor f in files:\n\
+    \    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n    with open(c, \"rb\"\
+    ) as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \"\n                  \
+    \   + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-guardcast4-g-0822.sha256\"), \"w\",\
+    \ newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\"\
+    , len(files), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(files) >= 3 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-guardcast4-g-0822\out\ep2-guardcast4-g-0822-nocontrol.png
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. A STILL CASTING PLATE on an approved node: no voice, no motion, no episode assembly, no
+  publication.'
+script_line: 'Beat 06 THE CLIPBOARD: guard 2, the one with the bark board. Head and shoulders, no prop
+  -- the question is his FACE.'
+cell: 'round 4 sample, cell G. Reasoning: pipeline/derive_guardcast4_sample_0822.py.'
+derivation:
+  parent: pipeline/jobs/ep2-guardcast3-g-0822.yaml
+  by: pipeline/derive_guardcast4_sample_0822.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - sample
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - cell
+  - consumer
+  - owner
+  - success
+  - why
+  keys_the_parent_had_that_did_NOT_cross:
+  - cell
+  - derivation
+  retokened:
+  - ep2-guardcast3-g-0822 -> ep2-guardcast4-g-0822
+  - ep2-guardcast3-g-0822 -> ep2-guardcast4-g-0822
+  overrides_applied_and_asserted:
+    payload:prompt.txt:
+    - payload prompt.txt (300 -> 299 chars)
