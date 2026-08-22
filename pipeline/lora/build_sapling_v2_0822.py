@@ -105,6 +105,8 @@ V1_FRAMES = "farm-out/ep3-saplora-frames-0821"
 FIG_FRAMES = "farm-out/ep2-fignat-%s-r2-0820"
 CAPTIONS = "pipeline/lora/captions/sapling-v2-0822"
 MANIFEST = "pipeline/lora/manifest-sapling-v2.yaml"
+CAPTIONS_B = "pipeline/lora/captions/sapling-v2b-0822"
+MANIFEST_B = "pipeline/lora/manifest-sapling-v2b.yaml"
 
 STYLE = "anime style, cel shading, detailed background"
 ALONE = "alone in the frame"
@@ -230,6 +232,39 @@ HARVEST_REJECT = {
 TIER_CAPTION = V1.TIER_CAPTION
 
 
+# ── THE DILUTION CUT (v2b), ADDED 2026-08-22 AFTER v2 WAS SCORED AND LOST.
+# v2 came back WORSE than v1: B1 9/15 against 11/15, B5 11/15 against 14/15,
+# B2_ground 3/6 against 4/6, while the bar it was built to move went 0/3 -> 1/3.
+# Four candidates were named in the verdict and this flag separates the first
+# from the rest for one card-hour.
+#
+# THE HYPOTHESIS. v2 lengthened EVERY caption in the set by two clauses,
+# including all 44 frames that were producing a working trigger, so
+# `bnysapling` became a smaller share of every caption. The regressions landed
+# on the SUBJECT ITSELF (identity, leaf count) and on frames the dataset did
+# not otherwise touch -- which is what dilution predicts and is not what
+# "harder frames" predicts.
+#
+# THE CUT. `--v1-captions-on-v1-frames` restores v1's EXACT caption to the
+# original 44 -- byte-identical, the string those weights were trained on --
+# and gives the two new clauses ONLY to the 15 frames that need them, where
+# the figure and the ground genuinely vary. Figure presence is then named only
+# when present, which is the asymmetric scheme, and it is weaker in theory;
+# the point is that it isolates one variable rather than being better.
+#
+# READ THE RESULT LIKE THIS, and it is written before the run: if B1 and B5
+# return to roughly v1's 11/15 and 14/15, the cause is caption dilution and
+# every future LoRA in this tree gets a short scheme. If they stay near 9/15
+# and 11/15, dilution is cleared and the cause is the frames or the repeat,
+# which is a different and more expensive fix.
+V1_CAPTIONS_ON_V1_FRAMES = "--v1-captions-on-v1-frames" in sys.argv
+
+
+def v1_caption(pk, tier):
+    """v1's caption for a v1 frame, byte-identical to captions/sapling-0821/."""
+    return V1.caption_for(None, pk, tier)
+
+
 def caption(tier, figure, ground, setting):
     """The v2 caption. TWO CLAUSES LONGER THAN v1's, and they are the two axes
     that failed. Order is deliberate: trigger, subject, the two v1 variables
@@ -264,7 +299,8 @@ def collect():
             fid=fid, source="v1", plate=pk, tier=tier,
             image=os.path.relpath(img, REPO), sha256=sha_of(img),
             ground=GROUND_V1[pk], figure=ALONE, figure_present=False,
-            caption=caption(tier, ALONE, GROUND_V1[pk], V1.SETTING[pk]),
+            caption=(v1_caption(pk, tier) if V1_CAPTIONS_ON_V1_FRAMES
+                     else caption(tier, ALONE, GROUND_V1[pk], V1.SETTING[pk])),
             geometry="root %s, stem %d px, tilt %.1f deg, leaf-frac %.2f, "
                      "leaf-spread %.1f deg" % (list(root), height, tilt, lf, ls),
             render="animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, "
@@ -374,10 +410,12 @@ def main() -> int:
         print("\n-- dry run. re-run with --write.")
         return 0
 
-    cdir = os.path.join(REPO, CAPTIONS)
+    cap_dir  = CAPTIONS_B if V1_CAPTIONS_ON_V1_FRAMES else CAPTIONS
+    man_path = MANIFEST_B if V1_CAPTIONS_ON_V1_FRAMES else MANIFEST
+    cdir = os.path.join(REPO, cap_dir)
     os.makedirs(cdir, exist_ok=True)
     for f in frames:
-        f["caption_file"] = "%s/%s.txt" % (CAPTIONS, f["fid"])
+        f["caption_file"] = "%s/%s.txt" % (cap_dir, f["fid"])
         with open(os.path.join(REPO, f["caption_file"]), "w",
                   encoding="utf-8", newline="\n") as fh:
             fh.write(f["caption"] + "\n")
@@ -478,10 +516,10 @@ def main() -> int:
             "  render: %s" % f["render"],
             "  spec: %s" % f["spec"],
         ]
-    with open(os.path.join(REPO, MANIFEST), "w", encoding="utf-8",
+    with open(os.path.join(REPO, man_path), "w", encoding="utf-8",
               newline="\n") as fh:
         fh.write("\n".join(lines) + "\n")
-    print("\nwrote %s and %d captions" % (MANIFEST, len(frames)))
+    print("\nwrote %s and %d captions" % (man_path, len(frames)))
     return 0
 
 

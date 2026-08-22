@@ -1,0 +1,847 @@
+# THE SAPLING LoRA v2 DATASET. GENERATED -- edit
+# pipeline/lora/build_sapling_v2_0822.py, not this file.
+#
+# v1 (manifest-sapling.yaml, 44 frames) IS NOT TOUCHED. It is the
+# record of what the v1 weights in registry.yaml were trained on.
+#
+# WHAT v2 CHANGES, AND IT IS THE DATASET AND NOTHING ELSE. No
+# hyperparameter moves. v1's three failing bars (B2_figure 0/3,
+# B2_ground 4/6, B3 no-regression) all trace to two facts about the
+# set, and this manifest fixes exactly those two:
+#
+#   THE FIGURE. v1 was figure-free 44 times out of 44 -- on purpose,
+#   and it overshot: the trigger learned NO FIGURE as part of the
+#   subject and at weight 0.8 DELETES a figure the base checkpoint
+#   draws without it. v2 carries 16 frames with a figure and, more to
+#   the point, NAMES FIGURE-PRESENCE IN EVERY CAPTION IN BOTH
+#   DIRECTIONS -- `alone in the frame` or `with a small green goblin
+#   <where>`. A named attribute is one the trigger is excused from
+#   carrying; that is the mechanism v1 used for leaf count and height.
+#
+#   THE GROUND -- AND THE v1 VERDICT WAS WRONG ABOUT THIS. The ship
+#   page says 44 of 44 stand on grass. Measured at the root point on
+#   the plates themselves, TEN DO NOT: s14/s15/s16 (u08) and
+#   s19/s20/s21 (r08) root on a bare dirt path, s12/s13 (u07) on
+#   forest floor, s36/s37 (v05) on wet rock. The set already had four
+#   non-grass materials and no caption ever said so, because v1's
+#   scheme has NO GROUND TOKEN AT ALL. So the ground failure is
+#   substantially a CAPTION failure: material was an unnamed constant,
+#   which is what a trigger absorbs. Those ten are re-captioned
+#   truthfully at zero render cost and eight new frames add six
+#   materials the set has never had.
+#
+# THE CAP THAT DID NOT MOVE. leaf_count_values is still 1 -- every
+# frame is TWO-leaf, because beat16_sapling_composite draws the canon
+# two and leaf_count_composite can only REMOVE leaves. The token is
+# explicit in all 60 captions so it cannot fuse into the trigger, but
+# v1's probe measured what a constant value costs: asked for four
+# leaves the trigger drew two. Canon rises 2 -> 6 by 006a, so this is
+# still the wall after ep3.
+#
+# A SECOND CAP, NEW. The eight new plates all use the depth skeletons,
+# which sit at cx 0.655, so the FIGURE'S side of frame does not vary
+# in the new half -- only its distance does. The plant's side varies
+# (four left, four right) and the harvested frames spread cx 121..577.
+# If B2_figure improves only for a figure right of centre, that is the
+# reason and the next batch is three mirrored skeletons.
+#
+# ITEM 18. Every frame is an SDXL chain: animagine-xl-3.1 plate -> a
+# numpy composite -> one 0.30 animagine inpaint. ZERO LTX pixels, and
+# the training job's stage step refuses any frame whose `render:` line
+# does not assert animagine. DECISIONS.md item 18 is OPEN and is the
+# founder's; this records scope and does not close it.
+
+subject: sapling
+trigger: bnysapling
+version: 2
+built_by: pipeline/lora/build_sapling_v2_0822.py
+built_on: '2026-08-22'
+supersedes: pipeline/lora/manifest-sapling.yaml   # 44 frames, v1
+authority: >-
+  canon `sapling-two-leaves` (founder, 2026-08-16) and
+  `sapling-cotyledon-shape` (founder, 2026-08-17); the growth ladder in
+  genomes/sapling/style.md:150-158; the dataset gate in
+  pipeline/lora/README.md; the v1 score in pipeline/lora/registry.yaml
+count: 59
+figure_frames: 15   # v1 had 0 of 44
+figure_free_frames: 44
+ground_materials: 11 distinct
+non_grass_frames: 17   # v1 had 0 NAMED, and 10 unnamed
+scale_tiers: l=18, m=15, s=14, xl=12
+leaf_count_values: 1   # two, in every frame. See the note above.
+cost_usd: 0.0
+harvest_rejected:
+  ep2-b12-sapnat2-0822: >-
+    NO FIGURE IN FRAME (and 704x1280, which would add a second bucket to a set that resolves to one). It is a fine plant on a cloud sky and it is the forty-fifth frame of what the set already has enough of.
+  ep2-b19-sapcomp-0819: >-
+    THE PLANT CARRIES A FIG. Beat 19 is `the drop` and its composite has the fruit on the stem, which is the beat working correctly and a dataset frame failing: `bud, flower, fruit` are in this dataset's own negative on every one of the 60 other frames, and a fruiting frame would teach the trigger the thing the negative spends three tokens banning. Rejected on the pixels, not on the provenance.
+  ep2-b21-sapnat2-0822: >-
+    NO FIGURE IN FRAME, and 704x1280. Same reading as b12.
+frames:
+- id: s01
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s01-u01-0821.png
+  sha256: ac915dd779a2d7fbe83664e1bbef84720445343cd22237f98f391b4c79799c04
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s01.txt
+  caption: 'bnysapling, a young sapling, two leaves, 15 cm tall, wide shot, open green meadow, distant hills, clear sky, flat daylight, anime style, cel shading, detailed background'
+  plate: u01
+  scale_tier: s
+  ground: grass
+  figure_present: false
+  geometry: root [300, 900], stem 150 px, tilt -5.0 deg, leaf-frac 0.58, leaf-spread 70.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s01-0821.yaml
+- id: s02
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s02-u01-0821.png
+  sha256: eae20a808f94329da297d04210e5f60696b447cf2aa00e04ce091676bb3c45d0
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s02.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, open green meadow, distant hills, clear sky, flat daylight, anime style, cel shading, detailed background'
+  plate: u01
+  scale_tier: l
+  ground: grass
+  figure_present: false
+  geometry: root [416, 1120], stem 470 px, tilt 7.0 deg, leaf-frac 0.50, leaf-spread 60.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s02-0821.yaml
+- id: s03
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s03-u01-0821.png
+  sha256: c85c0421388ba399562c1ea81aa46ca465a3bde790f87c2c951fa319769473a7
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s03.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, close-up, open green meadow, distant hills, clear sky, flat daylight, anime style, cel shading, detailed background'
+  plate: u01
+  scale_tier: xl
+  ground: grass
+  figure_present: false
+  geometry: root [416, 1180], stem 660 px, tilt -4.0 deg, leaf-frac 0.48, leaf-spread 55.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s03-0821.yaml
+- id: s04
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s04-u02-0821.png
+  sha256: 3761cf361451e3a6a2f9445bbfe6d4664ef5de222070e8c240a2a65f1b428c9a
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s04.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, rolling grassland at sunset, golden slopes, warm backlight, anime style, cel shading, detailed background'
+  plate: u02
+  scale_tier: m
+  ground: grass
+  figure_present: false
+  geometry: root [250, 1150], stem 300 px, tilt 5.0 deg, leaf-frac 0.52, leaf-spread 64.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s04-0821.yaml
+- id: s05
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s05-u02-0821.png
+  sha256: 0ddc4de86c188696aeb769f46c3cee423348a33fdb343d2c64156f267a3c535c
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s05.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, close-up, rolling grassland at sunset, golden slopes, warm backlight, anime style, cel shading, detailed background'
+  plate: u02
+  scale_tier: xl
+  ground: grass
+  figure_present: false
+  geometry: root [560, 1190], stem 640 px, tilt -6.0 deg, leaf-frac 0.48, leaf-spread 58.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s05-0821.yaml
+- id: s06
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s06-u03-0821.png
+  sha256: ac0a83d7f70f9840a8c461a1f5c2fdbe1b94da6fa546ac68ee3a16efc240ce20
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s06.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, misty green hills at dawn, valley fog, cool pale light, anime style, cel shading, detailed background'
+  plate: u03
+  scale_tier: m
+  ground: grass
+  figure_present: false
+  geometry: root [520, 1160], stem 230 px, tilt 8.0 deg, leaf-frac 0.54, leaf-spread 68.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s06-0821.yaml
+- id: s07
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s07-u03-0821.png
+  sha256: 18b84ef91aed92922b593d0eb639eb70705879b1dae5d020e6cbca82b1ea627f
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s07.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, misty green hills at dawn, valley fog, cool pale light, anime style, cel shading, detailed background'
+  plate: u03
+  scale_tier: l
+  ground: grass
+  figure_present: false
+  geometry: root [330, 1195], stem 560 px, tilt -5.0 deg, leaf-frac 0.49, leaf-spread 60.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s07-0821.yaml
+- id: s08
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s08-u04-0821.png
+  sha256: ffde8b968791ce2737f4db85b6dcfa461e2aba58112a6b8e8bab2e7bb2138894
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s08.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, dark green hills, heavy overcast sky, muted grey light, anime style, cel shading, detailed background'
+  plate: u04
+  scale_tier: m
+  ground: grass
+  figure_present: false
+  geometry: root [290, 1060], stem 280 px, tilt -7.0 deg, leaf-frac 0.52, leaf-spread 62.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s08-0821.yaml
+- id: s09
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s09-u04-0821.png
+  sha256: bf211b2c06d3924831220c98c0a63f8cc5e11245518f87c0d08ea42a1cc99056
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s09.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, close-up, dark green hills, heavy overcast sky, muted grey light, anime style, cel shading, detailed background'
+  plate: u04
+  scale_tier: xl
+  ground: grass
+  figure_present: false
+  geometry: root [340, 1120], stem 650 px, tilt 6.0 deg, leaf-frac 0.47, leaf-spread 56.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s09-0821.yaml
+- id: s10
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s10-u06-0821.png
+  sha256: f2745e1f5e4a13bed93c8361ea3bf7f4459cd19e82d599254d9b7c51dfaa98c3
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s10.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, alpine valley, snow-capped mountains, bright midday, anime style, cel shading, detailed background'
+  plate: u06
+  scale_tier: m
+  ground: grass
+  figure_present: false
+  geometry: root [300, 1130], stem 240 px, tilt 5.0 deg, leaf-frac 0.53, leaf-spread 67.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s10-0821.yaml
+- id: s11
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s11-u06-0821.png
+  sha256: 380de0bf9ae53c7aa61cfc018b4c19faa7ea69f9aa241cf01610341c1000f1b5
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s11.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, close-up, alpine valley, snow-capped mountains, bright midday, anime style, cel shading, detailed background'
+  plate: u06
+  scale_tier: xl
+  ground: grass
+  figure_present: false
+  geometry: root [500, 1195], stem 620 px, tilt -6.0 deg, leaf-frac 0.49, leaf-spread 59.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s11-0821.yaml
+- id: s12
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s12-u07-0821.png
+  sha256: 09bef4db1df7d241e892e16916a0aa4e8c7fc3edf99675b261dd283534c80965
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s12.txt
+  caption: 'bnysapling, a young sapling, two leaves, 15 cm tall, wide shot, inside a summer wood, tree trunks, dappled sunlight, anime style, cel shading, detailed background'
+  plate: u07
+  scale_tier: s
+  ground: forest floor
+  figure_present: false
+  geometry: root [290, 1130], stem 200 px, tilt -4.0 deg, leaf-frac 0.56, leaf-spread 71.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s12-0821.yaml
+- id: s13
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s13-u07-0821.png
+  sha256: 795ed968306dad537115c43f6854a13189469ff182f9f943a3a2660bea43a39b
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s13.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, inside a summer wood, tree trunks, dappled sunlight, anime style, cel shading, detailed background'
+  plate: u07
+  scale_tier: l
+  ground: forest floor
+  figure_present: false
+  geometry: root [416, 1130], stem 520 px, tilt 7.0 deg, leaf-frac 0.50, leaf-spread 62.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s13-0821.yaml
+- id: s14
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s14-u08-0821.png
+  sha256: 42ac7abda9ce351229d915e9d0d42d61d3b13c008378c3b46fbc9921eb044495
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s14.txt
+  caption: 'bnysapling, a young sapling, two leaves, 15 cm tall, wide shot, dirt path through a forest avenue, even daylight, anime style, cel shading, detailed background'
+  plate: u08
+  scale_tier: s
+  ground: a dirt path
+  figure_present: false
+  geometry: root [416, 1060], stem 190 px, tilt 6.0 deg, leaf-frac 0.55, leaf-spread 69.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s14-0821.yaml
+- id: s15
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s15-u08-0821.png
+  sha256: addc04e91f8b8b7b64ff9261a9f480598f35ea66e0046468cbf44e8be6a76eea
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s15.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, dirt path through a forest avenue, even daylight, anime style, cel shading, detailed background'
+  plate: u08
+  scale_tier: m
+  ground: a dirt path
+  figure_present: false
+  geometry: root [540, 1060], stem 300 px, tilt 4.0 deg, leaf-frac 0.52, leaf-spread 64.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s15-0821.yaml
+- id: s16
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s16-u08-0821.png
+  sha256: 310c07a41042ee83b2e2f05d7293bb669d47b62617ad8f22d4929ab93d8dfdc7
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s16.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, dirt path through a forest avenue, even daylight, anime style, cel shading, detailed background'
+  plate: u08
+  scale_tier: l
+  ground: a dirt path
+  figure_present: false
+  geometry: root [380, 1130], stem 560 px, tilt -5.0 deg, leaf-frac 0.50, leaf-spread 60.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s16-0821.yaml
+- id: s17
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s17-t04-0821.png
+  sha256: 8a4cb35ce6dffb07be5cb18426e62e637eeed4e08f8d6cb9aeeeaa46a460f35c
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s17.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, green field below distant misty mountains, pale dawn, anime style, cel shading, detailed background'
+  plate: t04
+  scale_tier: m
+  ground: grass
+  figure_present: false
+  geometry: root [540, 1130], stem 260 px, tilt -6.0 deg, leaf-frac 0.51, leaf-spread 65.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s17-0821.yaml
+- id: s18
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s18-t04-0821.png
+  sha256: 395fca92c866580a2f96ef9c369dbedd962e332cf895c53413e6077352d87789
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s18.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, close-up, green field below distant misty mountains, pale dawn, anime style, cel shading, detailed background'
+  plate: t04
+  scale_tier: xl
+  ground: grass
+  figure_present: false
+  geometry: root [340, 1150], stem 640 px, tilt 5.0 deg, leaf-frac 0.48, leaf-spread 57.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s18-0821.yaml
+- id: s19
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s19-r08-0821.png
+  sha256: 60155d4d24305651ab4c14c13dd0532f89fb3bd5f688e0bb37efff8df7a5f7c4
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s19.txt
+  caption: 'bnysapling, a young sapling, two leaves, 15 cm tall, wide shot, sunlit clearing path between dark trees, strong backlight, anime style, cel shading, detailed background'
+  plate: r08
+  scale_tier: s
+  ground: a dirt path
+  figure_present: false
+  geometry: root [416, 1060], stem 170 px, tilt 4.0 deg, leaf-frac 0.57, leaf-spread 70.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s19-0821.yaml
+- id: s20
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s20-r08-0821.png
+  sha256: c97a0f7585316ff3e4131c3cb0c9577921c732784c1ef6e92ca0881f49f09f10
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s20.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, sunlit clearing path between dark trees, strong backlight, anime style, cel shading, detailed background'
+  plate: r08
+  scale_tier: m
+  ground: a dirt path
+  figure_present: false
+  geometry: root [540, 980], stem 250 px, tilt -5.0 deg, leaf-frac 0.51, leaf-spread 66.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s20-0821.yaml
+- id: s21
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s21-r08-0821.png
+  sha256: caff3e29dd5a1d69f70e33ffd6c542616429f61aae27bb767b90041354e9cc76
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s21.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, sunlit clearing path between dark trees, strong backlight, anime style, cel shading, detailed background'
+  plate: r08
+  scale_tier: l
+  ground: a dirt path
+  figure_present: false
+  geometry: root [400, 1130], stem 500 px, tilt -7.0 deg, leaf-frac 0.50, leaf-spread 63.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s21-0821.yaml
+- id: s22
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s22-r05-0821.png
+  sha256: 21bee8b8e83f8c31586aa80ba4e93193f002b85ac164c2fd9c9c37c55b51006a
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s22.txt
+  caption: 'bnysapling, a young sapling, two leaves, 15 cm tall, wide shot, steep grassy hillside above a valley, hard midday sun, anime style, cel shading, detailed background'
+  plate: r05
+  scale_tier: s
+  ground: grass
+  figure_present: false
+  geometry: root [290, 1000], stem 180 px, tilt 6.0 deg, leaf-frac 0.56, leaf-spread 70.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s22-0821.yaml
+- id: s23
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s23-r05-0821.png
+  sha256: cc401d939430659031ed4accda66702a490fce3904361a6234ccf23b1b768d4d
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s23.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, steep grassy hillside above a valley, hard midday sun, anime style, cel shading, detailed background'
+  plate: r05
+  scale_tier: l
+  ground: grass
+  figure_present: false
+  geometry: root [330, 1195], stem 520 px, tilt -5.0 deg, leaf-frac 0.49, leaf-spread 61.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s23-0821.yaml
+- id: s24
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s24-p09-0821.png
+  sha256: bac138ce5200814c8cf9acceb89868d7c20919d59b82deac6c97dd2847c39bff
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s24.txt
+  caption: 'bnysapling, a young sapling, two leaves, 15 cm tall, wide shot, wildflower meadow, daisies in the grass, bright daylight, anime style, cel shading, detailed background'
+  plate: p09
+  scale_tier: s
+  ground: grass
+  figure_present: false
+  geometry: root [416, 920], stem 200 px, tilt 5.0 deg, leaf-frac 0.55, leaf-spread 69.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s24-0821.yaml
+- id: s25
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s25-p09-0821.png
+  sha256: a6f262c5f00c52b60023b2ea592896f0bc84639ab7c8eb6b240f579ef27e5d7c
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s25.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, wildflower meadow, daisies in the grass, bright daylight, anime style, cel shading, detailed background'
+  plate: p09
+  scale_tier: m
+  ground: grass
+  figure_present: false
+  geometry: root [600, 1020], stem 320 px, tilt -4.0 deg, leaf-frac 0.52, leaf-spread 65.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s25-0821.yaml
+- id: s26
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s26-p09-0821.png
+  sha256: 36c4a0808691e211551e560edeab548bd9775c80355a4169051ff88df3d1b3cc
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s26.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, wildflower meadow, daisies in the grass, bright daylight, anime style, cel shading, detailed background'
+  plate: p09
+  scale_tier: l
+  ground: grass
+  figure_present: false
+  geometry: root [400, 1060], stem 580 px, tilt -6.0 deg, leaf-frac 0.49, leaf-spread 59.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s26-0821.yaml
+- id: s27
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s27-v02-0821.png
+  sha256: df5932cad78866914fe39f8999fc9ad341023bea2453d5a4ae9b1b782b313d90
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s27.txt
+  caption: 'bnysapling, a young sapling, two leaves, 15 cm tall, wide shot, green meadow at night, distant hills, moonlight, blue darkness, anime style, cel shading, detailed background'
+  plate: v02
+  scale_tier: s
+  ground: grass
+  figure_present: false
+  geometry: root [300, 950], stem 180 px, tilt 6.0 deg, leaf-frac 0.56, leaf-spread 70.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s27-0821.yaml
+- id: s28
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s28-v02-0821.png
+  sha256: e639012821cff9720addc00c9a5573c1d91534ec4c8f0ceb478ba165a34bf201
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s28.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, green meadow at night, distant hills, moonlight, blue darkness, anime style, cel shading, detailed background'
+  plate: v02
+  scale_tier: m
+  ground: grass
+  figure_present: false
+  geometry: root [330, 1000], stem 300 px, tilt 6.0 deg, leaf-frac 0.52, leaf-spread 64.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s28-0821.yaml
+- id: s29
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s29-v02-0821.png
+  sha256: a7f2f2ea664826d7404ef52e6ed4d5e0f0ae4db8655788fbf4b3597272986718
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s29.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, close-up, green meadow at night, distant hills, moonlight, blue darkness, anime style, cel shading, detailed background'
+  plate: v02
+  scale_tier: xl
+  ground: grass
+  figure_present: false
+  geometry: root [360, 1090], stem 620 px, tilt -5.0 deg, leaf-frac 0.48, leaf-spread 57.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s29-0821.yaml
+- id: s30
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s30-v03-0821.png
+  sha256: cc529ab1c4ce75cace0b2ca36f7876519e87f25f78a23d3e850ca6c17f71b6d3
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s30.txt
+  caption: 'bnysapling, a young sapling, two leaves, 15 cm tall, wide shot, green plain under storm cloud, a shaft of light, dark sky, anime style, cel shading, detailed background'
+  plate: v03
+  scale_tier: s
+  ground: grass
+  figure_present: false
+  geometry: root [400, 990], stem 200 px, tilt 5.0 deg, leaf-frac 0.55, leaf-spread 69.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s30-0821.yaml
+- id: s31
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s31-v03-0821.png
+  sha256: 519d5f5b6fc6633d8c62bc094ccb424455638fa3acf8d020be15d1d36f9f859f
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s31.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, green plain under storm cloud, a shaft of light, dark sky, anime style, cel shading, detailed background'
+  plate: v03
+  scale_tier: m
+  ground: grass
+  figure_present: false
+  geometry: root [330, 1080], stem 260 px, tilt -6.0 deg, leaf-frac 0.52, leaf-spread 64.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s31-0821.yaml
+- id: s32
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s32-v03-0821.png
+  sha256: 46f2869e8e32fa85f07e932edfe4ce04b1b1a43a26bcdb0fd64254bb2a465750
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s32.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, close-up, green plain under storm cloud, a shaft of light, dark sky, anime style, cel shading, detailed background'
+  plate: v03
+  scale_tier: xl
+  ground: grass
+  figure_present: false
+  geometry: root [500, 1150], stem 560 px, tilt 5.0 deg, leaf-frac 0.49, leaf-spread 60.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s32-0821.yaml
+- id: s33
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s33-v12-0821.png
+  sha256: 95784152aeaf7066970fd4951d7101c6b3b473edac9bce946f5fb9289af1bad6
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s33.txt
+  caption: 'bnysapling, a young sapling, two leaves, 15 cm tall, wide shot, green plain after rain, puddles, breaking cloud, anime style, cel shading, detailed background'
+  plate: v12
+  scale_tier: s
+  ground: grass
+  figure_present: false
+  geometry: root [150, 900], stem 190 px, tilt -4.0 deg, leaf-frac 0.55, leaf-spread 69.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s33-0821.yaml
+- id: s34
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s34-v12-0821.png
+  sha256: e1f7398dc93e4ddc0d1482b7460c80e89b9af097754298a7d51fa3bc150a7b62
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s34.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, green plain after rain, puddles, breaking cloud, anime style, cel shading, detailed background'
+  plate: v12
+  scale_tier: m
+  ground: grass
+  figure_present: false
+  geometry: root [300, 1120], stem 300 px, tilt -5.0 deg, leaf-frac 0.52, leaf-spread 64.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s34-0821.yaml
+- id: s35
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s35-v12-0821.png
+  sha256: 289a31e7c787b698cc1bb5a7ecf10b08eabf104f6b20bd458263deaa267d9230
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s35.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, green plain after rain, puddles, breaking cloud, anime style, cel shading, detailed background'
+  plate: v12
+  scale_tier: l
+  ground: grass
+  figure_present: false
+  geometry: root [200, 1160], stem 500 px, tilt 6.0 deg, leaf-frac 0.50, leaf-spread 62.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s35-0821.yaml
+- id: s36
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s36-v05-0821.png
+  sha256: 6bc1e9fdec9a11a282a0b8cf2059fb1631e5ed8f3281b044ed00650334b47961
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s36.txt
+  caption: 'bnysapling, a young sapling, two leaves, 15 cm tall, wide shot, wet green moor in the rain, grey hills, flat rain light, anime style, cel shading, detailed background'
+  plate: v05
+  scale_tier: s
+  ground: wet rock
+  figure_present: false
+  geometry: root [300, 980], stem 170 px, tilt 4.0 deg, leaf-frac 0.57, leaf-spread 70.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s36-0821.yaml
+- id: s37
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s37-v05-0821.png
+  sha256: a44f4de78c0ad6a29e15671c3802db77be8934b4787613d34b6d8cfbbc6db695
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s37.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, wet green moor in the rain, grey hills, flat rain light, anime style, cel shading, detailed background'
+  plate: v05
+  scale_tier: l
+  ground: wet rock
+  figure_present: false
+  geometry: root [480, 1140], stem 420 px, tilt -6.0 deg, leaf-frac 0.50, leaf-spread 61.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s37-0821.yaml
+- id: s38
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s38-w03-0821.png
+  sha256: da73f710c9cb86b4715ac965416c21232b6b932c306ed34d79d618f9bd47bd0c
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s38.txt
+  caption: 'bnysapling, a young sapling, two leaves, 15 cm tall, wide shot, green meadow at night, distant hills, moonlight through broken cloud, anime style, cel shading, detailed background'
+  plate: w03
+  scale_tier: s
+  ground: grass
+  figure_present: false
+  geometry: root [280, 1080], stem 180 px, tilt 5.0 deg, leaf-frac 0.56, leaf-spread 70.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s38-0821.yaml
+- id: s39
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s39-w03-0821.png
+  sha256: a6b57c513e95efd7c722e1144ed8bf0afd6efec5dac35ea6f53475fea2188cec
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s39.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, green meadow at night, distant hills, moonlight through broken cloud, anime style, cel shading, detailed background'
+  plate: w03
+  scale_tier: m
+  ground: grass
+  figure_present: false
+  geometry: root [330, 1050], stem 300 px, tilt -6.0 deg, leaf-frac 0.52, leaf-spread 64.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s39-0821.yaml
+- id: s40
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s40-w03-0821.png
+  sha256: a8b16f1d887ed4233dc68df3dde0ace51b922231df7b3d563cb518d7282c5869
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s40.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, green meadow at night, distant hills, moonlight through broken cloud, anime style, cel shading, detailed background'
+  plate: w03
+  scale_tier: l
+  ground: grass
+  figure_present: false
+  geometry: root [400, 1130], stem 500 px, tilt 6.0 deg, leaf-frac 0.50, leaf-spread 62.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s40-0821.yaml
+- id: s41
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s41-w03-0821.png
+  sha256: af84de01f5110f46afe2b006b746e5da0d09ed8c033e5b89b123422014991866
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s41.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, close-up, green meadow at night, distant hills, moonlight through broken cloud, anime style, cel shading, detailed background'
+  plate: w03
+  scale_tier: xl
+  ground: grass
+  figure_present: false
+  geometry: root [360, 1160], stem 640 px, tilt -5.0 deg, leaf-frac 0.48, leaf-spread 57.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s41-0821.yaml
+- id: s42
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s42-w02-0821.png
+  sha256: 6f7338ad52b30ae10d33e7015e1ac777e11d531dfd38d9aebf9bed02c166c40e
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s42.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, rolling green downland, a low sun on the horizon, warm backlight, anime style, cel shading, detailed background'
+  plate: w02
+  scale_tier: m
+  ground: grass
+  figure_present: false
+  geometry: root [300, 1000], stem 280 px, tilt 5.0 deg, leaf-frac 0.52, leaf-spread 64.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s42-0821.yaml
+- id: s43
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s43-w02-0821.png
+  sha256: d2e5131cc7e97757845517d7c188112ed404732a3b375f1bbb75e9519c74f849
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s43.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, rolling green downland, a low sun on the horizon, warm backlight, anime style, cel shading, detailed background'
+  plate: w02
+  scale_tier: l
+  ground: grass
+  figure_present: false
+  geometry: root [350, 1130], stem 490 px, tilt -6.0 deg, leaf-frac 0.50, leaf-spread 61.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s43-0821.yaml
+- id: s44
+  source: v1
+  image: farm-out/ep3-saplora-frames-0821/sap-s44-w02-0821.png
+  sha256: 701f2cc4485012dca11579408dd7219117acabee4d5f86fb1e0b8b9de9897975
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/s44.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, close-up, rolling green downland, a low sun on the horizon, warm backlight, anime style, cel shading, detailed background'
+  plate: w02
+  scale_tier: xl
+  ground: grass
+  figure_present: false
+  geometry: root [380, 1160], stem 630 px, tilt 5.0 deg, leaf-frac 0.48, leaf-spread 57.0 deg
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-s44-0821.yaml
+- id: h01
+  source: harvest-ep2
+  image: farm-out/ep2-b02-sapnat-0821/b02-sapnat-s20260820.png
+  sha256: 30dce0fabd444fdf5e0727eb4c6a317d65004f71a7df0dbe5cb126224dbf46ea
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/h01.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, with a small green goblin striding past behind it, rooted in grass, tall grass, pale hazy daylight, anime style, cel shading, detailed background'
+  plate: ep2-b02-sapnat-0821
+  scale_tier: l
+  ground: grass
+  figure_present: true
+  geometry: plant cx 237 px, stem ~560 px (measured; see the HARVEST table's note on how)
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, $0 on rtx5090 -- harvested from the ep2 beat lane, not rendered for this dataset
+  spec: farm-out/ep2-b02-sapnat-0821/ -- the producing job's own .sha256 manifest is the authority
+- id: h02
+  source: harvest-ep2
+  image: farm-out/ep2-b03-sapnat-0821/b03-sapnat-s20260820.png
+  sha256: e59f177e01891bd32962dfd861478ab3ece74af248038a0e4fd8df34d6f4637f
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/h02.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, with a small green goblin sitting behind it, rooted in grass, tall grass, soft even daylight, anime style, cel shading, detailed background'
+  plate: ep2-b03-sapnat-0821
+  scale_tier: l
+  ground: grass
+  figure_present: true
+  geometry: plant cx 464 px, stem ~540 px (measured; see the HARVEST table's note on how)
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, $0 on rtx5090 -- harvested from the ep2 beat lane, not rendered for this dataset
+  spec: farm-out/ep2-b03-sapnat-0821/ -- the producing job's own .sha256 manifest is the authority
+- id: h03
+  source: harvest-ep2
+  image: farm-out/ep2-b03-sapcomp-0820/b03-sapcomp-s20260820.png
+  sha256: 7d3ab86a3f419f0d39c3c8960483008e61da99592dc77b4ff5cbb46cd2471671
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/h03.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, with a small green goblin crouching behind it, rooted in grass, open grass field, distant hills, bright hazy daylight, anime style, cel shading, detailed background'
+  plate: ep2-b03-sapcomp-0820
+  scale_tier: l
+  ground: grass
+  figure_present: true
+  geometry: plant cx 264 px, stem ~561 px (measured; see the HARVEST table's note on how)
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, $0 on rtx5090 -- harvested from the ep2 beat lane, not rendered for this dataset
+  spec: farm-out/ep2-b03-sapcomp-0820/ -- the producing job's own .sha256 manifest is the authority
+- id: h04
+  source: harvest-ep2
+  image: farm-out/ep2-b13-sapcomp-0820/b13-sapcomp-s20260820.png
+  sha256: bb0ad70c4294aa1647a0db1567df30482c97780359adc799818ff1dd88e0f7b2
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/h04.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, with a small green goblin sitting close beside it, rooted in grass, tall grass, warm side light, anime style, cel shading, detailed background'
+  plate: ep2-b13-sapcomp-0820
+  scale_tier: l
+  ground: grass
+  figure_present: true
+  geometry: plant cx 132 px, stem ~462 px (measured; see the HARVEST table's note on how)
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, $0 on rtx5090 -- harvested from the ep2 beat lane, not rendered for this dataset
+  spec: farm-out/ep2-b13-sapcomp-0820/ -- the producing job's own .sha256 manifest is the authority
+- id: h05
+  source: harvest-ep2
+  image: farm-out/ep2-b13-tallcomp-0820/b13-tallcomp-s20260820.png
+  sha256: 80590db7ffda11b79cc6ea5198e18572adb23d283d515c8844c59fe51fbc1ac3
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/h05.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, close-up, with a small green goblin sitting close beside it, rooted in grass, tall grass, warm side light, anime style, cel shading, detailed background'
+  plate: ep2-b13-tallcomp-0820
+  scale_tier: xl
+  ground: grass
+  figure_present: true
+  geometry: plant cx 139 px, stem ~866 px (measured; see the HARVEST table's note on how)
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, $0 on rtx5090 -- harvested from the ep2 beat lane, not rendered for this dataset
+  spec: farm-out/ep2-b13-tallcomp-0820/ -- the producing job's own .sha256 manifest is the authority
+- id: h06
+  source: harvest-ep2
+  image: farm-out/ep2-b15-sapcomp-0819/b15-sapcomp-s20260819.png
+  sha256: df399888424071e5b9281748937a1e422eff6756dbe62c452b28d7b5456d30b8
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/h06.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, with a small green goblin sitting on a rock beside it, rooted in grass, bright green meadow, hard daylight, anime style, cel shading, detailed background'
+  plate: ep2-b15-sapcomp-0819
+  scale_tier: m
+  ground: grass
+  figure_present: true
+  geometry: plant cx 215 px, stem ~280 px (measured; see the HARVEST table's note on how)
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, $0 on rtx5090 -- harvested from the ep2 beat lane, not rendered for this dataset
+  spec: farm-out/ep2-b15-sapcomp-0819/ -- the producing job's own .sha256 manifest is the authority
+- id: h07
+  source: harvest-ep2
+  image: farm-out/ep2-b16-sapnat4-0821/b16-sapnat4-s20260820.png
+  sha256: 8b5a432428c99c79a7349f8001b55c2ed268747d989fbf871a413dda8c2869c0
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/h07.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, with a small green goblin sitting apart from it, rooted in dry grass, dry pale grass, low warm light, anime style, cel shading, detailed background'
+  plate: ep2-b16-sapnat4-0821
+  scale_tier: l
+  ground: dry grass
+  figure_present: true
+  geometry: plant cx 160 px, stem ~560 px (measured; see the HARVEST table's note on how)
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, $0 on rtx5090 -- harvested from the ep2 beat lane, not rendered for this dataset
+  spec: farm-out/ep2-b16-sapnat4-0821/ -- the producing job's own .sha256 manifest is the authority
+- id: h08
+  source: harvest-ep2
+  image: farm-out/ep2-b20-sapnat-0821/b20-sapnat-s20260820.png
+  sha256: f8ffa9f24bfa3a9f8077dcc043326eee20dcb4752593227d1346a86f2f49be36
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/h08.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, close-up, with a small green goblin sitting beside it, rooted in grass, tall grass, bright daylight, anime style, cel shading, detailed background'
+  plate: ep2-b20-sapnat-0821
+  scale_tier: xl
+  ground: grass
+  figure_present: true
+  geometry: plant cx 577 px, stem ~760 px (measured; see the HARVEST table's note on how)
+  render: animagine-xl-3.1, SDXL inpaint, 40 steps, cfg 7.5, strength 0.30, $0 on rtx5090 -- harvested from the ep2 beat lane, not rendered for this dataset
+  spec: farm-out/ep2-b20-sapnat-0821/ -- the producing job's own .sha256 manifest is the authority
+- id: f-g1
+  source: figcell
+  image: farm-out/ep2-fignat-g1-r2-0820/fignat-g1-s20260820.png
+  sha256: 5c6525e236fbca720195ce0ca00a4f37601ddc629dddc99951c814661dd8e379
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/f-g1.txt
+  caption: 'bnysapling, a young sapling, two leaves, 15 cm tall, wide shot, with a small green goblin sitting to the left of it, rooted in bare tilled soil, soft daylight, plain pale backdrop, anime style, cel shading, detailed background'
+  plate: g1
+  scale_tier: s
+  ground: bare tilled soil
+  figure_present: true
+  geometry: root [745, 1170], stem 150 px, tilt -5.0 deg, leaf-frac 0.55, leaf-spread 65.0 deg, plant right edge of the figure, plate skeleton crouch
+  render: animagine-xl-3.1 ControlNet+IP-Adapter plate, numpy composite, SDXL inpaint 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-fignat-g1-0822.yaml
+- id: f-g2
+  source: figcell
+  image: farm-out/ep2-fignat-g2-r2-0820/fignat-g2-s20260820.png
+  sha256: dceaf2a28328b665264986a816444ae058ee2e8c75adb6a95862479ab7c6e959
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/f-g2.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, with a small green goblin sitting to the right of it, rooted in dry cracked earth, soft daylight, plain pale backdrop, anime style, cel shading, detailed background'
+  plate: g2
+  scale_tier: l
+  ground: dry cracked earth
+  figure_present: true
+  geometry: root [200, 1150], stem 520 px, tilt 6.0 deg, leaf-frac 0.50, leaf-spread 62.0 deg, plant left of the figure, plate skeleton sitfar60
+  render: animagine-xl-3.1 ControlNet+IP-Adapter plate, numpy composite, SDXL inpaint 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-fignat-g2-0822.yaml
+- id: f-g3
+  source: figcell
+  image: farm-out/ep2-fignat-g3-r2-0820/fignat-g3-s20260820.png
+  sha256: 08dd9d10494e7aab8aee4f1464e5fa1261a2fd066ffaf797b6e573df8263b355
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/f-g3.txt
+  caption: 'bnysapling, a young sapling, two leaves, 25 cm tall, wide shot, with a small green goblin sitting to the left of it, rooted in a dirt path, soft daylight, plain pale backdrop, anime style, cel shading, detailed background'
+  plate: g3
+  scale_tier: m
+  ground: a dirt path
+  figure_present: true
+  geometry: root [560, 1180], stem 300 px, tilt -6.0 deg, leaf-frac 0.52, leaf-spread 64.0 deg, plant right of the figure, plate skeleton sitfar50
+  render: animagine-xl-3.1 ControlNet+IP-Adapter plate, numpy composite, SDXL inpaint 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-fignat-g3-0822.yaml
+- id: f-g4
+  source: figcell
+  image: farm-out/ep2-fignat-g4-r2-0820/fignat-g4-s20260820.png
+  sha256: 17787528f98e88c5c78795365e3bcaf77a6c6b0627ba48b744f182fce4414b49
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/f-g4.txt
+  caption: 'bnysapling, a young sapling, two leaves, 15 cm tall, wide shot, with a small green goblin sitting to the right of it, rooted in flat grey rock, soft daylight, plain pale backdrop, anime style, cel shading, detailed background'
+  plate: g4
+  scale_tier: s
+  ground: flat grey rock
+  figure_present: true
+  geometry: root [120, 1090], stem 180 px, tilt 5.0 deg, leaf-frac 0.56, leaf-spread 70.0 deg, plant left of the figure, plate skeleton sitfar42
+  render: animagine-xl-3.1 ControlNet+IP-Adapter plate, numpy composite, SDXL inpaint 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-fignat-g4-0822.yaml
+- id: f-g5
+  source: figcell
+  image: farm-out/ep2-fignat-g5-r2-0820/fignat-g5-s20260820.png
+  sha256: cc801f4179262725c45e5d20ae1c6d7a0abc550ef6152af717fd5a2623e990fa
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/f-g5.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, medium shot, with a small green goblin sitting to the left of it, rooted in gravel, soft daylight, plain pale backdrop, anime style, cel shading, detailed background'
+  plate: g5
+  scale_tier: l
+  ground: gravel
+  figure_present: true
+  geometry: root [640, 1140], stem 500 px, tilt -4.0 deg, leaf-frac 0.50, leaf-spread 61.0 deg, plant right of the figure, plate skeleton sitfar60
+  render: animagine-xl-3.1 ControlNet+IP-Adapter plate, numpy composite, SDXL inpaint 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-fignat-g5-0822.yaml
+- id: f-g6
+  source: figcell
+  image: farm-out/ep2-fignat-g6-r2-0820/fignat-g6-s20260820.png
+  sha256: fdd06d3a275b3082087adf0c9db1c5bd1528f2a162c805ee06e199d053ff64bc
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/f-g6.txt
+  caption: 'bnysapling, a young sapling, two leaves, 15 cm tall, wide shot, with a small green goblin sitting to the right of it, rooted in pale dry sand, soft daylight, plain pale backdrop, anime style, cel shading, detailed background'
+  plate: g6
+  scale_tier: s
+  ground: pale dry sand
+  figure_present: true
+  geometry: root [180, 1100], stem 180 px, tilt 6.0 deg, leaf-frac 0.56, leaf-spread 69.0 deg, plant left of the figure, plate skeleton sitfar50
+  render: animagine-xl-3.1 ControlNet+IP-Adapter plate, numpy composite, SDXL inpaint 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-fignat-g6-0822.yaml
+- id: f-g8
+  source: figcell
+  image: farm-out/ep2-fignat-g8-r2-0820/fignat-g8-s20260820.png
+  sha256: c6f1e063cc9901abb40fbab826cfcf97915d55ae5604a4ca998f2414bbd16d88
+  caption_file: pipeline/lora/captions/sapling-v2b-0822/f-g8.txt
+  caption: 'bnysapling, a young sapling, two leaves, 40 cm tall, close-up, with a small green goblin sitting to the right of it, rooted in wet mud, soft daylight, plain pale backdrop, anime style, cel shading, detailed background'
+  plate: g8
+  scale_tier: xl
+  ground: wet mud
+  figure_present: true
+  geometry: root [250, 1170], stem 620 px, tilt 5.0 deg, leaf-frac 0.48, leaf-spread 57.0 deg, plant left of the figure, plate skeleton sitfar60
+  render: animagine-xl-3.1 ControlNet+IP-Adapter plate, numpy composite, SDXL inpaint 40 steps, cfg 7.5, strength 0.30, seed 20260820, $0 on rtx5090
+  spec: pipeline/jobs/ep3-saplora-fignat-g8-0822.yaml
