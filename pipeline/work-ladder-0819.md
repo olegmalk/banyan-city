@@ -8709,3 +8709,37 @@ fired.**
 **Sashes still absent on both men, in dark hooded robes.** Beat 05's contradicted
 ruling is still contradicted, and that is now the beat's oldest surviving fault
 across every route tried.
+
+#### THE BOARD IS NOT A CONTROLNET PROBLEM. THREE RUNGS, CLOSED, AND THE ANSWER IS A TOOL WE ALREADY HAVE.
+
+| rung | `--scale2` | rectangle | result |
+|---|---|---|---|
+| r1 | 0.50 | centred on the wrist line | **no board.** A glowing ball in his cupped hands |
+| r2 | 0.85 | centred on the wrist line | a plank **grown downward** out of the rectangle's top edge, standing in front of him like a post; his hands dropped to his sides |
+| r3 | 0.85 | **above** the wrists, bottom edge on them | **a lit white panel** over his chest, and the figure collapsed into a dark shrouded silhouette with no face |
+
+**Read together: at low strength no object arrives, at high strength the net
+draws the RECTANGLE — as a luminous panel — rather than reading it as a slab, and
+placing it over the torso lets it eat the figure.** That is the beat-08 finding
+in a different costume: `b08-arm-route-0819.md` §10 recorded a drawn skeleton
+coming back as *"a luminous cross with orbs on each figure's chest"*. This class
+of net renders a white stroke as LIGHT.
+
+**Three axes are now bracketed on this object — strength twice and position twice
+— and the ladder rule closes at three rungs. Do not file a fourth conditioning
+setting.**
+
+> **THE INSTRUMENT FOR AN OBJECT IN THIS TREE IS THE COMPOSITE, AND IT IS 4 FOR
+> 4.** Beats 03, 13, 16 and 19 all got a plant that no wording or conditioning
+> round could produce, by DRAWING it into a finished plate in PIL and settling it
+> with a 0.30 inpaint. Beat 06 does not need a fourth ControlNet scale: **round
+> one's frame already has the man standing in the field at the right size with
+> his hands together at chest height.** It needs a bark slab painted into those
+> hands and a naturalize pass. `pipeline/beat19_drop_composite.py` holds the
+> drawing, shading and clone-fill helpers; `pipeline/derive_ep2_sapnat_0821.py`
+> holds the naturalize recipe, numbers and guards.
+
+**And that is the same tool beats 12 and 21 are waiting on** — two round discs and
+one lance leaf, both needing canon's *average leaves* drawn in. One compositor
+serves three beats. **That is the top rung on this ladder for whoever picks it
+up next**, and it costs a drawing session before it costs a GPU minute.
