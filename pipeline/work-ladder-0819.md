@@ -9479,3 +9479,38 @@ is 20260813. `ep2-b12-cleanseed-{s1,s2}-0822` are on the card at 20260901 and
 ways: two cells near 110–120 px means the growth belongs to the plate and the
 next lever is a TRIM rather than a word; one cell near zero means the apex climb
 on this beat is seed scatter and r1's 5 px was a draw rather than a property.
+
+#### THE SEED CONTROL LANDED AND IT ANSWERS THE PRE-REGISTERED QUESTION: THE STILLNESS WAS A SIDE EFFECT OF THE DEFECT
+
+Three draws on the clean plate, r1's wording, nothing else moved.
+
+| seed | plate | apex climb | what it did |
+|---|---|---|---|
+| 20260813 | smeared | **5 px** | r1 — still, and the lead |
+| 20260813 | clean | 108 px | grows |
+| 20260813 | clean + no-grow clause | 122 px | grows |
+| **20260901** | clean | **122 px** | grows, **and the leaves come back as DISCS with veins** — the shape canon superseded on 08-17 |
+| **20260902** | clean | **−73 px** | does not grow: **the two blades FOLD SHUT** into a single bud by f060 and reopen lower |
+
+**Pre-registered both ways, and it came back in the first direction and then some:**
+the growth is not one draw, and the third cell says the clean plate has no
+settled behaviour at all — three draws, three different failures, none of them
+still.
+
+> **THE ZERO CLIMB BELONGED TO THE SMEAR.** The bars are a hard static
+> horizontal structure filling the sky, and every take that has them holds the
+> plant; every take without them moves it. Remove the manufactured structure and
+> the region is free, and the model puts something there. **Beat 12 is therefore
+> a CHOICE and not a bug waiting to be fixed** — a soft band with a still plant,
+> or a clean sky with a plant that does something — and the record should stop
+> describing the smear as purely a defect.
+
+**AND IT DOES NOT REDEEM THE ROW FILL.** The per-row fill is still wrong for a
+cloud bank and the harmonic fill is still the correct instrument; what is new is
+that on THIS beat its output is load-bearing for a second, unrelated clause. Both
+plates stay on disk and both are on the page.
+
+**Next lever, and it costs no GPU: a TRIM.** r1's climb is 5 px over 121 frames
+and the clean plate's is ~120 over the same; a shorter clip is the only lever
+left that does not re-open a route already closed by measurement. The wording
+route is closed twice with a control on each side.
