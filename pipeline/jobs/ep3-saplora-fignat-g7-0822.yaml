@@ -258,7 +258,7 @@ steps:
   - --init
   - C:\banyan-farm\saplora-fignat-g7-0822\sapfig-g7-0822.png
   - --init-sha256
-  - 1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d
+  - 91005350128057a782e0f049cfecaf851c48570df2ab1a9dfe70b82158869f49
   - --mask-png
   - C:\banyan-farm\saplora-fignat-g7-0822\sapfig-g7-mask-0822.png
   - --prompt-file
@@ -280,16 +280,13 @@ steps:
   - --seed
   - '20260820'
   - --note
-  - 'MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds
-    instead of a GPU fire. The mask is the union of the ERASED WEED''s footprint (dilated 5) and the DRAWN
-    SAPLING''s own footprint plus its contact shadow (dilated 9) -- 99,533 px, 9.84 percent of the frame,
-    extent x 151..783 y 302..1199. WHAT TO CHECK ON THE DRY PNG. (1) Above y=430 the only masked thing
-    is a narrow strip at x 206..241 -- that is the erased weed, and nothing else up there may be covered.
-    (2) It touches just 7.0 percent of his head box (x 310..590 y 194..459) and all of that is at the
-    jaw line, y>=430, where the drawn leaves pass in front of his chin. THAT OVERLAP IS BY DESIGN: the
-    plant stands BETWEEN THE CAMERA AND HIM, which is the whole restage. (3) It must not reach his eyes,
-    brow or the top of his skull. If it does, the plant is drawn too high and the fix is --root/--height,
-    not the mask.'
+  - 'MASK GEOMETRY CHECK for sapling-LoRA v2 cell g7. Writes the mask and exits BEFORE a model loads.
+    WHAT TO CHECK ON THE DRY PNG: (1) one connected blob shaped like a stem with two leaves, not two blobs
+    and not a rectangle; (2) it does not reach the top of the frame; (3) IT DOES NOT TOUCH THE GOBLIN.
+    Unlike beat 16, where the plant stands between the camera and him on purpose, every cell here was
+    composited with --body-box so the plant is clear of his silhouette. If the mask overlaps him the composite
+    step''s box was wrong and the fix is --body-box, not the mask. The plant is rooted right of him on
+    fallen leaves.'
   - --dry-run
 - name: s20260820
   argv:
@@ -298,7 +295,7 @@ steps:
   - --init
   - C:\banyan-farm\saplora-fignat-g7-0822\sapfig-g7-0822.png
   - --init-sha256
-  - 1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d
+  - 91005350128057a782e0f049cfecaf851c48570df2ab1a9dfe70b82158869f49
   - --mask-png
   - C:\banyan-farm\saplora-fignat-g7-0822\sapfig-g7-mask-0822.png
   - --prompt-file
@@ -320,16 +317,13 @@ steps:
   - --seed
   - '20260820'
   - --note
-  - 'ONE SAMPLE, ONE SEED. Every sampler number is the parent job''s: 40 steps, cfg 7.5, strength 0.30,
-    pad-crop 64, blur 8, animagine-xl-3.1 base weights in the SDXL inpaint pipeline. THE ONE VARIABLE
-    IS THE INIT. 0.30 runs int(40*0.30) = 12 of 40 denoising steps from a latent that still carries the
-    drawn structure, so the high-sigma steps where global layout is decided never run -- which is why
-    ''finish this structure'' succeeds where ''invent this structure'' failed, and beat 16 spent three
-    wordings proving the second half of that. BEAT 16 IS THE FIRST IN THIS FAMILY WHERE THE COMPOSITED
-    PLANT IS THE SUBJECT rather than set dressing: b13''s was 4.1 percent of frame, this one spans 62
-    percent of the width. The bet is that the pass cares about mask AREA (9.84 percent here) and not about
-    the object''s SPAN, and the big-leaf composite that measurably did nothing is the reason that is a
-    bet and not an assumption.'
+  - 'MASK GEOMETRY CHECK for sapling-LoRA v2 cell g7. Writes the mask and exits BEFORE a model loads.
+    WHAT TO CHECK ON THE DRY PNG: (1) one connected blob shaped like a stem with two leaves, not two blobs
+    and not a rectangle; (2) it does not reach the top of the frame; (3) IT DOES NOT TOUCH THE GOBLIN.
+    Unlike beat 16, where the plant stands between the camera and him on purpose, every cell here was
+    composited with --body-box so the plant is clear of his silhouette. If the mask overlaps him the composite
+    step''s box was wrong and the fix is --body-box, not the mask. The plant is rooted right of him on
+    fallen leaves.'
 - name: publish
   argv:
   - C:\banyan-farm\venv\Scripts\python.exe
@@ -496,6 +490,43 @@ derivation:
   - b16-sapcomp -> fignat-g7
   - ep2-b16-sapcomp-r2-0820 -> ep3-saplora-fignat-g7-0822
   overrides_applied_and_asserted:
+    argv:--init-sha256:
+    - step dry --init-sha256 (1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d -> 91005350128057a782e0f049cfecaf851c48570df2ab1a9dfe70b82158869f49)
+    - step s20260820 --init-sha256 (1f9782303b05dc5df9139de9ce9d24b0152bcd047e82a25817c0d5392515e37d ->
+      91005350128057a782e0f049cfecaf851c48570df2ab1a9dfe70b82158869f49)
+    argv:--note:
+    - 'step dry --note (MASK GEOMETRY CHECK. Writes the mask and exits BEFORE a model is loaded, so a
+      wrong mask costs seconds instead of a GPU fire. The mask is the union of the ERASED WEED''s footprint
+      (dilated 5) and the DRAWN SAPLING''s own footprint plus its contact shadow (dilated 9) -- 99,533
+      px, 9.84 percent of the frame, extent x 151..783 y 302..1199. WHAT TO CHECK ON THE DRY PNG. (1)
+      Above y=430 the only masked thing is a narrow strip at x 206..241 -- that is the erased weed, and
+      nothing else up there may be covered. (2) It touches just 7.0 percent of his head box (x 310..590
+      y 194..459) and all of that is at the jaw line, y>=430, where the drawn leaves pass in front of
+      his chin. THAT OVERLAP IS BY DESIGN: the plant stands BETWEEN THE CAMERA AND HIM, which is the whole
+      restage. (3) It must not reach his eyes, brow or the top of his skull. If it does, the plant is
+      drawn too high and the fix is --root/--height, not the mask. -> MASK GEOMETRY CHECK for sapling-LoRA
+      v2 cell g7. Writes the mask and exits BEFORE a model loads. WHAT TO CHECK ON THE DRY PNG: (1) one
+      connected blob shaped like a stem with two leaves, not two blobs and not a rectangle; (2) it does
+      not reach the top of the frame; (3) IT DOES NOT TOUCH THE GOBLIN. Unlike beat 16, where the plant
+      stands between the camera and him on purpose, every cell here was composited with --body-box so
+      the plant is clear of his silhouette. If the mask overlaps him the composite step''s box was wrong
+      and the fix is --body-box, not the mask. The plant is rooted right of him on fallen leaves.)'
+    - 'step s20260820 --note (ONE SAMPLE, ONE SEED. Every sampler number is the parent job''s: 40 steps,
+      cfg 7.5, strength 0.30, pad-crop 64, blur 8, animagine-xl-3.1 base weights in the SDXL inpaint pipeline.
+      THE ONE VARIABLE IS THE INIT. 0.30 runs int(40*0.30) = 12 of 40 denoising steps from a latent that
+      still carries the drawn structure, so the high-sigma steps where global layout is decided never
+      run -- which is why ''finish this structure'' succeeds where ''invent this structure'' failed, and
+      beat 16 spent three wordings proving the second half of that. BEAT 16 IS THE FIRST IN THIS FAMILY
+      WHERE THE COMPOSITED PLANT IS THE SUBJECT rather than set dressing: b13''s was 4.1 percent of frame,
+      this one spans 62 percent of the width. The bet is that the pass cares about mask AREA (9.84 percent
+      here) and not about the object''s SPAN, and the big-leaf composite that measurably did nothing is
+      the reason that is a bet and not an assumption. -> MASK GEOMETRY CHECK for sapling-LoRA v2 cell
+      g7. Writes the mask and exits BEFORE a model loads. WHAT TO CHECK ON THE DRY PNG: (1) one connected
+      blob shaped like a stem with two leaves, not two blobs and not a rectangle; (2) it does not reach
+      the top of the frame; (3) IT DOES NOT TOUCH THE GOBLIN. Unlike beat 16, where the plant stands between
+      the camera and him on purpose, every cell here was composited with --body-box so the plant is clear
+      of his silhouette. If the mask overlaps him the composite step''s box was wrong and the fix is --body-box,
+      not the mask. The plant is rooted right of him on fallen leaves.)'
     argv:--seed:
     - step dry --seed (20260820 -> 20260820)
     - step s20260820 --seed (20260820 -> 20260820)

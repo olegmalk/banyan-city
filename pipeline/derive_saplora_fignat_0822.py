@@ -263,6 +263,31 @@ for name, want in WANT.items():
                 "payload:prompt.txt": prompt,
                 "payload:negative.txt": NEGATIVE,
                 "argv:--seed": str(SEED),
+                # THE INIT'S OWN HASH, AND THIS IS THE THIRD THING THE PARENT
+                # CARRIED THAT HAD TO MOVE. `inpaint_fruit.py` re-verifies the
+                # init it was handed against `--init-sha256` before it loads a
+                # model, so a child that fetches its own init but inherits the
+                # parent's digest refuses itself at rc=3 -- which is the guard
+                # working exactly as designed, on the one input it exists to
+                # protect. It appears in BOTH the dry step and the render step
+                # and the override reaches both.
+                "argv:--init-sha256": want[init],
+                # The parent's --note describes BEAT 16's mask: the erased
+                # weed, his head box, his jaw line. None of that is true here
+                # and a note that lies about what to check is worse than none.
+                "argv:--note": (
+                    "MASK GEOMETRY CHECK for sapling-LoRA v2 cell %s. Writes "
+                    "the mask and exits BEFORE a model loads. WHAT TO CHECK ON "
+                    "THE DRY PNG: (1) one connected blob shaped like a stem "
+                    "with two leaves, not two blobs and not a rectangle; (2) "
+                    "it does not reach the top of the frame; (3) IT DOES NOT "
+                    "TOUCH THE GOBLIN. Unlike beat 16, where the plant stands "
+                    "between the camera and him on purpose, every cell here "
+                    "was composited with --body-box so the plant is clear of "
+                    "his silhouette. If the mask overlaps him the composite "
+                    "step's box was wrong and the fix is --body-box, not the "
+                    "mask. The plant is rooted %s of him on %s."
+                    % (cell, side, ground_word)),
                 # THE FETCH SCRIPT IS A PAYLOAD OVERRIDE, NOT AN EXTRA STEP,
                 # and the first attempt got this wrong in a way worth keeping
                 # on the record. The parent ALREADY HAS a `fetch` step that
