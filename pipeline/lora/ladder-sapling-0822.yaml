@@ -60,6 +60,14 @@
 # NOT DONE HERE, DELIBERATELY. This is a SET of eight cells, the standing rule
 # is one sample before any batch, and re-pointing a spent spec at a new
 # checkpoint is a recipe change. Its gate is a single rung drawn and looked at.
+#
+# DONE ELSEWHERE, 2026-08-22: `ladder-v2c-sapling-0822.yaml` is that string
+# swap, cut to the single gate rung (0.65, both sides). The endpoint check this
+# header asked for was made and PASSED -- v2c's own 0.8 subject frame, 0.8 clean
+# frame and no-LoRA frame were all drawn at seed 20260822 / 832x1216 / 40 / 7.5,
+# the same as this spec, so the endpoints are free after all. `run_ladder.py`
+# grew an additive `--weights` so a single rung could be drawn at all; with the
+# flag omitted it is byte-for-byte this spec's eight cells.
 # ══════════════════════════════════════════════════════════════════════════
 
 id: lora-sapling-ladder-0822

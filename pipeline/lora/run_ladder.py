@@ -71,22 +71,108 @@ SEED = 20260822
 WEIGHTS = (0.65, 0.5, 0.35, 0.2)
 
 
+# --------------------------------------------------------------------------
+# --weights IS ADDITIVE AND THE DEFAULT IS THE FROZEN LADDER. Added 2026-08-22
+# when the spec was re-pointed at v2c: the standing rule is one sample before a
+# SET, and this file could only ever draw all four rungs, so the gate in front
+# of an eight-cell sweep had no way to spend two cells. `--weights 0.65` draws
+# exactly one rung, and the sweep that follows it is the same script with the
+# flag left off.
+#
+# WITHOUT THE FLAG NOTHING MOVES. The default is the WEIGHTS tuple above, by
+# identity and not by re-parsing a string, so the argv this builds for an
+# un-flagged run is byte-for-byte the argv it built before the flag existed --
+# `--selftest` asserts that against a frozen copy of the eight-cell list. The
+# ladder's comparability rests on the rungs, prompts and seeds not being
+# re-picked; this flag lets a rung be DEFERRED, never redefined.
+
+def parse_weights(values) -> tuple:
+    """None -> the frozen ladder. A list -> a validated subset/superset of it."""
+    if values is None:
+        return WEIGHTS
+    if not values:
+        raise ValueError("--weights given with no value")
+    out = []
+    for v in values:
+        w = float(v)
+        if not 0.0 < w <= 1.0:
+            raise ValueError("weight %r out of range (0, 1]" % (v,))
+        if w in out:
+            raise ValueError("weight %r given twice" % (v,))
+        out.append(w)
+    return tuple(out)
+
+
+def build_cells(weights) -> list:
+    cells = []
+    for w in weights:
+        tag = ("%0.2f" % w).replace(".", "")
+        cells.append((f"SUBJECT-w{tag}", SUBJECT, SUBJECT_NEG, w))
+        cells.append((f"CLEAN-w{tag}", CLEAN, CLEAN_NEG, w))
+    return cells
+
+
+def selftest() -> int:
+    # 1. The un-flagged run is the old run. Frozen by hand from the pre-flag
+    #    file: four rungs, two sides each, in this order, with these tags.
+    frozen = [
+        ("SUBJECT-w065", 0.65), ("CLEAN-w065", 0.65),
+        ("SUBJECT-w050", 0.5), ("CLEAN-w050", 0.5),
+        ("SUBJECT-w035", 0.35), ("CLEAN-w035", 0.35),
+        ("SUBJECT-w020", 0.2), ("CLEAN-w020", 0.2),
+    ]
+    default = build_cells(parse_weights(None))
+    assert [(c[0], c[3]) for c in default] == frozen, default
+    # and the weight strings that reach the sampler are unchanged too
+    assert [str(c[3]) for c in default] == ["0.65", "0.65", "0.5", "0.5",
+                                            "0.35", "0.35", "0.2", "0.2"]
+    # 2. Prompts are per-side constants, not per-rung -- a subset run must draw
+    #    the SAME two prompts the full sweep would draw at that rung.
+    one = build_cells(parse_weights(["0.65"]))
+    assert len(one) == 2, one
+    assert one == default[:2], one
+    # 3. Order is the caller's order, and a rung off the frozen ladder is legal
+    #    (the flag defers rungs; it does not police them).
+    assert [c[0] for c in build_cells(parse_weights(["0.9", "0.45"]))] == [
+        "SUBJECT-w090", "CLEAN-w090", "SUBJECT-w045", "CLEAN-w045"]
+    # 4. Refusals.
+    for bad in ([], ["0"], ["1.4"], ["-0.5"], ["0.65", "0.65"]):
+        try:
+            parse_weights(bad)
+        except ValueError:
+            continue
+        raise AssertionError("parse_weights(%r) should have refused" % (bad,))
+    print("run_ladder selftest OK: default ladder unchanged (%d cells), "
+          "--weights subsets and refusals behave" % len(default))
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--lora", required=True)
-    ap.add_argument("--sampler", required=True)
-    ap.add_argument("--out-dir", required=True)
+    ap.add_argument("--lora")
+    ap.add_argument("--sampler")
+    ap.add_argument("--out-dir")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--selftest", action="store_true")
+    # ADDITIVE. Omit it and the ladder is the frozen four rungs, unchanged.
+    ap.add_argument("--weights", nargs="+", default=None,
+                    help="rungs to draw (default: %s)" % (WEIGHTS,))
     # Same reason as run_grid.py: box_enqueue refuses a spec whose artifacts are
     # named by no step's argv, and these filenames are derived from the weight.
     ap.add_argument("--require", nargs="*", default=[])
     a = ap.parse_args()
 
-    cells = []
-    for w in WEIGHTS:
-        tag = ("%0.2f" % w).replace(".", "")
-        cells.append((f"SUBJECT-w{tag}", SUBJECT, SUBJECT_NEG, w))
-        cells.append((f"CLEAN-w{tag}", CLEAN, CLEAN_NEG, w))
+    if a.selftest:
+        return selftest()
+    for req in ("lora", "sampler", "out_dir"):
+        if not getattr(a, req):
+            ap.error("--%s is required" % req.replace("_", "-"))
+
+    try:
+        weights = parse_weights(a.weights)
+    except ValueError as exc:
+        ap.error(str(exc))
+    cells = build_cells(weights)
 
     if a.dry_run:
         for name, pos, _n, w in cells:

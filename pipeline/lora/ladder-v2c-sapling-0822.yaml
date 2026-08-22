@@ -1,0 +1,202 @@
+# SAPLING LoRA v2c — THE WEIGHT LADDER, GATE RUNG. Filed 2026-08-22.
+#
+# $0 (local card). ~3 GPU-minutes, 2 cells.
+#
+# WHAT THIS IS. `ladder-sapling-0822.yaml` re-pointed at v2c exactly as its own
+# header prescribes -- `lora-sapling-0822` -> `lora-sapling-v2c-0822` and
+# `bnysapling-sdxl-v1` -> `bnysapling-sdxl-v2c`, by string swap and nothing
+# else, the way bars-v2c was derived from bars-v2b. THE RUNGS, PROMPTS, SEED,
+# SIZE, STEPS AND GUIDANCE ARE NOT RE-PICKED. Same SUBJECT and CLEAN prompts,
+# same negatives, same seed 20260822, same 832x1216 / 40 / 7.5. If any of those
+# moved the curve would stop being comparable to v1's.
+#
+# WHY ONLY ONE RUNG. The v1 spec's own header says a re-point is a recipe
+# change and its gate is a single rung drawn and looked at, and the eight-cell
+# sweep is a SET. So this draws 0.65 -- both sides, one rung -- and the
+# remaining three rungs are the SAME script with the flag left off or set to
+# `--weights 0.5 0.35 0.2`. `--weights` was added to run_ladder.py for exactly
+# this: without it the file could only ever draw all four.
+#
+# WHY 0.65 AND NOT A LOWER RUNG. It is the rung adjacent to the already-measured
+# 0.8, so it reads directly against frames that exist; it is the community
+# working point recorded in research section 6; and it is the highest weight, so
+# the subject side is at its strongest. That makes it the only single rung that
+# can produce a shippable number in one pass -- if the deleted figure returns
+# here while the sapling is still canon, there is a shipping weight. A fail here
+# closes nothing and routes to the low rungs, which is the honest shape of a
+# gate.
+#
+# THE ENDPOINTS ARE FREE AND IT WAS CHECKED, not assumed -- the v1 header warned
+# the free-endpoint trick might not carry. v2c's training job drew, at seed
+# 20260822 / 832x1216 / 40 steps / 7.5 guidance, all three frames this rung is
+# read against, and their sidecars are in farm-out/lora-sapling-v2c-0822/:
+#   * SAMPLE-bnysapling-tilled-overcast.png  subject @ 0.8, prompt verbatim
+#   * SAMPLE-noregress-A-lora.png            clean   @ 0.8, prompt verbatim
+#   * SAMPLE-noregress-B-base.png            clean   @ no LoRA
+#
+# THIS RE-GRADES NOTHING. B3 was pre-registered and scored at 0.8 and stays
+# scored at 0.8 for all four runs. This is a later, separate measurement whose
+# output is a recommended weight for the NEXT run. Bars tighten forward only.
+#
+# PRIORITY 140 IS DELIBERATE AND LOW. The goblin/jerry lane owns the card's
+# priority; its dataset re-rolls jump this. Lower number runs first
+# (box_runner.Queue.ready_jobs sorts (priority, name) ascending), so 140 sits
+# behind the default 100 and behind the v1 ladder's 71.
+
+id: lora-sapling-ladder-v2c-gate-0822
+task: lora-sapling-ladder-v2c-gate-0822
+node: 003b-one-leaf-for-yes
+runner: box
+needs_gpu: true
+priority: 140
+max_attempts: 1
+owner: the sapling-LoRA lane, 2026-08-22
+script_authority: 'Not a render of a script and not an episode assembly. TWO test stills from a weight file that
+  already exists; nothing enters an episode, a leaf or a shot board, and sample_lora.py writes approved: false
+  / provisional: true itself.'
+consumer: The shipping-weight decision for bnysapling v2c, and through it the ep3 plate step. v2c is the first
+  checkpoint to pass BOTH subject bars (B1 14/15, B5 14/15) and it still fails B3 at 0.8 by DELETING the figure
+  on the bridge. If the figure comes back at 0.65 with the sapling still canon, that is a shipping weight and
+  the first shippable sapling LoRA. If it does not, the low rungs (--weights 0.5 0.35 0.2) are the follow-up and
+  B3 goes to the merge lever.
+success: Two frames on disk in farm-out, read at 1:1 against v2c's own 0.8 pair and the no-LoRA frame already
+  published at the same seed. A rung that fixes nothing is a full result.
+why: The card is idle and the queue is empty. Three GPU-minutes gates an eight-cell sweep that would otherwise
+  be scaled on an unlooked-at re-point.
+est_minutes: 4
+needs:
+- cuda
+- vram20
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+steps:
+- name: ladder-gate
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\lora-sapling-v2c-0822\run_ladder.py
+  - --lora
+  - C:\banyan-farm\lora-sapling-v2c-0822\out\bnysapling-sdxl-v2c.safetensors
+  - --sampler
+  - C:\banyan-farm\lora-sapling-v2c-0822\sample_lora.py
+  - --out-dir
+  - C:\banyan-farm\lora-sapling-v2c-0822\ladder
+  - --weights
+  - '0.65'
+  - --require
+  - SUBJECT-w065.png
+  - CLEAN-w065.png
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv-lora\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\ndst = r\"C:\\banyan-farm\\courier-box\\farm-out\\lora-sapling-ladder-v2c-gate-0822\"\
+    \nos.makedirs(dst, exist_ok=True)\nsrc = sorted(glob.glob(r\"C:\\banyan-farm\\lora-sapling-v2c-0822\\ladder\\\
+    *.png\")\n             + glob.glob(r\"C:\\banyan-farm\\lora-sapling-v2c-0822\\ladder\\*.meta.yaml\"))\nlines\
+    \ = []\nfor f in src:\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, os.path.basename(f)), \"\
+    rb\") as fh:\n        lines.append(hashlib.sha256(fh.read()).hexdigest() + \"  \" + os.path.basename(f))\n\
+    with open(os.path.join(dst, \"lora-sapling-ladder-v2c-gate-0822.sha256\"), \"w\", newline=\"\\n\") as fh:\n\
+    \    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\", len(src), \"file(s) ->\", dst)\nraise SystemExit(0\
+    \ if len(src) >= 4 else 1)\n"
+artifacts:
+- C:\banyan-farm\lora-sapling-v2c-0822\ladder\SUBJECT-w065.png
+- C:\banyan-farm\lora-sapling-v2c-0822\ladder\CLEAN-w065.png
+payload:
+  C:\banyan-farm\lora-sapling-v2c-0822\run_ladder.py: "#!/usr/bin/env python3\nr\"\"\"The LoRA-WEIGHT ladder:\
+    \ find the scale where the subject still draws and the\nno-regression contamination stops.\n\n    <render-venv>/python.exe\
+    \ pipeline/lora/run_ladder.py \\\n        --lora out/bnysapling-sdxl-v1.safetensors \\\n        --sampler\
+    \ pipeline/lora/sample_lora.py --out-dir ladder\n\nWHY THIS EXISTS, AND IT IS A FINDING AND NOT A GUESS. The\
+    \ 2026-08-22 one sample\nanswered the expensive question — `bnysapling` DRAWS the canon two-leaf sapling,\n\
+    which five closed wording ladders never could. The no-regression pair drawn in\nthe same session answered\
+    \ a cheaper one badly. At the shipping weight 0.8, the\nidentical prompt and seed (\"a stone bridge over a\
+    \ river, forest, afternoon\nlight\") came back:\n\n  * WITHOUT the small figure that stands on the bridge\
+    \ in the no-LoRA frame --\n    an OBJECT DELETED, not a tone shift, and the sharpest single piece of\n   \
+    \ evidence here. Every one of the 44 training frames is figure-free.\n  * darker and flatter, deeper blues,\
+    \ less sky light\n  * recomposed lower and tighter\n\nNo sapling appeared, which is the failure this bar was\
+    \ most afraid of and it did\nnot happen. But `train-sapling-0822.yaml` bar B3 fails on \"a visible shift in\n\
+    palette, line weight or shading style\", and this is visible without effort.\n\nA FAIL AT ONE WEIGHT IS NOT\
+    \ A FAIL AT EVERY WEIGHT, and 0.8 was picked before any\npixel existed by copying the Jerry spec. Research\
+    \ section 6 already records 0.65\nas the community working point when LoRAs are stacked. So the question this\n\
+    answers is a two-sided one that a single number cannot: as the scale comes down,\ncontamination should fade\
+    \ AND the sapling should get worse. Where those two\ncurves cross is the shipping weight, and it is a measurement,\
+    \ not a taste call.\n\nWHAT IT DELIBERATELY DOES NOT DO: change any pre-registered bar. B3 was scored at\n\
+    0.8 and stays scored at 0.8. This ladder is a SEPARATE, later measurement whose\nresult is a recommended weight\
+    \ for the NEXT run, not a re-grade of this one.\nBars tighten forward only.\n\n$0, no provider. Both halves\
+    \ of every rung share one seed with the 0.8 pair\nalready on disk, so the whole ladder is comparable frame\
+    \ to frame.\n\"\"\"\n\nfrom __future__ import annotations\n\nimport argparse\nimport subprocess\nimport sys\n\
+    from pathlib import Path\n\nTAIL = (\"anime style, cel shading, detailed background, \"\n        \"masterpiece,\
+    \ best quality, very aesthetic\")\n\n# THE SUBJECT SIDE. P1 verbatim from train-sapling-0822.yaml BARS --\
+    \ the same\n# prompt the one sample used, so its 0.8 frame is already the top rung of this\n# ladder and does\
+    \ not need redrawing.\nSUBJECT = (\"bnysapling, a young sapling, two leaves, 25 cm tall, medium shot, \"\n\
+    \           \"bare tilled earth field, a low stone wall behind, overcast, \" + TAIL)\nSUBJECT_NEG = (\"1boy,\
+    \ 1girl, people, goblin, text, watermark, signature, \"\n               \"photorealism, 3d render, low quality,\
+    \ worst quality, blurry\")\n\n# THE CONTAMINATION SIDE. Verbatim from the no-regression pair, so the 0.8 frame\n\
+    # and the no-LoRA frame already on disk are this ladder's two endpoints.\nCLEAN = (\"a stone bridge over a\
+    \ river, forest, afternoon light, \" + TAIL)\nCLEAN_NEG = (\"text, watermark, signature, photorealism, 3d\
+    \ render, \"\n             \"low quality, worst quality, blurry\")\n\nSEED = 20260822\n\n# 0.8 is omitted\
+    \ on purpose: both its frames exist already and redrawing them\n# would spend card time to reproduce bytes\
+    \ we can read. 0.0 is the no-LoRA frame,\n# which also exists already.\nWEIGHTS = (0.65, 0.5, 0.35, 0.2)\n\
+    \n\n# --------------------------------------------------------------------------\n# --weights IS ADDITIVE\
+    \ AND THE DEFAULT IS THE FROZEN LADDER. Added 2026-08-22\n# when the spec was re-pointed at v2c: the standing\
+    \ rule is one sample before a\n# SET, and this file could only ever draw all four rungs, so the gate in front\n\
+    # of an eight-cell sweep had no way to spend two cells. `--weights 0.65` draws\n# exactly one rung, and the\
+    \ sweep that follows it is the same script with the\n# flag left off.\n#\n# WITHOUT THE FLAG NOTHING MOVES.\
+    \ The default is the WEIGHTS tuple above, by\n# identity and not by re-parsing a string, so the argv this\
+    \ builds for an\n# un-flagged run is byte-for-byte the argv it built before the flag existed --\n# `--selftest`\
+    \ asserts that against a frozen copy of the eight-cell list. The\n# ladder's comparability rests on the rungs,\
+    \ prompts and seeds not being\n# re-picked; this flag lets a rung be DEFERRED, never redefined.\n\ndef parse_weights(values)\
+    \ -> tuple:\n    \"\"\"None -> the frozen ladder. A list -> a validated subset/superset of it.\"\"\"\n   \
+    \ if values is None:\n        return WEIGHTS\n    if not values:\n        raise ValueError(\"--weights given\
+    \ with no value\")\n    out = []\n    for v in values:\n        w = float(v)\n        if not 0.0 < w <= 1.0:\n\
+    \            raise ValueError(\"weight %r out of range (0, 1]\" % (v,))\n        if w in out:\n          \
+    \  raise ValueError(\"weight %r given twice\" % (v,))\n        out.append(w)\n    return tuple(out)\n\n\n\
+    def build_cells(weights) -> list:\n    cells = []\n    for w in weights:\n        tag = (\"%0.2f\" % w).replace(\"\
+    .\", \"\")\n        cells.append((f\"SUBJECT-w{tag}\", SUBJECT, SUBJECT_NEG, w))\n        cells.append((f\"\
+    CLEAN-w{tag}\", CLEAN, CLEAN_NEG, w))\n    return cells\n\n\ndef selftest() -> int:\n    # 1. The un-flagged\
+    \ run is the old run. Frozen by hand from the pre-flag\n    #    file: four rungs, two sides each, in this\
+    \ order, with these tags.\n    frozen = [\n        (\"SUBJECT-w065\", 0.65), (\"CLEAN-w065\", 0.65),\n   \
+    \     (\"SUBJECT-w050\", 0.5), (\"CLEAN-w050\", 0.5),\n        (\"SUBJECT-w035\", 0.35), (\"CLEAN-w035\",\
+    \ 0.35),\n        (\"SUBJECT-w020\", 0.2), (\"CLEAN-w020\", 0.2),\n    ]\n    default = build_cells(parse_weights(None))\n\
+    \    assert [(c[0], c[3]) for c in default] == frozen, default\n    # and the weight strings that reach the\
+    \ sampler are unchanged too\n    assert [str(c[3]) for c in default] == [\"0.65\", \"0.65\", \"0.5\", \"0.5\"\
+    ,\n                                            \"0.35\", \"0.35\", \"0.2\", \"0.2\"]\n    # 2. Prompts are\
+    \ per-side constants, not per-rung -- a subset run must draw\n    #    the SAME two prompts the full sweep\
+    \ would draw at that rung.\n    one = build_cells(parse_weights([\"0.65\"]))\n    assert len(one) == 2, one\n\
+    \    assert one == default[:2], one\n    # 3. Order is the caller's order, and a rung off the frozen ladder\
+    \ is legal\n    #    (the flag defers rungs; it does not police them).\n    assert [c[0] for c in build_cells(parse_weights([\"\
+    0.9\", \"0.45\"]))] == [\n        \"SUBJECT-w090\", \"CLEAN-w090\", \"SUBJECT-w045\", \"CLEAN-w045\"]\n  \
+    \  # 4. Refusals.\n    for bad in ([], [\"0\"], [\"1.4\"], [\"-0.5\"], [\"0.65\", \"0.65\"]):\n        try:\n\
+    \            parse_weights(bad)\n        except ValueError:\n            continue\n        raise AssertionError(\"\
+    parse_weights(%r) should have refused\" % (bad,))\n    print(\"run_ladder selftest OK: default ladder unchanged\
+    \ (%d cells), \"\n          \"--weights subsets and refusals behave\" % len(default))\n    return 0\n\n\n\
+    def main() -> int:\n    ap = argparse.ArgumentParser()\n    ap.add_argument(\"--lora\")\n    ap.add_argument(\"\
+    --sampler\")\n    ap.add_argument(\"--out-dir\")\n    ap.add_argument(\"--dry-run\", action=\"store_true\"\
+    )\n    ap.add_argument(\"--selftest\", action=\"store_true\")\n    # ADDITIVE. Omit it and the ladder is the\
+    \ frozen four rungs, unchanged.\n    ap.add_argument(\"--weights\", nargs=\"+\", default=None,\n         \
+    \           help=\"rungs to draw (default: %s)\" % (WEIGHTS,))\n    # Same reason as run_grid.py: box_enqueue\
+    \ refuses a spec whose artifacts are\n    # named by no step's argv, and these filenames are derived from\
+    \ the weight.\n    ap.add_argument(\"--require\", nargs=\"*\", default=[])\n    a = ap.parse_args()\n\n  \
+    \  if a.selftest:\n        return selftest()\n    for req in (\"lora\", \"sampler\", \"out_dir\"):\n     \
+    \   if not getattr(a, req):\n            ap.error(\"--%s is required\" % req.replace(\"_\", \"-\"))\n\n  \
+    \  try:\n        weights = parse_weights(a.weights)\n    except ValueError as exc:\n        ap.error(str(exc))\n\
+    \    cells = build_cells(weights)\n\n    if a.dry_run:\n        for name, pos, _n, w in cells:\n         \
+    \   print(f\"{name}  weight={w}  {pos[:64]}...\")\n        print(f\"{len(cells)} cells\")\n        return\
+    \ 0\n\n    out = Path(a.out_dir)\n    out.mkdir(parents=True, exist_ok=True)\n    failed = []\n    for i,\
+    \ (name, pos, neg, w) in enumerate(cells, 1):\n        dest = out / f\"{name}.png\"\n        print(f\"[{i}/{len(cells)}]\
+    \ {name}\", flush=True)\n        rc = subprocess.call([sys.executable, a.sampler,\n                      \
+    \        \"--lora\", a.lora, \"--lora-weight\", str(w),\n                              \"--prompt\", pos,\
+    \ \"--negative\", neg,\n                              \"--width\", \"832\", \"--height\", \"1216\",\n    \
+    \                          \"--steps\", \"40\", \"--guidance\", \"7.5\",\n                              \"\
+    --seed\", str(SEED), \"--out\", str(dest)])\n        if rc != 0 or not dest.exists():\n            failed.append(name)\n\
+    \            print(f\"   !! {name} did not render (rc={rc})\", flush=True)\n\n    print(f\"\\n{len(cells)\
+    \ - len(failed)} of {len(cells)} cells drawn -> {out}\")\n    absent = [r for r in a.require if not (out /\
+    \ r).exists()]\n    if failed:\n        print(\"MISSING: \" + \", \".join(failed))\n    if absent:\n     \
+    \   print(\"REQUIRED CELL ABSENT: \" + \", \".join(absent))\n    return 0 if not failed and not absent else\
+    \ 1\n\n\nif __name__ == \"__main__\":\n    sys.exit(main())\n"
