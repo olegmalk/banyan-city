@@ -1,0 +1,7 @@
+#### job ep2-guardcast5-j-0822-1787391591 attempt 1 start 2026-08-22T10:07:43Z
+
+==== step stage START 2026-08-22T10:07:43Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "import hashlib, os, urllib.request\nbase = \"https://raw.githubusercontent.com/olegmalk/banyan-city/main/\"\nroot = r\"C:\\banyan-farm\\ep2-guardcast5-j-0822\\src\"\nwant = [(\"controlnet_plate.py\", os.path.join(root, \"pipeline\"),\n         \"ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32\")]\nfor name, dst, sha in want:\n    os.makedirs(dst, exist_ok=True)\n    with urllib.request.urlopen(base + \"pipeline/\" + name, timeout=120) as r:\n        blob = r.read()\n    got = hashlib.sha256(blob).hexdigest()\n    if got != sha:\n        raise SystemExit(\"!! %s sha %s, wanted %s\" % (name, got, sha))\n    with open(os.path.join(dst, name), \"wb\") as fh:\n        fh.write(blob)\n    print(\"staged\", name, got[:12])\n"]
+!! controlnet_plate.py sha 70bacd45515b16c016bb423dfcc805782b5fef6687129e899ff48fda7394311e, wanted ece54f687d892d1fb1df17211331919bfcb04faac4fe0ee6aa9b0bb231adcc32
+==== step stage END rc=1 2026-08-22T10:07:43Z ====
+#### job ep2-guardcast5-j-0822-1787391591 finished rc=1 2026-08-22T10:07:43Z
