@@ -4808,3 +4808,4 @@
 16:09:47Z DONE task=lora-jerry-v3-capshape-0822-1787414945 rc=0 artifacts=1
 16:12:13Z STARTED task=lora-jerry-v3-cnetscale-0822-1787415120 attempt=1 on box-runner
 16:13:05Z DONE task=lora-jerry-v3-cnetscale-0822-1787415120 rc=0 artifacts=1
+16:16:09Z box-runner idle ready=0 failed=129
