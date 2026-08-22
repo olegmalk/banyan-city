@@ -10256,3 +10256,41 @@ v1 as the reference checkpoint; no shipping weight sanctioned.** The lever left
 is `ladder-sapling-0822.yaml`, which already ran against v1's weights and now
 carries a header saying how to re-point it and why eight cells wait on one rung
 being looked at first.
+
+## 2026-08-22 — the goblin LoRA: trained on his own pixels, identity passes, the pose instrument is broken
+
+`bnyjerry` v2 exists. 21 frames, every one a cut of
+`taste/refs/goblin-canon-founder-0821.png` re-lit by the img2img route, **and the
+founder read all 21 at 1:1 and ruled "all ok"** (canon
+`goblin_dataset_ratified_2026_08_22`). 630 steps, $0, weights on the box.
+
+**Identity passes.** Judged at 1:1, the trained trigger draws his narrow almond
+eye, tiny dark pupil, broad low dome, near-horizontal ears, sage palette and
+placket shirt — in a snowy blue night and on a sunset beach, neither of which
+the training set contains. **The setting monoculture did not fuse**, which is
+the v1-sapling failure not repeating: all 21 frames stand in one hazy meadow
+(the route cannot change a background) and every caption NAMES it. Naming an
+unavoidable monoculture on every frame is now a measured mitigation.
+
+**The decisive bar is VOID, not failed.** B2 asked whether a LoRA and a pose
+skeleton can both act at strength 1.0. It scored 0/6 — and then the control
+said that number means nothing: with **no LoRA loaded at all**, the openpose net
+at scale 1.0 drew an unrelated figure, standing. Re-run on the `twins` blob:
+same. Two blobs, two controls, one outcome. The fault is in
+`controlnet_plate.py`'s **txt2img** path — the same net drives measurably
+through `inpaint_fruit.py`.
+
+**This gates the pre-authorised goblin wave.** Every beat in it is staged with a
+per-beat pose skeleton, so until a no-LoRA control ADOPTS a skeleton the wave
+would render fifteen beats of the one standing pose the LoRA already draws.
+Cheapest likely fix, named and not attempted: `inpaint_fruit.py` with an
+all-white mask at strength 1.0 IS txt2img-with-ControlNet, on the one code path
+where the pose net is proven — it needs the eight-line `--lora` arm
+`controlnet_plate.py` just grew.
+
+Also measured, and it corrects the route doc (`goblin-i2i-route-0822.md` §6):
+the img2img route is a re-lighting route only — the ground and background do not
+move, for the same mechanism that stops the pose moving. And his eye survives
+only inside a **window of face fraction** (~22–29 %); full body is below it and
+comes back with a yellow pupil at every strength.
+

@@ -115,3 +115,49 @@ from them with `pipeline/compare_sheet.py`.
   pipeline img2img. See `b08-arm-route-0819.md` §29.
 - `derive_goblin_i2i_0822.assert_no_face_terms` — the route closure's vocabulary
   as one shared assertion both derivers call.
+
+## 6. Section 3 was half wrong, and the dataset lane is what measured it (2026-08-22)
+
+Section 3 called this a **"re-lighting and re-grounding route"**. The
+re-grounding half is wrong and should not be quoted again.
+
+`derive_goblin_dataset_0822` ran 32 cells through it to build a goblin training
+set, and the ground and the background did not move. j01 asked for `dry cracked
+bare earth` at strength 0.40 and came back standing on the init's own meadow.
+The batch then asked for twelve distinct backgrounds — a stone wall, a dark
+forest, a barn wall, a ploughed field, a sand horizon, a wall of ferns — and
+**all but two came back on that same meadow.**
+
+**It is this document's own mechanism, read a third time.** A ground and a
+background are GLOBAL STRUCTURE. Section 2 says global structure is decided in
+the high-noise steps and that a low-strength img2img never runs them; that is
+why the pose cannot move and why the face survives. It is also why the ground
+cannot move. Three readings, one sentence.
+
+**What the route actually delivers is LIGHT, PALETTE and FRAMING** — and the
+framing only because the INIT is cut before the model sees it, never because a
+word asked for it.
+
+### And a second window, at the other end of the same knob
+
+The dataset lane also measured something section 2 did not reach: **his eye
+survives only inside a WINDOW of face fraction.**
+
+| init | face | mag | result |
+|---|---|---|---|
+| full body | 15 % | 1.000x | eye SHAPE holds at every strength, **pupil yellow at 0.40 / 0.35 / 0.30 / 0.25 / 0.20** |
+| native square | 22 % | 1.000x | **holds** at 0.30, 0.25, 0.20 |
+| cowboy | 29 % | 1.387x | **holds** at 0.20; the eye opens toward round at 0.25 |
+| magnified square | 49 % | 1.486x | drifts at 0.40, 0.20 **and 0.15** — its own floor |
+
+Above the window, animagine's prior has enough latent area to re-resolve the
+face and returns the round coloured iris and tall upswept ear that four founder
+vetoes name. **Below it**, his eye is a handful of latent cells, a tiny dark
+pupil inside a narrow almond cannot be carried at that resolution, and the prior
+repaints the iris warm no matter how few steps run. The magnified square failed
+at its floor for a third reason: 1.486x of LANCZOS makes a soft feature, and a
+soft feature is not a weak instruction to a denoiser but an AMBIGUOUS one.
+
+So the law this document states — *his pixels have to enter as PIXELS* — gets
+two more clauses. **At a size the latent grid can hold, and not as an
+interpolation of them.**
