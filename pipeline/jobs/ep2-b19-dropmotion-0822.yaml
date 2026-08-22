@@ -1,0 +1,231 @@
+id: ep2-b19-dropmotion-0822
+task: ep2-b19-dropmotion-0822
+node: 002b-first-citizen
+beat: 19
+runner: box
+priority: 13
+needs_gpu: true
+max_attempts: 1
+owner: night iteration lane, 2026-08-22 -- the ladder's named-not-fired beat 19 motion, on the plate that
+  has the fruit in it
+consumer: BEAT 19's SLATE, which has been a slate since 08-15 and which tonight's w4 clip could not close
+  because the object the beat is ABOUT was not in the plate. This is the first time this beat has had
+  motion asked of an init that contains a fruit on a stem. If it lands, beat 19 has a candidate for the
+  first time; if it does not, the failure says whether i2v will animate a composited object at all, which
+  nothing in this tree has ever asked.
+success: 'THE BEAT''S OWN done_when, IN ORDER, AND IT IS THREE EVENTS: the fruit STARTS ON THE STEM, it
+  FALLS, it LANDS ON THE GROUND, and HE NOTICES it. PRE-REGISTERED: (1) THERE IS A FRUIT IN THE FIRST
+  FRAME AND IT IS ON THE STEM. Tonight''s w4 take had no fruit anywhere and that is the whole reason this
+  exists. (2) IT LEAVES THE STEM AND REACHES THE GROUND inside the clip. A fruit that is on the stem at
+  the first frame and on the stem at the last is a FAIL. (3) HE NOTICES -- his head goes down toward it
+  AFTER it lands, not before. This is the clause the plate that passed 8 of 8 could never deliver, because
+  that job drew a still. (4) NO CONTACT WITH HIS BODY. The beat''s definition says a take where the fruit
+  touches him FAILS this beat now, however well it moves. (5) EXACTLY ONE fruit, and the plant stays rooted
+  and single. (6) The canon face survives to the LAST frame: broad dome, small off-white almond eyes with
+  dark pupils, near-horizontal ears. PRE-REGISTERED FAIL MODES: THE STILL-FALL-STILL SHAPE, which is EXPECTED
+  rather than feared -- a fall is inherently one-shot, tonight measured that one-shot actions park, and
+  beat 13 measured that putting a count on an action that cannot repeat makes it worse. If all three events
+  land in order this is a PASS even with a held head and tail. THE FRUIT NOT MOVING AT ALL, which would
+  say i2v will not animate a composited object and the drop needs to be authored frame by frame. THE PLANT
+  DRIFTING OR GROWING, which the composite was built to stop. And the fruit falling ONTO him, which the
+  definition rules out by name.'
+why: 'NAMED ON 08-19 AND NEVER FIRED: the ladder''s beat-19 entry ends ''still named, not fired: this
+  plate''s motion wants --image-crf 10, not 33''. Tonight made it urgent. The w4 motion clip failed for
+  having NO FRUIT IN IT -- the plate was authored for the face and nobody put the fig back, the same prompt-summons
+  law that pulled beats 02, 03 and 20 off their framing. The sapgloss plate is the one that does not have
+  that problem: the plant and the fig were DRAWN into the field in PIL and settled with a 0.22-strength
+  pass, and it scored 8 of 8 on a bar written before the tool that made it existed. ONE VARIABLE: the
+  init. The action is rewritten because the old one describes a foot and a lean and this beat is about
+  a fruit -- and it may now name the fig, the stem and the leaves, because this init CONTAINS them. $0,
+  ~4 GPU minutes. Full trace: pipeline/derive_b19_dropmotion_0822.py.'
+est_minutes: 8
+needs:
+- cuda
+- vram20
+- video-venv
+env:
+  PYTHONUTF8: '1'
+  PYTHONIOENCODING: utf-8
+  PYTHONUNBUFFERED: '1'
+  HF_HOME: C:\Users\artvn\.cache\huggingface
+  HF_HUB_DISABLE_XET: '1'
+  HF_HUB_DOWNLOAD_TIMEOUT: '60'
+  HF_HUB_DISABLE_SYMLINKS_WARNING: '1'
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+payload:
+  C:\banyan-farm\ep2-b19-dropmotion-0822\cover_crop.py: "#!/usr/bin/env python3\n\"\"\"Cover-crop an asserted\
+    \ source image to an exact WxH. No model, no network.\"\"\"\nimport argparse, hashlib, os, sys\nfrom\
+    \ PIL import Image\n\nap = argparse.ArgumentParser()\nap.add_argument(\"--src\", required=True)\n\
+    ap.add_argument(\"--sha256\", default=\"\", help=\"asserted before anything is written\")\nap.add_argument(\"\
+    --out\", required=True)\nap.add_argument(\"--size\", default=\"704x1280\")\na = ap.parse_args()\n\n\
+    if not os.path.isfile(a.src):\n    sys.exit(\"!! src not found: %s\" % a.src)\nh = hashlib.sha256()\n\
+    with open(a.src, \"rb\") as fh:\n    for chunk in iter(lambda: fh.read(1 << 20), b\"\"):\n       \
+    \ h.update(chunk)\nhave = h.hexdigest()\nif a.sha256 and have != a.sha256:\n    sys.exit(\"!! SRC\
+    \ SHA MISMATCH -- refusing.\\n   want %s\\n   have %s\" % (a.sha256, have))\n\nW, H = (int(v) for\
+    \ v in a.size.split(\"x\"))\nim = Image.open(a.src).convert(\"RGB\")\nsw, sh = im.size\nscale = max(W\
+    \ / float(sw), H / float(sh))\nnw, nh = int(round(sw * scale)), int(round(sh * scale))\nim = im.resize((nw,\
+    \ nh), Image.LANCZOS)\nleft, top = (nw - W) // 2, (nh - H) // 2\nim = im.crop((left, top, left + W,\
+    \ top + H))\nos.makedirs(os.path.dirname(os.path.abspath(a.out)) or \".\", exist_ok=True)\nim.save(a.out)\n\
+    print(\"src %dx%d sha %s\" % (sw, sh, have), flush=True)\nprint(\"cover-crop scale=%.4f -> %dx%d,\
+    \ centre box (%d,%d)\" % (scale, nw, nh, left, top), flush=True)\nprint(\"WROTE %s\" % a.out, flush=True)"
+  C:\banyan-farm\ep2-b19-dropmotion-0822\b19-motion-prompt.txt: '2D anime, hand-drawn cel animation, static
+    locked framing, the frame never moves, flat cel shading, clean ink linework, anime key art. Subject
+    already in frame: ONE small green goblin alone, bald, large pointed ears, small off-white almond eyes
+    with tiny dark pupils, heavy upper eyelids, eyebags, flat deadpan expression, mandarin-collar sage
+    shirt, dark shorts, dark boots. His face, ears, skin colour and clothes DO NOT CHANGE for the whole
+    clip. He is standing mid-stride, looking back down at the ground, in tall grass, full body. THE ACTION:
+    the small violet fig hangs on the thin stem beside him, then it comes loose and falls, and it lands
+    in the grass below. He turns his head down toward where it landed and KEEPS LOOKING at it for the
+    rest of the clip. The plant stays rooted where it is and the camera does not move. HALFWAY THROUGH
+    the fig is in the air between the stem and the ground and his head has started down.'
+  C:\banyan-farm\ep2-b19-dropmotion-0822\b19-negative.txt: second face, second goblin, two goblins, extra
+    head, disembodied head, crowd, child, chibi, baby, round head, different face, changing face, morphing,
+    melting face, featureless face, blank face, losing facial features, skin colour change, clothes changing,
+    cloak, hood, patchwork, camera pan, camera zoom, camera shake, text, watermark
+  C:\banyan-farm\ep2-b19-dropmotion-0822\b19-jobs-encode.json: '[{"beat": 20, "embeds": "C:\\banyan-farm\\ep2-b19-dropmotion-0822\\b19-embeds.pt",
+    "prompt_file": "C:\\banyan-farm\\ep2-b19-dropmotion-0822\\b19-motion-prompt.txt", "negative_file":
+    "C:\\banyan-farm\\ep2-b19-dropmotion-0822\\b19-negative.txt"}]'
+  C:\banyan-farm\ep2-b19-dropmotion-0822\b19-jobs-render.json: '[{"beat": 20, "seed": 20260889, "embeds":
+    "C:\\banyan-farm\\ep2-b19-dropmotion-0822\\b19-embeds.pt", "init": "C:\\banyan-farm\\ep2-b19-dropmotion-0822\\b19-init-704x1280.png",
+    "out": "C:\\banyan-farm\\ep2-b19-dropmotion-0822\\19-the-drop-LTX-ep2-b19-dropmotion-0822.mp4"}]'
+steps:
+- name: crop
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - C:\banyan-farm\ep2-b19-dropmotion-0822\cover_crop.py
+  - --src
+  - C:\banyan-farm\courier-box\farm-out\ep2-b19-sapgloss-0819\b19-sapgloss-s20260819.png
+  - --sha256
+  - 5a62ff900df2e22c45df8d5b8c0a22c85f374a53cd7fa9b64483e7716d77c11c
+  - --out
+  - C:\banyan-farm\ep2-b19-dropmotion-0822\b19-init-704x1280.png
+  - --size
+  - 704x1280
+- name: encode
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - encode
+  - --jobs
+  - C:\banyan-farm\ep2-b19-dropmotion-0822\b19-jobs-encode.json
+- name: render
+  argv:
+  - C:\banyan-video\venv\Scripts\python.exe
+  - C:\banyan-farm\banyan-city\pipeline\ltx_i2v.py
+  - --stage
+  - render
+  - --jobs
+  - C:\banyan-farm\ep2-b19-dropmotion-0822\b19-jobs-render.json
+  - --size
+  - 704x1280
+  - --frames
+  - '105'
+  - --fps
+  - '24'
+  - --guidance
+  - '2.0'
+  - --distilled-sigmas
+  - --two-stage
+  - --image-crf
+  - '10'
+  - --offload
+  - sequential
+  - --mode
+  - production
+  - --task
+  - ep2-b19-dropmotion-0822
+  - --worker
+  - rtx5090
+  - --bench-jsonl
+  - C:\banyan-farm\ep2-b19-dropmotion-0822\bench-ep2-b19-dropmotion-0822.jsonl
+  - --bench-label
+  - ep2-b19-dropmotion-0822
+- name: publish
+  allow_fail: true
+  argv:
+  - C:\banyan-farm\venv\Scripts\python.exe
+  - -c
+  - "import glob, hashlib, os, shutil\n# farm-out is NOT gitignored: the runner pushes whatever lands\
+    \ here itself,\n# so a clip that reaches this dir survives without any change to the runner.\ndst\
+    \ = \"C:/banyan-farm/courier-box/farm-out/ep2-b19-dropmotion-0822\"\nos.makedirs(dst, exist_ok=True)\n\
+    src = sorted(glob.glob(\"C:/banyan-farm/ep2-b19-dropmotion-0822/19-the-drop-LTX-ep2-b19-dropmotion-0822.mp4*\"\
+    )\n             + glob.glob(\"C:/banyan-farm/ep2-b19-dropmotion-0822/b19-init-704x1280.png\")\n  \
+    \           + glob.glob(\"C:/banyan-farm/ep2-b19-dropmotion-0822/bench-ep2-b19-dropmotion-0822.jsonl\"\
+    ))\nlines = []\nfor f in src:\n    shutil.copy2(f, dst)\n    c = os.path.join(dst, os.path.basename(f))\n\
+    \    with open(c, \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h\
+    \ + \"  \" + os.path.basename(f))\nwith open(os.path.join(dst, \"ep2-b19-dropmotion-0822.sha256\"\
+    ), \"w\", newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(lines) + \"\\n\")\nprint(\"published\"\
+    , len(src), \"file(s) + manifest ->\", dst)\n# >=2 so a run that wrote the init but no clip cannot\
+    \ pass silently.\nraise SystemExit(0 if len(src) >= 2 else 1)\n"
+artifacts:
+- C:\banyan-farm\ep2-b19-dropmotion-0822\19-the-drop-LTX-ep2-b19-dropmotion-0822.mp4
+script_authority: 'Node 002b-first-citizen, live script `002b-t0-c`, `approved_by: founder`, `approved_on:
+  2026-08-03`. The line is untouched by this job. Beat 04''s staging is quoted in `script_line` from jerry_canon_0821.WAVE[4],
+  which is the same node text the canon plate under this clip was drawn against. NOTE ON PROVENANCE: this
+  spec''s parent is a BEAT 20 job and both of these keys cross derive_spec''s allow-list as structure
+  -- carried unedited they would have had beat 04 claiming beat 16''s restaging as its authority, so they
+  are re-stated here rather than inherited.'
+script_line: THE FOOTNOTE -- 'leans out from behind the trunk to look, and pulls straight back the moment
+  he has looked'. THE PEEK, the founder's own restaging pick (A, 2026-08-20). The eyes are the whole beat.
+crf_note: --image-crf 10 is inherited from the parent's render step and is asserted rather than assumed,
+  because the ladder's named change for this beat WAS the crf and a child that silently ran at 33 would
+  look like the rung having been fired when it had not.
+expected_shape_stated_in_advance: STILL, FALL, STILL. A fall is inherently one-shot; tonight measured
+  that one-shot actions park, and beat 13 measured that putting a count on an action that cannot happen
+  twice makes it WORSE. So no count is put on this one. The tail is given something to do instead -- he
+  keeps looking at where it landed -- which is the only lever tonight's evidence supports. If the three
+  events land in order, the bar calls that a pass even with a held tail, because the beat's definition
+  is about ORDER and not about filling a runtime.
+the_one_variable: THE INIT, from a face plate with no plant in it to the composite plate that passed 8
+  of 8 with a rooted stem, two leaves, a side-branch and one matte violet fig. The action changes with
+  it and that is not a second variable being smuggled -- the old sentence describes a foot and a lean,
+  and the beat is a fruit falling; a foot sentence over a fruit plate would measure nothing.
+why_the_wording_may_name_objects: THIS WAVE'S FIRST LAW is that a prompt naming an object its init does
+  not contain makes the model build the object and re-frame the shot to fit it -- beat 04 rotated ninety
+  degrees onto its side over a trunk that was not there, tonight. The sapgloss init CONTAINS the fig,
+  the stem and the leaves, so naming them is description and not summons. --selftest asserts the init
+  being pointed at is the sapgloss one, because that assertion is the entire licence for the wording.
+derivation:
+  parent: pipeline/jobs/ep2-b19-w4motion-0822.yaml
+  by: pipeline/derive_b19_dropmotion_0822.py
+  method: ALLOW-LIST, not a deny-list. Only the keys pipeline/derive_spec.py names as structural cross
+    from the parent; every other key -- verdicts, picks, sweeps, fired fail-modes, cut preferences, notes,
+    however named or renamed -- stops at the boundary by construction. A verdict can arrive under any
+    key name, so the closed set is what a runner and its guards read, not what a regex can enumerate.
+  carried_structural_keys:
+  - artifacts
+  - beat
+  - env
+  - est_minutes
+  - id
+  - max_attempts
+  - needs
+  - needs_gpu
+  - node
+  - payload
+  - priority
+  - runner
+  - script_authority
+  - script_line
+  - steps
+  - task
+  authored_fresh_by_the_caller:
+  - consumer
+  - crf_note
+  - expected_shape_stated_in_advance
+  - owner
+  - success
+  - the_one_variable
+  - why
+  - why_the_wording_may_name_objects
+  keys_the_parent_had_that_did_NOT_cross:
+  - bar
+  - derivation
+  - head_clause_rewrite
+  - not_done_on_purpose
+  - plate_provenance
+  - the_one_variable
+  retokened:
+  - ep2-b19-w4motion-0822 -> ep2-b19-dropmotion-0822
+  overrides_applied_and_asserted: none
