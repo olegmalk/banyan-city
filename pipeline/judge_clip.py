@@ -2,6 +2,8 @@
 """Three readings on a clip, deliberately NOT blended into a score.
 
     python3 pipeline/judge_clip.py clip.mp4 [more.mp4 ...] [--json]
+    python3 pipeline/judge_clip.py clip.mp4 --geometry <init>.geometry.json \
+                                            --class leaf|fig
 
     HOLD    period / strength / distinct pictures / effective fps, from
             `hold_period.py`. Autocorrelation, so it sees odd periods that the
@@ -10,6 +12,13 @@
             construction, so a +-3% ripple with a clean period reads like a
             freeze; depth is the number that separates them.
               refs: b13-AFTER 0.029 real hold | b06-DONE 0.215 | b02-FIXED 0.397
+    COUNT   OPTIONAL, and only for a beat whose object was COMPOSITED: how
+            many of that object are in each frame, and whether the number ever
+            rises above the one the clip opens on. Needs --geometry and
+            --class; see count_composited_objects.py. The three readings below
+            are all about HOW MUCH the picture changes and none of them can see
+            HOW MANY of a thing is in it -- beats 19 and 21 both scored
+            normally on 2026-08-22 while growing an extra object.
     FREEZE  the terminal-freeze index: the length of the trailing run of
             consecutive-frame ncc == 1.0000.
 
@@ -57,6 +66,7 @@ reason (c870f08f).
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -122,7 +132,28 @@ def terminal_freeze(nccs, eps: float = FREEZE_EPS) -> int:
     return run
 
 
-def judge(path: str) -> dict:
+def count_reading(path: str, geometry: str, cls: str) -> dict:
+    """THE FOURTH READING, AND IT IS OPTIONAL BECAUSE IT NEEDS SOMETHING THE
+    CLIP DOES NOT CARRY: the geometry json the compositor wrote when it drew the
+    object. Only a beat whose object was COMPOSITED can be counted, which is
+    also the only kind of beat where a count is a defined question.
+
+    It exists because the three readings above are all about HOW MUCH the
+    picture changes and none of them can see HOW MANY of a thing is in it. On
+    2026-08-22 beat 19 put two extra figs in the sky and beat 21 grew a third
+    blade; both clips score normally on hold, depth and freeze, because adding
+    an object is not a motion defect. See count_composited_objects.py."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import count_composited_objects as C          # noqa: WPS433
+    r = C.run(path, geometry, cls, quiet=True)
+    return {"count_opening": r["opening"], "count_peak": max(r["counts"]),
+            "count_above_frames": len(r["above"]),
+            "count_below_frames": len(r["below"]),
+            "count_blip_frames": len(r["blips"]),
+            "count_flagged": r["flagged"]}
+
+
+def judge(path: str, geometry: str = None, cls: str = None) -> dict:
     res = measure(path)
     series, _fps, _dims, n = pair_differences(path)
     dep = depth(series, res.get("period"))
@@ -141,7 +172,7 @@ def judge(path: str) -> dict:
         "terminal_freeze_starts_at_frame": (len(nccs) + 1 - tail) if tail else None,
         "min_ncc": round(min(nccs), 5),
         "max_ncc": round(max(nccs), 5),
-    }
+    } | (count_reading(path, geometry, cls) if (geometry and cls) else {})
 
 
 def print_report(r: dict) -> None:
@@ -172,6 +203,16 @@ def print_report(r: dict) -> None:
               % (r["terminal_freeze_frames"], r["terminal_freeze_starts_at_frame"]))
     else:
         print("  FREEZE  none")
+    if "count_opening" in r:
+        print("  COUNT   opens at %d, peaks at %d; %d frame(s) above it, %d "
+              "below, %d isolated blip(s)"
+              % (r["count_opening"], r["count_peak"], r["count_above_frames"],
+                 r["count_below_frames"], r["count_blip_frames"]))
+        print("          %s  (ABOVE means the model ADDED one of the object -- "
+              "the axis motion does not protect. BELOW means the object left "
+              "the colour band and is a statement about the instrument, never "
+              "a flag.)"
+              % ("FLAG -- go and look" if r["count_flagged"] else "ok"))
     print("  ncc %.5f .. %.5f" % (r["min_ncc"], r["max_ncc"]))
     print("  %s" % r["reading"])
     print("  THE METRIC IS A FILTER, NEVER A VERDICT -- open the frames "
@@ -181,6 +222,16 @@ def print_report(r: dict) -> None:
 def main(argv=None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
     as_json = "--json" in argv
+    geometry = cls = None
+    for flag in ("--geometry", "--class"):
+        if flag in argv:
+            i = argv.index(flag)
+            val = argv[i + 1]
+            del argv[i:i + 2]
+            if flag == "--geometry":
+                geometry = val
+            else:
+                cls = val
     clips = [a for a in argv if not a.startswith("--")]
     if not clips:
         print(__doc__)
@@ -188,7 +239,7 @@ def main(argv=None) -> int:
     rows = []
     for c in clips:
         try:
-            rows.append(judge(c))
+            rows.append(judge(c, geometry, cls))
         except Exception as e:  # noqa: BLE001
             rows.append({"clip": c, "error": "%s: %s" % (type(e).__name__, e)})
     if as_json:
