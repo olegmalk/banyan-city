@@ -9007,3 +9007,22 @@ a payload STRING it does not reach.**
 * **BEAT 06's motion.** Its second fault is 4.5 s of frozen frame in a 6.5 s slot,
   and that question has never been askable because the object was missing from
   every plate. It becomes askable the moment the board plate passes.
+
+#### AND THE STRENGTH ROUND, FIRED AND JUDGED: A MADE OBJECT WANTS 0.45 WHERE A LEAF WANTS 0.30
+
+`ep2-b06-boardnat-r2-0822`, one number against its parent, and it was the parent's
+own pre-registered third failure mode rather than a new idea. At 0.30 the slab
+came back **exactly as flat as it was drawn** — a card with ruled lines. At 0.45
+it has wood in it: grain running across the face, a torn irregular edge, a bark
+colour instead of a flat brown fill. **And it did not move, narrow or slide off
+the hands**, which was the risk 18 of 40 steps buys.
+
+> **Every previous use of this pass has settled a PLANT.** 0.30 is enough for a
+> leaf, whose whole identity is a silhouette and a two-value fill. A hard-edged
+> made object has SURFACE, and surface is what the extra six steps buy. Carry
+> this to the b19 fig only with care — a fig is organic — and to any prop.
+
+Residual on the r2 plate, named: a soft crease down the middle reads for a moment
+as an open book rather than one piece of bark. That is the drawn polygon's
+midline split showing through, and it is a compositor edit rather than a strength
+one.

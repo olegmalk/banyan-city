@@ -55,10 +55,24 @@ import derive_ep2_sapnat2_0822 as S                           # noqa: E402
 from derive_sapling_field_0821 import assert_under_clip77     # noqa: E402
 
 BEAT = 6
-NEW_ID = "ep2-b06-boardnat-0822"
-DIRTOK = "b06boardnat-0822"
-OUTTOK = "b06-boardnat"
-PUBDIR = "ep2-b06-boardnat-0822"
+# ROUND 2 IS A NUMBER AND IT WAS PRE-REGISTERED AS ONE. Round 1 at 0.30 passed
+# every clause except P1: the slab did not move, did not shrink, is still held,
+# is not glowing and the man is untouched -- but the surface came back exactly
+# as flat as it was drawn, reading as ruled card rather than rough bark. That is
+# the spec's own third failure mode, verbatim: "0.30 leaves the slab exactly as
+# flat as it was drawn, which would say the pass needs more strength on a
+# hard-edged man-made object than it needs on a leaf -- and that is worth one
+# more round rather than a redraw." So: one more round, one number, and the
+# thing it is measuring is whether a MADE object needs a different strength
+# from an organic one. Everything else, including the drawn composite itself,
+# is byte-identical.
+STRENGTH = "0.45"
+ROUND = "r2"
+SUFFIX = "" if ROUND == "r1" else "-" + ROUND
+NEW_ID = "ep2-b06-boardnat%s-0822" % SUFFIX
+DIRTOK = "b06boardnat%s-0822" % SUFFIX
+OUTTOK = "b06-boardnat%s" % SUFFIX
+PUBDIR = "ep2-b06-boardnat%s-0822" % SUFFIX
 
 SRC_DIR = "farm-out/ep2-b06-boardcomp-0822"
 INIT = "b06-boardcomp-in-0822.png"
@@ -130,7 +144,14 @@ BAR = """JUDGED BY EYE AT 1:1. THE OBJECT IS THE QUESTION, THE MAN IS THE CONTRO
 A FAIL on P2 or P4 kills the plate. A FAIL on P1 alone is a strength question
 and is worth one more round. If it passes, the next rung is MOTION -- and the
 beat's other fault, 4.5 s of frozen frame in a 6.5 s slot, is a motion question
-that could never be asked while the object was missing."""
+that could never be asked while the object was missing.
+
+ROUND 2 ADDS ONE CLAUSE AND IT CUTS BOTH WAYS. At 0.45 the pass runs 18 of 40
+steps instead of 12, which is more licence to redraw AND more licence to move.
+So P2 stops being a formality: if the board is a beautiful piece of bark that
+has slid, narrowed or turned into a scroll, round 1 is the better plate and the
+answer is that this object wants a strength between the two. Say which of the
+two frames is better rather than scoring this one alone."""
 
 
 def main(argv=None) -> int:
@@ -208,6 +229,7 @@ def main(argv=None) -> int:
         overrides={
             "seed": S.SEED,
             "argv:--init-sha256": init_sha,
+            "argv:--strength": STRENGTH,
             "argv:--note": (
                 "ATTACHED TO BOTH THE DRY STEP AND THE RENDER STEP. ON THE DRY "
                 "STEP it is a MASK GEOMETRY CHECK, written before any model "
