@@ -557,7 +557,18 @@ BEATS = {
             "SAID PLAINLY: erasing two 250-pixel discs left a soft horizontal smear across the "
             "cloud bank behind the plant, and the light pass did not remove it \u2014 that was "
             "written down as a likely outcome before the job ran, and it is the one thing about "
-            "the new plate that is worse than the old one. THE MOTION RENDER HAS LANDED and it is the first candidate this beat has ever had \u2014 see below."),
+            "the new plate that is worse than the old one. THE MOTION RENDER HAS LANDED and it is the first candidate this beat has ever had \u2014 see below."
+            "\n\nUPDATE, 08-22 08:00 \u2014 THE SMEAR IS GONE, AND IT WAS OUR BUG, NOT THE "
+            "MODEL'S. Erasing the old discs left a hole in the clouds, and the tool that fills a "
+            "hole was written for a GRASS plate: it fills each row of pixels straight across, "
+            "left to right, because grass is banded in stripes and that reproduces the stripes "
+            "exactly. A cumulus bank is not banded in stripes. Six hundred and seventy rows each "
+            "filled straight across is precisely a set of horizontal bars \u2014 so the smear "
+            "was not a blur left behind, it was a STRUCTURE WE DREW, and every stage after it did "
+            "its job correctly by preserving the thing it was given. Filling the hole in both "
+            "directions instead of one removes it, and the light pass then drew real cloud into "
+            "the gap. The corrected plate is below and the motion re-render off it is on the card "
+            "as you read this."),
         faults_from="review/ep2-picks/done-definitions.yaml beats.12 + review/ep2-b12-trim-0821/verdict-0821.yaml",
         candidates=[
             dict(file=f"{CAND_URL}/12-related-LTX-leaf-0813.mp4",
@@ -572,6 +583,11 @@ BEATS = {
                  verdict="The leaves do stop fluttering: the frame changes about half as much as in the clip above. And the plant GROWS INSTEAD — 340 px of climb across the shot, against ZERO in the clip above and 140 px in the take you are shipping. So on the fault your line actually names, this is the worst of the three. Put up for what it says rather than because it is usable.",
                  diff="One clause. The action sentence's “the leaves stir gently in a light breeze, they lift and settle and turn a little” was replaced with an explicit “the sapling is completely still, not one leaf moves”. Nothing else changed. THE READING: the motion goes somewhere. Take away the small named movement and it comes back as the large unnamed one. So the fix for 'perfectly still' is not to ban movement — it is to name the thing that must not move, and “the stem does not lengthen” is a clause nobody has ever put in this prompt.",
                  src="pipeline/jobs/ep2-b12-stillmotion-r2-0822.yaml"),
+            dict(file=f"{POSTER_URL}/12-related-PLATE-nosmear-0822.jpg", still=True,
+                 label="THE PLATE WITH THE SMEAR GONE \u2014 08-22, and this is the one the next clip comes off", tag="warn",
+                 verdict="Same two leaves, same place, same grass, same framing \u2014 and the cloud bank behind them is continuous cumulus instead of a fan of horizontal bars. Hold it against the plate below it: that is the whole difference and it is one setting in our own software.",
+                 diff="Not a re-render, not a re-wording, and no GPU was spent on the fix itself. The hole left by erasing the old discs is now filled from its own edges in BOTH directions rather than row by row. The row-by-row version is committed beside it as the control, cut from the same command line one flag apart, so the comparison does not depend on anyone's memory of what the old one looked like.",
+                 src="pipeline/jobs/ep2-b12-sapnat3-0822.yaml"),
             dict(file=f"{POSTER_URL}/12-related-PLATE-leafcanon-0822.jpg", still=True,
                  label="a PLATE — canon's two average leaves, drawn in. This morning.", tag="warn",
                  verdict="Two ordinary leaves on one thin stem, in the grass, against the same clouds. Not discs. The plant is where it was and the sky, the grass and the framing are the clip's own \u2014 this is the first frame of the take you are already shipping with exactly one thing changed. THE FAULT IT CARRIES: a soft horizontal band across the cumulus where the two old discs were removed. It was predicted before the job ran and it is inside the region the pass was allowed to touch, so the pass had its chance at it and did not take it.",
@@ -693,7 +709,23 @@ BEATS = {
             "SO THE HONEST STATE IS: the trade stands \u2014 new face, no plant \u2014 and the "
             "next move is a placement low in the frame where the grass is dark, or this beat's "
             "plate re-rendered without the shallow-focus blur. Not a wording problem, and not "
-            "fired on a guess."),
+            "fired on a guess."
+            "\n\nUPDATE, 08-22 08:00 \u2014 THE WHITE PLANT WAS NOT THE PLATE'S FAULT AND THIS "
+            "BEAT NOW HAS ONE. The tool picks the plant's colours from \u201cthe green pixels\u201d "
+            "in the frame, and its test for green was simply \u201cis the green channel the "
+            "biggest one\u201d. A blown-out white highlight passes that test: 241 red, 255 green, "
+            "232 blue is WHITE, and it counted as green. On this frame that was 44% of everything "
+            "the tool was looking at, and it was the brightest 44%, so it decided what the "
+            "plant's highlight should be. Requiring the pixel to actually have some colour in it "
+            "moves the answer from near-white to an ordinary leaf green, off fifty-four thousand "
+            "pixels of real grass. Two plates are below: the ghost, and the same command with "
+            "that one change. THE BEAT IS STILL NOT DONE, and the reason is now a different one "
+            "and worth your eye: on this plate he fills the frame from top to bottom, so the "
+            "plant can only sit OVER him. Your staging is \u2018close on the leaf, he sits "
+            "blurred behind it\u2019, and that needs a frame with room in front of him. Four "
+            "plate re-renders were fired this morning to try to buy that with words \u2014 "
+            "killing the blur, naming distant hills \u2014 and all four changed nothing, because "
+            "the pose skeleton decides how much of the frame he takes and no word outranks it."),
         faults_from="ship-manifest.yaml beat 16",
         candidates=[
             dict(file=f"{CAND_URL}/16-why-LTX-ep2-b16-w4motion-0822.mp4",
@@ -702,6 +734,16 @@ BEATS = {
                  verdict="THE CLEANEST MOTION IN THE WHOLE WAVE: not one frame pair in 105 is under 0.5, the median step is 3.04, there is no topple, no dissolve and no frozen tail — he sits with his knees up, his eyes drift from open to half-lidded and back, and the camera moves the whole time. Your face all the way through: broad dome, off-white almond eyes with dark pupils, near-horizontal ears, sage mandarin collar. That answers this beat's first fault, which is that the goblin in the cut is the superseded adult-man design. BUT IT COSTS THE BEAT'S WIN. There is no plant in this clip at all, and what is in the cut is the only render in this tree where canon's two-leaf sapling survived to the last frame. So this is a straight trade and not a replacement: new goblin, no sapling.",
                  diff="New plate on the corrected eye, this beat's own action carried unchanged. The plant was never in the new plate — the re-plate was authored for the FACE and nobody put the sapling back into it, which is the same prompt-summons law that has bitten beats 02, 03 and 20: an object absent from the init cannot be asked for in the motion. Putting the two-leaf plant into this plate is a composite job, not a re-word, and the route for it is proven.",
                  src="pipeline/jobs/ep2-b16-w4motion-0822.yaml"),
+            dict(file=f"{POSTER_URL}/16-why-PLATE-sapnat3-0822.jpg", still=True,
+                 label="a PLATE \u2014 the first beat-16 frame on your goblin that has the plant in it. 08-22.", tag="warn",
+                 verdict="Two ordinary leaves on one stem, in the plate's own green, standing in front of him with his eyes clear above them. Compare it with the ghost below \u2014 same command line, one setting apart. WHAT IT DOES NOT GIVE YOU: he fills the frame here, so this reads as a plant IN FRONT OF HIM rather than as a close-up of a leaf with him behind it. That is your staging and it is not met. Put up because the colour question is now closed and the framing question is the only one left.",
+                 diff="No re-render and no new words \u2014 this is the plate you already have with the plant drawn in and settled by the same light pass that worked on beats 03, 12, 13, 15, 19 and 21. The change that made it possible is one line in the compositor: the palette sampler now requires a pixel to have some colour in it before it counts as green.",
+                 src="pipeline/jobs/ep2-b16-sapnat3-0822.yaml"),
+            dict(file=f"{POSTER_URL}/16-why-PLATE-whiteghost-0822.jpg", still=True,
+                 label="THE GHOST \u2014 the same command with the old colour test. Shown so the fix is checkable.", tag="fail",
+                 verdict="The plant is white. This is what stopped beat 16 twice yesterday and this morning, and it was recorded as the plate being wrong. It was not: the frame's greens are fine, the sampler was counting white pixels as green and taking its brightest colour from them.",
+                 diff="One flag. Identical plate, identical placement, identical everything else.",
+                 src="pipeline/beat16_sapling_composite.py"),
         ],
     ),
     17: dict(

@@ -55,7 +55,19 @@ OLD_SRC = (r"C:\banyan-farm\courier-box\farm-out\ep2-b12-sapnat2-0822"
 OLD_SHA = "dcc042b8e21f0ded82adb5401186f69a2b8d78aa92eb398eb74631bcfac5ea5a"
 NEW_SRC = (r"C:\banyan-farm\courier-box\farm-out\ep2-b12-sapnat3-0822"
            r"\b12-sapnat3-s20260820.png")
-NEW_SHA = "5ecde65e9bf6b2bd723ce70bcb59a38fb7401a31fc6acb7bbf545dc67e14555e"
+NEW_SHA = "680b50fbaa5a289f8b393ad246a47c79731f2c1f203976946ebcc38fa402d431"
+# THE SHA COMES FROM THE JOB'S OWN PUBLISHED MANIFEST
+# (farm-out/ep2-b12-sapnat3-0822/ep2-b12-sapnat3-0822.sha256), not from a
+# hash recomputed over a local copy. Attempt 1 of this job died at the crop
+# step -- "SRC SHA MISMATCH", zero GPU seconds -- on 5ecde65e..., which was
+# the digest of a CONTACT SHEET this lane had written to the same path. macOS
+# is case-insensitive, so `$SP/B12-NAT3.png` and `$SP/b12-nat3.png` are one
+# file and the sheet had silently replaced the extracted png.
+#
+#   TWO FILENAMES THAT DIFFER ONLY IN CASE ARE ONE FILE ON THIS MACHINE, and
+#   the manifest the producing job wrote is the only authority on what a
+#   published artifact hashes to. The guard did its whole job: the mismatch
+#   was caught before a model loaded.
 
 BAR = """THE PARENT'S BAR, UNCHANGED, PLUS ONE CLAUSE AND ONE INSTRUMENT.
 

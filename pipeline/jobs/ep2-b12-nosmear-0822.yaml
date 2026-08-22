@@ -90,7 +90,7 @@ steps:
   - --src
   - C:\banyan-farm\courier-box\farm-out\ep2-b12-sapnat3-0822\b12-sapnat3-s20260820.png
   - --sha256
-  - 5ecde65e9bf6b2bd723ce70bcb59a38fb7401a31fc6acb7bbf545dc67e14555e
+  - 680b50fbaa5a289f8b393ad246a47c79731f2c1f203976946ebcc38fa402d431
   - --out
   - C:\banyan-farm\ep2-b12-nosmear-0822\b13-init-704x1280.png
   - --size
@@ -168,7 +168,7 @@ bar: "THE PARENT'S BAR, UNCHANGED, PLUS ONE CLAUSE AND ONE INSTRUMENT.\n\n  S1  
   \ it to invent something in there --\n  a bird, a second cloud bank with a hard edge, a sun. The naturalize\
   \ already\n  drew cloud into it, which is the reason to expect this to hold, but a still\n  frame is\
   \ 40 steps and a clip is a different question."
-init_provenance: farm-out/ep2-b12-sapnat3-0822/b12-sapnat3-s20260820.png, sha256 5ecde65e9bf6b2bd723ce70bcb59a38fb7401a31fc6acb7bbf545dc67e14555e
+init_provenance: farm-out/ep2-b12-sapnat3-0822/b12-sapnat3-s20260820.png, sha256 680b50fbaa5a289f8b393ad246a47c79731f2c1f203976946ebcc38fa402d431
   -- the 0.30 naturalize of a composite whose erased region was filled with --fill-mode harmonic instead
   of the per-row default. Read off the box's own courier worktree, which is where the box put it, so there
   is no fetch step and nothing to sha against a raw URL.
@@ -226,7 +226,7 @@ derivation:
   - ep2-b12-leafmotion-0822 -> ep2-b12-nosmear-0822
   overrides_applied_and_asserted:
     argv:--sha256:
-    - step crop --sha256 (dcc042b8e21f0ded82adb5401186f69a2b8d78aa92eb398eb74631bcfac5ea5a -> 5ecde65e9bf6b2bd723ce70bcb59a38fb7401a31fc6acb7bbf545dc67e14555e)
+    - step crop --sha256 (dcc042b8e21f0ded82adb5401186f69a2b8d78aa92eb398eb74631bcfac5ea5a -> 680b50fbaa5a289f8b393ad246a47c79731f2c1f203976946ebcc38fa402d431)
     argv:--src:
     - step crop --src (C:\banyan-farm\courier-box\farm-out\ep2-b12-sapnat3-0822\b12-sapnat3-s20260820.png
       -> C:\banyan-farm\courier-box\farm-out\ep2-b12-sapnat3-0822\b12-sapnat3-s20260820.png)
