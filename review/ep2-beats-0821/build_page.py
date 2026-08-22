@@ -760,9 +760,36 @@ BEATS = {
             "started drifting. And the motion render off the new plate is below: the plant "
             "dissolves within two seconds. Everything now points one way \u2014 this beat needs "
             "a frame with room in front of him, and that is a change to the pose skeleton "
-            "itself, which is a build rather than a render."),
+            "itself, which is a build rather than a render."
+            "\n\nUPDATE, 08-22 09:45 \u2014 THAT BUILD IS DONE AND THE BEAT NOW HAS BOTH "
+            "THINGS AT ONCE. The pose skeleton was redrawn at 60% of its old size and moved "
+            "to the right, and there is ground in front of him for the first time. Nothing "
+            "else changed to get it: the words going in are identical to the four attempts "
+            "that failed, so the framing was always geometry and never vocabulary. Two "
+            "smaller sizes were tried in the same batch and both cost costume detail \u2014 "
+            "at half size his shirt loses its frog closures, at 42% his sleeves grow a "
+            "floral print \u2014 so 60% is the one. The sapling is composited into the new "
+            "ground on the left, clear of him, and the clip at the top of this beat is the "
+            "first footage in this tree with your goblin AND the plant in it together."
+            "\n\nAND THE PLANT SURVIVING WAS NOT WHAT WE THOUGHT. The theory this morning "
+            "was that the plant dissolved because it sat ON him in his own colour. The clip "
+            "made this morning with the plant standing well clear of him lost it in FIVE "
+            "frames \u2014 faster, not slower \u2014 so that theory is wrong and is withdrawn. "
+            "What actually carries a drawn object through a motion render is being NAMED in "
+            "the motion prompt: every object that has survived one \u2014 beat 12's sapling, "
+            "beat 21's leaf, beat 19's fig, beat 06's board \u2014 was named, and the only two "
+            "that vanished were beat 16's, the only two nobody had written down. One sentence "
+            "fixed it. STILL OPEN ON THIS BEAT AND BOTH ARE YOURS: the eye, which is on "
+            "/review/ep2-goblin-eye-0822 with the rest of the wave; and whether this goes in "
+            "the cut at all."),
         faults_from="ship-manifest.yaml beat 16",
         candidates=[
+            dict(file=f"{CAND_URL}/16-why-LTX-ep2-b16-spanmotion-r2-0822.mp4",
+                 poster=f"{POSTER_URL}/16-why-LTX-ep2-b16-spanmotion-r2-0822.jpg",
+                 label="BOTH AT ONCE, finally — your goblin AND the sapling, and he is behind it. 08-22", tag="pass",
+                 verdict="The plant is in the picture at the first frame and still in the picture at the last, in the same place, two leaves on one stem — counted, not eyeballed: about 8,500 leaf-green pixels at frame 0 and about 8,800 at frame 104. He holds his face, his ears and the mandarin collar the whole way through, and he is small and set back with the seedling nearest the camera, which is your staging for this beat. STILL ON IT: the camera drifts in a little, which is a fault this whole motion recipe has and not this beat's; and the plant reads slightly more like a drawing laid on the picture than a thing growing in it.",
+                 diff="TWO changes from the clip below, one at a time, and the second one is the finding. First a new plate: the pose skeleton drawn at 60% of its old size, so for the first time there is ground in front of him — words could never do this, and four attempts proved it. Then the plant, composited into that ground, clear of him. That clip lost the plant in FIVE frames, which killed the theory that the plant died because it was sitting on him. What saved it was one sentence: the motion prompt now says a sapling is there. Every drawn object that has ever survived one of these renders was named in its prompt, and the only two that vanished were the only two that were not.",
+                 src="pipeline/jobs/ep2-b16-spanmotion-r2-0822.yaml"),
             dict(file=f"{CAND_URL}/16-why-LTX-ep2-b16-plantmotion-0822.mp4",
                  poster=f"{POSTER_URL}/16-why-LTX-ep2-b16-plantmotion-0822.jpg",
                  label="the same clip off a plate that HAS the plant \u2014 and the plant dissolves. 08-22", tag="fail",
