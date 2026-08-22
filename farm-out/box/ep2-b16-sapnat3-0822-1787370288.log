@@ -1,0 +1,39 @@
+#### job ep2-b16-sapnat3-0822-1787370288 attempt 1 start 2026-08-22T03:44:55Z
+
+==== step fetch START 2026-08-22T03:44:55Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b16sapnat3-0822\\fetch_init.py"]
+fetched b16-sapnat3-in-0822.png 1051194 bytes sha 478655e6f206062a6d6866d65c44f6cef49a62dc72391e7fa1fb086e7c9ffb41 OK
+fetched b16-sapnat3-in-mask-0822.png 4783 bytes sha b441a9ed600e47e05b19740a11bc1afe445d95a205b777483711f52d5ac7fda6 OK
+==== step fetch END rc=0 2026-08-22T03:44:56Z ====
+
+==== step dry START 2026-08-22T03:44:56Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b16sapnat3-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b16sapnat3-0822\\b16-sapnat3-in-0822.png", "--init-sha256", "478655e6f206062a6d6866d65c44f6cef49a62dc72391e7fa1fb086e7c9ffb41", "--mask-png", "C:\\banyan-farm\\b16sapnat3-0822\\b16-sapnat3-in-mask-0822.png", "--prompt-file", "C:\\banyan-farm\\b16sapnat3-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b16sapnat3-0822\\negative.txt", "--out", "C:\\banyan-farm\\b16sapnat3-0822\\b16-sapnat3-DRY.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "ATTACHED TO BOTH THE DRY STEP AND THE RENDER STEP, and true of each. ON THE DRY STEP it is a MASK GEOMETRY CHECK: it writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. WHAT TO CHECK: (1) one connected blob shaped like a stem with two leaves, not two blobs and not a rectangle; (2) it does not reach the top of the frame; (3) it does not cover the goblin's head or hands -- if it does, the pass will redraw HIM, which is a P4 fail by construction. ON THE RENDER STEP: one pass, one seed. 0.30 runs 12 of 40 steps from a latent that still holds the drawn structure, so the layout steps never run and the pass FINISHES the shape rather than inventing one. This is beat 03, whose motion take failed because the action names a trunk the plate does not contain -- same root cause as beat 02, and the b03 verdict says so.", "--dry-run"]
+DRY RUN -- no model loaded, nothing rendered.
+init_sha256 OK 478655e6f206062a6d6866d65c44f6cef49a62dc72391e7fa1fb086e7c9ffb41
+mask png corners=- bbox=[239, 308, 800, 1215]  0.6743 x 0.7459 of 832x1216
+WROTE C:\banyan-farm\b16sapnat3-0822\b16-sapnat3-DRY-mask.png
+rc=0 dry_run=1
+==== step dry END rc=0 2026-08-22T03:44:56Z ====
+
+==== step s20260820 START 2026-08-22T03:44:56Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "C:\\banyan-farm\\b16sapnat3-0822\\inpaint_fruit.py", "--init", "C:\\banyan-farm\\b16sapnat3-0822\\b16-sapnat3-in-0822.png", "--init-sha256", "478655e6f206062a6d6866d65c44f6cef49a62dc72391e7fa1fb086e7c9ffb41", "--mask-png", "C:\\banyan-farm\\b16sapnat3-0822\\b16-sapnat3-in-mask-0822.png", "--prompt-file", "C:\\banyan-farm\\b16sapnat3-0822\\prompt.txt", "--negative-file", "C:\\banyan-farm\\b16sapnat3-0822\\negative.txt", "--out", "C:\\banyan-farm\\b16sapnat3-0822\\b16-sapnat3-s20260820.png", "--steps", "40", "--cfg", "7.5", "--strength", "0.30", "--pad-crop", "64", "--blur", "8", "--seed", "20260820", "--note", "ATTACHED TO BOTH THE DRY STEP AND THE RENDER STEP, and true of each. ON THE DRY STEP it is a MASK GEOMETRY CHECK: it writes the mask and exits BEFORE a model is loaded, so a wrong mask costs seconds instead of a GPU fire. WHAT TO CHECK: (1) one connected blob shaped like a stem with two leaves, not two blobs and not a rectangle; (2) it does not reach the top of the frame; (3) it does not cover the goblin's head or hands -- if it does, the pass will redraw HIM, which is a P4 fail by construction. ON THE RENDER STEP: one pass, one seed. 0.30 runs 12 of 40 steps from a latent that still holds the drawn structure, so the layout steps never run and the pass FINISHES the shape rather than inventing one. This is beat 03, whose motion take failed because the action names a trunk the plate does not contain -- same root cause as beat 02, and the b03 verdict says so."]
+
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]
+Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00, 12.07it/s]
+Loading pipeline components...:  57%|█████▋    | 4/7 [00:01<00:01,  1.94it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  3.01it/s]
+Loading pipeline components...: 100%|██████████| 7/7 [00:02<00:00,  2.96it/s]
+C:\banyan-farm\venv\Lib\site-packages\torch\nn\modules\module.py:1370: UserWarning: expandable_segments not supported on this platform (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\c10/cuda/CUDAAllocatorConfig.h:39.)
+  return t.to(
+MODEL_LOADED cagliostrolab/animagine-xl-3.1 cuda/bfloat16 unet.in_channels=4 in 6s
+WROTE C:\banyan-farm\b16sapnat3-0822\b16-sapnat3-s20260820.png
+WROTE C:\banyan-farm\b16sapnat3-0822\b16-sapnat3-s20260820-mask.png
+WROTE C:\banyan-farm\b16sapnat3-0822\b16-sapnat3-s20260820.png.meta.yaml
+rc=0 render_s=3.8
+==== step s20260820 END rc=0 2026-08-22T03:45:10Z ====
+
+==== step publish START 2026-08-22T03:45:10Z ====
+argv: ["C:\\banyan-farm\\venv\\Scripts\\python.exe", "-c", "# EVERY FILE IS NAMED IN FULL, not matched by a glob. A glob that misses\n# publishes nothing while returning a code that reads like a render failure,\n# and box_enqueue.output_path_problems refuses a spec whose declared artifacts\n# are never named by any step -- which a wildcard defeats. Missing ONE file is\n# a FAIL of the job. No allow_fail anywhere in this spec.\nimport hashlib, os, shutil\nfrom_dir = \"C:/banyan-farm/b16sapnat3-0822\"\ndst = \"C:/banyan-farm/courier-box/farm-out/ep2-b16-sapnat3-0821\"\nNAMES = [\n    \"b16-sapnat3-s20260820.png\",\n    \"b16-sapnat3-s20260820-mask.png\",\n    \"b16-sapnat3-s20260820.png.meta.yaml\",\n    \"b16-sapnat3-in-0822.png\",\n    \"b16-sapnat3-in-mask-0822.png\",\n    \"prompt.txt\",\n    \"negative.txt\",\n]\nos.makedirs(dst, exist_ok=True)\nlines = []\nfor name in NAMES:\n    f = os.path.join(from_dir, name)\n    if not os.path.isfile(f):\n        raise SystemExit(\"!! missing %s -- refusing to call the job clean.\" % f)\n    shutil.copy2(f, dst)\n    with open(os.path.join(dst, name), \"rb\") as fh:\n        h = hashlib.sha256(fh.read()).hexdigest()\n    lines.append(h + \"  \" + name)\nwith open(os.path.join(dst, \"ep2-b16-sapnat3-0821.sha256\"), \"w\",\n          newline=\"\\n\") as fh:\n    fh.write(\"\\n\".join(sorted(lines)) + \"\\n\")\nprint(\"published\", len(lines), \"file(s) + manifest ->\", dst)\nraise SystemExit(0 if len(lines) == len(NAMES) else 1)\n"]
+published 7 file(s) + manifest -> C:/banyan-farm/courier-box/farm-out/ep2-b16-sapnat3-0821
+==== step publish END rc=0 2026-08-22T03:45:10Z ====
+#### job ep2-b16-sapnat3-0822-1787370288 finished rc=0 2026-08-22T03:45:10Z
