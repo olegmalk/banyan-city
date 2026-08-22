@@ -1,6 +1,6 @@
 # The masked lower-body pass — how the goblin finally sat down
 
-**2026-08-22, the v3 lane.** Four samples, about a hundred seconds of card,
+**2026-08-22, the v3 lane.** Five samples, about two minutes of card,
 `$0`. Written because the pose problem is solved and the next lane should
 inherit the mechanism rather than the ladder.
 
@@ -20,7 +20,7 @@ inherit the mechanism rather than the ladder.
       pastes the init's own rows 0..883 back, byte for byte, asserted.
 
 Assets: `pipeline/author_jerry_lowerbody_0822.py` (`--write`).
-Jobs: `ep2-b13-lowerbody-0822`, `-w2-`, `-w3-`, `-kneel-`.
+Jobs: `ep2-b13-lowerbody-0822`, `-w2-`, `-w3-`, `-kneel-`, `-oneknee-`.
 Evidence: `farm-out/ep2-goblin-lowerbody-0822/` (contact sheets + the two
 restored frames; the raw renders land under `farm-out/ep2-b13-lowerbody-*-0822/`
 by courier). NOT `review/` -- `.gitignore:60` is `review/**/*.png`, so evidence
@@ -54,7 +54,7 @@ this pass does not need it: the identity is the init's own pixels. It is also
 the one configuration in which the pose net has been observed to drive in this
 tree (four of four postures, twopass CORRECTION §3).
 
-## 3. What four rounds measured
+## 3. What five rounds measured
 
 | round | the one variable | result |
 |---|---|---|
@@ -62,8 +62,9 @@ tree (four of four postures, twopass CORRECTION §3).
 | r2 | the wording: `in tall grass` out, `seated, bare legs, dark shorts, dark boots` in | **SEATED.** Knees up and out past the authored hint, shins descending, feet planted. Seam invisible. One figure. Thighs pale on the lit side; feet are paws. |
 | r3 | the wording again, aimed at P3: `bare sage green legs`, `dark leather boots` | Real boots with soles and heels — and they run knee-high and hide the thighs, and the stance narrows. Not better than r2, differently wrong. |
 | **gate** | **the hint only** — seat → kneel, with the positive still saying `seated`, byte-identical | **THE HINT WON.** The legs go down and forward instead of up and out: limb mass at y 1180 is 245 px against r2's 0, and at y 1040 it spans x 0..746 against r2's 0..567. Against a contradicting noun. |
+| oneknee | the hint only — the third posed frame, and the first ASYMMETRIC one | **THE ASYMMETRY DROVE** and it is the highest in the set: mirror-asymmetry over the limb band 81.4, against the kneel's 71.4 and the seat's 60.0. **And it is the worst frame of the five**: the right thigh lands 80 RGB units from the canon's sage as a pink slab, where the kneel's reads 7. |
 
-Held across all four: init sha, mask sha, hint sha, net, scale 1.0,
+Held across all five: init sha, mask sha, hint sha, net, scale 1.0,
 `--pad-crop 0`, 40 steps, cfg 7.5, seed 20260823, no LoRA.
 
 ### The findings, ranked by how much they generalise
@@ -198,6 +199,14 @@ reframes three things at once:
   to attach.
 * **One variable against v2**, so a score is attributable: the added frames. Not
   the recipe, not the captions of the 21, not the repeat count.
+
+**The set has three posed frames and TWO of them are usable.** Seat and kneel
+carry the defect in a place a crop deletes (below); `oneknee` does not — the
+pink thigh is at mid-limb, inside the fold the frame exists to teach, and no
+crop reaches it. It is a RESEED candidate, not a shipping frame, and the reason
+is worth keeping: an anime checkpoint's prior for a small frontal figure is
+strongly bilateral, and forcing the two legs apart bought the geometry at the
+cost of the material. **The hint reached the pose and did not reach the paint.**
 
 ### And P3 does not have to be solved before the set is built
 
