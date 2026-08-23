@@ -10303,3 +10303,11 @@ hobby duplicate) — banyan.city now 404s; the GitHub repo and Pages mirror
 remain intact. Subscription/billing cancellation is a dashboard action for
 the account holder (Settings → Billing → the banyan team → cancel plan).
 Next chapter per the founder: computer science lessons.
+
+## 2026-08-23 — steward observability
+
+Roman demanded visibility into steward actions ("i need to see exactly what
+you are doing to banyan city"). STEWARD-LOG.md now exists at repo root:
+write-ahead intent logging for every steward action, committed before acting.
+The v2 upgrade design (pipeline/upgrade-v2-design.md) is being drafted for
+founder screening; nothing executes before approval.
