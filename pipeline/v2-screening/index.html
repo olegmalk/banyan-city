@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Queue v2 — screening card</title>
+<style>
+:root{
+  --bg:#0d1117; --panel:#161c24; --panel2:#1c2430; --edge:#2b3646;
+  --ink:#e8edf4; --dim:#9fb0c3; --faint:#5d6b7d;
+  --go:#3fb950; --go-soft:#12351d; --hot:#e8b339; --hot-soft:#3a2d10;
+  --kill:#f85149;
+  --sans:"Avenir Next","Helvetica Neue",system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.5;padding:36px 20px 80px}
+.wrap{max-width:900px;margin:0 auto}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--hot)}
+h1{font-size:34px;font-weight:700;letter-spacing:-.01em;margin:8px 0 4px}
+.sub{color:var(--dim);margin-bottom:26px}
+.sub b{color:var(--ink)}
+
+/* the life of a job — diagram */
+.diagram{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:18px 14px 6px;margin-bottom:30px}
+.diagram h2{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:0 0 4px 8px}
+svg{width:100%;height:auto;display:block}
+.stage rect{fill:var(--panel2);stroke:var(--edge);stroke-width:1.5;rx:6}
+.stage text{fill:var(--ink);font-family:var(--sans);font-size:14px;font-weight:600;text-anchor:middle}
+.stage .sm{fill:var(--dim);font-size:10.5px;font-weight:400}
+.arrow{stroke:var(--faint);stroke-width:2;fill:none;marker-end:url(#ah)}
+.jrail{fill:var(--hot-soft);stroke:var(--hot);stroke-width:1.2;rx:5}
+.jlabel{fill:var(--hot);font-family:var(--mono);font-size:11px;text-anchor:middle;letter-spacing:.08em}
+.jtick{stroke:var(--hot);stroke-width:1.5;stroke-dasharray:3 3}
+.vgate rect{fill:var(--go-soft);stroke:var(--go)}
+.vgate text{fill:var(--go)}
+.cap{color:var(--faint);font-size:12px;padding:10px 8px 12px}
+.cap b{color:var(--hot)}
+
+/* claims */
+.claims{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.claim{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:16px 18px}
+.claim__n{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.claim__t{font-size:16.5px;font-weight:700;margin:4px 0 8px;line-height:1.3}
+.claim__how{color:var(--dim);font-size:13.5px}
+.claim__how code{font-family:var(--mono);font-size:12px;color:var(--hot);background:var(--bg);padding:1px 5px;border-radius:3px}
+.kills{margin-top:12px;padding-top:10px;border-top:1px dashed var(--edge);font-size:12.5px}
+.kills b{color:var(--kill);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase}
+.kills span{color:var(--dim)}
+.verdict{margin-top:34px;background:var(--panel);border:1px solid var(--hot);border-radius:8px;padding:20px 22px}
+.verdict h2{font-size:15px;margin-bottom:6px}
+.verdict p{color:var(--dim);font-size:14px}
+@media(max-width:700px){.claims{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Banyan-city v2 · founder screening · 1 of 1 tonight</p>
+  <h1>Queue v2</h1>
+  <p class="sub">You are approving <b>how a render job lives and dies</b>. Seven claims, each killing a failure that really happened. Veto any card in one line — or say <b>pass</b>.</p>
+
+  <div class="diagram">
+    <h2>The life of one job</h2>
+    <svg viewBox="0 0 880 240">
+      <defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+        <path d="M0,0 L8,3.5 L0,7 z" fill="#5d6b7d"/></marker></defs>
+      <!-- journal rail -->
+      <rect class="jrail" x="30" y="176" width="820" height="34"/>
+      <text class="jlabel" x="440" y="197">JOURNAL — append-only · every arrow below writes here BEFORE it moves · survives any crash</text>
+      <!-- stages -->
+      <g class="stage"><rect x="30" y="60" width="130" height="56"/>
+        <text x="95" y="84">SPEC</text><text class="sm" x="95" y="101">job + fingerprint</text></g>
+      <g class="stage"><rect x="205" y="60" width="130" height="56"/>
+        <text x="270" y="84">INTENT</text><text class="sm" x="270" y="101">written to disk first</text></g>
+      <g class="stage"><rect x="380" y="60" width="130" height="56"/>
+        <text x="445" y="84">CLAIM</text><text class="sm" x="445" y="101">one worker, atomically</text></g>
+      <g class="stage"><rect x="555" y="60" width="130" height="56"/>
+        <text x="620" y="84">RUN</text><text class="sm" x="620" y="101">render on the machine</text></g>
+      <g class="stage vgate"><rect x="730" y="60" width="120" height="56"/>
+        <text x="790" y="84">VERIFY</text><text class="sm" x="790" y="101" fill="#3fb950">bytes exist, name derived</text></g>
+      <!-- arrows -->
+      <path class="arrow" d="M160 88 H198"/><path class="arrow" d="M335 88 H373"/>
+      <path class="arrow" d="M510 88 H548"/><path class="arrow" d="M685 88 H723"/>
+      <!-- journal ticks -->
+      <line class="jtick" x1="270" y1="116" x2="270" y2="176"/>
+      <line class="jtick" x1="445" y1="116" x2="445" y2="176"/>
+      <line class="jtick" x1="620" y1="116" x2="620" y2="176"/>
+      <line class="jtick" x1="790" y1="116" x2="790" y2="176"/>
+      <!-- outcomes -->
+      <text x="790" y="34" text-anchor="middle" fill="#3fb950" font-size="12.5" font-family="ui-monospace">DONE only after verify ✓</text>
+      <text x="95" y="150" fill="#9fb0c3" font-size="12">duplicate fingerprint → <tspan fill="#f85149">refused at the door</tspan></text>
+      <text x="620" y="150" fill="#9fb0c3" font-size="12">machine dies here → journal still says <tspan fill="#e8b339">attempted</tspan>, sweeper retries</text>
+    </svg>
+    <p class="cap">The <b>journal rail</b> is the whole trick: the record is written <b>before</b> the action, so no crash can erase its own evidence. Everything else follows from it.</p>
+  </div>
+
+  <div class="claims">
+    <div class="claim"><p class="claim__n">CLAIM 1</p><p class="claim__t">Written down before it runs</p>
+      <p class="claim__how">The journal gets <code>attempt: beat X, recipe Y</code> before the render starts.</p>
+      <p class="kills"><b>Kills</b> <span>the BSOD that left attempt-count 0 — a crash loop the old guard structurally couldn't see.</span></p></div>
+    <div class="claim"><p class="claim__n">CLAIM 2</p><p class="claim__t">Same job can't run twice</p>
+      <p class="claim__how">Every spec has a fingerprint; the queue refuses ones it has seen — checked against <code>done + failed + live</code>, at the door.</p>
+      <p class="kills"><b>Kills</b> <span>b19 rendered twice by a resumed agent, 7 minutes after it finished.</span></p></div>
+    <div class="claim"><p class="claim__n">CLAIM 3</p><p class="claim__t">Queue lives on the working machine</p>
+      <p class="claim__how">Each worker owns its queue dir; the Mac orchestrates by <em>filing</em> work, not by staying alive.</p>
+      <p class="kills"><b>Kills</b> <span>"HARDWARE SHOULD WORK AND EARN ITS KEEP" — the farm starving whenever the orchestrator died.</span></p></div>
+    <div class="claim"><p class="claim__n">CLAIM 4</p><p class="claim__t">Done means verified</p>
+      <p class="claim__how">DONE requires: output exists, has bytes, sha256 recorded, and the filename came from the <em>same code</em> that wrote the file.</p>
+      <p class="kills"><b>Kills</b> <span>8 finished renders filed as failures by a hand-typed filename check; manifests attested before copying.</span></p></div>
+    <div class="claim"><p class="claim__n">CLAIM 5</p><p class="claim__t">No hand-run steps anywhere</p>
+      <p class="claim__how">Every recurring action names its scheduler in code — cron, launchd, or Actions. A step with no scheduler fails review.</p>
+      <p class="kills"><b>Kills</b> <span>"Nothing scheduled them. Nothing ever had." — the queue page that went stale twice in two days.</span></p></div>
+    <div class="claim"><p class="claim__n">CLAIM 6</p><p class="claim__t">Media never enters git</p>
+      <p class="claim__how">Renders land in a content-addressed store on disk; git carries only small text records pointing at hashes.</p>
+      <p class="kills"><b>Kills</b> <span>the 13 GB repo whose 41-minute clones killed its own deploys.</span></p></div>
+    <div class="claim"><p class="claim__n">CLAIM 7</p><p class="claim__t">One sample before any batch</p>
+      <p class="claim__how">Migration step 1: a single beat through the new queue, screened by you, before anything batches.</p>
+      <p class="kills"><b>Kills</b> <span>15 beats of "literally just frozen frames," rendered on a metric's say-so.</span></p></div>
+  </div>
+
+  <div class="verdict">
+    <h2>Your verdict</h2>
+    <p>Say <b>pass</b> in the chat — or name the card number you're vetoing and why, one line each. Tonight's build follows your word, and the first render you'll see is the Claim-7 sample.</p>
+  </div>
+</div>
+</body>
+</html>

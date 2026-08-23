@@ -59,3 +59,9 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   the clip-view requirement) are dad-via-Roman relays. The rebuild-the-queue-
   tonight request was Roman's own. Earlier entry "(Roman + dad, in chat)"
   should read "(Roman relaying dad, in chat)".
+
+- RESULT: queue-v2 screening prepared as a visual card
+  (pipeline/v2-screening/index.html — 7 claims, one diagram) after Roman
+  rejected the raw-markdown format twice. Roman defers his verdict to
+  tomorrow morning; nothing builds until he rules. Overnight: only the
+  already-logged review/grounding agents re-fire at 23:41 (API limit reset).
