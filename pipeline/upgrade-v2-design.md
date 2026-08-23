@@ -43,7 +43,7 @@ the same machine-crashing job again forever. A status page went stale because
 1. **Videos move out of git.** Each video lives on a disk under a name that is
    the fingerprint (sha256) of its own bytes; git keeps only a small text
    "manifest" saying what it is, where it came from, and its fingerprint. A
-   gate in CI refuses any commit that tries to put a big file back in.
+   gate in CI (the auto-checks GitHub runs on every push) refuses any commit that tries to put a big file back in.
 2. **Every job writes "I am starting attempt 3" to a crash-proof journal
    BEFORE it starts** — so even if the job bluescreens the whole computer, the
    attempt is on record and a job gets at most N tries before it is retired to
@@ -785,7 +785,9 @@ force-push**, migration before production. **Step 0 gates all.**
   this Mac; add the box_autofill host guard. Verification: unit tests for
   the gate; `git config core.hooksPath` returns `pipeline/hooks`;
   `gh run list` shows green-skipped hourly runs.
-- **Step 2 — settle the REAL dirty tree: 281 paths, not 14.** Three
+- **Step 2 — settle the REAL dirty tree: 281 paths, not 14.** *(Steps 1–3
+  are one Mac-local prep phase; within it tooling lands first — step 3's
+  `cas_put` exists before this step runs.)* Three
   classes, three treatments, none of them "commit it all":
   (a) **Modified tracked media** — the ship mp4 and the two farm-out graded
   PNGs — are **CAS'd with manifests, then DISCARDED from the worktree
