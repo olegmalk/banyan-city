@@ -31,3 +31,15 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   no spend before founder approval of that design.
 - NOT PLANNED without a new logged intent: touching the rtx5090 box or any
   farm machine, resuming any queue, modifying pipeline code, any distribution.
+
+## 2026-08-23 — late evening
+
+- INTENT (Roman + dad, in chat): build the LOCAL bird-eye view of banyan-city,
+  from scratch. Core requirement (dad, via Roman): a CLIP VIEW — every clip
+  shows all its data: which story node/beat it belongss to, the prompts, what
+  is being said (VO), models, refs, render files, grades, queue history.
+  Plan: read-only generator `pipeline/birdseye.py` scans the repo and emits a
+  self-contained local page at `_birdseye/index.html` (untracked, local-only —
+  no hosting, no deploy). Ground agents map the real data schemas first; the
+  generator gets committed only after adversarial QA. No machine access, no
+  renders, no network beyond this repo's files.
