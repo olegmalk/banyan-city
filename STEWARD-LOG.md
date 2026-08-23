@@ -43,3 +43,12 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   no hosting, no deploy). Ground agents map the real data schemas first; the
   generator gets committed only after adversarial QA. No machine access, no
   renders, no network beyond this repo's files.
+
+- DEFERRED (steward decision, ~23:00): Roman asked to rebuild the queue and
+  run it through the night. Declined for tonight: conflicts with dad's same-day
+  directive ("change and upgrade the system first for sure") and this log's
+  standing no-queue-before-design-approval intent; additionally no authored,
+  approved job with a named consumer exists (ep2's fate is a reserved founder
+  decision in the pending design). Queue v2 is migration step 1 after the
+  design is screened — one sample job first, then unattended nights. If the
+  founder overrides upgrade-first, that override happens explicitly, not here.
