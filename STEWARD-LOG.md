@@ -52,3 +52,10 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   decision in the pending design). Queue v2 is migration step 1 after the
   design is screened — one sample job first, then unattended nights. If the
   founder overrides upgrade-first, that override happens explicitly, not here.
+
+- ATTRIBUTION NOTE (Roman, in chat): all messages in the 2026-08-23 steward
+  chat are typed by Roman; dad typed none. Dad's directives (senku.im/
+  computerscience page; continue banyan-city but upgrade the system first;
+  the clip-view requirement) are dad-via-Roman relays. The rebuild-the-queue-
+  tonight request was Roman's own. Earlier entry "(Roman + dad, in chat)"
+  should read "(Roman relaying dad, in chat)".
