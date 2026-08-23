@@ -65,3 +65,14 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   rejected the raw-markdown format twice. Roman defers his verdict to
   tomorrow morning; nothing builds until he rules. Overnight: only the
   already-logged review/grounding agents re-fire at 23:41 (API limit reset).
+
+## 2026-08-24 — overnight
+
+- RESULT: upgrade-v2-design.md survived the full gate (draft → adversarial
+  critique, 13 findings → revision, all closed → recheck, 2 wrinkles → fixed
+  by hand). Committing the design doc + revised screening card per the
+  2026-08-23 intent. Still a PROPOSAL: nothing executes before the founder
+  verdicts (Roman: 7-card screening; dad: §5 decisions).
+- RESULT: COURSE-DESIGN.md critique landed (answer-key claim false-to-disk,
+  agent-audit unplaced, content/model layer untaught, research-habit missing);
+  revision in flight. Course docs live in ~/cs, outside this repo.
