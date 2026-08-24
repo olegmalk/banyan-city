@@ -108,3 +108,10 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   identical sample re-run isn't "a batch") — documented in the builder
   report. NEXT (own intent when it fires): the Claim-7 sample render on this
   Mac, founder-screened before any batch.
+
+- INTENT: Claim-7 sample — ONE job through queue2 end-to-end on this Mac:
+  enqueue a $0 local re-render of an approved 002b beat (render_local,
+  AnimateDiff/MPS), worker runs it, verify-then-attest, then Roman screens
+  the clip and records the founder verdict row (ledger/sample-verdicts.yaml).
+  This validates the queue machinery; the verdict gates only this recipe's
+  batches. No box access, no spend, no publication.
