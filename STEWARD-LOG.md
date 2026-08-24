@@ -98,3 +98,13 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   machine access, no renders yet; the Claim-7 sample render gets its own
   intent entry after the build passes review. Commit only after steward
   review of the builder's output.
+
+- RESULT: queue v2 core BUILT and committed. pipeline/queue2/ (journal 281L,
+  queue2 654L, sweep 162L) + test_queue2.py (487L, 55 checks incl. kill -9,
+  duplicate-at-the-door, corrupt-journal recovery, verify-then-attest,
+  sample_before_batch). Steward re-ran the suite independently (pass) and
+  spot-checked the seven claims in code before committing. One principled
+  deviation (recipe population counts distinct spec contents, so a byte-
+  identical sample re-run isn't "a batch") — documented in the builder
+  report. NEXT (own intent when it fires): the Claim-7 sample render on this
+  Mac, founder-screened before any batch.
