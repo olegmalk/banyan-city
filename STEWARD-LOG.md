@@ -283,3 +283,13 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   the founder's own rule; fault 2 (motion) levers named for the video rung.
   Step zero is $0 and needs no GPU: grade four already-rendered-but-unlooked-at
   v3 probe grids first. NOTHING rendered/enqueued — awaits founder screening.
+
+- FINDING (Roman, 2026-08-25 ~00:40): the box got LOGGED OUT and the
+  banyan-q2-worker task stopped with the session; Roman re-logged in and it
+  resumed (confirmed Running, polling clean, empty queue). So self-sufficiency
+  is only PARTIAL: the task survives a reboot (auto-logon brings the session
+  back) but NOT an interactive logout. Fix for the morning: register the
+  worker to "run whether user is logged on or not" (SYSTEM or stored creds,
+  /RU /RP or a service wrapper) so a logout can't idle the farm. Until then a
+  logout is a real stop — same human-awake-dependency class the v2 design
+  names. Nothing lost; no approved work was waiting to run anyway.
