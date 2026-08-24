@@ -215,3 +215,16 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   Same generator, same data layer, same one-file local output. Overnight
   adversarial gate (dad-lens UX + display-truth spot check) runs before it is
   shown to dad.
+
+- FOUNDER DECISION (Roman relaying dad, 2026-08-24 ~23:20): "dad wants us to
+  continue" — the night queue RESUMES ep2 finish work (grading/finish passes
+  on already-approved footage; risks were laid out to Roman first: day-one
+  code, box crash, spec mistranslation, wasted-effort-if-ep2-dead — dad's
+  continue answers the last one). Constraints in force tonight: ONE job filed
+  and verified before the rest release (one-before-batch applied to the
+  migration itself); NO new motion renders except the single diagnosis sample
+  (founder's rejection stands, gate is fail-closed); publication still gated;
+  $0 only.
+- INTENT: inventory the held ep2-finish backlog, translate specs to queue2,
+  file one, verify its attestation, release the remainder for the night.
+  Depends on the box's self-sufficiency canary (in flight).
