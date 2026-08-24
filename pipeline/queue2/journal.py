@@ -131,9 +131,28 @@ def _boot_epoch_windows():
                 return float(calendar.timegm(st) - offset_min * 60)
     except (OSError, ValueError, subprocess.SubprocessError):
         pass
-    # Fallback (wmic is deprecated and absent on some Win11 builds):
-    # boot epoch derived from the monotonic-since-boot tick counter. Jitters
-    # ~1s between processes; BOOT_TOLERANCE_S absorbs that.
+    # wmic is deprecated and ABSENT on this farm's Win11 box (measured
+    # 2026-08-24). Same source via PowerShell CIM: LastBootUpTime is a value
+    # FIXED at boot, stable across every process that asks -- unlike the
+    # tick fallback below, which drifts by however long the machine spent
+    # powered off or suspended inside one fast-startup kernel session
+    # (measured 9.2h apart on the box). Slow (~1s) but cached per process.
+    try:
+        out = subprocess.run(
+            ["powershell", "-NoProfile", "-Command",
+             "[long](((Get-CimInstance Win32_OperatingSystem).LastBootUpTime"
+             ".ToUniversalTime() - [datetime]'1970-01-01T00:00:00Z')"
+             ".TotalSeconds)"],
+            capture_output=True, text=True, encoding="utf-8",
+            errors="replace", timeout=30).stdout.strip()
+        if out:
+            return float(int(out))
+    except (OSError, ValueError, subprocess.SubprocessError):
+        pass
+    # Last resort: boot epoch derived from the monotonic-since-boot tick
+    # counter. Jitters ~1s between processes (BOOT_TOLERANCE_S absorbs
+    # that) and shifts across suspend -- acceptable only when both stable
+    # sources are gone.
     try:
         import ctypes
         ticks_ms = ctypes.windll.kernel32.GetTickCount64()
