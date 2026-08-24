@@ -76,3 +76,13 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
 - RESULT: COURSE-DESIGN.md critique landed (answer-key claim false-to-disk,
   agent-audit unplaced, content/model layer untaught, research-habit missing);
   revision in flight. Course docs live in ~/cs, outside this repo.
+
+- RESULT: bird-eye console SHIPPED. pipeline/birdseye.py (read-only generator,
+  stdlib+pyyaml, ~2s full scan) emits _birdseye/index.html — overview (story
+  tree w/ per-beat coverage, totals, data-health) + dad's clip view (every
+  clip: node/beat/script/VO/prompt-with-source/model/seed/files/sha256/grades/
+  queue rows/cost). Gated: truth check on 6 dossiers field-by-field → 3
+  blockers + 9 findings fixed → re-verify (all tiles independently reproduced)
+  → code review (crash vectors, injection, git-offline) → 10 fixes → smoke 6/6
+  PASS. Output dir gitignored (media-out-of-git rule applies to our own tool).
+  Open with: python3 pipeline/birdseye.py && open _birdseye/index.html

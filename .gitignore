@@ -96,3 +96,4 @@ pipeline/.decisions-state.json
 farm-out/**/*.safetensors
 farm-out/**/*.ckpt
 farm-out/**/*.pt
+_birdseye/
