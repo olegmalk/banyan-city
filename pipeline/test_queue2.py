@@ -213,7 +213,8 @@ def test_write_ahead_survives_kill9(td):
     proc = subprocess.Popen(
         [sys.executable, script, q.root, q.store, q.verdicts_path,
          str(PIPELINE)],
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+        encoding="utf-8", errors="replace")   # reader hygiene, design §2.3
     line = proc.stdout.readline().strip()
     check("the worker subprocess claimed the job", line == "CLAIMED victim")
     # SIGKILL on POSIX, TerminateProcess on Windows -- the same uncatchable

@@ -272,9 +272,15 @@ class Journal:
         table is never compacted: it is the idempotency memory and it is
         tiny. Returns the number of rows retired."""
         cutoff = time.time() - keep_days * 86400.0
+        # `<=`, not `<`: on Windows time.time() is GetSystemTimeAsFileTime,
+        # which ticks every 15.625 ms -- an attempt started and finished
+        # inside one tick has started_epoch EXACTLY equal to a keep_days=0
+        # cutoff, and a strict `<` would silently retire nothing. Measured on
+        # the rtx5090 box 2026-08-24: 200 tight time.time() samples, ONE
+        # distinct value. At keep_days=14 the boundary case cannot matter.
         rows = [dict(r) for r in self._exec(
             "SELECT * FROM attempts WHERE state IN "
-            "('DONE','FAILED','INTERRUPTED') AND started_epoch < ?",
+            "('DONE','FAILED','INTERRUPTED') AND started_epoch <= ?",
             (cutoff,)).fetchall()]
         if not rows:
             return 0
