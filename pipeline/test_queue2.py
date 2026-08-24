@@ -32,8 +32,8 @@ sys.path.insert(0, str(PIPELINE))
 from queue2 import (
     DuplicateSpec, HoldActive, Journal, JournalCorrupt, Queue2,
     ResidencyError, SampleBeforeBatch, VerifyFailed, ZombieAttempt,
-    output_path_for, queue2_sweep, recipe_fingerprint, record_sample_verdict,
-    spec_fingerprint, startup_sweep,
+    boot_id, output_path_for, queue2_sweep, recipe_fingerprint,
+    record_sample_verdict, same_boot, spec_fingerprint, startup_sweep,
 )
 from queue2.sweep import compact_journal, pid_alive
 
@@ -296,6 +296,43 @@ def test_sweep_requeues_then_retires_and_zombies_cannot_attest(td):
           == ["INTERRUPTED", "INTERRUPTED"])
 
 
+def test_boot_id_closes_pid_reuse(td):
+    q = mkq(td)
+    this = boot_id()
+    check("boot_id() answers on this platform -- a real id, not unknown",
+          this != "" and float(this) > 0)
+    check("and is stable within one boot", boot_id() == this)
+    check("small cross-method jitter is the SAME boot (wmic vs tick "
+          "fallback disagree by a second or two)",
+          same_boot("%.0f" % (float(this) - 3), this) is True)
+    check("an unknown/legacy boot id gives NO boot verdict -- pid decides",
+          same_boot(None, this) is None and same_boot("", this) is None)
+
+    # THE HOLE, induced: an attempt whose pid is alive TODAY (our own --
+    # nothing is more alive) but whose recorded boot ended long ago. Before
+    # this fix pid_alive() called it live forever; a rebooted box could
+    # never reclaim the job.
+    q.enqueue(spec("reused-pid", model="bootfix", max_attempts=1))
+    q.claim(pid=os.getpid())
+    q.journal._exec("UPDATE attempts SET boot_id=? WHERE job_id='reused-pid'",
+                    ("%.0f" % (float(this) - 86400.0),))
+    q.journal.db.commit()
+    report = startup_sweep(q)
+    row = q.journal.attempts_for("reused-pid")[0]
+    check("an attempt from a PREVIOUS boot is dead even though its pid is "
+          "alive now -- pid reuse cannot fake liveness",
+          report["interrupted"] == 1 and row["state"] == "INTERRUPTED"
+          and "boot" in (row["reason"] or ""))
+
+    # And the guard does not overreach: same boot + live pid is untouched.
+    q.enqueue(spec("actually-live", model="bootfix2"))
+    q.claim(pid=os.getpid())
+    report2 = startup_sweep(q)
+    check("a live attempt on THIS boot is not swept",
+          report2["interrupted"] == 0
+          and q.journal.attempts_for("actually-live")[0]["state"] == "STARTED")
+
+
 def test_verify_then_attest(td):
     q = mkq(td)
     q.enqueue(spec("proof", model="attest"))
@@ -507,6 +544,7 @@ def main():
         test_duplicate_rejected_across_live_and_terminal,
         test_write_ahead_survives_kill9,
         test_sweep_requeues_then_retires_and_zombies_cannot_attest,
+        test_boot_id_closes_pid_reuse,
         test_verify_then_attest,
         test_corrupt_journal_is_loud_then_recoverable,
         test_sample_before_batch,

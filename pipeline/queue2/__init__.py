@@ -12,7 +12,7 @@ verdict gate between one sample and any batch.
     from queue2 import Queue2, queue2_sweep, record_sample_verdict
 """
 
-from .journal import Journal, JournalCorrupt, ZombieAttempt
+from .journal import Journal, JournalCorrupt, ZombieAttempt, boot_id, same_boot
 from .queue2 import (
     APPROVE_VERDICTS,
     DuplicateSpec,
@@ -34,7 +34,7 @@ __all__ = [
     "APPROVE_VERDICTS", "DuplicateSpec", "HoldActive", "Journal",
     "JournalCorrupt", "Queue2", "Queue2Error", "ResidencyError",
     "SampleBeforeBatch", "SpecInvalid", "VerifyFailed", "ZombieAttempt",
-    "compact_journal", "output_path_for", "pid_alive", "queue2_sweep",
-    "recipe_fingerprint", "record_sample_verdict", "spec_fingerprint",
-    "startup_sweep",
+    "boot_id", "compact_journal", "output_path_for", "pid_alive",
+    "queue2_sweep", "recipe_fingerprint", "record_sample_verdict",
+    "same_boot", "spec_fingerprint", "startup_sweep",
 ]

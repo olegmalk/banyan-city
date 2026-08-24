@@ -40,11 +40,11 @@ import sys
 import time
 
 try:
-    from .journal import JournalCorrupt
+    from .journal import JournalCorrupt, boot_id, same_boot
     from .queue2 import MAX_ATTEMPTS_DEFAULT, Queue2
 except ImportError:  # run as a script
     sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    from queue2.journal import JournalCorrupt
+    from queue2.journal import JournalCorrupt, boot_id, same_boot
     from queue2.queue2 import MAX_ATTEMPTS_DEFAULT, Queue2
 
 STILL_ACTIVE = 259  # Windows GetExitCodeProcess sentinel
@@ -81,15 +81,31 @@ def pid_alive(pid) -> bool:
 
 
 def startup_sweep(q: Queue2) -> dict:
-    """Reconcile running/ against the journal. Returns honest counts."""
+    """Reconcile running/ against the journal. Returns honest counts.
+
+    Boot identity outranks pid liveness: a pid is only a name within one
+    boot, and after a reboot the OS re-issues the same numbers. An attempt
+    recorded under another boot is dead no matter how alive its pid looks
+    today -- that pid is somebody else. Rows with no boot id (legacy, or a
+    platform that gave no answer) fall back to the pid probe alone."""
     report = {"interrupted": 0, "requeued": 0, "retired": 0, "orphaned": 0}
+    this_boot = boot_id()
 
     for row in q.journal.started_rows(machine=q.machine):
-        if pid_alive(row["pid"]):
+        boot_match = same_boot(row.get("boot_id"), this_boot)
+        if boot_match is False:
+            reason = ("attempt %d belongs to boot %s but this is boot %s -- "
+                      "the host rebooted under it; pid %s is not evidence "
+                      "(pids are re-issued each boot); attempt consumed"
+                      % (row["attempt_n"], row.get("boot_id"), this_boot,
+                         row["pid"]))
+        elif pid_alive(row["pid"]):
             continue
-        reason = ("process %s on %s is gone with the attempt still open -- "
-                  "host death, kill, or closed window; attempt %d consumed"
-                  % (row["pid"], row["machine"], row["attempt_n"]))
+        else:
+            reason = ("process %s on %s is gone with the attempt still open "
+                      "-- host death, kill, or closed window; attempt %d "
+                      "consumed" % (row["pid"], row["machine"],
+                                    row["attempt_n"]))
         if not q.journal.mark_interrupted(row["attempt_id"], reason):
             continue  # reached a terminal state between listing and marking
         report["interrupted"] += 1

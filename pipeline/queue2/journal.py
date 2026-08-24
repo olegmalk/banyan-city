@@ -35,6 +35,8 @@ from __future__ import annotations
 import json
 import os
 import sqlite3
+import subprocess
+import sys
 import time
 
 
@@ -73,7 +75,8 @@ CREATE TABLE IF NOT EXISTS attempts (
     output_path     TEXT,
     readback_sha256 TEXT,
     readback_bytes  INTEGER,
-    readback_ts     TEXT
+    readback_ts     TEXT,
+    boot_id         TEXT
 );
 CREATE INDEX IF NOT EXISTS attempts_job   ON attempts (job_id);
 CREATE INDEX IF NOT EXISTS attempts_state ON attempts (state);
@@ -92,6 +95,98 @@ def utcnow() -> str:
     return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
 
+# ---- boot identity ---------------------------------------------------------
+# WHY: a pid is only meaningful within one boot. After a reboot the OS hands
+# the same numbers out again, so a STARTED row from the previous boot can
+# point at a pid that is alive TODAY doing something else -- and pid_alive()
+# would call the dead attempt live forever. The journal therefore records
+# which boot an attempt belongs to; the sweep treats a row from another boot
+# as dead no matter what its pid looks like now.
+
+_BOOT_ID_CACHE = None
+BOOT_TOLERANCE_S = 5.0  # two epochs this close are the same boot (a real
+                        # reboot on the box takes ~90s; method jitter is <2s)
+
+
+def _boot_epoch_windows():
+    # Preferred: WMI's LastBootUpTime, a string FIXED at boot -- stable
+    # across every process that asks. CIM datetime: yyyymmddHHMMSS.ffffff+UUU
+    # where UUU is minutes ahead of UTC.
+    try:
+        out = subprocess.run(
+            ["wmic", "os", "get", "lastbootuptime", "/value"],
+            capture_output=True, text=True, encoding="utf-8",
+            errors="replace", timeout=15).stdout
+        for line in out.splitlines():
+            if "=" in line and "lastbootuptime" in line.lower():
+                stamp = line.split("=", 1)[1].strip()
+                base, rest = stamp[:14], stamp[14:]
+                offset_min = 0
+                for sign in ("+", "-"):
+                    if sign in rest:
+                        offset_min = int(rest[rest.index(sign):])
+                        break
+                import calendar
+                st = time.strptime(base, "%Y%m%d%H%M%S")
+                return float(calendar.timegm(st) - offset_min * 60)
+    except (OSError, ValueError, subprocess.SubprocessError):
+        pass
+    # Fallback (wmic is deprecated and absent on some Win11 builds):
+    # boot epoch derived from the monotonic-since-boot tick counter. Jitters
+    # ~1s between processes; BOOT_TOLERANCE_S absorbs that.
+    try:
+        import ctypes
+        ticks_ms = ctypes.windll.kernel32.GetTickCount64()
+        return time.time() - ticks_ms / 1000.0
+    except (OSError, AttributeError):
+        return None
+
+
+def _boot_epoch_posix():
+    if sys.platform == "darwin":
+        try:
+            out = subprocess.run(["sysctl", "-n", "kern.boottime"],
+                                 capture_output=True, text=True,
+                                 timeout=15).stdout
+            # "{ sec = 1756020000, usec = 123456 } Mon Aug 24 ..."
+            sec = out.split("sec =", 1)[1].split(",", 1)[0].strip()
+            return float(int(sec))
+        except (OSError, ValueError, IndexError, subprocess.SubprocessError):
+            return None
+    try:
+        with open("/proc/stat", encoding="utf-8") as fh:  # linux
+            for line in fh:
+                if line.startswith("btime "):
+                    return float(int(line.split()[1]))
+    except (OSError, ValueError, IndexError):
+        pass
+    return None
+
+
+def boot_id() -> str:
+    """This boot's identity: the boot epoch as a whole-second string.
+    Empty string when the platform gives no answer -- UNKNOWN, never a lie;
+    the sweep falls back to pid-liveness alone for unknown rows."""
+    global _BOOT_ID_CACHE
+    if _BOOT_ID_CACHE is None:
+        epoch = (_boot_epoch_windows() if sys.platform == "win32"
+                 else _boot_epoch_posix())
+        _BOOT_ID_CACHE = "%.0f" % epoch if epoch is not None else ""
+    return _BOOT_ID_CACHE
+
+
+def same_boot(recorded, current) -> bool:
+    """True only when BOTH ids are known and name the same boot (within
+    tolerance -- wmic and the tick fallback may disagree by a second or two).
+    Either side unknown/legacy-NULL -> None: no boot verdict, pid decides."""
+    if not recorded or not current:
+        return None
+    try:
+        return abs(float(recorded) - float(current)) <= BOOT_TOLERANCE_S
+    except ValueError:
+        return recorded == current
+
+
 class Journal:
     def __init__(self, path: str):
         self.path = path
@@ -107,6 +202,13 @@ class Journal:
             if verdict != "ok":
                 raise sqlite3.DatabaseError("integrity_check: %s" % verdict)
             self.db.executescript(SCHEMA)
+            # Migration for journals created before boot_id existed (the
+            # box's live journal.db): CREATE IF NOT EXISTS will not add a
+            # column, ALTER does. Old rows stay NULL = boot unknown.
+            cols = [r[1] for r in
+                    self.db.execute("PRAGMA table_info(attempts)").fetchall()]
+            if "boot_id" not in cols:
+                self.db.execute("ALTER TABLE attempts ADD COLUMN boot_id TEXT")
             self.db.commit()
         except sqlite3.DatabaseError as exc:
             # Release the OS handle before raising. CPython's sqlite3 keeps a
@@ -189,14 +291,18 @@ class Journal:
     # ---- attempt lifecycle ---------------------------------------------
 
     def record_started(self, job_id: str, attempt_n: int, machine: str,
-                       pid: int) -> int:
+                       pid: int, boot: str = None) -> int:
         """THE write-ahead record. Committed (and, at synchronous=FULL,
         fsync'd) before the caller spawns anything. Returns the attempt
-        token every terminal transition must present."""
+        token every terminal transition must present. The row carries this
+        boot's id: a pid is only a name within one boot, and the sweep must
+        be able to see that a row belongs to a boot that is over."""
         cur = self._exec(
             "INSERT INTO attempts (job_id, attempt_n, machine, pid, state, "
-            "started_ts, started_epoch) VALUES (?, ?, ?, ?, 'STARTED', ?, ?)",
-            (job_id, attempt_n, machine, int(pid), utcnow(), time.time()))
+            "started_ts, started_epoch, boot_id) "
+            "VALUES (?, ?, ?, ?, 'STARTED', ?, ?, ?)",
+            (job_id, attempt_n, machine, int(pid), utcnow(), time.time(),
+             boot_id() if boot is None else boot))
         self.db.commit()
         return cur.lastrowid
 
