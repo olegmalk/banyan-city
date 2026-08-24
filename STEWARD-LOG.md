@@ -204,3 +204,14 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   (resemblance -> character-reference thread incl. the IPA run where the ref
   provably never reached the code; motion -> frozen-frames/metric thread).
   ONE new sample comes out of diagnosis, not fifteen.
+
+- RESULT: bird-eye v2 — "SAPLING · production atlas" — built to a full design
+  spec (screening-room look: charcoal, leaf accent, the show's frames doing
+  the work; story-tree rail -> 9:16 hover-play filmstrip -> beat dossier with
+  script/VO/prompt/provenance/files/queue/grades; health honest but folded
+  into the footer). Steward iterated on screenshots before anyone else saw
+  it: problem-dots thresholded to serious classes only (an alarm that always
+  rings is silence), long production-history paragraphs dimmed + collapsed.
+  Same generator, same data layer, same one-file local output. Overnight
+  adversarial gate (dad-lens UX + display-truth spot check) runs before it is
+  shown to dad.

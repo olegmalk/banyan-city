@@ -180,8 +180,16 @@ def load_story(lineage):
         entry["vo"] = {}
         entry["shots"] = {}
         node_md = nd / "node.md"
+        entry["r1"] = None
         if node_md.exists():
-            entry["beats"] = parse_node_beats(node_md.read_text(encoding="utf-8", errors="replace"))
+            md_text = node_md.read_text(encoding="utf-8", errors="replace")
+            entry["beats"] = parse_node_beats(md_text)
+            # R1 one-liner: first sentence of the "## State change" section
+            m = re.search(r"^## State change[^\n]*\n(.*?)(?=^## |\Z)", md_text, re.M | re.S)
+            if m:
+                prose = re.sub(r"[*_`]", "", " ".join(m.group(1).split())).strip()
+                sm = re.match(r"(.+?[.!?])(\s|$)", prose)
+                entry["r1"] = (sm.group(1) if sm else prose[:200]).strip() or None
         shots_md = nd / "shots.md"
         if shots_md.exists():
             entry["shots"] = parse_shots(shots_md.read_text(encoding="utf-8", errors="replace"))
@@ -209,7 +217,8 @@ def load_story(lineage):
 
 def walk_repo():
     sidecars, still_yamls, grades, manifests = [], [], [], []
-    media = {}  # relpath -> bytes
+    media = {}        # relpath -> bytes
+    media_mtime = {}  # relpath -> mtime (same stat call; newest-render ordering)
     for dirpath, dirnames, filenames in os.walk(ROOT):
         dirnames[:] = [d for d in dirnames
                        if d not in SKIP_DIRS and not d.startswith("C:")]
@@ -229,10 +238,12 @@ def walk_repo():
                 ext = os.path.splitext(fn)[1].lower()
                 if ext in MEDIA_EXTS:
                     try:
-                        media[rel(p)] = p.stat().st_size
+                        st = p.stat()
+                        media[rel(p)] = st.st_size
+                        media_mtime[rel(p)] = st.st_mtime
                     except OSError:
                         pass
-    return sidecars, still_yamls, grades, manifests, media
+    return sidecars, still_yamls, grades, manifests, media, media_mtime
 
 
 TASK_TOKEN = re.compile(r"^[A-Za-z0-9][\w.-]*$")
@@ -332,7 +343,7 @@ def main():
     story = load_story(lineage)
     short2slug = {v["id"]: slug for slug, v in lineage.items()}
 
-    sidecar_paths, still_yaml_paths, grade_paths, manifest_paths, media = walk_repo()
+    sidecar_paths, still_yaml_paths, grade_paths, manifest_paths, media, media_mtime = walk_repo()
 
     # --- sha256 manifests: task -> farm-out dir; (dir, fname) -> sha
     task_dir, sha_of = {}, {}
@@ -599,7 +610,8 @@ def main():
         kind = ("video" if ext in VIDEO_EXTS else "image" if ext in IMAGE_EXTS
                 else "audio" if ext in AUDIO_EXTS else "file")
         card["files"].append({"p": path, "bytes": size, "sha": sha_of.get((d, fn)),
-                              "where": where, "kind": kind})
+                              "where": where, "kind": kind,
+                              "mt": media_mtime.get(path)})
 
     # 1) queue history — one card per task
     for task, rows in queue_by_task.items():
@@ -986,6 +998,27 @@ def main():
             elif cur in ("none", "vo") and has_image:
                 coverage[slug][b - 1] = "still" if cur == "none" else "vo+still"
 
+    # per-beat "best clip" pointer: shipped pick wins, else newest local
+    # playable render (mp4/webm — .mov is not reliably playable in <video>)
+    PLAYABLE = {".mp4", ".webm"}
+    best_clip: dict[str, dict] = {}
+    best_rank: dict[tuple, tuple] = {}
+    for c in cards.values():
+        if c["retired_era"] or not c["node"] or c["beat"] is None:
+            continue
+        for f in c["files"]:
+            if f["kind"] != "video" or f["where"] != "local":
+                continue
+            if os.path.splitext(f["p"])[1].lower() not in PLAYABLE:
+                continue
+            shipped = (os.path.basename(f["p"]), c["beat"]) in take_index
+            rank = (1 if shipped else 0, f.get("mt") or 0, f["p"])
+            key = (c["node"], c["beat"])
+            if key not in best_rank or rank > best_rank[key]:
+                best_rank[key] = rank
+                best_clip.setdefault(c["node"], {})[str(c["beat"])] = {
+                    "p": f["p"], "shipped": shipped, "card": c["id"]}
+
     card_list = sorted(cards.values(),
                        key=lambda c: (c["node"] or "~", c["beat"] or 99, c["id"]))
 
@@ -1022,6 +1055,7 @@ def main():
                          "ship": (ship if slug == "002b-first-citizen" else {})}
                   for slug, st in story.items()},
         "coverage": coverage,
+        "best": best_clip,
         "cards": card_list,
         "health": {k: v for k, v in health.items()},
         "never_ran_sample": never_ran[:40],
@@ -1043,6 +1077,10 @@ def main():
 
 
 # ------------------------------------------------------------------ HTML
+# Render layer — "SAPLING · production atlas". A screening room, not a
+# console: dark, calm, the show's own frames providing the color.
+# Three levels of progressive disclosure: story tree (left rail) →
+# filmstrip of the selected node's beats (the hero) → beat dossier.
 
 def esc(s):
     return html_mod.escape(str(s if s is not None else ""))
@@ -1052,28 +1090,28 @@ def render_tree_html(lineage, data):
     children = {}
     for slug, n in lineage.items():
         children.setdefault(n["parent"], []).append(slug)
-    id2slug = {n["id"]: s for s, n in lineage.items()}
 
     def branch(parent_id):
         out = []
         for slug in sorted(children.get(parent_id, [])):
             n = lineage[slug]
-            beats = len(data["nodes"][slug]["beats"])
-            ncards = sum(1 for c in data["cards"] if c["node"] == slug)
-            trunk = ' <span class="trunk">trunk</span>' if n["trunk"] else ""
-            cov = data["coverage"].get(slug)
-            covh = ""
-            if cov:
-                cells = "".join(
-                    f'<i class="cv cv-{st}" title="beat {i+1}: {st}" data-node="{esc(slug)}" data-beat="{i+1}"></i>'
-                    for i, st in enumerate(cov))
-                covh = f'<span class="covrow">{cells}</span>'
+            cov = data["coverage"].get(slug) or []
+            segs = []
+            for i, st in enumerate(cov):
+                cls = []
+                if st in ("clip", "ship"):
+                    cls.append("f")
+                if st == "ship":
+                    cls.append("s")
+                segs.append(f'<i class="{" ".join(cls)}" title="beat {i+1}: {esc(st)}"></i>')
+            covh = f'<span class="covrow" aria-hidden="true">{"".join(segs)}</span>' if segs else ""
+            hot = " hot" if n["status"] == "hot" else ""
             out.append(
-                f'<li><span class="tn" data-node="{esc(slug)}">'
-                f'<b>{esc(n["id"])}</b> {esc(n["title"])}'
-                f' <span class="st st-{esc(n["status"])}">{esc(n["status"])}</span>{trunk}'
-                f' <span class="mut">{beats} beats · {ncards} cards</span></span>'
-                f'{covh}')
+                f'<li><button class="tn" type="button" data-node="{esc(slug)}">'
+                f'<span class="trow"><span class="tid">{esc(n["id"])}</span>'
+                f'<span class="ttl">{esc(n["title"])}</span>'
+                f'<span class="sdot{hot}" title="{esc(n["status"])}"></span></span>'
+                f'{covh}</button>')
             kids = branch(n["id"])
             if kids:
                 out.append(f"<ul>{kids}</ul>")
@@ -1119,330 +1157,577 @@ def render_health_html(h, data):
 def render_html(data, lineage):
     # '</' escape stops </script>; '<!--' must ALSO be escaped (HTML5 script-data
     # double-escape rule: '<!--'+'<script' swallows the real closing tag and
-    # bricks the page). \\u003c is a JSON-valid escape, so JSON.parse still works.
+    # bricks the page). < is a JSON-valid escape, so JSON.parse still works.
     payload = (json.dumps(data, ensure_ascii=False, default=str)
                .replace("</", "<\\/").replace("<!--", "\\u003c!--"))
     tree = render_tree_html(lineage, data)
     healthbox = render_health_html(data["health"], data)
     t = data["totals"]
-    tot = "".join(
-        f'<div class="tot"><b>{esc(v)}</b><span>{esc(k)}</span></div>' for k, v in [
-            ("story nodes", t["nodes"]), ("beats", t["beats"]), ("VO beats", t["vo_beats"]),
-            ("clip cards", t["cards"]), ("queue runs", f"{t['queue_runs']} ({t['queue_ok']} ok / {t['queue_failed']} failed)"),
-            ("media files on disk", t["media_files"]),
-            ("farm-out dirs", f"{t['farm_dirs_local']} local + {t['farm_dirs_branch_only']} branch-only"),
-            ("job specs", f"{t['specs']} ({t['specs_never_ran']} never ran)"),
-            ("ledgered spend", f"${t['spend_usd']:.2f}"),
-            ("unresolved items", t["unresolved"]),
-        ])
+    stat = (f"{t['nodes']} story nodes · {t['beats']} beats · "
+            f"{t['cards']:,} renders on disk · {t['queue_runs']:,} queue runs · "
+            f"${t['spend_usd']:.2f} ever spent")
+    hline = f"{t['unresolved']:,} links the generator could not resolve — view details"
     qm = data.get("queue_meta", {})
     qnote = (f"queue history: {esc(qm.get('_file',''))} measured {esc(qm.get('measured_at','?'))} "
              f"from {esc(qm.get('source_branch','?'))}@{esc(str(qm.get('source_commit',''))[:10])}"
              if qm else "queue history: not found")
 
-    return """<!doctype html>
+    return r"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>banyan-city birdseye</title>
+<title>SAPLING · production atlas</title>
 <style>
-:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2330;--line:#2d333b;--fg:#e6edf3;
---mut:#8b949e;--amber:#e3b341;--amber2:#d29922;--green:#3fb950;--red:#f85149;
---blue:#58a6ff;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;}
+:root{
+  --bg:#131313; --panel:#1c1c1a; --edge:#2c2c28;
+  --ink:#f2efe6; --dim:#a8a49a; --faint:#6b675f;
+  --leaf:#8fbf6f; --warn:#d9a53f; --bad:#cf5f56;
+  --disp:"Avenir Next","Helvetica Neue",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);
-font:14px/1.5 Inter,-apple-system,"Segoe UI",system-ui,sans-serif;}
-a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}
-header{padding:1.2rem 2rem .6rem;border-bottom:1px solid var(--line)}
-header h1{margin:0;font-size:1.25rem;color:var(--amber);letter-spacing:.04em}
-header .sub{color:var(--mut);font-size:.8rem;font-family:var(--mono)}
-main{padding:1rem 2rem 4rem;max-width:1500px;margin:0 auto}
-.totals{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0}
-.tot{background:var(--panel);border:1px solid var(--line);border-radius:8px;
-padding:.5rem .9rem;min-width:8rem}
-.tot b{display:block;font-size:1.05rem;color:var(--amber)}
-.tot span{color:var(--mut);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-@media(max-width:1000px){.cols{grid-template-columns:1fr}}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1rem 1.2rem}
-.panel h2{margin:.1rem 0 .7rem;font-size:.85rem;color:var(--amber2);
-text-transform:uppercase;letter-spacing:.1em}
-ul.tree,ul.tree ul{list-style:none;padding-left:1.1rem;margin:.2rem 0;border-left:1px dotted var(--line)}
-ul.tree{border-left:none;padding-left:0}
-.tn{cursor:pointer;padding:.05rem .3rem;border-radius:5px}
-.tn:hover{background:var(--panel2)}
-.tn b{color:var(--amber);font-family:var(--mono)}
-.st{font-size:.68rem;padding:0 .35rem;border-radius:4px;border:1px solid var(--line);color:var(--mut)}
-.st-hot{color:var(--green);border-color:var(--green)}
-.trunk{font-size:.68rem;color:var(--amber);border:1px solid var(--amber2);border-radius:4px;padding:0 .35rem}
-.mut{color:var(--mut);font-size:.75rem}
-.covrow{display:inline-flex;gap:2px;margin-left:.6rem;vertical-align:middle}
-.cv{width:11px;height:11px;border-radius:2px;background:#21262d;display:inline-block;cursor:pointer}
-.cv-vo{background:#39435a}.cv-still{background:#8f6d1f}.cv-vo\\+still{background:#8f6d1f}
-.cv-clip{background:#2ea043}.cv-ship{background:var(--amber);outline:1px solid #fff3}
-.legend{margin-top:.5rem;font-size:.72rem;color:var(--mut)}
-.legend i{width:10px;height:10px;display:inline-block;border-radius:2px;margin:0 .2rem 0 .7rem;vertical-align:-1px}
-.hrow{padding:.25rem .4rem;border-bottom:1px dashed var(--line);font-size:.8rem}
-.hrow.ok{color:var(--mut)}.hrow.bad summary{color:var(--red);cursor:pointer}
+html,body{overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--leaf);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--leaf);outline-offset:2px;border-radius:4px}
+.mono{font-family:var(--mono)}
+
+/* ---- header ---- */
+header{padding:1.6rem 2.4rem 1.2rem}
+.bar{display:flex;align-items:baseline;gap:1.1rem;flex-wrap:wrap}
+.wordmark{font-family:var(--disp);font-weight:700;font-size:1.3rem;letter-spacing:.3em;white-space:nowrap}
+.wordmark i{display:inline-block;width:.44em;height:.44em;background:var(--leaf);border-radius:2px;margin-left:.15em}
+.atlas{font-family:var(--disp);font-weight:600;font-size:.82rem;letter-spacing:.18em;color:var(--dim)}
+.bar .right{margin-left:auto;display:flex;align-items:center;gap:1.1rem}
+.gen{color:var(--faint);font-size:.76rem;font-family:var(--mono)}
+#q{width:240px;background:var(--panel);border:1px solid var(--edge);border-radius:6px;
+  color:var(--ink);padding:.42rem .7rem;font:inherit;font-size:.85rem}
+#q::placeholder{color:var(--faint)}
+.statline{margin:.9rem 0 0;color:var(--dim);font-size:.95rem}
+
+/* ---- layout ---- */
+#wrap{display:flex;gap:2.2rem;padding:.4rem 2.4rem 3rem;align-items:flex-start}
+#rail{width:300px;flex:0 0 300px;position:sticky;top:0;max-height:100vh;overflow-y:auto;
+  padding:.8rem 0 2rem}
+#stage{flex:1;min-width:0;padding-top:.8rem}
+@media(max-width:900px){#wrap{flex-direction:column}
+  #rail{position:static;width:100%;flex:none;max-height:none}}
+
+/* ---- level 1: story tree ---- */
+.tree,.tree ul{list-style:none;margin:0;padding:0}
+.tree ul{padding-left:.95rem}
+.tn{display:block;width:100%;text-align:left;background:none;border:0;
+  border-left:3px solid transparent;padding:.4rem .6rem .45rem;margin:.1rem 0;
+  border-radius:6px;cursor:pointer;color:var(--ink);font:inherit}
+.tn:hover{background:var(--panel)}
+.tn.sel{border-left-color:var(--leaf);background:var(--panel);border-radius:0 6px 6px 0}
+.trow{display:flex;align-items:baseline;gap:.45rem;min-width:0}
+.tid{font-family:var(--mono);font-size:.7rem;color:var(--faint);flex:none}
+.ttl{font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sdot{flex:none;width:6px;height:6px;border-radius:50%;background:var(--faint);margin-left:auto;align-self:center}
+.sdot.hot{background:var(--leaf)}
+.covrow{display:flex;gap:2px;margin-top:.38rem;height:4px}
+.covrow i{flex:1;min-width:2px;border-radius:1px;box-shadow:inset 0 0 0 1px var(--edge);position:relative}
+.covrow i.f{background:var(--leaf);box-shadow:none}
+.covrow i.s::after{content:"";position:absolute;left:50%;top:-5px;width:4px;height:4px;
+  margin-left:-2px;border-radius:50%;background:var(--warn)}
+
+/* ---- level 2: filmstrip ---- */
+#nodehead h2{font-family:var(--disp);font-weight:700;font-size:1.75rem;margin:.1rem 0 .15rem;letter-spacing:.01em}
+#nodehead .nmeta{color:var(--faint);font-size:.82rem}
+#nodehead .nmeta .mono{font-size:.78rem}
+#nodehead .r1{color:var(--dim);max-width:56rem;margin:.45rem 0 0}
+.strip{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;
+  padding:1.1rem .2rem 1.2rem;scrollbar-width:thin;scrollbar-color:var(--edge) transparent}
+.fcard{flex:none;width:132px;cursor:pointer;background:none;border:0;padding:0;
+  color:var(--ink);font:inherit;text-align:left}
+.fmedia{width:132px;height:235px;border-radius:10px;overflow:hidden;background:var(--panel);
+  box-shadow:inset 0 0 0 1px var(--edge);position:relative}
+.fmedia video,.fmedia img{width:100%;height:100%;object-fit:cover;display:block;background:var(--panel)}
+.fcard.sel .fmedia{box-shadow:0 0 0 2px var(--leaf)}
+.ph{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:.4rem}
+.ph b{font-family:var(--disp);font-weight:600;font-size:2.1rem;color:var(--faint)}
+.ph span{color:var(--faint);font-size:.7rem}
+.fmeta{margin-top:.5rem;width:132px}
+.fnum{font-family:var(--mono);font-size:.7rem;color:var(--faint)}
+.ftitle{font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ftc{font-family:var(--mono);font-size:.68rem;color:var(--faint)}
+.fdots{display:flex;gap:4px;margin-top:.32rem;height:6px}
+.fdots i{width:6px;height:6px;border-radius:50%}
+.fdots .d-ship{background:var(--warn)}
+.fdots .d-prob{background:var(--bad)}
+.unplaced{color:var(--faint);font-size:.82rem;background:none;border:0;cursor:pointer;
+  font-family:inherit;padding:0;text-decoration:underline dotted var(--faint)}
+
+/* ---- search results ---- */
+#results{margin:.2rem 0 1.6rem}
+.rline{color:var(--dim);font-size:.9rem;display:flex;align-items:center;gap:.7rem}
+#clr{background:var(--panel);border:1px solid var(--edge);color:var(--dim);border-radius:6px;
+  width:1.6rem;height:1.6rem;cursor:pointer;font:inherit;line-height:1}
+.rlabel{font-family:var(--mono);font-size:.66rem;color:var(--faint);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:132px}
+
+/* ---- level 3: dossier ---- */
+#dossier{max-width:900px;margin-top:1.2rem}
+.dhead{display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap}
+.dhead h3{font-family:var(--disp);font-weight:700;font-size:1.3rem;margin:0;letter-spacing:.01em}
+.dhead .tc{font-family:var(--mono);color:var(--faint);font-size:.82rem}
+.bship{font-family:var(--disp);font-weight:600;font-size:.66rem;letter-spacing:.12em;
+  color:#131313;background:var(--warn);border-radius:6px;padding:.14rem .5rem}
+.shipline{color:var(--dim);font-size:.84rem;margin:.4rem 0 0}
+.hist{margin:10px 0}
+.hist summary{color:var(--faint);font-size:13px;cursor:pointer;list-style:none}
+.hist summary::before{content:"▸ ";color:var(--faint)}
+.hist[open] summary::before{content:"▾ "}
+.hist p{color:var(--dim);font-size:13.5px;line-height:1.6;margin-top:8px}
+.scriptpage{background:var(--panel);border-radius:10px;padding:1.2rem 1.5rem;margin:1.1rem 0}
+.scriptpage .act{color:var(--dim);margin:.55rem 0}
+.scriptpage .dlg{margin:.6rem 0 .6rem 1.3rem}
+.who{font-variant:small-caps;letter-spacing:.06em;font-weight:600}
+.cue{color:var(--dim);font-style:italic;font-size:.92em}
+.vohead{color:var(--faint);font-size:.74rem;font-family:var(--mono);
+  margin:1.1rem 0 .2rem;padding-top:.8rem;border-top:1px solid var(--edge)}
+details.authored{margin:.4rem 0 1rem;color:var(--dim);font-size:.86rem}
+details.authored summary{cursor:pointer;color:var(--faint)}
+details.authored pre{white-space:pre-wrap;word-break:break-word;font-family:var(--mono);
+  font-size:.78rem;color:var(--dim);margin:.4rem 0 0}
+.takecount{color:var(--faint);font-size:.82rem;margin:1.3rem 0 .2rem}
+.cliprow{display:flex;gap:1.2rem;padding:1.1rem 0;border-top:1px solid var(--edge)}
+.cliprow .cvid{flex:none;width:96px}
+.cliprow video,.cliprow img{width:96px;height:170px;object-fit:cover;border-radius:6px;
+  background:var(--panel);display:block}
+.rowph{width:96px;height:170px;border-radius:6px;background:var(--panel);
+  display:flex;align-items:center;justify-content:center;color:var(--faint);
+  font-size:.66rem;text-align:center;padding:.5rem}
+.facts{flex:1;min-width:0}
+.rid{font-family:var(--mono);font-size:.8rem;margin-bottom:.4rem;overflow-wrap:anywhere}
+.rid .tag{margin-left:.5rem}
+.tag{font-size:.66rem;border:1px solid var(--edge);border-radius:6px;padding:.05rem .4rem;
+  color:var(--dim);white-space:nowrap}
+.tag.gold{color:var(--warn);border-color:var(--warn)}
+.fgrid{display:grid;grid-template-columns:108px 1fr;gap:.3rem 1rem;font-size:.85rem;margin:0}
+.fgrid dt{color:var(--faint);font-variant:small-caps;letter-spacing:.05em;font-size:.8rem}
+.fgrid dd{margin:0;min-width:0;overflow-wrap:break-word}
+.quote{border-left:2px solid var(--edge);padding:.1rem 0 .1rem .8rem;white-space:pre-wrap;word-break:break-word}
+.qsrc{color:var(--faint);font-size:.74rem;font-style:italic}
+.frow{font-family:var(--mono);font-size:.75rem;color:var(--dim);overflow-wrap:anywhere;padding:.06rem 0}
+.xtra{color:var(--faint);font-size:.76rem;font-family:var(--mono);overflow-wrap:anywhere}
+.amber{color:var(--warn);font-size:.84rem;margin-top:.55rem}
+.dsec{margin:1.2rem 0 0}
+.dsec h4{color:var(--faint);font-variant:small-caps;letter-spacing:.06em;font-weight:600;
+  font-size:.85rem;margin:0 0 .3rem}
+.dnote{color:var(--faint);font-size:.78rem;font-style:italic}
+
+/* ---- health footer ---- */
+footer{padding:2.4rem 2.4rem 3rem;color:var(--dim)}
+#hline{background:none;border:0;color:var(--dim);font:inherit;font-size:.9rem;
+  cursor:pointer;padding:0;text-decoration:underline dotted var(--faint)}
+#hbox{background:var(--panel);border-radius:10px;padding:1rem 1.4rem;margin-top:1rem}
+.hrow{padding:.32rem 0;border-bottom:1px solid var(--edge);font-size:.82rem;color:var(--dim)}
+.hrow.ok{color:var(--faint)}
+.hrow.bad summary{color:var(--bad);cursor:pointer}
 .hrow b{font-family:var(--mono)}
-.hrow ul{max-height:14rem;overflow:auto;font-family:var(--mono);font-size:.72rem;color:var(--mut)}
-#filters{position:sticky;top:0;z-index:5;background:var(--bg);padding:.8rem 0;
-display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;border-bottom:1px solid var(--line);margin-top:1.4rem}
-#filters select,#filters input[type=text]{background:var(--panel);color:var(--fg);
-border:1px solid var(--line);border-radius:6px;padding:.35rem .5rem;font:inherit;font-size:.82rem}
-#filters input[type=text]{min-width:22rem;font-family:var(--mono)}
-#filters label{font-size:.8rem;color:var(--mut)}
-#count{color:var(--amber);font-family:var(--mono);font-size:.8rem;margin-left:auto}
-#cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:.7rem;margin-top:1rem}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;
-padding:.7rem .9rem;cursor:pointer;overflow:hidden}
-.card:hover{border-color:var(--amber2)}
-.card.open{grid-column:1/-1;cursor:default;background:var(--panel2)}
-.card .cid{font-family:var(--mono);font-size:.8rem;color:var(--amber);word-break:break-all}
-.chips{margin:.3rem 0;display:flex;flex-wrap:wrap;gap:.3rem}
-.chip{font-size:.68rem;padding:.05rem .45rem;border-radius:10px;border:1px solid var(--line);color:var(--mut)}
-.chip.nb{color:var(--fg);border-color:#444c56}
-.chip.era{color:var(--blue)}
-.chip.ship{color:#0d1117;background:var(--amber);border-color:var(--amber);font-weight:700}
-.chip.prob{color:var(--red);border-color:var(--red)}
-.snip{color:var(--mut);font-size:.75rem;max-height:3.2em;overflow:hidden}
-.meta1{color:var(--mut);font-size:.72rem;font-family:var(--mono);margin-top:.3rem}
-.dossier{margin-top:.8rem;border-top:1px solid var(--line);padding-top:.8rem;font-size:.82rem}
-.dossier h4{margin:.9rem 0 .3rem;color:var(--amber2);font-size:.72rem;
-text-transform:uppercase;letter-spacing:.09em}
-.dossier .src{color:var(--mut);font-size:.7rem;font-style:italic}
-pre{background:#0a0d12;border:1px solid var(--line);border-radius:6px;padding:.5rem .7rem;
-white-space:pre-wrap;word-break:break-word;font-family:var(--mono);font-size:.76rem;color:#c9d1d9;margin:.3rem 0}
-table{border-collapse:collapse;width:100%;font-size:.76rem}
-.tblwrap{overflow-x:auto}
-th,td{border-bottom:1px solid var(--line);padding:.25rem .5rem;text-align:left;vertical-align:top}
-th{color:var(--mut);font-weight:600;font-size:.68rem;text-transform:uppercase}
-td{font-family:var(--mono);word-break:break-all}
-.ok{color:var(--green)}.bad{color:var(--red)}
-video{max-width:280px;max-height:400px;border-radius:6px;border:1px solid var(--line);display:block;margin:.3rem 0}
-.voline .who{color:var(--green);font-family:var(--mono);font-size:.72rem;font-weight:700}
-#more{margin:1.2rem auto;display:block;background:var(--panel);border:1px solid var(--amber2);
-color:var(--amber);padding:.5rem 2rem;border-radius:8px;font:inherit;cursor:pointer}
-.problems li{color:var(--red);font-size:.76rem}
-footer{color:var(--mut);text-align:center;font-size:.72rem;padding:2rem;font-family:var(--mono)}
+.hrow ul{max-height:14rem;overflow:auto;font-family:var(--mono);font-size:.72rem;color:var(--dim)}
+.buildnote{color:var(--faint);font-size:.74rem;font-family:var(--mono);margin-top:1.3rem}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+}
 </style></head><body>
-<header><h1>banyan-city · birdseye</h1>
-<div class="sub">read-only console · generated __GENERATED__ · __QNOTE__ · repo __ROOTPATH__</div></header>
-<main>
-<div class="totals">__TOTALS__</div>
-<div class="cols">
-<div class="panel"><h2>Story tree — 16 nodes, coverage per beat</h2>__TREE__
-<div class="legend">click a node or beat cell to filter the clip view below · beat cells:
-<i style="background:#21262d"></i>nothing <i style="background:#39435a"></i>VO only
-<i style="background:#8f6d1f"></i>still <i style="background:#2ea043"></i>clip
-<i style="background:var(--amber)"></i>shipped pick</div></div>
-<div class="panel"><h2>Data health — what could NOT be resolved</h2>__HEALTH__</div>
+<header>
+  <div class="bar">
+    <span class="wordmark">SAPLING<i aria-hidden="true"></i></span>
+    <span class="atlas">production atlas</span>
+    <span class="right">
+      <span class="gen">generated __GENERATED__</span>
+      <input id="q" type="search" placeholder="search tasks, prompts, VO…"
+             aria-label="search task ids, slugs, prompts, VO">
+    </span>
+  </div>
+  <p class="statline">__STAT__</p>
+</header>
+<div id="wrap">
+  <nav id="rail" aria-label="story tree">__TREE__</nav>
+  <main id="stage">
+    <section id="results" hidden></section>
+    <section id="nodehead"></section>
+    <div id="strip" class="strip"></div>
+    <p id="unplacedline"></p>
+    <section id="dossier"></section>
+  </main>
 </div>
-<div id="filters">
-<label>node <select id="f-node"><option value="">all</option></select></label>
-<label>beat <select id="f-beat"><option value="">all</option></select></label>
-<label>era <select id="f-era"><option value="">all</option></select></label>
-<label><input type="checkbox" id="f-prob"> has problems</label>
-<label><input type="checkbox" id="f-ship"> shipped picks</label>
-<input type="text" id="f-q" placeholder="search task ids, slugs, prompt text, VO…">
-<span id="count"></span>
-</div>
-<div id="cards"></div>
-<button id="more">show more</button>
-</main>
-<footer>pipeline/birdseye.py · reads only · no server, no network · regenerate = rerun</footer>
+<footer>
+  <button id="hline" type="button" aria-expanded="false">__HLINE__</button>
+  <div id="hbox" hidden>__HEALTH__</div>
+  <p class="buildnote">__QNOTE__<br>pipeline/birdseye.py · reads only · no server, no network · regenerate = rerun</p>
+</footer>
 <script id="data" type="application/json">__DATA__</script>
 <script>
 const DATA = JSON.parse(document.getElementById('data').textContent);
-const NODES = DATA.nodes, CARDS = DATA.cards;
+const NODES = DATA.nodes, CARDS = DATA.cards, BEST = DATA.best || {};
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const esc = s => String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const relurl = p => '../' + p.split('/').map(encodeURIComponent).join('/');
 const fileurl = p => 'file://' + (DATA.root + '/' + p).split('/').map(encodeURIComponent).join('/');
 const fmtB = b => b==null?'?':(b>1048576?(b/1048576).toFixed(1)+' MB':(b/1024).toFixed(0)+' KB');
+const pad2 = n => String(n).padStart(2,'0');
+const $ = id => document.getElementById(id);
+const PLAYABLE = /\.(mp4|webm)$/i;
 
-// search corpus per card (lazy)
-CARDS.forEach(c=>{
+// ---- indexes: cards by node|beat, per-card newest mtime + search corpus
+const byNB = {};
+CARDS.forEach((c,i) => {
+  c._i = i;
+  const k = (c.node||'') + '|' + (c.beat==null?'':c.beat);
+  (byNB[k] = byNB[k] || []).push(c);
+  c._mt = Math.max(0, ...(c.files||[]).map(f=>f.mt||0));
   const nd = NODES[c.node]||{};
   const bt = c.retired_era ? {} : ((nd.beats||[])[c.beat-1]||{});
   const vo = c.retired_era ? [] : (((nd.vo||{})[c.beat]||{}).lines||[]);
-  c._q = [c.id, c.tasks&&c.tasks.join(' '), c.node, bt.title, c.model, c.prompt,
-          (c.files||[]).map(f=>f.p).join(' '), vo.map(l=>l[1]).join(' ')].join(' ').toLowerCase();
+  c._q = [c.id,(c.tasks||[]).join(' '),c.node,bt.title,c.model,c.prompt,
+          (c.files||[]).map(f=>f.p).join(' '),vo.map(l=>l[1]).join(' ')].join(' ').toLowerCase();
+});
+function beatCards(slug,beat){ return byNB[slug+'|'+(beat==null?'':beat)]||[]; }
+function bestLocalVideo(c){
+  const vids=(c.files||[]).filter(f=>f.kind==='video'&&f.where==='local'&&PLAYABLE.test(f.p));
+  vids.sort((a,b)=>(b.mt||0)-(a.mt||0));
+  return vids[0]||null;
+}
+function bestLocalImage(c){
+  const ims=(c.files||[]).filter(f=>f.kind==='image'&&f.where==='local');
+  ims.sort((a,b)=>(b.mt||0)-(a.mt||0));
+  return ims[0]||null;
+}
+
+// ---- lazy first frames: when a card scrolls into view, load metadata only
+const IO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(!e.isIntersecting) return;
+    const v = e.target.querySelector('video');
+    if(v && v.preload==='none'){ v.preload='metadata'; v.load(); }
+    IO.unobserve(e.target);
+  });
+}, {rootMargin:'250px'});
+
+function wireCard(el){
+  IO.observe(el);
+  const v = el.querySelector('video');
+  if(v && !RM){
+    el.addEventListener('mouseenter', ()=>{ v.muted=true; v.play().catch(()=>{}); });
+    el.addEventListener('mouseleave', ()=>{ v.pause(); try{v.currentTime=0;}catch(_){} });
+  }
+}
+
+// ---- level 1: tree selection
+let selNode=null, selBeat=null;
+function selectNode(slug, openBeat){
+  selNode=slug; selBeat=null;
+  document.querySelectorAll('#rail .tn').forEach(b=>b.classList.toggle('sel', b.dataset.node===slug));
+  renderNode();
+  $('dossier').innerHTML='';
+  if(openBeat!=null) openDossier(openBeat);
+}
+document.querySelectorAll('#rail .tn').forEach(b=>{
+  b.addEventListener('click', ()=>selectNode(b.dataset.node));
 });
 
-// filter controls
-const sel = id => document.getElementById(id);
-const nodeSel=sel('f-node'), beatSel=sel('f-beat'), eraSel=sel('f-era');
-Object.keys(NODES).sort().forEach(s=>{
-  const o=document.createElement('option'); o.value=s;
-  o.textContent=NODES[s].id+' — '+NODES[s].title+' ('+CARDS.filter(c=>c.node===s).length+')';
-  nodeSel.appendChild(o);});
-const uo=document.createElement('option'); uo.value='__none__'; uo.textContent='(node unresolved)';
-nodeSel.appendChild(uo);
-[...new Set(CARDS.map(c=>c.era))].sort().forEach(e=>{
-  const o=document.createElement('option'); o.value=e; o.textContent=e; eraSel.appendChild(o);});
-function fillBeats(){
-  const ns=nodeSel.value; beatSel.innerHTML='<option value="">all</option>';
-  const beats=[...new Set(CARDS.filter(c=>!ns||c.node===ns).map(c=>c.beat).filter(b=>b!=null))].sort((a,b)=>a-b);
-  beats.forEach(b=>{const o=document.createElement('option');o.value=b;o.textContent='beat '+b;beatSel.appendChild(o);});
+// ---- level 2: filmstrip
+function stripCardHtml(slug, i, bt){
+  const best = (BEST[slug]||{})[i];
+  const nd = NODES[slug]||{};
+  const cs = beatCards(slug, i);
+  const SERIOUS = /conflict|retired|ship-manifest|missing on disk|never reached/i;
+  const prob = cs.some(c=>(c.problems||[]).some(p=>SERIOUS.test(p)));
+  const sp = (nd.ship||{})[i];
+  const shipped = !!(sp&&sp.take) || !!(best&&best.shipped);
+  const dots = (shipped?'<i class="d-ship" title="shipped pick"></i>':'')
+             + (prob?'<i class="d-prob" title="has problems — see dossier"></i>':'');
+  const media = best
+    ? '<video muted playsinline preload="none" src="'+esc(relurl(best.p))+'" tabindex="-1"></video>'
+    : '<div class="ph"><b>'+pad2(i)+'</b><span>no footage</span></div>';
+  return '<div class="fcard" role="button" tabindex="0" data-beat="'+i+'" '
+    +'aria-label="beat '+i+' — '+esc(bt.title)+'">'
+    +'<div class="fmedia">'+media+'</div>'
+    +'<div class="fmeta"><span class="fnum">'+pad2(i)+'</span> '
+    +'<span class="ftitle" title="'+esc(bt.title)+'">'+esc(bt.title)+'</span>'
+    +'<div class="ftc">'+esc(bt.range)+'</div>'
+    +'<div class="fdots">'+dots+'</div></div></div>';
 }
-fillBeats();
-
-let shown = 0; const CHUNK = 120; let current = CARDS;
-function apply(){
-  const ns=nodeSel.value, bs=beatSel.value, es=eraSel.value;
-  const pr=sel('f-prob').checked, sh=sel('f-ship').checked;
-  const q=sel('f-q').value.trim().toLowerCase();
-  current = CARDS.filter(c=>
-    (!ns || (ns==='__none__' ? !c.node : c.node===ns)) &&
-    (!bs || c.beat===+bs) && (!es || c.era===es) &&
-    (!pr || (c.problems&&c.problems.length)) && (!sh || c.shipped) &&
-    (!q || c._q.includes(q)));
-  shown=0; document.getElementById('cards').innerHTML=''; more();
-  sel('count').textContent = current.length + ' / ' + CARDS.length + ' cards';
-}
-function more(){
-  const box=document.getElementById('cards');
-  const slice=current.slice(shown, shown+CHUNK);
-  slice.forEach(c=>box.insertAdjacentHTML('beforeend', cardHtml(c)));
-  shown+=slice.length;
-  document.getElementById('more').style.display = shown<current.length?'block':'none';
-}
-['f-node','f-beat','f-era','f-prob','f-ship'].forEach(id=>sel(id).addEventListener('change',()=>{if(id==='f-node')fillBeats();apply();}));
-let deb; sel('f-q').addEventListener('input',()=>{clearTimeout(deb);deb=setTimeout(apply,200);});
-document.getElementById('more').addEventListener('click',more);
-document.querySelectorAll('.tn').forEach(el=>el.addEventListener('click',()=>{
-  nodeSel.value=el.dataset.node; fillBeats(); apply();
-  document.getElementById('filters').scrollIntoView({behavior:'smooth'});}));
-document.querySelectorAll('.cv').forEach(el=>el.addEventListener('click',()=>{
-  nodeSel.value=el.dataset.node; fillBeats(); beatSel.value=el.dataset.beat; apply();
-  document.getElementById('filters').scrollIntoView({behavior:'smooth'});}));
-
-function cardHtml(c){
-  const nd=NODES[c.node]||{}; const bt=c.retired_era?null:(nd.beats||[])[c.beat-1];
-  const idx=CARDS.indexOf(c);
-  const nb = c.support ? 'support — no story node'
-    : (nd.id?nd.id:'?') + (c.beat!=null?(' · beat '+String(c.beat).padStart(2,'0')):' · beat ?')
-      + (c.retired_era?(' · RETIRED SCRIPT ERA (slug '+c.retired_era.slug+')'):(bt?(' · '+bt.title):''));
-  let chips = '<span class="chip nb">'+esc(nb)+'</span><span class="chip era">'+esc(c.era)+'</span>';
-  if(c.shipped) chips+='<span class="chip ship">SHIPPED PICK</span>';
-  if(c.problems&&c.problems.length) chips+='<span class="chip prob">'+c.problems.length+' problem'+(c.problems.length>1?'s':'')+'</span>';
-  const nfiles=(c.files||[]).length, nq=(c.queue||[]).length;
-  return '<div class="card" data-i="'+idx+'" onclick="toggle(event,this)">'
-    +'<div class="cid">'+esc(c.id)+'</div><div class="chips">'+chips+'</div>'
-    +'<div class="snip">'+esc((c.prompt||'').slice(0,150)||'(no prompt recorded)')+'</div>'
-    +'<div class="meta1">'+esc(c.model?String(c.model).slice(0,48):'model ?')
-    +' · '+nfiles+' file'+(nfiles!==1?'s':'')+' · '+nq+' queue run'+(nq!==1?'s':'')+'</div>'
-    +'<div class="dz"></div></div>';
-}
-function toggle(ev,el){
-  if(ev.target.closest('a,video,pre,table,button')) return;
-  const open = el.classList.toggle('open');
-  const dz = el.querySelector('.dz');
-  if(open && !dz.innerHTML) dz.innerHTML = dossier(CARDS[+el.dataset.i]);
-  if(!open) dz.innerHTML='';
-}
-function kv(rows){
-  return '<div class="tblwrap"><table>'+rows.filter(r=>r[1]!=null&&r[1]!=='')
-    .map(r=>'<tr><th>'+esc(r[0])+'</th><td>'+r[1]+'</td></tr>').join('')+'</table></div>';
-}
-function dossier(c){
-  const nd=NODES[c.node]||{};
-  // a retired-era clip was made for a script that no longer exists — showing
-  // the CURRENT script's title/text/VO on it would state a falsehood
-  const bt=c.retired_era?null:(nd.beats||[])[c.beat-1];
-  const vo=c.retired_era?null:(nd.vo||{})[c.beat];
-  const shot=c.retired_era?null:(nd.shots||{})[c.beat];
-  let beatRow = 'unresolved';
-  if(c.retired_era)
-    beatRow = esc(c.beat)+' — <b>RETIRED SCRIPT ERA</b> — filename slug \\''+esc(c.retired_era.slug)
-      +'\\' \\u2260 current beat title \\''+esc(c.retired_era.current_title)
-      +'\\'; current-script text/VO suppressed (see this node\\'s leaves/*-t3-*.yaml for that era\\'s own record)'
-      +' <span class="src">(resolved via '+esc(c.beat_src)+')</span>';
-  else if(c.beat!=null)
-    beatRow = esc(c.beat+(bt?(' — '+bt.title+' ('+bt.range+')'):''))+' <span class="src">(resolved via '+esc(c.beat_src)+')</span>';
-  let h='<div class="dossier">';
-  // story
-  h+='<h4>Story</h4>'+kv([
-    ['support', c.support?esc(c.support):null],
-    ['node', c.support&&!c.node?null:esc((nd.id||'?')+' — '+(nd.title||c.node||'unresolved'))+' <span class="src">('+esc(c.node_src||'?')+')</span>'],
-    ['beat', c.support&&c.beat==null?null:beatRow],
-  ]);
-  if(c.beat_conflicts&&c.beat_conflicts.length)
-    h+='<pre class="bad">BEAT CONFLICT — all sources: \\n'+esc(c.beat_conflicts.join('\\n'))+'</pre>';
-  if(bt&&bt.text) h+='<h4>Script (node.md, struck-through staging excluded)</h4><pre>'+esc(bt.text)+'</pre>';
-  if(vo){ h+='<h4>VO — '+esc(vo.engine)+' · '+esc(vo.total_s)+'s · '+esc(vo.path)+'</h4>';
-    h+=vo.lines.map(l=>'<div class="voline"><span class="who">'+esc(l[0])+':</span> '+esc(l[1])+'</div>').join('');}
-  else if(!c.retired_era && c.beat!=null && nd.vo) h+='<h4>VO</h4><div class="mut">silent beat — no NN-vo.json</div>';
-  // prompt
-  h+='<h4>Prompt '+(c.prompt_src?'<span class="src">— source: '+esc(c.prompt_src)+'</span>':'')+'</h4>';
-  h+= c.prompt? '<pre>'+esc(c.prompt)+'</pre>' : '<div class="bad">no prompt recorded anywhere for this render</div>';
-  if(c.negative) h+='<h4>Negative</h4><pre>'+esc(c.negative)+'</pre>';
-  if(shot&&shot.prompt&&shot.prompt!==c.prompt)
-    h+='<h4>Beat\\u2019s authored prompt <span class="src">— shots.md registry (may differ from what rendered)</span></h4><pre>'+esc(shot.prompt)+'</pre>';
-  // settings
-  h+='<h4>Model / settings</h4>'+kv([
-    ['model',esc(c.model)],['platform',esc(c.platform)],['seed',esc(c.seed)],
-    ['steps',esc(c.steps)],['size',esc(c.size)],['guidance',esc(c.guidance)],
-    ['seconds',esc(c.seconds)],['kind',esc(c.kind)],
-    ['task(s)',esc((c.tasks||[]).join('  +  '))],
-    ['job spec', c.spec?('<a href="'+fileurl(c.spec)+'">'+esc(c.spec)+'</a>'):null],
-    ['sidecar(s)', (c.sidecars||[]).map(s=>'<a href="'+fileurl(s)+'">'+esc(s)+'</a>').join('<br>')||null],
-  ].concat(Object.entries(c.extras||{}).map(e=>[e[0], esc(e[1])])));
-  // refs
-  if(c.init||c.refs.length){
-    h+='<h4>Init plate / image refs</h4>';
-    if(c.init) h+='<pre>init: '+esc(JSON.stringify(c.init))+'</pre>';
-    c.refs.forEach(r=>h+='<pre>ref: '+esc(JSON.stringify(r))+'</pre>');
+function renderNode(){
+  const nd = NODES[selNode]||{};
+  const beats = nd.beats||[];
+  const nrec = CARDS.filter(c=>c.node===selNode).length;
+  let head = '<h2>'+esc(nd.title||selNode)+'</h2>'
+    +'<div class="nmeta"><span class="mono">'+esc(nd.id||'?')+' · '+esc(selNode)+'</span>'
+    +' · '+esc(nd.status||'?')+(nd.released?' · released '+esc(nd.released):'')
+    +' · '+beats.length+' beat'+(beats.length!==1?'s':'')+' · '+nrec+' record'+(nrec!==1?'s':'')+'</div>';
+  if(nd.r1) head += '<p class="r1">'+esc(nd.r1)+'</p>';
+  $('nodehead').innerHTML = head;
+  const strip = $('strip');
+  if(!beats.length){
+    strip.innerHTML = '<p class="dnote">no script beats yet — '+nrec+' record'+(nrec!==1?'s':'')+' findable via search</p>';
+  } else {
+    strip.innerHTML = beats.map((bt,ix)=>stripCardHtml(selNode, ix+1, bt)).join('');
+    strip.querySelectorAll('.fcard').forEach(el=>{
+      wireCard(el);
+      const open = ()=>openDossier(+el.dataset.beat);
+      el.addEventListener('click', open);
+      el.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
+    });
   }
-  // files
+  const un = beatCards(selNode, null).length;
+  const ul = $('unplacedline');
+  if(un){
+    ul.innerHTML = '<button class="unplaced" type="button">'+un+' record'+(un!==1?'s':'')+' not tied to a beat</button>';
+    ul.querySelector('button').addEventListener('click', ()=>openDossier(null));
+  } else {
+    ul.innerHTML = '';
+  }
+}
+
+// ---- level 3: beat dossier
+function scriptHtml(text){
+  const out=[];
+  text.split(/\n\s*\n/).forEach(par=>{
+    par=par.trim(); if(!par) return;
+    if(par.startsWith('>')){
+      const body = par.replace(/^>\s?/gm,'').trim();
+      const m = body.match(/^\*\*(.+?):\*\*\s*([\s\S]*)$/);
+      if(m){
+        let who=m[1], cue='';
+        const cm=who.match(/^(.*?)\s*\((.+)\)\s*$/);
+        if(cm){ who=cm[1]; cue=cm[2]; }
+        out.push('<p class="dlg"><span class="who">'+esc(who)+'</span>'
+          +(cue?' <span class="cue">('+esc(cue)+')</span>':'')
+          +' — '+esc(stripMd(m[2]))+'</p>');
+        return;
+      }
+    }
+    const flat = stripMd(par.replace(/\s*\n\s*/g,' '));
+    if(flat.length>260 || /^(restaged|PROVENANCE|Record:)/i.test(flat)){
+      out.push('<details class="hist"><summary>production history — '+esc(flat.slice(0,72))
+        +'…</summary><p>'+esc(flat)+'</p></details>');
+      return;
+    }
+    out.push('<p class="act">'+esc(flat)+'</p>');
+  });
+  return out.join('');
+}
+function stripMd(s){ return String(s).replace(/\*/g,'').replace(/`/g,''); }
+function voHtml(nd, beat){
+  const vo = beat!=null ? (nd.vo||{})[beat] : null;
+  if(!vo){
+    return (beat!=null && nd.vo && Object.keys(nd.vo).length)
+      ? '<p class="vohead">silent beat — no VO manifest</p>' : '';
+  }
+  let h='<p class="vohead">VO — '+esc(vo.engine)+' · '+esc(vo.total_s)+'s · '+esc(vo.path)+'</p>';
+  h+=(vo.lines||[]).map(l=>'<p class="dlg"><span class="who">'+esc(l[0])+'</span> — '+esc(l[1])+'</p>').join('');
+  return h;
+}
+
+function kv(label, valueHtml){
+  return valueHtml ? '<dt>'+esc(label)+'</dt><dd>'+valueHtml+'</dd>' : '';
+}
+function recipeLine(c){
+  const parts=[];
+  if(c.model) parts.push(esc(String(c.model)));
+  if(c.seed!=null) parts.push('seed <span class="mono">'+esc(c.seed)+'</span>');
+  if(c.steps!=null) parts.push('steps '+esc(c.steps));
+  if(c.size) parts.push(esc(c.size));
+  if(c.guidance!=null) parts.push('guidance '+esc(c.guidance));
+  if(c.seconds!=null) parts.push(esc(c.seconds)+'s');
+  if(c.platform) parts.push(esc(c.platform));
+  if(c.kind) parts.push(esc(c.kind));
+  if(c.era) parts.push(esc(c.era));
+  return parts.join(' · ');
+}
+function clipRowHtml(c){
+  const v = bestLocalVideo(c), im = v?null:bestLocalImage(c);
+  const media = v
+    ? '<video controls muted playsinline preload="metadata" src="'+esc(relurl(v.p))+'"></video>'
+    : (im ? '<a href="'+esc(relurl(im.p))+'"><img loading="lazy" src="'+esc(relurl(im.p))+'" alt=""></a>'
+          : '<div class="rowph">'+esc(c.era||'no local video')+'</div>');
+  let tags='';
+  if(c.shipped) tags+=' <span class="tag gold">shipped pick</span>';
+  if(c.support) tags+=' <span class="tag">'+esc(c.support)+'</span>';
+  let g='<dl class="fgrid">';
+  g+=kv('recipe', recipeLine(c)||null);
+  if(Object.keys(c.extras||{}).length)
+    g+=kv('also recorded', '<span class="xtra">'+esc(Object.entries(c.extras).map(e=>e[0]+': '+e[1]).join(' · '))+'</span>');
+  if(c.prompt)
+    g+=kv('prompt', '<div class="quote">'+esc(c.prompt)+'</div>'
+      +(c.prompt_src?'<div class="qsrc">from '+esc(c.prompt_src)+'</div>':''));
+  else
+    g+=kv('prompt', '<span class="dnote">no prompt recorded anywhere for this render</span>');
+  if(c.negative) g+=kv('negative', '<div class="quote">'+esc(c.negative)+'</div>');
   if(c.files&&c.files.length){
-    h+='<h4>Files on disk</h4><div class="tblwrap"><table><tr><th>path</th><th>size</th><th>sha256</th><th>where</th></tr>';
-    c.files.forEach(f=>{
-      const local = f.where==='local';
-      h+='<tr><td>'+(local?'<a href="'+fileurl(f.p)+'">'+esc(f.p)+'</a>':esc(f.p))+'</td>'
-        +'<td>'+fmtB(f.bytes)+'</td><td>'+esc(f.sha?f.sha.slice(0,12):'—')+'</td>'
-        +'<td class="'+(local?'ok':'bad')+'">'+esc(f.where)+'</td></tr>';});
-    h+='</table></div>';
-    c.files.filter(f=>f.kind==='video'&&f.where==='local').slice(0,3).forEach(f=>{
-      h+='<video controls preload="none" src="'+relurl(f.p)+'"></video>';});
+    g+=kv('files', c.files.map(f=>{
+      const local=f.where==='local';
+      return '<div class="frow">'+(local?'<a href="'+esc(fileurl(f.p))+'">'+esc(f.p)+'</a>':esc(f.p))
+        +' · '+fmtB(f.bytes)+(f.sha?' · '+esc(f.sha.slice(0,8)):'')
+        +(local?'':' <span class="tag">on farm branch</span>')+'</div>';
+    }).join(''));
   }
-  // grades
-  const gr=(nd.grades||{})[c.beat];
-  if(gr){ h+='<h4>Grades (plate finish pass)</h4>';
-    gr.forEach(g=>h+='<pre>'+esc(g.tag)+' · station '+esc(g.station)+' · hue drift '+esc(g.hue_drift_deg)
-      +'° · ink lift '+esc(g.ink_lift)
-      +'\\ngraded png: '+(g.png?('<a href="'+fileurl(g.png)+'">'+esc(g.png)+'</a>'):'(not on disk)')
-      +(g.out_sha256?(' · out_sha256 '+esc(g.out_sha256)+'…'):'')
-      +'\\ngrade json: <a href="'+fileurl(g.file)+'">'+esc(g.file)+'</a>'
-      +'\\nplate: '+esc(g.plate)+'\\nknobs: '+esc(JSON.stringify(g.knobs))
-      +'\\nbefore: '+esc(JSON.stringify(g.before))+'\\nafter:  '+esc(JSON.stringify(g.after))+'</pre>');}
-  // queue
+  const prov=[];
+  if(c.spec) prov.push('<div class="frow">spec <a href="'+esc(fileurl(c.spec))+'">'+esc(c.spec)+'</a></div>');
+  (c.sidecars||[]).forEach(s=>prov.push('<div class="frow">sidecar <a href="'+esc(fileurl(s))+'">'+esc(s)+'</a></div>'));
+  if(c.init) prov.push('<div class="frow">init '+esc(JSON.stringify(c.init))+'</div>');
+  (c.refs||[]).forEach(r=>prov.push('<div class="frow">ref '+esc(JSON.stringify(r))+'</div>'));
+  if(prov.length) g+=kv('provenance', prov.join(''));
   if(c.queue&&c.queue.length){
-    h+='<h4>Queue history ('+c.queue.length+' runs)</h4><div class="tblwrap"><table><tr><th>run id</th><th>rc</th><th>failed step</th><th>attempts</th><th>host</th><th>started</th><th>dur s</th></tr>';
-    c.queue.forEach(q=>h+='<tr><td>'+esc(q.id)+'</td><td class="'+(q.rc===0?'ok':'bad')+'">'+esc(q.rc)+'</td>'
-      +'<td>'+esc(q.step||'')+'</td><td>'+esc(q.attempts)+'</td><td>'+esc(q.host)+'</td>'
-      +'<td>'+esc(q.start)+'</td><td>'+esc(q.dur)+'</td></tr>');
-    h+='</table></div>';}
-  if(c.verdict) h+='<h4>Founder verdict (episode-progress)</h4><pre>'+esc(c.verdict.state||'')
-    +(c.verdict.picked?' · PICKED':'')+'\\n'+esc(c.verdict.note||'')+'</pre>';
-  const sh=(nd.ship||{})[c.beat];
-  if(sh) h+='<h4>Shipped cut (ep2-ship-0821)</h4><pre>pick: '+esc(sh.take)+' · sha '+esc(sh.sha256)
-    +' · '+(sh.on_disk?'<span class=ok>on disk</span>':'<span class=bad>NOT in sources/ — swap mid-flight</span>')
-    +'\\nverdict: '+esc(sh.verdict)+'</pre>';
-  if(c.cost&&c.cost.length){
-    h+='<h4>Cost — ALL ledger rows for this (node, beat) <span class="src">— ledger/render-spend.csv joins money at (node, beat) granularity only; these rows are NOT this clip\\u2019s spend (July provider-era rows included)</span></h4><div class="tblwrap"><table><tr><th>date</th><th>provider</th><th>model</th><th>$</th><th>note</th></tr>';
-    c.cost.forEach(r=>h+='<tr><td>'+esc(r.date)+'</td><td>'+esc(r.provider)+'</td><td>'+esc(r.model)+'</td><td>'+esc(r.usd)+'</td><td>'+esc(r.note)+'</td></tr>');
-    h+='</table></div>';}
-  if(c.problems&&c.problems.length)
-    h+='<h4>Problems</h4><ul class="problems">'+c.problems.map(p=>'<li>'+esc(p)+'</li>').join('')+'</ul>';
-  return h+'</div>';
+    g+=kv('queue', c.queue.map(q=>'<div class="frow">'+esc(q.start||'?')
+      +' · rc '+esc(q.rc==null?'?':q.rc)+(q.step?' at '+esc(q.step):'')
+      +' · '+esc(q.host||'?')+' · '+esc(q.dur==null?'?':q.dur)+'s</div>').join(''));
+  }
+  if(c.verdict)
+    g+=kv('founder verdict', '<div class="quote">'+esc(c.verdict.state||'')
+      +(c.verdict.picked?' · PICKED':'')+(c.verdict.note?'\n'+esc(c.verdict.note):'')+'</div>'
+      +'<div class="qsrc">verbatim — episode-progress record</div>');
+  if(c.cost&&c.cost.length)
+    g+=kv('cost', c.cost.map(r=>'<div class="frow">'+esc(r.date)+' · '+esc(r.provider)
+      +' · '+esc(r.model)+' · $'+esc(r.usd)+' · '+esc(r.note)+'</div>').join('')
+      +'<div class="qsrc">ledger joins money at (node, beat) granularity — not necessarily this clip’s spend</div>');
+  g+='</dl>';
+  // disagreements + problems: one amber line, factual
+  const notes=[];
+  if(c.retired_era) notes.push('retired script era — filename slug ‘'+c.retired_era.slug
+    +'’ is not current beat title ‘'+c.retired_era.current_title+'’; current script text/VO do not describe this clip');
+  if(c.beat_conflicts&&c.beat_conflicts.length)
+    notes.push('beat-number sources disagree: '+c.beat_conflicts.join('; ')+' (precedence applied: '+(c.beat_src||'?')+')');
+  (c.problems||[]).forEach(p=>{
+    if(!/^retired script era|^beat-number conflict/.test(p)) notes.push(p);
+  });
+  const amber = notes.length?'<p class="amber">'+esc(notes.join(' · '))+'</p>':'';
+  return '<div class="cliprow"><div class="cvid">'+media+'</div>'
+    +'<div class="facts"><div class="rid">'+esc(c.id)+tags+'</div>'+g+amber+'</div></div>';
 }
-apply();
+function openDossier(beat){
+  selBeat=beat;
+  document.querySelectorAll('#strip .fcard').forEach(el=>el.classList.toggle('sel', +el.dataset.beat===beat));
+  const nd = NODES[selNode]||{};
+  const bt = beat!=null ? (nd.beats||[])[beat-1] : null;
+  const sp = beat!=null ? (nd.ship||{})[beat] : null;
+  let h='<div class="dhead">';
+  if(beat!=null)
+    h+='<h3>Beat '+pad2(beat)+(bt?' — '+esc(bt.title):'')+'</h3>'
+      +(bt&&bt.range?'<span class="tc">'+esc(bt.range)+'</span>':'')
+      +(sp&&sp.take?'<span class="bship">SHIPPED</span>':'');
+  else
+    h+='<h3>Records not tied to a beat</h3>';
+  h+='</div>';
+  if(sp&&sp.take)
+    h+='<p class="shipline">shipped pick: <span class="mono">'+esc(sp.take)+'</span>'
+      +(sp.sha256?' · sha <span class="mono">'+esc(sp.sha256.slice(0,8))+'</span>':'')
+      +(sp.on_disk?'':' · <span class="amber">named in ship-manifest but NOT in sources/</span>')
+      +(sp.verdict?' — '+esc(sp.verdict):'')+'</p>';
+  if(bt&&bt.text) h+='<div class="scriptpage">'+scriptHtml(bt.text)+voHtml(nd,beat)+'</div>';
+  else if(beat!=null) h+='<div class="scriptpage"><p class="act">no script text for this beat</p>'+voHtml(nd,beat)+'</div>';
+  const shot = beat!=null ? (nd.shots||{})[beat] : null;
+  if(shot&&shot.prompt)
+    h+='<details class="authored"><summary>authored prompt — shots.md registry (may differ from what rendered)</summary><pre>'+esc(shot.prompt)+'</pre></details>';
+  const rows = beatCards(selNode,beat).slice().sort((a,b)=>b._mt-a._mt);
+  h+='<p class="takecount">'+rows.length+' record'+(rows.length!==1?'s':'')+' on file, newest first</p>';
+  const CAP=12;
+  h+=rows.slice(0,CAP).map(clipRowHtml).join('');
+  if(rows.length>CAP)
+    h+='<p id="morerows"><button class="unplaced" type="button">show all '+rows.length+' records</button></p>';
+  if(!rows.length) h+='<p class="dnote">nothing rendered for this beat yet</p>';
+  // grades are a per-beat finish pass — shown once, not per clip row
+  const gr = beat!=null ? (nd.grades||{})[beat] : null;
+  if(gr&&gr.length){
+    h+='<div class="dsec"><h4>grades — plate finish pass</h4>';
+    gr.forEach(g=>{
+      h+='<div class="frow">'+esc(g.tag)+' · station '+esc(g.station)
+        +' · hue drift '+esc(g.hue_drift_deg)+'° · ink lift '+esc(g.ink_lift)
+        +(g.out_sha256?' · out sha '+esc(g.out_sha256.slice(0,8)):'')
+        +' · <a href="'+esc(fileurl(g.file))+'">grade json</a>'
+        +(g.png?' · <a href="'+esc(fileurl(g.png))+'">graded png</a>':' · graded png not on disk')
+        +'</div>';
+      if(g.knobs) h+='<div class="xtra">knobs '+esc(JSON.stringify(g.knobs))+' · plate '+esc(g.plate)+'</div>';
+    });
+    h+='</div>';
+  }
+  const dz=$('dossier');
+  dz.innerHTML=h;
+  const mr=dz.querySelector('#morerows');
+  if(mr) mr.querySelector('button').addEventListener('click', ()=>{
+    mr.insertAdjacentHTML('beforebegin', rows.slice(12).map(clipRowHtml).join(''));
+    mr.remove();
+  });
+  return dz;
+}
+
+// ---- search
+const qEl=$('q');
+let deb;
+qEl.addEventListener('input', ()=>{ clearTimeout(deb); deb=setTimeout(doSearch,180); });
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape'&&qEl.value){ qEl.value=''; doSearch(); }
+});
+function resultCardHtml(c){
+  const v=bestLocalVideo(c), im=v?null:bestLocalImage(c);
+  const nd=NODES[c.node]||{};
+  const cap=(nd.id?nd.id:'?')+(c.beat!=null?' · beat '+pad2(c.beat):'');
+  const media=v
+    ?'<video muted playsinline preload="none" src="'+esc(relurl(v.p))+'" tabindex="-1"></video>'
+    :(im?'<img loading="lazy" src="'+esc(relurl(im.p))+'" alt="">'
+        :'<div class="ph"><b>·</b><span>'+esc(c.era||'record')+'</span></div>');
+  return '<div class="fcard" role="button" tabindex="0" data-i="'+c._i+'">'
+    +'<div class="fmedia">'+media+'</div>'
+    +'<div class="fmeta"><div class="rlabel" title="'+esc(c.id)+'">'+esc(c.id)+'</div>'
+    +'<div class="ftc">'+esc(cap)+'</div></div></div>';
+}
+function doSearch(){
+  const q=qEl.value.trim().toLowerCase();
+  const box=$('results');
+  if(!q){ box.hidden=true; box.innerHTML=''; return; }
+  const hits=CARDS.filter(c=>c._q.includes(q));
+  const shown=hits.slice(0,60);
+  box.hidden=false;
+  box.innerHTML='<div class="rline">'+hits.length+' result'+(hits.length!==1?'s':'')
+    +' for “'+esc(q)+'”'+(hits.length>60?' (showing 60)':'')
+    +' <button id="clr" type="button" aria-label="clear search">×</button></div>'
+    +'<div class="strip">'+shown.map(resultCardHtml).join('')+'</div>';
+  $('clr').addEventListener('click', ()=>{ qEl.value=''; doSearch(); });
+  box.querySelectorAll('.fcard').forEach(el=>{
+    wireCard(el);
+    const jump=()=>{
+      const c=CARDS[+el.dataset.i];
+      if(c.node&&NODES[c.node]){ selectNode(c.node, c.beat!=null?c.beat:null);
+        const dz=$('dossier'); if(dz.innerHTML) dz.scrollIntoView({behavior:RM?'auto':'smooth'}); }
+    };
+    el.addEventListener('click', jump);
+    el.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); jump(); } });
+  });
+}
+
+// ---- health footer
+$('hline').addEventListener('click', ()=>{
+  const hb=$('hbox');
+  hb.hidden=!hb.hidden;
+  $('hline').setAttribute('aria-expanded', String(!hb.hidden));
+});
+
+// ---- boot: hash deep link (#n=<slug>&b=<beat>&q=<query>) else node with most cards
+(function(){
+  const hp=new URLSearchParams(location.hash.slice(1));
+  const counts={};
+  CARDS.forEach(c=>{ if(c.node) counts[c.node]=(counts[c.node]||0)+1; });
+  let slug=hp.get('n');
+  if(!slug||!NODES[slug])
+    slug=Object.keys(NODES).sort((a,b)=>(counts[b]||0)-(counts[a]||0))[0];
+  const b=hp.get('b');
+  selectNode(slug, b!=null&&b!==''?+b:null);
+  if(b!=null&&b!==''){ const dz=$('dossier'); if(dz.innerHTML) dz.scrollIntoView(); }
+  if(hp.get('q')){ qEl.value=hp.get('q'); doSearch(); }
+})();
 </script>
 </body></html>""" \
         .replace("__GENERATED__", esc(data["generated"])) \
+        .replace("__STAT__", esc(stat)) \
+        .replace("__HLINE__", esc(hline)) \
         .replace("__QNOTE__", qnote) \
-        .replace("__ROOTPATH__", esc(data["root"])) \
-        .replace("__TOTALS__", tot) \
         .replace("__TREE__", tree) \
         .replace("__HEALTH__", healthbox) \
         .replace("__DATA__", payload)
