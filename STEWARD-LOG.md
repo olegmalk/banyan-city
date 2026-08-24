@@ -126,3 +126,12 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   box for the claim-7 sample (its own queue root, machine residency), and
   deploy the auto-logon/at-boot worker service so it never needs a human
   login again (design §6 step 4). No renders until the box is confirmed up.
+
+- INTENT (box confirmed up: ssh ok, RTX 5090 24GB idle): enlist rtx5090 for
+  the claim-7 sample. Steps: (1) pull latest main on the box's clone (it was
+  2 days stale at stop time), (2) check its held state (.HOLD-project-stopped
+  -0822) and the banyan-box-autofill scheduled task — autofill stays DISABLED
+  so nothing self-feeds before the sample is screened, (3) run ONE sample job
+  through queue2 with a box-local queue root, (4) copy the clip back for
+  founder screening. Deferred to its own intent: the auto-logon/at-boot
+  worker service (design §6 step 4).
