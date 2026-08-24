@@ -1,0 +1,9 @@
+- job_id: queue2-sample-b02-0824-1787566150
+  date: 2026-08-24
+  verdict: rejected
+  by: founder (Roman, in chat)
+  reasons:
+    - "barely looks like the goblin (character resemblance)"
+    - "the animation is trash (motion quality)"
+  recipe_fp: pending-box-journal   # box was mid-reboot; fill from journal
+  effect: this recipe may not batch; next step is diagnosis, then ONE new sample

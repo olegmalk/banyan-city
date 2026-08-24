@@ -196,3 +196,11 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   at-boot service running as a different account would silently see an empty
   queue — pin --root/--store explicitly; v1 runner is still draining the old
   queue and the design retires that split.
+
+- FOUNDER VERDICT (Roman): claim-7 sample REJECTED — "barely looks like the
+  goblin" + "the animation is trash". Recorded in ledger/sample-verdicts.yaml.
+  Gate is fail-closed so no batch was ever possible; this makes the rejection
+  durable and names the defects. Tonight = self-sufficiency proof + diagnosis
+  (resemblance -> character-reference thread incl. the IPA run where the ref
+  provably never reached the code; motion -> frozen-frames/metric thread).
+  ONE new sample comes out of diagnosis, not fifteen.
