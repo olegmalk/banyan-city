@@ -270,3 +270,16 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   line, "21/21 beats with footage" coverage sentence + color legend, ship
   picks resolved by sha to byte-identical local copies, contrast/ellipsis/
   arithmetic nits closed. Steward screened the final pixels. Committing.
+
+- RESULT (~00:10): cycle-019 diagnosis WRITTEN and adversarially CONFIRMED-SOUND
+  (all quotes verbatim, both commits verified, byte-identity proven, blobs
+  exist, one $0 render, new fingerprint; two cosmetic filename nits fixed).
+  Headline finding: last night's rejected pixels were an UNSCREENED 08-21
+  steward pick the founder had already effectively rejected (commit 5412a4522
+  reverted it as "worse than the last one") — not a regression, this recipe's
+  first real founder screening, consistent with every prior note. Fault 1
+  (resemblance) is decided at frame 0, so the prescribed sample is a STILL
+  (inpaint_fruit.py + jerry-v3 LoRA, pose-net path), stills-before-motion per
+  the founder's own rule; fault 2 (motion) levers named for the video rung.
+  Step zero is $0 and needs no GPU: grade four already-rendered-but-unlooked-at
+  v3 probe grids first. NOTHING rendered/enqueued — awaits founder screening.
