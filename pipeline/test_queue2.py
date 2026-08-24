@@ -35,7 +35,7 @@ from queue2 import (
     output_path_for, queue2_sweep, recipe_fingerprint, record_sample_verdict,
     spec_fingerprint, startup_sweep,
 )
-from queue2.sweep import compact_journal
+from queue2.sweep import compact_journal, pid_alive
 
 REPO = PIPELINE.parent
 FAILURES = []
@@ -193,13 +193,19 @@ def test_duplicate_rejected_across_live_and_terminal(td):
           res["id"].startswith("renamed4-again"))
 
 
+# The worker reports its OWN pid, and that is the pid the assertion uses --
+# never Popen.pid. On Windows a venv's Scripts\\python.exe is a redirector
+# that runs the real interpreter as a SEPARATE process, so the pid the parent
+# spawned and the pid doing the work differ (measured on the box: Popen.pid
+# 19052, worker 18912). The journal records what the worker sees, which is
+# also what sweep.pid_alive() probes -- so that is what must match.
 WORKER_SRC = """\
-import sys, time
+import os, sys, time
 sys.path.insert(0, sys.argv[4])
 from queue2 import Queue2
 q = Queue2(root=sys.argv[1], store=sys.argv[2], verdicts_path=sys.argv[3])
 got = q.claim()
-print("CLAIMED %s" % (got and got[0]["id"]), flush=True)
+print("CLAIMED %s %d" % (got and got[0]["id"], os.getpid()), flush=True)
 time.sleep(60)   # mid-job forever, until somebody kill -9s us
 """
 
@@ -215,18 +221,32 @@ def test_write_ahead_survives_kill9(td):
          str(PIPELINE)],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
         encoding="utf-8", errors="replace")   # reader hygiene, design §2.3
-    line = proc.stdout.readline().strip()
-    check("the worker subprocess claimed the job", line == "CLAIMED victim")
+    parts = proc.stdout.readline().split()
+    check("the worker subprocess claimed the job",
+          len(parts) == 3 and parts[:2] == ["CLAIMED", "victim"])
+    worker_pid = int(parts[2])
     # SIGKILL on POSIX, TerminateProcess on Windows -- the same uncatchable
     # death, spelled portably (Windows has no signal.SIGKILL at all).
     proc.kill()
     proc.wait()
+    # Killing what we spawned is not the same as killing the WORKER: see the
+    # redirector note above. The failure this test induces is the worker's
+    # death, so induce it on the pid the journal names -- os.kill(pid, 9) is
+    # TerminateProcess on Windows and SIGKILL on POSIX. Assumed deaths are
+    # what this suite exists to stop assuming.
+    deadline = time.time() + 10.0
+    while pid_alive(worker_pid) and time.time() < deadline:
+        try:
+            os.kill(worker_pid, 9)
+        except OSError:
+            break
+        time.sleep(0.05)
 
     rows = q.journal.attempts_for("victim")
     check("the journal shows the attempt the kill could not erase "
           "(write-ahead: STARTED committed before work)",
           len(rows) == 1 and rows[0]["state"] == "STARTED"
-          and rows[0]["pid"] == proc.pid)
+          and rows[0]["pid"] == worker_pid)
     check("pragmas are the crash-proof pair the design names",
           q.journal.db.execute("PRAGMA journal_mode").fetchone()[0] == "wal"
           and q.journal.db.execute("PRAGMA synchronous").fetchone()[0] == 2)
