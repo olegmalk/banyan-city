@@ -148,3 +148,23 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   exists. NOT rescheduling it to Roman's Mac — he held that (control/HOLD).
 - STANDING: while the box is down, steward work = course + robot track, and
   Mac-side banyan work that needs no GPU.
+
+## 2026-08-24 — evening
+
+- RESOLVED: the rtx5090 "dead machine" was a loose wall adaptor (also why the
+  RoSpider was not charging). Power restored; BitLocker demanded its recovery
+  key after the unclean shutdown; Roman retrieved it from the Microsoft
+  account and unlocked it himself (the steward never saw the key). Box now
+  reachable: GPU idle, 41C, nothing lost.
+- INTENT (founder chose option A): make the box SELF-SUFFICIENT before any
+  render. Two parts, in order:
+  (1) deploy queue2 to the box (its own machine-local queue root under
+      C:\banyan-queue2, media store outside any git tree, hooks installed via
+      the tracked installer, host_preflight fail-closed check);
+  (2) auto-logon + at-boot worker service so the worker starts with no human
+      login, plus disable sleep (a farm machine that naps is not a farm
+      machine — today's fault made that concrete).
+  banyan-box-autofill stays DISABLED throughout; no render fires until the
+  box can feed itself AND the claim-7 sample has been screened by the founder.
+  Verification for each part is named in design §6 step 4; nothing is called
+  done on an agent's word — GPU meter and journal rows only.
