@@ -241,3 +241,21 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   attempt refused with the founder's verdict quoted. The steward hand-typed a
   row whose own docstring says the shape is code — noted, and the docstring
   won.
+
+- RESULT (night queue, ~23:35): the ONE job ran end-to-end on the standing
+  self-started worker and attested clean — ep2-b11g2-guardgrade (finish-class,
+  CPU, $0, 7s): the b11 guard2 plate re-graded onto guard1's founder-accepted
+  light, completing the b05g2/b07 trio. Journal DONE, three independent
+  hashers agree (2efcbec5…). Graded bytes await founder screening.
+- FINDING: there is NO releasable "rest of the backlog." The 88 held v1 specs
+  are ALL motion/generation-class, and most carry pre-stop FOUNDER TASTE HOLDS
+  (age-pivot, eyesize-unsettled, r4-sample-teen) that are not the steward's to
+  lift. The pending gradmotion wave (b17 sample, then b04/b07/b14) is
+  motion-class and stays blocked by tonight's own logged constraint (no new
+  motion except the diagnosis sample). So the night queue's honest total is:
+  one job, done, verified. Machines go quiet on renders — not idle-while-
+  runnable-work-exists; there is no runnable render work tonight that would
+  not violate a standing hold. No-work-without-a-consumer holds.
+- STATUS: cycle-019 (diagnosis) writer has died on API connection errors 4x
+  tonight; the API is flaky. One retry queued; if it fails again the document
+  waits for morning — no sample renders without it passing its gate anyway.
