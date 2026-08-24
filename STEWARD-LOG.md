@@ -115,3 +115,14 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   the clip and records the founder verdict row (ledger/sample-verdicts.yaml).
   This validates the queue machinery; the verdict gates only this recipe's
   batches. No box access, no spend, no publication.
+
+- FOUNDER STOP (Roman, in chat): "why on my mac? it is lagging like crazy.
+  use the 5090." Mac render killed twice (a subagent relaunched it once,
+  unaware) and now HELD in code: ~/banyan-queue2/control/HOLD blocks the Mac
+  worker until the founder releases it. Both interrupted attempts were caught
+  by the sweeper and filed to failed/ with reason + attempt consumed —
+  claim-1 (write-ahead journal) validated by accident on its first day.
+- NEXT: founder is powering on the rtx5090. Intent when it is up: enlist the
+  box for the claim-7 sample (its own queue root, machine residency), and
+  deploy the auto-logon/at-boot worker service so it never needs a human
+  login again (design §6 step 4). No renders until the box is confirmed up.
