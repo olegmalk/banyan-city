@@ -135,3 +135,16 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   through queue2 with a box-local queue root, (4) copy the clip back for
   founder screening. Deferred to its own intent: the auto-logon/at-boot
   worker service (design §6 step 4).
+
+- HARDWARE FAULT (Roman, ~15:40): the rtx5090 box will not power on — no
+  power LED, no fan, no charger LED, 15s power-button hold does nothing. It
+  was reachable and idle at 14:50 (ssh ok, GPU 0%, cold). Nothing was ever
+  written to it today: reads only (nvidia-smi, dir listings) plus one
+  `git pull` on its clone at 14:05. No render ever ran. Escalated to dad —
+  his machine, possible charger/warranty matter.
+- CONSEQUENCE: banyan-city renders are blocked on hardware, not on design.
+  Queue v2 (built+tested), birdseye (shipped) and the approved v2 design are
+  all Mac-side and unaffected. The claim-7 sample cannot run until a GPU host
+  exists. NOT rescheduling it to Roman's Mac — he held that (control/HOLD).
+- STANDING: while the box is down, steward work = course + robot track, and
+  Mac-side banyan work that needs no GPU.
