@@ -7,12 +7,19 @@ passed claim gets its failure INDUCED, not assumed: a worker is kill -9'd
 mid-job, the journal db is truncated on purpose, an output goes missing
 before attest, a batch knocks before its sample verdict exists.
 
+PLATFORM-INDEPENDENT ON PURPOSE (2026-08-24): the queue's home is the Windows
+box, so this suite may not assume a POSIX userland. Job steps are spawned as
+`sys.executable -c ...` rather than `sh -c ...` (the box has no sh, no bash
+and no sleep on PATH); the mid-job kill goes through Popen.kill(), which is
+SIGKILL on POSIX and TerminateProcess on Windows, because signal.SIGKILL does
+not exist there at all.
+
 Run: python3 pipeline/test_queue2.py
 """
 
+import gc
 import json
 import os
-import signal
 import subprocess
 import sys
 import tempfile
@@ -47,10 +54,21 @@ def mkq(td, **kw):
                   **kw)
 
 
+# The job vocabulary, as portable argv. Every box in the farm has the python
+# that is running this suite; none of them is guaranteed a shell.
+PY = sys.executable
+WRITE_OUT = [PY, "-c", "import sys; open(sys.argv[1],'wb').write(b'payload')",
+             "{out}"]
+
+
+def exits(code):
+    return [PY, "-c", "raise SystemExit(%d)" % code]
+
+
 def spec(sid, seed=1, model="m1", argv=None, **kw):
     s = {"id": sid, "stamp_id": False, "seed": seed, "model": model,
          "needs_gpu": False,
-         "steps": [{"argv": argv or ["sh", "-c", "echo payload > {out}"]}]}
+         "steps": [{"argv": argv or list(WRITE_OUT)}]}
     s.update(kw)
     return s
 
@@ -67,7 +85,7 @@ def write_output(q, job, attempt_n, data=b"rendered bytes"):
 def dead_pid():
     """A pid that certainly existed and is certainly gone: our own reaped
     child. No magic numbers that might collide with a live process."""
-    p = subprocess.Popen(["sleep", "0"])
+    p = subprocess.Popen([PY, "-c", ""])
     p.wait()
     return p.pid
 
@@ -161,7 +179,7 @@ def test_duplicate_rejected_across_live_and_terminal(td):
           refused(spec("renamed3", model="dup-live")))
 
     q.enqueue(spec("doomed", model="dup-dead", max_attempts=2,
-                   argv=["sh", "-c", "exit 1"]))
+                   argv=exits(1)))
     for _ in range(2):
         j2, t2, _ = q.claim()
         q.fail(j2, t2, "induced")
@@ -169,7 +187,7 @@ def test_duplicate_rejected_across_live_and_terminal(td):
           os.path.exists(os.path.join(q.dir("failed"), "doomed.json")))
     check("duplicate refused against failed/ too",
           refused(spec("doomed-again", model="dup-dead", max_attempts=2,
-                       argv=["sh", "-c", "exit 1"])))
+                       argv=exits(1))))
     res = q.enqueue(spec("renamed4", model="dup-live"), again=True)
     check("--again is the loud override and mints a fresh id",
           res["id"].startswith("renamed4-again"))
@@ -198,7 +216,9 @@ def test_write_ahead_survives_kill9(td):
         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     line = proc.stdout.readline().strip()
     check("the worker subprocess claimed the job", line == "CLAIMED victim")
-    os.kill(proc.pid, signal.SIGKILL)
+    # SIGKILL on POSIX, TerminateProcess on Windows -- the same uncatchable
+    # death, spelled portably (Windows has no signal.SIGKILL at all).
+    proc.kill()
     proc.wait()
 
     rows = q.journal.attempts_for("victim")
@@ -395,7 +415,7 @@ def test_run_job_honest_exit_codes(td):
           q.run_job(job, token, n) == 0
           and os.path.exists(os.path.join(q.dir("done"), "clean.json")))
 
-    q.enqueue(spec("liar", model="rc-liar", argv=["sh", "-c", "exit 3"]))
+    q.enqueue(spec("liar", model="rc-liar", argv=exits(3)))
     job, token, n = q.claim()
     rc = q.run_job(job, token, n)
     reason = q.journal.attempts_for("liar")[-1]["reason"] or ""
@@ -404,7 +424,9 @@ def test_run_job_honest_exit_codes(td):
           and os.path.exists(os.path.join(q.dir("ready"), "liar.json")))
 
     declared = spec("declared", model="rc-declared")
-    declared["steps"] = [{"argv": ["sh", "-c", "echo hi > {out}; exit 3"],
+    declared["steps"] = [{"argv": [PY, "-c", "import sys; "
+                                   "open(sys.argv[1],'wb').write(b'hi'); "
+                                   "raise SystemExit(3)", "{out}"],
                           "expected_rc": [3]}]
     q.enqueue(declared)
     # ready/ also holds the requeued "liar"; drain claims until ours.
@@ -416,7 +438,8 @@ def test_run_job_honest_exit_codes(td):
           job["id"] == "declared" and q.run_job(job, token, n) == 0)
 
     q.enqueue(spec("stuck", model="rc-stuck", max_runtime=0.6,
-                   max_attempts=1, argv=["sleep", "30"]))
+                   max_attempts=1,
+                   argv=[PY, "-c", "import time; time.sleep(30)"]))
     job, token, n = q.claim()
     while job["id"] != "stuck":
         q.fail(job, token, "test drain")
@@ -473,6 +496,13 @@ def main():
         print("-- " + t.__name__)
         with tempfile.TemporaryDirectory() as td:
             t(td)
+            # Drop the journal's OS handle before the tmpdir is removed.
+            # sqlite3's prepared-statement cache and its Connection form a
+            # reference cycle, so a Queue2 that has merely gone out of scope
+            # still holds journal.db open until the CYCLIC collector runs --
+            # and Windows will not unlink an open file. Cleanup stays strict
+            # (no ignore_errors): a real leak must still fail loudly here.
+            gc.collect()
     print()
     if FAILURES:
         print("FAILED %d:" % len(FAILURES))

@@ -109,6 +109,19 @@ class Journal:
             self.db.executescript(SCHEMA)
             self.db.commit()
         except sqlite3.DatabaseError as exc:
+            # Release the OS handle before raising. CPython's sqlite3 keeps a
+            # prepared-statement LRU cache whose Statements point back at the
+            # Connection -- a reference CYCLE, so a dropped connection is
+            # freed only by the cyclic GC, never by refcounting. On POSIX that
+            # is invisible (an open file can still be unlinked); on Windows
+            # the file stays LOCKED -- and the very next thing a caller does
+            # after this raise is Journal.recover(), which RENAMES this file.
+            # Leaking here would make recovery, the one path that runs when
+            # things are already bad, fail with WinError 32.
+            try:
+                self.db.close()
+            except (sqlite3.Error, AttributeError):
+                pass
             raise JournalCorrupt(
                 "!! journal %s is corrupt (%s) -- refusing to answer from it; "
                 "quarantine + restart with Journal.recover(%r)"
