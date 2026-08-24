@@ -130,7 +130,9 @@ BEAT_RANGE = re.compile(r"\d+:\d+\s*[–—-]\s*\d+:\d+")
 def parse_node_beats(md: str):
     """Port of render_t1.parse_frames' beat rule: inside '## Script', every
     full-bold line carrying a time range is a beat (bold WITHOUT a range is
-    emphasis). Struck-through ~~lines~~ (retired staging) are excluded."""
+    emphasis). Struck-through ~~lines~~ (retired staging) are KEPT — the
+    render layer shows them struck; deleting them dangles the prose that
+    references them ('the original text is right here:')."""
     m = re.search(r"^## Script\s*\n(.*?)(?=^## |^---\s*$|\Z)", md, re.M | re.S)
     if not m:
         return []
@@ -146,8 +148,8 @@ def parse_node_beats(md: str):
             current = {"n": len(beats) + 1, "title": title, "range": rng, "text": []}
             beats.append(current)
         elif current is not None:
-            if s.startswith("~~") and s.endswith("~~") and len(s) > 4:
-                continue  # struck-through staging — retired, not current
+            # struck-through ~~staging~~ stays in (rendered as <del> by the
+            # page); it is retired text but the record must show it
             current["text"].append(line.rstrip())
     for b in beats:
         b["text"] = "\n".join(b["text"]).strip()
@@ -215,14 +217,39 @@ def load_story(lineage):
 
 # ---------------------------------------------------------------- disk scan
 
+def git_worktrees():
+    """Registered git worktrees other than ROOT itself. A nested checkout
+    (e.g. wt-pre/) is another commit's tree, never production data — walking
+    it double-counts every file it mirrors, puts stale takes on filmstrip
+    faces (checkout mtime beats render mtime) and breaks newest-first."""
+    wts = set()
+    try:
+        out = subprocess.run(["git", "worktree", "list", "--porcelain"],
+                             cwd=ROOT, capture_output=True, text=True,
+                             encoding="utf-8", errors="replace", timeout=30)
+        for line in out.stdout.splitlines():
+            if line.startswith("worktree "):
+                p = Path(line[len("worktree "):].strip()).resolve()
+                if p != ROOT:
+                    wts.add(p)
+    except Exception:
+        pass
+    return wts
+
+
 def walk_repo():
     sidecars, still_yamls, grades, manifests = [], [], [], []
     media = {}        # relpath -> bytes
     media_mtime = {}  # relpath -> mtime (same stat call; newest-render ordering)
+    worktrees = git_worktrees()
     for dirpath, dirnames, filenames in os.walk(ROOT):
-        dirnames[:] = [d for d in dirnames
-                       if d not in SKIP_DIRS and not d.startswith("C:")]
         dp = Path(dirpath)
+        # prune nested git checkouts: registered worktrees AND any dir that
+        # carries its own .git entry (file or dir) — belt and braces
+        dirnames[:] = [d for d in dirnames
+                       if d not in SKIP_DIRS and not d.startswith("C:")
+                       and (dp / d).resolve() not in worktrees
+                       and not (dp / d / ".git").exists()]
         in_farmout = "farm-out" in dp.relative_to(ROOT).parts[:1] if dp != ROOT else False
         for fn in filenames:
             p = dp / fn
@@ -365,7 +392,8 @@ def main():
     try:
         out = subprocess.run(
             ["git", "ls-tree", "-r", "--name-only", FARM_BRANCH, "farm-out/"],
-            cwd=ROOT, capture_output=True, text=True, timeout=120)
+            cwd=ROOT, capture_output=True, text=True,
+            encoding="utf-8", errors="replace", timeout=120)
         if out.returncode != 0:
             health.setdefault("notes", []).append(
                 f"git ls-tree {FARM_BRANCH} failed (rc={out.returncode}): "
@@ -552,17 +580,57 @@ def main():
     smp = ROOT / "review/ep2-ship-0821/sources/ship-manifest.yaml"
     if smp.exists():
         sm = loose_yaml(smp) or {}
+        rows_missing = []  # (ship rec, full sha, beat) for the sha-identity pass
         for row in sm.get("beats", []) or []:
             if not isinstance(row, dict):
                 continue
             take = row.get("take") or row.get("clip")
             on_disk = bool(take) and (smp.parent / str(take)).exists()
-            ship[row.get("beat")] = {
-                "take": take, "sha256": (row.get("sha256") or "")[:16],
-                "verdict": str(row.get("verdict") or ""), "on_disk": on_disk}
-            if take and not on_disk:
+            full_sha = str(row.get("sha256") or "")
+            rec = {"take": take, "sha256": full_sha[:16],
+                   "verdict": str(row.get("verdict") or ""), "on_disk": on_disk,
+                   "sha_local": None}
+            ship[row.get("beat")] = rec
+            if take and not on_disk and len(full_sha) == 64:
+                rows_missing.append((rec, full_sha, row.get("beat")))
+        # a ship take gets RENAMED at staging time; the same bytes usually
+        # still sit locally under the render's original name. Join by full
+        # sha256: farm manifests first (free), then hash the local NN-prefix
+        # candidates (small clips — sub-second total).
+        if rows_missing:
+            import hashlib
+            sha_owner = {s: f"{d}/{fn}" for (d, fn), s in sha_of.items()}
+            wanted = {sha: rec for rec, sha, _ in rows_missing}
+            for sha, rec in list(wanted.items()):
+                p = sha_owner.get(sha)
+                if p and (ROOT / p).exists():
+                    rec["sha_local"] = p
+                    del wanted[sha]
+                elif p:
+                    # branch-only fallback; keep hunting for a LOCAL copy below
+                    rec["sha_local"] = p + " (farm branch only)"
+            if wanted:
+                prefixes = {str(rec["take"])[:3] for rec in wanted.values()
+                            if str(rec["take"])[:2].isdigit()}
+                for mp in sorted(media):
+                    if not wanted:
+                        break
+                    bn = os.path.basename(mp)
+                    if bn[:3] not in prefixes or os.path.splitext(bn)[1].lower() not in VIDEO_EXTS:
+                        continue
+                    try:
+                        digest = hashlib.sha256((ROOT / mp).read_bytes()).hexdigest()
+                    except OSError:
+                        continue
+                    rec = wanted.pop(digest, None)
+                    if rec:
+                        rec["sha_local"] = mp
+        for beat, rec in ship.items():
+            if rec["take"] and not rec["on_disk"]:
                 health["ship_pick_missing"].append(
-                    f"beat {row.get('beat')}: {take} (named in ship-manifest, not in sources/)")
+                    f"beat {beat}: {rec['take']} (named in ship-manifest, not in sources/"
+                    + (f"; byte-identical render at {rec['sha_local']}" if rec["sha_local"]
+                       else "; no sha-identical copy found locally") + ")")
 
     # --- spend ledger (tolerant: unquoted commas in note produce >7 columns)
     ledger_rows, spend_total = [], 0.0
@@ -601,10 +669,12 @@ def main():
             "verdict": None, "problems": [], "cost": [], "extras": {},
             "retired_era": None})
 
-    def add_file(card, path, where="local"):
+    def add_file(card, path, where="local", bytes_hint=None):
         if any(f["p"] == path for f in card["files"]):
             return
         size = media.get(path)
+        if size is None:
+            size = bytes_hint  # branch-only rows: queue outputs record the bytes
         d, fn = os.path.split(path)
         ext = os.path.splitext(fn)[1].lower()
         kind = ("video" if ext in VIDEO_EXTS else "image" if ext in IMAGE_EXTS
@@ -639,7 +709,9 @@ def main():
         c["seconds"] = rec.get("seconds")
         if best.get("prompt"):
             c["prompt"] = best["prompt"]
-            c["prompt_src"] = f"queue-history ({best.get('prompt_from') or best.get('prompt_source') or 'record'})"
+            # prompt_source is the descriptive field ('spec payload (the exact
+            # bytes the encode step read)'); prompt_from is the vaguer tag
+            c["prompt_src"] = f"queue-history ({best.get('prompt_source') or best.get('prompt_from') or 'record'})"
         c["negative"] = best.get("negative")
         if best.get("init"):
             c["init"] = best["init"]
@@ -658,7 +730,8 @@ def main():
         for o in best.get("outputs") or []:
             p = o.get("path")
             if p:
-                add_file(c, p, "local" if p in media else "on farm branch, not local")
+                add_file(c, p, "local" if p in media else "on farm branch, not local",
+                         o.get("bytes"))
 
     # 2) sidecars — enrich task cards, or standalone cards for taskless files
     for sr in sidecar_recs:
@@ -1136,20 +1209,28 @@ def render_health_html(h, data):
         "retired_era_clips": "clips made for a RETIRED script era (filename slug ≠ current beat title)",
         "notes": "build notes — infra degradations (git/queue-history unavailable), not data problems",
     }
+    # rows NOT counted in the headline "unresolved links" number — marked so
+    # the arithmetic is checkable (branch-only = marked fact, fallback-parsed
+    # = still read, notes = infra, never-ran = a different fact entirely)
+    NOT_COUNTED = {"branch_only_tasks", "unparsable_yaml", "notes"}
+    unresolved = data["totals"]["unresolved"]
+    in_badge = f'<span class="hbadge">counted in the {unresolved:,}</span>'
+    out_badge = '<span class="hbadge">fact, not counted</span>'
     rows = []
     for k, label in labels.items():
         items = h.get(k, [])
+        badge = out_badge if k in NOT_COUNTED else in_badge
         if not items:
             rows.append(f'<div class="hrow ok"><b>0</b> {esc(label)}</div>')
             continue
         lis = "".join(f"<li>{esc(x)}</li>" for x in items[:150])
         more = f"<li>… and {len(items)-150} more</li>" if len(items) > 150 else ""
-        rows.append(f'<details class="hrow bad"><summary><b>{len(items)}</b> {esc(label)}</summary>'
+        rows.append(f'<details class="hrow bad"><summary><b>{len(items)}</b> {esc(label)} {badge}</summary>'
                     f'<ul>{lis}{more}</ul></details>')
     nr = data["totals"]["specs_never_ran"]
     sample = "".join(f"<li>{esc(x)}</li>" for x in data["never_ran_sample"])
     rows.append(f'<details class="hrow"><summary><b>{nr}</b> job specs never ran '
-                f'(no queue row by task id or spec_file, no sidecar, no farm-out dir — incl. {data["never_ran_upcoming"]} tracked as upcoming/held)'
+                f'(no queue row by task id or spec_file, no sidecar, no farm-out dir — incl. {data["never_ran_upcoming"]} tracked as upcoming/held) {out_badge}'
                 f'</summary><ul>{sample}<li>…</li></ul></details>')
     return "".join(rows)
 
@@ -1166,7 +1247,8 @@ def render_html(data, lineage):
     stat = (f"{t['nodes']} story nodes · {t['beats']} beats · "
             f"{t['cards']:,} renders on disk · {t['queue_runs']:,} queue runs · "
             f"${t['spend_usd']:.2f} ever spent")
-    hline = f"{t['unresolved']:,} links the generator could not resolve — view details"
+    hline = (f"data health — {t['unresolved']:,} links the generator could not resolve, "
+             f"plus build facts (branch-only, fallback-parsed, never-ran) — view details")
     qm = data.get("queue_meta", {})
     qnote = (f"queue history: {esc(qm.get('_file',''))} measured {esc(qm.get('measured_at','?'))} "
              f"from {esc(qm.get('source_branch','?'))}@{esc(str(qm.get('source_commit',''))[:10])}"
@@ -1179,7 +1261,7 @@ def render_html(data, lineage):
 <style>
 :root{
   --bg:#131313; --panel:#1c1c1a; --edge:#2c2c28;
-  --ink:#f2efe6; --dim:#a8a49a; --faint:#6b675f;
+  --ink:#f2efe6; --dim:#a8a49a; --faint:#8c8880; /* >=4.5:1 on bg AND panel */
   --leaf:#8fbf6f; --warn:#d9a53f; --bad:#cf5f56;
   --disp:"Avenir Next","Helvetica Neue",sans-serif;
   --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -1232,6 +1314,13 @@ header{padding:1.6rem 2.4rem 1.2rem}
 .covrow i.f{background:var(--leaf);box-shadow:none}
 .covrow i.s::after{content:"";position:absolute;left:50%;top:-5px;width:4px;height:4px;
   margin-left:-2px;border-radius:50%;background:var(--warn)}
+.legend{color:var(--faint);font-size:.72rem;line-height:1.9;margin:1.1rem .6rem 0;
+  padding-top:.7rem;border-top:1px solid var(--edge)}
+.legend .sw{display:inline-block;vertical-align:middle;margin:0 .3rem 2px .1rem}
+.legend .swf{width:14px;height:4px;border-radius:1px;background:var(--leaf)}
+.legend .sws{width:6px;height:6px;border-radius:50%;background:var(--warn)}
+.legend .swp{width:6px;height:6px;border-radius:50%;background:var(--bad)}
+.legend .swhot{width:6px;height:6px;border-radius:50%;background:var(--leaf)}
 
 /* ---- level 2: filmstrip ---- */
 #nodehead h2{font-family:var(--disp);font-weight:700;font-size:1.75rem;margin:.1rem 0 .15rem;letter-spacing:.01em}
@@ -1250,9 +1339,10 @@ header{padding:1.6rem 2.4rem 1.2rem}
 .ph b{font-family:var(--disp);font-weight:600;font-size:2.1rem;color:var(--faint)}
 .ph span{color:var(--faint);font-size:.7rem}
 .fmeta{margin-top:.5rem;width:132px}
-.fnum{font-family:var(--mono);font-size:.7rem;color:var(--faint)}
-.ftitle{font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ftc{font-family:var(--mono);font-size:.68rem;color:var(--faint)}
+.frow1{display:flex;gap:.35rem;align-items:baseline;min-width:0}
+.fnum{font-family:var(--mono);font-size:.7rem;color:var(--faint);flex:none}
+.ftitle{flex:1;min-width:0;font-size:.8rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ftc{font-family:var(--mono);font-size:.7rem;color:var(--faint)}
 .fdots{display:flex;gap:4px;margin-top:.32rem;height:6px}
 .fdots i{width:6px;height:6px;border-radius:50%}
 .fdots .d-ship{background:var(--warn)}
@@ -1265,7 +1355,7 @@ header{padding:1.6rem 2.4rem 1.2rem}
 .rline{color:var(--dim);font-size:.9rem;display:flex;align-items:center;gap:.7rem}
 #clr{background:var(--panel);border:1px solid var(--edge);color:var(--dim);border-radius:6px;
   width:1.6rem;height:1.6rem;cursor:pointer;font:inherit;line-height:1}
-.rlabel{font-family:var(--mono);font-size:.66rem;color:var(--faint);
+.rlabel{font-family:var(--mono);font-size:.7rem;color:var(--faint);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:132px}
 
 /* ---- level 3: dossier ---- */
@@ -1282,6 +1372,7 @@ header{padding:1.6rem 2.4rem 1.2rem}
 .hist[open] summary::before{content:"▾ "}
 .hist p{color:var(--dim);font-size:13.5px;line-height:1.6;margin-top:8px}
 .scriptpage{background:var(--panel);border-radius:10px;padding:1.2rem 1.5rem;margin:1.1rem 0}
+.scriptpage del{color:var(--faint);text-decoration:line-through}
 .scriptpage .act{color:var(--dim);margin:.55rem 0}
 .scriptpage .dlg{margin:.6rem 0 .6rem 1.3rem}
 .who{font-variant:small-caps;letter-spacing:.06em;font-weight:600}
@@ -1328,6 +1419,8 @@ footer{padding:2.4rem 2.4rem 3rem;color:var(--dim)}
 .hrow.ok{color:var(--faint)}
 .hrow.bad summary{color:var(--bad);cursor:pointer}
 .hrow b{font-family:var(--mono)}
+.hbadge{font-size:.72rem;color:var(--faint);border:1px solid var(--edge);
+  border-radius:6px;padding:.02rem .35rem;white-space:nowrap}
 .hrow ul{max-height:14rem;overflow:auto;font-family:var(--mono);font-size:.72rem;color:var(--dim)}
 .buildnote{color:var(--faint);font-size:.74rem;font-family:var(--mono);margin-top:1.3rem}
 
@@ -1348,7 +1441,12 @@ footer{padding:2.4rem 2.4rem 3rem;color:var(--dim)}
   <p class="statline">__STAT__</p>
 </header>
 <div id="wrap">
-  <nav id="rail" aria-label="story tree">__TREE__</nav>
+  <nav id="rail" aria-label="story tree">__TREE__
+    <p class="legend"><i class="sw swf" aria-hidden="true"></i>beat has footage
+      · <i class="sw sws" aria-hidden="true"></i>shipped pick
+      · <i class="sw swp" aria-hidden="true"></i>problem on current take
+      · <i class="sw swhot" aria-hidden="true"></i>hot node</p>
+  </nav>
   <main id="stage">
     <section id="results" hidden></section>
     <section id="nodehead"></section>
@@ -1436,21 +1534,23 @@ document.querySelectorAll('#rail .tn').forEach(b=>{
 function stripCardHtml(slug, i, bt){
   const best = (BEST[slug]||{})[i];
   const nd = NODES[slug]||{};
-  const cs = beatCards(slug, i);
   const SERIOUS = /conflict|retired|ship-manifest|missing on disk|never reached/i;
-  const prob = cs.some(c=>(c.problems||[]).some(p=>SERIOUS.test(p)));
+  // the red dot judges only the beat's CURRENT take (shipped pick else best
+  // clip) — judging the whole historical record pile lights it forever
+  const cur = best ? beatCards(slug, i).find(c=>c.id===best.card) : null;
+  const prob = !!(cur && (cur.problems||[]).some(p=>SERIOUS.test(p)));
   const sp = (nd.ship||{})[i];
   const shipped = !!(sp&&sp.take) || !!(best&&best.shipped);
   const dots = (shipped?'<i class="d-ship" title="shipped pick"></i>':'')
-             + (prob?'<i class="d-prob" title="has problems — see dossier"></i>':'');
+             + (prob?'<i class="d-prob" title="current take has a problem — see dossier"></i>':'');
   const media = best
     ? '<video muted playsinline preload="none" src="'+esc(relurl(best.p))+'" tabindex="-1"></video>'
     : '<div class="ph"><b>'+pad2(i)+'</b><span>no footage</span></div>';
   return '<div class="fcard" role="button" tabindex="0" data-beat="'+i+'" '
     +'aria-label="beat '+i+' — '+esc(bt.title)+'">'
     +'<div class="fmedia">'+media+'</div>'
-    +'<div class="fmeta"><span class="fnum">'+pad2(i)+'</span> '
-    +'<span class="ftitle" title="'+esc(bt.title)+'">'+esc(bt.title)+'</span>'
+    +'<div class="fmeta"><div class="frow1"><span class="fnum">'+pad2(i)+'</span>'
+    +'<span class="ftitle" title="'+esc(bt.title)+'">'+esc(bt.title)+'</span></div>'
     +'<div class="ftc">'+esc(bt.range)+'</div>'
     +'<div class="fdots">'+dots+'</div></div></div>';
 }
@@ -1458,10 +1558,14 @@ function renderNode(){
   const nd = NODES[selNode]||{};
   const beats = nd.beats||[];
   const nrec = CARDS.filter(c=>c.node===selNode).length;
+  const cov = (DATA.coverage||{})[selNode]||[];
+  const nfoot = cov.filter(s=>s==='clip'||s==='ship').length;
   let head = '<h2>'+esc(nd.title||selNode)+'</h2>'
     +'<div class="nmeta"><span class="mono">'+esc(nd.id||'?')+' · '+esc(selNode)+'</span>'
     +' · '+esc(nd.status||'?')+(nd.released?' · released '+esc(nd.released):'')
-    +' · '+beats.length+' beat'+(beats.length!==1?'s':'')+' · '+nrec+' record'+(nrec!==1?'s':'')+'</div>';
+    +' · '+beats.length+' beat'+(beats.length!==1?'s':'')
+    +(beats.length?' · '+nfoot+'/'+beats.length+' beats with footage':'')
+    +' · '+nrec+' record'+(nrec!==1?'s':'')+'</div>';
   if(nd.r1) head += '<p class="r1">'+esc(nd.r1)+'</p>';
   $('nodehead').innerHTML = head;
   const strip = $('strip');
@@ -1505,12 +1609,16 @@ function scriptHtml(text){
       }
     }
     const flat = stripMd(par.replace(/\s*\n\s*/g,' '));
+    // ~~struck~~ staging renders STRUCK — deleting it dangles the prose
+    // that says 'the original text is right here:'
+    const md = s => esc(s).replace(/~~([^~]+)~~/g,'<del>$1</del>');
     if(flat.length>260 || /^(restaged|PROVENANCE|Record:)/i.test(flat)){
-      out.push('<details class="hist"><summary>production history — '+esc(flat.slice(0,72))
-        +'…</summary><p>'+esc(flat)+'</p></details>');
+      out.push('<details class="hist"><summary>production history — '+esc(flat.replace(/~~/g,'').slice(0,72))
+        +'…</summary><p>'+md(flat)+'</p></details>');
       return;
     }
-    out.push('<p class="act">'+esc(flat)+'</p>');
+    out.push('<p class="act">'+md(flat)
+      +(/^~~.*~~$/.test(flat)?' <span class="cue">(retired staging — struck in the script)</span>':'')+'</p>');
   });
   return out.join('');
 }
@@ -1529,9 +1637,18 @@ function voHtml(nd, beat){
 function kv(label, valueHtml){
   return valueHtml ? '<dt>'+esc(label)+'</dt><dd>'+valueHtml+'</dd>' : '';
 }
+function modelLabel(m){
+  // assembled/no-model records glue per-stage model fields with '+'
+  // ('none — no sampler ran…+diffusers/LTX…+none -- no model was loaded');
+  // drop the none stages, join the rest readably
+  m=String(m);
+  if(!/(^|\+)\s*none\s*(—|--)/.test(m)) return m;
+  const parts=m.split('+').map(s=>s.trim()).filter(s=>s&&!/^none\b/.test(s));
+  return parts.length?parts.join(' · '):'assembled — no diffusion model';
+}
 function recipeLine(c){
   const parts=[];
-  if(c.model) parts.push(esc(String(c.model)));
+  if(c.model) parts.push(esc(modelLabel(c.model)));
   if(c.seed!=null) parts.push('seed <span class="mono">'+esc(c.seed)+'</span>');
   if(c.steps!=null) parts.push('steps '+esc(c.steps));
   if(c.size) parts.push(esc(c.size));
@@ -1540,6 +1657,12 @@ function recipeLine(c){
   if(c.platform) parts.push(esc(c.platform));
   if(c.kind) parts.push(esc(c.kind));
   if(c.era) parts.push(esc(c.era));
+  // cost + wall time belong in the headline, not buried in 'also recorded'
+  const cu=(c.extras||{}).cost_usd;
+  if(cu!==undefined&&cu!==null&&cu!=='') parts.push('cost $'+esc(String(cu).replace(/^\$/,'')));
+  else if(c.cost&&c.cost.length) parts.push('cost $'+esc(c.cost.reduce((s,r)=>s+(+r.usd||0),0).toFixed(2))+' (ledger)');
+  const q=(c.queue||[]).slice().reverse().find(r=>r.rc===0)||(c.queue||[])[(c.queue||[]).length-1];
+  if(q&&q.dur!=null) parts.push('wall '+esc(q.dur)+'s'+(q.host?' on '+esc(q.host):''));
   return parts.join(' · ');
 }
 function clipRowHtml(c){
@@ -1553,8 +1676,9 @@ function clipRowHtml(c){
   if(c.support) tags+=' <span class="tag">'+esc(c.support)+'</span>';
   let g='<dl class="fgrid">';
   g+=kv('recipe', recipeLine(c)||null);
-  if(Object.keys(c.extras||{}).length)
-    g+=kv('also recorded', '<span class="xtra">'+esc(Object.entries(c.extras).map(e=>e[0]+': '+e[1]).join(' · '))+'</span>');
+  const xEnt=Object.entries(c.extras||{}).filter(e=>e[0]!=='cost_usd'); // hoisted into the recipe line
+  if(xEnt.length)
+    g+=kv('also recorded', '<span class="xtra">'+esc(xEnt.map(e=>e[0]+': '+e[1]).join(' · '))+'</span>');
   if(c.prompt)
     g+=kv('prompt', '<div class="quote">'+esc(c.prompt)+'</div>'
       +(c.prompt_src?'<div class="qsrc">from '+esc(c.prompt_src)+'</div>':''));
@@ -1619,7 +1743,9 @@ function openDossier(beat){
   if(sp&&sp.take)
     h+='<p class="shipline">shipped pick: <span class="mono">'+esc(sp.take)+'</span>'
       +(sp.sha256?' · sha <span class="mono">'+esc(sp.sha256.slice(0,8))+'</span>':'')
-      +(sp.on_disk?'':' · <span class="amber">named in ship-manifest but NOT in sources/</span>')
+      +(sp.on_disk?'':' · <span class="amber">named in ship-manifest but NOT in sources/'
+        +(sp.sha_local?' — byte-identical render at '+esc(sp.sha_local)
+                      :' — no sha-identical copy found locally')+'</span>')
       +(sp.verdict?' — '+esc(sp.verdict):'')+'</p>';
   if(bt&&bt.text) h+='<div class="scriptpage">'+scriptHtml(bt.text)+voHtml(nd,beat)+'</div>';
   else if(beat!=null) h+='<div class="scriptpage"><p class="act">no script text for this beat</p>'+voHtml(nd,beat)+'</div>';
@@ -1668,11 +1794,12 @@ document.addEventListener('keydown', e=>{
 function resultCardHtml(c){
   const v=bestLocalVideo(c), im=v?null:bestLocalImage(c);
   const nd=NODES[c.node]||{};
-  const cap=(nd.id?nd.id:'?')+(c.beat!=null?' · beat '+pad2(c.beat):'');
+  // no '?' node labels ('?' reads as broken) and no stray '·' placeholder dot
+  const cap=(nd.id?nd.id:(c.node||'unplaced'))+(c.beat!=null?' · beat '+pad2(c.beat):'');
   const media=v
     ?'<video muted playsinline preload="none" src="'+esc(relurl(v.p))+'" tabindex="-1"></video>'
     :(im?'<img loading="lazy" src="'+esc(relurl(im.p))+'" alt="">'
-        :'<div class="ph"><b>·</b><span>'+esc(c.era||'record')+'</span></div>');
+        :'<div class="ph"><span>'+esc(c.era||'record')+'</span></div>');
   return '<div class="fcard" role="button" tabindex="0" data-i="'+c._i+'">'
     +'<div class="fmedia">'+media+'</div>'
     +'<div class="fmeta"><div class="rlabel" title="'+esc(c.id)+'">'+esc(c.id)+'</div>'

@@ -259,3 +259,14 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
 - STATUS: cycle-019 (diagnosis) writer has died on API connection errors 4x
   tonight; the API is flaky. One retry queued; if it fails again the document
   waits for morning — no sample renders without it passing its gate anyway.
+
+- RESULT (~23:40): atlas gate findings ALL fixed and re-verified. The big one:
+  a leftover git worktree (wt-pre/) was being walked as production data —
+  inflating every count ~25% (renders 3,426→2,778 real, unresolved 1,941→
+  1,123), showing STALE takes on 4 filmstrip faces, and breaking newest-first
+  ordering. Now any registered worktree is pruned from the scan. Also: the
+  red dot judges only the current take (2/21 lit on 002b, was 21/21 — an
+  alarm that always rings is silence), cost+wall-time hoisted into the recipe
+  line, "21/21 beats with footage" coverage sentence + color legend, ship
+  picks resolved by sha to byte-identical local copies, contrast/ellipsis/
+  arithmetic nits closed. Steward screened the final pixels. Committing.
