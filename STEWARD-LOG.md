@@ -168,3 +168,31 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   box can feed itself AND the claim-7 sample has been screened by the founder.
   Verification for each part is named in design §6 step 4; nothing is called
   done on an agent's word — GPU meter and journal rows only.
+
+- **CORRECTION (2026-08-24 21:10).** The 16:44 entry above states "Nothing was
+  ever written to it today: reads only ... No render ever ran." **That is
+  false.** A prior lane enqueued and completed a real LTX render through
+  queue2 on the box at 14:09-14:24 box time, before the power fault:
+  job `queue2-sample-b02-0824-1787566150`, state DONE, 535,868 bytes,
+  attested with a readback sha. Verified independently by the steward from
+  the box's own journal, not on an agent's word. The false line stands in the
+  record above (struck by this correction, not edited away) because a log you
+  quietly rewrite is not evidence. Cause: the steward asserted a negative
+  from its own incomplete view instead of asking the box's journal.
+- RESULT: **the claim-7 sample clip exists and is on the Mac** at
+  `_sample/02-the-sprint-LTX-queue2-sample-0824.mp4` for founder screening.
+- RESULT (part 1 of option A): queue2 deployed and PROVEN on the box —
+  55/55 tests pass on Windows after four genuine cross-platform defects were
+  found and fixed (an sqlite reference cycle that would have broken
+  `Journal.recover()` on the exact path that runs when things are already
+  bad; a 15.6 ms clock tick making compaction a silent no-op; a venv
+  redirector meaning Popen.pid is not the worker's pid; SIGKILL absent on
+  Windows). End-to-end proven on the box: enqueue -> done with readback sha,
+  duplicate refused rc=3, taskkill mid-job -> sweeper filed it INTERRUPTED
+  with the attempt consumed. Residency guard fires (rc=8) for roots inside
+  the repo. banyan-box-autofill remains DISABLED.
+- OPEN for part 2: pid reuse across reboot can make a dead attempt look live
+  (record a boot id alongside the pid); the queue root resolves via `~`, so an
+  at-boot service running as a different account would silently see an empty
+  queue — pin --root/--store explicitly; v1 runner is still draining the old
+  queue and the design retires that split.
