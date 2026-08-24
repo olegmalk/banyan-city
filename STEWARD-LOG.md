@@ -86,3 +86,15 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   → code review (crash vectors, injection, git-offline) → 10 fixes → smoke 6/6
   PASS. Output dir gitignored (media-out-of-git rule applies to our own tool).
   Open with: python3 pipeline/birdseye.py && open _birdseye/index.html
+
+## 2026-08-24 — morning
+
+- VERDICT (Roman, in chat): **PASS** on the queue-v2 screening card, all seven
+  claims, no vetoes. (pipeline/v2-screening/index.html, design §3.2/§6.)
+- INTENT: build queue v2 core on this Mac per the approved claims — new files
+  under pipeline/queue2/ (write-ahead journal, fingerprint-idempotent enqueue,
+  startup sweeper, verify-then-attest, sample_before_batch gate) + induced-
+  failure tests (kill -9 mid-job, duplicate enqueue, corrupt journal). No
+  machine access, no renders yet; the Claim-7 sample render gets its own
+  intent entry after the build passes review. Commit only after steward
+  review of the builder's output.
