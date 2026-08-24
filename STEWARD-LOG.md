@@ -228,3 +228,16 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
 - INTENT: inventory the held ep2-finish backlog, translate specs to queue2,
   file one, verify its attestation, release the remainder for the night.
   Depends on the box's self-sufficiency canary (in flight).
+
+- LESSON->CODE (from the diagnosis lane's adversarial checker, ~23:30): the
+  founder's rejection was prose-durable only — the hand-typed ledger row used
+  key recipe_fp (placeholder value) where queue2 reads `fingerprint`, so the
+  gate could never see it; and population is counted per-host, so a fanout-1
+  respin on the Mac would have slipped through. Fixed: row rewritten through
+  record_sample_verdict() with the REAL fingerprint (854622022405…, read from
+  the box journal), reasons preserved; queue2 now blocks a rejected recipe on
+  EVERY host regardless of population ("a rejected recipe does not run again;
+  change the recipe and sample that"). Proven: 55/55 suite + a live respin
+  attempt refused with the founder's verdict quoted. The steward hand-typed a
+  row whose own docstring says the shape is code — noted, and the docstring
+  won.

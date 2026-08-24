@@ -1,9 +1,9 @@
-- job_id: queue2-sample-b02-0824-1787566150
-  date: 2026-08-24
+verdicts:
+- fingerprint: 8546220224059c5a1c112e01e9fc4d655ff23f37d265017334d1d6ac30788927
+  sample_job_id: queue2-sample-b02-0824-1787566150
   verdict: rejected
   by: founder (Roman, in chat)
+  date: '2026-08-24'
   reasons:
-    - "barely looks like the goblin (character resemblance)"
-    - "the animation is trash (motion quality)"
-  recipe_fp: pending-box-journal   # box was mid-reboot; fill from journal
-  effect: this recipe may not batch; next step is diagnosis, then ONE new sample
+  - barely looks like the goblin (character resemblance)
+  - the animation is trash (motion quality)

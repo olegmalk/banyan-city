@@ -374,8 +374,20 @@ class Queue2:
         # the founder's verdict row first.
         already = max(self.journal.recipe_count(recipe_fp, spec_fp),
                       self._recipe_jobs_on_disk(recipe_fp, spec_fp))
+        # a recorded REJECTION blocks this recipe on every host, even a
+        # single respin -- population lives per-machine, the ledger is
+        # committed and travels with the repo (the founder said no once;
+        # a fixed recipe has a new fingerprint and starts clean).
+        row = sample_verdict_for(self.verdicts_path, recipe_fp)
+        if row is not None and \
+                str(row.get("verdict", "")).lower() not in APPROVE_VERDICTS:
+            raise SampleBeforeBatch(
+                "!! recipe %s has a founder verdict and it is %r (by %s, %s) "
+                "-- a rejected recipe does not run again; change the recipe "
+                "(new fingerprint) and sample that"
+                % (recipe_fp[:12], row.get("verdict"), row.get("by"),
+                   row.get("date")))
         if fanout > 1 or already >= 1:
-            row = sample_verdict_for(self.verdicts_path, recipe_fp)
             if row is None:
                 raise SampleBeforeBatch(
                     "!! recipe %s would total %d jobs but "
@@ -384,12 +396,6 @@ class Queue2:
                     "(queue2.py verdict), then batch. A metric agreeing with "
                     "the steward is not a sample."
                     % (recipe_fp[:12], already + fanout))
-            if str(row.get("verdict", "")).lower() not in APPROVE_VERDICTS:
-                raise SampleBeforeBatch(
-                    "!! recipe %s has a founder verdict and it is %r (by %s, "
-                    "%s) -- a rejected sample does not batch"
-                    % (recipe_fp[:12], row.get("verdict"), row.get("by"),
-                       row.get("date")))
 
         # id stamping, v1 convention: epoch-suffix unless opted out, so a
         # re-filed name never inherits its predecessor's spent attempts.
