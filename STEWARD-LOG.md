@@ -293,3 +293,13 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   /RU /RP or a service wrapper) so a logout can't idle the farm. Until then a
   logout is a real stop — same human-awake-dependency class the v2 design
   names. Nothing lost; no approved work was waiting to run anyway.
+
+## 2026-08-25 — Olga ad prep
+- CONSENT recorded: Olga agreed to AI likeness + voice clone for her own ad
+  (Roman relaying, 2026-08-25). Privacy enforced in code/process: assets live
+  in ~/olga-ad/ ONLY (outside every repo), never uploaded, never committed.
+- Project scaffold built at ~/olga-ad/ (README w/ consent+privacy, exact VO
+  lines + motion prompts, clipped-string placeholders awaiting dad's plain text).
+- INTENT: install Chatterbox-multilingual on the rtx5090 box (the one missing
+  capability for Russian VO; ~2-3GB, $0, no human dependency). Read-only survey
+  confirmed no TTS on the box. No renders; no Olga assets exist yet.
