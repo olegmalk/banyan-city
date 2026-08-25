@@ -319,3 +319,14 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
 - BLOCKED on: dad's clipped prompt strings (anchor/wardrobe/negative) before
   stills; then the pipeline runs stills -> screen -> 1 sample shot -> screen ->
   rest -> voice.
+
+- RESULT: dad re-sent the brief un-clipped ("C1 local render brief (1).pdf");
+  all 4 previously-clipped strings recovered (anchor+wardrobe tail, crammed,
+  sorted, negative). Still prompts A/B/C ASSEMBLED at ~/olga-ad/stills/prompts/
+  with the real text + Olga's photo-derived appearance line. AWAITING file
+  retired. Prompt/text gate = CLOSED.
+- NEXT gap (last technical one before generating her face): the STILLS need a
+  PHOTOREAL image model + face-identity method (brief: IP-Adapter FaceID /
+  InstantID / PuLID, or an image-edit model fed her photo). Box has an ANIME
+  checkpoint + BASIC IP-Adapter only. Surveying the box for the shortest $0
+  path to a photoreal on-model still of Olga before any generation.
