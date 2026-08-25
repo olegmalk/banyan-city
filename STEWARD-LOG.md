@@ -341,3 +341,18 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   pip insightface/onnxruntime, write a small diffusers gen script, produce ONE
   Still A (576x1024) from ~/olga-ad refs + the assembled A prompt. Copy back to
   the Mac for screening. One image only — no batch, no other stills yet.
+
+- STILL A attempt 1: REJECT (steward pre-read, LOOKED at pixels — the FaceID
+  cosine 0.12 metric was nearly trusted blind; caught per cycle-016 lesson).
+  Failures: (1) hallucinated glasses (no ref has them), (2) unnatural pink
+  cheek/nose blush artifact, (3) SCENE IGNORED — text asked robe + crammed
+  wardrobe + hangers + medium shot; output was a white-shirt selfie in a
+  doorway. Diagnosis: FaceID identity weight too high -> her selfie-framed refs
+  dominated composition, overrode the text scene (or img2img bleed). Likeness
+  itself: partial-promising (resembles her). Images at ~/olga-ad/stills/
+  A_sample.png + A_raw.png.
+- INTENT: bounded iteration (attempts 2-4) — text-to-image (not img2img),
+  FaceID identity-only at moderate scale (~0.6), add glasses/heavy-blush/red-
+  cheeks to negative, confirm the wardrobe scene renders. Steward pre-reads by
+  LOOKING; only a candidate passing (right scene, no artifacts, reads as her)
+  goes to Roman+mom for the taste verdict. $0, local, one-at-a-time.
