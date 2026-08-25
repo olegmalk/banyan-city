@@ -446,3 +446,20 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   $0/local, box idle, refs stay on box. Steward pre-reads by eye; Roman screens
   in the morning. If v2 still not-quite -> the final lever is uncompressed
   close-up originals (send as WhatsApp "Document" or AirDrop).
+
+- LoRA v2 RESULT (face-weighted, 16 imgs, 56min): steward LOOKED (zoomed face
+  crop vs real b2_12). VERDICT: only MARGINAL improvement — still slimmer/more
+  angular/generic-pretty than Olga's fuller rounder warmer face; build still
+  slim-model. NOT her. Agent's "clearly most her" was generous; honest read =
+  "less runway, still not her."
+- CEILING NOW CONFIRMED TWICE (3 photos -> 15 photos, both plateau): the wall
+  is WhatsApp COMPRESSION + only ~6 clear-face photos. The one experiment never
+  run all night: UNCOMPRESSED close-up face photos. Every attempt used squished
+  images.
+- STOPPED retraining (same compressed source = frozen-frames anti-pattern).
+  MORNING STATE: ad fully buildable except the face; motion/voice/scene proven.
+  NEXT LEVER (definitive): Olga sends full-res close-up selfies as WhatsApp
+  "Document" (skips compression) or AirDrop -> retrain -> best/last shot at
+  local likeness. If that ALSO plateaus -> honest fork: invented-presenter
+  version (brief-allowed, works on voice+styling) vs paid cloud tool.
+  Comparisons at ~/olga-ad/stills/COMPARE_V2.png + FACE_COMPARE.png.
