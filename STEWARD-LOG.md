@@ -492,3 +492,20 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   $0/local, refs stay on box, one-sample discipline still gates PUBLICATION —
   these are internal tests, founder screens the gallery. Steward drives the
   iteration; failures logged, no faking.
+
+- CAMPAIGN progress (overnight, steward inspected all by eye):
+  * swap+restore DONE: real-face inswapper + CodeFormer(w0.9) = BEST lead —
+    "plausibly her but IDEALIZED" (slimmer/prettier than her fuller real face).
+    Restore fixes softness, does NOT add identity. KEY INSIGHT: her face is only
+    ~67px in the full-body wardrobe frames -> inswapper has too little real face
+    -> restorer invents toward pretty. LEVER = bigger face in frame.
+  * Flux-schnell LoRA: TRAINING now (GPU 100%, ~2-3h) — tests the base-model
+    hypothesis; result pending.
+  * GALLERY_faces.png built: real vs v1/v2 LoRA / InstantID / bare-swap /
+    swap+restore — the whole search, one strip. Real-face methods win.
+  RANKING so far: swap+restore w0.9 > bare swap > InstantID > LoRA v2 > v1.
+- NEXT EXPERIMENT (queued for when Flux frees the GPU): generate a CLOSER-
+  framed / higher-res wardrobe scene so Olga's face is much bigger (~150px+),
+  then real-face swap + light restore -> preserves her real (fuller) face,
+  restorer invents less. This is the insight-driven shot at "unmistakably her."
+  Also compare Flux LoRA face when it lands. Watchers armed on both.
