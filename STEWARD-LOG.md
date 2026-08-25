@@ -369,3 +369,12 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   it on the A_v2 scene first; if her face lands photoreally, apply to the
   proper A/B/C scenes. Fallback if inswapper weights unavailable: InstantID.
   Founder screens the RESULT for taste; steward pre-reads for bars.
+
+- STILL A: face-swap SUCCEEDED and PASSES steward pre-read (I looked at pixels,
+  not cosine). inswapper_128.onnx (554MB, sha-verified genuine) from public
+  mirror; Olga's face (4-frontal-ref averaged embedding, buffalo_l) swapped
+  onto the scale-0 wardrobe scene. Result ~/olga-ad/stills/A_swap.png (576x1024):
+  reads as a plausible Olga, scene intact (open wardrobe, rail, hangers, grey
+  robe over white tee, medium shot), no glasses/blush, seamless, only mild
+  face-softness. GATE HELD: no B/C/video until Roman+Olga give the TASTE
+  verdict on this one still. $0, local, refs stayed on box.
