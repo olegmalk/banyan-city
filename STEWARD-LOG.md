@@ -303,3 +303,19 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
 - INTENT: install Chatterbox-multilingual on the rtx5090 box (the one missing
   capability for Russian VO; ~2-3GB, $0, no human dependency). Read-only survey
   confirmed no TTS on the box. No renders; no Olga assets exist yet.
+
+- RESULT: Chatterbox-multilingual installed on the box, GPU-verified for
+  RUSSIAN. Isolated venv C:\banyan-tts\venv (render venvs untouched); Blackwell
+  torch 2.11+cu128 protected via --no-deps (chatterbox pins torch 2.6 which
+  lacks sm_120 — that trap avoided). Russian selftest ran on cuda:0 (no one's
+  voice). Clone helper: C:\banyan-tts\clone_ru.py <ref.wav> <out.wav> "<ru text>".
+  One caveat: auto Russian STRESS-marking is unavailable (russian_text_stresser
+  missing) — synthesis works, but the brief's stress notes (директ/верхо́в/
+  низо́в last-syllable) must be hand-marked in the input text. Watermarked by
+  design (fine).
+- Olga voice ref staged from her no-music talking-to-camera video: 41s clean,
+  48kHz mono, + a normalized copy (source was -42dB). Face refs staged (3
+  photos + 44 video frames), appearance line written from the photos.
+- BLOCKED on: dad's clipped prompt strings (anchor/wardrobe/negative) before
+  stills; then the pipeline runs stills -> screen -> 1 sample shot -> screen ->
+  rest -> voice.
