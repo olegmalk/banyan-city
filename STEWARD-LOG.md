@@ -423,3 +423,13 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   brief allows (ad carries on her voice + styling; the generic-model faces
   already qualify). Comparison at ~/olga-ad/stills/COMPARE_LORA.png. LoRA saved
   box-side C:\olga-lora\out\olga_lora_v1.safetensors (private).
+
+- FOUNDER PUSH (Roman): don't wait on photos — make videos from current
+  footage. AGREED (aligns with the brief's own "test S1 first, then run the
+  rest" and one-sample rule): the LTX i2v video step + the voice are BOTH
+  untested; a moving-shot draft answers the OTHER big risk (motion, Sapling's
+  weakness) and is a legit invented-presenter fallback draft (brief-sanctioned).
+  INTENT: render S1 via LTX-2.3 i2v (576x1024, 121 frames, distilled 8-step,
+  brief settings) from the best LoRA Still A; render the 5 Russian VO lines via
+  Chatterbox (hand-marked stress on директ/верхо́в/низо́в). $0/local. Deliver
+  both for Roman to watch; check motion by eye before batching the other 6.
