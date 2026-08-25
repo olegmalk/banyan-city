@@ -356,3 +356,16 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   cheeks to negative, confirm the wardrobe scene renders. Steward pre-reads by
   LOOKING; only a candidate passing (right scene, no artifacts, reads as her)
   goes to Roman+mom for the taste verdict. $0, local, one-at-a-time.
+
+- STILL A iteration (attempts 2-4): FaceID-PlusV2 confirmed scene-vs-face
+  cliff — any identity scale >0 forces a frontal portrait (+ blush/glasses
+  return); scale-0 renders the wardrobe scene beautifully but is a stranger.
+  Steward LOOKED at A_v2.png (scale 0): scene is correct + photoreal, and the
+  stranger is coincidentally blonde/fair/blue-eyed = close to Olga's coloring.
+- INTENT (method choice, steward's per taste-vs-picks boundary; $0/local/no
+  account/same refs, within approved Route B "produce a screenable Still A"):
+  FACE-SWAP path — render scene identity-off (have it), swap Olga's face on via
+  InsightFace inswapper (already installed) which is pose/scene-agnostic. Prove
+  it on the A_v2 scene first; if her face lands photoreally, apply to the
+  proper A/B/C scenes. Fallback if inswapper weights unavailable: InstantID.
+  Founder screens the RESULT for taste; steward pre-reads for bars.
