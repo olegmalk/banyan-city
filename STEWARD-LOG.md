@@ -433,3 +433,16 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   brief settings) from the best LoRA Still A; render the 5 Russian VO lines via
   Chatterbox (hand-marked stress on директ/верхо́в/низо́в). $0/local. Deliver
   both for Roman to watch; check motion by eye before batching the other 6.
+
+- PHOTOS batch 2 (2026-08-26 ~00:xx): Roman got Olga to send 12 more via
+  WhatsApp (saved to Downloads -> ~/olga-ad/refs/batch2/). All only her, varied
+  (many full-body outfit shots + 2 CLEAR face shots: b2_07 outdoor smile,
+  b2_12 close car selfie = best face ref yet). Still WhatsApp-compressed
+  (~130KB, faces often small) — uncompressed originals would be better, but this
+  is a real 3->15 upgrade with actual face coverage.
+- INTENT: retrain LoRA v2 on the expanded set (12 new + 3 old), curated with
+  FACE CROPS from the clear shots emphasized + full-bodies for proportion,
+  ~2000 steps, then gen Still A candidates. Tests the better-photos hypothesis.
+  $0/local, box idle, refs stay on box. Steward pre-reads by eye; Roman screens
+  in the morning. If v2 still not-quite -> the final lever is uncompressed
+  close-up originals (send as WhatsApp "Document" or AirDrop).
