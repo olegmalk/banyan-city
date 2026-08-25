@@ -477,3 +477,18 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   photos are the ceiling (proven). Prefer Flux.1-dev if an HF token already
   exists on the box; else strongest UNGATED option (Flux.1-schnell / Z-Image /
   Qwen-Image) that fits 24GB. Overnight, $0/local, refs stay on box.
+
+- FOUNDER DIRECTIVE (Roman, ~3am): "keep working overnight, lots of tests,
+  iterate yourself." AUTHORIZED autonomous overnight face-likeness campaign.
+  Plan (each result LOOKED-at + compared to real b2_12, assembled into a
+  morning gallery ~/olga-ad/stills/GALLERY_*.png):
+  1. [running] Flux-schnell LoRA — base-model test (RealVisXL beautify-bias
+     hypothesis).
+  2. [launching] inswapper HER-REAL-FACE + face-restoration (CodeFormer/GFPGAN)
+     onto the good v2 LoRA scene — real-pixel identity + fix the softness the
+     first swap lacked. GPU free during Flux download.
+  3. [iterate] pursue whichever is closest: hybrids (LoRA scene + real face +
+     restore), beautify-bias counters, Flux tuning.
+  $0/local, refs stay on box, one-sample discipline still gates PUBLICATION —
+  these are internal tests, founder screens the gallery. Steward drives the
+  iteration; failures logged, no faking.
