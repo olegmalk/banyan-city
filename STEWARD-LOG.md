@@ -330,3 +330,14 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   InstantID / PuLID, or an image-edit model fed her photo). Box has an ANIME
   checkpoint + BASIC IP-Adapter only. Surveying the box for the shortest $0
   path to a photoreal on-model still of Olga before any generation.
+
+- FOUNDER DECISION (Roman): Route B for Olga stills — RealVisXL + IP-Adapter-
+  FaceID + InsightFace (~8GB, ungated, $0, no account). Goal: generate ONE
+  Still A, screen with Roman+mom (the likeness moment of truth). Escalate to
+  Flux Kontext (Route A, needs dad's HF account) ONLY if likeness is
+  insufficient. Nothing sent/published; local only; her refs never leave box.
+- INTENT: on the box, dedicated venv (protect render + tts venvs + Blackwell
+  torch), download RealVisXL_V5.0 + ip-adapter-faceid-plusv2_sdxl + antelopev2,
+  pip insightface/onnxruntime, write a small diffusers gen script, produce ONE
+  Still A (576x1024) from ~/olga-ad refs + the assembled A prompt. Copy back to
+  the Mac for screening. One image only — no batch, no other stills yet.
