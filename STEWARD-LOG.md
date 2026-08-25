@@ -463,3 +463,17 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   local likeness. If that ALSO plateaus -> honest fork: invented-presenter
   version (brief-allowed, works on voice+styling) vs paid cloud tool.
   Comparisons at ~/olga-ad/stills/COMPARE_V2.png + FACE_COMPARE.png.
+
+- FOUNDER CHALLENGE (Roman, sharp + correct): "so much reference, are we using
+  a BAD MODEL? photo quality is not the problem." VALID — steward conceded:
+  ALL 5 attempts (FaceID/inswapper/InstantID/LoRA v1+v2) used the SAME base
+  family (SDXL/RealVisXL). Changed identity METHOD 5x, never the base MODEL.
+  RealVisXL beautifies (slim symmetric model bias) -> may actively fight
+  Olga's fuller real face regardless of ref quality = a MODEL problem, not a
+  photo problem. Research already flagged SDXL as the weak base vs Flux.
+- INTENT (clean single-variable experiment): train a LoRA on a STRONGER base
+  (Flux-class) using the SAME 15-photo set. Isolates model vs photos: if it
+  captures her -> model was the ceiling (Roman right); if it also plateaus ->
+  photos are the ceiling (proven). Prefer Flux.1-dev if an HF token already
+  exists on the box; else strongest UNGATED option (Flux.1-schnell / Z-Image /
+  Qwen-Image) that fits 24GB. Overnight, $0/local, refs stay on box.
