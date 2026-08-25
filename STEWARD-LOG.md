@@ -404,3 +404,22 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   prompt. $0/local, refs stay on box. HONEST: current source is IG-compressed
   = quality ceiling; this is a first real datapoint, sharper photos lift it.
   Still one-sample gated -> Roman+Olga screen.
+
+- LoRA RESULT (overnight): trained clean (2000 steps, 49min, loss 0.073),
+  generated 4 candidates. Steward LOOKED (full-size). VERDICT: SCENE/styling/
+  composition = excellent (real wardrobe-reel look, grey robe, natural light,
+  no artifacts — best of any attempt). FACE = NOT Olga: a slim/older/angular
+  GENERIC MODEL, wrong face shape + build. LoRA learned her vibe, not her face.
+- DEFINITIVE FINDING (was hypothesis, now proven): the BEST local tool (a
+  trained LoRA) still cannot capture her specific face from the current source
+  (3 IG-compressed photos + soft video frames). Every method plateaued on face;
+  the LoRA even regressed the body toward a fashion model. The ceiling is
+  SOURCE PHOTO QUALITY, confirmed. Not a tool problem anymore.
+- STOPPED GPU iteration (more attempts w/o new input = the frozen-frames
+  anti-pattern). MORNING STATE: pipeline fully proven (LoRA train->gen->great
+  scenes, ~50min end to end), everything except the face is solved. Two paths
+  for Roman+Olga: (A) she sends 15-20 SHARP close-up varied phone selfies ->
+  retrain -> actually her (~1-2h); (B) accept the invented-woman fallback the
+  brief allows (ad carries on her voice + styling; the generic-model faces
+  already qualify). Comparison at ~/olga-ad/stills/COMPARE_LORA.png. LoRA saved
+  box-side C:\olga-lora\out\olga_lora_v1.safetensors (private).
