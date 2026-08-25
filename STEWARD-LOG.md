@@ -387,3 +387,20 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   prefers not to reshoot). Still one-sample gated: produce ONE InstantID Still
   A, steward pre-reads by eye, then Roman+Olga screen for taste. No B/C/video
   until a still passes.
+
+- RESEARCH (face likeness, 2026): the 3 tried methods (FaceID/inswapper/
+  InstantID) are all zero-shot adapters that avg her into a generic embedding
+  -> structurally cap at "resembles," never "unmistakable." Real answer =
+  TRAIN A LoRA on her (learns her actual face) + BETTER SOURCE PHOTOS (15-30
+  sharp/varied = the single biggest lever, caps every method). Also: inswapper
+  is NON-COMMERCIAL license -> unusable for an ad anyway. Consent already held.
+- IG check (@malkovastylist, public): not a usable source — compressed
+  thumbnails only + feed full of CLIENT faces (forbidden). Sharp phone selfies
+  remain the lever.
+- FOUNDER DECISION (Roman): "try 1" = the LoRA route. INTENT: train an SDXL
+  character LoRA (RealVisXL base + kohya, both on box) on the best available set
+  (3 photos + sharpest/varied video frames, curated+captioned, unique trigger),
+  ~1500-2500 steps on the 24GB card, then generate Still A with LoRA + the A
+  prompt. $0/local, refs stay on box. HONEST: current source is IG-compressed
+  = quality ceiling; this is a first real datapoint, sharper photos lift it.
+  Still one-sample gated -> Roman+Olga screen.
