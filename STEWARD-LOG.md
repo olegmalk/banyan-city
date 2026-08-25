@@ -378,3 +378,12 @@ Audit me: `git log --oneline -- STEWARD-LOG.md` · `git show <id>` ·
   robe over white tee, medium shot), no glasses/blush, seamless, only mild
   face-softness. GATE HELD: no B/C/video until Roman+Olga give the TASTE
   verdict on this one still. $0, local, refs stayed on box.
+
+- STILL A face-swap: founder+Olga verdict = "close but not quite" -> ESCALATE
+  to the stronger identity method (Roman's call). Plan: InstantID (SDXL,
+  keypoint+ControlNet identity — holds composition AND stronger likeness than
+  faceid/inswapper), on the box, $0/local. Same refs (Instagram-compressed;
+  noted as a quality ceiling — sharper phone selfies would help but Olga
+  prefers not to reshoot). Still one-sample gated: produce ONE InstantID Still
+  A, steward pre-reads by eye, then Roman+Olga screen for taste. No B/C/video
+  until a still passes.
